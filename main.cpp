@@ -26,9 +26,10 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 
 	//ウィンドウクラスの設定
 	WNDCLASSEX w{};
-	w.cbSize = sizeof(WNDCLASSEX);			//ウィンドウプロシージャを設定
-	w.lpfnWndProc = (WNDPROC)WindowProc;	//ウィンドウクラス名
-	w.lpszClassName = L"DirectXGame";		//ウィンドウハンドル
+	w.cbSize = sizeof(WNDCLASSEX);			
+	w.lpfnWndProc = (WNDPROC)WindowProc;	//ウィンドウプロシージャを設定
+	w.lpszClassName = L"DirectXGame";		//ウィンドウクラス名
+	w.hInstance = GetModuleHandle(nullptr);	//ウィンドウハンドル
 	w.hCursor = LoadCursor(NULL, IDC_ARROW);//カーソル指定
 
 	//ウィンドウクラスをOSに登録する
@@ -41,6 +42,52 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	AdjustWindowRect(&wrc, WS_OVERLAPPEDWINDOW, false);
 
 	//ウィンドウオブジェクトの生成
+	HWND hwnd = CreateWindow(
+		w.lpszClassName,		//クラス名
+		L"DirectXGame",			//タイトルバーの文字
+		WS_OVERLAPPEDWINDOW,	//標準的なウィンドウスタイル
+		CW_USEDEFAULT,			//表示X座標(OSに任せる)
+		CW_USEDEFAULT,			//表示Y座標(OSに任せる)
+		wrc.right - wrc.left,	//ウィンドウ横幅
+		wrc.bottom - wrc.top,	//ウィンドウ縦幅
+		nullptr,				//親ウィンドウハンドル
+		nullptr,				//メニューハンドル
+		w.hInstance,			//呼び出しアプリケーションハンドル
+		nullptr,				//オプション
+		);
+
+	//ウィンドウを表示状態にする
+	ShowWindow(hwnd, SW_SHOW);
+
+	MSG msg{};	//メッセージ
+
+	//DirectX初期化処理　ここから
+	
+	//DirectX初期化処理　ここまで
+
+
+
+
+	//ゲームループ
+	while (true){
+		if (PeekMessage(&msg, nullptr, 0, 0, PM_REMOVE)) {
+			TranslateMessage(&msg);		//キー入力メッセージの処理
+			DispatchMessage(&msg);		//プロシージャにメッセージを送る
+		}
+
+		if (msg.message == WM_QUIT) {
+			break;
+		}
+
+		//DirectX毎フレーム処理 ここから
+		
+
+		//DirectX毎フレーム処理 ここまで
+
+	}
+
+	//ウィンドウクラスを登録解除
+	UnregisterClass(w.lpszClassName, w.hInstance);
 
 	//コンソールへの文字出力
 	OutputDebugStringA("Hello,DirectX!!\n");
