@@ -6,6 +6,10 @@
 #include <string>
 #pragma comment(lib,"d3d12.lib")
 #pragma comment(lib,"dxgi.lib")
+#include <DirectXMath.h>
+using namespace DirectX;
+#include <d3dcompiler.inl>
+#pragma comment(lib,"d3dcompiler.lib")
 
 //ウィンドウプロシージャ
 LRESULT WindowProc(HWND hwnd, UINT msg, WPARAM wparam, LPARAM lparam){
@@ -27,6 +31,7 @@ LRESULT WindowProc(HWND hwnd, UINT msg, WPARAM wparam, LPARAM lparam){
 //windowsアプリでのエントリーポイント(main関数)
 int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 
+#pragma region WindowsAPI初期化処理
 	//ウィンドウサイズ
 	const int window_width = 1200;
 	const int window_height = 720;
@@ -67,9 +72,12 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	ShowWindow(hwnd, SW_SHOW);
 
 	MSG msg{};	//メッセージ
+#pragma endregion WindowsAPI初期化処理 
 
 	///---DirectX初期化処理　ここから---///
 	
+#pragma region DirectX初期化処理
+
 #ifdef  _DEBUG
 	//デバッグレイヤーをオンに
 	ID3D12Debug* debugController;
@@ -77,6 +85,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		debugController->EnableDebugLayer();
 	}
 #endif //  _DEBUG
+
 
 
 	HRESULT result;
@@ -231,11 +240,135 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 
 	///---DirectX初期化処理　ここまで---///
 
+#pragma endregion DirectX初期化処理
 
+#pragma region 描画初期化処理
 
+	//頂点データ
+	XMFLOAT3 vertices[] = {
+		{ -0.5f,-0.5f,0.0f},//左下
+		{ -0.5f,+0.5f,0.0f},//左上
+		{ +0.5f,-0.5f,0.0f},//右下
+	};
+
+	//頂点データ全体のサイズ = 頂点データ一つ分のサイズ * 頂点データの要素数
+	UINT sizeVB = static_cast<UINT>(sizeof(XMFLOAT3) * _countof(vertices));
+
+	//頂点バッファの設定
+	D3D12_HEAP_PROPERTIES heapProp{};		//ヒープ設定
+	heapProp.Type = D3D12_HEAP_TYPE_UPLOAD;	//GPUへの転送用
+
+	//リソース設定
+	D3D12_RESOURCE_DESC resDesc{};
+	resDesc.Dimension = D3D12_RESOURCE_DIMENSION_BUFFER;
+	resDesc.Width - sizeVB;	//頂点データ全体のサイズ
+	resDesc.Height = 1;
+	resDesc.DepthOrArraySize = 1;
+	resDesc.MipLevels = 1;
+	resDesc.SampleDesc.Count = 1;
+	resDesc.Layout = D3D12_TEXTURE_LAYOUT_ROW_MAJOR;
+
+	//頂点バッファの生成
+	ID3D12Resource* vertBuff = nullptr;
+	result = device->CreateCommittedResource(
+		&heapProp,	//ヒープ設定
+		D3D12_HEAP_FLAG_NONE,
+		&resDesc,	//リソース設定
+		D3D12_RESOURCE_STATE_GENERIC_READ,
+		nullptr,
+		IID_PPV_ARGS(&vertBuff));
+	assert(SUCCEEDED(result));
+
+	//GPU状のバッファに対応した仮想メモリ(メインメモリ上)を取得
+	XMFLOAT3* vertMap = nullptr;
+	result = vertBuff->Map(0, nullptr, (void**)&vertMap);
+	assert(SUCCEEDED(result));
+	//全頂点に大使て
+	for (int i = 0; i < _countof(vertices); i++){
+		vertMap[i] = vertices[i];	//	座標をコピー
+	}
+	//繋がりを解除
+	vertBuff->Unmap(0, nullptr);
+
+	//頂点バッファビューの作成
+	D3D12_VERTEX_BUFFER_VIEW vbView{};
+	//GPU仮想アドレス
+	vbView.BufferLocation = vertBuff->GetGPUVirtualAddress();
+	//頂点バッファのサイズ
+	vbView.SizeInBytes = sizeVB;
+	//頂点1つ分のデータサイズ
+	vbView.StrideInBytes = sizeof(XMFLOAT3);
+
+	ID3DBlob* vsBlob = nullptr;	//頂点シェーダオブジェクト
+	ID3DBlob* psBlob = nullptr;	//ピクセルシェーダーオブジェクト
+	ID3DBlob* errorBlob = nullptr;	//エラーオブジェクト
+
+	//頂点シェーダの読み込みとコンパイル
+	result = D3DCompileFromFile(
+		L"BasicVS.hlsl",	//シェーダファイル名
+		nullptr,
+		D3D_COMPILE_STANDARD_FILE_INCLUDE,	//デバッグ用設定
+		"main", "vs_5_0",	//エントリーポイント名、シェーダーモデル指定
+		D3DCOMPILE_DEBUG | D3DCOMPILE_SKIP_OPTIMIZATION,	//デバッグ用設定
+		0,
+		&vsBlob, &errorBlob);
+
+	//エラーなら
+	if (FAILED(result)) {
+		//errorBlobからエラー内容をstring型にコピー
+		std::string error;
+		error.resize(errorBlob->GetBufferSize());
+
+		std::copy_n((char*)errorBlob->GetBufferPointer(),
+			errorBlob->GetBufferSize(),
+			error.begin());
+		error += "\n";
+		//エラー内容を出力ウィンドウに表示
+		OutputDebugStringA(error.c_str());
+		assert(0);
+	}
+
+	//ピクセルシェーダの読み込みとコンパイル
+	result = D3DCompileFromFile(
+		L"BasicPS.hlsl",	//シェーダファイル名
+		nullptr,
+		D3D_COMPILE_STANDARD_FILE_INCLUDE,	//インクルード可能にする
+		"main", "ps_5_0",	//エントリーポイント名、シェーダモデル指定
+		D3DCOMPILE_DEBUG | D3DCOMPILE_SKIP_OPTIMIZATION,	//デバッグ用設定
+		0,
+		&psBlob, &errorBlob);
+
+	//エラーなら
+	if (FAILED(result)) {
+		//errorBlobからエラー内容をstring型をコピー
+		std::string error;
+		error.resize(errorBlob->GetBufferSize());
+
+		std::copy_n((char*)errorBlob->GetBufferPointer(),
+			errorBlob->GetBufferSize(),
+			error.begin());
+		error += "\n";
+		//エラー内容を出力ウィンドウに表示
+		OutputDebugStringA(error.c_str());
+		assert(0);
+
+		//頂点レイアウト
+		D3D12_INPUT_ELEMENT_DESC inputlayout[] = {
+			{
+				"POSITION",0,DXGI_FORMAT_R32G32B32_FLOAT,0,
+				D3D12_APPEND_ALIGNED_ELEMENT,
+				D3D12_INPUT_CLASSIFICATION_PER_VERTEX_DATA,0
+			},
+		};
+		//スライド31まで
+	}
+
+#pragma endregion 描画初期化処理
 
 	//ゲームループ
 	while (true){
+
+#pragma region ウィンドウメッセージ
 		if (PeekMessage(&msg, nullptr, 0, 0, PM_REMOVE)) {
 			TranslateMessage(&msg);		//キー入力メッセージの処理
 			DispatchMessage(&msg);		//プロシージャにメッセージを送る
@@ -244,7 +377,9 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		if (msg.message == WM_QUIT) {
 			break;
 		}
+#pragma endregion ウィンドウメッセージ
 
+#pragma region DirectX毎フレーム処理
 		///---DirectX毎フレーム処理 ここから---///
 		
 		UINT bbIndex = swapChain->GetCurrentBackBufferIndex();
@@ -306,7 +441,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 
 
 		///---DirectX毎フレーム処理 ここまで---///
-
+#pragma endregion DirectX毎フレーム処理
 	}
 
 	//ウィンドウクラスを登録解除
