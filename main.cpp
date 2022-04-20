@@ -44,7 +44,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 
 	//ウィンドウクラスの設定
 	WNDCLASSEX w{};
-	w.cbSize = sizeof(WNDCLASSEX);			
+	w.cbSize = sizeof(WNDCLASSEX);
 	w.lpfnWndProc = (WNDPROC)WindowProc;	//ウィンドウプロシージャを設定
 	w.lpszClassName = L"DirectXGame";		//ウィンドウクラス名
 	w.hInstance = GetModuleHandle(nullptr);	//ウィンドウハンドル
@@ -80,9 +80,9 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	MSG msg{};	//メッセージ
 #pragma endregion WindowsAPI初期化処理 
 
-	///---DirectX初期化処理　ここから---///
-	
 #pragma region DirectX初期化処理
+
+	///---DirectX初期化処理　ここから---///
 
 #ifdef  _DEBUG
 	//デバッグレイヤーをオンに
@@ -114,10 +114,10 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	IDXGIAdapter4* tmpAdapter = nullptr;
 
 	//パフォーマンスが高いものから順に、すべてのアダプターを列挙する
-	for (UINT i = 0; 
+	for (UINT i = 0;
 		dxgifactory->EnumAdapterByGpuPreference(i,
 			DXGI_GPU_PREFERENCE_HIGH_PERFORMANCE,
-			IID_PPV_ARGS(&tmpAdapter)) != DXGI_ERROR_NOT_FOUND; 
+			IID_PPV_ARGS(&tmpAdapter)) != DXGI_ERROR_NOT_FOUND;
 		i++)
 	{
 		//動的配列に追加する
@@ -143,7 +143,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	///------///
 
 	///---デバイスの生成---///
-	
+
 	D3D_FEATURE_LEVEL levels[] = {
 		D3D_FEATURE_LEVEL_12_1,
 		D3D_FEATURE_LEVEL_12_0,
@@ -242,7 +242,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	ID3D12Fence* fence = nullptr;
 	UINT64 fenceVal = 0;
 
-	result = device->CreateFence(fenceVal, D3D12_FENCE_FLAG_NONE,IID_PPV_ARGS(&fence));
+	result = device->CreateFence(fenceVal, D3D12_FENCE_FLAG_NONE, IID_PPV_ARGS(&fence));
 
 	//DirectInputの初期化
 	IDirectInput8* directInput = nullptr;
@@ -273,6 +273,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		{ -0.5f,-0.5f,0.0f},//左下
 		{ -0.5f,+0.5f,0.0f},//左上
 		{ +0.5f,-0.5f,0.0f},//右下
+		{ +0.5f,+0.5f,0.0f},//右上
 	};
 
 	//頂点データ全体のサイズ = 頂点データ一つ分のサイズ * 頂点データの要素数
@@ -308,7 +309,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	result = vertBuff->Map(0, nullptr, (void**)&vertMap);
 	assert(SUCCEEDED(result));
 	//全頂点に対して
-	for (int i = 0; i < _countof(vertices); i++){
+	for (int i = 0; i < _countof(vertices); i++) {
 		vertMap[i] = vertices[i];	//	座標をコピー
 	}
 	//繋がりを解除
@@ -387,74 +388,130 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	};
 
 	//グラフィックスパイプライン設定
-	D3D12_GRAPHICS_PIPELINE_STATE_DESC pipelineDesc{};
 
-	//シェーダーの設定
-	pipelineDesc.VS.pShaderBytecode = vsBlob->GetBufferPointer();
-	pipelineDesc.VS.BytecodeLength = vsBlob->GetBufferSize();
-	pipelineDesc.PS.pShaderBytecode = psBlob->GetBufferPointer();
-	pipelineDesc.PS.BytecodeLength = psBlob->GetBufferSize();
+	const int FILLMODE_NUM = 2;
+	D3D12_GRAPHICS_PIPELINE_STATE_DESC pipelineDesc[FILLMODE_NUM]{};
 
-	//サンプルマスクの設定
-	pipelineDesc.SampleMask = D3D12_DEFAULT_SAMPLE_MASK;	//標準設定
+	for (int i = 0; i < FILLMODE_NUM; i++)
+	{
+		//シェーダーの設定
+		pipelineDesc[i].VS.pShaderBytecode = vsBlob->GetBufferPointer();
+		pipelineDesc[i].VS.BytecodeLength = vsBlob->GetBufferSize();
+		pipelineDesc[i].PS.pShaderBytecode = psBlob->GetBufferPointer();
+		pipelineDesc[i].PS.BytecodeLength = psBlob->GetBufferSize();
 
-	//ラスタライザの設定
-	pipelineDesc.RasterizerState.CullMode = D3D12_CULL_MODE_NONE;	//カリングしない
-	pipelineDesc.RasterizerState.FillMode = D3D12_FILL_MODE_SOLID;	//ポリゴン内塗りつぶし
-	pipelineDesc.RasterizerState.DepthClipEnable = true;			//深度クリッピングを有効に
+		//サンプルマスクの設定
+		pipelineDesc[i].SampleMask = D3D12_DEFAULT_SAMPLE_MASK;	//標準設定
 
-	//ブレンドステート
-	pipelineDesc.BlendState.RenderTarget[0].RenderTargetWriteMask =
-		D3D12_COLOR_WRITE_ENABLE_ALL;	//RGBA全てのチャンネルを描画
+		//ラスタライザの設定
+		pipelineDesc[i].RasterizerState.CullMode = D3D12_CULL_MODE_NONE;	//カリングしない
+		pipelineDesc[i].RasterizerState.DepthClipEnable = true;			//深度クリッピングを有効に
 
-	//頂点レイアウトの設定
-	pipelineDesc.InputLayout.pInputElementDescs = inputLayout;
-	pipelineDesc.InputLayout.NumElements = _countof(inputLayout);
+		//ブレンドステート
+		pipelineDesc[i].BlendState.RenderTarget[0].RenderTargetWriteMask =
+			D3D12_COLOR_WRITE_ENABLE_ALL;	//RGBA全てのチャンネルを描画
 
-	//図形の形状設定
-	pipelineDesc.PrimitiveTopologyType = D3D12_PRIMITIVE_TOPOLOGY_TYPE_TRIANGLE;
+		//頂点レイアウトの設定
+		pipelineDesc[i].InputLayout.pInputElementDescs = inputLayout;
+		pipelineDesc[i].InputLayout.NumElements = _countof(inputLayout);
 
-	//その他の設定
-	pipelineDesc.NumRenderTargets = 1;	//描画対象は1つ
-	pipelineDesc.RTVFormats[0] = DXGI_FORMAT_R8G8B8A8_UNORM_SRGB;	//0～255指定のRGBA
-	pipelineDesc.SampleDesc.Count = 1;	//1ピクセルにつき1回サンプリング
+		//図形の形状設定
+		pipelineDesc[i].PrimitiveTopologyType = D3D12_PRIMITIVE_TOPOLOGY_TYPE_TRIANGLE;
+
+		//その他の設定
+		pipelineDesc[i].NumRenderTargets = 1;	//描画対象は1つ
+		pipelineDesc[i].RTVFormats[0] = DXGI_FORMAT_R8G8B8A8_UNORM_SRGB;	//0～255指定のRGBA
+		pipelineDesc[i].SampleDesc.Count = 1;	//1ピクセルにつき1回サンプリング
+	}
+
+	//塗りつぶしするかしないのか、どっちなんだい！！　ヤー！！！
+	pipelineDesc[0].RasterizerState.FillMode = D3D12_FILL_MODE_SOLID;		//塗りつぶす！！
+	pipelineDesc[1].RasterizerState.FillMode = D3D12_FILL_MODE_WIREFRAME;	//塗りつぶさない！！！
 
 	//ルートシグネチャ
-	ID3D12RootSignature* rootSignature;
+	ID3D12RootSignature* rootSignature[FILLMODE_NUM];
 
 	//ルートシグネチャの設定
 	D3D12_ROOT_SIGNATURE_DESC rootSignatureDesc{};
 	rootSignatureDesc.Flags = D3D12_ROOT_SIGNATURE_FLAG_ALLOW_INPUT_ASSEMBLER_INPUT_LAYOUT;
 
-	//ルートシグネチャのシリアライズ
-	ID3DBlob* rootSigBlob = nullptr;
-	result = D3D12SerializeRootSignature(&rootSignatureDesc, D3D_ROOT_SIGNATURE_VERSION_1_0,
-		&rootSigBlob, &errorBlob);
-	assert(SUCCEEDED(result));
-	result = device->CreateRootSignature(0, rootSigBlob->GetBufferPointer(), rootSigBlob->GetBufferSize(),
-		IID_PPV_ARGS(&rootSignature));
-	assert(SUCCEEDED(result));
-	rootSigBlob->Release();
-	//パイプラインにルートシグネチャをセット
-	pipelineDesc.pRootSignature = rootSignature;
+	ID3DBlob* rootSigBlob[FILLMODE_NUM] = { nullptr };
 
-	//パイプラインステートの生成
-	ID3D12PipelineState* pipelineState = nullptr;
-	result = device->CreateGraphicsPipelineState(&pipelineDesc, IID_PPV_ARGS(&pipelineState));
-	assert(SUCCEEDED(result));
+	ID3D12PipelineState* pipelineState[FILLMODE_NUM] = {nullptr};
 
+	for (int i = 0; i < FILLMODE_NUM; i++)
+	{
+		//ルートシグネチャのシリアライズ
+		result = D3D12SerializeRootSignature(&rootSignatureDesc, D3D_ROOT_SIGNATURE_VERSION_1_0,
+			&rootSigBlob[i], &errorBlob);
+		assert(SUCCEEDED(result));
+		result = device->CreateRootSignature(0, rootSigBlob[i]->GetBufferPointer(), rootSigBlob[i]->GetBufferSize(),
+			IID_PPV_ARGS(&rootSignature[i]));
+		assert(SUCCEEDED(result));
+		rootSigBlob[i]->Release();
+		//パイプラインにルートシグネチャをセット
+		pipelineDesc->pRootSignature = rootSignature[i];
+
+		//パイプラインステートの生成
+		result = device->CreateGraphicsPipelineState(&pipelineDesc[i], IID_PPV_ARGS(&pipelineState[i]));
+		assert(SUCCEEDED(result));
+	}
 #pragma endregion 描画初期化処理
 
 	//ゲームループ内で使う変数の宣言
 	FLOAT clearColor[] = { 0,0,0,0 };
 
-	FLOAT redColor[] = { 0.5f,0.1f,0.25f,0.0f };	//赤っぽい色
 	FLOAT blueColor[] = { 0.1f,0.25f,0.5f,0.0f };	//青っぽい色
+	FLOAT pinkColor[] = { 1.0f,0.7f,1.0f,0.0f };	
 
-	*clearColor = *blueColor;
+	for (int i = 0; i < 4; i++)
+	{
+		clearColor[i] = blueColor[i];
+	}
 
 	BYTE key[256] = {};
 	BYTE oldkey[256] = {};
+
+	const int VIEWPORT_NUM = 4;
+	D3D12_VIEWPORT viewport[VIEWPORT_NUM]{};
+
+	viewport[0].Width = window_width / 2;
+	viewport[0].Height = window_height / 2;
+	viewport[0].TopLeftX = 0;
+	viewport[0].TopLeftY = 0;
+	viewport[0].MinDepth = 0.0f;
+	viewport[0].MaxDepth = 1.0f;
+
+	viewport[1].Width = window_width / 2;
+	viewport[1].Height = window_height / 2;
+	viewport[1].TopLeftX = window_width / 2;
+	viewport[1].TopLeftY = 0;
+	viewport[1].MinDepth = 0.0f;
+	viewport[1].MaxDepth = 1.0f;
+
+	viewport[2].Width = window_width / 2;
+	viewport[2].Height = window_height / 2;
+	viewport[2].TopLeftX = 0;
+	viewport[2].TopLeftY = window_height / 2;
+	viewport[2].MinDepth = 0.0f;
+	viewport[2].MaxDepth = 1.0f;
+
+	viewport[3].Width = window_width / 2;
+	viewport[3].Height = window_height / 2;
+	viewport[3].TopLeftX = window_width / 2;
+	viewport[3].TopLeftY = window_height / 2;
+	viewport[3].MinDepth = 0.0f;
+	viewport[3].MaxDepth = 1.0f;
+
+	D3D12_RECT scissorRect{};
+	scissorRect.left = 0;									//切り抜き座標左
+	scissorRect.right = scissorRect.left + window_width;	//切り抜き座標右
+	scissorRect.top = 0;									//切り抜き座標上
+	scissorRect.bottom = scissorRect.top + window_height;	//切り抜き座標下
+
+	D3D_PRIMITIVE_TOPOLOGY drawType = D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST;
+
+	bool wireframeFlag = 0;
 
 	//ゲームループ
 	while (true){
@@ -502,15 +559,41 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		}
 		keyboard->GetDeviceState(sizeof(key), key);
 
+		if (key[DIK_SPACE])
+		{
+			for (int i = 0; i < 4; i++)
+			{
+				clearColor[i] = pinkColor[i];
+			}
+		}
+		else
+		{
+			for (int i = 0; i < 4; i++)
+			{
+				clearColor[i] = blueColor[i];
+			}
+		}
 		if (key[DIK_1] && !oldkey[DIK_1])
 		{
-			if (*clearColor != *redColor)
+			if (drawType != D3D_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP)
 			{
-				*clearColor = *redColor;
+				drawType = D3D_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP;
 			}
-			else if(*clearColor == *redColor)
+			else
 			{
-				*clearColor = *blueColor;
+				drawType = D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST;
+			}
+		}
+		if (key[DIK_2] && !oldkey[DIK_2])
+		{
+			switch (wireframeFlag)
+			{
+			case true:
+				wireframeFlag = false;
+				break;
+			case false:
+				wireframeFlag = true;
+				break;
 			}
 		}
 
@@ -519,37 +602,28 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 
 #pragma region グラフィックスコマンド
 		//--4.描画コマンドここから--//
-		
-		D3D12_VIEWPORT viewport{};
-		viewport.Width = window_width;
-		viewport.Height = window_height;
-		viewport.TopLeftX = 0;
-		viewport.TopLeftY = 0;
-		viewport.MinDepth = 0.0f;
-		viewport.MaxDepth = 1.0f;
-		//ビューポート設定コマンドを、コマンドリストに積む
-		commandList->RSSetViewports(1, &viewport);
 
-		D3D12_RECT scissorRect{};
-		scissorRect.left = 0;									//切り抜き座標左
-		scissorRect.right = scissorRect.left + window_width;	//切り抜き座標右
-		scissorRect.top = 0;									//切り抜き座標上
-		scissorRect.bottom = scissorRect.top + window_height;	//切り抜き座標下
-		//シザー矩形設定コマンドを、コマンドリストに積む
-		commandList->RSSetScissorRects(1, &scissorRect);
+		for (int i = 0; i < VIEWPORT_NUM; i++)
+		{
+			//ビューポート設定コマンドを、コマンドリストに積む
+			commandList->RSSetViewports(1, &viewport[i]);
 
-		//パイプラインステートとルートシグネチャの設定コマンド
-		commandList->SetPipelineState(pipelineState);
-		commandList->SetGraphicsRootSignature(rootSignature);
+			//シザー矩形設定コマンドを、コマンドリストに積む
+			commandList->RSSetScissorRects(1, &scissorRect);
 
-		//プリミティブ形状の設定コマンド
-		commandList->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+			//パイプラインステートとルートシグネチャの設定コマンド
+			commandList->SetPipelineState(pipelineState[wireframeFlag]);
+			commandList->SetGraphicsRootSignature(rootSignature[wireframeFlag]);
 
-		//頂点バッファビューの設定コマンド
-		commandList->IASetVertexBuffers(0, 1, &vbView);
+			//プリミティブ形状の設定コマンド
+			commandList->IASetPrimitiveTopology(drawType);
 
-		//描画コマンド
-		commandList->DrawInstanced(_countof(vertices), 1, 0, 0);	//全ての頂点を使って描画
+			//頂点バッファビューの設定コマンド
+			commandList->IASetVertexBuffers(0, 1, &vbView);
+
+			//描画コマンド
+			commandList->DrawInstanced(_countof(vertices), 1, 0, 0);	//全ての頂点を使って描画
+		}
 
 		//--4.描画コマンドここまで--//
 
