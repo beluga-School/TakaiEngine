@@ -11,6 +11,12 @@ using namespace DirectX;
 #include <d3dcompiler.h>
 #pragma comment(lib,"d3dcompiler.lib")
 
+#define DIRECTINPUT_VERSION 0x0800	//DirectInputのバージョン指定
+#include <dinput.h>
+
+#pragma comment(lib,"dinput8.lib")
+#pragma comment(lib,"dxguid.lib")
+
 //ウィンドウプロシージャ
 LRESULT WindowProc(HWND hwnd, UINT msg, WPARAM wparam, LPARAM lparam){
 	
@@ -238,6 +244,24 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 
 	result = device->CreateFence(fenceVal, D3D12_FENCE_FLAG_NONE,IID_PPV_ARGS(&fence));
 
+	//DirectInputの初期化
+	IDirectInput8* directInput = nullptr;
+	result = DirectInput8Create(
+		w.hInstance, DIRECTINPUT_VERSION, IID_IDirectInput8, (void**)&directInput, nullptr);
+	assert(SUCCEEDED(result));
+
+	//キーボードデバイスの生成
+	IDirectInputDevice8* keyboard = nullptr;
+	result = directInput->CreateDevice(GUID_SysKeyboard, &keyboard, NULL);
+	assert(SUCCEEDED(result));
+
+	result = keyboard->SetDataFormat(&c_dfDIKeyboard);	//標準形式
+	assert(SUCCEEDED(result));
+
+	result = keyboard->SetCooperativeLevel(
+		hwnd, DISCL_FOREGROUND | DISCL_NONEXCLUSIVE | DISCL_NOWINKEY);
+	assert(SUCCEEDED(result));
+
 	///---DirectX初期化処理　ここまで---///
 
 #pragma endregion DirectX初期化処理
@@ -421,6 +445,17 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 
 #pragma endregion 描画初期化処理
 
+	//ゲームループ内で使う変数の宣言
+	FLOAT clearColor[] = { 0,0,0,0 };
+
+	FLOAT redColor[] = { 0.5f,0.1f,0.25f,0.0f };	//赤っぽい色
+	FLOAT blueColor[] = { 0.1f,0.25f,0.5f,0.0f };	//青っぽい色
+
+	*clearColor = *blueColor;
+
+	BYTE key[256] = {};
+	BYTE oldkey[256] = {};
+
 	//ゲームループ
 	while (true){
 
@@ -454,9 +489,30 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		commandList->OMSetRenderTargets(1, &rtvHandle, false, nullptr);
 
 		//3.画面クリア
-		FLOAT clearColor[] = { 0.1f,0.25f,0.5f,0.0f };	//青っぽい色
+		
 		commandList->ClearRenderTargetView(rtvHandle, clearColor, 0, nullptr);
 
+		//キーボード情報の取得開始
+		keyboard->Acquire();
+
+		//全キーの入力状態を取得する
+		for (int i = 0; i < 256; i++)
+		{
+			oldkey[i] = key[i];
+		}
+		keyboard->GetDeviceState(sizeof(key), key);
+
+		if (key[DIK_SPACE] && !oldkey[DIK_SPACE])
+		{
+			if (*clearColor != *redColor)
+			{
+				*clearColor = *redColor;
+			}
+			else if(*clearColor == *redColor)
+			{
+				*clearColor = *blueColor;
+			}
+		}
 
 		///---DirectX毎フレーム処理 ここまで---///
 #pragma endregion DirectX毎フレーム処理
