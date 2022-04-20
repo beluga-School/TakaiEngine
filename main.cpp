@@ -502,7 +502,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		}
 		keyboard->GetDeviceState(sizeof(key), key);
 
-		if (key[DIK_SPACE] && !oldkey[DIK_SPACE])
+		if (key[DIK_1] && !oldkey[DIK_1])
 		{
 			if (*clearColor != *redColor)
 			{
