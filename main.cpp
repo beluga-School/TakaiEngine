@@ -8,7 +8,7 @@
 #pragma comment(lib,"dxgi.lib")
 #include <DirectXMath.h>
 using namespace DirectX;
-#include <d3dcompiler.inl>
+#include <d3dcompiler.h>
 #pragma comment(lib,"d3dcompiler.lib")
 
 //ウィンドウプロシージャ
@@ -261,7 +261,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	//リソース設定
 	D3D12_RESOURCE_DESC resDesc{};
 	resDesc.Dimension = D3D12_RESOURCE_DIMENSION_BUFFER;
-	resDesc.Width - sizeVB;	//頂点データ全体のサイズ
+	resDesc.Width = sizeVB;	//頂点データ全体のサイズ
 	resDesc.Height = 1;
 	resDesc.DepthOrArraySize = 1;
 	resDesc.MipLevels = 1;
@@ -283,7 +283,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	XMFLOAT3* vertMap = nullptr;
 	result = vertBuff->Map(0, nullptr, (void**)&vertMap);
 	assert(SUCCEEDED(result));
-	//全頂点に大使て
+	//全頂点に対して
 	for (int i = 0; i < _countof(vertices); i++){
 		vertMap[i] = vertices[i];	//	座標をコピー
 	}
@@ -351,17 +351,73 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		//エラー内容を出力ウィンドウに表示
 		OutputDebugStringA(error.c_str());
 		assert(0);
-
-		//頂点レイアウト
-		D3D12_INPUT_ELEMENT_DESC inputlayout[] = {
-			{
-				"POSITION",0,DXGI_FORMAT_R32G32B32_FLOAT,0,
-				D3D12_APPEND_ALIGNED_ELEMENT,
-				D3D12_INPUT_CLASSIFICATION_PER_VERTEX_DATA,0
-			},
-		};
-		//スライド31まで
 	}
+
+	//頂点レイアウト
+	D3D12_INPUT_ELEMENT_DESC inputLayout[] = {
+		{
+			"POSITION",0,DXGI_FORMAT_R32G32B32_FLOAT,0,
+			D3D12_APPEND_ALIGNED_ELEMENT,
+			D3D12_INPUT_CLASSIFICATION_PER_VERTEX_DATA,0
+		},
+	};
+
+	//グラフィックスパイプライン設定
+	D3D12_GRAPHICS_PIPELINE_STATE_DESC pipelineDesc{};
+
+	//シェーダーの設定
+	pipelineDesc.VS.pShaderBytecode = vsBlob->GetBufferPointer();
+	pipelineDesc.VS.BytecodeLength = vsBlob->GetBufferSize();
+	pipelineDesc.PS.pShaderBytecode = psBlob->GetBufferPointer();
+	pipelineDesc.PS.BytecodeLength = psBlob->GetBufferSize();
+
+	//サンプルマスクの設定
+	pipelineDesc.SampleMask = D3D12_DEFAULT_SAMPLE_MASK;	//標準設定
+
+	//ラスタライザの設定
+	pipelineDesc.RasterizerState.CullMode = D3D12_CULL_MODE_NONE;	//カリングしない
+	pipelineDesc.RasterizerState.FillMode = D3D12_FILL_MODE_SOLID;	//ポリゴン内塗りつぶし
+	pipelineDesc.RasterizerState.DepthClipEnable = true;			//深度クリッピングを有効に
+
+	//ブレンドステート
+	pipelineDesc.BlendState.RenderTarget[0].RenderTargetWriteMask =
+		D3D12_COLOR_WRITE_ENABLE_ALL;	//RGBA全てのチャンネルを描画
+
+	//頂点レイアウトの設定
+	pipelineDesc.InputLayout.pInputElementDescs = inputLayout;
+	pipelineDesc.InputLayout.NumElements = _countof(inputLayout);
+
+	//図形の形状設定
+	pipelineDesc.PrimitiveTopologyType = D3D12_PRIMITIVE_TOPOLOGY_TYPE_TRIANGLE;
+
+	//その他の設定
+	pipelineDesc.NumRenderTargets = 1;	//描画対象は1つ
+	pipelineDesc.RTVFormats[0] = DXGI_FORMAT_R8G8B8A8_UNORM_SRGB;	//0～255指定のRGBA
+	pipelineDesc.SampleDesc.Count = 1;	//1ピクセルにつき1回サンプリング
+
+	//ルートシグネチャ
+	ID3D12RootSignature* rootSignature;
+
+	//ルートシグネチャの設定
+	D3D12_ROOT_SIGNATURE_DESC rootSignatureDesc{};
+	rootSignatureDesc.Flags = D3D12_ROOT_SIGNATURE_FLAG_ALLOW_INPUT_ASSEMBLER_INPUT_LAYOUT;
+
+	//ルートシグネチャのシリアライズ
+	ID3DBlob* rootSigBlob = nullptr;
+	result = D3D12SerializeRootSignature(&rootSignatureDesc, D3D_ROOT_SIGNATURE_VERSION_1_0,
+		&rootSigBlob, &errorBlob);
+	assert(SUCCEEDED(result));
+	result = device->CreateRootSignature(0, rootSigBlob->GetBufferPointer(), rootSigBlob->GetBufferSize(),
+		IID_PPV_ARGS(&rootSignature));
+	assert(SUCCEEDED(result));
+	rootSigBlob->Release();
+	//パイプラインにルートシグネチャをセット
+	pipelineDesc.pRootSignature = rootSignature;
+
+	//パイプラインステートの生成
+	ID3D12PipelineState* pipelineState = nullptr;
+	result = device->CreateGraphicsPipelineState(&pipelineDesc, IID_PPV_ARGS(&pipelineState));
+	assert(SUCCEEDED(result));
 
 #pragma endregion 描画初期化処理
 
@@ -401,9 +457,49 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		FLOAT clearColor[] = { 0.1f,0.25f,0.5f,0.0f };	//青っぽい色
 		commandList->ClearRenderTargetView(rtvHandle, clearColor, 0, nullptr);
 
+
+		///---DirectX毎フレーム処理 ここまで---///
+#pragma endregion DirectX毎フレーム処理
+
+#pragma region グラフィックスコマンド
 		//--4.描画コマンドここから--//
 		
+		D3D12_VIEWPORT viewport{};
+		viewport.Width = window_width;
+		viewport.Height = window_height;
+		viewport.TopLeftX = 0;
+		viewport.TopLeftY = 0;
+		viewport.MinDepth = 0.0f;
+		viewport.MaxDepth = 1.0f;
+		//ビューポート設定コマンドを、コマンドリストに積む
+		commandList->RSSetViewports(1, &viewport);
+
+		D3D12_RECT scissorRect{};
+		scissorRect.left = 0;									//切り抜き座標左
+		scissorRect.right = scissorRect.left + window_width;	//切り抜き座標右
+		scissorRect.top = 0;									//切り抜き座標上
+		scissorRect.bottom = scissorRect.top + window_height;	//切り抜き座標下
+		//シザー矩形設定コマンドを、コマンドリストに積む
+		commandList->RSSetScissorRects(1, &scissorRect);
+
+		//パイプラインステートとルートシグネチャの設定コマンド
+		commandList->SetPipelineState(pipelineState);
+		commandList->SetGraphicsRootSignature(rootSignature);
+
+		//プリミティブ形状の設定コマンド
+		commandList->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+
+		//頂点バッファビューの設定コマンド
+		commandList->IASetVertexBuffers(0, 1, &vbView);
+
+		//描画コマンド
+		commandList->DrawInstanced(_countof(vertices), 1, 0, 0);	//全ての頂点を使って描画
+
 		//--4.描画コマンドここまで--//
+
+#pragma endregion グラフィックスコマンド
+
+#pragma region 画面入れ替え
 
 		//5.リソースバリアを戻す
 		barrierDesc.Transition.StateBefore = D3D12_RESOURCE_STATE_RENDER_TARGET;	//描画状態から
@@ -422,7 +518,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		result = swapChain->Present(1, 0);
 		assert(SUCCEEDED(result));
 
-		//コマンドの実行完了を松
+		//コマンドの実行完了を待つ
 		commandQueue->Signal(fence, ++fenceVal);
 		if (fence->GetCompletedValue() != fenceVal) {
 			HANDLE event = CreateEvent(nullptr, false, false, nullptr);
@@ -439,9 +535,8 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		result = commandList->Reset(commandAllocator, nullptr);
 		assert(SUCCEEDED(result));
 
+#pragma endregion 画面入れ替え
 
-		///---DirectX毎フレーム処理 ここまで---///
-#pragma endregion DirectX毎フレーム処理
 	}
 
 	//ウィンドウクラスを登録解除
