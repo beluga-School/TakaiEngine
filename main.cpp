@@ -17,6 +17,10 @@ using namespace DirectX;
 
 WinAPI winApi_;
 
+struct ConstBufferDataMaterial {
+	XMFLOAT4 color;	//色(RGBA)
+};
+
 //windowsアプリでのエントリーポイント(main関数)
 int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 
