@@ -429,33 +429,35 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	pipelineDesc[1].RasterizerState.FillMode = D3D12_FILL_MODE_WIREFRAME;	//塗りつぶさない！！！
 
 	//ルートシグネチャ
-	ID3D12RootSignature* rootSignature[FILLMODE_NUM];
+	ID3D12RootSignature* rootSignature;
 
 	//ルートシグネチャの設定
 	D3D12_ROOT_SIGNATURE_DESC rootSignatureDesc{};
 	rootSignatureDesc.Flags = D3D12_ROOT_SIGNATURE_FLAG_ALLOW_INPUT_ASSEMBLER_INPUT_LAYOUT;
 
-	ID3DBlob* rootSigBlob[FILLMODE_NUM] = { nullptr };
+	ID3DBlob* rootSigBlob =  nullptr;
 
-	ID3D12PipelineState* pipelineState[FILLMODE_NUM] = {nullptr};
+	ID3D12PipelineState* pipelineState[FILLMODE_NUM] = { nullptr , nullptr};
+
+	//ルートシグネチャのシリアライズ
+	result = D3D12SerializeRootSignature(&rootSignatureDesc, D3D_ROOT_SIGNATURE_VERSION_1_0,
+		&rootSigBlob, &errorBlob);
+	assert(SUCCEEDED(result));
+	result = device->CreateRootSignature(0, rootSigBlob->GetBufferPointer(), rootSigBlob->GetBufferSize(),
+		IID_PPV_ARGS(&rootSignature));
+	assert(SUCCEEDED(result));
+	rootSigBlob->Release();
 
 	for (int i = 0; i < FILLMODE_NUM; i++)
 	{
-		//ルートシグネチャのシリアライズ
-		result = D3D12SerializeRootSignature(&rootSignatureDesc, D3D_ROOT_SIGNATURE_VERSION_1_0,
-			&rootSigBlob[i], &errorBlob);
-		assert(SUCCEEDED(result));
-		result = device->CreateRootSignature(0, rootSigBlob[i]->GetBufferPointer(), rootSigBlob[i]->GetBufferSize(),
-			IID_PPV_ARGS(&rootSignature[i]));
-		assert(SUCCEEDED(result));
-		rootSigBlob[i]->Release();
 		//パイプラインにルートシグネチャをセット
-		pipelineDesc->pRootSignature = rootSignature[i];
+		pipelineDesc[i].pRootSignature = rootSignature;
 
 		//パイプラインステートの生成
 		result = device->CreateGraphicsPipelineState(&pipelineDesc[i], IID_PPV_ARGS(&pipelineState[i]));
 		assert(SUCCEEDED(result));
 	}
+
 #pragma endregion 描画初期化処理
 
 	//ゲームループ内で使う変数の宣言
@@ -511,7 +513,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 
 	D3D_PRIMITIVE_TOPOLOGY drawType = D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST;
 
-	bool wireframeFlag = 0;
+	bool isWireFrame = 0;
 
 	//ゲームループ
 	while (true){
@@ -586,13 +588,13 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		}
 		if (key[DIK_2] && !oldkey[DIK_2])
 		{
-			switch (wireframeFlag)
+			switch (isWireFrame)
 			{
 			case true:
-				wireframeFlag = false;
+				isWireFrame = false;
 				break;
 			case false:
-				wireframeFlag = true;
+				isWireFrame = true;
 				break;
 			}
 		}
@@ -607,13 +609,13 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		{
 			//ビューポート設定コマンドを、コマンドリストに積む
 			commandList->RSSetViewports(1, &viewport[i]);
-
+		
 			//シザー矩形設定コマンドを、コマンドリストに積む
 			commandList->RSSetScissorRects(1, &scissorRect);
 
 			//パイプラインステートとルートシグネチャの設定コマンド
-			commandList->SetPipelineState(pipelineState[wireframeFlag]);
-			commandList->SetGraphicsRootSignature(rootSignature[wireframeFlag]);
+			commandList->SetPipelineState(pipelineState[isWireFrame]);
+			commandList->SetGraphicsRootSignature(rootSignature);
 
 			//プリミティブ形状の設定コマンド
 			commandList->IASetPrimitiveTopology(drawType);
@@ -624,6 +626,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 			//描画コマンド
 			commandList->DrawInstanced(_countof(vertices), 1, 0, 0);	//全ての頂点を使って描画
 		}
+
 
 		//--4.描画コマンドここまで--//
 
