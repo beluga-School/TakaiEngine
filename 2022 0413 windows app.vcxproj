@@ -140,7 +140,6 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="DirectXInit.cpp" />
-    <ClCompile Include="DrawInit.cpp" />
     <ClCompile Include="Input.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="WinAPI.cpp" />
@@ -161,7 +160,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="DirectXInit.h" />
-    <ClInclude Include="DrawInit.h" />
     <ClInclude Include="Input.h" />
     <ClInclude Include="Result.h" />
     <ClInclude Include="WinAPI.h" />
