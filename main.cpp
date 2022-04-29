@@ -251,12 +251,21 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	pipelineDesc.RTVFormats[0] = DXGI_FORMAT_R8G8B8A8_UNORM_SRGB;	//0～255指定のRGBA
 	pipelineDesc.SampleDesc.Count = 1;	//1ピクセルにつき1回サンプリング
 
+	//ルートパラメータの設定
+	D3D12_ROOT_PARAMETER rootParam = {};
+	rootParam.ParameterType = D3D12_ROOT_PARAMETER_TYPE_CBV;	//定数バッファビュー
+	rootParam.Descriptor.ShaderRegister = 0;					//定数バッファ番号
+	rootParam.Descriptor.RegisterSpace = 0;						//デフォルト値
+	rootParam.ShaderVisibility = D3D12_SHADER_VISIBILITY_ALL;	//全てのシェーダから見える
+
 	//ルートシグネチャ
 	ID3D12RootSignature* rootSignature;
 
 	//ルートシグネチャの設定
 	D3D12_ROOT_SIGNATURE_DESC rootSignatureDesc{};
 	rootSignatureDesc.Flags = D3D12_ROOT_SIGNATURE_FLAG_ALLOW_INPUT_ASSEMBLER_INPUT_LAYOUT;
+	rootSignatureDesc.pParameters = &rootParam;	//ルートパラメータの先頭アドレス
+	rootSignatureDesc.NumParameters = 1;		//ルートパラメータ数
 
 	//ルートシグネチャのシリアライズ
 	ID3DBlob* rootSigBlob = nullptr;
@@ -275,6 +284,38 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	result = DX12.device->CreateGraphicsPipelineState(&pipelineDesc, IID_PPV_ARGS(&pipelineState));
 	assert(SUCCEEDED(result));
 
+	//ヒープ設定
+	D3D12_HEAP_PROPERTIES cbHeapProp{};
+	cbHeapProp.Type = D3D12_HEAP_TYPE_UPLOAD;	//GPUへの転送用
+	//リソース設定
+	D3D12_RESOURCE_DESC cbResourceDesc{};
+	cbResourceDesc.Dimension = D3D12_RESOURCE_DIMENSION_BUFFER;
+	cbResourceDesc.Width = (sizeof(ConstBufferDataMaterial) + 0xff) & ~0xff;	//256バイトアラインメント
+	cbResourceDesc.Height = 1;
+	cbResourceDesc.DepthOrArraySize = 1;
+	cbResourceDesc.MipLevels = 1;
+	cbResourceDesc.SampleDesc.Count = 1;
+	cbResourceDesc.Layout = D3D12_TEXTURE_LAYOUT_ROW_MAJOR;
+
+	ID3D12Resource* countBuffMaterial = nullptr;
+	//定数バッファの生成
+	result = DX12.device->CreateCommittedResource(
+		&cbHeapProp,	//ヒープ設定
+		D3D12_HEAP_FLAG_NONE,
+		&cbResourceDesc,	//リソース設定
+		D3D12_RESOURCE_STATE_GENERIC_READ,
+		nullptr,
+		IID_PPV_ARGS(&countBuffMaterial));
+	assert(SUCCEEDED(result));
+
+	//定数バッファのマッピング
+	ConstBufferDataMaterial* constMapMaterial = nullptr;
+	result = countBuffMaterial->Map(0, nullptr, (void**)&constMapMaterial);	//マッピング
+	assert(SUCCEEDED(result));
+
+	//値を書き込むと自動的に転送されるらしい
+	constMapMaterial->color = XMFLOAT4(1, 0, 0, 0.5f);	//RGBAで半透明の赤の値
+
 #pragma endregion 描画初期化処理
 
 	//ゲームループ内で使う変数の宣言
@@ -283,7 +324,12 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	FLOAT redColor[] = { 0.5f,0.1f,0.25f,0.0f };	//赤っぽい色
 	FLOAT blueColor[] = { 0.1f,0.25f,0.5f,0.0f };	//青っぽい色
 
-	*clearColor = *blueColor;
+	for (int i = 0; i < _countof(clearColor); i++)
+	{
+		clearColor[i] = blueColor[i];
+	}
+
+	XMFLOAT3 materialColor = { -0.005f,0.005f,0 };
 
 	//ゲームループ
 	while (true){
@@ -325,15 +371,21 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 
 		if (input_->TriggerKey(DIK_1))
 		{
-			if (*clearColor != *redColor)
+			for (int i = 0; i < _countof(clearColor); i++)
 			{
-				*clearColor = *redColor;
-			}
-			else if(*clearColor == *redColor)
-			{
-				*clearColor = *blueColor;
+				if (clearColor[i] != redColor[i])
+				{
+					clearColor[i] = redColor[i];
+				}
+				else if (clearColor[i] == redColor[i])
+				{
+					clearColor[i] = blueColor[i];
+				}
 			}
 		}
+
+		constMapMaterial->color.x += materialColor.x;
+		constMapMaterial->color.y += materialColor.y;
 
 		///---DirectX毎フレーム処理 ここまで---///
 #pragma endregion DirectX毎フレーム処理
@@ -368,6 +420,9 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 
 		//頂点バッファビューの設定コマンド
 		DX12.commandList->IASetVertexBuffers(0, 1, &vbView);
+
+		//定数バッファビュー(CBV)の設定コマンド
+		DX12.commandList->SetGraphicsRootConstantBufferView(0, countBuffMaterial->GetGPUVirtualAddress());
 
 		//描画コマンド
 		DX12.commandList->DrawInstanced(_countof(vertices), 1, 0, 0);	//全ての頂点を使って描画
