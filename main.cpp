@@ -57,6 +57,9 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	   { -0.5f,-0.5f,0.0f},//左下
 	   { -0.5f,+0.5f,0.0f},//左上
 	   { +0.5f,-0.5f,0.0f},//右下
+	   { +0.5f,-0.5f,0.0f},//右下
+	   { -0.5f,+0.5f,0.0f},//左上
+	   { +0.5f,+0.5f,0.0f},//右上
 	};
 
 	//頂点データ全体のサイズ = 頂点データ一つ分のサイズ * 頂点データの要素数
@@ -416,7 +419,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		DX12.commandList->SetGraphicsRootSignature(rootSignature);
 
 		//プリミティブ形状の設定コマンド
-		DX12.commandList->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+		DX12.commandList->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP);
 
 		//頂点バッファビューの設定コマンド
 		DX12.commandList->IASetVertexBuffers(0, 1, &vbView);
