@@ -52,16 +52,23 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 
 #pragma region 描画初期化処理
 
+	//頂点データ構造体
+	struct Vertex
+	{
+		XMFLOAT3 pos;	//xyz座標
+		XMFLOAT2 uv;	//uv座標
+	};
 	//頂点データ
-	XMFLOAT3 vertices[] = {
-	   { -0.5f,-0.5f,0.0f},//左下 インデックス0
-	   { -0.5f,+0.5f,0.0f},//左上 インデックス1
-	   { +0.5f,-0.5f,0.0f},//右下 インデックス2
-	   { +0.5f,+0.5f,0.0f},//右上 インデックス3
+	Vertex vertices[] = {
+		// x	y	  z		 u	   v
+		{{-0.4f,-0.7f,0.0f},{0.0f,1.0f}},	//左下
+		{{-0.4f,+0.7f,0.0f},{0.0f,0.0f}},	//左上
+		{{+0.4f,-0.7f,0.0f},{1.0f,1.0f}},	//右下
+		{{+0.4f,+0.7f,0.0f},{1.0f,0.0f}},	//右上
 	};
 
 	//頂点データ全体のサイズ = 頂点データ一つ分のサイズ * 頂点データの要素数
-	UINT sizeVB = static_cast<UINT>(sizeof(XMFLOAT3) * _countof(vertices));
+	UINT sizeVB = static_cast<UINT>(sizeof(vertices[0]) * _countof(vertices));
 
 	//頂点バッファの設定
 	D3D12_HEAP_PROPERTIES heapProp{};		//ヒープ設定
@@ -89,7 +96,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	assert(SUCCEEDED(result));
 
 	//GPU状のバッファに対応した仮想メモリ(メインメモリ上)を取得
-	XMFLOAT3* vertMap = nullptr;
+	Vertex* vertMap = nullptr;
 	result = vertBuff->Map(0, nullptr, (void**)&vertMap);
 	assert(SUCCEEDED(result));
 	//全頂点に対して
@@ -106,7 +113,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	//頂点バッファのサイズ
 	vbView.SizeInBytes = sizeVB;
 	//頂点1つ分のデータサイズ
-	vbView.StrideInBytes = sizeof(XMFLOAT3);
+	vbView.StrideInBytes = sizeof(vertices[0]);
 
 	//インデックスデータ
 	uint16_t indices[] =
@@ -209,8 +216,13 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 
 	//頂点レイアウト
 	D3D12_INPUT_ELEMENT_DESC inputLayout[] = {
-		{
+		{ //xyz座標
 			"POSITION",0,DXGI_FORMAT_R32G32B32_FLOAT,0,
+			D3D12_APPEND_ALIGNED_ELEMENT,
+			D3D12_INPUT_CLASSIFICATION_PER_VERTEX_DATA,0
+		},
+		{ //uv座標
+			"TEXCOORD",0,DXGI_FORMAT_R32G32_FLOAT,0,
 			D3D12_APPEND_ALIGNED_ELEMENT,
 			D3D12_INPUT_CLASSIFICATION_PER_VERTEX_DATA,0
 		},
@@ -361,6 +373,8 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 
 	//値を書き込むと自動的に転送されるらしい
 	constMapMaterial->color = XMFLOAT4(1, 0, 0, 0.5f);	//RGBAで半透明の赤の値
+
+
 
 #pragma endregion 描画初期化処理
 
