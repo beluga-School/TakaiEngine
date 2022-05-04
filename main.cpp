@@ -374,7 +374,63 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	//値を書き込むと自動的に転送されるらしい
 	constMapMaterial->color = XMFLOAT4(1, 0, 0, 0.5f);	//RGBAで半透明の赤の値
 
+	//横方向ピクセル数
+	const size_t textureWidth = 256;
+	//縦方向ピクセル
+	const size_t textureHeight = 256;
+	//配列の要素数
+	const size_t imageDataCount = textureWidth * textureHeight;
+	//画像イメージデータ配列
+	XMFLOAT4* imageData = new XMFLOAT4[imageDataCount]; //必ず後で解放する
 
+	//全ピクセルの色を初期化
+	for (size_t i = 0; i < imageDataCount; i++)
+	{
+		imageData[i].x = 1.0f;	//R
+		imageData[i].y = 0.0f;	//G
+		imageData[i].z = 0.0f;	//B
+		imageData[i].w = 1.0f;	//A
+	}
+
+	//ヒープ設定
+	D3D12_HEAP_PROPERTIES textureHeapProp{};
+	textureHeapProp.Type = D3D12_HEAP_TYPE_CUSTOM;
+	textureHeapProp.CPUPageProperty =
+		D3D12_CPU_PAGE_PROPERTY_WRITE_BACK;
+	textureHeapProp.MemoryPoolPreference = D3D12_MEMORY_POOL_L0;
+	//リソース設定
+	D3D12_RESOURCE_DESC textureResourceDesc{};
+	textureResourceDesc.Dimension - D3D12_RESOURCE_DIMENSION_TEXTURE2D;
+	textureResourceDesc.Format = DXGI_FORMAT_R32G32B32A32_FLOAT;
+	textureResourceDesc.Width = textureWidth;
+	textureResourceDesc.Height = textureWidth;	//高さなのになぜか幅入れてる
+	textureResourceDesc.DepthOrArraySize;
+	textureResourceDesc.MipLevels = 1;
+	textureResourceDesc.SampleDesc.Count = 1;
+
+	//テクスチャバッファの生成
+	ID3D12Resource* texBuff = nullptr;
+	result = DX12.device->CreateCommittedResource(
+		&textureHeapProp,
+		D3D12_HEAP_FLAG_NONE,
+		&textureResourceDesc,
+		D3D12_RESOURCE_STATE_GENERIC_READ,
+		nullptr,
+		IID_PPV_ARGS(&texBuff));
+
+	//テクスチャバッファにデータ転送
+	result = texBuff->WriteToSubresource(
+		0,
+		nullptr,	//全領域へコピー
+		imageData,	//元データアドレス
+		sizeof(XMFLOAT4) * textureWidth,	//1ラインサイズ
+		sizeof(XMFLOAT4) * imageDataCount	//全サイズ
+	);
+
+	//元データ解放
+	delete[] imageData;
+
+	//ここから
 
 #pragma endregion 描画初期化処理
 
