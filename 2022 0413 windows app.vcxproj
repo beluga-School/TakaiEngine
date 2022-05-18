@@ -144,6 +144,7 @@
     <ClCompile Include="DirectXInit.cpp" />
     <ClCompile Include="Input.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Obj.cpp" />
     <ClCompile Include="Shader.cpp" />
     <ClCompile Include="TextureLoad.cpp" />
     <ClCompile Include="Vertex.cpp" />
@@ -166,6 +167,7 @@
   <ItemGroup>
     <ClInclude Include="DirectXInit.h" />
     <ClInclude Include="Input.h" />
+    <ClInclude Include="Obj.h" />
     <ClInclude Include="Result.h" />
     <ClInclude Include="Shader.h" />
     <ClInclude Include="TextureLoad.h" />

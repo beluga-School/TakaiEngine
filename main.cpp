@@ -18,9 +18,11 @@ using namespace DirectX;
 #include "Vertex.h"
 #include "Shader.h"
 #include "TextureLoad.h"
+#include "Obj.h"
 
 WinAPI winApi_;
 VertexData vertexdate_;
+Obj zawa_;
 
 struct ConstBufferDataMaterial {
 	XMFLOAT4 color;	//色(RGBA)
@@ -498,36 +500,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	XMFLOAT3 target(0, 0, 0);	//注視点座標
 	XMFLOAT3 up(0, 1, 0);		//上方向ベクトル
 	matView = XMMatrixLookAtLH(XMLoadFloat3(&eye), XMLoadFloat3(&target), XMLoadFloat3(&up));
-
-	//ワールド変換行列
-	XMMATRIX matWorld;
-	//単位行列を代入
-	matWorld = XMMatrixIdentity();
-
-	//スケーリングを計算し、ワールド行列に乗算
-	XMMATRIX matScale;	//スケーリング行列
-	matScale = XMMatrixScaling(1.0f, 0.5f, 1.0f);
-	matWorld *= matScale;	//ワールド行列にスケーリングを反映
-
-	//回転をウッチョリニャンポする処理
-	XMMATRIX matRot;	//回転行列
-	matRot = XMMatrixIdentity();
-	matRot *= XMMatrixRotationZ(XMConvertToRadians(0.0f));
-	matRot *= XMMatrixRotationX(XMConvertToRadians(15.0f));
-	matRot *= XMMatrixRotationY(XMConvertToRadians(30.0f));
-	matWorld *= matRot;	//ワールド行列に回転を反映
-
-	//ゲームでは、Z→X→Yの順番で回転するのが使いやすいらしい
-
-	XMMATRIX matTrans;	//平行移動行列
-	matTrans = XMMatrixTranslation(-50.0f, 0, 0);
-	matWorld *= matTrans;	//ワールド行列に平行移動を反映
-
-	//定数バッファに転送
-	constMapTransform->mat = matWorld * matView * matProjection;
-	//	 ↑ 行列はなんと掛け算によって1つにまとめることができるんです！！！！
-	//		行列は掛ける順番によって結果が変わるので注意！！！注意！！！注意！！！
-
+	
 #pragma endregion 描画初期化処理
 
 	//ゲームループ内で使う変数の宣言
@@ -633,34 +606,26 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		}
 
 		//単位行列を代入
-		matWorld = XMMatrixIdentity();
+		zawa_.MatWorldIdentity();
 
 		//スケーリングを計算し、ワールド行列に乗算
-		XMMATRIX matScale;	//スケーリング行列
-		matScale = XMMatrixScaling(scale.x, scale.y, scale.z);
-		//matWorld *= matScale;	//ワールド行列にスケーリングを反映
+		zawa_.SetMatScale(scale.x, scale.y, scale.z);
 
 		//回転をウッチョリニャンポする処理
-		XMMATRIX matRot;	//回転行列
-		matRot = XMMatrixIdentity();
-		matRot *= XMMatrixRotationZ(rotation.z);
-		matRot *= XMMatrixRotationX(rotation.x);
-		matRot *= XMMatrixRotationY(rotation.y);
-		//matWorld *= matRot;	//ワールド行列に回転を反映
+		zawa_.MatRotIdentity();
+		zawa_.RotUpdateZXY(rotation.x, rotation.y, rotation.z);
 
 		//ゲームでは、Z→X→Yの順番で回転するのが使いやすいらしい
 
-		XMMATRIX matTrans;	//平行移動行列
-		matTrans = XMMatrixTranslation(position.x, position.y, position.z);
-		//matWorld *= matTrans;	//ワールド行列に平行移動を反映
+		zawa_.TransUpdate(position.x,position.y,position.z);
 
-		matWorld = XMMatrixIdentity();	//変形をリセット
-		matWorld *= matScale;			//ワールド行列にスケーリングを反映
-		matWorld *= matRot;				//ワールド行列に回転を反映
-		matWorld *= matTrans;			//ワールド行列に平行移動を反映
+		zawa_.MatWorldUpdate();
 
 		//てんそ～～～～～
-		constMapTransform->mat = matWorld * matView * matProjection;
+		constMapTransform->mat = zawa_.GetMatWorld() * matView * matProjection;
+		//	 ↑ 行列はなんと掛け算によって1つにまとめることができるんです！！！！
+		//		行列は掛ける順番によって結果が変わるので注意！！！注意！！！注意！！！
+
 
 		constMapMaterial->color.x += materialColor.x;
 		constMapMaterial->color.y += materialColor.y;
