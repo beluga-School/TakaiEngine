@@ -17,22 +17,24 @@ using namespace DirectX;
 #include "DirectXInit.h"
 #include "Vertex.h"
 #include "Shader.h"
-#include "ConstBuffer.h"
+#include "TextureLoad.h"
 
 WinAPI winApi_;
 VertexData vertexdate_;
 
-//struct ConstBufferDataMaterial {
-//	XMFLOAT4 color;	//色(RGBA)
-//};
-//
-//struct ConstBufferDataTransform {
-//	XMMATRIX mat;	//3D変換行列
-//};
+struct ConstBufferDataMaterial {
+	XMFLOAT4 color;	//色(RGBA)
+};
 
-//ConstBufferDataMaterial* constMapMaterial = nullptr;
-//
-//ConstBufferDataTransform* constMapTransform = nullptr;
+struct ConstBufferDataTransform {
+	XMMATRIX mat;	//3D変換行列
+};
+
+ConstBufferDataMaterial* constMapMaterial = nullptr;
+ID3D12Resource* countBuffMaterial = nullptr;
+
+ConstBufferDataTransform* constMapTransform = nullptr;
+ID3D12Resource* constBuffTransform = nullptr;
 
 
 //windowsアプリでのエントリーポイント(main関数)
@@ -168,9 +170,14 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	pipelineDesc.RTVFormats[0] = DXGI_FORMAT_R8G8B8A8_UNORM_SRGB;	//0～255指定のRGBA
 	pipelineDesc.SampleDesc.Count = 1;	//1ピクセルにつき1回サンプリング
 
+
+	//TextureLoad textureload;
+	//textureload.WIC(L"Resources/pizza.png");
+	
+	//WICテクスチャのロード
 	TexMetadata metadata{};
 	ScratchImage scratchImg{};
-	//WICテクスチャのロード
+	
 	result = LoadFromWICFile(
 		L"Resources/pizza.png",	//ここに読み込みたいファイルのパスを入れる
 		WIC_FLAGS_NONE,
@@ -349,20 +356,73 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	D3D12_HEAP_PROPERTIES cbHeapProp{};
 	//リソース設定
 	D3D12_RESOURCE_DESC cbResourceDesc{};
-	ID3D12Resource* countBuffMaterial = nullptr;
-	countBuffMaterial = CreateConstantBuff(cbHeapProp, cbResourceDesc, DX12, countBuffMaterial,constMapMaterial);
-
 	//ヒープ設定
-	D3D12_HEAP_PROPERTIES cbHeapProp2{};
+	cbHeapProp.Type = D3D12_HEAP_TYPE_UPLOAD;	//GPUへの転送用
 	//リソース設定
-	D3D12_RESOURCE_DESC cbResourceDesc2{};
-	ID3D12Resource* constBuffTransform = nullptr;
-	constBuffTransform = CreateConstantBuff(cbHeapProp2, cbResourceDesc2, DX12, constBuffTransform,constMapTransform);
+	cbResourceDesc.Dimension = D3D12_RESOURCE_DIMENSION_BUFFER;
+	cbResourceDesc.Width = (sizeof(ConstBufferDataMaterial) + 0xff) & ~0xff;	//256バイトアラインメント
+	cbResourceDesc.Height = 1;
+	cbResourceDesc.DepthOrArraySize = 1;
+	cbResourceDesc.MipLevels = 1;
+	cbResourceDesc.SampleDesc.Count = 1;
+	cbResourceDesc.Layout = D3D12_TEXTURE_LAYOUT_ROW_MAJOR;
+
+	//定数バッファの生成
+	result = DX12.device->CreateCommittedResource(
+		&cbHeapProp,	//ヒープ設定
+		D3D12_HEAP_FLAG_NONE,
+		&cbResourceDesc,	//リソース設定
+		D3D12_RESOURCE_STATE_GENERIC_READ,
+		nullptr,
+		IID_PPV_ARGS(&countBuffMaterial));
+	assert(SUCCEEDED(result));
+
+	//定数バッファのマッピング
+	result = countBuffMaterial->Map(0, nullptr, (void**)&constMapMaterial);	//マッピング
+	assert(SUCCEEDED(result));
+
+	{
+		//ヒープ設定
+		D3D12_HEAP_PROPERTIES cbHeapProp{};
+		//リソース設定
+		D3D12_RESOURCE_DESC cbResourceDesc{};
+		//ヒープ設定
+		cbHeapProp.Type = D3D12_HEAP_TYPE_UPLOAD;	//GPUへの転送用
+		//リソース設定
+		cbResourceDesc.Dimension = D3D12_RESOURCE_DIMENSION_BUFFER;
+		cbResourceDesc.Width = (sizeof(ConstBufferDataTransform) + 0xff) & ~0xff;	//256バイトアラインメント
+		cbResourceDesc.Height = 1;
+		cbResourceDesc.DepthOrArraySize = 1;
+		cbResourceDesc.MipLevels = 1;
+		cbResourceDesc.SampleDesc.Count = 1;
+		cbResourceDesc.Layout = D3D12_TEXTURE_LAYOUT_ROW_MAJOR;
+	}
+
+	//定数バッファの生成
+	result = DX12.device->CreateCommittedResource(
+		&cbHeapProp,	//ヒープ設定
+		D3D12_HEAP_FLAG_NONE,
+		&cbResourceDesc,	//リソース設定
+		D3D12_RESOURCE_STATE_GENERIC_READ,
+		nullptr,
+		IID_PPV_ARGS(&constBuffTransform));
+	assert(SUCCEEDED(result));
+
+	//定数バッファのマッピング
+	result = constBuffTransform->Map(0, nullptr, (void**)&constMapTransform);	//マッピング
+	assert(SUCCEEDED(result));
 
 	//値を書き込むと自動的に転送されるらしい
 	constMapMaterial->color = XMFLOAT4(1, 0, 0, 0.5f);	//RGBAで半透明の赤の値
 
+	//単位行列で埋める
 	constMapTransform->mat = XMMatrixIdentity();
+	//指定の部分を書き換える
+	constMapTransform->mat.r[0].m128_f32[0] = 2.0f / window_width;
+	constMapTransform->mat.r[1].m128_f32[1] = -2.0f / window_height;
+
+	constMapTransform->mat.r[3].m128_f32[0] = -1.0f;
+	constMapTransform->mat.r[3].m128_f32[1] = 1.0f;
 
 #pragma endregion 描画初期化処理
 
@@ -482,6 +542,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		DX12.commandList->SetGraphicsRootDescriptorTable(1, srvGpuHandle);
 
 		//定数バッファビュー(CBV)の設定コマンド
+		DX12.commandList->SetGraphicsRootConstantBufferView(2, constBuffTransform->GetGPUVirtualAddress());
 
 		//インデックスバッファビューの設定コマンド
 		DX12.commandList->IASetIndexBuffer(&vertexdate_.ibView);

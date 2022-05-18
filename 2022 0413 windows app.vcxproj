@@ -141,11 +141,11 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="ConstBuffer.cpp" />
     <ClCompile Include="DirectXInit.cpp" />
     <ClCompile Include="Input.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Shader.cpp" />
+    <ClCompile Include="TextureLoad.cpp" />
     <ClCompile Include="Vertex.cpp" />
     <ClCompile Include="WinAPI.cpp" />
   </ItemGroup>
@@ -164,11 +164,11 @@
     </FxCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="ConstBuffer.h" />
     <ClInclude Include="DirectXInit.h" />
     <ClInclude Include="Input.h" />
     <ClInclude Include="Result.h" />
     <ClInclude Include="Shader.h" />
+    <ClInclude Include="TextureLoad.h" />
     <ClInclude Include="Vertex.h" />
     <ClInclude Include="WinAPI.h" />
   </ItemGroup>
