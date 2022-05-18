@@ -423,6 +423,31 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 
 	constMapTransform->mat.r[3].m128_f32[0] = -1.0f;
 	constMapTransform->mat.r[3].m128_f32[1] = 1.0f;
+	
+	//DirectXの機能で置き換え(やってない)
+	//constMapTransform->mat = XMMatrixIdentity();
+
+	//constMapTransform->mat = XMMatrixOrthographicOffCenterLH(
+	//	0.0f, 100.f, 100.f, 0.0f, 0.0f, 1.0f
+	//);
+	//透視投影行列の計算
+	constMapTransform->mat = XMMatrixPerspectiveFovLH(
+		XMConvertToRadians(45.0f),				//上下画角45度
+		(float)window_width / window_height,	//アスペクト比(画面横幅/画面縦幅)
+		0.1f, 1000.0f							//前端、奥端
+	);
+	//射影変換行列(投資投影)
+	XMMATRIX matProjection =
+		XMMatrixPerspectiveFovLH(
+			XMConvertToRadians(45.0f),
+			(float)window_width / window_height,
+			0.1f, 1000.0f
+		);
+
+	//ここでビュー変換行列(透視投影)を計算
+
+	//定数バッファに転送
+	constMapTransform->mat = matProjection;
 
 #pragma endregion 描画初期化処理
 
