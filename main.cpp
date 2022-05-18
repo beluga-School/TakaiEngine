@@ -431,6 +431,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	//	0.0f, 100.f, 100.f, 0.0f, 0.0f, 1.0f
 	//);
 	//透視投影行列の計算
+
 	constMapTransform->mat = XMMatrixPerspectiveFovLH(
 		XMConvertToRadians(45.0f),				//上下画角45度
 		(float)window_width / window_height,	//アスペクト比(画面横幅/画面縦幅)
@@ -444,10 +445,41 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 			0.1f, 1000.0f
 		);
 
-	//ここでビュー変換行列(透視投影)を計算
+	//ビュー変換行列(透視投影)を計算
+	XMMATRIX matView;
+	XMFLOAT3 eye(0, 0, -100);	//視点座標
+	XMFLOAT3 target(0, 0, 0);	//注視点座標
+	XMFLOAT3 up(0, 1, 0);		//上方向ベクトル
+	matView = XMMatrixLookAtLH(XMLoadFloat3(&eye), XMLoadFloat3(&target), XMLoadFloat3(&up));
+
+	//ワールド変換行列
+	XMMATRIX matWorld;
+	//単位行列を代入
+	matWorld = XMMatrixIdentity();
+
+	//スケーリングを計算し、ワールド行列に乗算
+	XMMATRIX matScale;	//スケーリング行列
+	matScale = XMMatrixScaling(1.0f, 0.5f, 1.0f);
+	matWorld *= matScale;	//ワールド行列にスケーリングを反映
+
+	//回転をウッチョリニャンポする処理
+	XMMATRIX matRot;	//回転行列
+	matRot = XMMatrixIdentity();
+	matRot *= XMMatrixRotationZ(XMConvertToRadians(0.0f));
+	matRot *= XMMatrixRotationX(XMConvertToRadians(15.0f));
+	matRot *= XMMatrixRotationY(XMConvertToRadians(30.0f));
+	matWorld *= matRot;	//ワールド行列に回転を反映
+
+	//ゲームでは、Z→X→Yの順番で回転するのが使いやすいらしい
+
+	XMMATRIX matTrans;	//平行移動行列
+	matTrans = XMMatrixTranslation(-50.0f, 0, 0);
+	matWorld *= matTrans;	//ワールド行列に平行移動を反映
 
 	//定数バッファに転送
-	constMapTransform->mat = matProjection;
+	constMapTransform->mat = matWorld * matView * matProjection;
+	//	 ↑ 行列はなんと掛け算によって1つにまとめることができるんです！！！！
+	//		行列は掛ける順番によって結果が変わるので注意！！！注意！！！注意！！！
 
 #pragma endregion 描画初期化処理
 
@@ -463,6 +495,15 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	}
 
 	XMFLOAT3 materialColor = { -0.005f,0.005f,0 };
+
+	float angle = 0.0f;	//カメラの回転角
+	
+	//スケーリング倍率
+	XMFLOAT3 scale = {1.0f,1.0f,1.0f};
+	//回転角
+	XMFLOAT3 rotation = { 0.0f,0.0f,0.0f };
+	//座標
+	XMFLOAT3 position = { 0.0f,0.0f,0.0f };
 
 	//ゲームループ
 	while (true){
@@ -516,6 +557,61 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 				}
 			}
 		}
+
+		//ビュー行列の計算
+		if (input_->PushKey(DIK_D) || input_->PushKey(DIK_A))
+		{
+			if (input_->PushKey(DIK_D)) { angle += XMConvertToRadians(1.0f); }
+			if (input_->PushKey(DIK_A)) { angle -= XMConvertToRadians(1.0f); }
+
+			//angleラジアンだけY軸まわりに回転。半径は-100
+			eye.x = -100 * sinf(angle);
+			eye.z = -100 * cosf(angle);
+
+			//射影行列の計算(更新しない場合は再計算しなくていいのでこの位置でOK)
+			matView = XMMatrixLookAtLH(XMLoadFloat3(&eye), XMLoadFloat3(&target), XMLoadFloat3(&up));
+		}
+
+		if (input_->PushKey(DIK_UP) ||
+			input_->PushKey(DIK_DOWN) ||
+			input_->PushKey(DIK_RIGHT) ||
+			input_->PushKey(DIK_LEFT)) {
+			//座標を移動する処理
+			if (input_->PushKey(DIK_UP))	{ position.z += 1.0f; }
+			if (input_->PushKey(DIK_DOWN))	{ position.z -= 1.0f; }
+			if (input_->PushKey(DIK_RIGHT)) { position.x += 1.0f; }
+			if (input_->PushKey(DIK_LEFT))	{ position.x -= 1.0f; }
+		}
+
+		//単位行列を代入
+		matWorld = XMMatrixIdentity();
+
+		//スケーリングを計算し、ワールド行列に乗算
+		XMMATRIX matScale;	//スケーリング行列
+		matScale = XMMatrixScaling(scale.x, scale.y, scale.z);
+		//matWorld *= matScale;	//ワールド行列にスケーリングを反映
+
+		//回転をウッチョリニャンポする処理
+		XMMATRIX matRot;	//回転行列
+		matRot = XMMatrixIdentity();
+		matRot *= XMMatrixRotationZ(rotation.z);
+		matRot *= XMMatrixRotationX(rotation.x);
+		matRot *= XMMatrixRotationY(rotation.y);
+		//matWorld *= matRot;	//ワールド行列に回転を反映
+
+		//ゲームでは、Z→X→Yの順番で回転するのが使いやすいらしい
+
+		XMMATRIX matTrans;	//平行移動行列
+		matTrans = XMMatrixTranslation(position.x, position.y, position.z);
+		//matWorld *= matTrans;	//ワールド行列に平行移動を反映
+
+		matWorld = XMMatrixIdentity();	//変形をリセット
+		matWorld *= matScale;			//ワールド行列にスケーリングを反映
+		matWorld *= matRot;				//ワールド行列に回転を反映
+		matWorld *= matTrans;			//ワールド行列に平行移動を反映
+
+		//てんそ～～～～～
+		constMapTransform->mat = matWorld * matView * matProjection;
 
 		constMapMaterial->color.x += materialColor.x;
 		constMapMaterial->color.y += materialColor.y;
