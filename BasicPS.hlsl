@@ -5,6 +5,13 @@ SamplerState smp : register(s0);	//0番スロットに設定されたサンプラー
 
 float4 main(VSOutput input) : SV_TARGET
 {
-	return float4(tex.Sample(smp,input.uv));
+	float4 texcolor = float4(tex.Sample(smp,input.uv));
+	float3 light = normalize(float3(1,-1,1));		//右下奥　向きのライト
+	float diffuse = saturate(dot(-light, input.normal));
+	float brightness = diffuse + 0.3f;	//光源へのベクトルとベクトルの内積
+	return float4(texcolor.rgb * brightness, texcolor.a) * colorli;//輝度をRGBに代入して出力
+
+	//return float4(input.normal,1);	//RGBをそれぞれ法線のXYZ、Aを1で出力
+	//return float4(tex.Sample(smp,input.uv));
 	//return float4(1,1,1,1);
 }

@@ -113,6 +113,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		&dsvDesc,
 		dsvHeap->GetCPUDescriptorHandleForHeapStart());
 
+	//頂点データ作成
 	vertexdate_.CreateVertex(DX12);
 
 	Shader shader_;
@@ -133,7 +134,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	pipelineDesc.SampleMask = D3D12_DEFAULT_SAMPLE_MASK;	//標準設定
 
 	//ラスタライザの設定
-	pipelineDesc.RasterizerState.CullMode = D3D12_CULL_MODE_NONE;	//カリングしない
+	pipelineDesc.RasterizerState.CullMode = D3D12_CULL_MODE_BACK;	//カリングしない
 	pipelineDesc.RasterizerState.FillMode = D3D12_FILL_MODE_SOLID;	//ポリゴン内塗りつぶし
 	pipelineDesc.RasterizerState.DepthClipEnable = true;			//深度クリッピングを有効に
 
@@ -193,6 +194,11 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	static D3D12_INPUT_ELEMENT_DESC inputLayout[] = {
 			{ //xyz座標
 				"POSITION",0,DXGI_FORMAT_R32G32B32_FLOAT,0,
+				D3D12_APPEND_ALIGNED_ELEMENT,
+				D3D12_INPUT_CLASSIFICATION_PER_VERTEX_DATA,0
+			},
+			{//法線ベクトル
+				"NORMAL",0,DXGI_FORMAT_R32G32B32_FLOAT,0,
 				D3D12_APPEND_ALIGNED_ELEMENT,
 				D3D12_INPUT_CLASSIFICATION_PER_VERTEX_DATA,0
 			},
@@ -517,7 +523,10 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	XMFLOAT3 materialColor = { -0.005f,0.005f,0 };
 
 	float angle = 0.0f;	//カメラの回転角
-	
+	float angleY = 0.0f;
+
+	float cameraY = 100;
+
 	//スケーリング倍率
 	XMFLOAT3 scale = {1.0f,1.0f,1.0f};
 	//回転角
@@ -587,10 +596,21 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 			if (input_->PushKey(DIK_A)) { angle -= XMConvertToRadians(1.0f); }
 
 			//angleラジアンだけY軸まわりに回転。半径は-100
-			eye.x = -100 * sinf(angle);
-			eye.z = -100 * cosf(angle);
+			eye.x = -cameraY * sinf(angle);
+			eye.z = -cameraY * cosf(angle);
 
 			//射影行列の計算(更新しない場合は再計算しなくていいのでこの位置でOK)
+			matView = XMMatrixLookAtLH(XMLoadFloat3(&eye), XMLoadFloat3(&target), XMLoadFloat3(&up));
+		}
+
+		if (input_->PushKey(DIK_W) || input_->PushKey(DIK_S))
+		{
+			if (input_->PushKey(DIK_W)) { angleY += XMConvertToRadians(1.0f); }
+			if (input_->PushKey(DIK_S)) { angleY -= XMConvertToRadians(1.0f); }
+
+			eye.y = -cameraY * sinf(angleY);
+			eye.z = -cameraY * cosf(angleY);
+
 			matView = XMMatrixLookAtLH(XMLoadFloat3(&eye), XMLoadFloat3(&target), XMLoadFloat3(&up));
 		}
 
