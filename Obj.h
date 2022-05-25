@@ -6,7 +6,7 @@ using namespace DirectX;
 
 class Obj
 {
-private:
+public:
 
 	XMMATRIX matWorld;	//ワールド変換行列
 	XMMATRIX matScale;	//スケーリング行列
@@ -19,8 +19,8 @@ public:
 	void MatRotIdentity();
 	void MatTransIdentity();
 
-	void SetMatScale(float matSx,float matSy,float matSz);
-	void SetMatScale(XMFLOAT3 scale);
+	void ScaleUpdate(float matSx,float matSy,float matSz);
+	void ScaleUpdate(XMFLOAT3 scale);
 
 	void RotUpdateZXY(float matRx, float matRy, float matRz);
 	void RotUpdateZXY(XMFLOAT3 rot);

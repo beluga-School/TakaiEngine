@@ -22,7 +22,7 @@ using namespace DirectX;
 
 WinAPI winApi_;
 VertexData vertexdate_;
-Obj zawa_;
+Obj zawa_[2];
 
 struct ConstBufferDataMaterial {
 	XMFLOAT4 color;	//色(RGBA)
@@ -35,8 +35,8 @@ struct ConstBufferDataTransform {
 ConstBufferDataMaterial* constMapMaterial = nullptr;
 ID3D12Resource* countBuffMaterial = nullptr;
 
-ConstBufferDataTransform* constMapTransform = nullptr;
-ID3D12Resource* constBuffTransform = nullptr;
+ConstBufferDataTransform* constMapTransform[2] = { nullptr };
+ID3D12Resource* constBuffTransform[2] = {nullptr };
 
 
 //windowsアプリでのエントリーポイント(main関数)
@@ -460,24 +460,38 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		&cbResourceDesc,	//リソース設定
 		D3D12_RESOURCE_STATE_GENERIC_READ,
 		nullptr,
-		IID_PPV_ARGS(&constBuffTransform));
+		IID_PPV_ARGS(&constBuffTransform[0]));
 	assert(SUCCEEDED(result));
 
 	//定数バッファのマッピング
-	result = constBuffTransform->Map(0, nullptr, (void**)&constMapTransform);	//マッピング
+	result = constBuffTransform[0]->Map(0, nullptr, (void**)&constMapTransform[0]);	//マッピング
+	assert(SUCCEEDED(result));
+
+	//定数バッファの生成
+	result = DX12.device->CreateCommittedResource(
+		&cbHeapProp,	//ヒープ設定
+		D3D12_HEAP_FLAG_NONE,
+		&cbResourceDesc,	//リソース設定
+		D3D12_RESOURCE_STATE_GENERIC_READ,
+		nullptr,
+		IID_PPV_ARGS(&constBuffTransform[1]));
+	assert(SUCCEEDED(result));
+
+	//定数バッファのマッピング
+	result = constBuffTransform[1]->Map(0, nullptr, (void**)&constMapTransform[1]);	//マッピング
 	assert(SUCCEEDED(result));
 
 	//値を書き込むと自動的に転送されるらしい
-	constMapMaterial->color = XMFLOAT4(1, 0, 0, 0.5f);	//RGBAで半透明の赤の値
+	constMapMaterial->color = XMFLOAT4(1, 0, 0, 1.0f);	//RGBAで半透明の赤の値
 
 	//単位行列で埋める
-	constMapTransform->mat = XMMatrixIdentity();
+	constMapTransform[0]->mat = XMMatrixIdentity();
 	//指定の部分を書き換える
-	constMapTransform->mat.r[0].m128_f32[0] = 2.0f / window_width;
-	constMapTransform->mat.r[1].m128_f32[1] = -2.0f / window_height;
+	constMapTransform[0]->mat.r[0].m128_f32[0] = 2.0f / window_width;
+	constMapTransform[0]->mat.r[1].m128_f32[1] = -2.0f / window_height;
 
-	constMapTransform->mat.r[3].m128_f32[0] = -1.0f;
-	constMapTransform->mat.r[3].m128_f32[1] = 1.0f;
+	constMapTransform[0]->mat.r[3].m128_f32[0] = -1.0f;
+	constMapTransform[0]->mat.r[3].m128_f32[1] = 1.0f;
 	
 	//DirectXの機能で置き換え(やってない)
 	//constMapTransform->mat = XMMatrixIdentity();
@@ -487,7 +501,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	//);
 	//透視投影行列の計算
 
-	constMapTransform->mat = XMMatrixPerspectiveFovLH(
+	constMapTransform[0]->mat = XMMatrixPerspectiveFovLH(
 		XMConvertToRadians(45.0f),				//上下画角45度
 		(float)window_width / window_height,	//アスペクト比(画面横幅/画面縦幅)
 		0.1f, 1000.0f							//前端、奥端
@@ -626,26 +640,33 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		}
 
 		//単位行列を代入
-		zawa_.MatWorldIdentity();
+		zawa_[0].MatWorldIdentity();
 
 		//スケーリングを計算し、ワールド行列に乗算
-		zawa_.SetMatScale(scale.x, scale.y, scale.z);
+		zawa_[0].ScaleUpdate(scale.x, scale.y, scale.z);
 
 		//回転をウッチョリニャンポする処理
-		zawa_.MatRotIdentity();
-		zawa_.RotUpdateZXY(rotation.x, rotation.y, rotation.z);
+		zawa_[0].MatRotIdentity();
+		zawa_[0].RotUpdateZXY(rotation.x, rotation.y, rotation.z);
 
 		//ゲームでは、Z→X→Yの順番で回転するのが使いやすいらしい
 
-		zawa_.TransUpdate(position.x,position.y,position.z);
+		zawa_[0].TransUpdate(position.x, position.y, position.z);
 
-		zawa_.MatWorldUpdate();
+		zawa_[0].MatWorldUpdate();
 
 		//てんそ～～～～～
-		constMapTransform->mat = zawa_.GetMatWorld() * matView * matProjection;
+		constMapTransform[0]->mat = zawa_[0].GetMatWorld() * matView * matProjection;
 		//	 ↑ 行列はなんと掛け算によって1つにまとめることができるんです！！！！
 		//		行列は掛ける順番によって結果が変わるので注意！！！注意！！！注意！！！
 
+		zawa_[1].MatWorldIdentity();
+		zawa_[1].ScaleUpdate(1.0f, 1.0f, 1.0f);
+		zawa_[1].MatRotIdentity();
+		zawa_[1].matRot = XMMatrixRotationY(XM_PI / 4.0f);
+		zawa_[1].TransUpdate(-20.0f, 0, 0);
+		zawa_[1].MatWorldUpdate();
+		constMapTransform[1]->mat = zawa_[1].GetMatWorld() * matView * matProjection;
 
 		constMapMaterial->color.x += materialColor.x;
 		constMapMaterial->color.y += materialColor.y;
@@ -697,10 +718,16 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		DX12.commandList->SetGraphicsRootDescriptorTable(1, srvGpuHandle);
 
 		//定数バッファビュー(CBV)の設定コマンド
-		DX12.commandList->SetGraphicsRootConstantBufferView(2, constBuffTransform->GetGPUVirtualAddress());
+		DX12.commandList->SetGraphicsRootConstantBufferView(2, constBuffTransform[0]->GetGPUVirtualAddress());
 
 		//インデックスバッファビューの設定コマンド
 		DX12.commandList->IASetIndexBuffer(&vertexdate_.ibView);
+
+		//描画コマンド
+		DX12.commandList->DrawIndexedInstanced(_countof(indices), 1, 0, 0, 0);	//全ての頂点を使って描画
+
+		//定数バッファビュー(CBV)の設定コマンド
+		DX12.commandList->SetGraphicsRootConstantBufferView(2, constBuffTransform[1]->GetGPUVirtualAddress());
 
 		//描画コマンド
 		DX12.commandList->DrawIndexedInstanced(_countof(indices), 1, 0, 0, 0);	//全ての頂点を使って描画

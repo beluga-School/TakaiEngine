@@ -5,12 +5,12 @@ XMMATRIX Obj::GetMatWorld()
 	return matWorld;
 }
 
-void Obj::SetMatScale(float matSx, float matSy, float matSz)
+void Obj::ScaleUpdate(float matSx, float matSy, float matSz)
 {
 	matScale = XMMatrixScaling(matSx, matSy, matSz);
 }
 
-void Obj::SetMatScale(XMFLOAT3 scale)
+void Obj::ScaleUpdate(XMFLOAT3 scale)
 {
 	matScale = XMMatrixScaling(scale.x, scale.y, scale.z);
 }
