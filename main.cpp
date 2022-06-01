@@ -428,46 +428,31 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	result = countBuffMaterial->Map(0, nullptr, (void**)&constMapMaterial);	//マッピング
 	assert(SUCCEEDED(result));
 
-	const size_t kObjectCount = 50;
+	const size_t kObjectCount = 1;
 	Obj3d object3ds[kObjectCount];
 
 	for (int i = 0; i < _countof(object3ds); i++)
 	{
 		object3ds[i].Initialize(DX12.device);
 
-		//親子構造　サンプル
-		//先頭以外なら
-		if (i > 0)
-		{
-			//ひとつ前を親オブジェクトとする
-			object3ds[i].parent = &object3ds[i - 1];
-			//子は親オブジェの9割の大きさ
-			object3ds[i].scale = { 0.9f,0.9f,0.9f };
-			//親オブジェに対してZ軸まわりに30度回転
-			object3ds[i].rotation = { 0.0f,0.0f,XMConvertToRadians(30.0f) };
+		////親子構造　サンプル
+		////先頭以外なら
+		//if (i > 0)
+		//{
+		//	//ひとつ前を親オブジェクトとする
+		//	object3ds[i].parent = &object3ds[i - 1];
+		//	//子は親オブジェの9割の大きさ
+		//	object3ds[i].scale = { 0.9f,0.9f,0.9f };
+		//	//親オブジェに対してZ軸まわりに30度回転
+		//	object3ds[i].rotation = { 0.0f,0.0f,XMConvertToRadians(30.0f) };
 
-			//親オブジェに対してZ方向-8.0ずらす
-			object3ds[i].position = { 0.0f,0.0f,-8.0f };
-		}
+		//	//親オブジェに対してZ方向-8.0ずらす
+		//	object3ds[i].position = { 0.0f,0.0f,-8.0f };
+		//}
 	}
 
 	//値を書き込むと自動的に転送されるらしい
-	constMapMaterial->color = XMFLOAT4(1, 0, 0, 1.0f);	//RGBAで半透明の赤の値
-
-	////単位行列で埋める
-	//constMapTransform[0]->mat = XMMatrixIdentity();
-	////指定の部分を書き換える
-	//constMapTransform[0]->mat.r[0].m128_f32[0] = 2.0f / window_width;
-	//constMapTransform[0]->mat.r[1].m128_f32[1] = -2.0f / window_height;
-
-	//constMapTransform[0]->mat.r[3].m128_f32[0] = -1.0f;
-	//constMapTransform[0]->mat.r[3].m128_f32[1] = 1.0f;
-	//
-	//constMapTransform[0]->mat = XMMatrixPerspectiveFovLH(
-	//	XMConvertToRadians(45.0f),				//上下画角45度
-	//	(float)window_width / window_height,	//アスペクト比(画面横幅/画面縦幅)
-	//	0.1f, 1000.0f							//前端、奥端
-	//);
+	constMapMaterial->color = XMFLOAT4(1, 1, 1, 1.0f);	//RGBAで半透明の赤の値
 
 	//射影変換行列(投資投影)
 	XMMATRIX matProjection =
@@ -559,50 +544,51 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		}
 
 		//ビュー行列の計算
-		if (input_->PushKey(DIK_D) || input_->PushKey(DIK_A))
-		{
-			if (input_->PushKey(DIK_D)) { angle += XMConvertToRadians(1.0f); }
-			if (input_->PushKey(DIK_A)) { angle -= XMConvertToRadians(1.0f); }
+		
+		viewProjection_.eye.z -= 1.0f;
+		viewProjection_.UpdatematView();
 
-			//angleラジアンだけY軸まわりに回転。半径は-100
-			viewProjection_.eye.x = -cameraY * sinf(angle);
-			viewProjection_.eye.z = -cameraY * cosf(angle);
+		//if (input_->PushKey(DIK_D) || input_->PushKey(DIK_A))
+		//{
+		//	if (input_->PushKey(DIK_D)) { angle += XMConvertToRadians(1.0f); }
+		//	if (input_->PushKey(DIK_A)) { angle -= XMConvertToRadians(1.0f); }
 
-			//射影行列の計算(更新しない場合は再計算しなくていいのでこの位置でOK)
-			viewProjection_.UpdatematView();
-		}
+		//	//angleラジアンだけY軸まわりに回転。半径は-100
+		//	viewProjection_.eye.x = -cameraY * sinf(angle);
+		//	viewProjection_.eye.z = -cameraY * cosf(angle);
 
-		if (input_->PushKey(DIK_W) || input_->PushKey(DIK_S))
-		{
-			if (input_->PushKey(DIK_W)) { angleY += XMConvertToRadians(1.0f); }
-			if (input_->PushKey(DIK_S)) { angleY -= XMConvertToRadians(1.0f); }
+		//	//射影行列の計算(更新しない場合は再計算しなくていいのでこの位置でOK)
+		//	viewProjection_.UpdatematView();
+		//}
 
-			viewProjection_.eye.y = -cameraY * sinf(angleY);
-			viewProjection_.eye.z = -cameraY * cosf(angleY);
+		//if (input_->PushKey(DIK_W) || input_->PushKey(DIK_S))
+		//{
+		//	if (input_->PushKey(DIK_W)) { angleY += XMConvertToRadians(1.0f); }
+		//	if (input_->PushKey(DIK_S)) { angleY -= XMConvertToRadians(1.0f); }
 
-			viewProjection_.UpdatematView();
-		}
+		//	viewProjection_.eye.y = -cameraY * sinf(angleY);
+		//	viewProjection_.eye.z = -cameraY * cosf(angleY);
 
-		if (input_->PushKey(DIK_UP) ||
-			input_->PushKey(DIK_DOWN) ||
-			input_->PushKey(DIK_RIGHT) ||
-			input_->PushKey(DIK_LEFT)) {
+		//	viewProjection_.UpdatematView();
+		//}
+
+		if (input_->PushKey(DIK_W) ||
+			input_->PushKey(DIK_S) ||
+			input_->PushKey(DIK_D) ||
+			input_->PushKey(DIK_A)) {
 			//座標を移動する処理
-			if (input_->PushKey(DIK_UP))	{ object3ds[0].position.z += 1.0f; }
-			if (input_->PushKey(DIK_DOWN))	{ object3ds[0].position.z -= 1.0f; }
-			if (input_->PushKey(DIK_RIGHT)) { object3ds[0].position.x += 1.0f; }
-			if (input_->PushKey(DIK_LEFT))	{ object3ds[0].position.x -= 1.0f; }
+			if (input_->PushKey(DIK_W))	{ object3ds[0].position.y += 1.0f; }
+			if (input_->PushKey(DIK_S))	{ object3ds[0].position.y -= 1.0f; }
+			if (input_->PushKey(DIK_D)) { object3ds[0].position.x += 1.0f; }
+			if (input_->PushKey(DIK_A))	{ object3ds[0].position.x -= 1.0f; }
 		}
 
-		object3ds[1].rotation.x += 0.5f;
+		object3ds[0].rotation.z += 0.1f;
 
 		for (size_t i = 0; i < _countof(object3ds); i++)
 		{
 			object3ds[i].Update(viewProjection_.matView, matProjection);
 		}
-
-		constMapMaterial->color.x += materialColor.x;
-		constMapMaterial->color.y += materialColor.y;
 
 		///---DirectX毎フレーム処理 ここまで---///
 #pragma endregion DirectX毎フレーム処理
