@@ -26,7 +26,6 @@ using namespace DirectX;
 
 WinAPI winApi_;
 VertexData vertexdate_;
-//Obj zawa_[2];
 
 ConstBufferDataMaterial* constMapMaterial = nullptr;
 ID3D12Resource* countBuffMaterial = nullptr;
