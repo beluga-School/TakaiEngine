@@ -54,7 +54,11 @@ void Obj3d::Update(XMMATRIX& matView, XMMATRIX& matProjection)
 }
 
 void Obj3d::Draw(ID3D12GraphicsCommandList* commandList, D3D12_VERTEX_BUFFER_VIEW& vbView,
-	D3D12_INDEX_BUFFER_VIEW& ibView, UINT numIndices) {
+	D3D12_INDEX_BUFFER_VIEW& ibView, UINT numIndices, D3D12_GPU_DESCRIPTOR_HANDLE srvGpuHandle) {
+
+	//SRVヒープの先頭にあるSRVをルートパラメータ1番に設定
+	commandList->SetGraphicsRootDescriptorTable(1, srvGpuHandle);
+
 	//頂点バッファの設定
 	commandList->IASetVertexBuffers(0, 1, &vbView);
 	//インデックスバッファの設定
