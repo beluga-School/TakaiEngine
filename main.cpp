@@ -485,19 +485,19 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 
 	float cameraY = 100;
 
-	object3ds[0].position = { 10.0f,0,0 };
+	object3ds[0].position = { 0,0,0 };
 	object3ds[1].position = { 0,0,0 };
 
+	object3ds[0].scale = { 15.0f,10.0f,0 };
+
 	//シェーダーリソースビュー周りの変数の初期化
-	//シェーダーリソースビューヒープの先頭ハンドルを取得(SRVを指しているはず)
+	//シェーダーリソースビューヒープの先頭ハンドルを取得(SRVを指しているはず)^
 	D3D12_GPU_DESCRIPTOR_HANDLE srvGpuHandle[2] = { 0 };
 	for (int i = 0; i < 2; i++)
 	{
 		srvGpuHandle[i] = srvHeap->GetGPUDescriptorHandleForHeapStart();
 	}
 	srvGpuHandle[1].ptr += SRVHandleSize;
-	
-	bool hoge = 0;
 
 	//ゲームループ
 	while (true){
@@ -561,45 +561,45 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 
 		//ビュー行列の計算
 
-		//viewProjection_.eye.z -= 1.0f;
+		viewProjection_.eye.z -= 1.0f;
 		viewProjection_.UpdatematView();
 
-		//if (input_->PushKey(DIK_D) || input_->PushKey(DIK_A))
-		//{
-		//	if (input_->PushKey(DIK_D)) { angle += XMConvertToRadians(1.0f); }
-		//	if (input_->PushKey(DIK_A)) { angle -= XMConvertToRadians(1.0f); }
+		if (input_->PushKey(DIK_D) || input_->PushKey(DIK_A))
+		{
+			if (input_->PushKey(DIK_D)) { angle += XMConvertToRadians(1.0f); }
+			if (input_->PushKey(DIK_A)) { angle -= XMConvertToRadians(1.0f); }
 
-		//	//angleラジアンだけY軸まわりに回転。半径は-100
-		//	viewProjection_.eye.x = -cameraY * sinf(angle);
-		//	viewProjection_.eye.z = -cameraY * cosf(angle);
+			//angleラジアンだけY軸まわりに回転。半径は-100
+			viewProjection_.eye.x = -cameraY * sinf(angle);
+			viewProjection_.eye.z = -cameraY * cosf(angle);
 
-		//	//射影行列の計算(更新しない場合は再計算しなくていいのでこの位置でOK)
-		//	viewProjection_.UpdatematView();
-		//}
-
-		//if (input_->PushKey(DIK_W) || input_->PushKey(DIK_S))
-		//{
-		//	if (input_->PushKey(DIK_W)) { angleY += XMConvertToRadians(1.0f); }
-		//	if (input_->PushKey(DIK_S)) { angleY -= XMConvertToRadians(1.0f); }
-
-		//	viewProjection_.eye.y = -cameraY * sinf(angleY);
-		//	viewProjection_.eye.z = -cameraY * cosf(angleY);
-
-		//	viewProjection_.UpdatematView();
-		//}
-
-		if (input_->PushKey(DIK_W) ||
-			input_->PushKey(DIK_S) ||
-			input_->PushKey(DIK_D) ||
-			input_->PushKey(DIK_A)) {
-			//座標を移動する処理
-			if (input_->PushKey(DIK_W)) { object3ds[0].position.y += 1.0f; }
-			if (input_->PushKey(DIK_S)) { object3ds[0].position.y -= 1.0f; }
-			if (input_->PushKey(DIK_D)) { object3ds[0].position.x += 1.0f; }
-			if (input_->PushKey(DIK_A)) { object3ds[0].position.x -= 1.0f; }
+			//射影行列の計算(更新しない場合は再計算しなくていいのでこの位置でOK)
+			viewProjection_.UpdatematView();
 		}
 
-		object3ds[0].rotation.z += 0.1f;
+		if (input_->PushKey(DIK_W) || input_->PushKey(DIK_S))
+		{
+			if (input_->PushKey(DIK_W)) { angleY += XMConvertToRadians(1.0f); }
+			if (input_->PushKey(DIK_S)) { angleY -= XMConvertToRadians(1.0f); }
+
+			viewProjection_.eye.y = -cameraY * sinf(angleY);
+			viewProjection_.eye.z = -cameraY * cosf(angleY);
+
+			viewProjection_.UpdatematView();
+		}
+
+		//if (input_->PushKey(DIK_W) ||
+		//	input_->PushKey(DIK_S) ||
+		//	input_->PushKey(DIK_D) ||
+		//	input_->PushKey(DIK_A)) {
+		//	//座標を移動する処理
+		//	if (input_->PushKey(DIK_W)) { object3ds[0].position.y += 1.0f; }
+		//	if (input_->PushKey(DIK_S)) { object3ds[0].position.y -= 1.0f; }
+		//	if (input_->PushKey(DIK_D)) { object3ds[0].position.x += 1.0f; }
+		//	if (input_->PushKey(DIK_A)) { object3ds[0].position.x -= 1.0f; }
+		//}
+
+		object3ds[1].rotation.z += 0.1f;
 
 		for (size_t i = 0; i < _countof(object3ds); i++)
 		{
