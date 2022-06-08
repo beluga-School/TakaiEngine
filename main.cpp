@@ -25,7 +25,8 @@ using namespace DirectX;
 //・objの読み込みは実装したい
 
 WinAPI winApi_;
-VertexData vertexdate_;
+const int vertexCount = 2;
+VertexData vertexdate_[vertexCount];
 
 ConstBufferDataMaterial* constMapMaterial = nullptr;
 ID3D12Resource* countBuffMaterial = nullptr;
@@ -105,7 +106,10 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		dsvHeap->GetCPUDescriptorHandleForHeapStart());
 
 	//頂点データ作成
-	vertexdate_.CreateVertex(DX12);
+	for (int i = 0; i < vertexCount; i++)
+	{
+		vertexdate_[i].CreateVertex(DX12);
+	}
 
 	Shader shader_;
 
@@ -323,15 +327,18 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	D3D12_CPU_DESCRIPTOR_HANDLE srvHandle = srvHeap->GetCPUDescriptorHandleForHeapStart();
 
 	//シェーダリソースビュー設定
-	D3D12_SHADER_RESOURCE_VIEW_DESC srvDesc{};//設定構造体
-	srvDesc.Format = vertexdate_.resDesc.Format;//RGBA float
-	srvDesc.Shader4ComponentMapping =
-		D3D12_DEFAULT_SHADER_4_COMPONENT_MAPPING;
-	srvDesc.ViewDimension = D3D12_SRV_DIMENSION_TEXTURE2D;//2Dテクスチャ
-	srvDesc.Texture2D.MipLevels = vertexdate_.resDesc.MipLevels;
+	D3D12_SHADER_RESOURCE_VIEW_DESC srvDesc[vertexCount]{};//設定構造体
+	for (int i = 0; i < vertexCount; i++)
+	{
+		srvDesc[i].Format = vertexdate_[i].resDesc.Format;//RGBA float
+		srvDesc[i].Shader4ComponentMapping =
+			D3D12_DEFAULT_SHADER_4_COMPONENT_MAPPING;
+		srvDesc[i].ViewDimension = D3D12_SRV_DIMENSION_TEXTURE2D;//2Dテクスチャ
+		srvDesc[i].Texture2D.MipLevels = vertexdate_[i].resDesc.MipLevels;
 
-	//ハンドルの指す位置にシェーダーリソースビュー作成
-	DX12.device->CreateShaderResourceView(texBuff, &srvDesc, srvHandle);
+		//ハンドルの指す位置にシェーダーリソースビュー作成
+		DX12.device->CreateShaderResourceView(texBuff, &srvDesc[i], srvHandle);
+	}
 
 	//デスクリプタレンジの設定
 	D3D12_DESCRIPTOR_RANGE descriptorRange{};
@@ -427,7 +434,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	result = countBuffMaterial->Map(0, nullptr, (void**)&constMapMaterial);	//マッピング
 	assert(SUCCEEDED(result));
 
-	const size_t kObjectCount = 1;
+	const size_t kObjectCount = 2;
 	Obj3d object3ds[kObjectCount];
 
 	for (int i = 0; i < _countof(object3ds); i++)
@@ -621,7 +628,10 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		DX12.commandList->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 
 		//頂点バッファビューの設定コマンド
-		DX12.commandList->IASetVertexBuffers(0, 1, &vertexdate_.vbView);
+		for (int i = 0; i < vertexCount; i++)
+		{
+			DX12.commandList->IASetVertexBuffers(0, 1, &vertexdate_[i].vbView);
+		}
 
 		//定数バッファビュー(CBV)の設定コマンド
 		DX12.commandList->SetGraphicsRootConstantBufferView(0, countBuffMaterial->GetGPUVirtualAddress());
@@ -638,7 +648,13 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		//描画処理
 		for (int i = 0; i < _countof(object3ds); i++)
 		{
-			object3ds[i].Draw(DX12.commandList, vertexdate_.vbView, vertexdate_.ibView, _countof(indices));
+			for (int j = 0; j < vertexCount; j++)
+			{
+				object3ds[i].Draw(DX12.commandList, 
+					vertexdate_[j].vbView, 
+					vertexdate_[j].ibView, 
+					_countof(indices));
+			}
 		}
 
 		//--4.描画コマンドここまで--//
