@@ -452,7 +452,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	}
 
 	//値を書き込むと自動的に転送されるらしい
-	constMapMaterial->color = XMFLOAT4(1, 0, 0, 1.0f);	//RGBAで半透明の赤の値
+	constMapMaterial->color = XMFLOAT4(1, 1, 1, 1.0f);
 
 	////単位行列で埋める
 	//constMapTransform[0]->mat = XMMatrixIdentity();
@@ -501,6 +501,14 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 
 	float cameraY = 100;
 
+	enum CameraMode
+	{
+		BIOHAZARD,
+		TPS,
+		IMAMADE,
+	};
+	int cameramode = TPS;
+
 	//ゲームループ
 	while (true){
 
@@ -543,66 +551,118 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		//更新処理
 		input_->Update();
 
-		if (input_->TriggerKey(DIK_1))
+		switch (cameramode)
 		{
-			for (int i = 0; i < _countof(clearColor); i++)
+		case BIOHAZARD:
+		{
+			if (input_->TriggerKey(DIK_Q)) { cameramode = TPS; }
+			viewProjection_.UpdatematView();
+			for (size_t i = 0; i < _countof(object3ds); i++)
 			{
-				if (clearColor[i] != redColor[i])
-				{
-					clearColor[i] = redColor[i];
+				object3ds[i].Update(viewProjection_.matView, matProjection);
+			}
+			break;
+		}
+		case TPS:
+		{
+			//カメラ移動
+			if (input_->TriggerKey(DIK_Q)) { cameramode = BIOHAZARD; }
+
+			if (input_->PushKey(DIK_RIGHT) || 
+				input_->PushKey(DIK_LEFT) || 
+				input_->PushKey(DIK_UP) || 
+				input_->PushKey(DIK_DOWN))
+			{
+				if (input_->PushKey(DIK_RIGHT)) { 
+					viewProjection_.eye.x += 2;
+					viewProjection_.target.x += 2;
 				}
-				else if (clearColor[i] == redColor[i])
+				if (input_->PushKey(DIK_LEFT)) { 
+					viewProjection_.eye.x -= 2; 
+					viewProjection_.target.x -= 2;
+				}
+				if (input_->PushKey(DIK_UP)) {
+					viewProjection_.eye.y += 2;
+					viewProjection_.target.y += 2;
+				}
+				if (input_->PushKey(DIK_DOWN)) {
+					viewProjection_.eye.y -= 2;
+					viewProjection_.target.y -= 2;
+				}
+				viewProjection_.UpdatematView();
+			}
+	
+			for (size_t i = 0; i < _countof(object3ds); i++)
+			{
+				object3ds[i].Update(viewProjection_.matView, matProjection);
+			}
+			break;
+		}
+		default:
+		{
+			if (input_->TriggerKey(DIK_1))
+			{
+				for (int i = 0; i < _countof(clearColor); i++)
 				{
-					clearColor[i] = blueColor[i];
+					if (clearColor[i] != redColor[i])
+					{
+						clearColor[i] = redColor[i];
+					}
+					else if (clearColor[i] == redColor[i])
+					{
+						clearColor[i] = blueColor[i];
+					}
 				}
 			}
+
+			//ビュー行列の計算
+			if (input_->PushKey(DIK_D) || input_->PushKey(DIK_A))
+			{
+				if (input_->PushKey(DIK_D)) { angle += XMConvertToRadians(1.0f); }
+				if (input_->PushKey(DIK_A)) { angle -= XMConvertToRadians(1.0f); }
+
+				//angleラジアンだけY軸まわりに回転。半径は-100
+				viewProjection_.eye.x = -cameraY * sinf(angle);
+				viewProjection_.eye.z = -cameraY * cosf(angle);
+
+				//射影行列の計算(更新しない場合は再計算しなくていいのでこの位置でOK)
+				viewProjection_.UpdatematView();
+			}
+
+			if (input_->PushKey(DIK_W) || input_->PushKey(DIK_S))
+			{
+				if (input_->PushKey(DIK_W)) { angleY += XMConvertToRadians(1.0f); }
+				if (input_->PushKey(DIK_S)) { angleY -= XMConvertToRadians(1.0f); }
+
+				viewProjection_.eye.y = -cameraY * sinf(angleY);
+				viewProjection_.eye.z = -cameraY * cosf(angleY);
+
+				viewProjection_.UpdatematView();
+			}
+
+			if (input_->PushKey(DIK_UP) ||
+				input_->PushKey(DIK_DOWN) ||
+				input_->PushKey(DIK_RIGHT) ||
+				input_->PushKey(DIK_LEFT)) {
+				//座標を移動する処理
+				if (input_->PushKey(DIK_UP)) { object3ds[0].position.z += 1.0f; }
+				if (input_->PushKey(DIK_DOWN)) { object3ds[0].position.z -= 1.0f; }
+				if (input_->PushKey(DIK_RIGHT)) { object3ds[0].position.x += 1.0f; }
+				if (input_->PushKey(DIK_LEFT)) { object3ds[0].position.x -= 1.0f; }
+			}
+
+			//object3ds[1].rotation.x += 0.5f;
+
+			for (size_t i = 0; i < _countof(object3ds); i++)
+			{
+				object3ds[i].Update(viewProjection_.matView, matProjection);
+			}
+			break;
+		}
 		}
 
-		//ビュー行列の計算
-		if (input_->PushKey(DIK_D) || input_->PushKey(DIK_A))
-		{
-			if (input_->PushKey(DIK_D)) { angle += XMConvertToRadians(1.0f); }
-			if (input_->PushKey(DIK_A)) { angle -= XMConvertToRadians(1.0f); }
-
-			//angleラジアンだけY軸まわりに回転。半径は-100
-			viewProjection_.eye.x = -cameraY * sinf(angle);
-			viewProjection_.eye.z = -cameraY * cosf(angle);
-
-			//射影行列の計算(更新しない場合は再計算しなくていいのでこの位置でOK)
-			viewProjection_.UpdatematView();
-		}
-
-		if (input_->PushKey(DIK_W) || input_->PushKey(DIK_S))
-		{
-			if (input_->PushKey(DIK_W)) { angleY += XMConvertToRadians(1.0f); }
-			if (input_->PushKey(DIK_S)) { angleY -= XMConvertToRadians(1.0f); }
-
-			viewProjection_.eye.y = -cameraY * sinf(angleY);
-			viewProjection_.eye.z = -cameraY * cosf(angleY);
-
-			viewProjection_.UpdatematView();
-		}
-
-		if (input_->PushKey(DIK_UP) ||
-			input_->PushKey(DIK_DOWN) ||
-			input_->PushKey(DIK_RIGHT) ||
-			input_->PushKey(DIK_LEFT)) {
-			//座標を移動する処理
-			if (input_->PushKey(DIK_UP))	{ object3ds[0].position.z += 1.0f; }
-			if (input_->PushKey(DIK_DOWN))	{ object3ds[0].position.z -= 1.0f; }
-			if (input_->PushKey(DIK_RIGHT)) { object3ds[0].position.x += 1.0f; }
-			if (input_->PushKey(DIK_LEFT))	{ object3ds[0].position.x -= 1.0f; }
-		}
-
-		object3ds[1].rotation.x += 0.5f;
-
-		for (size_t i = 0; i < _countof(object3ds); i++)
-		{
-			object3ds[i].Update(viewProjection_.matView, matProjection);
-		}
-
-		constMapMaterial->color.x += materialColor.x;
-		constMapMaterial->color.y += materialColor.y;
+		//constMapMaterial->color.x += materialColor.x;
+		//constMapMaterial->color.y += materialColor.y;
 
 		///---DirectX毎フレーム処理 ここまで---///
 #pragma endregion DirectX毎フレーム処理
