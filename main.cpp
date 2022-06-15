@@ -21,12 +21,13 @@ using namespace DirectX;
 #include "Obj.h"
 #include "ViewProjection.h"
 #include "Vector3.h"
+#include "Model.h"
 
 //やりたいことメモ
 //・objの読み込みは実装したい
 
 WinAPI winApi_;
-VertexData vertexdate_;
+Model cube = Cube();
 //Obj zawa_[2];
 
 ConstBufferDataMaterial* constMapMaterial = nullptr;
@@ -111,7 +112,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	//--depthここまで
 
 	//頂点データ作成
-	vertexdate_.CreateVertex(DX12);
+	cube.CreateModel(DX12);
 
 	//シェーダー
 	Shader shader_;
@@ -312,11 +313,11 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 
 	//シェーダリソースビュー設定
 	D3D12_SHADER_RESOURCE_VIEW_DESC srvDesc{};//設定構造体
-	srvDesc.Format = vertexdate_.resDesc.Format;//RGBA float
+	srvDesc.Format = cube.resDesc.Format;//RGBA float
 	srvDesc.Shader4ComponentMapping =
 		D3D12_DEFAULT_SHADER_4_COMPONENT_MAPPING;
 	srvDesc.ViewDimension = D3D12_SRV_DIMENSION_TEXTURE2D;//2Dテクスチャ
-	srvDesc.Texture2D.MipLevels = vertexdate_.resDesc.MipLevels;
+	srvDesc.Texture2D.MipLevels = cube.resDesc.MipLevels;
 
 	//ハンドルの指す位置にシェーダーリソースビュー作成
 	DX12.device->CreateShaderResourceView(texBuff, &srvDesc, srvHandle);
@@ -421,6 +422,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	for (int i = 0; i < _countof(object3ds); i++)
 	{
 		object3ds[i].Initialize(DX12.device);
+		object3ds[i].SetModel(&cube);
 
 		//親子構造　サンプル
 		//先頭以外なら
@@ -696,7 +698,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		DX12.commandList->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 
 		//頂点バッファビューの設定コマンド
-		DX12.commandList->IASetVertexBuffers(0, 1, &vertexdate_.vbView);
+		DX12.commandList->IASetVertexBuffers(0, 1, &cube.vbView);
 
 		//定数バッファビュー(CBV)の設定コマンド
 		DX12.commandList->SetGraphicsRootConstantBufferView(0, countBuffMaterial->GetGPUVirtualAddress());
@@ -713,7 +715,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		//描画処理
 		for (int i = 0; i < _countof(object3ds); i++)
 		{
-			object3ds[i].Draw(DX12.commandList, vertexdate_.vbView, vertexdate_.ibView, _countof(indices));
+			object3ds[i].Draw(DX12.commandList);
 		}
 
 		//--4.描画コマンドここまで--//

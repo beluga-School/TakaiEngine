@@ -4,6 +4,7 @@ using namespace DirectX;
 #include <d3dcompiler.h>
 #pragma comment(lib,"d3dcompiler.lib")
 #include "DirectXInit.h"
+#include "Model.h"
 
 struct ConstBufferDataMaterial {
 	XMFLOAT4 color;	//色(RGBA)
@@ -24,17 +25,18 @@ public:
 	XMFLOAT3 position = { 0,0,0 };
 
 	XMMATRIX matWorld;	//ワールド変換行列
-	XMMATRIX matScale;	//スケーリング行列
-	XMMATRIX matRot;	//回転行列
-	XMMATRIX matTrans;	//平行移動行列
+	//XMMATRIX matScale;	//スケーリング行列
+	//XMMATRIX matRot;	//回転行列
+	//XMMATRIX matTrans;	//平行移動行列
 
 	Obj3d* parent = nullptr;
 
+	Model* model = nullptr;
 public:
 	void Initialize(ID3D12Device* device);
+	void SetModel(Model *model);
 	void Update(XMMATRIX& matView, XMMATRIX& matProjection);
-	void Draw(ID3D12GraphicsCommandList* commandList, D3D12_VERTEX_BUFFER_VIEW& vbView,
-		D3D12_INDEX_BUFFER_VIEW& ibView, UINT numIndices);
+	void Draw(ID3D12GraphicsCommandList* commandList);
 
 	//void MatWorldIdentity();
 	//void MatScaleIdentity();

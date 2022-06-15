@@ -146,6 +146,7 @@
     <ClCompile Include="Input.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Matrix4.cpp" />
+    <ClCompile Include="Model.cpp" />
     <ClCompile Include="Obj.cpp" />
     <ClCompile Include="Shader.cpp" />
     <ClCompile Include="TextureLoad.cpp" />
@@ -174,6 +175,7 @@
     <ClInclude Include="DirectXInit.h" />
     <ClInclude Include="Input.h" />
     <ClInclude Include="Matrix4.h" />
+    <ClInclude Include="Model.h" />
     <ClInclude Include="Obj.h" />
     <ClInclude Include="Result.h" />
     <ClInclude Include="Shader.h" />

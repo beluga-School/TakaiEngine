@@ -13,6 +13,9 @@ using namespace DirectX;
 #include <DirectXTex.h>
 
 #include "DirectXInit.h"
+#include <vector>
+
+std::vector<int>;
 
 //頂点データ構造体
 struct Vertex
@@ -31,7 +34,7 @@ public:
 	//頂点バッファビューの作成
 	D3D12_VERTEX_BUFFER_VIEW vbView{};
 
-	void CreateVertex(DirectXInit dx12_);
+	void CreateVertex(DirectXInit dx12_, std::vector<Vertex> vertices, std::vector<uint16_t> indices);
 };
 
 //頂点データ
@@ -43,8 +46,8 @@ public:
 //	{{+0.4f,+0.7f,0.0f},{1.0f,0.0f}},	//右上
 //};
 
-static Vertex vertices[] = {
-	// x	 y	   z	  u	   v
+static std::vector<Vertex> vertices = {
+	// x	 y	   z	 n	 u	   v
 	//前
 	{{-5.0f,-5.0f,-5.0f},{} ,{0.0f,1.0f}},	//左下
 	{{-5.0f, 5.0f,-5.0f},{} ,{0.0f,0.0f}},	//左上
@@ -78,7 +81,7 @@ static Vertex vertices[] = {
 };
 
 //インデックスデータ
-static uint16_t indices[] =
+static std::vector<uint16_t> indices =
 {
 	//前
 	0,1,2,		//三角形1つ目

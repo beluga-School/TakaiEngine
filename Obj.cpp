@@ -1,6 +1,11 @@
 #include "Obj.h"
 #include "Result.h"
 
+void Obj3d::SetModel(Model* model)
+{
+	this->model = model;
+}
+
 void Obj3d::Initialize(ID3D12Device* device)
 {
 	D3D12_HEAP_PROPERTIES heapProp{};
@@ -30,6 +35,10 @@ void Obj3d::Initialize(ID3D12Device* device)
 
 void Obj3d::Update(XMMATRIX& matView, XMMATRIX& matProjection)
 {
+	XMMATRIX matScale;	//スケーリング行列
+	XMMATRIX matRot;	//回転行列
+	XMMATRIX matTrans;	//平行移動行列
+
 	matScale = XMMatrixScaling(scale.x, scale.y, scale.z);
 	matRot = XMMatrixIdentity();
 	matRot *= XMMatrixRotationZ(rotation.z);
@@ -53,17 +62,16 @@ void Obj3d::Update(XMMATRIX& matView, XMMATRIX& matProjection)
 	////		行列は掛ける順番によって結果が変わるので注意！！！注意！！！注意！！！
 }
 
-void Obj3d::Draw(ID3D12GraphicsCommandList* commandList, D3D12_VERTEX_BUFFER_VIEW& vbView,
-	D3D12_INDEX_BUFFER_VIEW& ibView, UINT numIndices) {
+void Obj3d::Draw(ID3D12GraphicsCommandList* commandList) {
 	//頂点バッファの設定
-	commandList->IASetVertexBuffers(0, 1, &vbView);
+	commandList->IASetVertexBuffers(0, 1, &model->vbView);
 	//インデックスバッファの設定
-	commandList->IASetIndexBuffer(&ibView);
+	commandList->IASetIndexBuffer(&model->ibView);
 	//定数バッファビュー(CBV)の設定コマンド
 	commandList->SetGraphicsRootConstantBufferView(2, constBuffTransform->GetGPUVirtualAddress());
 
 	//描画コマンド
-	commandList->DrawIndexedInstanced(numIndices, 1, 0, 0, 0);
+	commandList->DrawIndexedInstanced(model->indices.size() , 1, 0, 0, 0);
 }
 
 //XMMATRIX Obj3d::GetMatWorld()

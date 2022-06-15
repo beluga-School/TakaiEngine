@@ -1,12 +1,12 @@
 #include "Vertex.h"
 #include "Result.h"
 
-void VertexData::CreateVertex(DirectXInit dx12_)
+void VertexData::CreateVertex(DirectXInit dx12_, std::vector<Vertex> vertices, std::vector<uint16_t> indices)
 {
 	//頂点データ
 
 	//頂点データ全体のサイズ = 頂点データ一つ分のサイズ * 頂点データの要素数
-	sizeVB = static_cast<UINT>(sizeof(vertices[0]) * _countof(vertices));
+	sizeVB = static_cast<UINT>(sizeof(vertices[0]) * vertices.size());
 
 	//頂点バッファの設定
 	D3D12_HEAP_PROPERTIES heapProp{};		//ヒープ設定
@@ -32,7 +32,7 @@ void VertexData::CreateVertex(DirectXInit dx12_)
 		IID_PPV_ARGS(&vertBuff));
 	assert(SUCCEEDED(result));
 
-	for (int i = 0; i < sizeof(indices) / 3; i++)
+	for (int i = 0; i < indices.size() / 3; i++)
 	{	//三角形1つごとに計算していく
 		//三角形のインデックスを取り出して、一時的な変数にいれる
 		unsigned short indices0 = indices[i * 3 + 0];
@@ -61,7 +61,7 @@ void VertexData::CreateVertex(DirectXInit dx12_)
 	result = vertBuff->Map(0, nullptr, (void**)&vertMap);
 	assert(SUCCEEDED(result));
 	//全頂点に対して
-	for (int i = 0; i < _countof(vertices); i++) {
+	for (int i = 0; i < vertices.size(); i++) {
 		vertMap[i] = vertices[i];	//	座標をコピー
 	}
 	//繋がりを解除
@@ -75,7 +75,7 @@ void VertexData::CreateVertex(DirectXInit dx12_)
 	vbView.StrideInBytes = sizeof(vertices[0]);
 
 	//インデックスデータ全体のサイズ
-	UINT sizeIB = static_cast<UINT>(sizeof(uint16_t) * _countof(indices));
+	UINT sizeIB = static_cast<UINT>(sizeof(uint16_t) * indices.size());
 
 	//リソース設定
 	resDesc.Dimension = D3D12_RESOURCE_DIMENSION_BUFFER;
@@ -100,7 +100,7 @@ void VertexData::CreateVertex(DirectXInit dx12_)
 	uint16_t* indexMap = nullptr;
 	result = indexBuff->Map(0, nullptr, (void**)&indexMap);
 	//全インデックスに対して
-	for (int i = 0; i < _countof(indices); i++) {
+	for (int i = 0; i < indices.size(); i++) {
 		indexMap[i] = indices[i];	//インデックスをコピー
 	}
 	//マッピング解除
