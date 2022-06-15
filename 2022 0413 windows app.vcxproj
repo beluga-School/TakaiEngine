@@ -147,6 +147,7 @@
     <ClCompile Include="Obj.cpp" />
     <ClCompile Include="Shader.cpp" />
     <ClCompile Include="TextureLoad.cpp" />
+    <ClCompile Include="Vector3.cpp" />
     <ClCompile Include="Vertex.cpp" />
     <ClCompile Include="ViewProjection.cpp" />
     <ClCompile Include="WinAPI.cpp" />
@@ -172,6 +173,7 @@
     <ClInclude Include="Result.h" />
     <ClInclude Include="Shader.h" />
     <ClInclude Include="TextureLoad.h" />
+    <ClInclude Include="Vector3.h" />
     <ClInclude Include="Vertex.h" />
     <ClInclude Include="ViewProjection.h" />
     <ClInclude Include="WinAPI.h" />

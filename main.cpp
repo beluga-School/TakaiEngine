@@ -20,6 +20,7 @@ using namespace DirectX;
 #include "TextureLoad.h"
 #include "Obj.h"
 #include "ViewProjection.h"
+#include "Vector3.h"
 
 //やりたいことメモ
 //・objの読み込みは実装したい
@@ -451,6 +452,12 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		}
 	}
 
+	//Obj3d biocheckBox;
+	//biocheckBox.Initialize(DX12.device);
+	//biocheckBox.position = { object3ds[0].position.x - 10,
+	//	object3ds[0].position.y - 10,object3ds[0].position.z};
+	//biocheckBox.scale = { 0.9f,0.9f,0.9f };
+
 	//値を書き込むと自動的に転送されるらしい
 	constMapMaterial->color = XMFLOAT4(1, 1, 1, 1.0f);
 
@@ -508,6 +515,8 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		IMAMADE,
 	};
 	int cameramode = TPS;
+	
+	float matWorldZ = 0;
 
 	//ゲームループ
 	while (true){
@@ -567,6 +576,11 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		{
 			//カメラ移動
 			if (input_->TriggerKey(DIK_Q)) { cameramode = BIOHAZARD; }
+
+			//if (input_->PushKey(DIK_W))
+			//{
+			//	matWorldZ = object3ds->matWorld.r[2];	//Z軸の抽出はできる
+			//}
 
 			if (input_->PushKey(DIK_RIGHT) || 
 				input_->PushKey(DIK_LEFT) || 
