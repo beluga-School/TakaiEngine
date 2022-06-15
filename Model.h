@@ -9,7 +9,7 @@ public:
 
 	std::vector<Vertex> vertices;	//‚±‚¢‚Â‚ç‚ªŠæ’£‚ê‚Îmodel“Ç‚İ‚İ‚à‚¢‚¯‚é‚Áƒs
 	std::vector<uint16_t> indices;
-	void CreateModel(DirectXInit dx12_);
+	void CreateModel(DirectX12 dx12_);
 
 };
 

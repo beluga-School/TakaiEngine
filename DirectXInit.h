@@ -12,7 +12,7 @@ static std::vector<IDXGIAdapter4*> adapters;
 //ここに特定の名前をもつアダプターオブジェクトが入る
 static IDXGIAdapter4* tmpAdapter = nullptr;
 
-class DirectXInit
+class DirectX12
 {
 public:
 
@@ -50,3 +50,7 @@ public:
 
 	void CreateFence();
 };
+
+static DirectX12 DX12;
+
+//ID3D12Device *bGetDevice();

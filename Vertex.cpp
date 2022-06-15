@@ -1,7 +1,7 @@
 #include "Vertex.h"
 #include "Result.h"
 
-void VertexData::CreateVertex(DirectXInit dx12_, std::vector<Vertex> vertices, std::vector<uint16_t> indices)
+void VertexData::CreateVertex(DirectX12 dx12_, std::vector<Vertex> vertices, std::vector<uint16_t> indices)
 {
 	//頂点データ
 

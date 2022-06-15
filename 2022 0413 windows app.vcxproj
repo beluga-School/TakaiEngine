@@ -141,6 +141,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="ConstBuffer.cpp" />
     <ClCompile Include="Depth.cpp" />
     <ClCompile Include="DirectXInit.cpp" />
     <ClCompile Include="Input.cpp" />
@@ -171,6 +172,7 @@
     </FxCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="ConstBuffer.h" />
     <ClInclude Include="Depth.h" />
     <ClInclude Include="DirectXInit.h" />
     <ClInclude Include="Input.h" />

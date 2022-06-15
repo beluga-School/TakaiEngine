@@ -34,17 +34,8 @@ public:
 	//頂点バッファビューの作成
 	D3D12_VERTEX_BUFFER_VIEW vbView{};
 
-	void CreateVertex(DirectXInit dx12_, std::vector<Vertex> vertices, std::vector<uint16_t> indices);
+	void CreateVertex(DirectX12 dx12_, std::vector<Vertex> vertices, std::vector<uint16_t> indices);
 };
-
-//頂点データ
-//static Vertex vertices[] = {
-//	// x	y	  z		 u	   v
-//	{{-0.4f,-0.7f,0.0f},{0.0f,1.0f}},	//左下
-//	{{-0.4f,+0.7f,0.0f},{0.0f,0.0f}},	//左上
-//	{{+0.4f,-0.7f,0.0f},{1.0f,1.0f}},	//右下
-//	{{+0.4f,+0.7f,0.0f},{1.0f,0.0f}},	//右上
-//};
 
 static std::vector<Vertex> vertices = {
 	// x	 y	   z	 n	 u	   v

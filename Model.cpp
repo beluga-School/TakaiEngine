@@ -1,6 +1,6 @@
 #include "Model.h"
 
-void Model::CreateModel(DirectXInit dx12_)
+void Model::CreateModel(DirectX12 dx12_)
 {
 	CreateVertex(dx12_, vertices, indices);
 }

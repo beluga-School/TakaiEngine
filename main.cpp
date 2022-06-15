@@ -22,16 +22,13 @@ using namespace DirectX;
 #include "ViewProjection.h"
 #include "Vector3.h"
 #include "Model.h"
+//#include "ConstBuffer.h"
 
 //やりたいことメモ
 //・objの読み込みは実装したい
 
 WinAPI winApi_;
-Model cube = Cube();
 //Obj zawa_[2];
-
-ConstBufferDataMaterial* constMapMaterial = nullptr;
-ID3D12Resource* countBuffMaterial = nullptr;
 
 //windowsアプリでのエントリーポイント(main関数)
 int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
@@ -51,7 +48,6 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	}
 #endif _DEBUG
 
-	DirectXInit DX12;
 	DX12.yobidasi(winApi_);
 
 	//DirectInputの初期化
@@ -63,6 +59,8 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	///---DirectX初期化処理　ここまで---///
 
 #pragma region 描画初期化処理
+
+	Model cube = Cube();
 
 	//--depthこっから
 
@@ -403,25 +401,14 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	cbResourceDesc.Layout = D3D12_TEXTURE_LAYOUT_ROW_MAJOR;
 
 	//定数バッファの生成
-	result = DX12.device->CreateCommittedResource(
-		&cbHeapProp,	//ヒープ設定
-		D3D12_HEAP_FLAG_NONE,
-		&cbResourceDesc,	//リソース設定
-		D3D12_RESOURCE_STATE_GENERIC_READ,
-		nullptr,
-		IID_PPV_ARGS(&countBuffMaterial));
-	assert(SUCCEEDED(result));
-
-	//定数バッファのマッピング
-	result = countBuffMaterial->Map(0, nullptr, (void**)&constMapMaterial);	//マッピング
-	assert(SUCCEEDED(result));
+	ConstBuffer<ConstBufferDataMaterial> constBufferM;
 
 	const size_t kObjectCount = 50;
 	Obj3d object3ds[kObjectCount];
 
 	for (int i = 0; i < _countof(object3ds); i++)
 	{
-		object3ds[i].Initialize(DX12.device);
+		object3ds[i].Initialize();
 		object3ds[i].SetModel(&cube);
 
 		//親子構造　サンプル
@@ -447,7 +434,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	//biocheckBox.scale = { 0.9f,0.9f,0.9f };
 
 	//値を書き込むと自動的に転送されるらしい
-	constMapMaterial->color = XMFLOAT4(1, 1, 1, 1.0f);
+	constBufferM.constBufferData->color = XMFLOAT4(1, 1, 1, 1.0f);
 
 	////単位行列で埋める
 	//constMapTransform[0]->mat = XMMatrixIdentity();
@@ -701,7 +688,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		DX12.commandList->IASetVertexBuffers(0, 1, &cube.vbView);
 
 		//定数バッファビュー(CBV)の設定コマンド
-		DX12.commandList->SetGraphicsRootConstantBufferView(0, countBuffMaterial->GetGPUVirtualAddress());
+		DX12.commandList->SetGraphicsRootConstantBufferView(0, constBufferM.buffer->GetGPUVirtualAddress());
 
 		//SRVヒープの設定コマンド
 		DX12.commandList->SetDescriptorHeaps(1, &srvHeap);

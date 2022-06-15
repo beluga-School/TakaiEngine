@@ -6,31 +6,9 @@ void Obj3d::SetModel(Model* model)
 	this->model = model;
 }
 
-void Obj3d::Initialize(ID3D12Device* device)
+void Obj3d::Initialize()
 {
-	D3D12_HEAP_PROPERTIES heapProp{};
-	heapProp.Type = D3D12_HEAP_TYPE_UPLOAD;
-
-	D3D12_RESOURCE_DESC resdesc{};
-	resdesc.Dimension = D3D12_RESOURCE_DIMENSION_BUFFER;
-	resdesc.Width = (sizeof(ConstBufferDataTransform) + 0xff) & ~0xff;
-	resdesc.Height = 1;
-	resdesc.DepthOrArraySize = 1;
-	resdesc.MipLevels = 1;
-	resdesc.SampleDesc.Count = 1;
-	resdesc.Layout = D3D12_TEXTURE_LAYOUT_ROW_MAJOR;
-
-	result = device->CreateCommittedResource(
-		&heapProp,
-		D3D12_HEAP_FLAG_NONE,
-		&resdesc,
-		D3D12_RESOURCE_STATE_GENERIC_READ,
-		nullptr,
-		IID_PPV_ARGS(&constBuffTransform));
-	assert(SUCCEEDED(result));
-
-	result = constBuffTransform->Map(0, nullptr, (void**)&constMapTransform);
-	assert(SUCCEEDED(result));
+	
 }
 
 void Obj3d::Update(XMMATRIX& matView, XMMATRIX& matProjection)
@@ -57,7 +35,7 @@ void Obj3d::Update(XMMATRIX& matView, XMMATRIX& matProjection)
 		matWorld *= parent->matWorld;
 	}
 
-	constMapTransform->mat = matWorld * matView * matProjection;
+	constBufferT.constBufferData->mat = matWorld * matView * matProjection;
 	////	 ↑ 行列はなんと掛け算によって1つにまとめることができるんです！！！！
 	////		行列は掛ける順番によって結果が変わるので注意！！！注意！！！注意！！！
 }
@@ -65,10 +43,12 @@ void Obj3d::Update(XMMATRIX& matView, XMMATRIX& matProjection)
 void Obj3d::Draw(ID3D12GraphicsCommandList* commandList) {
 	//頂点バッファの設定
 	commandList->IASetVertexBuffers(0, 1, &model->vbView);
+
 	//インデックスバッファの設定
 	commandList->IASetIndexBuffer(&model->ibView);
+	
 	//定数バッファビュー(CBV)の設定コマンド
-	commandList->SetGraphicsRootConstantBufferView(2, constBuffTransform->GetGPUVirtualAddress());
+	commandList->SetGraphicsRootConstantBufferView(2, constBufferT.buffer->GetGPUVirtualAddress());
 
 	//描画コマンド
 	commandList->DrawIndexedInstanced(model->indices.size() , 1, 0, 0, 0);

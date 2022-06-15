@@ -1,7 +1,7 @@
 #include "DirectXInit.h"
 #include "Result.h"
 
-void DirectXInit::yobidasi(WinAPI winApi_)
+void DirectX12::yobidasi(WinAPI winApi_)
 {
 	AdapterSort();
 
@@ -20,7 +20,7 @@ void DirectXInit::yobidasi(WinAPI winApi_)
 	CreateFence();
 }
 
-void DirectXInit::AdapterSort()
+void DirectX12::AdapterSort()
 {
 	///---グラフィックボードのアダプタを列挙---///
 	//DXGIファクトリーの生成
@@ -56,7 +56,7 @@ void DirectXInit::AdapterSort()
 	///------///
 }
 
-void DirectXInit::CreateDevice()
+void DirectX12::CreateDevice()
 {
 	///---デバイスの生成---///
 
@@ -83,7 +83,7 @@ void DirectXInit::CreateDevice()
 	///------///
 }
 
-void DirectXInit::CreateCmdList()
+void DirectX12::CreateCmdList()
 {
 	//コマンドアロケータを生成
 	result = device->CreateCommandAllocator(
@@ -105,7 +105,7 @@ void DirectXInit::CreateCmdList()
 	assert(SUCCEEDED(result));
 }
 
-void DirectXInit::SetSwapChain(WinAPI winApi_)
+void DirectX12::SetSwapChain(WinAPI winApi_)
 {
 	//スワップチェーンの設定
 	swapChainDesc.Width = 1280;
@@ -124,7 +124,7 @@ void DirectXInit::SetSwapChain(WinAPI winApi_)
 	assert(SUCCEEDED(result));
 }
 
-void DirectXInit::SetDescHeap()
+void DirectX12::SetDescHeap()
 {
 	//デスクリプタヒープの設定
 	rtvHeapDesc.Type = D3D12_DESCRIPTOR_HEAP_TYPE_RTV;		//レンダーターゲットビュー
@@ -135,13 +135,13 @@ void DirectXInit::SetDescHeap()
 
 }
 
-void DirectXInit::SetBackBuffer()
+void DirectX12::SetBackBuffer()
 {
 	//バックバッファ
 	backBuffers.resize(swapChainDesc.BufferCount);
 }
 
-void DirectXInit::RenderTargetView()
+void DirectX12::RenderTargetView()
 {
 	//スワップチェーンのすべてのバッファについて処理する
 	for (size_t i = 0; i < backBuffers.size(); i++)
@@ -168,8 +168,13 @@ void DirectXInit::RenderTargetView()
 	}
 }
 
-void DirectXInit::CreateFence()
+void DirectX12::CreateFence()
 {
 	//フェンスの生成
 	result = device->CreateFence(fenceVal, D3D12_FENCE_FLAG_NONE, IID_PPV_ARGS(&fence));
+}
+
+ID3D12Device* bGetDevice()
+{
+	return DX12.device;
 }

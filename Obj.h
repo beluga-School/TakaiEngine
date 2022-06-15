@@ -5,6 +5,7 @@ using namespace DirectX;
 #pragma comment(lib,"d3dcompiler.lib")
 #include "DirectXInit.h"
 #include "Model.h"
+#include "ConstBuffer.h"
 
 struct ConstBufferDataMaterial {
 	XMFLOAT4 color;	//êF(RGBA)
@@ -17,8 +18,7 @@ struct ConstBufferDataTransform {
 class Obj3d
 {
 public:
-	ID3D12Resource* constBuffTransform;
-	ConstBufferDataTransform* constMapTransform;
+	ConstBuffer<ConstBufferDataTransform> constBufferT;
 
 	XMFLOAT3 scale = { 1,1,1 };
 	XMFLOAT3 rotation = { 0,0,0 };
@@ -33,7 +33,7 @@ public:
 
 	Model* model = nullptr;
 public:
-	void Initialize(ID3D12Device* device);
+	void Initialize();
 	void SetModel(Model *model);
 	void Update(XMMATRIX& matView, XMMATRIX& matProjection);
 	void Draw(ID3D12GraphicsCommandList* commandList);
