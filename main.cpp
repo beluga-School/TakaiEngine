@@ -63,6 +63,8 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 
 #pragma region 描画初期化処理
 
+	//--depthこっから
+
 	D3D12_RESOURCE_DESC depthResourceDesc{};
 	depthResourceDesc.Dimension = D3D12_RESOURCE_DIMENSION_TEXTURE2D;
 	depthResourceDesc.Width = window_width;	//レンダーターゲットに合わせる
@@ -106,13 +108,18 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		&dsvDesc,
 		dsvHeap->GetCPUDescriptorHandleForHeapStart());
 
+	//--depthここまで
+
 	//頂点データ作成
 	vertexdate_.CreateVertex(DX12);
 
+	//シェーダー
 	Shader shader_;
 
 	shader_.vsBlob = shader_.Compile(L"BasicVS.hlsl", "vs_5_0", shader_.vsBlob,"main");
 	shader_.psBlob = shader_.Compile(L"BasicPS.hlsl", "ps_5_0", shader_.psBlob,"main");
+
+
 
 	//グラフィックスパイプライン設定
 	D3D12_GRAPHICS_PIPELINE_STATE_DESC pipelineDesc{};
@@ -244,27 +251,6 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 
 	//読み込んだディフューズテクスチャをSRGBとして扱う
 	metadata.format = MakeSRGB(metadata.format);
-
-	if (false)
-	{
-		//横方向ピクセル数
-		const size_t textureWidth = 256;
-		//縦方向ピクセル
-		const size_t textureHeight = 256;
-		//配列の要素数
-		const size_t imageDataCount = textureWidth * textureHeight;
-		//画像イメージデータ配列
-		XMFLOAT4* imageData = new XMFLOAT4[imageDataCount]; //必ず後で解放する
-
-		//全ピクセルの色を初期化
-		for (size_t i = 0; i < imageDataCount; i++)
-		{
-			imageData[i].x = 1.0f;	//R
-			imageData[i].y = 0.0f;	//G
-			imageData[i].z = 0.0f;	//B
-			imageData[i].w = 1.0f;	//A
-		}
-	}
 
 	//ヒープ設定
 	D3D12_HEAP_PROPERTIES textureHeapProp{};
