@@ -11,12 +11,14 @@ using namespace DirectX;
 #include <DirectXTex.h>
 #include "Model.h"
 
+//役割的にテクスチャ情報と読み込みやらSRVに書き込むやらは分けたい
 class Texture
 {
 public:
-	void Load(const wchar_t* t);
-	void CreateSRV();
-	void SetSRV(Model cube);
+	//なぜか関数内に入った途端DX12が全て初期化されたので引数でもらっている
+	void Load(const wchar_t* t,DirectX12 DX12);
+	void CreateSRV(DirectX12 DX12);
+	void SetSRV(Model cube, DirectX12 DX12);
 	D3D12_GPU_DESCRIPTOR_HANDLE GetHandle();
 	//設定を元にSRV用デスクリプタヒープを生成
 	ID3D12DescriptorHeap* srvHeap = nullptr;

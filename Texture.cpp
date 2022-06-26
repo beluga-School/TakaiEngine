@@ -2,8 +2,9 @@
 #include "Result.h"
 #include "DirectXInit.h"
 
-void Texture::Load(const wchar_t* t)
+void Texture::Load(const wchar_t* t, DirectX12 DX12)
 {
+
 	result = LoadFromWICFile(
 		t,	//ここに読み込みたいファイルのパスを入れる
 		WIC_FLAGS_NONE,
@@ -79,7 +80,7 @@ D3D12_GPU_DESCRIPTOR_HANDLE Texture::GetHandle()
 	return srvGpuHandle;
 }
 
-void Texture::CreateSRV()
+void Texture::CreateSRV(DirectX12 DX12)
 {
 	//ハンドルの指す位置にシェーダーリソースビュー作成
 	DX12.device->CreateShaderResourceView(texBuff, &srvDesc, srvHandle);
@@ -87,7 +88,7 @@ void Texture::CreateSRV()
 	srvHandle.ptr += SRVHandleSize;//* loadTexCount
 }
 
-void Texture::SetSRV(Model cube)
+void Texture::SetSRV(Model cube, DirectX12 DX12)
 {
 	//デスクリプタヒープの設定
 	srvHeapDesc.Type = D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV;
