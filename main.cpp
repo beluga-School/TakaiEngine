@@ -22,6 +22,7 @@ using namespace DirectX;
 #include "ViewProjection.h"
 #include "Vector3.h"
 #include "Model.h"
+#include "Texture.h"
 //#include "ConstBuffer.h"
 
 //やりたいことメモ
@@ -231,94 +232,111 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	//WICテクスチャのロード
 	TexMetadata metadata{};
 	ScratchImage scratchImg{};
-	
-	result = LoadFromWICFile(
-		L"Resources/zawa_sironuri.png",	//ここに読み込みたいファイルのパスを入れる
-		WIC_FLAGS_NONE,
-		&metadata, scratchImg
-	);
-
 	ScratchImage mipChain{};
-	//ミップマップ生成
-	result = GenerateMipMaps(
-		scratchImg.GetImages(), scratchImg.GetImageCount(), scratchImg.GetMetadata(),
-		TEX_FILTER_DEFAULT, 0, mipChain);
-	if (SUCCEEDED(result)) {
-		scratchImg = std::move(mipChain);
-		metadata = scratchImg.GetMetadata();
-	}
 
-	//読み込んだディフューズテクスチャをSRGBとして扱う
-	metadata.format = MakeSRGB(metadata.format);
+	//const int texbuffCount = 2;
+	const wchar_t* msg = { L"Resources/zawa_sironuri.png"};
 
-	//ヒープ設定
-	D3D12_HEAP_PROPERTIES textureHeapProp{};
-	textureHeapProp.Type = D3D12_HEAP_TYPE_CUSTOM;
-	textureHeapProp.CPUPageProperty =
-		D3D12_CPU_PAGE_PROPERTY_WRITE_BACK;
-	textureHeapProp.MemoryPoolPreference = D3D12_MEMORY_POOL_L0;
-	//リソース設定
-	D3D12_RESOURCE_DESC textureResourceDesc{};
-	textureResourceDesc.Dimension = D3D12_RESOURCE_DIMENSION_TEXTURE2D;
-	textureResourceDesc.Format = metadata.format;
-	textureResourceDesc.Width = metadata.width;
-	textureResourceDesc.Height = (UINT)metadata.height;
-	textureResourceDesc.DepthOrArraySize = (UINT)metadata.arraySize;
-	textureResourceDesc.MipLevels = (UINT16)metadata.mipLevels;
-	textureResourceDesc.SampleDesc.Count = 1;
+	Texture zawa;
 
-	//テクスチャバッファの生成
-	ID3D12Resource* texBuff = nullptr;
-	result = DX12.device->CreateCommittedResource(
-		&textureHeapProp,
-		D3D12_HEAP_FLAG_NONE,
-		&textureResourceDesc,
-		D3D12_RESOURCE_STATE_GENERIC_READ,
-		nullptr,
-		IID_PPV_ARGS(&texBuff));
+	zawa.Load(msg);
+	//for (int i = 0; i < texbuffCount; i++)
+	//{
+	//	ID3D12Resource* texBuff = nullptr;
+	//	result = LoadFromWICFile(
+	//		msg[i],	//ここに読み込みたいファイルのパスを入れる
+	//		WIC_FLAGS_NONE,
+	//		&metadata, scratchImg
+	//	);
 
-	for (SIZE_T i = 0; i < metadata.mipLevels; i++)
-	{
-		//ミップマップレベルを指定してイメージを取得
-		const Image* img = scratchImg.GetImage(i, 0, 0);
-		//テクスチャバッファにデータ転送
-		result = texBuff->WriteToSubresource(
-			(UINT)i,
-			nullptr,	//全領域へコピー
-			img->pixels,	//元データアドレス
-			(UINT)img->rowPitch,	//1ラインサイズ
-			(UINT)img->slicePitch	//全サイズ
-		);
-		assert(SUCCEEDED(result));
-	}
+	//	//ミップマップ生成
+	//	result = GenerateMipMaps(
+	//		scratchImg.GetImages(), scratchImg.GetImageCount(), scratchImg.GetMetadata(),
+	//		TEX_FILTER_DEFAULT, 0, mipChain);
+	//	if (SUCCEEDED(result)) {
+	//		scratchImg = std::move(mipChain);
+	//		metadata = scratchImg.GetMetadata();
+	//	}
 
-	//SRVの最大個数
-	const size_t kMaxSRVCount = 2056;
+	//	//読み込んだディフューズテクスチャをSRGBとして扱う
+	//	metadata.format = MakeSRGB(metadata.format);
 
-	//デスクリプタヒープの設定
-	D3D12_DESCRIPTOR_HEAP_DESC srvHeapDesc = {};
-	srvHeapDesc.Type = D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV;
-	srvHeapDesc.Flags = D3D12_DESCRIPTOR_HEAP_FLAG_SHADER_VISIBLE;//シェーダーから見えるように
-	srvHeapDesc.NumDescriptors = kMaxSRVCount;
+	//	//ヒープ設定
+	//	D3D12_HEAP_PROPERTIES textureHeapProp{};
+	//	textureHeapProp.Type = D3D12_HEAP_TYPE_CUSTOM;
+	//	textureHeapProp.CPUPageProperty =
+	//		D3D12_CPU_PAGE_PROPERTY_WRITE_BACK;
+	//	textureHeapProp.MemoryPoolPreference = D3D12_MEMORY_POOL_L0;
+	//	//リソース設定
+	//	D3D12_RESOURCE_DESC textureResourceDesc{};
+	//	textureResourceDesc.Dimension = D3D12_RESOURCE_DIMENSION_TEXTURE2D;
+	//	textureResourceDesc.Format = metadata.format;
+	//	textureResourceDesc.Width = metadata.width;
+	//	textureResourceDesc.Height = (UINT)metadata.height;
+	//	textureResourceDesc.DepthOrArraySize = (UINT)metadata.arraySize;
+	//	textureResourceDesc.MipLevels = (UINT16)metadata.mipLevels;
+	//	textureResourceDesc.SampleDesc.Count = 1;
 
-	//設定を元にSRV用デスクリプタヒープを生成
-	ID3D12DescriptorHeap* srvHeap = nullptr;
-	result = DX12.device->CreateDescriptorHeap(&srvHeapDesc, IID_PPV_ARGS(&srvHeap));
-	assert(SUCCEEDED(result));
+	//	//テクスチャバッファの生成
+	//	result = DX12.device->CreateCommittedResource(
+	//		&textureHeapProp,
+	//		D3D12_HEAP_FLAG_NONE,
+	//		&textureResourceDesc,
+	//		D3D12_RESOURCE_STATE_GENERIC_READ,
+	//		nullptr,
+	//		IID_PPV_ARGS(&texBuff[i]));
 
-	//SRVヒープの先頭ハンドルを取得
-	D3D12_CPU_DESCRIPTOR_HANDLE srvHandle = srvHeap->GetCPUDescriptorHandleForHeapStart();
+	//	for (SIZE_T j = 0; j < metadata.mipLevels; j++)
+	//	{
+	//		//ミップマップレベルを指定してイメージを取得
+	//		const Image* img = scratchImg.GetImage(j, 0, 0);
+	//		//テクスチャバッファにデータ転送
+	//		result = texBuff[i]->WriteToSubresource(
+	//			(UINT)j,
+	//			nullptr,	//全領域へコピー
+	//			img->pixels,	//元データアドレス
+	//			(UINT)img->rowPitch,	//1ラインサイズ
+	//			(UINT)img->slicePitch	//全サイズ
+	//		);
+	//		assert(SUCCEEDED(result));
+	//	}
+	//}
 
-	//シェーダリソースビュー設定
-	D3D12_SHADER_RESOURCE_VIEW_DESC srvDesc{};//設定構造体
-	srvDesc.Format = cube.resDesc.Format;//RGBA float
-	srvDesc.Shader4ComponentMapping =
-		D3D12_DEFAULT_SHADER_4_COMPONENT_MAPPING;
-	srvDesc.ViewDimension = D3D12_SRV_DIMENSION_TEXTURE2D;//2Dテクスチャ
-	srvDesc.Texture2D.MipLevels = cube.resDesc.MipLevels;
+	zawa.SetSRV(cube);
+	////SRVの最大個数
+	//const size_t kMaxSRVCount = 2056;
+
+	////デスクリプタヒープの設定
+	//D3D12_DESCRIPTOR_HEAP_DESC srvHeapDesc = {};
+	//srvHeapDesc.Type = D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV;
+	//srvHeapDesc.Flags = D3D12_DESCRIPTOR_HEAP_FLAG_SHADER_VISIBLE;//シェーダーから見えるように
+	//srvHeapDesc.NumDescriptors = kMaxSRVCount;
+
+	////設定を元にSRV用デスクリプタヒープを生成
+	//ID3D12DescriptorHeap* srvHeap = nullptr;
+	//result = DX12.device->CreateDescriptorHeap(&srvHeapDesc, IID_PPV_ARGS(&srvHeap));
+	//assert(SUCCEEDED(result));
+
+	////SRVヒープの先頭ハンドルを取得
+	//D3D12_CPU_DESCRIPTOR_HANDLE srvHandle = srvHeap->GetCPUDescriptorHandleForHeapStart();
+
+	////シェーダリソースビュー設定
+	//D3D12_SHADER_RESOURCE_VIEW_DESC srvDesc{};//設定構造体
+	//srvDesc.Format = cube.resDesc.Format;//RGBA float
+	//srvDesc.Shader4ComponentMapping =
+	//	D3D12_DEFAULT_SHADER_4_COMPONENT_MAPPING;
+	//srvDesc.ViewDimension = D3D12_SRV_DIMENSION_TEXTURE2D;//2Dテクスチャ
+	//srvDesc.Texture2D.MipLevels = cube.resDesc.MipLevels;
+
+	////SRVヒープの大きさを取得
+	//UINT SRVHandleSize = DX12.device->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV);
+
+	zawa.CreateSRV();
 
 	//ハンドルの指す位置にシェーダーリソースビュー作成
-	DX12.device->CreateShaderResourceView(texBuff, &srvDesc, srvHandle);
+	//DX12.device->CreateShaderResourceView(texBuff, &srvDesc, srvHandle);
+	//SRVヒープの大きさ分だけポインタを進める
+	//srvHandle.ptr += SRVHandleSize;
 
 	//デスクリプタレンジの設定
 	D3D12_DESCRIPTOR_RANGE descriptorRange{};
@@ -403,35 +421,31 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	//定数バッファの生成
 	ConstBuffer<ConstBufferDataMaterial> constBufferM;
 
-	const size_t kObjectCount = 50;
+	const size_t kObjectCount = 2;
 	Obj3d object3ds[kObjectCount];
 
 	for (int i = 0; i < _countof(object3ds); i++)
 	{
 		object3ds[i].Initialize();
 		object3ds[i].SetModel(&cube);
-
 		//親子構造　サンプル
 		//先頭以外なら
-		if (i > 0)
-		{
-			//ひとつ前を親オブジェクトとする
-			object3ds[i].parent = &object3ds[i - 1];
-			//子は親オブジェの9割の大きさ
-			object3ds[i].scale = { 0.9f,0.9f,0.9f };
-			//親オブジェに対してZ軸まわりに30度回転
-			object3ds[i].rotation = { 0.0f,0.0f,XMConvertToRadians(30.0f) };
+		//if (i > 0)
+		//{
+		//	//ひとつ前を親オブジェクトとする
+		//	object3ds[i].parent = &object3ds[i - 1];
+		//	//子は親オブジェの9割の大きさ
+		//	object3ds[i].scale = { 0.9f,0.9f,0.9f };
+		//	//親オブジェに対してZ軸まわりに30度回転
+		//	object3ds[i].rotation = { 0.0f,0.0f,XMConvertToRadians(30.0f) };
 
-			//親オブジェに対してZ方向-8.0ずらす
-			object3ds[i].position = { 0.0f,0.0f,-8.0f };
-		}
+		//	//親オブジェに対してZ方向-8.0ずらす
+		//	object3ds[i].position = { 0.0f,0.0f,-8.0f };
+		//}
 	}
 
-	//Obj3d biocheckBox;
-	//biocheckBox.Initialize(DX12.device);
-	//biocheckBox.position = { object3ds[0].position.x - 10,
-	//	object3ds[0].position.y - 10,object3ds[0].position.z};
-	//biocheckBox.scale = { 0.9f,0.9f,0.9f };
+	object3ds[1].position.x = 20;
+	object3ds[1].position.y = 10;
 
 	//値を書き込むと自動的に転送されるらしい
 	constBufferM.constBufferData->color = XMFLOAT4(1, 1, 1, 1.0f);
@@ -492,6 +506,14 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	int cameramode = TPS;
 	
 	float matWorldZ = 0;
+
+	////ハンドルを取得する部分
+	////SRVヒープの先頭ハンドルを取得(SRVを指しているはず)
+	//D3D12_GPU_DESCRIPTOR_HANDLE srvGpuHandle = { 0 };
+
+	//srvGpuHandle = srvHeap->GetGPUDescriptorHandleForHeapStart();
+	////ポインタを「SRVサイズ * 添え字」分進める
+	//srvGpuHandle.ptr += SRVHandleSize;
 
 	//ゲームループ
 	while (true){
@@ -691,18 +713,12 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		DX12.commandList->SetGraphicsRootConstantBufferView(0, constBufferM.buffer->GetGPUVirtualAddress());
 
 		//SRVヒープの設定コマンド
-		DX12.commandList->SetDescriptorHeaps(1, &srvHeap);
-
-		//SRVヒープの先頭ハンドルを取得(SRVを指しているはず)
-		D3D12_GPU_DESCRIPTOR_HANDLE srvGpuHandle = srvHeap->GetGPUDescriptorHandleForHeapStart();
-
-		//SRVヒープの先頭にあるSRVをルートパラメータ1番に設定
-		DX12.commandList->SetGraphicsRootDescriptorTable(1, srvGpuHandle);
+		DX12.commandList->SetDescriptorHeaps(1, &zawa.srvHeap);
 
 		//描画処理
 		for (int i = 0; i < _countof(object3ds); i++)
 		{
-			object3ds[i].Draw(DX12.commandList);
+			object3ds[i].Draw(DX12.commandList,zawa.GetHandle());
 		}
 
 		//--4.描画コマンドここまで--//

@@ -36,7 +36,7 @@ public:
 	void Initialize();
 	void SetModel(Model *model);
 	void Update(XMMATRIX& matView, XMMATRIX& matProjection);
-	void Draw(ID3D12GraphicsCommandList* commandList);
+	void Draw(ID3D12GraphicsCommandList* commandList, D3D12_GPU_DESCRIPTOR_HANDLE srvGpuHandle);
 
 	//void MatWorldIdentity();
 	//void MatScaleIdentity();

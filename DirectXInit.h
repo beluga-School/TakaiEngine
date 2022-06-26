@@ -53,4 +53,4 @@ public:
 
 static DirectX12 DX12;
 
-//ID3D12Device *bGetDevice();
+ID3D12Device *bGetDevice();
