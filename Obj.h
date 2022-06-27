@@ -6,6 +6,7 @@ using namespace DirectX;
 #include "DirectXInit.h"
 #include "Model.h"
 #include "ConstBuffer.h"
+#include "Texture.h"
 
 struct ConstBufferDataMaterial {
 	XMFLOAT4 color;	//êF(RGBA)
@@ -36,7 +37,7 @@ public:
 	void Initialize();
 	void SetModel(Model *model);
 	void Update(XMMATRIX& matView, XMMATRIX& matProjection);
-	void Draw(ID3D12GraphicsCommandList* commandList, D3D12_GPU_DESCRIPTOR_HANDLE srvGpuHandle);
+	void Draw(ID3D12GraphicsCommandList* commandList, Texture& texture);
 
 	//void MatWorldIdentity();
 	//void MatScaleIdentity();

@@ -2,7 +2,7 @@
 #include "Result.h"
 #include "DirectXInit.h"
 
-void Texture::Load(const wchar_t* t, DirectX12 DX12)
+void Texture::Load(const wchar_t* t, Model cube, DirectX12 DX12)
 {
 
 	result = LoadFromWICFile(
@@ -63,33 +63,6 @@ void Texture::Load(const wchar_t* t, DirectX12 DX12)
 		assert(SUCCEEDED(result));
 	}
 
-	//loadTexCount++;
-}
-
-D3D12_GPU_DESCRIPTOR_HANDLE Texture::GetHandle()
-{
-	//ハンドルを取得する部分
-	//SRVヒープの先頭ハンドルを取得(SRVを指しているはず)
-	D3D12_GPU_DESCRIPTOR_HANDLE srvGpuHandle = { 0 };
-
-	srvGpuHandle = srvHeap->GetGPUDescriptorHandleForHeapStart();
-
-	////ポインタを「SRVサイズ * 添え字」分進める
-	//srvGpuHandle.ptr += SRVHandleSize;
-
-	return srvGpuHandle;
-}
-
-void Texture::CreateSRV(DirectX12 DX12)
-{
-	//ハンドルの指す位置にシェーダーリソースビュー作成
-	DX12.device->CreateShaderResourceView(texBuff, &srvDesc, srvHandle);
-	//SRVヒープの大きさ分だけポインタを進める
-	srvHandle.ptr += SRVHandleSize;//* loadTexCount
-}
-
-void Texture::SetSRV(Model cube, DirectX12 DX12)
-{
 	//デスクリプタヒープの設定
 	srvHeapDesc.Type = D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV;
 	srvHeapDesc.Flags = D3D12_DESCRIPTOR_HEAP_FLAG_SHADER_VISIBLE;//シェーダーから見えるように
@@ -109,5 +82,18 @@ void Texture::SetSRV(Model cube, DirectX12 DX12)
 	srvDesc.ViewDimension = D3D12_SRV_DIMENSION_TEXTURE2D;//2Dテクスチャ
 	srvDesc.Texture2D.MipLevels = cube.resDesc.MipLevels;
 
-	SRVHandleSize = DX12.device->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV);
+	//SRVヒープのookisawosyutoku
+	//SRVHandleSize = DX12.device->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV);
+
+	//ハンドルの指す位置にシェーダーリソースビュー作成
+	DX12.device->CreateShaderResourceView(texBuff, &srvDesc, srvHandle);
+
+	//ハンドルを取得する部分
+	//SRVヒープの先頭ハンドルを取得(SRVを指しているはず)
+	srvGpuHandle = srvHeap->GetGPUDescriptorHandleForHeapStart();
+}
+
+D3D12_GPU_DESCRIPTOR_HANDLE Texture::GetHandle()
+{
+	return srvGpuHandle;
 }

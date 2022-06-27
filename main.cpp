@@ -225,23 +225,19 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	pipelineDesc.DepthStencilState.DepthWriteMask = D3D12_DEPTH_WRITE_MASK_ALL;	//書き込み許可
 	pipelineDesc.DepthStencilState.DepthFunc = D3D12_COMPARISON_FUNC_LESS;	//小さければ許可
 	pipelineDesc.DSVFormat = DXGI_FORMAT_D32_FLOAT;	//深度値フォーマット
-
-	//TextureLoad textureload;
-	//textureload.WIC(L"Resources/pizza.png");
 	
 	//WICテクスチャのロード
-	TexMetadata metadata{};
-	ScratchImage scratchImg{};
-	ScratchImage mipChain{};
-
-	//const int texbuffCount = 2;
-	const wchar_t* msg = { L"Resources/zawa_sironuri.png"};
+	const wchar_t* msg[3] = {L"Resources/zawa_sironuri.png", L"Resources/slime.png",L"Resources/pizza.png"};
 
 	Texture zawa;
-	zawa.Load(msg,DX12);
-	zawa.SetSRV(cube, DX12);
-	zawa.CreateSRV(DX12);
-
+	zawa.Load(msg[0], cube,DX12);
+	
+	Texture slime;
+	slime.Load(msg[1], cube,DX12);
+	
+	Texture pizza;
+	pizza.Load(msg[2], cube, DX12);
+	
 	//デスクリプタレンジの設定
 	D3D12_DESCRIPTOR_RANGE descriptorRange{};
 	descriptorRange.NumDescriptors = 1;	//一度の描画に使うテクスチャが1枚なので1
@@ -325,7 +321,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	//定数バッファの生成
 	ConstBuffer<ConstBufferDataMaterial> constBufferM;
 
-	const size_t kObjectCount = 2;
+	const size_t kObjectCount = 3;
 	Obj3d object3ds[kObjectCount];
 
 	for (int i = 0; i < _countof(object3ds); i++)
@@ -350,6 +346,9 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 
 	object3ds[1].position.x = 20;
 	object3ds[1].position.y = 10;
+
+	object3ds[2].position.x = -20;
+	object3ds[2].position.y = -10;
 
 	//値を書き込むと自動的に転送されるらしい
 	constBufferM.constBufferData->color = XMFLOAT4(1, 1, 1, 1.0f);
@@ -616,14 +615,10 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		//定数バッファビュー(CBV)の設定コマンド
 		DX12.commandList->SetGraphicsRootConstantBufferView(0, constBufferM.buffer->GetGPUVirtualAddress());
 
-		//SRVヒープの設定コマンド
-		DX12.commandList->SetDescriptorHeaps(1, &zawa.srvHeap);
-
 		//描画処理
-		for (int i = 0; i < _countof(object3ds); i++)
-		{
-			object3ds[i].Draw(DX12.commandList,zawa.GetHandle());
-		}
+		object3ds[0].Draw(DX12.commandList, zawa);
+		object3ds[1].Draw(DX12.commandList, slime);
+		object3ds[2].Draw(DX12.commandList, pizza);
 
 		//--4.描画コマンドここまで--//
 
