@@ -24,7 +24,7 @@ using namespace DirectX;
 #include "Vector3.h"
 #include "Model.h"
 #include "Texture.h"
-//#include "ConstBuffer.h"
+#include "GameScene.h"
 
 //やりたいことメモ
 //・objの読み込みは実装したい
@@ -35,7 +35,9 @@ WinAPI winApi_;
 //windowsアプリでのエントリーポイント(main関数)
 int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 
-	Input* input_ = new Input();
+	GameScene gameScene_;
+
+	Input* input_ = new Input;
 
 	//WindowsAPI初期化処理
 	winApi_.SetWindowClass();
@@ -384,6 +386,8 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 
 #pragma endregion 描画初期化処理
 
+	gameScene_.Initialize();
+
 	//ゲームループ内で使う変数の宣言
 	FLOAT clearColor[] = { 0,0,0,0 };
 
@@ -408,7 +412,6 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		TPS,
 		IMAMADE,
 	};
-	int cameramode = TPS;
 	
 	float matWorldZ = 0;
 
@@ -460,125 +463,100 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 
 
 		//更新処理
+		gameScene_.Update();
+
 		input_->Update();
 
-		switch (cameramode)
+		//カメラ移動
+		if (input_->PushKey(DIK_RIGHT) || 
+			input_->PushKey(DIK_LEFT) || 
+			input_->PushKey(DIK_UP) || 
+			input_->PushKey(DIK_DOWN))
 		{
-		case BIOHAZARD:
-		{
-			if (input_->TriggerKey(DIK_Q)) { cameramode = TPS; }
+			if (input_->PushKey(DIK_RIGHT)) { 
+				viewProjection_.eye.x += 2;
+				viewProjection_.target.x += 2;
+			}
+			if (input_->PushKey(DIK_LEFT)) { 
+				viewProjection_.eye.x -= 2; 
+				viewProjection_.target.x -= 2;
+			}
+			if (input_->PushKey(DIK_UP)) {
+				viewProjection_.eye.y += 2;
+				viewProjection_.target.y += 2;
+			}
+			if (input_->PushKey(DIK_DOWN)) {
+				viewProjection_.eye.y -= 2;
+				viewProjection_.target.y -= 2;
+			}
 			viewProjection_.UpdatematView();
-			for (size_t i = 0; i < kObjectCount; i++)
-			{
-				object3ds[i].Update(viewProjection_.matView, matProjection);
-			}
-			break;
 		}
-		case TPS:
-		{
-			//カメラ移動
-			if (input_->TriggerKey(DIK_Q)) { cameramode = BIOHAZARD; }
-
-			//if (input_->PushKey(DIK_W))
-			//{
-			//	matWorldZ = object3ds->matWorld.r[2];	//Z軸の抽出はできる
-			//}
-
-			if (input_->PushKey(DIK_RIGHT) || 
-				input_->PushKey(DIK_LEFT) || 
-				input_->PushKey(DIK_UP) || 
-				input_->PushKey(DIK_DOWN))
-			{
-				if (input_->PushKey(DIK_RIGHT)) { 
-					viewProjection_.eye.x += 2;
-					viewProjection_.target.x += 2;
-				}
-				if (input_->PushKey(DIK_LEFT)) { 
-					viewProjection_.eye.x -= 2; 
-					viewProjection_.target.x -= 2;
-				}
-				if (input_->PushKey(DIK_UP)) {
-					viewProjection_.eye.y += 2;
-					viewProjection_.target.y += 2;
-				}
-				if (input_->PushKey(DIK_DOWN)) {
-					viewProjection_.eye.y -= 2;
-					viewProjection_.target.y -= 2;
-				}
-				viewProjection_.UpdatematView();
-			}
 	
-			for (size_t i = 0; i < kObjectCount; i++)
-			{
-				object3ds[i].Update(viewProjection_.matView, matProjection);
-			}
-			break;
-		}
-		default:
+		for (size_t i = 0; i < kObjectCount; i++)
 		{
-			if (input_->TriggerKey(DIK_1))
-			{
-				for (int i = 0; i < _countof(clearColor); i++)
-				{
-					if (clearColor[i] != redColor[i])
-					{
-						clearColor[i] = redColor[i];
-					}
-					else if (clearColor[i] == redColor[i])
-					{
-						clearColor[i] = blueColor[i];
-					}
-				}
-			}
-
-			//ビュー行列の計算
-			if (input_->PushKey(DIK_D) || input_->PushKey(DIK_A))
-			{
-				if (input_->PushKey(DIK_D)) { angle += XMConvertToRadians(1.0f); }
-				if (input_->PushKey(DIK_A)) { angle -= XMConvertToRadians(1.0f); }
-
-				//angleラジアンだけY軸まわりに回転。半径は-100
-				viewProjection_.eye.x = -cameraY * sinf(angle);
-				viewProjection_.eye.z = -cameraY * cosf(angle);
-
-				//射影行列の計算(更新しない場合は再計算しなくていいのでこの位置でOK)
-				viewProjection_.UpdatematView();
-			}
-
-			if (input_->PushKey(DIK_W) || input_->PushKey(DIK_S))
-			{
-				if (input_->PushKey(DIK_W)) { angleY += XMConvertToRadians(1.0f); }
-				if (input_->PushKey(DIK_S)) { angleY -= XMConvertToRadians(1.0f); }
-
-				viewProjection_.eye.y = -cameraY * sinf(angleY);
-				viewProjection_.eye.z = -cameraY * cosf(angleY);
-
-				viewProjection_.UpdatematView();
-			}
-
-			if (input_->PushKey(DIK_UP) ||
-				input_->PushKey(DIK_DOWN) ||
-				input_->PushKey(DIK_RIGHT) ||
-				input_->PushKey(DIK_LEFT)) {
-				//座標を移動する処理
-				if (input_->PushKey(DIK_UP)) { object3ds[0].position.z += 1.0f; }
-				if (input_->PushKey(DIK_DOWN)) { object3ds[0].position.z -= 1.0f; }
-				if (input_->PushKey(DIK_RIGHT)) { object3ds[0].position.x += 1.0f; }
-				if (input_->PushKey(DIK_LEFT)) { object3ds[0].position.x -= 1.0f; }
-			}
-
-			//object3ds[1].rotation.x += 0.5f;
-
-			for (size_t i = 0; i < kObjectCount; i++)
-			{
-				object3ds[i].Update(viewProjection_.matView, matProjection);
-			}
-			break;
+			object3ds[i].Update(viewProjection_.matView, matProjection);
 		}
-		}
+		//default:
+		//{
+		//	if (input_->TriggerKey(DIK_1))
+		//	{
+		//		for (int i = 0; i < _countof(clearColor); i++)
+		//		{
+		//			if (clearColor[i] != redColor[i])
+		//			{
+		//				clearColor[i] = redColor[i];
+		//			}
+		//			else if (clearColor[i] == redColor[i])
+		//			{
+		//				clearColor[i] = blueColor[i];
+		//			}
+		//		}
+		//	}
 
-		//constMapMaterial->color.x += materialColor.x;
-		//constMapMaterial->color.y += materialColor.y;
+		//	//ビュー行列の計算
+		//	if (input_->PushKey(DIK_D) || input_->PushKey(DIK_A))
+		//	{
+		//		if (input_->PushKey(DIK_D)) { angle += XMConvertToRadians(1.0f); }
+		//		if (input_->PushKey(DIK_A)) { angle -= XMConvertToRadians(1.0f); }
+
+		//		//angleラジアンだけY軸まわりに回転。半径は-100
+		//		viewProjection_.eye.x = -cameraY * sinf(angle);
+		//		viewProjection_.eye.z = -cameraY * cosf(angle);
+
+		//		//射影行列の計算(更新しない場合は再計算しなくていいのでこの位置でOK)
+		//		viewProjection_.UpdatematView();
+		//	}
+
+		//	if (input_->PushKey(DIK_W) || input_->PushKey(DIK_S))
+		//	{
+		//		if (input_->PushKey(DIK_W)) { angleY += XMConvertToRadians(1.0f); }
+		//		if (input_->PushKey(DIK_S)) { angleY -= XMConvertToRadians(1.0f); }
+
+		//		viewProjection_.eye.y = -cameraY * sinf(angleY);
+		//		viewProjection_.eye.z = -cameraY * cosf(angleY);
+
+		//		viewProjection_.UpdatematView();
+		//	}
+
+		//	if (input_->PushKey(DIK_UP) ||
+		//		input_->PushKey(DIK_DOWN) ||
+		//		input_->PushKey(DIK_RIGHT) ||
+		//		input_->PushKey(DIK_LEFT)) {
+		//		//座標を移動する処理
+		//		if (input_->PushKey(DIK_UP)) { object3ds[0].position.z += 1.0f; }
+		//		if (input_->PushKey(DIK_DOWN)) { object3ds[0].position.z -= 1.0f; }
+		//		if (input_->PushKey(DIK_RIGHT)) { object3ds[0].position.x += 1.0f; }
+		//		if (input_->PushKey(DIK_LEFT)) { object3ds[0].position.x -= 1.0f; }
+		//	}
+
+		//	//object3ds[1].rotation.x += 0.5f;
+
+		//	for (size_t i = 0; i < kObjectCount; i++)
+		//	{
+		//		object3ds[i].Update(viewProjection_.matView, matProjection);
+		//	}
+		//	break;
+		//}
 
 		///---DirectX毎フレーム処理 ここまで---///
 #pragma endregion DirectX毎フレーム処理
@@ -618,6 +596,8 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		DX12.commandList->SetGraphicsRootConstantBufferView(0, constBufferM.buffer->GetGPUVirtualAddress());
 
 		//描画処理
+		gameScene_.Draw();
+
 		object3ds[0].Draw(DX12.commandList.Get(), zawa);
 		object3ds[1].Draw(DX12.commandList.Get(), slime);
 		object3ds[2].Draw(DX12.commandList.Get(), pizza);
@@ -666,7 +646,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 
 	}
 
-	delete input_;
+	gameScene_.End();
 
 	//ウィンドウクラスを登録解除
 	UnregisterClass(winApi_.w.lpszClassName, winApi_.w.hInstance);

@@ -144,6 +144,7 @@
     <ClCompile Include="ConstBuffer.cpp" />
     <ClCompile Include="Depth.cpp" />
     <ClCompile Include="DirectXInit.cpp" />
+    <ClCompile Include="GameScene.cpp" />
     <ClCompile Include="Input.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Matrix4.cpp" />
@@ -175,6 +176,7 @@
     <ClInclude Include="ConstBuffer.h" />
     <ClInclude Include="Depth.h" />
     <ClInclude Include="DirectXInit.h" />
+    <ClInclude Include="GameScene.h" />
     <ClInclude Include="Input.h" />
     <ClInclude Include="Matrix4.h" />
     <ClInclude Include="Model.h" />
