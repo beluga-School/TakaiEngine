@@ -17,7 +17,6 @@ using namespace DirectX;
 #include "DirectXInit.h"
 #include "Vertex.h"
 #include "Shader.h"
-#include "TextureLoad.h"
 #include "Obj.h"
 #include "ViewProjection.h"
 #include "Vector3.h"
@@ -43,7 +42,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	
 #ifdef  _DEBUG
 	//デバッグレイヤーをオンに
-	ID3D12Debug* debugController;
+	ComPtr<ID3D12Debug> debugController;
 	if (SUCCEEDED(D3D12GetDebugInterface(IID_PPV_ARGS(&debugController)))) {
 		debugController->EnableDebugLayer();
 	}
@@ -83,7 +82,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	depthClearValue.Format = DXGI_FORMAT_D32_FLOAT;	//深度値フォーマット
 
 	//リソース生成
-	ID3D12Resource* depthBuff = nullptr;
+	ComPtr<ID3D12Resource> depthBuff;
 	result = DX12.device->CreateCommittedResource(
 		&depthHeapProp,
 		D3D12_HEAP_FLAG_NONE,
@@ -96,7 +95,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	D3D12_DESCRIPTOR_HEAP_DESC dsvHeapDesc{};
 	dsvHeapDesc.NumDescriptors = 1;	//深度ビューは1つ
 	dsvHeapDesc.Type = D3D12_DESCRIPTOR_HEAP_TYPE_DSV;	//デプスステンシルビュー
-	ID3D12DescriptorHeap* dsvHeap = nullptr;
+	ComPtr<ID3D12DescriptorHeap> dsvHeap;
 	result = DX12.device->CreateDescriptorHeap(&dsvHeapDesc, IID_PPV_ARGS(&dsvHeap));
 
 	//深度ビュー作成
@@ -104,7 +103,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	dsvDesc.Format = DXGI_FORMAT_D32_FLOAT;//深度値フォーマット
 	dsvDesc.ViewDimension = D3D12_DSV_DIMENSION_TEXTURE2D;
 	DX12.device->CreateDepthStencilView(
-		depthBuff,
+		depthBuff.Get(),
 		&dsvDesc,
 		dsvHeap->GetCPUDescriptorHandleForHeapStart());
 
@@ -276,7 +275,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	samplerDesc.ShaderVisibility = D3D12_SHADER_VISIBILITY_PIXEL;
 
 	//ルートシグネチャ
-	ID3D12RootSignature* rootSignature;
+	ComPtr<ID3D12RootSignature> rootSignature;
 
 	//ルートシグネチャの設定
 	D3D12_ROOT_SIGNATURE_DESC rootSignatureDesc{};
@@ -294,12 +293,12 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	result = DX12.device->CreateRootSignature(0, rootSigBlob->GetBufferPointer(), rootSigBlob->GetBufferSize(),
 		IID_PPV_ARGS(&rootSignature));
 	assert(SUCCEEDED(result));
-	rootSigBlob->Release();
+
 	//パイプラインにルートシグネチャをセット
-	pipelineDesc.pRootSignature = rootSignature;
+	pipelineDesc.pRootSignature = rootSignature.Get();
 
 	//パイプラインステートの生成
-	ID3D12PipelineState* pipelineState = nullptr;
+	ComPtr<ID3D12PipelineState> pipelineState;
 	result = DX12.device->CreateGraphicsPipelineState(&pipelineDesc, IID_PPV_ARGS(&pipelineState));
 	assert(SUCCEEDED(result));
 
@@ -439,7 +438,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 
 		//1.リソースバリアで書き込み化に変更
 		D3D12_RESOURCE_BARRIER barrierDesc{};
-		barrierDesc.Transition.pResource = DX12.backBuffers[bbIndex];	//バックバッファを指定
+		barrierDesc.Transition.pResource = DX12.backBuffers[bbIndex].Get();	//バックバッファを指定
 		barrierDesc.Transition.StateBefore = D3D12_RESOURCE_STATE_PRESENT;	//表示状態から
 		barrierDesc.Transition.StateAfter = D3D12_RESOURCE_STATE_RENDER_TARGET;		//描画状態へ
 		DX12.commandList->ResourceBarrier(1, &barrierDesc);
@@ -603,8 +602,8 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		DX12.commandList->RSSetScissorRects(1, &scissorRect);
 
 		//パイプラインステートとルートシグネチャの設定コマンド
-		DX12.commandList->SetPipelineState(pipelineState);
-		DX12.commandList->SetGraphicsRootSignature(rootSignature);
+		DX12.commandList->SetPipelineState(pipelineState.Get());
+		DX12.commandList->SetGraphicsRootSignature(rootSignature.Get());
 
 		//プリミティブ形状の設定コマンド
 		DX12.commandList->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
@@ -616,9 +615,9 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		DX12.commandList->SetGraphicsRootConstantBufferView(0, constBufferM.buffer->GetGPUVirtualAddress());
 
 		//描画処理
-		object3ds[0].Draw(DX12.commandList, zawa);
-		object3ds[1].Draw(DX12.commandList, slime);
-		object3ds[2].Draw(DX12.commandList, pizza);
+		object3ds[0].Draw(DX12.commandList.Get(), zawa);
+		object3ds[1].Draw(DX12.commandList.Get(), slime);
+		object3ds[2].Draw(DX12.commandList.Get(), pizza);
 
 		//--4.描画コマンドここまで--//
 
@@ -636,7 +635,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		assert(SUCCEEDED(result));
 
 		//コマンドリストの実行
-		ID3D12CommandList* commandLists[] = { DX12.commandList };
+		ID3D12CommandList* commandLists[] = { DX12.commandList.Get() };
 		DX12.commandQueue->ExecuteCommandLists(1, commandLists);
 
 		//画面に表示するバッファをフリップ(裏表の入れ替え)
@@ -644,7 +643,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		assert(SUCCEEDED(result));
 
 		//コマンドの実行完了を待つ
-		DX12.commandQueue->Signal(DX12.fence, ++DX12.fenceVal);
+		DX12.commandQueue->Signal(DX12.fence.Get(), ++DX12.fenceVal);
 		if (DX12.fence->GetCompletedValue() != DX12.fenceVal) {
 			HANDLE event = CreateEvent(nullptr, false, false, nullptr);
 			DX12.fence->SetEventOnCompletion(DX12.fenceVal, event);
@@ -657,7 +656,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		assert(SUCCEEDED(result));
 
 		//再びコマンドリストを貯める準備
-		result = DX12.commandList->Reset(DX12.commandAllocator, nullptr);
+		result = DX12.commandList->Reset(DX12.commandAllocator.Get(), nullptr);
 		assert(SUCCEEDED(result));
 
 #pragma endregion 画面入れ替え

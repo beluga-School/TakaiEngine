@@ -49,7 +49,7 @@ void DirectX12::AdapterSort()
 		//ソフトウェアデバイスを回避
 		if (!(adapterDesc.Flags & DXGI_ADAPTER_FLAG3_SOFTWARE)) {
 			//デバイスを採用してループを抜ける
-			tmpAdapter = adapters[i];
+			tmpAdapter = adapters[i].Get();
 			break;
 		}
 	}
@@ -94,7 +94,7 @@ void DirectX12::CreateCmdList()
 	//コマンドリストを生成
 	result = device->CreateCommandList(0,
 		D3D12_COMMAND_LIST_TYPE_DIRECT,
-		commandAllocator, nullptr,
+		commandAllocator.Get(), nullptr,
 		IID_PPV_ARGS(&commandList));
 	assert(SUCCEEDED(result));
 
@@ -117,11 +117,20 @@ void DirectX12::SetSwapChain(WinAPI winApi_)
 	swapChainDesc.SwapEffect = DXGI_SWAP_EFFECT_FLIP_DISCARD;	//フリップ後は破棄
 	swapChainDesc.Flags = DXGI_SWAP_CHAIN_FLAG_ALLOW_MODE_SWITCH;
 
+	//ComPtrに対応
+	ComPtr<IDXGISwapChain1> swapchain1;
+
 	//スワップチェーンの生成
 	result = dxgifactory->CreateSwapChainForHwnd(
-		commandQueue, winApi_.hwnd, &swapChainDesc, nullptr, nullptr,
-		(IDXGISwapChain1**)&swapChain);
+		commandQueue.Get(), 
+		winApi_.hwnd, 
+		&swapChainDesc, 
+		nullptr, 
+		nullptr,
+		(IDXGISwapChain1**)&swapchain1);
 	assert(SUCCEEDED(result));
+
+	swapchain1.As(&swapChain);
 }
 
 void DirectX12::SetDescHeap()
@@ -163,7 +172,7 @@ void DirectX12::RenderTargetView()
 		rtvDesc.ViewDimension = D3D12_RTV_DIMENSION_TEXTURE2D;
 
 		//レンダーターゲットビューの生成
-		device->CreateRenderTargetView(backBuffers[i], &rtvDesc, rtvHandle);
+		device->CreateRenderTargetView(backBuffers[i].Get(), &rtvDesc, rtvHandle);
 
 	}
 }
@@ -176,5 +185,5 @@ void DirectX12::CreateFence()
 
 ID3D12Device* bGetDevice()
 {
-	return DX12.device;
+	return DX12.device.Get();
 }

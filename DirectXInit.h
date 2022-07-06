@@ -5,9 +5,11 @@
 #include "WinAPI.h"
 #include <vector>
 #include <string>
+#include<wrl.h>
+using namespace Microsoft::WRL;
 
 //アダプターの列挙用
-static std::vector<IDXGIAdapter4*> adapters;
+static std::vector<ComPtr<IDXGIAdapter4>> adapters;
 
 //ここに特定の名前をもつアダプターオブジェクトが入る
 static IDXGIAdapter4* tmpAdapter = nullptr;
@@ -16,19 +18,19 @@ class DirectX12
 {
 public:
 
-	ID3D12Device* device = nullptr;
-	IDXGIFactory7* dxgifactory = nullptr;
-	IDXGISwapChain4* swapChain = nullptr;
-	ID3D12CommandAllocator* commandAllocator = nullptr;
-	ID3D12GraphicsCommandList* commandList = nullptr;
-	ID3D12CommandQueue* commandQueue = nullptr;
-	ID3D12DescriptorHeap* rtvHeap = nullptr;
+	ComPtr<ID3D12Device> device;
+	ComPtr<IDXGIFactory7> dxgifactory;
+	ComPtr<IDXGISwapChain4> swapChain;
+	ComPtr<ID3D12CommandAllocator> commandAllocator;
+	ComPtr<ID3D12GraphicsCommandList> commandList;
+	ComPtr<ID3D12CommandQueue> commandQueue;
+	ComPtr<ID3D12DescriptorHeap> rtvHeap;
 
 	DXGI_SWAP_CHAIN_DESC1 swapChainDesc{};
 	D3D12_DESCRIPTOR_HEAP_DESC rtvHeapDesc{};
-	std::vector<ID3D12Resource*> backBuffers;
+	std::vector<ComPtr<ID3D12Resource>> backBuffers;
 
-	ID3D12Fence* fence = nullptr;
+	ComPtr<ID3D12Fence> fence;
 	UINT64 fenceVal = 0;
 
 public:
