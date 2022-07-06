@@ -467,19 +467,19 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		{
 			if (input_->PushKey(DIK_RIGHT)) { 
 				viewProjection_.eye.x += 2;
-				viewProjection_.target.x += 2;
+				//viewProjection_.target.x += 2;
 			}
 			if (input_->PushKey(DIK_LEFT)) { 
 				viewProjection_.eye.x -= 2; 
-				viewProjection_.target.x -= 2;
+				//viewProjection_.target.x -= 2;
 			}
 			if (input_->PushKey(DIK_UP)) {
-				viewProjection_.eye.y += 2;
-				viewProjection_.target.y += 2;
+				viewProjection_.eye.z += 2;
+				//viewProjection_.target.y += 2;
 			}
 			if (input_->PushKey(DIK_DOWN)) {
-				viewProjection_.eye.y -= 2;
-				viewProjection_.target.y -= 2;
+				viewProjection_.eye.z -= 2;
+				//viewProjection_.target.y -= 2;
 			}
 			viewProjection_.UpdatematView();
 		}

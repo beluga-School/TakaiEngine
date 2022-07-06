@@ -35,5 +35,4 @@ public:
 	D3D12_VERTEX_BUFFER_VIEW vbView{};
 
 	void CreateVertex(DirectX12 dx12_, std::vector<Vertex> vertices, std::vector<uint16_t> indices);
-	D3D12_RESOURCE_DESC GetResDesc(bool getMode);
 };
