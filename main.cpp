@@ -65,6 +65,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 #pragma region 描画初期化処理
 
 	Model cube = Cube();
+	Model sprite = Sprite();
 
 	//--depthこっから
 
@@ -115,6 +116,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 
 	//頂点データ作成
 	cube.CreateModel(DX12);
+	sprite.CreateModel(DX12);
 
 	//シェーダー
 	Shader shader_;
@@ -233,13 +235,16 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	const wchar_t* msg[3] = { L"Resources/zawa_sironuri.png", L"Resources/slime.png",L"Resources/pizza.png" };
 
 	Texture zawa;
-	zawa.Load(msg[0], cube,DX12);
+	zawa.Load(msg[0],DX12);
 	
 	Texture slime;
-	slime.Load(msg[1], cube,DX12);
+	slime.Load(msg[1],DX12);
 	
 	Texture pizza;
-	pizza.Load(msg[2], cube, DX12);
+	pizza.Load(msg[2], DX12);
+
+	Texture white;
+	white.CreateWhiteTexture(DX12);
 	
 	//デスクリプタレンジの設定
 	D3D12_DESCRIPTOR_RANGE descriptorRange{};
@@ -331,7 +336,6 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	for (int i = 0; i < kObjectCount; i++)
 	{
 		object3ds[i].Initialize();
-		object3ds[i].SetModel(&cube);
 		//親子構造　サンプル
 		//先頭以外なら
 		//if (i > 0)
@@ -347,6 +351,11 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		//	object3ds[i].position = { 0.0f,0.0f,-8.0f };
 		//}
 	}
+
+	//どのモデルの形を使うかを設定
+	object3ds[0].SetModel(&sprite);
+	object3ds[1].SetModel(&cube);
+	object3ds[2].SetModel(&cube);
 
 	object3ds[1].position.x = 20;
 	object3ds[1].position.y = 10;
@@ -406,23 +415,6 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 
 	float cameraY = 100;
 
-	enum CameraMode
-	{
-		BIOHAZARD,
-		TPS,
-		IMAMADE,
-	};
-	
-	float matWorldZ = 0;
-
-	////ハンドルを取得する部分
-	////SRVヒープの先頭ハンドルを取得(SRVを指しているはず)
-	//D3D12_GPU_DESCRIPTOR_HANDLE srvGpuHandle = { 0 };
-
-	//srvGpuHandle = srvHeap->GetGPUDescriptorHandleForHeapStart();
-	////ポインタを「SRVサイズ * 添え字」分進める
-	//srvGpuHandle.ptr += SRVHandleSize;
-
 	//ゲームループ
 	while (true){
 
@@ -467,7 +459,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 
 		input_->Update();
 
-		//カメラ移動
+		//カメラ座標を動かす
 		if (input_->PushKey(DIK_RIGHT) || 
 			input_->PushKey(DIK_LEFT) || 
 			input_->PushKey(DIK_UP) || 
@@ -496,67 +488,6 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		{
 			object3ds[i].Update(viewProjection_.matView, matProjection);
 		}
-		//default:
-		//{
-		//	if (input_->TriggerKey(DIK_1))
-		//	{
-		//		for (int i = 0; i < _countof(clearColor); i++)
-		//		{
-		//			if (clearColor[i] != redColor[i])
-		//			{
-		//				clearColor[i] = redColor[i];
-		//			}
-		//			else if (clearColor[i] == redColor[i])
-		//			{
-		//				clearColor[i] = blueColor[i];
-		//			}
-		//		}
-		//	}
-
-		//	//ビュー行列の計算
-		//	if (input_->PushKey(DIK_D) || input_->PushKey(DIK_A))
-		//	{
-		//		if (input_->PushKey(DIK_D)) { angle += XMConvertToRadians(1.0f); }
-		//		if (input_->PushKey(DIK_A)) { angle -= XMConvertToRadians(1.0f); }
-
-		//		//angleラジアンだけY軸まわりに回転。半径は-100
-		//		viewProjection_.eye.x = -cameraY * sinf(angle);
-		//		viewProjection_.eye.z = -cameraY * cosf(angle);
-
-		//		//射影行列の計算(更新しない場合は再計算しなくていいのでこの位置でOK)
-		//		viewProjection_.UpdatematView();
-		//	}
-
-		//	if (input_->PushKey(DIK_W) || input_->PushKey(DIK_S))
-		//	{
-		//		if (input_->PushKey(DIK_W)) { angleY += XMConvertToRadians(1.0f); }
-		//		if (input_->PushKey(DIK_S)) { angleY -= XMConvertToRadians(1.0f); }
-
-		//		viewProjection_.eye.y = -cameraY * sinf(angleY);
-		//		viewProjection_.eye.z = -cameraY * cosf(angleY);
-
-		//		viewProjection_.UpdatematView();
-		//	}
-
-		//	if (input_->PushKey(DIK_UP) ||
-		//		input_->PushKey(DIK_DOWN) ||
-		//		input_->PushKey(DIK_RIGHT) ||
-		//		input_->PushKey(DIK_LEFT)) {
-		//		//座標を移動する処理
-		//		if (input_->PushKey(DIK_UP)) { object3ds[0].position.z += 1.0f; }
-		//		if (input_->PushKey(DIK_DOWN)) { object3ds[0].position.z -= 1.0f; }
-		//		if (input_->PushKey(DIK_RIGHT)) { object3ds[0].position.x += 1.0f; }
-		//		if (input_->PushKey(DIK_LEFT)) { object3ds[0].position.x -= 1.0f; }
-		//	}
-
-		//	//object3ds[1].rotation.x += 0.5f;
-
-		//	for (size_t i = 0; i < kObjectCount; i++)
-		//	{
-		//		object3ds[i].Update(viewProjection_.matView, matProjection);
-		//	}
-		//	break;
-		//}
 
 		///---DirectX毎フレーム処理 ここまで---///
 #pragma endregion DirectX毎フレーム処理
@@ -590,7 +521,9 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		DX12.commandList->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 
 		//頂点バッファビューの設定コマンド
+		//モデルのどれかのvertexbufferが入っていればok
 		DX12.commandList->IASetVertexBuffers(0, 1, &cube.vbView);
+		//DX12.commandList->IASetVertexBuffers(0, 1, &sprite.vbView);
 
 		//定数バッファビュー(CBV)の設定コマンド
 		DX12.commandList->SetGraphicsRootConstantBufferView(0, constBufferM.buffer->GetGPUVirtualAddress());
@@ -599,7 +532,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		gameScene_.Draw();
 
 		object3ds[0].Draw(DX12.commandList.Get(), zawa);
-		object3ds[1].Draw(DX12.commandList.Get(), slime);
+		object3ds[1].Draw(DX12.commandList.Get(), white);
 		object3ds[2].Draw(DX12.commandList.Get(), pizza);
 
 		//--4.描画コマンドここまで--//

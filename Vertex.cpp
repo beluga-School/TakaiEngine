@@ -1,14 +1,12 @@
 #include "Vertex.h"
 #include "Result.h"
-#include <wrl.h>
-using namespace Microsoft::WRL;
 
 void VertexData::CreateVertex(DirectX12 dx12_, std::vector<Vertex> vertices, std::vector<uint16_t> indices)
 {
 	//頂点データ
 
 	//頂点データ全体のサイズ = 頂点データ一つ分のサイズ * 頂点データの要素数
-	sizeVB = static_cast<UINT>(sizeof(vertices[0]) * vertices.size());
+	UINT sizeVB = static_cast<UINT>(sizeof(vertices[0]) * vertices.size());
 
 	//頂点バッファの設定
 	D3D12_HEAP_PROPERTIES heapProp{};		//ヒープ設定

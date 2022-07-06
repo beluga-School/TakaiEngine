@@ -39,23 +39,5 @@ public:
 	void SetModel(Model *model);
 	void Update(XMMATRIX& matView, XMMATRIX& matProjection);
 	void Draw(ID3D12GraphicsCommandList* commandList, Texture& texture);
-
-	//void MatWorldIdentity();
-	//void MatScaleIdentity();
-	//void MatRotIdentity();
-	//void MatTransIdentity();
-
-	//void ScaleUpdate(float matSx,float matSy,float matSz);
-	//void ScaleUpdate(XMFLOAT3 scale);
-
-	//void RotUpdateZXY(float matRx, float matRy, float matRz);
-	//void RotUpdateZXY(XMFLOAT3 rot);
-
-	//void TransUpdate(float posx, float posy, float posz);
-	//void TransUpdate(XMFLOAT3 pos);
-
-	//void MatWorldUpdate();
-
-	//XMMATRIX GetMatWorld();
 };
 

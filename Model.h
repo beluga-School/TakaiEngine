@@ -23,6 +23,13 @@ public:
 	//void CreateModel(DirectXInit dx12_);
 };
 
+class Sprite : public Model
+{
+public:
+	Sprite();
+	~Sprite() {};
+};
+
 class Triangle : public Model
 {
 public:
