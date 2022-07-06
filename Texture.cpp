@@ -86,7 +86,7 @@ void Texture::Load(const wchar_t* t, Model cube, DirectX12 DX12)
 	//SRVHandleSize = DX12.device->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV);
 
 	//ハンドルの指す位置にシェーダーリソースビュー作成
-	DX12.device->CreateShaderResourceView(texBuff, &srvDesc, srvHandle);
+	DX12.device->CreateShaderResourceView(texBuff.Get(), &srvDesc, srvHandle);
 
 	//ハンドルを取得する部分
 	//SRVヒープの先頭ハンドルを取得(SRVを指しているはず)

@@ -9,7 +9,7 @@ template <class Format>
 class ConstBuffer
 {
 public:
-	ID3D12Resource* buffer;
+	Microsoft::WRL::ComPtr<ID3D12Resource> buffer;
 	Format* constBufferData;
 
 	ConstBuffer();

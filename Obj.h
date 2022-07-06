@@ -7,6 +7,7 @@ using namespace DirectX;
 #include "Model.h"
 #include "ConstBuffer.h"
 #include "Texture.h"
+#include <memory>
 
 struct ConstBufferDataMaterial {
 	XMFLOAT4 color;	//色(RGBA)
@@ -30,7 +31,7 @@ public:
 	//XMMATRIX matRot;	//回転行列
 	//XMMATRIX matTrans;	//平行移動行列
 
-	Obj3d* parent = nullptr;
+	std::unique_ptr<Obj3d> parent;
 
 	Model* model = nullptr;
 public:

@@ -18,14 +18,15 @@ public:
 	void Load(const wchar_t* t, Model cube, DirectX12 DX12);
 	D3D12_GPU_DESCRIPTOR_HANDLE GetHandle();
 	//設定を元にSRV用デスクリプタヒープを生成
-	ID3D12DescriptorHeap* srvHeap = nullptr;
+	//ここはComPtrにするとダメだった なんでダメかはわからん
+	ID3D12DescriptorHeap* srvHeap;
 
 private:
 	TexMetadata metadata{};
 	ScratchImage scratchImg{};
 	ScratchImage mipChain{};
 
-	ID3D12Resource* texBuff = nullptr;
+	Microsoft::WRL::ComPtr<ID3D12Resource> texBuff;
 	D3D12_GPU_DESCRIPTOR_HANDLE srvGpuHandle = { 0 };
 
 	//SRVの最大個数

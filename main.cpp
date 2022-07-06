@@ -9,6 +9,8 @@ using namespace DirectX;
 #include <d3dcompiler.h>
 #pragma comment(lib,"d3dcompiler.lib")
 #include <DirectXTex.h>
+#include <iostream>
+#include <memory>
 
 //自分でクラス化したやつ
 #include "WinAPI.h"
@@ -115,8 +117,8 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	//シェーダー
 	Shader shader_;
 
-	shader_.vsBlob = shader_.Compile(L"BasicVS.hlsl", "vs_5_0", shader_.vsBlob,"main");
-	shader_.psBlob = shader_.Compile(L"BasicPS.hlsl", "ps_5_0", shader_.psBlob,"main");
+	shader_.vsBlob = shader_.Compile(L"BasicVS.hlsl", "vs_5_0", shader_.vsBlob.Get(), "main");
+	shader_.psBlob = shader_.Compile(L"BasicPS.hlsl", "ps_5_0", shader_.psBlob.Get(),"main");
 
 
 
@@ -226,7 +228,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	pipelineDesc.DSVFormat = DXGI_FORMAT_D32_FLOAT;	//深度値フォーマット
 	
 	//WICテクスチャのロード
-	const wchar_t* msg[3] = {L"Resources/zawa_sironuri.png", L"Resources/slime.png",L"Resources/pizza.png"};
+	const wchar_t* msg[3] = { L"Resources/zawa_sironuri.png", L"Resources/slime.png",L"Resources/pizza.png" };
 
 	Texture zawa;
 	zawa.Load(msg[0], cube,DX12);
@@ -286,7 +288,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	rootSignatureDesc.NumStaticSamplers = 1;				//サンプラーの数			配列ならルートパラメータと同じような書き方ができる
 
 	//ルートシグネチャのシリアライズ
-	ID3DBlob* rootSigBlob = nullptr;
+	ComPtr<ID3DBlob> rootSigBlob;
 	result = D3D12SerializeRootSignature(&rootSignatureDesc, D3D_ROOT_SIGNATURE_VERSION_1_0,
 		&rootSigBlob, &shader_.errorBlob);
 	assert(SUCCEEDED(result));
@@ -321,9 +323,10 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	ConstBuffer<ConstBufferDataMaterial> constBufferM;
 
 	const size_t kObjectCount = 3;
-	Obj3d object3ds[kObjectCount];
+	std::unique_ptr<Obj3d[]> object3ds;
+	object3ds = std::make_unique<Obj3d[]>(kObjectCount);
 
-	for (int i = 0; i < _countof(object3ds); i++)
+	for (int i = 0; i < kObjectCount; i++)
 	{
 		object3ds[i].Initialize();
 		object3ds[i].SetModel(&cube);
@@ -465,7 +468,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		{
 			if (input_->TriggerKey(DIK_Q)) { cameramode = TPS; }
 			viewProjection_.UpdatematView();
-			for (size_t i = 0; i < _countof(object3ds); i++)
+			for (size_t i = 0; i < kObjectCount; i++)
 			{
 				object3ds[i].Update(viewProjection_.matView, matProjection);
 			}
@@ -505,7 +508,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 				viewProjection_.UpdatematView();
 			}
 	
-			for (size_t i = 0; i < _countof(object3ds); i++)
+			for (size_t i = 0; i < kObjectCount; i++)
 			{
 				object3ds[i].Update(viewProjection_.matView, matProjection);
 			}
@@ -566,7 +569,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 
 			//object3ds[1].rotation.x += 0.5f;
 
-			for (size_t i = 0; i < _countof(object3ds); i++)
+			for (size_t i = 0; i < kObjectCount; i++)
 			{
 				object3ds[i].Update(viewProjection_.matView, matProjection);
 			}

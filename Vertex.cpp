@@ -1,5 +1,7 @@
 #include "Vertex.h"
 #include "Result.h"
+#include <wrl.h>
+using namespace Microsoft::WRL;
 
 void VertexData::CreateVertex(DirectX12 dx12_, std::vector<Vertex> vertices, std::vector<uint16_t> indices)
 {
@@ -22,7 +24,8 @@ void VertexData::CreateVertex(DirectX12 dx12_, std::vector<Vertex> vertices, std
 	resDesc.Layout = D3D12_TEXTURE_LAYOUT_ROW_MAJOR;
 
 	//頂点バッファの生成
-	ID3D12Resource* vertBuff = nullptr;
+	//ComPtrにしたらダメだった マップ処理に使ってるから？
+	ID3D12Resource* vertBuff;
 	result = dx12_.device->CreateCommittedResource(
 		&heapProp,	//ヒープ設定
 		D3D12_HEAP_FLAG_NONE,
@@ -75,6 +78,7 @@ void VertexData::CreateVertex(DirectX12 dx12_, std::vector<Vertex> vertices, std
 	vbView.StrideInBytes = sizeof(vertices[0]);
 
 	//インデックスデータ全体のサイズ
+	//ComPtrにしたらダメだった マップ処理に使ってるから？
 	UINT sizeIB = static_cast<UINT>(sizeof(uint16_t) * indices.size());
 
 	//リソース設定

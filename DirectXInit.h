@@ -5,6 +5,7 @@
 #include "WinAPI.h"
 #include <vector>
 #include <string>
+//Ç±Ç±Ç…íuÇ¢Ç∆Ç≠Ç∆äÎÇ»Ç¢ÇÒÇ∂Ç·Ç»Ç¢ÅH
 #include<wrl.h>
 using namespace Microsoft::WRL;
 
