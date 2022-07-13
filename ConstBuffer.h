@@ -4,9 +4,15 @@
 #include "Model.h"
 #include "Result.h"
 
-template <class Format>
+struct ConstBufferDataMaterial {
+	XMFLOAT4 color;	//êF(RGBA)
+};
 
-class ConstBuffer
+struct ConstBufferDataTransform {
+	XMMATRIX mat;	//3Dïœä∑çsóÒ
+};
+
+template <class Format> class ConstBuffer
 {
 public:
 	Microsoft::WRL::ComPtr<ID3D12Resource> buffer;
@@ -16,8 +22,7 @@ public:
 	~ConstBuffer();
 };
 
-template<class Format>
-inline ConstBuffer<Format>::ConstBuffer()
+template<class Format> inline ConstBuffer<Format>::ConstBuffer()
 {
 	D3D12_HEAP_PROPERTIES heapProp{};
 	heapProp.Type = D3D12_HEAP_TYPE_UPLOAD;

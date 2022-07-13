@@ -4,6 +4,9 @@
 
 ID3DBlob* Shader::Compile(const wchar_t *shaderFilename, LPCSTR shadermodelname,ID3DBlob *blob , LPCSTR entrypointname)
 {
+	//一度コンパイルしたシェーダーを再コンパイルしないような設計にすると
+	//べんり
+
 	//シェーダの読み込みとコンパイル
 	result = D3DCompileFromFile(
 		shaderFilename,	//シェーダファイル名
