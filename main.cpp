@@ -124,6 +124,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	Sprite sprite;
 	PipelineSet object = sprite.PipelineCreate(DX12);
 	SpriteKozotai kozotai = SpriteKozotai::SpriteCreate(DX12);
+	kozotai.Init();
 
 	/*Shader shader_;*/
 
@@ -365,18 +366,18 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	constBufferM.constBufferData->color = XMFLOAT4(1, 1, 1, 1.0f);
 
 
-	ConstBuffer<ConstBufferDataTransform> constBufferT;
+	ConstBuffer<ConstBufferDataTransform> MatOrtho;
 
 	//単位行列で埋める
-	constBufferT.constBufferData->mat = XMMatrixIdentity();
+	MatOrtho.constBufferData->mat = XMMatrixIdentity();
 	//指定の部分を書き換える
-	constBufferT.constBufferData->mat.r[0].m128_f32[0] = 2.0f / window_width;
-	constBufferT.constBufferData->mat.r[1].m128_f32[1] = -2.0f / window_height;
+	MatOrtho.constBufferData->mat.r[0].m128_f32[0] = 2.0f / window_width;
+	MatOrtho.constBufferData->mat.r[1].m128_f32[1] = -2.0f / window_height;
 
-	constBufferT.constBufferData->mat.r[3].m128_f32[0] = -1.0f;
-	constBufferT.constBufferData->mat.r[3].m128_f32[1] = 1.0f;
+	MatOrtho.constBufferData->mat.r[3].m128_f32[0] = -1.0f;
+	MatOrtho.constBufferData->mat.r[3].m128_f32[1] = 1.0f;
 	
-	constBufferT.constBufferData->mat = XMMatrixPerspectiveFovLH(
+	MatOrtho.constBufferData->mat = XMMatrixPerspectiveFovLH(
 		XMConvertToRadians(45.0f),				//上下画角45度
 		(float)window_width / window_height,	//アスペクト比(画面横幅/画面縦幅)
 		0.1f, 1000.0f							//前端、奥端
@@ -463,6 +464,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		gameScene_.Update();
 
 		input_->Update();
+		kozotai.Update(MatOrtho.constBufferData->mat);
 
 		//カメラ座標を動かす
 		if (input_->PushKey(DIK_RIGHT) || 

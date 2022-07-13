@@ -2,6 +2,11 @@
 #include <memory>
 using namespace std;
 
+void SpriteKozotai::Init()
+{
+	constBufferT.constBufferData->mat = XMMatrixIdentity();
+}
+
 PipelineSet Sprite::PipelineCreate(DirectX12 DX12)
 {
 	Shader shader_;
@@ -25,6 +30,10 @@ PipelineSet Sprite::PipelineCreate(DirectX12 DX12)
 	pipelineDesc.RasterizerState.CullMode = D3D12_CULL_MODE_NONE;	//カリングしない
 	pipelineDesc.RasterizerState.FillMode = D3D12_FILL_MODE_SOLID;	//ポリゴン内塗りつぶし
 	pipelineDesc.RasterizerState.DepthClipEnable = true;			//深度クリッピングを有効に
+
+	//ブレンドステート
+	pipelineDesc.BlendState.RenderTarget[0].RenderTargetWriteMask =
+		D3D12_COLOR_WRITE_ENABLE_ALL;	//RGBA全てのチャンネルを描画
 
 	static D3D12_INPUT_ELEMENT_DESC inputLayout[] = {
 		{ //xyz座標
@@ -141,11 +150,6 @@ PipelineSet Sprite::PipelineCreate(DirectX12 DX12)
 	return pipelineSet;
 }
 
-//void Sprite::CreateSprite(DirectX12 dx12_)
-//{
-//	kozotai.vertS.CreateVertex(dx12_, kozotai.);
-//}
-
 SpriteKozotai SpriteKozotai::SpriteCreate(DirectX12 DX12)
 {
 	SpriteKozotai sprite;
@@ -201,7 +205,31 @@ SpriteKozotai SpriteKozotai::SpriteCreate(DirectX12 DX12)
 	//頂点1つ分のデータサイズ
 	sprite.vertS.vbView.StrideInBytes = sizeof(vertices[0]);
 
+	sprite.vertS.CreateVertex(DX12, vertices);
+
 	return sprite;
+}
+
+void SpriteKozotai::Update(XMMATRIX& matProjection)
+{
+	XMMATRIX matScale;	//スケーリング行列
+	XMMATRIX matRot;	//回転行列
+	XMMATRIX matTrans;	//平行移動行列
+
+	matScale = XMMatrixScaling(scale.x, scale.y, scale.z);
+	matRot = XMMatrixIdentity();
+	matRot *= XMMatrixRotationZ(rotation.z);
+	matRot *= XMMatrixRotationX(rotation.x);
+	matRot *= XMMatrixRotationY(rotation.y);
+	matTrans = XMMatrixTranslation(
+		position.x, position.y, position.z);
+
+	matWorld = XMMatrixIdentity();
+	matWorld *= matScale;
+	matWorld *= matRot;
+	matWorld *= matTrans;
+
+	constBufferT.constBufferData->mat = matWorld * matProjection;
 }
 
 void SpriteKozotai::PreDraw(ID3D12GraphicsCommandList* commandList,const PipelineSet& pipelineSet, Texture& texture)
@@ -213,13 +241,16 @@ void SpriteKozotai::PreDraw(ID3D12GraphicsCommandList* commandList,const Pipelin
 	commandList->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP);
 
 	commandList->SetDescriptorHeaps(1, &texture.srvHeap);
+	//ルートパラメータ1番はテクスチャバッファ
+	commandList->SetGraphicsRootDescriptorTable(1, texture.GetHandle());
 }
 
 void SpriteKozotai::Draw(const Sprite& sprite, ID3D12GraphicsCommandList* commandList)
 {
 	commandList->IASetVertexBuffers(0, 1, &vertS.vbView);
 
-	commandList->SetGraphicsRootConstantBufferView(0, constBufferT.buffer->GetGPUVirtualAddress());
+	//commandList->SetGraphicsRootConstantBufferView(0, constBufferT.buffer->GetGPUVirtualAddress());
+	commandList->SetGraphicsRootConstantBufferView(2, constBufferT.buffer->GetGPUVirtualAddress());
 
 	commandList->DrawInstanced(4, 1, 0, 0);
 }
