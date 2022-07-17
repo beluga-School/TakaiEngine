@@ -474,36 +474,15 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	BYTE key[256] = {};
 	BYTE oldkey[256] = {};
 
-	const int VIEWPORT_NUM = 4;
+	const int VIEWPORT_NUM = 1;
 	D3D12_VIEWPORT viewport[VIEWPORT_NUM]{};
 
-	viewport[0].Width = window_width / 2;
-	viewport[0].Height = window_height / 2;
+	viewport[0].Width = window_width;
+	viewport[0].Height = window_height;
 	viewport[0].TopLeftX = 0;
 	viewport[0].TopLeftY = 0;
 	viewport[0].MinDepth = 0.0f;
 	viewport[0].MaxDepth = 1.0f;
-
-	viewport[1].Width = window_width / 2;
-	viewport[1].Height = window_height / 2;
-	viewport[1].TopLeftX = window_width / 2;
-	viewport[1].TopLeftY = 0;
-	viewport[1].MinDepth = 0.0f;
-	viewport[1].MaxDepth = 1.0f;
-
-	viewport[2].Width = window_width / 2;
-	viewport[2].Height = window_height / 2;
-	viewport[2].TopLeftX = 0;
-	viewport[2].TopLeftY = window_height / 2;
-	viewport[2].MinDepth = 0.0f;
-	viewport[2].MaxDepth = 1.0f;
-
-	viewport[3].Width = window_width / 2;
-	viewport[3].Height = window_height / 2;
-	viewport[3].TopLeftX = window_width / 2;
-	viewport[3].TopLeftY = window_height / 2;
-	viewport[3].MinDepth = 0.0f;
-	viewport[3].MaxDepth = 1.0f;
 
 	D3D12_RECT scissorRect{};
 	scissorRect.left = 0;									//êÿÇËî≤Ç´ç¿ïWç∂
