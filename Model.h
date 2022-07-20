@@ -33,5 +33,6 @@ public:
 class Triangle : public Model
 {
 public:
-
+	Triangle();
+	~Triangle() {};
 };

@@ -66,6 +66,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 
 	Model cube = Cube();
 	Model sprite = Sprite();
+	Model triangle = Triangle();
 
 	//--depthこっから
 
@@ -117,6 +118,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	//頂点データ作成
 	cube.CreateModel(DX12);
 	sprite.CreateModel(DX12);
+	triangle.CreateModel(DX12);
 
 	//シェーダー
 	Shader shader_;
@@ -353,7 +355,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	}
 
 	//どのモデルの形を使うかを設定
-	object3ds[0].SetModel(&sprite);
+	object3ds[0].SetModel(&triangle);
 	object3ds[1].SetModel(&cube);
 	object3ds[2].SetModel(&cube);
 
@@ -531,8 +533,8 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		//描画処理
 		gameScene_.Draw();
 
-		object3ds[0].Draw(DX12.commandList.Get(), zawa);
-		object3ds[1].Draw(DX12.commandList.Get(), white);
+		object3ds[0].Draw(DX12.commandList.Get(), white);
+		object3ds[1].Draw(DX12.commandList.Get(), zawa);
 		object3ds[2].Draw(DX12.commandList.Get(), pizza);
 
 		//--4.描画コマンドここまで--//
