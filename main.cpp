@@ -64,10 +64,6 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 
 #pragma region 描画初期化処理
 
-	Model cube = Cube();
-	Model sprite = Sprite();
-	Model triangle = Triangle();
-
 	//--depthこっから
 
 	D3D12_RESOURCE_DESC depthResourceDesc{};
@@ -115,10 +111,17 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 
 	//--depthここまで
 
+	Model cube = Cube();
+	Model sprite = Sprite();
+	Model triangle = Triangle();
+	Model line = Line();
+
 	//頂点データ作成
 	cube.CreateModel(DX12);
 	sprite.CreateModel(DX12);
 	triangle.CreateModel(DX12);
+	line.CreateModel(DX12);
+
 
 	//シェーダー
 	Shader shader_;
@@ -234,7 +237,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	pipelineDesc.DSVFormat = DXGI_FORMAT_D32_FLOAT;	//深度値フォーマット
 	
 	//WICテクスチャのロード
-	const wchar_t* msg[3] = { L"Resources/zawa_sironuri.png", L"Resources/slime.png",L"Resources/pizza.png" };
+	const wchar_t* msg[3] = { L"Resources/zawa_sironuri.png", L"Resources/slime.png",L"Resources/pizza_sironuri.png" };
 
 	Texture zawa;
 	zawa.Load(msg[0],DX12);
@@ -331,7 +334,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	//定数バッファの生成
 	ConstBuffer<ConstBufferDataMaterial> constBufferM;
 
-	const size_t kObjectCount = 3;
+	const int kObjectCount = 2;
 	std::unique_ptr<Obj3d[]> object3ds;
 	object3ds = std::make_unique<Obj3d[]>(kObjectCount);
 
@@ -357,13 +360,35 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	//どのモデルの形を使うかを設定
 	object3ds[0].SetModel(&triangle);
 	object3ds[1].SetModel(&cube);
-	object3ds[2].SetModel(&cube);
 
 	object3ds[1].position.x = 20;
 	object3ds[1].position.y = 10;
+	
+	//線のモデルを使う設定
+	const int kLineCountX = 15;
+	const int kLineCountY = 15;
+	std::unique_ptr<Obj3d[]> LineX;
+	LineX = std::make_unique<Obj3d[]>(kLineCountX);
 
-	object3ds[2].position.x = -20;
-	object3ds[2].position.y = -10;
+	for (int i = 0; i < kLineCountX; i++)
+	{
+		LineX[i].Initialize();
+		LineX[i].SetModel(&line);
+		LineX[i].position.x += 10 * i - (10 * kLineCountX / 2);
+	}
+
+	std::unique_ptr<Obj3d[]> LineY;
+	LineY = std::make_unique<Obj3d[]>(kLineCountY);
+
+	for (int i = 0; i < kLineCountY; i++)
+	{
+		LineY[i].Initialize();
+		LineY[i].SetModel(&line);
+		//LineY[i].position.x += 10 * i;
+		LineY[i].position.z += 10 * i - (10 * kLineCountY / 2);
+
+		LineY[i].rotation.y += XMConvertToRadians(90.0f);
+	}
 
 	//値を書き込むと自動的に転送されるらしい
 	constBufferM.constBufferData->color = XMFLOAT4(1, 1, 1, 1.0f);
@@ -395,6 +420,9 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	ViewProjection viewProjection_;
 	viewProjection_.Initialize();
 
+	viewProjection_.eye.y = 50.0f;
+	viewProjection_.UpdatematView();
+
 #pragma endregion 描画初期化処理
 
 	gameScene_.Initialize();
@@ -410,12 +438,17 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		clearColor[i] = blueColor[i];
 	}
 
-	XMFLOAT3 materialColor = { -0.005f,0.005f,0 };
+	//XMFLOAT3 materialColor = { -0.005f,0.005f,0 };
 
 	float angle = 0.0f;	//カメラの回転角
 	float angleY = 0.0f;
 
 	float cameraY = 100;
+
+	float count = 0;
+
+	XMFLOAT4 color = { 0,1,0.5f,1.0f };
+	XMFLOAT4 colorSpd = { 0.01f,0.01f,0.01f,0.01f };
 
 	//ゲームループ
 	while (true){
@@ -457,6 +490,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 
 
 		//更新処理
+
 		gameScene_.Update();
 
 		input_->Update();
@@ -477,19 +511,77 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 			}
 			if (input_->PushKey(DIK_UP)) {
 				viewProjection_.eye.z += 2;
-				//viewProjection_.target.y += 2;
+				//viewProjection_.target.z += 2;
 			}
 			if (input_->PushKey(DIK_DOWN)) {
 				viewProjection_.eye.z -= 2;
-				//viewProjection_.target.y -= 2;
+				//viewProjection_.target.z -= 2;
 			}
 			viewProjection_.UpdatematView();
 		}
-	
+
+		//オブジェクトの更新
 		for (size_t i = 0; i < kObjectCount; i++)
 		{
+			if (input_->PushKey(DIK_D))
+			{
+				object3ds[i].position.x += 1;
+			}
+			if (input_->PushKey(DIK_A))
+			{
+				object3ds[i].position.x -= 1;
+			}
+			if (input_->PushKey(DIK_W))
+			{
+				object3ds[i].position.z += 1;
+			}
+			if (input_->PushKey(DIK_S))
+			{
+				object3ds[i].position.z -= 1;
+			}
+			if (input_->PushKey(DIK_Q))
+			{
+				object3ds[i].rotation.z += 0.1f;
+			}
+			if (input_->PushKey(DIK_E))
+			{
+				object3ds[i].rotation.z -= 0.1f;
+			}
 			object3ds[i].Update(viewProjection_.matView, matProjection);
 		}
+
+		for (int i = 0; i < kLineCountX; i++)
+		{
+			LineX[i].Update(viewProjection_.matView, matProjection);
+		}
+		for (int i = 0; i < kLineCountY; i++)
+		{
+			LineY[i].Update(viewProjection_.matView, matProjection);
+		}
+
+		//色を変える処理
+		if (color.x < 0 || color.x > 1)
+		{
+			colorSpd.x *= -1;
+		}
+		if (color.y < 0 || color.y > 1)
+		{
+			colorSpd.y *= -1;
+		}
+		if (color.z < 0 || color.z > 1)
+		{
+			colorSpd.z *= -1;
+		}
+		if (color.z < 0 || color.z > 1)
+		{
+			colorSpd.w *= -1;
+		}
+		color.x += colorSpd.x;
+		color.y += colorSpd.y;
+		color.z += colorSpd.z;
+		color.w += colorSpd.w;
+
+		constBufferM.constBufferData->color = XMFLOAT4(color.x, color.y, color.z, color.w);
 
 		///---DirectX毎フレーム処理 ここまで---///
 #pragma endregion DirectX毎フレーム処理
@@ -524,18 +616,32 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 
 		//頂点バッファビューの設定コマンド
 		//モデルのどれかのvertexbufferが入っていればok
-		DX12.commandList->IASetVertexBuffers(0, 1, &cube.vbView);
-		//DX12.commandList->IASetVertexBuffers(0, 1, &sprite.vbView);
+		//DX12.commandList->IASetVertexBuffers(0, 1, &cube.vbView);
 
 		//定数バッファビュー(CBV)の設定コマンド
-		DX12.commandList->SetGraphicsRootConstantBufferView(0, constBufferM.buffer->GetGPUVirtualAddress());
+		//DX12.commandList->SetGraphicsRootConstantBufferView(0, constBufferM.buffer->GetGPUVirtualAddress());
+
+		for (int i = 0; i < kObjectCount; i++)
+		{
+			object3ds[i].constBufferM = constBufferM;
+		}
 
 		//描画処理
 		gameScene_.Draw();
 
 		object3ds[0].Draw(DX12.commandList.Get(), white);
-		object3ds[1].Draw(DX12.commandList.Get(), zawa);
-		object3ds[2].Draw(DX12.commandList.Get(), pizza);
+		object3ds[1].Draw(DX12.commandList.Get(), pizza);
+
+		for (int i = 0; i < kLineCountX; i++)
+		{
+			//LineX[i].constBufferM = constBufferM;
+			LineX[i].Draw(DX12.commandList.Get(), white);
+		}
+		for (int i = 0; i < kLineCountY; i++)
+		{
+			//LineY[i].constBufferM = constBufferM;
+			LineY[i].Draw(DX12.commandList.Get(), white);
+		}
 
 		//--4.描画コマンドここまで--//
 

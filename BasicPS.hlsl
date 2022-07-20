@@ -12,6 +12,6 @@ float4 main(VSOutput input) : SV_TARGET
 	return float4(texcolor.rgb * brightness, texcolor.a) * color;//輝度をRGBに代入して出力
 
 	//return float4(input.normal,1);	//RGBをそれぞれ法線のXYZ、Aを1で出力
-	//return float4(tex.Sample(smp,input.uv));
+	//return float4(input.uv,0,1);
 	//return float4(1,1,1,1);
 }

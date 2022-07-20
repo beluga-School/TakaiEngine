@@ -21,6 +21,7 @@ class Obj3d
 {
 public:
 	ConstBuffer<ConstBufferDataTransform> constBufferT;
+	ConstBuffer<ConstBufferDataMaterial> constBufferM;
 
 	XMFLOAT3 scale = { 1,1,1 };
 	XMFLOAT3 rotation = { 0,0,0 };

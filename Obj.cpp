@@ -36,6 +36,7 @@ void Obj3d::Update(XMMATRIX& matView, XMMATRIX& matProjection)
 	}
 
 	constBufferT.constBufferData->mat = matWorld * matView * matProjection;
+	constBufferM.constBufferData->color = XMFLOAT4(1, 1, 1, 1.0f);
 	////	 ↑ 行列はなんと掛け算によって1つにまとめることができるんです！！！！
 	////		行列は掛ける順番によって結果が変わるので注意！！！注意！！！注意！！！
 }
@@ -53,6 +54,8 @@ void Obj3d::Draw(ID3D12GraphicsCommandList* commandList,Texture &texture) {
 	commandList->IASetIndexBuffer(&model->ibView);
 	
 	//定数バッファビュー(CBV)の設定コマンド
+	commandList->SetGraphicsRootConstantBufferView(0, constBufferM.buffer->GetGPUVirtualAddress());
+
 	commandList->SetGraphicsRootConstantBufferView(2, constBufferT.buffer->GetGPUVirtualAddress());
 
 	//描画コマンド

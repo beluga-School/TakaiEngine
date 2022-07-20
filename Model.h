@@ -36,3 +36,10 @@ public:
 	Triangle();
 	~Triangle() {};
 };
+
+class Line : public Model
+{
+public:
+	Line();
+	~Line() {};
+};
