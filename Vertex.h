@@ -15,8 +15,6 @@ using namespace DirectX;
 #include "DirectXInit.h"
 #include <vector>
 
-std::vector<int>;
-
 //頂点データ構造体
 struct Vertex
 {
@@ -35,4 +33,10 @@ public:
 	D3D12_VERTEX_BUFFER_VIEW vbView{};
 
 	void CreateVertex(DirectX12 dx12_, std::vector<Vertex> vertices, std::vector<uint16_t> indices);
+};
+
+struct VertexSprite
+{
+	XMFLOAT3 pos;	//xyz座標
+	XMFLOAT2 uv;	//uv座標
 };
