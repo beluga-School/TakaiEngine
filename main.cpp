@@ -26,11 +26,7 @@ using namespace DirectX;
 #include "Texture.h"
 #include "GameScene.h"
 
-//やりたいことメモ
-//・objの読み込みは実装したい
-
 WinAPI winApi_;
-//Obj zawa_[2];
 
 //windowsアプリでのエントリーポイント(main関数)
 int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
@@ -122,14 +118,34 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	triangle.CreateModel(DX12);
 	line.CreateModel(DX12);
 
+	//WICテクスチャのロード
+	const wchar_t* msg[4] = 
+	{ L"Resources/zawa_sironuri.png", 
+		L"Resources/slime.png",
+		L"Resources/pizza_sironuri.png",
+		L"Resources/tyusiten.png"
+	};
+
+	Texture zawa;
+	zawa.Load(msg[0], DX12);
+
+	Texture slime;
+	slime.Load(msg[1], DX12);
+
+	Texture pizza;
+	pizza.Load(msg[2], DX12);
+
+	Texture tyusiten;
+	tyusiten.Load(msg[3], DX12);
+
+	Texture white;
+	white.CreateWhiteTexture(DX12);
 
 	//シェーダー
 	Shader shader_;
 
 	shader_.vsBlob = shader_.Compile(L"BasicVS.hlsl", "vs_5_0", shader_.vsBlob.Get(), "main");
 	shader_.psBlob = shader_.Compile(L"BasicPS.hlsl", "ps_5_0", shader_.psBlob.Get(),"main");
-
-
 
 	//グラフィックスパイプライン設定
 	D3D12_GRAPHICS_PIPELINE_STATE_DESC pipelineDesc{};
@@ -236,21 +252,6 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	pipelineDesc.DepthStencilState.DepthFunc = D3D12_COMPARISON_FUNC_LESS;	//小さければ許可
 	pipelineDesc.DSVFormat = DXGI_FORMAT_D32_FLOAT;	//深度値フォーマット
 	
-	//WICテクスチャのロード
-	const wchar_t* msg[3] = { L"Resources/zawa_sironuri.png", L"Resources/slime.png",L"Resources/pizza_sironuri.png" };
-
-	Texture zawa;
-	zawa.Load(msg[0],DX12);
-	
-	Texture slime;
-	slime.Load(msg[1],DX12);
-	
-	Texture pizza;
-	pizza.Load(msg[2], DX12);
-
-	Texture white;
-	white.CreateWhiteTexture(DX12);
-	
 	//デスクリプタレンジの設定
 	D3D12_DESCRIPTOR_RANGE descriptorRange{};
 	descriptorRange.NumDescriptors = 1;	//一度の描画に使うテクスチャが1枚なので1
@@ -333,36 +334,34 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 
 	//定数バッファの生成
 	ConstBuffer<ConstBufferDataMaterial> constBufferM;
+	ConstBuffer<ConstBufferDataMaterial> constBufferM2;
 
-	const int kObjectCount = 2;
+	const int kObjectCount = 4;
 	std::unique_ptr<Obj3d[]> object3ds;
 	object3ds = std::make_unique<Obj3d[]>(kObjectCount);
 
 	for (int i = 0; i < kObjectCount; i++)
 	{
 		object3ds[i].Initialize();
-		//親子構造　サンプル
-		//先頭以外なら
-		//if (i > 0)
-		//{
-		//	//ひとつ前を親オブジェクトとする
-		//	object3ds[i].parent = &object3ds[i - 1];
-		//	//子は親オブジェの9割の大きさ
-		//	object3ds[i].scale = { 0.9f,0.9f,0.9f };
-		//	//親オブジェに対してZ軸まわりに30度回転
-		//	object3ds[i].rotation = { 0.0f,0.0f,XMConvertToRadians(30.0f) };
-
-		//	//親オブジェに対してZ方向-8.0ずらす
-		//	object3ds[i].position = { 0.0f,0.0f,-8.0f };
-		//}
 	}
 
 	//どのモデルの形を使うかを設定
 	object3ds[0].SetModel(&triangle);
 	object3ds[1].SetModel(&cube);
+	object3ds[2].SetModel(&triangle);
+	object3ds[3].SetModel(&sprite);
 
 	object3ds[1].position.x = 20;
 	object3ds[1].position.y = 10;
+
+	object3ds[2].position.x = -20;
+	object3ds[2].position.y = 0;
+
+	object3ds[3].position.x = 0;
+	object3ds[3].position.y = -10;
+	object3ds[3].scale.x = 10.0f;
+	object3ds[3].scale.y = 10.0f;
+	object3ds[3].rotation.x += XMConvertToRadians(90.0f);
 	
 	//線のモデルを使う設定
 	const int kLineCountX = 15;
@@ -392,21 +391,6 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 
 	//値を書き込むと自動的に転送されるらしい
 	constBufferM.constBufferData->color = XMFLOAT4(1, 1, 1, 1.0f);
-
-	////単位行列で埋める
-	//constMapTransform[0]->mat = XMMatrixIdentity();
-	////指定の部分を書き換える
-	//constMapTransform[0]->mat.r[0].m128_f32[0] = 2.0f / window_width;
-	//constMapTransform[0]->mat.r[1].m128_f32[1] = -2.0f / window_height;
-
-	//constMapTransform[0]->mat.r[3].m128_f32[0] = -1.0f;
-	//constMapTransform[0]->mat.r[3].m128_f32[1] = 1.0f;
-	//
-	//constMapTransform[0]->mat = XMMatrixPerspectiveFovLH(
-	//	XMConvertToRadians(45.0f),				//上下画角45度
-	//	(float)window_width / window_height,	//アスペクト比(画面横幅/画面縦幅)
-	//	0.1f, 1000.0f							//前端、奥端
-	//);
 
 	//射影変換行列(投資投影)
 	XMMATRIX matProjection =
@@ -499,7 +483,8 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		if (input_->PushKey(DIK_RIGHT) || 
 			input_->PushKey(DIK_LEFT) || 
 			input_->PushKey(DIK_UP) || 
-			input_->PushKey(DIK_DOWN))
+			input_->PushKey(DIK_DOWN)||
+			input_->PushKey(DIK_SPACE))
 		{
 			if (input_->PushKey(DIK_RIGHT)) { 
 				viewProjection_.eye.x += 2;
@@ -517,6 +502,36 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 				viewProjection_.eye.z -= 2;
 				//viewProjection_.target.z -= 2;
 			}
+			if (input_->PushKey(DIK_SPACE))
+			{
+				if (input_->PushKey(DIK_RIGHT)) {
+				
+					viewProjection_.target.x += 2;
+				}
+				if (input_->PushKey(DIK_LEFT)) {
+					
+					viewProjection_.target.x -= 2;
+				}
+				if (input_->PushKey(DIK_UP)) {
+					
+					viewProjection_.target.z += 2;
+				}
+				if (input_->PushKey(DIK_DOWN)) {
+					
+					viewProjection_.target.z -= 2;
+				}
+			}
+			viewProjection_.UpdatematView();
+		}
+
+		if (input_->TriggerKey(DIK_R))
+		{
+			for (int i = 0; i < kObjectCount; i++)
+			{
+				object3ds[i].Initialize();
+			}
+			viewProjection_.Initialize();
+			viewProjection_.eye.y = 50.0f;
 			viewProjection_.UpdatematView();
 		}
 
@@ -581,7 +596,8 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		color.z += colorSpd.z;
 		color.w += colorSpd.w;
 
-		constBufferM.constBufferData->color = XMFLOAT4(color.x, color.y, color.z, color.w);
+		constBufferM.constBufferData->color = XMFLOAT4(color.x, color.y, color.z, 1.0f);
+		constBufferM2.constBufferData->color = XMFLOAT4(1.0f, 1.0f, 1.0f, color.w);
 
 		///---DirectX毎フレーム処理 ここまで---///
 #pragma endregion DirectX毎フレーム処理
@@ -613,33 +629,28 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 
 		//プリミティブ形状の設定コマンド
 		DX12.commandList->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
-
-		//頂点バッファビューの設定コマンド
-		//モデルのどれかのvertexbufferが入っていればok
-		//DX12.commandList->IASetVertexBuffers(0, 1, &cube.vbView);
-
-		//定数バッファビュー(CBV)の設定コマンド
-		//DX12.commandList->SetGraphicsRootConstantBufferView(0, constBufferM.buffer->GetGPUVirtualAddress());
-
-		for (int i = 0; i < kObjectCount; i++)
-		{
-			object3ds[i].constBufferM = constBufferM;
-		}
+	
+		object3ds[0].constBufferM = constBufferM;
+		object3ds[1].constBufferM = constBufferM2;
+		object3ds[2].constBufferM = constBufferM2;
 
 		//描画処理
 		gameScene_.Draw();
 
 		object3ds[0].Draw(DX12.commandList.Get(), white);
 		object3ds[1].Draw(DX12.commandList.Get(), pizza);
+		object3ds[2].Draw(DX12.commandList.Get(), white);
+		if (input_->PushKey(DIK_SPACE))
+		{
+			object3ds[3].Draw(DX12.commandList.Get(), tyusiten);
+		}
 
 		for (int i = 0; i < kLineCountX; i++)
 		{
-			//LineX[i].constBufferM = constBufferM;
 			LineX[i].Draw(DX12.commandList.Get(), white);
 		}
 		for (int i = 0; i < kLineCountY; i++)
 		{
-			//LineY[i].constBufferM = constBufferM;
 			LineY[i].Draw(DX12.commandList.Get(), white);
 		}
 
