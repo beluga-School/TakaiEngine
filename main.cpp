@@ -144,8 +144,8 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	//シェーダー
 	Shader shader_;
 
-	shader_.vsBlob = shader_.Compile(L"BasicVS.hlsl", "vs_5_0", shader_.vsBlob.Get(), "main");
-	shader_.psBlob = shader_.Compile(L"BasicPS.hlsl", "ps_5_0", shader_.psBlob.Get(),"main");
+	shader_.vsBlob = shader_.Compile(L"Shader\\BasicVS.hlsl", "vs_5_0", shader_.vsBlob.Get(), "main");
+	shader_.psBlob = shader_.Compile(L"Shader\\BasicPS.hlsl", "ps_5_0", shader_.psBlob.Get(),"main");
 
 	//グラフィックスパイプライン設定
 	D3D12_GRAPHICS_PIPELINE_STATE_DESC pipelineDesc{};

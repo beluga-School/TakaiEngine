@@ -68,10 +68,6 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <FxCompile Include="BasicVS.hlsl" />
-    <FxCompile Include="BasicPS.hlsl" />
-  </ItemGroup>
-  <ItemGroup>
     <ClInclude Include="Input.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
@@ -125,6 +121,10 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Basic.hlsli" />
+    <None Include="Shader\Basic.hlsli" />
+  </ItemGroup>
+  <ItemGroup>
+    <FxCompile Include="Shader\BasicPS.hlsl" />
+    <FxCompile Include="Shader\BasicVS.hlsl" />
   </ItemGroup>
 </Project>
