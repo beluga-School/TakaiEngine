@@ -13,13 +13,21 @@ float Vector3::length() const {
 	return sqrtf(x * x + y * y + z * z);
 }
 
-Vector3& Vector3::normalize() {
+Vector3 Vector3::GetNormalize() {
+	Vector3 v;
 	float len = length();
 	if (len != 0)
 	{
-		return *this /= len;
+		return v = *this / len;
 	}
-	return *this;
+	return v;
+}
+
+void Vector3::normalize()
+{
+	float leng = length();
+	x = x / leng;
+	y = y / leng;
 }
 
 Vector3 Vector3::cross(const Vector3& v) const

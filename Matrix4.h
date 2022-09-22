@@ -31,13 +31,13 @@ public:
 	float& operator()(int i, int j);
 
 	Matrix4& operator=(const Matrix4& a);
-	static Matrix4& operator*=(Matrix4& m1, Matrix4& m2);
+	//static Matrix4& operator*=(Matrix4& m1, Matrix4& m2);
 
 	Matrix4 operator+(const Matrix4& a) const;
 	Matrix4 operator-(const Matrix4& a) const;
 	Matrix4 operator*(const Matrix4& a) const;
 
-	static Vector3 operator*(const Vector3& v, const Matrix4& m);
+	//static Vector3 operator*(const Vector3& v, const Matrix4& m);
 
 	//Matrix4& operator += (const Matrix4& a);
 	//Matrix4& operator -= (const Matrix4& a);

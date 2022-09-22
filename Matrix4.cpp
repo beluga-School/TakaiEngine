@@ -213,24 +213,24 @@ Matrix4 Matrix4::operator*(const Matrix4& a) const
 	);
 }
 
-Matrix4& Matrix4::operator*=(Matrix4& m1, Matrix4& m2)
-{
-	Matrix4 result;
-	result.Identity();
-
-	for (int i = 0; i < 4; i++)
-	{
-		for (int j = 0; j < 4; j++)
-		{
-			for (int k = 0; k < 4; k++)
-			{
-				result[i * 4 + j] += m1[i * 4 + k] * m2[k * 4 + j];
-			}
-		}
-	}
-}
-
-Vector3 Matrix4::operator*(const Vector3& v, const Matrix4& m)
-{
-	return transform(v, m);
-}
+//Matrix4& Matrix4::operator*=(Matrix4& m1, Matrix4& m2)
+//{
+//	Matrix4 result;
+//	result.Identity();
+//
+//	for (int i = 0; i < 4; i++)
+//	{
+//		for (int j = 0; j < 4; j++)
+//		{
+//			for (int k = 0; k < 4; k++)
+//			{
+//				result[i * 4 + j] += m1[i * 4 + k] * m2[k * 4 + j];
+//			}
+//		}
+//	}
+//}
+//
+//Vector3 Matrix4::operator*(const Vector3& v, const Matrix4& m)
+//{
+//	return transform(v, m);
+//}

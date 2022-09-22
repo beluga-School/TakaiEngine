@@ -11,7 +11,8 @@ public:
 
 	//ƒƒ“ƒoŠÖ”
 	float length() const;
-	Vector3& normalize();
+	Vector3 GetNormalize();
+	void normalize();
 	float dot(const Vector3& v)const;
 	Vector3 cross(const Vector3& v)const;
 
