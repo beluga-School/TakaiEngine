@@ -47,6 +47,8 @@ void Obj3d::Draw(ID3D12GraphicsCommandList* commandList,Texture &texture) {
 	//SRVヒープの先頭から順番にSRVをルートパラメータ1番に設定
 	//ルートパラメータ1番はテクスチャバッファ
 	commandList->SetGraphicsRootDescriptorTable(1, texture.GetHandle());
+	//commandList->SetGraphicsRootConstantBufferView(0, constBufferT.buffer->GetGPUVirtualAddress());
+
 	//頂点バッファの設定
 	commandList->IASetVertexBuffers(0, 1, &model->vbView);
 

@@ -19,15 +19,13 @@ class Cube : public Model
 public:
 	Cube();
 	~Cube(){};
-
-	//void CreateModel(DirectXInit dx12_);
 };
 
-class Sprite : public Model
+class Plate : public Model
 {
 public:
-	Sprite();
-	~Sprite() {};
+	Plate();
+	~Plate() {};
 };
 
 class Triangle : public Model

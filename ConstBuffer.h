@@ -4,6 +4,15 @@
 #include "Model.h"
 #include "Result.h"
 
+struct ConstBufferDataMaterial {
+	XMFLOAT4 color;	//色(RGBA)
+};
+
+struct ConstBufferDataTransform {
+	XMMATRIX mat;	//3D変換行列
+};
+
+
 template <class Format>
 
 class ConstBuffer
@@ -31,6 +40,7 @@ inline ConstBuffer<Format>::ConstBuffer()
 	resdesc.SampleDesc.Count = 1;
 	resdesc.Layout = D3D12_TEXTURE_LAYOUT_ROW_MAJOR;
 
+	//定数バッファの生成
 	result = DX12.device->CreateCommittedResource(
 		&heapProp,
 		D3D12_HEAP_FLAG_NONE,

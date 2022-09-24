@@ -154,6 +154,7 @@
     <ClCompile Include="Matrix4.cpp" />
     <ClCompile Include="Model.cpp" />
     <ClCompile Include="Obj.cpp" />
+    <ClCompile Include="Pipeline.cpp" />
     <ClCompile Include="Shader.cpp" />
     <ClCompile Include="Sprite.cpp" />
     <ClCompile Include="Texture.cpp" />
@@ -172,6 +173,7 @@
     <ClInclude Include="Matrix4.h" />
     <ClInclude Include="Model.h" />
     <ClInclude Include="Obj.h" />
+    <ClInclude Include="Pipeline.h" />
     <ClInclude Include="Result.h" />
     <ClInclude Include="Shader.h" />
     <ClInclude Include="Sprite.h" />

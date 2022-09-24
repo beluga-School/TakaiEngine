@@ -67,7 +67,7 @@ Cube::Cube()
 	};
 }
 
-Sprite::Sprite()
+Plate::Plate()
 {
 	vertices = {
 		// x	 y	   z	 n	 u	   v

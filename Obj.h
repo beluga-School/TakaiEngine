@@ -9,14 +9,6 @@ using namespace DirectX;
 #include "Texture.h"
 #include <memory>
 
-struct ConstBufferDataMaterial {
-	XMFLOAT4 color;	//F(RGBA)
-};
-
-struct ConstBufferDataTransform {
-	XMMATRIX mat;	//3D•ÏŠ·s—ñ
-};
-
 class Obj3d
 {
 public:
