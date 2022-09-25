@@ -156,6 +156,7 @@
     <ClCompile Include="Obj.cpp" />
     <ClCompile Include="Pipeline.cpp" />
     <ClCompile Include="Shader.cpp" />
+    <ClCompile Include="Sound.cpp" />
     <ClCompile Include="Sprite.cpp" />
     <ClCompile Include="Texture.cpp" />
     <ClCompile Include="Vector2.cpp" />
@@ -176,6 +177,7 @@
     <ClInclude Include="Pipeline.h" />
     <ClInclude Include="Result.h" />
     <ClInclude Include="Shader.h" />
+    <ClInclude Include="Sound.h" />
     <ClInclude Include="Sprite.h" />
     <ClInclude Include="Texture.h" />
     <ClInclude Include="Vector2.h" />

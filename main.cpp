@@ -28,6 +28,8 @@ using namespace DirectX;
 #include "Sprite.h"
 #include "Pipeline.h"
 
+#include "Sound.h"
+
 WinAPI winApi_;
 
 //windowsアプリでのエントリーポイント(main関数)
@@ -249,6 +251,11 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 
 #pragma endregion 描画初期化処理
 
+	SoundManager soundManager;
+	soundManager.Initialize();
+
+	SoundData curser = soundManager.SoundLoadWave("Resources\\sound\\curser.wav");
+
 	gameScene_.Initialize();
 
 	//ゲームループ内で使う変数の宣言
@@ -318,6 +325,11 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		gameScene_.Update();
 
 		input_->Update();
+
+		if (input_->TriggerKey(DIK_SPACE))
+		{
+			soundManager.SoundPlayWave(curser);
+		}
 
 		//カメラ座標を動かす
 		if (input_->PushKey(DIK_RIGHT) || 
@@ -569,6 +581,13 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	}
 
 	gameScene_.End();
+
+	//音声データは先にxAudio2を解放しなければならない
+	//xAudio2の解放
+	soundManager.End();
+
+	//音声データの解放
+	soundManager.SoundUnload(&curser);
 
 	//ウィンドウクラスを登録解除
 	UnregisterClass(winApi_.w.lpszClassName, winApi_.w.hInstance);
