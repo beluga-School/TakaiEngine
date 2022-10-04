@@ -21,6 +21,9 @@ using namespace DirectX;
 #include "Pipeline.h"
 #include "Texture.h"
 
+//テクスチャの最大枚数(今は手作業でテクスチャの方と合わせてる)
+const int spriteSRVCount = 2056;
+
 struct VertexPosUV
 {
 	XMFLOAT3 pos;
@@ -34,14 +37,54 @@ struct Sprite
 	//頂点バッファビュー
 	D3D12_VERTEX_BUFFER_VIEW vbView{};
 	//定数バッファ
-	ConstBuffer<ConstBufferDataMaterial> constBufferM;
-	ConstBuffer<ConstBufferDataTransform> constBufferT;
+	ConstBuffer<ConstBufferDataSprite> constBuffer;
+
+	//Z軸回りの回転角
+	float rotation = 0.0f;
+	//座標
+	XMFLOAT3 position = { 0,0,0 };
+	//ワールド行列
+	XMMATRIX matWorld;
+	//色
+	XMFLOAT4 color = { 1,1,1,1 };
+
+	Texture *tex;
+
+	XMFLOAT2 size;
+
+	XMFLOAT2 anchorpoint = { 0.5f,0.5f };
+
+	bool isFlipX = false;
+	bool isFlipY = false;
+
+	XMFLOAT2 texLeftTop = {0,0};
+	XMFLOAT2 texSize;
+
+	bool isInvisible = false;
+};
+
+struct SpriteCommon
+{
+	PipelineSet pipelineSet;
+	//射影行列
+	XMMATRIX matProjection{};
 };
 
 //スプライトの生成
-Sprite SpriteCreate(DirectX12 dx12);
+Sprite SpriteCreate(DirectX12 dx12, Texture* tex, XMFLOAT2 anchorpoint,bool isFlipX = false, bool isFlipY = false);
+
+//スプライトの変数の初期化
+void SpriteInit(Sprite& sprite, SpriteCommon& spriteCommon,XMFLOAT2 pos = {0,0}, float rotation = 0.0f, XMFLOAT4 color = {1,1,1,1});
 
 //スプライト共通グラフィックコマンドのセット
-void SpriteCommonBeginDraw(DirectX12 dx12,const PipelineSet& pipelineSet,Texture &tex);
+void SpriteCommonBeginDraw(DirectX12 dx12,const SpriteCommon& spriteCommon);
 
-void SpriteDraw(const Sprite& sprite, DirectX12 dx12, Texture& tex);
+void SpriteUpdate(Sprite& sprite,const SpriteCommon& spriteCommon);
+
+void SpriteTransferVertexBuffer(const Sprite& sprite);
+
+void SpriteSetSize(Sprite& sprite, XMFLOAT2 size);
+
+void SpriteDraw(const Sprite& sprite, DirectX12 dx12);
+
+SpriteCommon SpriteCommonCreate(DirectX12 dx12);

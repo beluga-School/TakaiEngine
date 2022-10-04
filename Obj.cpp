@@ -41,12 +41,12 @@ void Obj3d::Update(XMMATRIX& matView, XMMATRIX& matProjection)
 	////		行列は掛ける順番によって結果が変わるので注意！！！注意！！！注意！！！
 }
 
-void Obj3d::Draw(ID3D12GraphicsCommandList* commandList,Texture &texture) {
+void Obj3d::Draw(ID3D12GraphicsCommandList* commandList,Texture *texture) {
 	//SRVヒープの設定コマンド
-	commandList->SetDescriptorHeaps(1, &texture.srvHeap);
+	commandList->SetDescriptorHeaps(1, &texture->texData.srvHeap);
 	//SRVヒープの先頭から順番にSRVをルートパラメータ1番に設定
 	//ルートパラメータ1番はテクスチャバッファ
-	commandList->SetGraphicsRootDescriptorTable(1, texture.GetHandle());
+	commandList->SetGraphicsRootDescriptorTable(1, texture->GetHandle());
 	//commandList->SetGraphicsRootConstantBufferView(0, constBufferT.buffer->GetGPUVirtualAddress());
 
 	//頂点バッファの設定

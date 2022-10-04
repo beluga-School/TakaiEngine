@@ -29,6 +29,7 @@ using namespace DirectX;
 #include "Pipeline.h"
 
 #include "Sound.h"
+#include "DebugText.h"
 
 WinAPI winApi_;
 
@@ -141,30 +142,43 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		L"Resources/tyusiten.png"
 	};
 
-	Texture zawa;
-	zawa.Load(msg[0], DX12);
+	std::shared_ptr<Texture> zawa = std::make_shared<Texture>();
+	zawa->Load(msg[0], DX12);
 
-	Texture slime;
-	slime.Load(msg[1], DX12);
+	std::shared_ptr<Texture> slime = std::make_shared<Texture>();
+	slime->Load(msg[1], DX12);
 
-	Texture pizza;
-	pizza.Load(msg[2], DX12);
+	std::shared_ptr<Texture> pizza = std::make_shared<Texture>();
+	pizza->Load(msg[2], DX12);
 
-	Texture tyusiten;
-	tyusiten.Load(msg[3], DX12);
+	std::shared_ptr<Texture> tyusiten = std::make_shared<Texture>();
+	tyusiten->Load(msg[3], DX12);
 
-	Texture white;
-	white.CreateWhiteTexture(DX12);
+	std::shared_ptr<Texture> white = std::make_shared<Texture>();
+	white->CreateWhiteTexture(DX12);
 
 	PipelineSet object3dPipelineSet = CreateObject3DPipeline(DX12);
 
-	PipelineSet spritePipelineSet = CreateSpritePipeline(DX12);
+	SpriteCommon spriteCommon;
+	spriteCommon = SpriteCommonCreate(DX12);
 
 	//スプライト
-	Sprite sprite;
-	sprite = SpriteCreate(DX12);
-	
-	//スプライト生成
+	Sprite pizzaSprite;
+	pizzaSprite = SpriteCreate(DX12, pizza.get(), {0.5f,0.5f});
+	SpriteInit(pizzaSprite, spriteCommon,{ 100,100}, 0);
+	SpriteSetSize(pizzaSprite, { 100,100 });
+
+	Sprite slimeSprite;
+	slimeSprite = SpriteCreate(DX12,slime.get(), { 0.5f,0.5f });
+	SpriteInit(slimeSprite, spriteCommon,{ 200,200 }, 45,{1,0,1,1});
+
+	//デバッグテキスト生成
+
+	std::shared_ptr<Texture> debugFont = std::make_shared<Texture>();
+	debugFont->Load(L"Resources/debugfont.png", DX12);
+
+	DebugText debugText;
+	debugText.Initialize(DX12, debugFont.get());
 
 	//3Dオブジェクト用の定数バッファ生成
 	//ヒープ設定
@@ -328,6 +342,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 
 		if (input_->TriggerKey(DIK_SPACE))
 		{
+
 			soundManager.SoundPlayWave(curser);
 		}
 
@@ -402,7 +417,6 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		//viewProjection_.target.z = object3ds[0].position.z + offset.z;
 
 		viewProjection_.UpdatematView();
-
 		//オブジェクトの更新
 		for (size_t i = 0; i < kObjectCount; i++)
 		{
@@ -470,6 +484,12 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 			constBufferM2.constBufferData->color = XMFLOAT4(1.0f, 1.0f, 1.0f, color.w);
 		}
 
+		SpriteUpdate(pizzaSprite, spriteCommon);
+		SpriteUpdate(slimeSprite, spriteCommon);
+
+		debugText.Print(spriteCommon, "Hello,DirectX", 200,100,1.0f);
+		debugText.Print(spriteCommon, "Nihon Kogakuin", 200,200,2.0f);
+
 		///---DirectX毎フレーム処理 ここまで---///
 #pragma endregion DirectX毎フレーム処理
 
@@ -509,27 +529,30 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		//描画処理
 		gameScene_.Draw();
 
-		object3ds[0].Draw(DX12.commandList.Get(), pizza);
+		object3ds[0].Draw(DX12.commandList.Get(), pizza.get());
 		
 		if (input_->PushKey(DIK_SPACE))
 		{
-			object3ds[1].Draw(DX12.commandList.Get(), tyusiten);
+			object3ds[1].Draw(DX12.commandList.Get(), tyusiten.get());
 		}
 
 		for (int i = 0; i < kLineCountX; i++)
 		{
-			LineX[i].Draw(DX12.commandList.Get(), white);
+			LineX[i].Draw(DX12.commandList.Get(), white.get());
 		}
 		for (int i = 0; i < kLineCountY; i++)
 		{
-			LineY[i].Draw(DX12.commandList.Get(), white);
+			LineY[i].Draw(DX12.commandList.Get(), white.get());
 		}
 
 		//スプライトの前描画(共通コマンド)
-		SpriteCommonBeginDraw(DX12, spritePipelineSet, slime);
+		SpriteCommonBeginDraw(DX12, spriteCommon);
 
 		//スプライト単体描画
-		SpriteDraw(sprite, DX12, pizza);
+		SpriteDraw(pizzaSprite, DX12);
+		SpriteDraw(slimeSprite, DX12);
+
+		debugText.DrawAll(DX12, spriteCommon);
 
 		//--4.描画コマンドここまで--//
 

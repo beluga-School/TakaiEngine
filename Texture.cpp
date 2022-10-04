@@ -68,11 +68,11 @@ void Texture::CreateWhiteTexture(DirectX12 DX12)
 	srvHeapDesc.NumDescriptors = kMaxSRVCount;
 
 	//設定を元にSRV用デスクリプタヒープを生成
-	result = DX12.device->CreateDescriptorHeap(&srvHeapDesc, IID_PPV_ARGS(&srvHeap));
+	result = DX12.device->CreateDescriptorHeap(&srvHeapDesc, IID_PPV_ARGS(&texData.srvHeap));
 	assert(SUCCEEDED(result));
 
 	//SRVヒープの先頭ハンドルを取得
-	srvHandle = srvHeap->GetCPUDescriptorHandleForHeapStart();
+	srvHandle = texData.srvHeap->GetCPUDescriptorHandleForHeapStart();
 
 	//シェーダリソースビュー設定
 	srvDesc.Format = resDesc.Format;//RGBA float
@@ -89,12 +89,13 @@ void Texture::CreateWhiteTexture(DirectX12 DX12)
 
 	//ハンドルを取得する部分
 	//SRVヒープの先頭ハンドルを取得(SRVを指しているはず)
-	srvGpuHandle = srvHeap->GetGPUDescriptorHandleForHeapStart();
+	texData.handle = texData.srvHeap->GetGPUDescriptorHandleForHeapStart();
+
+	texData.getResDesc = textureResourceDesc;
 }
 
 void Texture::Load(const wchar_t* t, DirectX12 DX12)
 {
-
 	//リソース設定
 	resDesc.Dimension = D3D12_RESOURCE_DIMENSION_BUFFER;
 	resDesc.DepthOrArraySize = 1;
@@ -166,11 +167,11 @@ void Texture::Load(const wchar_t* t, DirectX12 DX12)
 	srvHeapDesc.NumDescriptors = kMaxSRVCount;
 
 	//設定を元にSRV用デスクリプタヒープを生成
-	result = DX12.device->CreateDescriptorHeap(&srvHeapDesc, IID_PPV_ARGS(&srvHeap));
+	result = DX12.device->CreateDescriptorHeap(&srvHeapDesc, IID_PPV_ARGS(&texData.srvHeap));
 	assert(SUCCEEDED(result));
 
 	//SRVヒープの先頭ハンドルを取得
-	srvHandle = srvHeap->GetCPUDescriptorHandleForHeapStart();
+	srvHandle = texData.srvHeap->GetCPUDescriptorHandleForHeapStart();
 
 	//シェーダリソースビュー設定
 	srvDesc.Format = resDesc.Format;//RGBA float
@@ -187,10 +188,12 @@ void Texture::Load(const wchar_t* t, DirectX12 DX12)
 
 	//ハンドルを取得する部分
 	//SRVヒープの先頭ハンドルを取得(SRVを指しているはず)
-	srvGpuHandle = srvHeap->GetGPUDescriptorHandleForHeapStart();
+	texData.handle = texData.srvHeap->GetGPUDescriptorHandleForHeapStart();
+
+	texData.getResDesc = textureResourceDesc;
 }
 
 D3D12_GPU_DESCRIPTOR_HANDLE Texture::GetHandle()
 {
-	return srvGpuHandle;
+	return texData.handle;
 }

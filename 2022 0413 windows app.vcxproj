@@ -146,6 +146,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="ConstBuffer.cpp" />
+    <ClCompile Include="DebugText.cpp" />
     <ClCompile Include="Depth.cpp" />
     <ClCompile Include="DirectXInit.cpp" />
     <ClCompile Include="GameScene.cpp" />
@@ -167,6 +168,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ConstBuffer.h" />
+    <ClInclude Include="DebugText.h" />
     <ClInclude Include="Depth.h" />
     <ClInclude Include="DirectXInit.h" />
     <ClInclude Include="GameScene.h" />

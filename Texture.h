@@ -11,6 +11,18 @@ using namespace DirectX;
 #include <DirectXTex.h>
 #include "Model.h"
 
+const size_t kMaxSRVCount = 2056;
+
+struct TextureData
+{
+	D3D12_GPU_DESCRIPTOR_HANDLE handle;
+
+	ID3D12DescriptorHeap* srvHeap;
+
+	//外部から参照する用のリソース設定(書き換えてもテクスチャ側には影響しない)
+	D3D12_RESOURCE_DESC getResDesc;
+};
+
 class Texture
 {
 public:
@@ -19,21 +31,24 @@ public:
 
 	void CreateWhiteTexture(DirectX12 DX12);
 
+	TextureData texData;
+
 	D3D12_GPU_DESCRIPTOR_HANDLE GetHandle();
 	//設定を元にSRV用デスクリプタヒープを生成
 	//ここはComPtrにするとダメだった なんでダメかはわからん
-	ID3D12DescriptorHeap* srvHeap;
+	//ID3D12DescriptorHeap* srvHeap;
 
+	Microsoft::WRL::ComPtr<ID3D12Resource> texBuff;
+	
 private:
 	TexMetadata metadata{};
 	ScratchImage scratchImg{};
 	ScratchImage mipChain{};
 
-	Microsoft::WRL::ComPtr<ID3D12Resource> texBuff;
-	D3D12_GPU_DESCRIPTOR_HANDLE srvGpuHandle = { 0 };
+	//D3D12_GPU_DESCRIPTOR_HANDLE srvGpuHandle = { 0 };
 
 	//SRVの最大個数
-	const size_t kMaxSRVCount = 2056;
+	
 	//デスクリプタヒープの設定
 	D3D12_DESCRIPTOR_HEAP_DESC srvHeapDesc = {};
 	

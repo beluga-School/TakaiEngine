@@ -1,8 +1,10 @@
 #include "Sound.h"
 #include "Result.h"
+#include <combaseapi.h>
 
 void SoundManager::Initialize()
 {
+	//result = CoInitializeEx(nullptr, COINIT_MULTITHREADED);
 	result = XAudio2Create(&xAudio2, 0, XAUDIO2_DEFAULT_PROCESSOR);
 	result = xAudio2->CreateMasteringVoice(&masterVoice);
 }

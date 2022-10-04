@@ -303,11 +303,6 @@ PipelineSet CreateSpritePipeline(DirectX12 DX12)
 	rootParams2[1].DescriptorTable.pDescriptorRanges = &descriptorRange2;					//デスクリプタレンジ
 	rootParams2[1].DescriptorTable.NumDescriptorRanges = 1;						//デスクリプタレンジ数
 	rootParams2[1].ShaderVisibility = D3D12_SHADER_VISIBILITY_ALL;	//全てのシェーダから見える
-	//定数バッファ1番 b1
-	rootParams2[2].ParameterType = D3D12_ROOT_PARAMETER_TYPE_CBV;	//種類
-	rootParams2[2].Descriptor.ShaderRegister = 1;					//定数バッファ番号
-	rootParams2[2].Descriptor.RegisterSpace = 0;						//デフォルト値
-	rootParams2[2].ShaderVisibility = D3D12_SHADER_VISIBILITY_ALL;	//すべてのシェーダから見える
 
 	//テクスチャサンプラーの生成 s0
 	D3D12_STATIC_SAMPLER_DESC samplerDesc2{};

@@ -12,6 +12,10 @@ struct ConstBufferDataTransform {
 	XMMATRIX mat;	//3D•ÏŠ·s—ñ
 };
 
+struct ConstBufferDataSprite {
+	XMFLOAT4 color;	//F(RGBA)
+	XMMATRIX mat;	//3D•ÏŠ·s—ñ
+};
 
 template <class Format>
 
