@@ -51,7 +51,7 @@ void Model::CreateModel(const wchar_t* t,DirectX12 dx12_)
 			//テクスチャ座標データに追加
 			texcoords.emplace_back(texcoord);
 		}
-		if (key == "vt")
+		if (key == "vn")
 		{
 			//X,Y,Z成分読み込み
 			XMFLOAT3 normal{};

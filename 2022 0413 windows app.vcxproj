@@ -145,9 +145,9 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="ClearDrawScreen.cpp" />
     <ClCompile Include="ConstBuffer.cpp" />
     <ClCompile Include="DebugText.cpp" />
-    <ClCompile Include="Depth.cpp" />
     <ClCompile Include="DirectXInit.cpp" />
     <ClCompile Include="GameScene.cpp" />
     <ClCompile Include="Input.cpp" />
@@ -167,9 +167,9 @@
     <ClCompile Include="WinAPI.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="ClearDrawScreen.h" />
     <ClInclude Include="ConstBuffer.h" />
     <ClInclude Include="DebugText.h" />
-    <ClInclude Include="Depth.h" />
     <ClInclude Include="DirectXInit.h" />
     <ClInclude Include="GameScene.h" />
     <ClInclude Include="Input.h" />
