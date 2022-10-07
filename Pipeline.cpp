@@ -11,8 +11,8 @@ PipelineSet CreateObject3DPipeline(DirectX12 DX12)
 	//シェーダー
 	Shader shader_;
 
-	shader_.vsBlob = shader_.Compile(L"Shader\\BasicVS.hlsl", "vs_5_0", shader_.vsBlob.Get(), "main");
-	shader_.psBlob = shader_.Compile(L"Shader\\BasicPS.hlsl", "ps_5_0", shader_.psBlob.Get(), "main");
+	shader_.vsBlob = shader_.Compile(L"Resources\\Shader\\BasicVS.hlsl", "vs_5_0", shader_.vsBlob.Get(), "main");
+	shader_.psBlob = shader_.Compile(L"Resources\\Shader\\BasicPS.hlsl", "ps_5_0", shader_.psBlob.Get(), "main");
 
 	//グラフィックスパイプライン設定
 	D3D12_GRAPHICS_PIPELINE_STATE_DESC pipelineDesc{};
@@ -184,8 +184,8 @@ PipelineSet CreateSpritePipeline(DirectX12 DX12)
 	//シェーダー
 	Shader shader2_;
 
-	shader2_.vsBlob = shader2_.Compile(L"SpriteVS.hlsl", "vs_5_0", shader2_.vsBlob.Get(), "main");
-	shader2_.psBlob = shader2_.Compile(L"SpritePS.hlsl", "ps_5_0", shader2_.psBlob.Get(), "main");
+	shader2_.vsBlob = shader2_.Compile(L"Resources\\Shader\\SpriteVS.hlsl", "vs_5_0", shader2_.vsBlob.Get(), "main");
+	shader2_.psBlob = shader2_.Compile(L"Resources\\Shader\\SpritePS.hlsl", "ps_5_0", shader2_.psBlob.Get(), "main");
 
 	//グラフィックスパイプライン設定
 	D3D12_GRAPHICS_PIPELINE_STATE_DESC pipelineDesc2{};

@@ -1,7 +1,94 @@
 #include "Model.h"
+using namespace std;
 
-void Model::CreateModel(DirectX12 dx12_)
+void Model::CreateDefaultModel(DirectX12 dx12_)
 {
+	CreateVertex(dx12_, vertices, indices);
+}
+
+void Model::CreateModel(const wchar_t* t,DirectX12 dx12_)
+{
+	std::ifstream file;
+	//objファイルを開く
+	file.open(t);
+	//ファイルオープン失敗をチェック
+	if (file.fail())
+	{
+		assert(0);
+	}
+
+	vector<XMFLOAT3> positions;	//頂点データ
+	vector<XMFLOAT3> normals;	//法線ベクトル
+	vector<XMFLOAT2> texcoords;	//テクスチャuv
+
+	string line;
+	while (getline(file, line))
+	{
+		std::istringstream line_stream(line);
+
+		string key;
+		getline(line_stream, key,' ');
+
+		if (key == "v")
+		{
+			//X,Y,Z座標読み込み
+			XMFLOAT3 position{};
+			line_stream >> position.x;
+			line_stream >> position.y;
+			line_stream >> position.z;
+
+			//座標データに追加
+			positions.emplace_back(position);
+		}
+		if (key == "vt")
+		{
+			//U,V成分読み込み
+			XMFLOAT2 texcoord{};
+			line_stream >> texcoord.x;
+			line_stream >> texcoord.y;
+			//V方向反転
+			texcoord.y = 1.0f - texcoord.y;
+			//テクスチャ座標データに追加
+			texcoords.emplace_back(texcoord);
+		}
+		if (key == "vt")
+		{
+			//X,Y,Z成分読み込み
+			XMFLOAT3 normal{};
+			line_stream >> normal.x;
+			line_stream >> normal.y;
+			line_stream >> normal.z;
+			//法線ベクトルデータに追加
+			normals.emplace_back(normal);
+		}
+
+		if (key == "f")
+		{
+			string index_string;
+			while (getline(line_stream,index_string,' '))
+			{
+				//頂点インデックス1個分の文字列をストリームに変換
+				istringstream index_stream(index_string);
+				uint16_t indexPosition, indexTexcoord, indexNormal;
+				index_stream >> indexPosition;
+				index_stream.seekg(1, ios_base::cur);//スラッシュを飛ばす
+				index_stream >> indexTexcoord;
+				index_stream.seekg(1, ios_base::cur);//スラッシュを飛ばす
+				index_stream >> indexNormal;
+				
+				Vertex vertex{};
+				vertex.pos = positions[indexPosition - 1];
+				vertex.normal = normals[indexNormal - 1];
+				vertex.uv = texcoords[indexTexcoord - 1];
+				vertices.emplace_back(vertex);
+
+				//頂点インデックスに追加
+				indices.emplace_back((unsigned short)indices.size());
+			}
+		}
+	}
+	file.close();
+
 	CreateVertex(dx12_, vertices, indices);
 }
 

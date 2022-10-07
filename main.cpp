@@ -128,11 +128,15 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	Model triangle = Triangle();
 	Model line = Line();
 
+	Model triangleM = Model();
+
 	//頂点データ作成
-	cube.CreateModel(DX12);
-	plane.CreateModel(DX12);
-	triangle.CreateModel(DX12);
-	line.CreateModel(DX12);
+	cube.CreateDefaultModel(DX12);
+	plane.CreateDefaultModel(DX12);
+	triangle.CreateDefaultModel(DX12);
+	line.CreateDefaultModel(DX12);
+
+	triangleM.CreateModel(L"Resources\\triangle.obj", DX12);
 
 	//WICテクスチャのロード
 	const wchar_t* msg[4] = 
@@ -210,8 +214,11 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	}
 
 	//どのモデルの形を使うかを設定
-	object3ds[0].SetModel(&cube);
+	object3ds[0].SetModel(&triangleM);
 	object3ds[1].SetModel(&plane);
+
+	object3ds[0].scale.x = 10.0f;
+	object3ds[0].scale.y = 10.0f;
 
 	object3ds[1].position.x = 0;
 	object3ds[1].position.y = -10;

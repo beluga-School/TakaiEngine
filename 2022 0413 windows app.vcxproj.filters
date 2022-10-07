@@ -148,25 +148,25 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <FxCompile Include="Shader\BasicPS.hlsl">
+    <None Include="Resources\Shader\Basic.hlsli">
       <Filter>シェーダー</Filter>
-    </FxCompile>
-    <FxCompile Include="Shader\BasicVS.hlsl">
+    </None>
+    <None Include="Resources\Shader\Sprite.hlsli">
       <Filter>シェーダー</Filter>
-    </FxCompile>
-    <FxCompile Include="SpriteVS.hlsl">
-      <Filter>シェーダー</Filter>
-    </FxCompile>
-    <FxCompile Include="SpritePS.hlsl">
-      <Filter>シェーダー</Filter>
-    </FxCompile>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Shader\Basic.hlsli">
+    <FxCompile Include="Resources\Shader\BasicPS.hlsl">
       <Filter>シェーダー</Filter>
-    </None>
-    <None Include="Sprite.hlsli">
+    </FxCompile>
+    <FxCompile Include="Resources\Shader\BasicVS.hlsl">
       <Filter>シェーダー</Filter>
-    </None>
+    </FxCompile>
+    <FxCompile Include="Resources\Shader\SpritePS.hlsl">
+      <Filter>シェーダー</Filter>
+    </FxCompile>
+    <FxCompile Include="Resources\Shader\SpriteVS.hlsl">
+      <Filter>シェーダー</Filter>
+    </FxCompile>
   </ItemGroup>
 </Project>
