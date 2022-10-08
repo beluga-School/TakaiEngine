@@ -54,6 +54,7 @@ public:
 	void CreateFence();
 };
 
+//constBufferの生成にて、デバイスの作成に利用している
 static DirectX12 DX12;
 
 ID3D12Device *bGetDevice();

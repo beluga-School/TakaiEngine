@@ -23,8 +23,14 @@ public:
 	/// モデルを読み込んで生成する関数
 	/// </summary>
 	/// <param name="dx12_"></param>
-	void CreateModel(const wchar_t* t,DirectX12 dx12_);
+	void CreateModel(const string t,DirectX12 dx12_);
 
+	/// <summary>
+	/// マテリアル読み込み
+	/// </summary>
+	/// <param name="directoryPath"></param>
+	/// <param name="filename"></param>
+	static void LoadMaterial(const std::string& directoryPath, const std::string& filename);
 };
 
 

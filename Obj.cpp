@@ -8,7 +8,7 @@ void Obj3d::SetModel(Model* model)
 
 void Obj3d::Initialize()
 {
-	
+
 }
 
 void Obj3d::Update(XMMATRIX& matView, XMMATRIX& matProjection)
@@ -36,9 +36,18 @@ void Obj3d::Update(XMMATRIX& matView, XMMATRIX& matProjection)
 	}
 
 	constBufferT.constBufferData->mat = matWorld * matView * matProjection;
-	constBufferM.constBufferData->color = XMFLOAT4(1, 1, 1, 1.0f);
 	////	 ↑ 行列はなんと掛け算によって1つにまとめることができるんです！！！！
 	////		行列は掛ける順番によって結果が変わるので注意！！！注意！！！注意！！！
+
+	//constBufferM.constBufferData->color = XMFLOAT4(1, 1, 1, 1.0f);
+
+	ConstBufferDataB1* constMap1 = nullptr;
+	result = constBufferMaterial.buffer->Map(0, nullptr, (void**)&constMap1);
+	constMap1->ambient = material.ambient;
+	constMap1->diffuse = material.diffuse;
+	constMap1->specular = material.specular;
+	constMap1->alpha = material.alpha;
+	constBufferMaterial.buffer->Unmap(0, nullptr);
 }
 
 void Obj3d::Draw(ID3D12GraphicsCommandList* commandList,Texture *texture) {
@@ -56,7 +65,7 @@ void Obj3d::Draw(ID3D12GraphicsCommandList* commandList,Texture *texture) {
 	commandList->IASetIndexBuffer(&model->ibView);
 	
 	//定数バッファビュー(CBV)の設定コマンド
-	commandList->SetGraphicsRootConstantBufferView(0, constBufferM.buffer->GetGPUVirtualAddress());
+	commandList->SetGraphicsRootConstantBufferView(0, constBufferMaterial.buffer->GetGPUVirtualAddress());
 
 	commandList->SetGraphicsRootConstantBufferView(2, constBufferT.buffer->GetGPUVirtualAddress());
 

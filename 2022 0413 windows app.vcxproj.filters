@@ -84,6 +84,9 @@
     <ClCompile Include="ClearDrawScreen.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
+    <ClCompile Include="Material.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Input.h">
@@ -146,12 +149,18 @@
     <ClInclude Include="ClearDrawScreen.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
+    <ClInclude Include="Material.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\Shader\Basic.hlsli">
       <Filter>シェーダー</Filter>
     </None>
     <None Include="Resources\Shader\Sprite.hlsli">
+      <Filter>シェーダー</Filter>
+    </None>
+    <None Include="OBJShaderHeader.hlsli">
       <Filter>シェーダー</Filter>
     </None>
   </ItemGroup>
@@ -166,6 +175,12 @@
       <Filter>シェーダー</Filter>
     </FxCompile>
     <FxCompile Include="Resources\Shader\SpriteVS.hlsl">
+      <Filter>シェーダー</Filter>
+    </FxCompile>
+    <FxCompile Include="OBJPS.hlsl">
+      <Filter>シェーダー</Filter>
+    </FxCompile>
+    <FxCompile Include="OBJVS.hlsl">
       <Filter>シェーダー</Filter>
     </FxCompile>
   </ItemGroup>

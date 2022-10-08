@@ -6,11 +6,21 @@ void Model::CreateDefaultModel(DirectX12 dx12_)
 	CreateVertex(dx12_, vertices, indices);
 }
 
-void Model::CreateModel(const wchar_t* t,DirectX12 dx12_)
+void Model::LoadMaterial(const std::string& directoryPath, const std::string& filename)
+{
+
+}
+
+void Model::CreateModel(const string t,DirectX12 dx12_)
 {
 	std::ifstream file;
 	//objファイルを開く
-	file.open(t);
+	//file.open(t);
+	const string modelname = t;
+	const string filename = modelname + "obj";
+	const string directoryPath = "Resources/" + modelname + "/";
+	file.open(directoryPath + filename);
+
 	//ファイルオープン失敗をチェック
 	if (file.fail())
 	{
@@ -28,6 +38,15 @@ void Model::CreateModel(const wchar_t* t,DirectX12 dx12_)
 
 		string key;
 		getline(line_stream, key,' ');
+
+		if (key == "mtllib")
+		{
+			//マテリアルのファイル名読み込み
+			string filename;
+			line_stream >> filename;
+			//マテリアル読み込み
+			LoadMaterial(directoryPath, filename);
+		}
 
 		if (key == "v")
 		{

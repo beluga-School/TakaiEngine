@@ -9,11 +9,25 @@ using namespace DirectX;
 #include "Texture.h"
 #include <memory>
 
+#include "Material.h"
+
+struct ConstBufferDataB1
+{
+	Vector3 ambient;	//アンビエント係数
+	float pad1;			//パディング
+	Vector3 diffuse;	//ディフューズ係数
+	float pad2;			//パディング
+	Vector3 specular;	//スペキュラー係数
+	float alpha;		//アルファ
+};
+
 class Obj3d
 {
 public:
 	ConstBuffer<ConstBufferDataTransform> constBufferT;
 	ConstBuffer<ConstBufferDataMaterial> constBufferM;
+
+	ConstBuffer<ConstBufferDataB1> constBufferMaterial;
 
 	XMFLOAT3 scale = { 1,1,1 };
 	XMFLOAT3 rotation = { 0,0,0 };
@@ -27,6 +41,8 @@ public:
 	std::unique_ptr<Obj3d> parent;
 
 	Model* model = nullptr;
+
+	static Material material;
 public:
 	void Initialize();
 	void SetModel(Model *model);
