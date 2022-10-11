@@ -43,10 +43,10 @@ void Obj3d::Update(XMMATRIX& matView, XMMATRIX& matProjection)
 
 	ConstBufferDataB1* constMap1 = nullptr;
 	result = constBufferMaterial.buffer->Map(0, nullptr, (void**)&constMap1);
-	constMap1->ambient = material.ambient;
-	constMap1->diffuse = material.diffuse;
-	constMap1->specular = material.specular;
-	constMap1->alpha = material.alpha;
+	constMap1->ambient = model->material.ambient;
+	constMap1->diffuse = model->material.diffuse;
+	constMap1->specular = model->material.specular;
+	constMap1->alpha = model->material.alpha;
 	constBufferMaterial.buffer->Unmap(0, nullptr);
 }
 

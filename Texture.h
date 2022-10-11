@@ -9,7 +9,7 @@ using namespace DirectX;
 #include <d3dcompiler.h>
 #pragma comment(lib,"d3dcompiler.lib")
 #include <DirectXTex.h>
-#include "Model.h"
+#include "DirectXInit.h"
 
 const size_t kMaxSRVCount = 2056;
 

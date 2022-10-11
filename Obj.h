@@ -5,11 +5,8 @@ using namespace DirectX;
 #pragma comment(lib,"d3dcompiler.lib")
 #include "DirectXInit.h"
 #include "Model.h"
-#include "ConstBuffer.h"
 #include "Texture.h"
 #include <memory>
-
-#include "Material.h"
 
 struct ConstBufferDataB1
 {
@@ -18,7 +15,7 @@ struct ConstBufferDataB1
 	Vector3 diffuse;	//ディフューズ係数
 	float pad2;			//パディング
 	Vector3 specular;	//スペキュラー係数
-	float alpha;		//アルファ
+	float alpha;
 };
 
 class Obj3d
@@ -41,8 +38,6 @@ public:
 	std::unique_ptr<Obj3d> parent;
 
 	Model* model = nullptr;
-
-	static Material material;
 public:
 	void Initialize();
 	void SetModel(Model *model);

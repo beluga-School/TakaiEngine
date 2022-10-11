@@ -96,7 +96,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	triangle.CreateDefaultModel(DX12);
 	line.CreateDefaultModel(DX12);
 
-	triangleM.CreateModel(L"Resources\\triangle.obj", DX12);
+	triangleM.CreateModel("triangle_mat", DX12);
 
 	//WICテクスチャのロード
 	const wchar_t* msg[4] = 
@@ -106,19 +106,19 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		L"Resources/tyusiten.png"
 	};
 
-	std::shared_ptr<Texture> zawa = std::make_shared<Texture>();
+	std::unique_ptr<Texture> zawa = std::make_unique<Texture>();
 	zawa->Load(msg[0], DX12);
 
-	std::shared_ptr<Texture> slime = std::make_shared<Texture>();
+	std::unique_ptr<Texture> slime = std::make_unique<Texture>();
 	slime->Load(msg[1], DX12);
 
-	std::shared_ptr<Texture> pizza = std::make_shared<Texture>();
+	std::unique_ptr<Texture> pizza = std::make_unique<Texture>();
 	pizza->Load(msg[2], DX12);
 
-	std::shared_ptr<Texture> tyusiten = std::make_shared<Texture>();
+	std::unique_ptr<Texture> tyusiten = std::make_unique<Texture>();
 	tyusiten->Load(msg[3], DX12);
 
-	std::shared_ptr<Texture> white = std::make_shared<Texture>();
+	std::unique_ptr<Texture> white = std::make_unique<Texture>();
 	white->CreateWhiteTexture(DX12);
 
 	PipelineSet object3dPipelineSet = CreateObject3DPipeline(DX12);
@@ -252,7 +252,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 
 		if (input_->TriggerKey(DIK_SPACE))
 		{
-			soundManager.SoundPlayWave(curser);
+			//soundManager.SoundPlayWave(curser);
 		}
 
 		//カメラ座標を動かす
@@ -379,9 +379,9 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 
 		object3ds[0].Draw(DX12.commandList.Get(), pizza.get());
 		
-		if (input_->PushKey(DIK_SPACE))
+		if (input_->TriggerKey(DIK_SPACE))
 		{
-			object3ds[1].Draw(DX12.commandList.Get(), tyusiten.get());
+			object3ds[1].Draw(DX12.commandList.Get(), slime.get());
 		}
 
 		for (int i = 0; i < kLineCountX; i++)
@@ -417,6 +417,8 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 			break;
 		}
 	}
+
+	delete input_;
 
 	gameScene_.End();
 

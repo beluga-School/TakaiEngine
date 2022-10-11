@@ -1,6 +1,7 @@
 #pragma once
 #include <string>
 #include "Vector3.h"
+#include "Texture.h"
 
 struct Material
 {
@@ -10,6 +11,7 @@ struct Material
 	Vector3 specular;			//スペキュラー影響度
 	float alpha;				//アルファ
 	std::string textureFilename;//テクスチャファイル名
+	Texture tex;
 
 	Material() {
 		ambient = { 0.3f,0.3f,0.3f };

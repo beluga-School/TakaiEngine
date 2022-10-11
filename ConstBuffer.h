@@ -1,8 +1,15 @@
 #pragma once
 #include <d3d12.h>
 #include "DirectXInit.h"
-#include "Model.h"
 #include "Result.h"
+
+#pragma comment(lib,"d3d12.lib")
+#pragma comment(lib,"dxgi.lib")
+#include <DirectXMath.h>
+using namespace DirectX;
+#include <d3dcompiler.h>
+#pragma comment(lib,"d3dcompiler.lib")
+#include <DirectXTex.h>
 
 struct ConstBufferDataMaterial {
 	XMFLOAT4 color;	//êF(RGBA)

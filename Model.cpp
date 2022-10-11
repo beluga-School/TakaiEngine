@@ -1,23 +1,93 @@
 #include "Model.h"
 using namespace std;
+#include "StringUtil.h"
 
 void Model::CreateDefaultModel(DirectX12 dx12_)
 {
 	CreateVertex(dx12_, vertices, indices);
 }
 
-void Model::LoadMaterial(const std::string& directoryPath, const std::string& filename)
+void Model::LoadMaterial(const std::string& directoryPath, const std::string& filename,DirectX12 dx12)
 {
+	//ファイルストリーム
+	std::ifstream file;
+	//マテリアルファイルを開く
+	file.open(directoryPath + filename);
 
+	//ファイルオープン失敗をチェック
+	if (file.fail())
+	{
+		assert(0);
+	}
+
+	//1行ずつ読み込む
+	string line;
+	while (getline(file, line))
+	{
+		std::istringstream line_stream(line);
+		//半角スペース区切りで行の先頭文字列を取得
+		string key;
+		getline(line_stream, key, ' ');
+
+		//先頭のタブ文字は無視する
+		if (key[0] == '\t') {
+			key.erase(key.begin());//先頭の文字を削除
+		}
+
+		//先頭文字列がnewmtlならマテリアル名
+		if (key == "newmtl") {
+			//マテリアル名
+			line_stream >> material.name;
+		}
+
+		if (key == "ka") {
+			line_stream >> material.ambient.x;
+			line_stream >> material.ambient.y;
+			line_stream >> material.ambient.z;
+		}
+
+		if (key == "kd") {
+			line_stream >> material.diffuse.x;
+			line_stream >> material.diffuse.y;
+			line_stream >> material.diffuse.z;
+		}
+
+		if (key == "ks") {
+			line_stream >> material.specular.x;
+			line_stream >> material.specular.y;
+			line_stream >> material.specular.z;
+		}
+
+		if (key == "map_Kd")
+		{
+
+			line_stream >> material.textureFilename;
+
+			material.tex.Load(ConvertStringToWChar(directoryPath + material.textureFilename).c_str(),dx12);
+		}
+	}
+	//ファイルを閉じる
+	file.close();
 }
 
-void Model::CreateModel(const string t,DirectX12 dx12_)
+//void Model::Update()
+//{
+//	ConstBufferDataB1* constMap1 = nullptr;
+//	result = constBufferMaterial.buffer->Map(0, nullptr, (void**)&constMap1);
+//	constMap1->ambient = material.ambient;
+//	constMap1->diffuse = material.diffuse;
+//	constMap1->specular = material.specular;
+//	constMap1->alpha = material.alpha;
+//	constBufferMaterial.buffer->Unmap(0, nullptr);
+//}
+
+void Model::CreateModel(const std::string t,DirectX12 dx12_)
 {
 	std::ifstream file;
 	//objファイルを開く
 	//file.open(t);
 	const string modelname = t;
-	const string filename = modelname + "obj";
+	const string filename = modelname + ".obj";
 	const string directoryPath = "Resources/" + modelname + "/";
 	file.open(directoryPath + filename);
 
@@ -39,13 +109,18 @@ void Model::CreateModel(const string t,DirectX12 dx12_)
 		string key;
 		getline(line_stream, key,' ');
 
+		if (key[0] == '\t') {
+			key.erase(key.begin());
+		}
+
 		if (key == "mtllib")
 		{
 			//マテリアルのファイル名読み込み
 			string filename;
 			line_stream >> filename;
+
 			//マテリアル読み込み
-			LoadMaterial(directoryPath, filename);
+			LoadMaterial(directoryPath, filename,dx12_);
 		}
 
 		if (key == "v")

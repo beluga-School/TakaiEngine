@@ -87,6 +87,9 @@
     <ClCompile Include="Material.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
+    <ClCompile Include="StringUtil.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Input.h">
@@ -152,6 +155,9 @@
     <ClInclude Include="Material.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
+    <ClInclude Include="StringUtil.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\Shader\Basic.hlsli">
@@ -160,7 +166,7 @@
     <None Include="Resources\Shader\Sprite.hlsli">
       <Filter>シェーダー</Filter>
     </None>
-    <None Include="OBJShaderHeader.hlsli">
+    <None Include="Resources\Shader\OBJShaderHeader.hlsli">
       <Filter>シェーダー</Filter>
     </None>
   </ItemGroup>
@@ -177,10 +183,10 @@
     <FxCompile Include="Resources\Shader\SpriteVS.hlsl">
       <Filter>シェーダー</Filter>
     </FxCompile>
-    <FxCompile Include="OBJPS.hlsl">
+    <FxCompile Include="Resources\Shader\OBJPS.hlsl">
       <Filter>シェーダー</Filter>
     </FxCompile>
-    <FxCompile Include="OBJVS.hlsl">
+    <FxCompile Include="Resources\Shader\OBJVS.hlsl">
       <Filter>シェーダー</Filter>
     </FxCompile>
   </ItemGroup>
