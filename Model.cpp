@@ -2,12 +2,12 @@
 using namespace std;
 #include "StringUtil.h"
 
-void Model::CreateDefaultModel(DirectX12 &dx12_)
+void Model::CreateDefaultModel()
 {
-	CreateVertex(dx12_, vertices, indices);
+	CreateVertex( vertices, indices);
 }
 
-void Model::LoadMaterial(const std::string& directoryPath, const std::string& filename,DirectX12 &dx12)
+void Model::LoadMaterial(const std::string& directoryPath, const std::string& filename)
 {
 	//ファイルストリーム
 	std::ifstream file;
@@ -62,14 +62,14 @@ void Model::LoadMaterial(const std::string& directoryPath, const std::string& fi
 		{
 			line_stream >> material.textureFilename;
 
-			material.tex->Load(ConvertStringToWChar(directoryPath + material.textureFilename).c_str(),dx12);
+			material.tex->Load(ConvertStringToWChar(directoryPath + material.textureFilename).c_str());
 		}
 	}
 	//ファイルを閉じる
 	file.close();
 }
 
-void Model::CreateModel(const std::string t,DirectX12 &dx12_)
+void Model::CreateModel(const std::string t)
 {
 	std::ifstream file;
 	//objファイルを開く
@@ -108,7 +108,7 @@ void Model::CreateModel(const std::string t,DirectX12 &dx12_)
 			line_stream >> filename;
 
 			//マテリアル読み込み
-			LoadMaterial(directoryPath, filename,dx12_);
+			LoadMaterial(directoryPath, filename);
 		}
 
 		if (key == "v")
@@ -171,7 +171,7 @@ void Model::CreateModel(const std::string t,DirectX12 &dx12_)
 	}
 	file.close();
 
-	CreateVertex(dx12_, vertices, indices);
+	CreateVertex(vertices, indices);
 }
 
 Cube::Cube()

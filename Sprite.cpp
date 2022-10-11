@@ -1,8 +1,10 @@
 #include "Sprite.h"
 #include "Result.h"
 
-Sprite SpriteCreate(DirectX12 &dx12, Texture* tex,XMFLOAT2 anchorpoint, bool isFlipX, bool isFlipY)
+Sprite SpriteCreate( Texture* tex,XMFLOAT2 anchorpoint, bool isFlipX, bool isFlipY)
 {
+	DirectX12* dx12 = DirectX12::GetInstance();
+
 	result = S_FALSE;
 
 	//新規スプライトを生成
@@ -32,7 +34,7 @@ Sprite SpriteCreate(DirectX12 &dx12, Texture* tex,XMFLOAT2 anchorpoint, bool isF
 	resDesc.Layout = D3D12_TEXTURE_LAYOUT_ROW_MAJOR;
 
 	//頂点バッファ生成
-	result = dx12.device->CreateCommittedResource(
+	result = dx12->device->CreateCommittedResource(
 		&heapProp,
 		D3D12_HEAP_FLAG_NONE,
 		&resDesc,
@@ -162,31 +164,35 @@ void SpriteTransferVertexBuffer(const Sprite& sprite)
 	sprite.vertBuff->Unmap(0, nullptr);
 }
 
-void SpriteCommonBeginDraw(DirectX12 &dx12, const SpriteCommon& spriteCommon)
+void SpriteCommonBeginDraw(const SpriteCommon& spriteCommon)
 {
+	DirectX12* dx12 = DirectX12::GetInstance();
+
 	//パイプラインステートの設定
-	dx12.commandList->SetPipelineState(spriteCommon.pipelineSet.pipelinestate.Get());
+	dx12->commandList->SetPipelineState(spriteCommon.pipelineSet.pipelinestate.Get());
 	//ルートシグネチャの設定
-	dx12.commandList->SetGraphicsRootSignature(spriteCommon.pipelineSet.rootsignature.Get());
+	dx12->commandList->SetGraphicsRootSignature(spriteCommon.pipelineSet.rootsignature.Get());
 	//プリミティブ形状を設定
-	dx12.commandList->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP);
+	dx12->commandList->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP);
 }
 
-void SpriteDraw(const Sprite& sprite, DirectX12 &dx12)
+void SpriteDraw(const Sprite& sprite)
 {
+	DirectX12* dx12 = DirectX12::GetInstance();
+
 	if (sprite.isInvisible)
 	{
 		return;
 	}
 
-	dx12.commandList->IASetVertexBuffers(0, 1, &sprite.vbView);
+	dx12->commandList->IASetVertexBuffers(0, 1, &sprite.vbView);
 
-	dx12.commandList->SetDescriptorHeaps(1, &sprite.tex->texData.srvHeap);
-	dx12.commandList->SetGraphicsRootDescriptorTable(1, sprite.tex->texData.handle);
+	dx12->commandList->SetDescriptorHeaps(1, &sprite.tex->texData.srvHeap);
+	dx12->commandList->SetGraphicsRootDescriptorTable(1, sprite.tex->texData.handle);
 
-	dx12.commandList->SetGraphicsRootConstantBufferView(0, sprite.constBuffer.buffer->GetGPUVirtualAddress());
+	dx12->commandList->SetGraphicsRootConstantBufferView(0, sprite.constBuffer.buffer->GetGPUVirtualAddress());
 
-	dx12.commandList->DrawInstanced(4, 1, 0, 0);
+	dx12->commandList->DrawInstanced(4, 1, 0, 0);
 }
 
 void SpriteSetSize(Sprite& sprite, XMFLOAT2 size)
@@ -195,7 +201,7 @@ void SpriteSetSize(Sprite& sprite, XMFLOAT2 size)
 	SpriteTransferVertexBuffer(sprite);
 }
 
-SpriteCommon SpriteCommonCreate(DirectX12 &dx12)
+SpriteCommon SpriteCommonCreate()
 {
 	result = S_FALSE;
 
@@ -203,7 +209,7 @@ SpriteCommon SpriteCommonCreate(DirectX12 &dx12)
 	SpriteCommon spriteCommon{};
 
 	//スプライト用のパイプラインを生成
-	spriteCommon.pipelineSet = CreateSpritePipeline(dx12);
+	spriteCommon.pipelineSet = CreateSpritePipeline();
 
 	//並行投影の射影行列生成
 	spriteCommon.matProjection = XMMatrixOrthographicOffCenterLH(

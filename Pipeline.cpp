@@ -3,8 +3,10 @@
 #include "Result.h"
 #include <cassert>
 
-PipelineSet CreateObject3DPipeline(DirectX12 &DX12)
+PipelineSet CreateObject3DPipeline()
 {
+	DirectX12* dx12 = DirectX12::GetInstance();
+
 	//パイプライン構造体
 	PipelineSet pipelineSet;
 
@@ -162,7 +164,7 @@ PipelineSet CreateObject3DPipeline(DirectX12 &DX12)
 	result = D3D12SerializeRootSignature(&rootSignatureDesc, D3D_ROOT_SIGNATURE_VERSION_1_0,
 		&rootSigBlob, &shader_.errorBlob);
 	assert(SUCCEEDED(result));
-	result = DX12.device->CreateRootSignature(0, rootSigBlob->GetBufferPointer(), rootSigBlob->GetBufferSize(),
+	result = dx12->device->CreateRootSignature(0, rootSigBlob->GetBufferPointer(), rootSigBlob->GetBufferSize(),
 		IID_PPV_ARGS(&pipelineSet.rootsignature));
 	assert(SUCCEEDED(result));
 
@@ -171,14 +173,16 @@ PipelineSet CreateObject3DPipeline(DirectX12 &DX12)
 
 	//パイプラインステートの生成
 	//ComPtr<ID3D12PipelineState> pipelineState;
-	result = DX12.device->CreateGraphicsPipelineState(&pipelineDesc, IID_PPV_ARGS(&pipelineSet.pipelinestate));
+	result = dx12->device->CreateGraphicsPipelineState(&pipelineDesc, IID_PPV_ARGS(&pipelineSet.pipelinestate));
 	assert(SUCCEEDED(result));
 
 	return pipelineSet;
 }
 
-PipelineSet CreateSpritePipeline(DirectX12 &DX12)
+PipelineSet CreateSpritePipeline()
 {
+	DirectX12* dx12 = DirectX12::GetInstance();
+
 	PipelineSet spritePipelineSet;
 
 	//シェーダー
@@ -332,7 +336,7 @@ PipelineSet CreateSpritePipeline(DirectX12 &DX12)
 	result = D3D12SerializeRootSignature(&rootSignatureDesc2, D3D_ROOT_SIGNATURE_VERSION_1_0,
 		&rootSigBlob2, &shader2_.errorBlob);
 	assert(SUCCEEDED(result));
-	result = DX12.device->CreateRootSignature(0, rootSigBlob2->GetBufferPointer(), rootSigBlob2->GetBufferSize(),
+	result = dx12->device->CreateRootSignature(0, rootSigBlob2->GetBufferPointer(), rootSigBlob2->GetBufferSize(),
 		IID_PPV_ARGS(&spritePipelineSet.rootsignature));
 	assert(SUCCEEDED(result));
 
@@ -341,7 +345,7 @@ PipelineSet CreateSpritePipeline(DirectX12 &DX12)
 
 	//パイプラインステートの生成
 	//ComPtr<ID3D12PipelineState> pipelineState;
-	result = DX12.device->CreateGraphicsPipelineState(&pipelineDesc2, IID_PPV_ARGS(&spritePipelineSet.pipelinestate));
+	result = dx12->device->CreateGraphicsPipelineState(&pipelineDesc2, IID_PPV_ARGS(&spritePipelineSet.pipelinestate));
 	assert(SUCCEEDED(result));
 
 	return spritePipelineSet;

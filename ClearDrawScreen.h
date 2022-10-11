@@ -1,5 +1,4 @@
 #pragma once
-#include "DirectXInit.h"
 #include "Pipeline.h"
 
 void CreateDepthView();

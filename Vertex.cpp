@@ -1,7 +1,7 @@
 #include "Vertex.h"
 #include "Result.h"
 
-void VertexData::CreateVertex(DirectX12 &dx12_, std::vector<Vertex> vertices, std::vector<uint16_t> indices)
+void VertexData::CreateVertex(std::vector<Vertex> vertices, std::vector<uint16_t> indices)
 {
 	//頂点データ
 
@@ -24,7 +24,7 @@ void VertexData::CreateVertex(DirectX12 &dx12_, std::vector<Vertex> vertices, st
 	//頂点バッファの生成
 	//ComPtrにしたらダメだった マップ処理に使ってるから？
 	ID3D12Resource* vertBuff;
-	result = dx12_.device->CreateCommittedResource(
+	result = dx12->device->CreateCommittedResource(
 		&heapProp,	//ヒープ設定
 		D3D12_HEAP_FLAG_NONE,
 		&resDesc,	//リソース設定
@@ -90,7 +90,7 @@ void VertexData::CreateVertex(DirectX12 &dx12_, std::vector<Vertex> vertices, st
 
 	//インデックスバッファの生成
 	ID3D12Resource* indexBuff = nullptr;
-	result = dx12_.device->CreateCommittedResource(
+	result = dx12->device->CreateCommittedResource(
 		&heapProp,	//ヒープ設定
 		D3D12_HEAP_FLAG_NONE,
 		&resDesc,	//リソース設定

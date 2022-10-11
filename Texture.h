@@ -27,9 +27,10 @@ class Texture
 {
 public:
 	//なぜか関数内に入った途端DX12が全て初期化されたので引数でもらっている
-	void Load(const wchar_t* t, DirectX12 &DX12);
+	//おい！！！！！！４か月くらい前のおれ！！！！！！！できたぞ！！！！！！！！！
+	void Load(const wchar_t* t);
 
-	void CreateWhiteTexture(DirectX12 &DX12);
+	void CreateWhiteTexture();
 
 	TextureData texData;
 
@@ -60,6 +61,8 @@ private:
 	D3D12_RESOURCE_DESC resDesc{};
 	//SRVヒープの大きさ
 	UINT SRVHandleSize = 0;
+
+	DirectX12* dx12 = DirectX12::GetInstance();
 
 };
 

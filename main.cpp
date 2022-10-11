@@ -35,9 +35,6 @@ using namespace DirectX;
 //windowsアプリでのエントリーポイント(main関数)
 int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 
-	WinAPI* winApi = WinAPI::GetInstance();
-	DirectX12 *DX12 = DirectX12::GetInstance();
-
 	///---DirectX初期化処理　ここから---///
 	
 #ifdef  _DEBUG
@@ -45,10 +42,14 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	ComPtr<ID3D12Debug1> debugController;
 	if (SUCCEEDED(D3D12GetDebugInterface(IID_PPV_ARGS(&debugController)))) {
 		debugController->EnableDebugLayer();
+		//これより前にデバイスを生成するとデバイスが消されるらしい
 		debugController->SetEnableGPUBasedValidation(TRUE);
 	}
 
 #endif _DEBUG
+
+	WinAPI* winApi = WinAPI::GetInstance();
+	DirectX12* DX12 = DirectX12::GetInstance();
 
 #ifdef  _DEBUG
 	ID3D12InfoQueue* infoQueue;
@@ -73,7 +74,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 
 	//--depthこっから
 
-	CreateDepthView(*DX12);
+	CreateDepthView();
 
 	//--depthここまで
 
@@ -88,13 +89,13 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	Model skydome = Model();
 
 	//頂点データ作成
-	cube.CreateDefaultModel(*DX12);
-	plane.CreateDefaultModel(*DX12);
-	triangle.CreateDefaultModel(*DX12);
-	line.CreateDefaultModel(*DX12);
+	cube.CreateDefaultModel();
+	plane.CreateDefaultModel();
+	triangle.CreateDefaultModel();
+	line.CreateDefaultModel();
 
-	triangleM.CreateModel("triangle_mat", *DX12);
-	skydome.CreateModel("skydome", *DX12);
+	triangleM.CreateModel("triangle_mat");
+	skydome.CreateModel("skydome");
 
 	//WICテクスチャのロード
 	const wchar_t* msg[4] = 
@@ -105,45 +106,45 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	};
 
 	std::unique_ptr<Texture> zawa = std::make_unique<Texture>();
-	zawa->Load(msg[0], *DX12);
+	zawa->Load(msg[0]);
 
 	std::unique_ptr<Texture> slime = std::make_unique<Texture>();
-	slime->Load(msg[1], *DX12);
+	slime->Load(msg[1]);
 
 	std::unique_ptr<Texture> pizza = std::make_unique<Texture>();
-	pizza->Load(msg[2], *DX12);
+	pizza->Load(msg[2]);
 
 	std::unique_ptr<Texture> tyusiten = std::make_unique<Texture>();
-	tyusiten->Load(msg[3], *DX12);
+	tyusiten->Load(msg[3]);
 
 	std::unique_ptr<Texture> sinomiya = std::make_unique<Texture>();
-	sinomiya->Load(L"Resources/triangle_mat/tex1.png", *DX12);
+	sinomiya->Load(L"Resources/triangle_mat/tex1.png");
 
 	std::unique_ptr<Texture> white = std::make_unique<Texture>();
-	white->CreateWhiteTexture(*DX12);
+	white->CreateWhiteTexture();
 
-	PipelineSet object3dPipelineSet = CreateObject3DPipeline(*DX12);
+	PipelineSet object3dPipelineSet = CreateObject3DPipeline();
 
 	SpriteCommon spriteCommon;
-	spriteCommon = SpriteCommonCreate(*DX12);
+	spriteCommon = SpriteCommonCreate();
 
 	//スプライト
 	Sprite pizzaSprite;
-	pizzaSprite = SpriteCreate(*DX12, pizza.get(), {0.5f,0.5f});
+	pizzaSprite = SpriteCreate(pizza.get(), {0.5f,0.5f});
 	SpriteInit(pizzaSprite, spriteCommon,{ 100,100}, 0);
 	SpriteSetSize(pizzaSprite, { 100,100 });
 
 	Sprite slimeSprite;
-	slimeSprite = SpriteCreate(*DX12,slime.get(), { 0.5f,0.5f });
+	slimeSprite = SpriteCreate(slime.get(), { 0.5f,0.5f });
 	SpriteInit(slimeSprite, spriteCommon,{ 200,200 }, 45,{1,0,1,1});
 
 	//デバッグテキスト生成
 
 	std::unique_ptr<Texture> debugFont = std::make_unique<Texture>();
-	debugFont->Load(L"Resources/debugfont.png", *DX12);
+	debugFont->Load(L"Resources/debugfont.png");
 
 	DebugText debugText;
-	debugText.Initialize(*DX12, debugFont.get());
+	debugText.Initialize(debugFont.get());
 
 	const int kObjectCount = 3;
 	std::unique_ptr<Obj3d[]> object3ds;
@@ -244,7 +245,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 #pragma region DirectX毎フレーム処理
 		///---DirectX毎フレーム処理 ここから---///
 		
-		ClearDrawScreen(*DX12);
+		ClearDrawScreen();
 
 		//更新処理
 
@@ -374,7 +375,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 
 #pragma region グラフィックスコマンド
 		//--4.描画コマンドここから--//
-		PreDraw(*DX12, object3dPipelineSet);
+		PreDraw( object3dPipelineSet);
 
 		//描画処理
 		gameScene_.Draw();
@@ -398,13 +399,13 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		}
 
 		//スプライトの前描画(共通コマンド)
-		SpriteCommonBeginDraw(*DX12, spriteCommon);
+		SpriteCommonBeginDraw(spriteCommon);
 
 		//スプライト単体描画
-		SpriteDraw(pizzaSprite, *DX12);
-		SpriteDraw(slimeSprite, *DX12);
+		SpriteDraw(pizzaSprite);
+		SpriteDraw(slimeSprite);
 
-		debugText.DrawAll(*DX12, spriteCommon);
+		debugText.DrawAll(spriteCommon);
 
 		//--4.描画コマンドここまで--//
 
@@ -412,7 +413,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 
 #pragma region 画面入れ替え
 
-		PostDraw(*DX12);
+		PostDraw();
 
 #pragma endregion 画面入れ替え
 

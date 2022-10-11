@@ -1,10 +1,10 @@
 #include "DebugText.h"
 
-void DebugText::Initialize(DirectX12 &dx12,Texture* tex)
+void DebugText::Initialize(Texture* tex)
 {
 	for (int i = 0; i < _countof(sprites); i++)
 	{
-		sprites[i] = SpriteCreate(dx12, tex,{0.5f,0.5f});
+		sprites[i] = SpriteCreate(tex,{0.5f,0.5f});
 	}
 }
 
@@ -45,10 +45,10 @@ void DebugText::Print(const SpriteCommon& spritecommon, const std::string& text,
 	}
 }
 
-void DebugText::DrawAll(DirectX12 &dx12, const SpriteCommon& spriteCommon)
+void DebugText::DrawAll( const SpriteCommon& spriteCommon)
 {
 	for (int i = 0; i < spriteIndex; i++)
 	{
-		SpriteDraw(sprites[i], dx12);
+		SpriteDraw(sprites[i]);
 	}
 }

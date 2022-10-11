@@ -1,4 +1,5 @@
 #include "ClearDrawScreen.h"
+#include "DirectXInit.h"
 #include "Result.h"
 
 ComPtr<ID3D12DescriptorHeap> dsvHeap = nullptr;
@@ -7,10 +8,9 @@ ComPtr<ID3D12Resource> depthBuff;
 
 D3D12_RESOURCE_BARRIER barrierDesc{};
 
-DirectX12* dx12 = DirectX12::GetInstance();
-
 void CreateDepthView()
 {
+	DirectX12* dx12 = DirectX12::GetInstance();
 
 	D3D12_RESOURCE_DESC depthResourceDesc{};
 	depthResourceDesc.Dimension = D3D12_RESOURCE_DIMENSION_TEXTURE2D;
@@ -46,6 +46,8 @@ void CreateDepthView()
 	
 	result = dx12->device->CreateDescriptorHeap(&dsvHeapDesc, IID_PPV_ARGS(&dsvHeap));
 
+	assert(SUCCEEDED(result));
+
 	//深度ビュー作成
 	D3D12_DEPTH_STENCIL_VIEW_DESC dsvDesc = {};
 	dsvDesc.Format = DXGI_FORMAT_D32_FLOAT;//深度値フォーマット
@@ -58,6 +60,8 @@ void CreateDepthView()
 
 void ClearDrawScreen()
 {
+	DirectX12* dx12 = DirectX12::GetInstance();
+
 	FLOAT clearColor[] = { 0.1f,0.25f,0.5f,0.0f };
 
 	UINT bbIndex = dx12->swapChain->GetCurrentBackBufferIndex();
@@ -85,6 +89,8 @@ void ClearDrawScreen()
 
 void PreDraw(PipelineSet objectPipelineSet)
 {
+	DirectX12* dx12 = DirectX12::GetInstance();
+
 	D3D12_VIEWPORT viewport{};
 	viewport.Width = window_width;
 	viewport.Height = window_height;
@@ -114,6 +120,8 @@ void PreDraw(PipelineSet objectPipelineSet)
 
 void PostDraw()
 {
+	DirectX12* dx12 = DirectX12::GetInstance();
+
 	//5.リソースバリアを戻す
 	barrierDesc.Transition.StateBefore = D3D12_RESOURCE_STATE_RENDER_TARGET;	//描画状態から
 	barrierDesc.Transition.StateAfter = D3D12_RESOURCE_STATE_PRESENT;	//表示状態へ

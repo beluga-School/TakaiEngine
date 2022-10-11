@@ -3,7 +3,7 @@
 #include "DirectXInit.h"
 #include <memory>
 
-void Texture::CreateWhiteTexture(DirectX12 &DX12)
+void Texture::CreateWhiteTexture()
 {
 	const size_t textureWidth = 256;
 	const size_t textureHeight = 256;
@@ -44,7 +44,7 @@ void Texture::CreateWhiteTexture(DirectX12 &DX12)
 	textureResourceDesc.SampleDesc.Count = 1;
 
 	//テクスチャバッファの生成
-	result = DX12.device->CreateCommittedResource(
+	result = dx12->device->CreateCommittedResource(
 		&textureHeapProp,
 		D3D12_HEAP_FLAG_NONE,
 		&textureResourceDesc,
@@ -68,7 +68,7 @@ void Texture::CreateWhiteTexture(DirectX12 &DX12)
 	srvHeapDesc.NumDescriptors = kMaxSRVCount;
 
 	//設定を元にSRV用デスクリプタヒープを生成
-	result = DX12.device->CreateDescriptorHeap(&srvHeapDesc, IID_PPV_ARGS(&texData.srvHeap));
+	result = dx12->device->CreateDescriptorHeap(&srvHeapDesc, IID_PPV_ARGS(&texData.srvHeap));
 	assert(SUCCEEDED(result));
 
 	//SRVヒープの先頭ハンドルを取得
@@ -85,7 +85,7 @@ void Texture::CreateWhiteTexture(DirectX12 &DX12)
 	//SRVHandleSize = DX12.device->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV);
 
 	//ハンドルの指す位置にシェーダーリソースビュー作成
-	DX12.device->CreateShaderResourceView(texBuff.Get(), &srvDesc, srvHandle);
+	dx12->device->CreateShaderResourceView(texBuff.Get(), &srvDesc, srvHandle);
 
 	//ハンドルを取得する部分
 	//SRVヒープの先頭ハンドルを取得(SRVを指しているはず)
@@ -94,7 +94,7 @@ void Texture::CreateWhiteTexture(DirectX12 &DX12)
 	texData.getResDesc = textureResourceDesc;
 }
 
-void Texture::Load(const wchar_t* t, DirectX12 &DX12)
+void Texture::Load(const wchar_t* t)
 {
 	//リソース設定
 	resDesc.Dimension = D3D12_RESOURCE_DIMENSION_BUFFER;
@@ -138,7 +138,7 @@ void Texture::Load(const wchar_t* t, DirectX12 &DX12)
 	textureResourceDesc.SampleDesc.Count = 1;
 
 	//テクスチャバッファの生成
-	result = DX12.device->CreateCommittedResource(
+	result = dx12->device->CreateCommittedResource(
 		&textureHeapProp,
 		D3D12_HEAP_FLAG_NONE,
 		&textureResourceDesc,
@@ -167,7 +167,7 @@ void Texture::Load(const wchar_t* t, DirectX12 &DX12)
 	srvHeapDesc.NumDescriptors = kMaxSRVCount;
 
 	//設定を元にSRV用デスクリプタヒープを生成
-	result = DX12.device->CreateDescriptorHeap(&srvHeapDesc, IID_PPV_ARGS(&texData.srvHeap));
+	result = dx12->device->CreateDescriptorHeap(&srvHeapDesc, IID_PPV_ARGS(&texData.srvHeap));
 	assert(SUCCEEDED(result));
 
 	//SRVヒープの先頭ハンドルを取得
@@ -184,7 +184,7 @@ void Texture::Load(const wchar_t* t, DirectX12 &DX12)
 	//SRVHandleSize = DX12.device->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV);
 
 	//ハンドルの指す位置にシェーダーリソースビュー作成
-	DX12.device->CreateShaderResourceView(texBuff.Get(), &srvDesc, srvHandle);
+	dx12->device->CreateShaderResourceView(texBuff.Get(), &srvDesc, srvHandle);
 
 	//ハンドルを取得する部分
 	//SRVヒープの先頭ハンドルを取得(SRVを指しているはず)
