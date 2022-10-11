@@ -3,7 +3,7 @@
 #include "Result.h"
 #include <cassert>
 
-PipelineSet CreateObject3DPipeline(DirectX12 DX12)
+PipelineSet CreateObject3DPipeline(DirectX12 &DX12)
 {
 	//パイプライン構造体
 	PipelineSet pipelineSet;
@@ -177,7 +177,7 @@ PipelineSet CreateObject3DPipeline(DirectX12 DX12)
 	return pipelineSet;
 }
 
-PipelineSet CreateSpritePipeline(DirectX12 DX12)
+PipelineSet CreateSpritePipeline(DirectX12 &DX12)
 {
 	PipelineSet spritePipelineSet;
 

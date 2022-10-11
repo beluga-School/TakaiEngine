@@ -34,8 +34,10 @@ public:
 	ComPtr<ID3D12Fence> fence;
 	UINT64 fenceVal = 0;
 
-public:
-	void yobidasi(WinAPI winApi_);
+	static DirectX12* GetInstance();
+
+private:
+	void yobidasi();
 
 	void AdapterSort();
 
@@ -43,7 +45,7 @@ public:
 
 	void CreateCmdList();
 
-	void SetSwapChain(WinAPI winApi_);
+	void SetSwapChain();
 
 	void SetDescHeap();
 
@@ -52,9 +54,19 @@ public:
 	void RenderTargetView();
 
 	void CreateFence();
+
+private:
+	DirectX12()
+	{
+		yobidasi();
+	}
+	~DirectX12(){};
+
+	DirectX12(const DirectX12& a) = delete;
+	DirectX12& operator=(const DirectX12&) = delete;
+
+	WinAPI* winapi = WinAPI::GetInstance();
 };
 
 //constBufferの生成にて、デバイスの作成に利用している
-static DirectX12 DX12;
-
-ID3D12Device *bGetDevice();
+//static DirectX12 DX12;

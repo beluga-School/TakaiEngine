@@ -1,6 +1,6 @@
 #include "DebugText.h"
 
-void DebugText::Initialize(DirectX12 dx12,Texture* tex)
+void DebugText::Initialize(DirectX12 &dx12,Texture* tex)
 {
 	for (int i = 0; i < _countof(sprites); i++)
 	{
@@ -45,7 +45,7 @@ void DebugText::Print(const SpriteCommon& spritecommon, const std::string& text,
 	}
 }
 
-void DebugText::DrawAll(DirectX12 dx12, const SpriteCommon& spriteCommon)
+void DebugText::DrawAll(DirectX12 &dx12, const SpriteCommon& spriteCommon)
 {
 	for (int i = 0; i < spriteIndex; i++)
 	{

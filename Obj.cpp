@@ -72,3 +72,26 @@ void Obj3d::Draw(ID3D12GraphicsCommandList* commandList,Texture *texture) {
 	//描画コマンド
 	commandList->DrawIndexedInstanced(model->indices.size() , 1, 0, 0, 0);
 }
+
+void Obj3d::MaterialDraw(ID3D12GraphicsCommandList* commandList) {
+	//SRVヒープの設定コマンド
+	commandList->SetDescriptorHeaps(1, &model->material.tex->texData.srvHeap);
+	//SRVヒープの先頭から順番にSRVをルートパラメータ1番に設定
+	//ルートパラメータ1番はテクスチャバッファ
+	commandList->SetGraphicsRootDescriptorTable(1, model->material.tex->GetHandle());
+	//commandList->SetGraphicsRootConstantBufferView(0, constBufferT.buffer->GetGPUVirtualAddress());
+
+	//頂点バッファの設定
+	commandList->IASetVertexBuffers(0, 1, &model->vbView);
+
+	//インデックスバッファの設定
+	commandList->IASetIndexBuffer(&model->ibView);
+
+	//定数バッファビュー(CBV)の設定コマンド
+	commandList->SetGraphicsRootConstantBufferView(0, constBufferMaterial.buffer->GetGPUVirtualAddress());
+
+	commandList->SetGraphicsRootConstantBufferView(2, constBufferT.buffer->GetGPUVirtualAddress());
+
+	//描画コマンド
+	commandList->DrawIndexedInstanced(model->indices.size(), 1, 0, 0, 0);
+}

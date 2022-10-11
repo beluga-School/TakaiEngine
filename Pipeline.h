@@ -20,6 +20,6 @@ struct PipelineSet
 	ComPtr<ID3D12RootSignature> rootsignature;
 };
 
-PipelineSet CreateObject3DPipeline(DirectX12 DX12);
+PipelineSet CreateObject3DPipeline(DirectX12 &DX12);
 
-PipelineSet CreateSpritePipeline(DirectX12 DX12);
+PipelineSet CreateSpritePipeline(DirectX12 &DX12);

@@ -16,9 +16,15 @@ public:
 
 	//ウィンドウクラスの設定
 	WNDCLASSEX w{};
-	void SetWindowClass();
+
+	static WinAPI* GetInstance();
 
 private:
+	WinAPI();
+	~WinAPI(){};
 
+	WinAPI(const WinAPI& a) = delete;
+	WinAPI& operator=(const WinAPI&) = delete;
+
+	void SetWindowClass();
 };
-

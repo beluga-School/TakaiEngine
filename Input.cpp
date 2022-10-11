@@ -9,6 +9,13 @@ Input::Input()
 
 Input::~Input()
 {
+
+}
+
+Input* Input::GetInstance()
+{
+	static Input instance;
+	return &instance;
 }
 
 
@@ -27,14 +34,14 @@ bool Input::ReleaseKey(unsigned char keys)
 	return !key[keys] && oldkey[keys];;
 }
 
-void Input::DirectInputInit(WinAPI winApi_)
+void Input::DirectInputInit()
 {
 	result = DirectInput8Create(
-		winApi_.w.hInstance, DIRECTINPUT_VERSION, IID_IDirectInput8, (void**)&directInput, nullptr);
+		winApi->w.hInstance, DIRECTINPUT_VERSION, IID_IDirectInput8, (void**)&directInput, nullptr);
 	assert(SUCCEEDED(result));
 }
 
-void Input::DirectInputCreate(WinAPI winApi_)
+void Input::DirectInputCreate()
 {
 	//キーボードデバイスの生成
 	result = directInput->CreateDevice(GUID_SysKeyboard, &keyboard, NULL);
@@ -45,7 +52,7 @@ void Input::DirectInputCreate(WinAPI winApi_)
 
 	
 	result = keyboard->SetCooperativeLevel(
-		winApi_.hwnd, DISCL_FOREGROUND | DISCL_NONEXCLUSIVE | DISCL_NOWINKEY);
+		winApi->hwnd, DISCL_FOREGROUND | DISCL_NONEXCLUSIVE | DISCL_NOWINKEY);
 	assert(SUCCEEDED(result));
 }
 

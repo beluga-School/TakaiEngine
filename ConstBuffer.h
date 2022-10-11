@@ -34,6 +34,8 @@ public:
 
 	ConstBuffer();
 	~ConstBuffer();
+private:
+	DirectX12* dx12 = DirectX12::GetInstance();
 };
 
 template<class Format>
@@ -52,7 +54,7 @@ inline ConstBuffer<Format>::ConstBuffer()
 	resdesc.Layout = D3D12_TEXTURE_LAYOUT_ROW_MAJOR;
 
 	//定数バッファの生成
-	result = DX12.device->CreateCommittedResource(
+	result = dx12->device->CreateCommittedResource(
 		&heapProp,
 		D3D12_HEAP_FLAG_NONE,
 		&resdesc,

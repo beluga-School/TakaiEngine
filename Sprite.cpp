@@ -1,7 +1,7 @@
 #include "Sprite.h"
 #include "Result.h"
 
-Sprite SpriteCreate(DirectX12 dx12, Texture* tex,XMFLOAT2 anchorpoint, bool isFlipX, bool isFlipY)
+Sprite SpriteCreate(DirectX12 &dx12, Texture* tex,XMFLOAT2 anchorpoint, bool isFlipX, bool isFlipY)
 {
 	result = S_FALSE;
 
@@ -162,7 +162,7 @@ void SpriteTransferVertexBuffer(const Sprite& sprite)
 	sprite.vertBuff->Unmap(0, nullptr);
 }
 
-void SpriteCommonBeginDraw(DirectX12 dx12, const SpriteCommon& spriteCommon)
+void SpriteCommonBeginDraw(DirectX12 &dx12, const SpriteCommon& spriteCommon)
 {
 	//パイプラインステートの設定
 	dx12.commandList->SetPipelineState(spriteCommon.pipelineSet.pipelinestate.Get());
@@ -172,7 +172,7 @@ void SpriteCommonBeginDraw(DirectX12 dx12, const SpriteCommon& spriteCommon)
 	dx12.commandList->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP);
 }
 
-void SpriteDraw(const Sprite& sprite, DirectX12 dx12)
+void SpriteDraw(const Sprite& sprite, DirectX12 &dx12)
 {
 	if (sprite.isInvisible)
 	{
@@ -195,7 +195,7 @@ void SpriteSetSize(Sprite& sprite, XMFLOAT2 size)
 	SpriteTransferVertexBuffer(sprite);
 }
 
-SpriteCommon SpriteCommonCreate(DirectX12 dx12)
+SpriteCommon SpriteCommonCreate(DirectX12 &dx12)
 {
 	result = S_FALSE;
 

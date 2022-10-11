@@ -25,20 +25,20 @@ public:
 	/// プログラムで作成したモデルを生成する用の関数
 	/// </summary>
 	/// <param name="dx12_"></param>
-	void CreateDefaultModel(DirectX12 dx12_);
+	void CreateDefaultModel(DirectX12 &dx12_);
 
 	/// <summary>
 	/// モデルを読み込んで生成する関数
 	/// </summary>
 	/// <param name="dx12_"></param>
-	void CreateModel(const std::string t,DirectX12 dx12_);
+	void CreateModel(const std::string t,DirectX12 &dx12_);
 
 	/// <summary>
 	/// マテリアル読み込み
 	/// </summary>
 	/// <param name="directoryPath"></param>
 	/// <param name="filename"></param>
-	void LoadMaterial(const std::string& directoryPath, const std::string& filename, DirectX12 dx12);
+	void LoadMaterial(const std::string& directoryPath, const std::string& filename, DirectX12 &dx12);
 
 	//void Update();
 };

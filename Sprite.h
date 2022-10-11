@@ -71,13 +71,13 @@ struct SpriteCommon
 };
 
 //スプライトの生成
-Sprite SpriteCreate(DirectX12 dx12, Texture* tex, XMFLOAT2 anchorpoint,bool isFlipX = false, bool isFlipY = false);
+Sprite SpriteCreate(DirectX12 &dx12, Texture* tex, XMFLOAT2 anchorpoint,bool isFlipX = false, bool isFlipY = false);
 
 //スプライトの変数の初期化
 void SpriteInit(Sprite& sprite, SpriteCommon& spriteCommon,XMFLOAT2 pos = {0,0}, float rotation = 0.0f, XMFLOAT4 color = {1,1,1,1});
 
 //スプライト共通グラフィックコマンドのセット
-void SpriteCommonBeginDraw(DirectX12 dx12,const SpriteCommon& spriteCommon);
+void SpriteCommonBeginDraw(DirectX12 &dx12,const SpriteCommon& spriteCommon);
 
 void SpriteUpdate(Sprite& sprite,const SpriteCommon& spriteCommon);
 
@@ -85,6 +85,6 @@ void SpriteTransferVertexBuffer(const Sprite& sprite);
 
 void SpriteSetSize(Sprite& sprite, XMFLOAT2 size);
 
-void SpriteDraw(const Sprite& sprite, DirectX12 dx12);
+void SpriteDraw(const Sprite& sprite, DirectX12 &dx12);
 
-SpriteCommon SpriteCommonCreate(DirectX12 dx12);
+SpriteCommon SpriteCommonCreate(DirectX12 &dx12);

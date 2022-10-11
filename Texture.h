@@ -27,9 +27,9 @@ class Texture
 {
 public:
 	//‚È‚º‚©ŠÖ”“à‚É“ü‚Á‚½“r’[DX12‚ª‘S‚Ä‰Šú‰»‚³‚ê‚½‚Ì‚Åˆø”‚Å‚à‚ç‚Á‚Ä‚¢‚é
-	void Load(const wchar_t* t, DirectX12 DX12);
+	void Load(const wchar_t* t, DirectX12 &DX12);
 
-	void CreateWhiteTexture(DirectX12 DX12);
+	void CreateWhiteTexture(DirectX12 &DX12);
 
 	TextureData texData;
 

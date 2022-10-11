@@ -3,7 +3,7 @@
 #include "DirectXInit.h"
 #include <memory>
 
-void Texture::CreateWhiteTexture(DirectX12 DX12)
+void Texture::CreateWhiteTexture(DirectX12 &DX12)
 {
 	const size_t textureWidth = 256;
 	const size_t textureHeight = 256;
@@ -94,7 +94,7 @@ void Texture::CreateWhiteTexture(DirectX12 DX12)
 	texData.getResDesc = textureResourceDesc;
 }
 
-void Texture::Load(const wchar_t* t, DirectX12 DX12)
+void Texture::Load(const wchar_t* t, DirectX12 &DX12)
 {
 	//ÉäÉ\Å[ÉXê›íË
 	resDesc.Dimension = D3D12_RESOURCE_DIMENSION_BUFFER;

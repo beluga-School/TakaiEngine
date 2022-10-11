@@ -17,6 +17,10 @@ LRESULT WindowProc(HWND hwnd, UINT msg, WPARAM wparam, LPARAM lparam) {
 	return DefWindowProc(hwnd, msg, wparam, lparam);
 }
 
+WinAPI::WinAPI()
+{
+	SetWindowClass();
+}
 
 void WinAPI::SetWindowClass()
 {
@@ -54,4 +58,10 @@ void WinAPI::SetWindowClass()
 	ShowWindow(hwnd, SW_SHOW);
 
 	msg = {};
+}
+
+WinAPI* WinAPI::GetInstance()
+{
+	static WinAPI instance;
+	return &instance;
 }

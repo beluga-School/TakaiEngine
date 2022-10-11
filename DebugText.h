@@ -4,10 +4,10 @@
 class DebugText
 {
 public:
-	void Initialize(DirectX12 dx12, Texture* tex);
+	void Initialize(DirectX12 &dx12, Texture* tex);
 	void Print(const SpriteCommon& spritecommon, const std::string& text, float x, float y, float scale);
 
-	void DrawAll(DirectX12 dx12, const SpriteCommon& spriteCommon);
+	void DrawAll(DirectX12 &dx12, const SpriteCommon& spriteCommon);
 
 private:
 

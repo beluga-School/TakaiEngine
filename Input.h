@@ -17,6 +17,8 @@ public:
 	Input();
 	~Input();
 
+	static Input* GetInstance();
+
 	unsigned char key[256] = {};
 	unsigned char oldkey[256] = {};
 
@@ -24,9 +26,11 @@ public:
 	bool TriggerKey(unsigned char keys);
 	bool ReleaseKey(unsigned char keys);
 
-	void DirectInputInit(WinAPI winApi_);
-	void DirectInputCreate(WinAPI winApi_);
+	void DirectInputInit();
+	void DirectInputCreate();
 
 	void Update();
+private:
+	WinAPI *winApi = WinAPI::GetInstance();
 };
 

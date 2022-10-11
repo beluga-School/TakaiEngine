@@ -43,5 +43,6 @@ public:
 	void SetModel(Model *model);
 	void Update(XMMATRIX& matView, XMMATRIX& matProjection);
 	void Draw(ID3D12GraphicsCommandList* commandList, Texture* texture);
+	void MaterialDraw(ID3D12GraphicsCommandList* commandList);
 };
 

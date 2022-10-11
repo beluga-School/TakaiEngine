@@ -1,5 +1,6 @@
 #pragma once
 #include <string>
+#include <memory>
 #include "Vector3.h"
 #include "Texture.h"
 
@@ -11,7 +12,7 @@ struct Material
 	Vector3 specular;			//スペキュラー影響度
 	float alpha;				//アルファ
 	std::string textureFilename;//テクスチャファイル名
-	Texture tex;
+	std::unique_ptr<Texture> tex = std::make_unique<Texture>();
 
 	Material() {
 		ambient = { 0.3f,0.3f,0.3f };

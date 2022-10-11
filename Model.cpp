@@ -2,12 +2,12 @@
 using namespace std;
 #include "StringUtil.h"
 
-void Model::CreateDefaultModel(DirectX12 dx12_)
+void Model::CreateDefaultModel(DirectX12 &dx12_)
 {
 	CreateVertex(dx12_, vertices, indices);
 }
 
-void Model::LoadMaterial(const std::string& directoryPath, const std::string& filename,DirectX12 dx12)
+void Model::LoadMaterial(const std::string& directoryPath, const std::string& filename,DirectX12 &dx12)
 {
 	//ファイルストリーム
 	std::ifstream file;
@@ -40,19 +40,19 @@ void Model::LoadMaterial(const std::string& directoryPath, const std::string& fi
 			line_stream >> material.name;
 		}
 
-		if (key == "ka") {
+		if (key == "Ka") {
 			line_stream >> material.ambient.x;
 			line_stream >> material.ambient.y;
 			line_stream >> material.ambient.z;
 		}
 
-		if (key == "kd") {
+		if (key == "Kd") {
 			line_stream >> material.diffuse.x;
 			line_stream >> material.diffuse.y;
 			line_stream >> material.diffuse.z;
 		}
 
-		if (key == "ks") {
+		if (key == "Ks") {
 			line_stream >> material.specular.x;
 			line_stream >> material.specular.y;
 			line_stream >> material.specular.z;
@@ -60,28 +60,16 @@ void Model::LoadMaterial(const std::string& directoryPath, const std::string& fi
 
 		if (key == "map_Kd")
 		{
-
 			line_stream >> material.textureFilename;
 
-			material.tex.Load(ConvertStringToWChar(directoryPath + material.textureFilename).c_str(),dx12);
+			material.tex->Load(ConvertStringToWChar(directoryPath + material.textureFilename).c_str(),dx12);
 		}
 	}
 	//ファイルを閉じる
 	file.close();
 }
 
-//void Model::Update()
-//{
-//	ConstBufferDataB1* constMap1 = nullptr;
-//	result = constBufferMaterial.buffer->Map(0, nullptr, (void**)&constMap1);
-//	constMap1->ambient = material.ambient;
-//	constMap1->diffuse = material.diffuse;
-//	constMap1->specular = material.specular;
-//	constMap1->alpha = material.alpha;
-//	constBufferMaterial.buffer->Unmap(0, nullptr);
-//}
-
-void Model::CreateModel(const std::string t,DirectX12 dx12_)
+void Model::CreateModel(const std::string t,DirectX12 &dx12_)
 {
 	std::ifstream file;
 	//objファイルを開く

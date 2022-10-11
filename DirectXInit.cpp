@@ -1,7 +1,7 @@
 #include "DirectXInit.h"
 #include "Result.h"
 
-void DirectX12::yobidasi(WinAPI winApi_)
+void DirectX12::yobidasi()
 {
 	AdapterSort();
 
@@ -9,7 +9,7 @@ void DirectX12::yobidasi(WinAPI winApi_)
 
 	CreateCmdList();
 
-	SetSwapChain(winApi_);
+	SetSwapChain();
 
 	SetDescHeap();
 
@@ -105,7 +105,7 @@ void DirectX12::CreateCmdList()
 	assert(SUCCEEDED(result));
 }
 
-void DirectX12::SetSwapChain(WinAPI winApi_)
+void DirectX12::SetSwapChain()
 {
 	//スワップチェーンの設定
 	swapChainDesc.Width = 1280;
@@ -123,7 +123,7 @@ void DirectX12::SetSwapChain(WinAPI winApi_)
 	//スワップチェーンの生成
 	result = dxgifactory->CreateSwapChainForHwnd(
 		commandQueue.Get(), 
-		winApi_.hwnd, 
+		winapi->hwnd,
 		&swapChainDesc, 
 		nullptr, 
 		nullptr,
@@ -183,7 +183,8 @@ void DirectX12::CreateFence()
 	result = device->CreateFence(fenceVal, D3D12_FENCE_FLAG_NONE, IID_PPV_ARGS(&fence));
 }
 
-ID3D12Device* bGetDevice()
+DirectX12* DirectX12::GetInstance()
 {
-	return DX12.device.Get();
+	static DirectX12 instance;
+	return &instance;
 }
