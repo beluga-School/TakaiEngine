@@ -94,6 +94,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	triangle.CreateDefaultModel();
 	line.CreateDefaultModel();
 
+	//gitignore‚Ìİ’èƒ~ƒX‚Åobj‚ª‘—‚ê‚Ä‚È‚©‚Á‚½‚æ
 	triangleM.CreateModel("triangle_mat");
 	skydome.CreateModel("skydome");
 
