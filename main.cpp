@@ -26,6 +26,7 @@ using namespace DirectX;
 #include "Sprite.h"
 #include "Pipeline.h"
 #include "ClearDrawScreen.h"
+#include "Billboard.h"
 
 #include "GameScene.h"
 
@@ -157,7 +158,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	}
 
 	//どのモデルの形を使うかを設定
-	object3ds[0].SetModel(&triangleM);
+	object3ds[0].SetModel(&cube);
 	object3ds[1].SetModel(&plane);
 	object3ds[2].SetModel(&skydome);
 
@@ -170,31 +171,31 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	object3ds[1].scale.y = 10.0f;
 	object3ds[1].rotation.x += XMConvertToRadians(90.0f);
 	
-	//線のモデルを使う設定
-	const int kLineCountX = 15;
-	const int kLineCountY = 15;
-	std::unique_ptr<Obj3d[]> LineX;
-	LineX = std::make_unique<Obj3d[]>(kLineCountX);
+	////線のモデルを使う設定
+	//const int kLineCountX = 15;
+	//const int kLineCountY = 15;
+	//std::unique_ptr<Obj3d[]> LineX;
+	//LineX = std::make_unique<Obj3d[]>(kLineCountX);
 
-	for (int i = 0; i < kLineCountX; i++)
-	{
-		LineX[i].Initialize();
-		LineX[i].SetModel(&line);
-		LineX[i].position.x += 10 * i - (10 * kLineCountX / 2);
-	}
+	//for (int i = 0; i < kLineCountX; i++)
+	//{
+	//	LineX[i].Initialize();
+	//	LineX[i].SetModel(&line);
+	//	LineX[i].position.x += 10 * i - (10 * kLineCountX / 2);
+	//}
 
-	std::unique_ptr<Obj3d[]> LineY;
-	LineY = std::make_unique<Obj3d[]>(kLineCountY);
+	//std::unique_ptr<Obj3d[]> LineY;
+	//LineY = std::make_unique<Obj3d[]>(kLineCountY);
 
-	for (int i = 0; i < kLineCountY; i++)
-	{
-		LineY[i].Initialize();
-		LineY[i].SetModel(&line);
-		//LineY[i].position.x += 10 * i;
-		LineY[i].position.z += 10 * i - (10 * kLineCountY / 2);
+	//for (int i = 0; i < kLineCountY; i++)
+	//{
+	//	LineY[i].Initialize();
+	//	LineY[i].SetModel(&line);
+	//	//LineY[i].position.x += 10 * i;
+	//	LineY[i].position.z += 10 * i - (10 * kLineCountY / 2);
 
-		LineY[i].rotation.y += XMConvertToRadians(90.0f);
-	}
+	//	LineY[i].rotation.y += XMConvertToRadians(90.0f);
+	//}
 
 	//射影変換行列(投資投影)
 	XMMATRIX matProjection =
@@ -205,11 +206,18 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		);
 
 	//ビュー変換行列(透視投影)を計算
-	ViewProjection viewProjection_;
-	viewProjection_.Initialize();
+	View view_;
+	view_.Initialize();
 
-	viewProjection_.eye.y = 50.0f;
-	viewProjection_.UpdatematView();
+	view_.eye.y = 50.0f;
+	view_.UpdatematView();
+
+	Billboard billboard = Billboard(&view_);
+	billboard.Initialize();
+	billboard.SetModel(&triangleM);
+
+	billboard.position = { 10,10,0 };
+	billboard.scale = { 10,10,10 };
 
 #pragma endregion 描画初期化処理
 
@@ -267,41 +275,41 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 			input_->PushKey(DIK_SPACE))
 		{
 			if (input_->PushKey(DIK_RIGHT)) { 
-				viewProjection_.eye.x += 2;
+				view_.eye.x += 2;
 				//viewProjection_.target.x += 2;
 			}
 			if (input_->PushKey(DIK_LEFT)) { 
-				viewProjection_.eye.x -= 2; 
+				view_.eye.x -= 2; 
 				//viewProjection_.target.x -= 2;
 			}
 			if (input_->PushKey(DIK_UP)) {
-				viewProjection_.eye.z += 2;
+				view_.eye.z += 2;
 				//viewProjection_.target.z += 2;
 			}
 			if (input_->PushKey(DIK_DOWN)) {
-				viewProjection_.eye.z -= 2;
+				view_.eye.z -= 2;
 				//viewProjection_.target.z -= 2;
 			}
 			if (input_->PushKey(DIK_SPACE))
 			{
 				if (input_->PushKey(DIK_RIGHT)) {
 				
-					viewProjection_.target.x += 2;
+					view_.target.x += 2;
 				}
 				if (input_->PushKey(DIK_LEFT)) {
 					
-					viewProjection_.target.x -= 2;
+					view_.target.x -= 2;
 				}
 				if (input_->PushKey(DIK_UP)) {
 					
-					viewProjection_.target.z += 2;
+					view_.target.z += 2;
 				}
 				if (input_->PushKey(DIK_DOWN)) {
 					
-					viewProjection_.target.z -= 2;
+					view_.target.z -= 2;
 				}
 			}
-			viewProjection_.UpdatematView();
+			view_.UpdatematView();
 		}
 
 		if (input_->TriggerKey(DIK_R))
@@ -310,26 +318,26 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 			{
 				object3ds[i].Initialize();
 			}
-			viewProjection_.Initialize();
-			viewProjection_.eye.y = 50.0f;
-			viewProjection_.UpdatematView();
+			view_.Initialize();
+			view_.eye.y = 50.0f;
+			view_.UpdatematView();
 		}
 
 		//相対距離を求める
 		XMFLOAT3 offset = { 0,0,0 };
-		offset.x = viewProjection_.eye.x - object3ds[0].position.x;
-		offset.y = viewProjection_.eye.y - object3ds[0].position.y;
-		offset.z = viewProjection_.eye.z - object3ds[0].position.z;
+		offset.x = view_.eye.x - object3ds[0].position.x;
+		offset.y = view_.eye.y - object3ds[0].position.y;
+		offset.z = view_.eye.z - object3ds[0].position.z;
 
-		viewProjection_.eye.x = object3ds[0].position.x + offset.x;
-		viewProjection_.eye.y = object3ds[0].position.y + offset.y;
-		viewProjection_.eye.z = object3ds[0].position.z + offset.z;
+		view_.eye.x = object3ds[0].position.x + offset.x;
+		view_.eye.y = object3ds[0].position.y + offset.y;
+		view_.eye.z = object3ds[0].position.z + offset.z;
 
-		viewProjection_.UpdatematView();
+		view_.UpdatematView();
 		//オブジェクトの更新
 		for (size_t i = 0; i < kObjectCount; i++)
 		{
-			if (input_->PushKey(DIK_D))
+			/*if (input_->PushKey(DIK_D))
 			{
 				object3ds[i].position.x += 1;
 			}
@@ -352,18 +360,20 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 			if (input_->PushKey(DIK_E))
 			{
 				object3ds[i].rotation.y -= 0.1f;
-			}
-			object3ds[i].Update(viewProjection_.matView, matProjection);
+			}*/
+			object3ds[i].Update(view_.matView, matProjection);
 		}
 
-		for (int i = 0; i < kLineCountX; i++)
+		billboard.Update(matProjection);
+
+		/*for (int i = 0; i < kLineCountX; i++)
 		{
 			LineX[i].Update(viewProjection_.matView, matProjection);
 		}
 		for (int i = 0; i < kLineCountY; i++)
 		{
 			LineY[i].Update(viewProjection_.matView, matProjection);
-		}
+		}*/
 
 		SpriteUpdate(pizzaSprite, spriteCommon);
 		SpriteUpdate(slimeSprite, spriteCommon);
@@ -381,8 +391,8 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		//描画処理
 		gameScene_.Draw();
 
-		object3ds[0].MaterialDraw(DX12->commandList.Get());
-		//object3ds[0].MaterialDraw(DX12.commandList.Get());
+		//object3ds[0].MaterialDraw(DX12->commandList.Get());
+		//object3ds[0].Draw(DX12->commandList.Get(),slime.get());
 		object3ds[2].MaterialDraw(DX12->commandList.Get());
 		
 		if (input_->TriggerKey(DIK_SPACE))
@@ -390,14 +400,16 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 			object3ds[1].Draw(DX12->commandList.Get(), slime.get());
 		}
 
-		for (int i = 0; i < kLineCountX; i++)
+		billboard.Draw(slime.get());
+
+		/*for (int i = 0; i < kLineCountX; i++)
 		{
 			LineX[i].Draw(DX12->commandList.Get(), white.get());
 		}
 		for (int i = 0; i < kLineCountY; i++)
 		{
 			LineY[i].Draw(DX12->commandList.Get(), white.get());
-		}
+		}*/
 
 		//スプライトの前描画(共通コマンド)
 		SpriteCommonBeginDraw(spriteCommon);

@@ -145,6 +145,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Billboard.cpp" />
     <ClCompile Include="ClearDrawScreen.cpp" />
     <ClCompile Include="ConstBuffer.cpp" />
     <ClCompile Include="DebugText.cpp" />
@@ -169,6 +170,7 @@
     <ClCompile Include="WinAPI.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Billboard.h" />
     <ClInclude Include="ClearDrawScreen.h" />
     <ClInclude Include="ConstBuffer.h" />
     <ClInclude Include="DebugText.h" />

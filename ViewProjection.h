@@ -5,7 +5,7 @@ using namespace DirectX;
 #pragma comment(lib,"d3dcompiler.lib")
 #include "DirectXInit.h"
 
-class ViewProjection
+class View
 {
 public:
 	XMMATRIX matView;
