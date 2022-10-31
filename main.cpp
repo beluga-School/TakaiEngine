@@ -14,6 +14,8 @@ using namespace DirectX;
 
 //自分でクラス化したやつ
 #include "WinAPI.h"
+#include "TimeManager.h"
+
 #include "Result.h"
 #include "Input.h"
 #include "DirectXInit.h"
@@ -72,6 +74,8 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	input_->DirectInputCreate();
 
 	///---DirectX初期化処理　ここまで---///
+
+	TimeManager::Init();
 
 #pragma region 描画初期化処理
 
@@ -154,8 +158,8 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	PipelineSet geometryObjectPipelineSet = CreateGeometryPipeline();
 
 	//ジオメトリオブジェクト生成
-	GeometryObject GObject;
-	GObject.CreateModel();
+	//GeometryObject GObject;
+	//GObject.CreateModel();
 
 	const int kObjectCount = 3;
 	std::unique_ptr<Obj3d[]> object3ds;
@@ -334,6 +338,16 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 			view_.UpdatematView();
 		}
 
+		/*if (input_->PushKey(DIK_D))
+		{
+			billboard.position.x += 10.0f * TimeManager::deltaTime;
+		}
+
+		if (input_->PushKey(DIK_A))
+		{
+			billboard.position.x -= 10.0f * TimeManager::deltaTime;
+		}*/
+
 		//相対距離を求める
 		XMFLOAT3 offset = { 0,0,0 };
 		offset.x = view_.eye.x - object3ds[0].position.x;
@@ -348,19 +362,19 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		//オブジェクトの更新
 		if (input_->PushKey(DIK_D))
 		{
-			billboard.position.x += 1;
+			billboard.position.x += 60.0f * TimeManager::deltaTime;
 		}
 		if (input_->PushKey(DIK_A))
 		{
-			billboard.position.x -= 1;
+			billboard.position.x -= 60.0f * TimeManager::deltaTime;
 		}
 		if (input_->PushKey(DIK_W))
 		{
-			billboard.position.y += 1;
+			billboard.position.y += 60.0f * TimeManager::deltaTime;
 		}
 		if (input_->PushKey(DIK_S))
 		{
-			billboard.position.y -= 1;
+			billboard.position.y -= 60.0f * TimeManager::deltaTime;
 		}
 		for (size_t i = 0; i < kObjectCount; i++)
 		{
@@ -376,7 +390,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 			billboard.yBillboardMode = false;
 		}
 
-		GObject.Update(view_.matView,matProjection);
+		//GObject.Update(view_.matView,matProjection);
 
 		billboard.Update(matProjection);
 
@@ -387,7 +401,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		count++;
 		
 		debugText.Print(spriteCommon,
-			"Q : change_YBillBoard",50,100,2.0f);
+			"deltaTime " + std::to_string(TimeManager::deltaTime), 50, 100, 1.0f);
 
 		///---DirectX毎フレーム処理 ここまで---///
 #pragma endregion DirectX毎フレーム処理
@@ -408,10 +422,10 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 			object3ds[1].Draw(slime.get());
 		}
 
-		//billboard.Draw(slime.get());
+		billboard.Draw(slime.get());
 
 		GeometryObjectPreDraw(geometryObjectPipelineSet);
-		GObject.Draw();
+		//GObject.Draw();
 
 
 		//スプライトの前描画(共通コマンド)
@@ -434,6 +448,8 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		debugText.PostDraw();
 
 #pragma endregion 画面入れ替え
+
+		TimeManager::Update();
 
 		if (input_->PushKey(DIK_ESCAPE))
 		{
