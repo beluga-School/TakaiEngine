@@ -87,7 +87,7 @@ void ClearDrawScreen()
 
 }
 
-void PreDraw(PipelineSet objectPipelineSet)
+void BasicObjectPreDraw(PipelineSet objectPipelineSet)
 {
 	DirectX12* dx12 = DirectX12::GetInstance();
 
@@ -116,6 +116,36 @@ void PreDraw(PipelineSet objectPipelineSet)
 
 	//プリミティブ形状の設定コマンド
 	dx12->commandList->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+}
+
+void GeometryObjectPreDraw(PipelineSet geometryPipelineSet)
+{
+	DirectX12* dx12 = DirectX12::GetInstance();
+
+	D3D12_VIEWPORT viewport{};
+	viewport.Width = window_width;
+	viewport.Height = window_height;
+	viewport.TopLeftX = 0;
+	viewport.TopLeftY = 0;
+	viewport.MinDepth = 0.0f;
+	viewport.MaxDepth = 1.0f;
+	//ビューポート設定コマンドを、コマンドリストに積む
+	dx12->commandList->RSSetViewports(1, &viewport);
+
+	D3D12_RECT scissorRect{};
+	scissorRect.left = 0;									//切り抜き座標左
+	scissorRect.right = scissorRect.left + window_width;	//切り抜き座標右
+	scissorRect.top = 0;									//切り抜き座標上
+	scissorRect.bottom = scissorRect.top + window_height;	//切り抜き座標下
+	//シザー矩形設定コマンドを、コマンドリストに積む
+	dx12->commandList->RSSetScissorRects(1, &scissorRect);
+
+	//パイプラインステートとルートシグネチャの設定コマンド
+	//スプライトじゃない方
+	dx12->commandList->SetPipelineState(geometryPipelineSet.pipelinestate.Get());
+	dx12->commandList->SetGraphicsRootSignature(geometryPipelineSet.rootsignature.Get());
+
+	dx12->commandList->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_POINTLIST);
 }
 
 void PostDraw()

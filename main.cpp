@@ -33,6 +33,8 @@ using namespace DirectX;
 #include "Sound.h"
 #include "DebugText.h"
 
+#include "GeometryObject.h"
+
 //windowsアプリでのエントリーポイント(main関数)
 int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 
@@ -147,6 +149,13 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 
 	DebugText debugText;
 	debugText.Initialize(debugFont.get());
+
+	//ジオメトリオブジェクト用パイプライン生成
+	PipelineSet geometryObjectPipelineSet = CreateGeometryPipeline();
+
+	//ジオメトリオブジェクト生成
+	GeometryObject GObject;
+	GObject.CreateModel();
 
 	const int kObjectCount = 3;
 	std::unique_ptr<Obj3d[]> object3ds;
@@ -367,16 +376,9 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 			billboard.yBillboardMode = false;
 		}
 
-		billboard.Update(matProjection);
+		GObject.Update(view_.matView,matProjection);
 
-		/*for (int i = 0; i < kLineCountX; i++)
-		{
-			LineX[i].Update(viewProjection_.matView, matProjection);
-		}
-		for (int i = 0; i < kLineCountY; i++)
-		{
-			LineY[i].Update(viewProjection_.matView, matProjection);
-		}*/
+		billboard.Update(matProjection);
 
 		SpriteUpdate(pizzaSprite, spriteCommon);
 		SpriteUpdate(slimeSprite, spriteCommon);
@@ -392,7 +394,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 
 #pragma region グラフィックスコマンド
 		//--4.描画コマンドここから--//
-		PreDraw( object3dPipelineSet);
+		BasicObjectPreDraw( object3dPipelineSet);
 
 		//描画処理
 		gameScene_.Draw();
@@ -406,7 +408,11 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 			object3ds[1].Draw(slime.get());
 		}
 
-		billboard.Draw(slime.get());
+		//billboard.Draw(slime.get());
+
+		GeometryObjectPreDraw(geometryObjectPipelineSet);
+		GObject.Draw();
+
 
 		//スプライトの前描画(共通コマンド)
 		SpriteCommonBeginDraw(spriteCommon);
