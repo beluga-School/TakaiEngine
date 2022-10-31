@@ -1,5 +1,6 @@
 #include "WinAPI.h"
 
+//staticにすべき
 //ウィンドウプロシージャ
 LRESULT WindowProc(HWND hwnd, UINT msg, WPARAM wparam, LPARAM lparam) {
 

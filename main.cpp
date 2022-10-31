@@ -212,12 +212,12 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	view_.eye.y = 50.0f;
 	view_.UpdatematView();
 
-	Billboard billboard = Billboard(&view_);
+	Billboard billboard = Billboard(&view_,false);
 	billboard.Initialize();
 	billboard.SetModel(&triangleM);
 
 	billboard.position = { 10,10,0 };
-	billboard.scale = { 10,10,10 };
+	billboard.scale = { 100,100,100 };
 
 #pragma endregion 描画初期化処理
 
@@ -235,7 +235,9 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 
 	float cameraY = 100;
 
-	float count = 0;
+	//float count = 0;
+
+	int count = 0;
 
 	//ゲームループ
 	while (true){
@@ -335,33 +337,34 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 
 		view_.UpdatematView();
 		//オブジェクトの更新
+		if (input_->PushKey(DIK_D))
+		{
+			billboard.position.x += 1;
+		}
+		if (input_->PushKey(DIK_A))
+		{
+			billboard.position.x -= 1;
+		}
+		if (input_->PushKey(DIK_W))
+		{
+			billboard.position.y += 1;
+		}
+		if (input_->PushKey(DIK_S))
+		{
+			billboard.position.y -= 1;
+		}
 		for (size_t i = 0; i < kObjectCount; i++)
 		{
-			/*if (input_->PushKey(DIK_D))
-			{
-				object3ds[i].position.x += 1;
-			}
-			if (input_->PushKey(DIK_A))
-			{
-				object3ds[i].position.x -= 1;
-			}
-			if (input_->PushKey(DIK_W))
-			{
-				object3ds[i].position.z += 1;
-			}
-			if (input_->PushKey(DIK_S))
-			{
-				object3ds[i].position.z -= 1;
-			}
-			if (input_->PushKey(DIK_Q))
-			{
-				object3ds[i].rotation.y += 0.1f;
-			}
-			if (input_->PushKey(DIK_E))
-			{
-				object3ds[i].rotation.y -= 0.1f;
-			}*/
 			object3ds[i].Update(view_.matView, matProjection);
+		}
+
+		if (input_->PushKey(DIK_Q))
+		{
+			billboard.yBillboardMode = true;
+		}
+		else
+		{
+			billboard.yBillboardMode = false;
 		}
 
 		billboard.Update(matProjection);
@@ -378,8 +381,11 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		SpriteUpdate(pizzaSprite, spriteCommon);
 		SpriteUpdate(slimeSprite, spriteCommon);
 
-		debugText.Print(spriteCommon, "Hello,DirectX", 200,100,1.0f);
-		debugText.Print(spriteCommon, "Nihon Kogakuin", 200,200,2.0f);
+	
+		count++;
+		
+		debugText.Print(spriteCommon,
+			"Q : change_YBillBoard",50,100,2.0f);
 
 		///---DirectX毎フレーム処理 ここまで---///
 #pragma endregion DirectX毎フレーム処理
@@ -392,33 +398,24 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		gameScene_.Draw();
 
 		//object3ds[0].MaterialDraw(DX12->commandList.Get());
-		//object3ds[0].Draw(DX12->commandList.Get(),slime.get());
-		object3ds[2].MaterialDraw(DX12->commandList.Get());
+		//object3ds[0].Draw(slime.get());
+		object3ds[2].MaterialDraw();
 		
 		if (input_->TriggerKey(DIK_SPACE))
 		{
-			object3ds[1].Draw(DX12->commandList.Get(), slime.get());
+			object3ds[1].Draw(slime.get());
 		}
 
 		billboard.Draw(slime.get());
-
-		/*for (int i = 0; i < kLineCountX; i++)
-		{
-			LineX[i].Draw(DX12->commandList.Get(), white.get());
-		}
-		for (int i = 0; i < kLineCountY; i++)
-		{
-			LineY[i].Draw(DX12->commandList.Get(), white.get());
-		}*/
 
 		//スプライトの前描画(共通コマンド)
 		SpriteCommonBeginDraw(spriteCommon);
 
 		//スプライト単体描画
-		SpriteDraw(pizzaSprite);
-		SpriteDraw(slimeSprite);
+		//SpriteDraw(pizzaSprite);
+		//SpriteDraw(slimeSprite);
 
-		debugText.DrawAll(spriteCommon);
+		debugText.DrawAll();
 
 		//--4.描画コマンドここまで--//
 
@@ -427,6 +424,8 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 #pragma region 画面入れ替え
 
 		PostDraw();
+
+		debugText.PostDraw();
 
 #pragma endregion 画面入れ替え
 

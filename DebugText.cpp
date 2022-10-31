@@ -45,10 +45,20 @@ void DebugText::Print(const SpriteCommon& spritecommon, const std::string& text,
 	}
 }
 
-void DebugText::DrawAll( const SpriteCommon& spriteCommon)
+void DebugText::DrawAll()
 {
 	for (int i = 0; i < spriteIndex; i++)
 	{
 		SpriteDraw(sprites[i]);
 	}
+}
+
+void DebugText::PostDraw()
+{
+	for (int i = 0; i < spriteIndex; i++)
+	{
+		sprites[i].position = { 0,0,0 };
+		sprites[i].size = { 0,0 };
+	}
+	spriteIndex = 0;
 }

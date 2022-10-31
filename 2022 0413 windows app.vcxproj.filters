@@ -195,5 +195,8 @@
     <FxCompile Include="Resources\Shader\OBJVS.hlsl">
       <Filter>シェーダー</Filter>
     </FxCompile>
+    <FxCompile Include="Resources\Shader\BasicGeometryShader.hlsl">
+      <Filter>シェーダー</Filter>
+    </FxCompile>
   </ItemGroup>
 </Project>

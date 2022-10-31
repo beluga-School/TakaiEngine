@@ -1,90 +1,48 @@
 #include "Billboard.h"
 #include "DirectXInit.h"
 
-Billboard::Billboard(View* view)
+Billboard::Billboard(View* view, bool yBillboardMode)
 {
 	this->view = view;
+	this->yBillboardMode = yBillboardMode;
 }
-
 
 void Billboard::Update(XMMATRIX& matProjection)
 {
-
 	XMMATRIX matScale;	//スケーリング行列
 	XMMATRIX matRot;	//回転行列
 	XMMATRIX matTrans;	//平行移動行列
 
+	XMMATRIX reverseMatView;
+	reverseMatView = XMMatrixInverse(nullptr, view->matView);
+	reverseMatView.r[3] = XMVectorSet(0, 0, 0, 1);
+
 	matScale = XMMatrixScaling(scale.x, scale.y, scale.z);
-
 	matRot = XMMatrixIdentity();
-
-	//ここ！！！
-	XMVECTOR cameraAxisZ = {
-	view->target.x - view->eye.x,
-	view->target.y - view->eye.y,
-	view->target.z - view->eye.z,
-	};
-
-	XMVECTOR viewUpVec = {
-		view->up.x,
-		view->up.y,
-		view->up.z
-	};
-
-	XMVECTOR viewEye = {
-	view->eye.x,
-	view->eye.y,
-	view->eye.z
-	};
-
-	XMVECTOR viewTarget = {
-view->target.x,
-view->target.y,
-view->target.z
-	};
-
-	cameraAxisZ = XMVector3Normalize(cameraAxisZ);
-
-	XMVECTOR cameraAxisX = XMVector3Cross(viewUpVec, cameraAxisZ);
-	cameraAxisX = XMVector3Normalize(cameraAxisX);
-
-	XMVECTOR cameraAxisY;
-	cameraAxisY = XMVector3Cross(cameraAxisZ, cameraAxisX);
-
-	XMMATRIX matCameraRot;
-	matCameraRot.r[0] = cameraAxisX;
-	matCameraRot.r[1] = cameraAxisY;
-	matCameraRot.r[2] = cameraAxisZ;
-	matCameraRot.r[3] = XMVectorSet(0, 0, 0,1);
-
-	view->matView = XMMatrixTranspose(matCameraRot);
-
-	XMVECTOR reverseEyePosition = XMVectorNegate(viewEye);
-
-	XMVECTOR tX = XMVector3Dot(view->matView.r[0], reverseEyePosition);
-	XMVECTOR tY = XMVector3Dot(view->matView.r[1], reverseEyePosition);
-	XMVECTOR tZ = XMVector3Dot(view->matView.r[2], reverseEyePosition);
-
-	XMVECTOR translation = XMVectorSet(
-		tX.m128_f32[0],
-		tY.m128_f32[1],
-		tZ.m128_f32[2],
-		1.0f);
-	view->matView.r[3] = translation;
-
+	matRot *= XMMatrixRotationZ(rotation.z);
+	matRot *= XMMatrixRotationX(rotation.x);
+	matRot *= XMMatrixRotationY(rotation.y);
 	matTrans = XMMatrixTranslation(
 		position.x, position.y, position.z);
 
-	XMMATRIX matBillboard = XMMatrixIdentity();
-	matBillboard.r[0] = cameraAxisX;
-	matBillboard.r[1] = cameraAxisY;
-	matBillboard.r[2] = cameraAxisZ;
-	matBillboard.r[3] = XMVectorSet(0, 0, 0, 1);
+	XMMATRIX matBillboardY = XMMatrixIdentity();
+	XMVECTOR upVector = { 0,1,0 };
+	XMVECTOR cameraAxisX = {
+		view->matView.r[0].m128_f32[0],
+		view->matView.r[1].m128_f32[0],
+		view->matView.r[2].m128_f32[0],
+	};
+
+	XMVECTOR axisZ = XMVector3Cross(cameraAxisX, upVector);
+
+	matBillboardY.r[0] = cameraAxisX;	//x
+	matBillboardY.r[2] = axisZ;			//z
+
+	matBillboardY.r[1] = XMVector3Cross(axisZ,cameraAxisX);	//y
+	
+	matBillboardY.r[3] = XMVectorSet(0, 0, 0, 1);
 
 	matWorld = XMMatrixIdentity();
-
-	matWorld *= matBillboard;
-
 	matWorld *= matScale;
 	matWorld *= matRot;
 	matWorld *= matTrans;
@@ -94,9 +52,18 @@ view->target.z
 		matWorld *= parent->matWorld;
 	}
 
-	constBufferT.constBufferData->mat = matWorld * view->matView * matProjection;
+	if (yBillboardMode)
+	{
+		constBufferT.constBufferData->mat = matWorld * matBillboardY * view->matView * matProjection;
+	}
+	else
+	{
+		constBufferT.constBufferData->mat = matWorld * reverseMatView * view->matView * matProjection;
+	}
+	////	 ↑ 行列はなんと掛け算によって1つにまとめることができるんです！！！！
+	////		行列は掛ける順番によって結果が変わるので注意！！！注意！！！注意！！！
 
-	constBufferM.constBufferData->color = XMFLOAT4(1, 1, 1, 1.0f);
+	//constBufferM.constBufferData->color = XMFLOAT4(1, 1, 1, 1.0f);
 
 	ConstBufferDataB1* constMap1 = nullptr;
 	result = constBufferMaterial.buffer->Map(0, nullptr, (void**)&constMap1);
@@ -105,8 +72,108 @@ view->target.z
 	constMap1->specular = model->material.specular;
 	constMap1->alpha = model->material.alpha;
 	constBufferMaterial.buffer->Unmap(0, nullptr);
-
 }
+
+//void Billboard::Update(XMMATRIX& matProjection)
+//{
+//
+//	XMMATRIX matScale;	//スケーリング行列
+//	XMMATRIX matRot;	//回転行列
+//	XMMATRIX matTrans;	//平行移動行列
+//
+//	matScale = XMMatrixScaling(scale.x, scale.y, scale.z);
+//
+//	matRot = XMMatrixIdentity();
+//
+//	//ここ！！！
+//	XMVECTOR cameraAxisZ = {
+//	view->target.x - view->eye.x,
+//	view->target.y - view->eye.y,
+//	view->target.z - view->eye.z,
+//	};
+//
+//	XMVECTOR viewUpVec = {
+//		view->up.x,
+//		view->up.y,
+//		view->up.z
+//	};
+//
+//	XMVECTOR viewEye = {
+//		view->eye.x,
+//		view->eye.y,
+//		view->eye.z
+//	};
+//
+//	XMVECTOR viewTarget = {
+//		view->target.x,
+//		view->target.y,
+//		view->target.z
+//	};
+//
+//	cameraAxisZ = XMVector3Normalize(cameraAxisZ);
+//
+//	XMVECTOR cameraAxisX = XMVector3Cross(viewUpVec, cameraAxisZ);
+//	cameraAxisX = XMVector3Normalize(cameraAxisX);
+//
+//	XMVECTOR cameraAxisY;
+//	cameraAxisY = XMVector3Cross(cameraAxisZ, cameraAxisX);
+//
+//	XMMATRIX matCameraRot;
+//	matCameraRot.r[0] = cameraAxisX;
+//	matCameraRot.r[1] = cameraAxisY;
+//	matCameraRot.r[2] = cameraAxisZ;
+//	matCameraRot.r[3] = XMVectorSet(0, 0, 0,1);
+//
+//	view->matView = XMMatrixTranspose(matCameraRot);
+//
+//	XMVECTOR reverseEyePosition = XMVectorNegate(viewEye);
+//
+//	XMVECTOR tX = XMVector3Dot(view->matView.r[0], reverseEyePosition);
+//	XMVECTOR tY = XMVector3Dot(view->matView.r[1], reverseEyePosition);
+//	XMVECTOR tZ = XMVector3Dot(view->matView.r[2], reverseEyePosition);
+//
+//	XMVECTOR translation = XMVectorSet(
+//		tX.m128_f32[0],
+//		tY.m128_f32[1],
+//		tZ.m128_f32[2],
+//		1.0f);
+//	view->matView.r[3] = translation;
+//
+//	matTrans = XMMatrixTranslation(
+//		position.x, position.y, position.z);
+//
+//	XMMATRIX matBillboard = XMMatrixIdentity();
+//	matBillboard.r[0] = cameraAxisX;
+//	matBillboard.r[1] = cameraAxisY;
+//	matBillboard.r[2] = cameraAxisZ;
+//	matBillboard.r[3] = XMVectorSet(0, 0, 0, 1);
+//
+//	matWorld = XMMatrixIdentity();
+//
+//	matWorld *= matBillboard;
+//
+//	matWorld *= matScale;
+//	matWorld *= matRot;
+//	matWorld *= matTrans;
+//
+//	if (parent != nullptr)
+//	{
+//		matWorld *= parent->matWorld;
+//	}
+//
+//	constBufferT.constBufferData->mat = matWorld * view->matView * matProjection;
+//
+//	constBufferM.constBufferData->color = XMFLOAT4(1, 1, 1, 1.0f);
+//
+//	ConstBufferDataB1* constMap1 = nullptr;
+//	result = constBufferMaterial.buffer->Map(0, nullptr, (void**)&constMap1);
+//	constMap1->ambient = model->material.ambient;
+//	constMap1->diffuse = model->material.diffuse;
+//	constMap1->specular = model->material.specular;
+//	constMap1->alpha = model->material.alpha;
+//	constBufferMaterial.buffer->Unmap(0, nullptr);
+//
+//}
 
 void Billboard::Draw(Texture* texture)
 {

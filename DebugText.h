@@ -7,7 +7,9 @@ public:
 	void Initialize( Texture* tex);
 	void Print(const SpriteCommon& spritecommon, const std::string& text, float x, float y, float scale);
 
-	void DrawAll( const SpriteCommon& spriteCommon);
+	void DrawAll();
+
+	void PostDraw();
 
 private:
 

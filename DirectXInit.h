@@ -67,6 +67,3 @@ private:
 
 	WinAPI* winapi = WinAPI::GetInstance();
 };
-
-//constBufferの生成にて、デバイスの作成に利用している
-//static DirectX12 DX12;

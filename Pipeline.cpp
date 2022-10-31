@@ -15,6 +15,7 @@ PipelineSet CreateObject3DPipeline()
 
 	shader_.vsBlob = shader_.Compile(L"Resources\\Shader\\OBJVS.hlsl", "vs_5_0", shader_.vsBlob.Get(), "main");
 	shader_.psBlob = shader_.Compile(L"Resources\\Shader\\OBJPS.hlsl", "ps_5_0", shader_.psBlob.Get(), "main");
+	//shader_.gsBlob = shader_.Compile(L"Resources\\Shader\\OBJPS.hlsl", "ps_5_0", shader_.psBlob.Get(), "main");
 
 	//グラフィックスパイプライン設定
 	D3D12_GRAPHICS_PIPELINE_STATE_DESC pipelineDesc{};
