@@ -5,7 +5,7 @@ void GeometryObject::CreateModel()
 {
 	DirectX12 *dx12 = DirectX12::GetInstance();
 
-	verticesPoint[vertexCount] = {
+	verticesPoint[0] = {
 		{0.0f,0.0f,0.0f}
 	};
 
@@ -62,9 +62,15 @@ void GeometryObject::Update(XMMATRIX& matView, XMMATRIX& matProjection)
 	constBufferGeometry.constBufferData->mat = matView * matProjection;
 }
 
-void GeometryObject::Draw()
+void GeometryObject::Draw(Texture* texture)
 {
 	DirectX12* dx12 = DirectX12::GetInstance();
+
+	//SRVヒープの設定コマンド
+	dx12->commandList->SetDescriptorHeaps(1, &texture->texData.srvHeap);
+	//SRVヒープの先頭から順番にSRVをルートパラメータ1番に設定
+	//ルートパラメータ1番はテクスチャバッファ
+	dx12->commandList->SetGraphicsRootDescriptorTable(1, texture->GetHandle());
 
 	//頂点バッファの設定
 	dx12->commandList->IASetVertexBuffers(0, 1, &vbView);

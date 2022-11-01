@@ -134,6 +134,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	PipelineSet object3dPipelineSet = CreateObject3DPipeline();
 
 	SpriteCommon spriteCommon;
+	//spriteCommon = SpriteCommon::GetInstance();
 	spriteCommon = SpriteCommonCreate();
 
 	//スプライト
@@ -158,8 +159,8 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	PipelineSet geometryObjectPipelineSet = CreateGeometryPipeline();
 
 	//ジオメトリオブジェクト生成
-	//GeometryObject GObject;
-	//GObject.CreateModel();
+	GeometryObject GObject;
+	GObject.CreateModel();
 
 	const int kObjectCount = 3;
 	std::unique_ptr<Obj3d[]> object3ds;
@@ -291,20 +292,17 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		{
 			if (input_->PushKey(DIK_RIGHT)) { 
 				view_.eye.x += 2;
-				//viewProjection_.target.x += 2;
 			}
 			if (input_->PushKey(DIK_LEFT)) { 
 				view_.eye.x -= 2; 
-				//viewProjection_.target.x -= 2;
 			}
 			if (input_->PushKey(DIK_UP)) {
-				view_.eye.z += 2;
-				//viewProjection_.target.z += 2;
+				view_.eye.y += 2;
 			}
 			if (input_->PushKey(DIK_DOWN)) {
-				view_.eye.z -= 2;
-				//viewProjection_.target.z -= 2;
+				view_.eye.y -= 2;
 			}
+
 			if (input_->PushKey(DIK_SPACE))
 			{
 				if (input_->PushKey(DIK_RIGHT)) {
@@ -317,11 +315,11 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 				}
 				if (input_->PushKey(DIK_UP)) {
 					
-					view_.target.z += 2;
+					view_.target.y += 2;
 				}
 				if (input_->PushKey(DIK_DOWN)) {
 					
-					view_.target.z -= 2;
+					view_.target.y -= 2;
 				}
 			}
 			view_.UpdatematView();
@@ -390,7 +388,20 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 			billboard.yBillboardMode = false;
 		}
 
-		//GObject.Update(view_.matView,matProjection);
+		if (input_->PushKey(DIK_1))
+		{
+			TimeManager::fixFPS = 30;
+		}
+		if (input_->PushKey(DIK_2))
+		{
+			TimeManager::fixFPS = 60;
+		}
+		if (input_->PushKey(DIK_3))
+		{
+			TimeManager::fixFPS = 120;
+		}
+
+		GObject.Update(view_.matView,matProjection);
 
 		billboard.Update(matProjection);
 
@@ -402,6 +413,9 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		
 		debugText.Print(spriteCommon,
 			"deltaTime " + std::to_string(TimeManager::deltaTime), 50, 100, 1.0f);
+
+		debugText.Print(spriteCommon,
+			"fps " + std::to_string(TimeManager::fps), 50, 200, 1.0f);
 
 		///---DirectX毎フレーム処理 ここまで---///
 #pragma endregion DirectX毎フレーム処理
@@ -416,24 +430,19 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		//object3ds[0].MaterialDraw(DX12->commandList.Get());
 		//object3ds[0].Draw(slime.get());
 		object3ds[2].MaterialDraw();
-		
-		if (input_->TriggerKey(DIK_SPACE))
-		{
-			object3ds[1].Draw(slime.get());
-		}
 
-		billboard.Draw(slime.get());
+		//billboard.Draw(slime.get());
 
 		GeometryObjectPreDraw(geometryObjectPipelineSet);
-		//GObject.Draw();
+		GObject.Draw(slime.get());
 
 
 		//スプライトの前描画(共通コマンド)
 		SpriteCommonBeginDraw(spriteCommon);
 
 		//スプライト単体描画
-		//SpriteDraw(pizzaSprite);
-		//SpriteDraw(slimeSprite);
+		SpriteDraw(pizzaSprite);
+		SpriteDraw(slimeSprite);
 
 		debugText.DrawAll();
 

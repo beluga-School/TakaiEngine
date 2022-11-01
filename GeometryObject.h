@@ -9,7 +9,7 @@ using namespace DirectX;
 
 #include "DirectXInit.h"
 #include <vector>
-
+#include "Texture.h"
 #include "ConstBuffer.h"
 
 struct VertexPos
@@ -42,5 +42,5 @@ public:
 	
 	void Update(XMMATRIX& matView, XMMATRIX& matProjection);
 
-	void Draw();
+	void Draw(Texture* texture);
 };

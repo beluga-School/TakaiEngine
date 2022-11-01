@@ -7,9 +7,12 @@ namespace TimeManager
 {
 	extern float deltaTime;
 
-	extern LARGE_INTEGER nowTime;
-	extern LARGE_INTEGER time;
+	extern LARGE_INTEGER startTime;
+	extern LARGE_INTEGER endTime;
 	extern LARGE_INTEGER nowTimeFreq;
+
+	extern float fps;
+	extern float fixFPS;
 
 	void Init();
 
