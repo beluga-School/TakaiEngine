@@ -37,6 +37,7 @@ using namespace DirectX;
 
 #include "GeometryObject.h"
 
+
 //windowsアプリでのエントリーポイント(main関数)
 int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 
