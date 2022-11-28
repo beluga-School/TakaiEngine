@@ -40,6 +40,7 @@ using namespace DirectX;
 
 #include "SceneManager.h"
 
+
 //windowsアプリでのエントリーポイント(main関数)
 int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 
