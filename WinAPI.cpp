@@ -1,4 +1,5 @@
 #include "WinAPI.h"
+#include "Util.h"
 
 //staticにすべき
 //ウィンドウプロシージャ
@@ -35,7 +36,7 @@ void WinAPI::SetWindowClass()
 	RegisterClassEx(&w);
 
 	//ウィンドウサイズ { X座標 Y座標 横幅 縦幅 }
-	wrc = { 0,0,window_width,window_height };
+	wrc = { 0,0,Util::window_width,Util::window_height };
 
 	//自動でサイズを補正する
 	AdjustWindowRect(&wrc, WS_OVERLAPPEDWINDOW, false);

@@ -26,11 +26,28 @@ Vector3 Vector3::GetNormalize() {
 void Vector3::normalize()
 {
 	float leng = length();
+	//0èúéZëŒçÙ
+	if (leng == 0)
+	{
+		x = 0;
+		y = 0;
+		z = 0;
+		return;
+	}
+
 	x = x / leng;
 	y = y / leng;
+	z = z / leng;
 }
 
-Vector3 Vector3::cross(const Vector3& v) const
+void Vector3::cross(const Vector3& v)
+{
+	x = y * v.z - z * v.y;
+	y = z * v.x - x * v.z;
+	z = x * v.y - y * v.x;
+}
+
+Vector3 Vector3::GetCross(const Vector3& v)const
 {
 	Vector3 vec3;
 	vec3.x = y * v.z - z * v.y;

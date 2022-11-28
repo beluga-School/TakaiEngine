@@ -122,7 +122,7 @@ PipelineSet CreateObject3DPipeline()
 	descriptorRange.OffsetInDescriptorsFromTableStart = D3D12_DESCRIPTOR_RANGE_OFFSET_APPEND;
 
 	//ルートパラメータの設定
-	D3D12_ROOT_PARAMETER rootParams[3] = {};
+	D3D12_ROOT_PARAMETER rootParams[4] = {};
 	//定数バッファ0番 b0
 	rootParams[0].ParameterType = D3D12_ROOT_PARAMETER_TYPE_CBV;	//種類
 	rootParams[0].Descriptor.ShaderRegister = 0;					//定数バッファ番号
@@ -138,6 +138,11 @@ PipelineSet CreateObject3DPipeline()
 	rootParams[2].Descriptor.ShaderRegister = 1;					//定数バッファ番号
 	rootParams[2].Descriptor.RegisterSpace = 0;						//デフォルト値
 	rootParams[2].ShaderVisibility = D3D12_SHADER_VISIBILITY_ALL;	//すべてのシェーダから見える
+	//定数バッファ2番 b2
+	rootParams[3].ParameterType = D3D12_ROOT_PARAMETER_TYPE_CBV;	//種類
+	rootParams[3].Descriptor.ShaderRegister = 2;					//定数バッファ番号
+	rootParams[3].Descriptor.RegisterSpace = 0;						//デフォルト値
+	rootParams[3].ShaderVisibility = D3D12_SHADER_VISIBILITY_ALL;	//すべてのシェーダから見える
 
 	//テクスチャサンプラーの生成 s0
 	D3D12_STATIC_SAMPLER_DESC samplerDesc{};
@@ -361,9 +366,9 @@ PipelineSet CreateGeometryPipeline()
 	//シェーダー
 	Shader shader_;
 
-	shader_.vsBlob = shader_.Compile(L"Resources\\Shader\\GeometryVS.hlsl", "vs_5_0", shader_.vsBlob.Get(), "main");
-	shader_.psBlob = shader_.Compile(L"Resources\\Shader\\GeometryPS.hlsl", "ps_5_0", shader_.psBlob.Get(), "main");
-	shader_.gsBlob = shader_.Compile(L"Resources\\Shader\\GeometryGS.hlsl", "gs_5_0", shader_.gsBlob.Get(), "main");
+	shader_.vsBlob = shader_.Compile(L"Resources\\Shader\\ParticleVS.hlsl", "vs_5_0", shader_.vsBlob.Get(), "main");
+	shader_.psBlob = shader_.Compile(L"Resources\\Shader\\ParticlePS.hlsl", "ps_5_0", shader_.psBlob.Get(), "main");
+	shader_.gsBlob = shader_.Compile(L"Resources\\Shader\\ParticleGS.hlsl", "gs_5_0", shader_.gsBlob.Get(), "main");
 
 	//グラフィックスパイプライン設定
 	D3D12_GRAPHICS_PIPELINE_STATE_DESC pipelineDesc{};
@@ -398,7 +403,7 @@ PipelineSet CreateGeometryPipeline()
 	blenddesc.SrcBlendAlpha = D3D12_BLEND_ZERO;		//ソースの値を100%使う
 	blenddesc.DestBlendAlpha = D3D12_BLEND_ZERO;	//デストの値を  0%使う
 
-	int blendMode = ALPHA;
+	int blendMode = ADD;
 
 	if (blendMode == ADD)
 	{
@@ -436,6 +441,16 @@ PipelineSet CreateGeometryPipeline()
 				D3D12_APPEND_ALIGNED_ELEMENT,
 				D3D12_INPUT_CLASSIFICATION_PER_VERTEX_DATA,0
 			},
+			{ //スケールの情報
+				"SCALE",0,DXGI_FORMAT_R32_FLOAT,0,
+				D3D12_APPEND_ALIGNED_ELEMENT,
+				D3D12_INPUT_CLASSIFICATION_PER_VERTEX_DATA,0
+			},
+			{ //色の情報
+				"COLOR",0,DXGI_FORMAT_R32G32B32A32_FLOAT,0,
+				D3D12_APPEND_ALIGNED_ELEMENT,
+				D3D12_INPUT_CLASSIFICATION_PER_VERTEX_DATA,0
+			},
 	};
 
 	//頂点レイアウトの設定
@@ -451,7 +466,7 @@ PipelineSet CreateGeometryPipeline()
 	pipelineDesc.SampleDesc.Count = 1;	//1ピクセルにつき1回サンプリング
 
 	pipelineDesc.DepthStencilState.DepthEnable = true;	//深度テストを行う
-	pipelineDesc.DepthStencilState.DepthWriteMask = D3D12_DEPTH_WRITE_MASK_ALL;	//書き込み許可
+	pipelineDesc.DepthStencilState.DepthWriteMask = D3D12_DEPTH_WRITE_MASK_ZERO;//書き込み不可
 	pipelineDesc.DepthStencilState.DepthFunc = D3D12_COMPARISON_FUNC_LESS;	//小さければ許可
 	pipelineDesc.DSVFormat = DXGI_FORMAT_D32_FLOAT;	//深度値フォーマット
 

@@ -37,4 +37,7 @@ public:
 	void CreateVertex(std::vector<Vertex> vertices, std::vector<uint16_t> indices);
 private:
 	DirectX12 *dx12 = DirectX12::GetInstance();
+
+	ComPtr<ID3D12Resource> vertBuff = nullptr;
+	ComPtr<ID3D12Resource> indexBuff = nullptr;
 };

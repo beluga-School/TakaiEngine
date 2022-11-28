@@ -1,14 +1,22 @@
 #include "Sprite.h"
 #include "Result.h"
+#include "Util.h"
 
-Sprite SpriteCreate( Texture* tex,XMFLOAT2 anchorpoint, bool isFlipX, bool isFlipY)
+SpriteCommon SpriteCommon::spriteCommon;
+
+void SpriteCommon::Initialize()
+{
+	spriteCommon = SpriteCommonCreate();
+}
+
+void SpriteCreate(Sprite* sprite, Texture* tex,XMFLOAT2 anchorpoint, bool isFlipX, bool isFlipY)
 {
 	DirectX12* dx12 = DirectX12::GetInstance();
 
 	result = S_FALSE;
 
 	//新規スプライトを生成
-	Sprite sprite{};
+	//Sprite sprite{};
 
 	//頂点データ
 	VertexPosUV vertices[] = {
@@ -40,41 +48,39 @@ Sprite SpriteCreate( Texture* tex,XMFLOAT2 anchorpoint, bool isFlipX, bool isFli
 		&resDesc,
 		D3D12_RESOURCE_STATE_GENERIC_READ,
 		nullptr,
-		IID_PPV_ARGS(&sprite.vertBuff));
+		IID_PPV_ARGS(sprite->vertBuff.GetAddressOf()));
 
 	//頂点バッファへのデータ転送
-	VertexPosUV* vertMap = nullptr;
+	/*VertexPosUV* vertMap = nullptr;
 	result = sprite.vertBuff->Map(0, nullptr, (void**)&vertMap);
 	memcpy(vertMap, vertices, sizeof(vertices));
-	sprite.vertBuff->Unmap(0, nullptr);
+	sprite.vertBuff->Unmap(0, nullptr);*/
 
-	sprite.vbView.BufferLocation = sprite.vertBuff->GetGPUVirtualAddress();
-	sprite.vbView.SizeInBytes = sizeof(vertices);
-	sprite.vbView.StrideInBytes = sizeof(vertices[0]);
+	sprite->vbView.BufferLocation = sprite->vertBuff->GetGPUVirtualAddress();
+	sprite->vbView.SizeInBytes = sizeof(vertices);
+	sprite->vbView.StrideInBytes = sizeof(vertices[0]);
 
 	//定数バッファの設定
 	//平行投影行列
-	sprite.constBuffer.constBufferData->mat = 
+	sprite->constBuffer.constBufferData->mat =
 		XMMatrixOrthographicOffCenterLH(
-		0.0f, window_width, window_height, 0.0f, 0.0f, 1.0f);
+		0.0f, Util::window_width, Util::window_height, 0.0f, 0.0f, 1.0f);
 
 	//色指定
-	sprite.constBuffer.constBufferData->color = XMFLOAT4(1, 1, 1, 1.0f);
+	sprite->constBuffer.constBufferData->color = XMFLOAT4(1, 1, 1, 1.0f);
 
-	sprite.tex = tex;
+	sprite->tex = tex;
 
-	sprite.size = { (float)tex->texData.getResDesc.Width,(float)tex->texData.getResDesc.Height };
+	sprite->size = { (float)tex->getResDesc.Width,(float)tex->getResDesc.Height };
 
-	sprite.texSize = sprite.size;
+	sprite->cutSize = sprite->size;
 
-	sprite.anchorpoint = anchorpoint;
+	sprite->anchorpoint = anchorpoint;
 
-	sprite.isFlipX = isFlipX;
-	sprite.isFlipY = isFlipY;
+	sprite->isFlipX = isFlipX;
+	sprite->isFlipY = isFlipY;
 
-	SpriteTransferVertexBuffer(sprite);
-
-	return sprite;
+	SpriteTransferVertexBuffer(*sprite);
 }
 
 void SpriteInit(Sprite& sprite, SpriteCommon& spriteCommon, XMFLOAT2 pos, float rotation, XMFLOAT4 color)
@@ -120,6 +126,11 @@ void SpriteTransferVertexBuffer(const Sprite& sprite)
 		LB,LT,RB,RT
 	};
 
+	vertices[LB].pos = { 0.0f,	sprite.size.y,	0.0f };
+	vertices[LT].pos = { 0.0f,	0.0f,	0.0f };
+	vertices[RB].pos = { sprite.size.x,	sprite.size.y,	0.0f };
+	vertices[RT].pos = { sprite.size.x,	0.0f,	0.0f };
+
 	float left =	(0.0f - sprite.anchorpoint.x) * sprite.size.x;
 	float right =	(1.0f - sprite.anchorpoint.x) * sprite.size.x;
 	float top =		(0.0f - sprite.anchorpoint.y) * sprite.size.y;
@@ -144,12 +155,12 @@ void SpriteTransferVertexBuffer(const Sprite& sprite)
 
 	if (sprite.tex->texBuff)
 	{
-		D3D12_RESOURCE_DESC resDesc = sprite.tex->texData.getResDesc;
+		D3D12_RESOURCE_DESC resDesc = sprite.tex->getResDesc;
 
 		float tex_left = sprite.texLeftTop.x / resDesc.Width;
-		float tex_right = (sprite.texLeftTop.x + sprite.texSize.x) / resDesc.Width;
+		float tex_right = (sprite.texLeftTop.x + sprite.cutSize.x) / resDesc.Width;
 		float tex_top = sprite.texLeftTop.y / resDesc.Height;
-		float tex_bottom = (sprite.texLeftTop.y + sprite.texSize.y) / resDesc.Height;
+		float tex_bottom = (sprite.texLeftTop.y + sprite.cutSize.y) / resDesc.Height;
 
 		vertices[LB].uv = { tex_left,tex_bottom };
 		vertices[LT].uv = { tex_left,tex_top };
@@ -167,6 +178,7 @@ void SpriteTransferVertexBuffer(const Sprite& sprite)
 void SpriteCommonBeginDraw(const SpriteCommon& spriteCommon)
 {
 	DirectX12* dx12 = DirectX12::GetInstance();
+	TextureManager* texM = TextureManager::GetInstance();
 
 	//パイプラインステートの設定
 	dx12->commandList->SetPipelineState(spriteCommon.pipelineSet.pipelinestate.Get());
@@ -174,11 +186,14 @@ void SpriteCommonBeginDraw(const SpriteCommon& spriteCommon)
 	dx12->commandList->SetGraphicsRootSignature(spriteCommon.pipelineSet.rootsignature.Get());
 	//プリミティブ形状を設定
 	dx12->commandList->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP);
+
+	dx12->commandList->SetDescriptorHeaps(1, texM->srvHeap.GetAddressOf());
 }
 
 void SpriteDraw(const Sprite& sprite)
 {
 	DirectX12* dx12 = DirectX12::GetInstance();
+	TextureManager* texM = TextureManager::GetInstance();
 
 	if (sprite.isInvisible)
 	{
@@ -187,8 +202,7 @@ void SpriteDraw(const Sprite& sprite)
 
 	dx12->commandList->IASetVertexBuffers(0, 1, &sprite.vbView);
 
-	dx12->commandList->SetDescriptorHeaps(1, &sprite.tex->texData.srvHeap);
-	dx12->commandList->SetGraphicsRootDescriptorTable(1, sprite.tex->texData.handle);
+	dx12->commandList->SetGraphicsRootDescriptorTable(1, sprite.tex->gpuHandle);
 
 	dx12->commandList->SetGraphicsRootConstantBufferView(0, sprite.constBuffer.buffer->GetGPUVirtualAddress());
 
@@ -213,7 +227,7 @@ SpriteCommon SpriteCommonCreate()
 
 	//並行投影の射影行列生成
 	spriteCommon.matProjection = XMMatrixOrthographicOffCenterLH(
-		0.0f, (float)window_width, (float)window_height, 0.0f, 0.0f, 1.0f);
+		0.0f, (float)Util::window_width, (float)Util::window_height, 0.0f, 0.0f, 1.0f);
 
 	return spriteCommon;
 }

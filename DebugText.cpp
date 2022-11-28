@@ -4,7 +4,7 @@ void DebugText::Initialize(Texture* tex)
 {
 	for (int i = 0; i < _countof(sprites); i++)
 	{
-		sprites[i] = SpriteCreate(tex,{0.5f,0.5f});
+		SpriteCreate(&sprites[i],tex,{0.5f,0.5f});
 	}
 }
 
@@ -34,7 +34,7 @@ void DebugText::Print(const SpriteCommon& spritecommon, const std::string& text,
 		sprites[spriteIndex].position = { x + fontWidth * scale * i,y,0 };
 		sprites[spriteIndex].texLeftTop = 
 		{(float)fontIndexX * fontWidth,(float)fontIndexY * fontHeight};
-		sprites[spriteIndex].texSize = { fontWidth,fontHeight };
+		sprites[spriteIndex].cutSize = { fontWidth,fontHeight };
 		sprites[spriteIndex].size = { fontWidth * scale,fontHeight * scale };
 
 		SpriteTransferVertexBuffer(sprites[spriteIndex]);

@@ -11,6 +11,11 @@ cbuffer cbuff1 : register(b1)
     matrix mat; //3D変換行列
 };
 
+cbuffer cbuff2 : register(b2)
+{
+    float4 color; //カラー
+};
+
 struct VSOutput
 {
     float4 svpos : SV_POSITION; //システム用頂点座標

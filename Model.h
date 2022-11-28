@@ -44,6 +44,23 @@ private:
 	DirectX12* dx12 = DirectX12::GetInstance();
 };
 
+class ModelManager
+{
+public:
+	Model cubeM;
+	Model skyDomeM;
+	Model triangleM;
+	Model boardM;
+
+	void PreLoad();
+
+	static ModelManager* GetInstance() {
+		static ModelManager instance;
+		return &instance;
+	};
+	
+};
+
 
 class Cube : public Model
 {

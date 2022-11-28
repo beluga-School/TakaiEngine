@@ -18,32 +18,46 @@ struct ConstBufferDataB1
 	float alpha;
 };
 
+struct ConstBufferBrightness
+{
+	XMFLOAT4 brightness;		//カラー
+};
+
 class Obj3d
 {
 public:
 	ConstBuffer<ConstBufferDataTransform> constBufferT;
 	ConstBuffer<ConstBufferDataMaterial> constBufferM;
+	ConstBuffer<ConstBufferBrightness> constBufferB;
 
 	ConstBuffer<ConstBufferDataB1> constBufferMaterial;
 
-	XMFLOAT3 scale = { 1,1,1 };
+	XMFLOAT3 scale = { 1.0f,1.0f,1.0f };
 	XMFLOAT3 rotation = { 0,0,0 };
 	XMFLOAT3 position = { 0,0,0 };
+
+	XMFLOAT4 color = { 1.0f,1.0f,1.0f,1.0f };
 
 	XMMATRIX matWorld;	//ワールド変換行列
 	//XMMATRIX matScale;	//スケーリング行列
 	//XMMATRIX matRot;	//回転行列
 	//XMMATRIX matTrans;	//平行移動行列
 
-	std::unique_ptr<Obj3d> parent;
+	bool notScaleFlag = false;
+
+	Obj3d* parent = nullptr;
+	Texture *texture = nullptr;
 
 	Model* model = nullptr;
 public:
 	void Initialize();
 	void SetModel(Model *model);
+	void SetTexture(Texture *texture);
 	void Update(XMMATRIX& matView, XMMATRIX& matProjection);
 
-	void Draw(Texture* texture);
-	void MaterialDraw();
+	Vector3 GetWorldTrans();
+
+	void Draw();
+	void DrawMaterial();
 };
 

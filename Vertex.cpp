@@ -3,8 +3,6 @@
 
 void VertexData::CreateVertex(std::vector<Vertex> vertices, std::vector<uint16_t> indices)
 {
-	//頂点データ
-
 	//頂点データ全体のサイズ = 頂点データ一つ分のサイズ * 頂点データの要素数
 	UINT sizeVB = static_cast<UINT>(sizeof(vertices[0]) * vertices.size());
 
@@ -23,14 +21,13 @@ void VertexData::CreateVertex(std::vector<Vertex> vertices, std::vector<uint16_t
 
 	//頂点バッファの生成
 	//ComPtrにしたらダメだった マップ処理に使ってるから？
-	ID3D12Resource* vertBuff;
 	result = dx12->device->CreateCommittedResource(
 		&heapProp,	//ヒープ設定
 		D3D12_HEAP_FLAG_NONE,
 		&resDesc,	//リソース設定
 		D3D12_RESOURCE_STATE_GENERIC_READ,
 		nullptr,
-		IID_PPV_ARGS(&vertBuff));
+		IID_PPV_ARGS(vertBuff.GetAddressOf()));
 	assert(SUCCEEDED(result));
 
 	for (int i = 0; i < indices.size() / 3; i++)
@@ -89,14 +86,13 @@ void VertexData::CreateVertex(std::vector<Vertex> vertices, std::vector<uint16_t
 	resDesc.Layout = D3D12_TEXTURE_LAYOUT_ROW_MAJOR;
 
 	//インデックスバッファの生成
-	ID3D12Resource* indexBuff = nullptr;
 	result = dx12->device->CreateCommittedResource(
 		&heapProp,	//ヒープ設定
 		D3D12_HEAP_FLAG_NONE,
 		&resDesc,	//リソース設定
 		D3D12_RESOURCE_STATE_GENERIC_READ,
 		nullptr,
-		IID_PPV_ARGS(&indexBuff));
+		IID_PPV_ARGS(indexBuff.GetAddressOf()));
 
 	//インデックスバッファをマッピング
 	uint16_t* indexMap = nullptr;

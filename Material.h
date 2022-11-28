@@ -11,6 +11,7 @@ struct Material
 	Vector3 diffuse;			//ディフューズ
 	Vector3 specular;			//スペキュラー影響度
 	float alpha;				//アルファ
+	Vector3 color;
 	std::string textureFilename;//テクスチャファイル名
 	std::unique_ptr<Texture> tex = std::make_unique<Texture>();
 
@@ -19,5 +20,6 @@ struct Material
 		diffuse = { 0.0f,0.0f,0.0f };
 		specular = { 0.0f,0.0f,0.0f };
 		alpha = 1.0f;
+		color = { 1.0f,1.0f,1.0f };
 	}
 };

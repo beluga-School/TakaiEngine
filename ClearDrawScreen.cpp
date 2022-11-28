@@ -1,6 +1,8 @@
 #include "ClearDrawScreen.h"
 #include "DirectXInit.h"
 #include "Result.h"
+#include "Util.h"
+#include "Texture.h"
 
 ComPtr<ID3D12DescriptorHeap> dsvHeap = nullptr;
 
@@ -14,8 +16,8 @@ void CreateDepthView()
 
 	D3D12_RESOURCE_DESC depthResourceDesc{};
 	depthResourceDesc.Dimension = D3D12_RESOURCE_DIMENSION_TEXTURE2D;
-	depthResourceDesc.Width = window_width;	//レンダーターゲットに合わせる
-	depthResourceDesc.Height = window_height;	//レンダーターゲットに合わせる
+	depthResourceDesc.Width = Util::window_width;	//レンダーターゲットに合わせる
+	depthResourceDesc.Height = Util::window_height;	//レンダーターゲットに合わせる
 	depthResourceDesc.DepthOrArraySize = 1;
 	depthResourceDesc.Format = DXGI_FORMAT_D32_FLOAT;	//深度値フォーマット
 	depthResourceDesc.SampleDesc.Count = 1;
@@ -90,10 +92,11 @@ void ClearDrawScreen()
 void BasicObjectPreDraw(PipelineSet objectPipelineSet)
 {
 	DirectX12* dx12 = DirectX12::GetInstance();
+	TextureManager* texM = TextureManager::GetInstance();
 
 	D3D12_VIEWPORT viewport{};
-	viewport.Width = window_width;
-	viewport.Height = window_height;
+	viewport.Width = Util::window_width;
+	viewport.Height = Util::window_height;
 	viewport.TopLeftX = 0;
 	viewport.TopLeftY = 0;
 	viewport.MinDepth = 0.0f;
@@ -103,9 +106,9 @@ void BasicObjectPreDraw(PipelineSet objectPipelineSet)
 
 	D3D12_RECT scissorRect{};
 	scissorRect.left = 0;									//切り抜き座標左
-	scissorRect.right = scissorRect.left + window_width;	//切り抜き座標右
+	scissorRect.right = scissorRect.left + Util::window_width;	//切り抜き座標右
 	scissorRect.top = 0;									//切り抜き座標上
-	scissorRect.bottom = scissorRect.top + window_height;	//切り抜き座標下
+	scissorRect.bottom = scissorRect.top + Util::window_height;	//切り抜き座標下
 	//シザー矩形設定コマンドを、コマンドリストに積む
 	dx12->commandList->RSSetScissorRects(1, &scissorRect);
 
@@ -116,15 +119,19 @@ void BasicObjectPreDraw(PipelineSet objectPipelineSet)
 
 	//プリミティブ形状の設定コマンド
 	dx12->commandList->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+
+	//SRVヒープの設定コマンド
+	dx12->commandList->SetDescriptorHeaps(1, texM->srvHeap.GetAddressOf());
 }
 
 void GeometryObjectPreDraw(PipelineSet geometryPipelineSet)
 {
 	DirectX12* dx12 = DirectX12::GetInstance();
+	TextureManager* texM = TextureManager::GetInstance();
 
 	D3D12_VIEWPORT viewport{};
-	viewport.Width = window_width;
-	viewport.Height = window_height;
+	viewport.Width = Util::window_width;
+	viewport.Height = Util::window_height;
 	viewport.TopLeftX = 0;
 	viewport.TopLeftY = 0;
 	viewport.MinDepth = 0.0f;
@@ -134,9 +141,9 @@ void GeometryObjectPreDraw(PipelineSet geometryPipelineSet)
 
 	D3D12_RECT scissorRect{};
 	scissorRect.left = 0;									//切り抜き座標左
-	scissorRect.right = scissorRect.left + window_width;	//切り抜き座標右
+	scissorRect.right = scissorRect.left + Util::window_width;	//切り抜き座標右
 	scissorRect.top = 0;									//切り抜き座標上
-	scissorRect.bottom = scissorRect.top + window_height;	//切り抜き座標下
+	scissorRect.bottom = scissorRect.top + Util::window_height;	//切り抜き座標下
 	//シザー矩形設定コマンドを、コマンドリストに積む
 	dx12->commandList->RSSetScissorRects(1, &scissorRect);
 
@@ -146,6 +153,9 @@ void GeometryObjectPreDraw(PipelineSet geometryPipelineSet)
 	dx12->commandList->SetGraphicsRootSignature(geometryPipelineSet.rootsignature.Get());
 
 	dx12->commandList->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_POINTLIST);
+
+	//SRVヒープの設定コマンド
+	dx12->commandList->SetDescriptorHeaps(1, texM->srvHeap.GetAddressOf());
 }
 
 void PostDraw()

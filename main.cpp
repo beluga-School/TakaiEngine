@@ -35,7 +35,10 @@ using namespace DirectX;
 #include "Sound.h"
 #include "DebugText.h"
 
-#include "GeometryObject.h"
+#include "Particle.h"
+#include "MathF.h"
+
+#include "SceneManager.h"
 
 //windowsアプリでのエントリーポイント(main関数)
 int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
@@ -87,65 +90,28 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 
 	GameScene gameScene_;
 
-	Model cube = Cube();
-	Model plane = Plate();
-	Model triangle = Triangle();
-	Model line = Line();
-
-	Model triangleM = Model();
-	Model skydome = Model();
-
-	//頂点データ作成
-	cube.CreateDefaultModel();
-	plane.CreateDefaultModel();
-	triangle.CreateDefaultModel();
-	line.CreateDefaultModel();
-
-	//gitignoreの設定ミスでobjが送れてなかったよ
-	triangleM.CreateModel("triangle_mat");
-	skydome.CreateModel("skydome");
-
 	//WICテクスチャのロード
-	const wchar_t* msg[4] = 
-	{ L"Resources/zawa_sironuri.png", 
-		L"Resources/slime.png",
-		L"Resources/pizza_sironuri.png",
-		L"Resources/tyusiten.png"
-	};
+	TextureManager::GetInstance()->Initialize();
+	TextureManager::GetInstance()->PreLoad();
 
-	std::unique_ptr<Texture> zawa = std::make_unique<Texture>();
-	zawa->Load(msg[0]);
+	SpriteCommon::spriteCommon.Initialize();
 
-	std::unique_ptr<Texture> slime = std::make_unique<Texture>();
-	slime->Load(msg[1]);
-
-	std::unique_ptr<Texture> pizza = std::make_unique<Texture>();
-	pizza->Load(msg[2]);
-
-	std::unique_ptr<Texture> tyusiten = std::make_unique<Texture>();
-	tyusiten->Load(msg[3]);
-
-	std::unique_ptr<Texture> sinomiya = std::make_unique<Texture>();
-	sinomiya->Load(L"Resources/triangle_mat/tex1.png");
-
-	std::unique_ptr<Texture> white = std::make_unique<Texture>();
-	white->CreateWhiteTexture();
+	ModelManager::GetInstance()->PreLoad();
 
 	PipelineSet object3dPipelineSet = CreateObject3DPipeline();
 
-	SpriteCommon spriteCommon;
-	//spriteCommon = SpriteCommon::GetInstance();
-	spriteCommon = SpriteCommonCreate();
+	//ジオメトリオブジェクト用パイプライン生成
+	PipelineSet geometryObjectPipelineSet = CreateGeometryPipeline();
 
 	//スプライト
 	Sprite pizzaSprite;
-	pizzaSprite = SpriteCreate(pizza.get(), {0.5f,0.5f});
-	SpriteInit(pizzaSprite, spriteCommon,{ 100,100}, 0);
+	SpriteCreate(&pizzaSprite,&TextureManager::GetInstance()->pizza, {0.5f,0.5f});
+	SpriteInit(pizzaSprite, SpriteCommon::spriteCommon,{ 100,100}, 0);
 	SpriteSetSize(pizzaSprite, { 100,100 });
 
 	Sprite slimeSprite;
-	slimeSprite = SpriteCreate(slime.get(), { 0.5f,0.5f });
-	SpriteInit(slimeSprite, spriteCommon,{ 200,200 }, 45,{1,0,1,1});
+	SpriteCreate(&slimeSprite, &TextureManager::GetInstance()->pizza, { 0.5f,0.5f });
+	SpriteInit(slimeSprite, SpriteCommon::spriteCommon,{ 200,200 }, 45,{1,0,1,1});
 
 	//デバッグテキスト生成
 
@@ -155,83 +121,44 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	DebugText debugText;
 	debugText.Initialize(debugFont.get());
 
-	//ジオメトリオブジェクト用パイプライン生成
-	PipelineSet geometryObjectPipelineSet = CreateGeometryPipeline();
-
 	//ジオメトリオブジェクト生成
-	GeometryObject GObject;
-	GObject.CreateModel();
+	ParticleManager *particleManager = ParticleManager::Getinstance();
+	particleManager->Initialize();
 
-	const int kObjectCount = 3;
-	std::unique_ptr<Obj3d[]> object3ds;
-	object3ds = std::make_unique<Obj3d[]>(kObjectCount);
-
-	for (int i = 0; i < kObjectCount; i++)
-	{
-		object3ds[i].Initialize();
-	}
+	Obj3d skydome;
+	skydome.Initialize();
 
 	//どのモデルの形を使うかを設定
-	object3ds[0].SetModel(&cube);
-	object3ds[1].SetModel(&plane);
-	object3ds[2].SetModel(&skydome);
+	skydome.SetModel(&ModelManager::GetInstance()->skyDomeM);
 
-	object3ds[0].scale.x = 10.0f;
-	object3ds[0].scale.y = 10.0f;
-
-	object3ds[1].position.x = 0;
-	object3ds[1].position.y = -10;
-	object3ds[1].scale.x = 10.0f;
-	object3ds[1].scale.y = 10.0f;
-	object3ds[1].rotation.x += XMConvertToRadians(90.0f);
-	
-	////線のモデルを使う設定
-	//const int kLineCountX = 15;
-	//const int kLineCountY = 15;
-	//std::unique_ptr<Obj3d[]> LineX;
-	//LineX = std::make_unique<Obj3d[]>(kLineCountX);
-
-	//for (int i = 0; i < kLineCountX; i++)
-	//{
-	//	LineX[i].Initialize();
-	//	LineX[i].SetModel(&line);
-	//	LineX[i].position.x += 10 * i - (10 * kLineCountX / 2);
-	//}
-
-	//std::unique_ptr<Obj3d[]> LineY;
-	//LineY = std::make_unique<Obj3d[]>(kLineCountY);
-
-	//for (int i = 0; i < kLineCountY; i++)
-	//{
-	//	LineY[i].Initialize();
-	//	LineY[i].SetModel(&line);
-	//	//LineY[i].position.x += 10 * i;
-	//	LineY[i].position.z += 10 * i - (10 * kLineCountY / 2);
-
-	//	LineY[i].rotation.y += XMConvertToRadians(90.0f);
-	//}
-
-	//射影変換行列(投資投影)
-	XMMATRIX matProjection =
-		XMMatrixPerspectiveFovLH(
-			XMConvertToRadians(45.0f),
-			(float)window_width / window_height,
-			0.1f, 1000.0f
-		);
+	skydome.SetTexture(&TextureManager::GetInstance()->slime);
 
 	//ビュー変換行列(透視投影)を計算
-	View view_;
-	view_.Initialize();
+	Camera *camera = Camera::camera;
+	camera->Initialize();
 
-	view_.eye.y = 50.0f;
-	view_.UpdatematView();
+	Obj3d cubeObj;
+	cubeObj.Initialize();
+	cubeObj.SetModel(&ModelManager::GetInstance()->cubeM);
+	cubeObj.SetTexture(&TextureManager::GetInstance()->slime);
 
-	Billboard billboard = Billboard(&view_,false);
+	cubeObj.position = { 0,0,10 };
+
+	Billboard billboard = Billboard(camera,false);
 	billboard.Initialize();
-	billboard.SetModel(&triangleM);
+	billboard.SetModel(&ModelManager::GetInstance()->boardM);
+	billboard.SetTexture(&TextureManager::GetInstance()->pizza);
 
-	billboard.position = { 10,10,0 };
-	billboard.scale = { 100,100,100 };
+	billboard.position = { 10,10,10 };
+	billboard.scale = { 3,3,3 };
+
+	camera->target = {
+		0,0,0
+	};
+
+	camera->SetEye({ 0,20,-10 });
+
+	//camera->SetEye({ 10,10,10 });
 
 #pragma endregion 描画初期化処理
 
@@ -247,11 +174,31 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	float angle = 0.0f;	//カメラの回転角
 	float angleY = 0.0f;
 
-	float cameraY = 100;
+	ParticleEmitter pEmitter;
+	pEmitter.Initialize();
+	pEmitter.SetInfo({ -10,-10,20 }, 10, 5,{0,0.5f,1,1}, 1, true);
 
-	//float count = 0;
+	ParticleEmitter pEmitter2;
+	pEmitter2.Initialize();
+	pEmitter2.SetInfo({ 10,10,10 }, 3, 1, { 1,1,1,1 }, 1);	
+	
+	ParticleEmitter pEmitter3;
+	pEmitter3.Initialize();
+	pEmitter3.SetInfo({ 20,-20,10 }, 10, 1, { 0,0.1f,0.1f,1 }, 10);
 
-	int count = 0;
+	SceneManager sceneManager;
+
+	Scene Tscene("Title");
+	Scene Nscene("newGame");
+	Scene Cscene("gameClear");
+	Scene Oscene("gameOver");
+
+	sceneManager.LoadScene(Tscene);
+	sceneManager.LoadScene(Nscene);
+	sceneManager.LoadScene(Cscene);
+	sceneManager.LoadScene(Oscene);
+
+	sceneManager.ChangeScene("Title");
 
 	//ゲームループ
 	while (true){
@@ -278,144 +225,106 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 
 		input_->Update();
 
-		if (input_->TriggerKey(DIK_SPACE))
-		{
-			//soundManager.SoundPlayWave(curser);
-		}
+		pEmitter.Update();
+		pEmitter2.Update();
+		pEmitter3.Update();
 
 		//カメラ座標を動かす
-		if (input_->PushKey(DIK_RIGHT) || 
-			input_->PushKey(DIK_LEFT) || 
-			input_->PushKey(DIK_UP) || 
-			input_->PushKey(DIK_DOWN)||
-			input_->PushKey(DIK_SPACE))
-		{
-			if (input_->PushKey(DIK_RIGHT)) { 
-				view_.eye.x += 2;
-			}
-			if (input_->PushKey(DIK_LEFT)) { 
-				view_.eye.x -= 2; 
-			}
-			if (input_->PushKey(DIK_UP)) {
-				view_.eye.y += 2;
-			}
-			if (input_->PushKey(DIK_DOWN)) {
-				view_.eye.y -= 2;
-			}
-
-			if (input_->PushKey(DIK_SPACE))
-			{
-				if (input_->PushKey(DIK_RIGHT)) {
-				
-					view_.target.x += 2;
-				}
-				if (input_->PushKey(DIK_LEFT)) {
-					
-					view_.target.x -= 2;
-				}
-				if (input_->PushKey(DIK_UP)) {
-					
-					view_.target.y += 2;
-				}
-				if (input_->PushKey(DIK_DOWN)) {
-					
-					view_.target.y -= 2;
-				}
-			}
-			view_.UpdatematView();
+		if (input_->PushKey(DIK_RIGHT)) {
+			camera->eye.x += 20 * TimeManager::deltaTime;
 		}
+		if (input_->PushKey(DIK_LEFT)) {
+			camera->eye.x -= 20 * TimeManager::deltaTime;
+		}
+		if (input_->PushKey(DIK_UP)) {
+			camera->eye.y += 20 * TimeManager::deltaTime;
+		}
+		if (input_->PushKey(DIK_DOWN)) {
+			camera->eye.y -= 20 * TimeManager::deltaTime;
+		}
+
+		if (input_->PushKey(DIK_D)) {
+
+			camera->eye.x += 20 * TimeManager::deltaTime;
+			camera->target.x += 20 * TimeManager::deltaTime;
+		}
+		if (input_->PushKey(DIK_A)) {
+
+			camera->eye.x -= 20 * TimeManager::deltaTime;
+			camera->target.x -= 20 * TimeManager::deltaTime;
+		}
+		if (input_->PushKey(DIK_W)) {
+
+			camera->eye.z += 20 * TimeManager::deltaTime;
+			camera->target.z += 20 * TimeManager::deltaTime;
+		}
+		if (input_->PushKey(DIK_S)) {
+
+			camera->eye.z -= 20 * TimeManager::deltaTime;
+			camera->target.z -= 20 * TimeManager::deltaTime;
+		}
+
+		camera->UpdatematView();
 
 		if (input_->TriggerKey(DIK_R))
 		{
-			for (int i = 0; i < kObjectCount; i++)
-			{
-				object3ds[i].Initialize();
-			}
-			view_.Initialize();
-			view_.eye.y = 50.0f;
-			view_.UpdatematView();
+			camera->Initialize();
+			camera->eye.y = 20.0f;
+			camera->UpdatematView();
 		}
 
-		/*if (input_->PushKey(DIK_D))
-		{
-			billboard.position.x += 10.0f * TimeManager::deltaTime;
-		}
-
-		if (input_->PushKey(DIK_A))
-		{
-			billboard.position.x -= 10.0f * TimeManager::deltaTime;
-		}*/
-
-		//相対距離を求める
-		XMFLOAT3 offset = { 0,0,0 };
-		offset.x = view_.eye.x - object3ds[0].position.x;
-		offset.y = view_.eye.y - object3ds[0].position.y;
-		offset.z = view_.eye.z - object3ds[0].position.z;
-
-		view_.eye.x = object3ds[0].position.x + offset.x;
-		view_.eye.y = object3ds[0].position.y + offset.y;
-		view_.eye.z = object3ds[0].position.z + offset.z;
-
-		view_.UpdatematView();
-		//オブジェクトの更新
-		if (input_->PushKey(DIK_D))
-		{
-			billboard.position.x += 60.0f * TimeManager::deltaTime;
-		}
-		if (input_->PushKey(DIK_A))
-		{
-			billboard.position.x -= 60.0f * TimeManager::deltaTime;
-		}
-		if (input_->PushKey(DIK_W))
-		{
-			billboard.position.y += 60.0f * TimeManager::deltaTime;
-		}
-		if (input_->PushKey(DIK_S))
-		{
-			billboard.position.y -= 60.0f * TimeManager::deltaTime;
-		}
-		for (size_t i = 0; i < kObjectCount; i++)
-		{
-			object3ds[i].Update(view_.matView, matProjection);
-		}
-
-		if (input_->PushKey(DIK_Q))
-		{
-			billboard.yBillboardMode = true;
-		}
-		else
-		{
-			billboard.yBillboardMode = false;
-		}
-
-		if (input_->PushKey(DIK_1))
-		{
-			TimeManager::fixFPS = 30;
-		}
-		if (input_->PushKey(DIK_2))
-		{
-			TimeManager::fixFPS = 60;
-		}
-		if (input_->PushKey(DIK_3))
-		{
-			TimeManager::fixFPS = 120;
-		}
-
-		GObject.Update(view_.matView,matProjection);
-
-		billboard.Update(matProjection);
-
-		SpriteUpdate(pizzaSprite, spriteCommon);
-		SpriteUpdate(slimeSprite, spriteCommon);
-
+		camera->UpdatematView();
 	
-		count++;
-		
-		debugText.Print(spriteCommon,
-			"deltaTime " + std::to_string(TimeManager::deltaTime), 50, 100, 1.0f);
+		if (input_->TriggerKey(DIK_1))
+		{
+			sceneManager.ChangeScene("Title");
+			//TimeManager::fixFPS = 30;
+			//TimeManager::fps = 0;
+		}
+		if (input_->TriggerKey(DIK_2))
+		{
+			sceneManager.ChangeScene("newGame");
+			//TimeManager::fixFPS = 60;
+			//TimeManager::fps = 0;
+		}
+		if (input_->TriggerKey(DIK_3))
+		{
+			sceneManager.ChangeScene("gameClear");
+			//TimeManager::fixFPS = 120;
+			//TimeManager::fps = 0;
+		}
+		if (input_->TriggerKey(DIK_4))
+		{
+			sceneManager.ChangeScene("gameOver");
+			//TimeManager::fixFPS = 120;
+			//TimeManager::fps = 0;
+		}
 
-		debugText.Print(spriteCommon,
-			"fps " + std::to_string(TimeManager::fps), 50, 200, 1.0f);
+		//オブジェクトの更新
+		particleManager->Update(camera->matView, camera->matProjection);
+
+		skydome.Update(camera->matView, camera->matProjection);
+
+		cubeObj.Update(camera->matView, camera->matProjection);
+		billboard.Update(camera->matProjection);
+
+		SpriteUpdate(pizzaSprite, SpriteCommon::spriteCommon);
+		SpriteUpdate(slimeSprite, SpriteCommon::spriteCommon);
+
+		debugText.Print(SpriteCommon::spriteCommon,
+			"deltaTime " + std::to_string(TimeManager::deltaTime), 50, 500);
+
+		debugText.Print(SpriteCommon::spriteCommon,
+			"fps " + std::to_string(TimeManager::fps), 50, 550);
+
+		debugText.Print(SpriteCommon::spriteCommon,
+			"FixFPS " + std::to_string(TimeManager::fixFPS), 50, 600);
+		
+		debugText.Print(SpriteCommon::spriteCommon,
+			"particles.size " + std::to_string(particleManager->particles.size()), 50, 350);
+
+		debugText.Print(SpriteCommon::spriteCommon,
+			sceneManager.nowScene->str, 50, 400);
 
 		///---DirectX毎フレーム処理 ここまで---///
 #pragma endregion DirectX毎フレーム処理
@@ -427,22 +336,22 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		//描画処理
 		gameScene_.Draw();
 
-		//object3ds[0].MaterialDraw(DX12->commandList.Get());
-		//object3ds[0].Draw(slime.get());
-		object3ds[2].MaterialDraw();
+		billboard.Draw();
+		cubeObj.Draw();
+		
+		skydome.DrawMaterial();
 
-		//billboard.Draw(slime.get());
 
 		GeometryObjectPreDraw(geometryObjectPipelineSet);
-		GObject.Draw(slime.get());
+		particleManager->Draw(&TextureManager::GetInstance()->particle);
 
 
 		//スプライトの前描画(共通コマンド)
-		SpriteCommonBeginDraw(spriteCommon);
+		SpriteCommonBeginDraw(SpriteCommon::spriteCommon);
 
 		//スプライト単体描画
-		SpriteDraw(pizzaSprite);
-		SpriteDraw(slimeSprite);
+		//SpriteDraw(pizzaSprite);
+		//SpriteDraw(slimeSprite);
 
 		debugText.DrawAll();
 

@@ -62,17 +62,22 @@ void Texture::CreateWhiteTexture()
 	);
 	assert(SUCCEEDED(result));
 
-	//デスクリプタヒープの設定
-	srvHeapDesc.Type = D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV;
-	srvHeapDesc.Flags = D3D12_DESCRIPTOR_HEAP_FLAG_SHADER_VISIBLE;//シェーダーから見えるように
-	srvHeapDesc.NumDescriptors = kMaxSRVCount;
+	TextureManager* tManager = TextureManager::GetInstance();
 
-	//設定を元にSRV用デスクリプタヒープを生成
-	result = dx12->device->CreateDescriptorHeap(&srvHeapDesc, IID_PPV_ARGS(&texData.srvHeap));
-	assert(SUCCEEDED(result));
+	//ハンドルを取得する部分
+	//gpuハンドルを取得
+	gpuHandle = tManager->srvHeap->GetGPUDescriptorHandleForHeapStart();
 
-	//SRVヒープの先頭ハンドルを取得
-	srvHandle = texData.srvHeap->GetCPUDescriptorHandleForHeapStart();
+	//cpuハンドルを取得
+	cpuHandle = tManager->srvHeap->GetCPUDescriptorHandleForHeapStart();
+
+	//前回のSRVヒープの大きさを加算
+	cpuHandle.ptr += tManager->SRVHandleSize;
+
+	gpuHandle.ptr += tManager->SRVHandleSize;
+
+	//SRVヒープの大きさを取得
+	tManager->SRVHandleSize += dx12->device->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV);
 
 	//シェーダリソースビュー設定
 	srvDesc.Format = resDesc.Format;//RGBA float
@@ -81,17 +86,10 @@ void Texture::CreateWhiteTexture()
 	srvDesc.ViewDimension = D3D12_SRV_DIMENSION_TEXTURE2D;//2Dテクスチャ
 	srvDesc.Texture2D.MipLevels = resDesc.MipLevels;
 
-	//SRVヒープの大きさを取得
-	//SRVHandleSize = DX12.device->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV);
-
 	//ハンドルの指す位置にシェーダーリソースビュー作成
-	dx12->device->CreateShaderResourceView(texBuff.Get(), &srvDesc, srvHandle);
+	dx12->device->CreateShaderResourceView(texBuff.Get(), &srvDesc, cpuHandle);
 
-	//ハンドルを取得する部分
-	//SRVヒープの先頭ハンドルを取得(SRVを指しているはず)
-	texData.handle = texData.srvHeap->GetGPUDescriptorHandleForHeapStart();
-
-	texData.getResDesc = textureResourceDesc;
+	getResDesc = textureResourceDesc;
 }
 
 void Texture::Load(const wchar_t* t)
@@ -161,17 +159,22 @@ void Texture::Load(const wchar_t* t)
 		assert(SUCCEEDED(result));
 	}
 
-	//デスクリプタヒープの設定
-	srvHeapDesc.Type = D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV;
-	srvHeapDesc.Flags = D3D12_DESCRIPTOR_HEAP_FLAG_SHADER_VISIBLE;//シェーダーから見えるように
-	srvHeapDesc.NumDescriptors = kMaxSRVCount;
+	TextureManager *tManager = TextureManager::GetInstance();
 
-	//設定を元にSRV用デスクリプタヒープを生成
-	result = dx12->device->CreateDescriptorHeap(&srvHeapDesc, IID_PPV_ARGS(&texData.srvHeap));
-	assert(SUCCEEDED(result));
+	//ハンドルを取得する部分
+	//gpuハンドルを取得
+	gpuHandle = tManager->srvHeap->GetGPUDescriptorHandleForHeapStart();
 
-	//SRVヒープの先頭ハンドルを取得
-	srvHandle = texData.srvHeap->GetCPUDescriptorHandleForHeapStart();
+	//cpuハンドルを取得
+	cpuHandle = tManager->srvHeap->GetCPUDescriptorHandleForHeapStart();
+
+	//SRVヒープの大きさを加算
+	cpuHandle.ptr += tManager->SRVHandleSize;
+
+	gpuHandle.ptr += tManager->SRVHandleSize;
+
+	//SRVヒープの大きさを取得
+	tManager->SRVHandleSize += dx12->device->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV);
 
 	//シェーダリソースビュー設定
 	srvDesc.Format = resDesc.Format;//RGBA float
@@ -180,20 +183,32 @@ void Texture::Load(const wchar_t* t)
 	srvDesc.ViewDimension = D3D12_SRV_DIMENSION_TEXTURE2D;//2Dテクスチャ
 	srvDesc.Texture2D.MipLevels = resDesc.MipLevels;
 
-	//SRVヒープのookisawosyutoku
-	//SRVHandleSize = DX12.device->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV);
-
 	//ハンドルの指す位置にシェーダーリソースビュー作成
-	dx12->device->CreateShaderResourceView(texBuff.Get(), &srvDesc, srvHandle);
+	dx12->device->CreateShaderResourceView(texBuff.Get(), &srvDesc, cpuHandle);
 
-	//ハンドルを取得する部分
-	//SRVヒープの先頭ハンドルを取得(SRVを指しているはず)
-	texData.handle = texData.srvHeap->GetGPUDescriptorHandleForHeapStart();
-
-	texData.getResDesc = textureResourceDesc;
+	getResDesc = textureResourceDesc;
 }
 
-D3D12_GPU_DESCRIPTOR_HANDLE Texture::GetHandle()
+void TextureManager::Initialize()
 {
-	return texData.handle;
+	DirectX12 *dx12 = DirectX12::GetInstance();
+
+	//デスクリプタヒープの設定
+	srvHeapDesc.Type = D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV;
+	srvHeapDesc.Flags = D3D12_DESCRIPTOR_HEAP_FLAG_SHADER_VISIBLE;//シェーダーから見えるように
+	srvHeapDesc.NumDescriptors = kMaxSRVCount;
+
+	//設定を元にSRV用デスクリプタヒープを生成
+	result = dx12->device->CreateDescriptorHeap(&srvHeapDesc, IID_PPV_ARGS(&srvHeap));
+	assert(SUCCEEDED(result));
+}
+
+void TextureManager::PreLoad()
+{
+	//white.CreateWhiteTexture();
+	white.Load(L"Resources\\white.png");
+	slime.Load(L"Resources\\slime.png");
+	def.Load(L"Resources\\default.png");
+	pizza.Load(L"Resources\\pizza.png");
+	particle.Load(L"Resources\\particle.png");
 }

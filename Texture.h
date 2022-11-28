@@ -13,56 +13,67 @@ using namespace DirectX;
 
 const size_t kMaxSRVCount = 2056;
 
-struct TextureData
-{
-	D3D12_GPU_DESCRIPTOR_HANDLE handle;
-
-	ID3D12DescriptorHeap* srvHeap;
-
-	//外部から参照する用のリソース設定(書き換えてもテクスチャ側には影響しない)
-	D3D12_RESOURCE_DESC getResDesc;
-};
-
 class Texture
 {
 public:
-	//なぜか関数内に入った途端DX12が全て初期化されたので引数でもらっている
-	//おい！！！！！！４か月くらい前のおれ！！！！！！！できたぞ！！！！！！！！！
+
 	void Load(const wchar_t* t);
 
 	void CreateWhiteTexture();
 
-	TextureData texData;
-
-	D3D12_GPU_DESCRIPTOR_HANDLE GetHandle();
-	//設定を元にSRV用デスクリプタヒープを生成
-	//ここはComPtrにするとダメだった なんでダメかはわからん
-	//ID3D12DescriptorHeap* srvHeap;
+	//外部から参照する用のリソース設定(書き換えてもテクスチャ側には影響しない)
+	D3D12_RESOURCE_DESC getResDesc;
 
 	Microsoft::WRL::ComPtr<ID3D12Resource> texBuff;
 	
+	D3D12_GPU_DESCRIPTOR_HANDLE gpuHandle = { 0 };
+
+	D3D12_CPU_DESCRIPTOR_HANDLE cpuHandle = { 0 };
+
 private:
 	TexMetadata metadata{};
 	ScratchImage scratchImg{};
 	ScratchImage mipChain{};
 
-	//D3D12_GPU_DESCRIPTOR_HANDLE srvGpuHandle = { 0 };
-
-	//SRVの最大個数
-	
-	//デスクリプタヒープの設定
-	D3D12_DESCRIPTOR_HEAP_DESC srvHeapDesc = {};
-	
-	//SRVヒープの先頭ハンドルを取得
-	D3D12_CPU_DESCRIPTOR_HANDLE srvHandle = { 0 };
 	//シェーダリソースビュー設定
 	D3D12_SHADER_RESOURCE_VIEW_DESC srvDesc{};//設定構造体
 	//リソース設定
 	D3D12_RESOURCE_DESC resDesc{};
-	//SRVヒープの大きさ
-	UINT SRVHandleSize = 0;
 
 	DirectX12* dx12 = DirectX12::GetInstance();
 
 };
 
+class TextureManager
+{
+public:
+	static TextureManager* GetInstance() {
+		static TextureManager instance;
+		return &instance;
+	};
+
+	//デスクリプタヒープの設定
+	D3D12_DESCRIPTOR_HEAP_DESC srvHeapDesc = {};
+
+	ComPtr<ID3D12DescriptorHeap> srvHeap;
+
+	//SRVヒープの大きさ
+	UINT SRVHandleSize = 0;
+
+	void Initialize();
+	void PreLoad();
+
+public:
+	Texture white;
+	Texture slime;
+	Texture pizza;
+	Texture def;
+	Texture particle;
+
+private:
+	TextureManager(){};
+	~TextureManager(){};
+	TextureManager(const TextureManager& a) = delete;
+	TextureManager operator=(const TextureManager&) = delete;
+
+};

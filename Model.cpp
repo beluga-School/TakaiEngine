@@ -349,3 +349,11 @@ Line::Line()
 		//6–Ê‚É‚·‚é‚È‚ç12ŒÂ•K—v...‚Á‚ÄºÄ!? Ü¡¡¡
 	};
 }
+
+void ModelManager::PreLoad()
+{
+	cubeM.CreateModel("Cube");
+	skyDomeM.CreateModel("skydome");
+	boardM.CreateModel("board");
+	//triangleM.CreateModel("triangle_mat");
+}

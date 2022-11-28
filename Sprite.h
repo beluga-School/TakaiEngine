@@ -33,7 +33,7 @@ struct VertexPosUV
 struct Sprite
 {
 	//頂点バッファ
-	ID3D12Resource* vertBuff;
+	Microsoft::WRL::ComPtr<ID3D12Resource> vertBuff;
 	//頂点バッファビュー
 	D3D12_VERTEX_BUFFER_VIEW vbView{};
 	//定数バッファ
@@ -58,7 +58,7 @@ struct Sprite
 	bool isFlipY = false;
 
 	XMFLOAT2 texLeftTop = {0,0};
-	XMFLOAT2 texSize;
+	XMFLOAT2 cutSize;
 
 	bool isInvisible = false;
 
@@ -69,10 +69,14 @@ struct SpriteCommon
 	PipelineSet pipelineSet;
 	//射影行列
 	XMMATRIX matProjection{};
+
+	static void Initialize();
+
+	static SpriteCommon spriteCommon;
 };
 
 //スプライトの生成
-Sprite SpriteCreate(Texture* tex, XMFLOAT2 anchorpoint,bool isFlipX = false, bool isFlipY = false);
+void SpriteCreate(Sprite *sprite,Texture* tex, XMFLOAT2 anchorpoint,bool isFlipX = false, bool isFlipY = false);
 
 //スプライトの変数の初期化
 void SpriteInit(Sprite& sprite, SpriteCommon& spriteCommon,XMFLOAT2 pos = {0,0}, float rotation = 0.0f, XMFLOAT4 color = {1,1,1,1});

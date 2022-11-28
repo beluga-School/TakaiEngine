@@ -10,11 +10,41 @@ public:
 	Vector3(float x, float y, float z);
 
 	//メンバ関数
+
+	/// <summary>
+	/// 長さを返す
+	/// </summary>
 	float length() const;
+
+	/// <summary>
+	/// 正規化
+	/// 結果をreturnし、本体を書き換えない 本体を書き換えたい場合はnormalizeを使用してください
+	/// </summary>
+	/// <param name="v"></param>
+	/// <returns></returns>
 	Vector3 GetNormalize();
+	
+	/// <summary>
+	/// 正規化
+	/// 本体を書き換える　変数に代入したい場合はGetNormalizeを使用してください 
+	/// </summary>
+	/// <param name="v"></param>
+	/// <returns></returns>
 	void normalize();
+	
 	float dot(const Vector3& v)const;
-	Vector3 cross(const Vector3& v)const;
+
+	/// <summary>
+	/// 内積
+	/// 本体を書き換える　変数に代入したい場合はGetCrossを使用してください
+	/// </summary>
+	void cross(const Vector3& v);
+	
+	/// <summary>
+	/// 内積
+	/// 結果をreturnし、本体を書き換えない 本体を書き換えたい場合はcrossを使用してください
+	/// </summary>
+	Vector3 GetCross(const Vector3& v)const;
 
 	Vector3 operator+()const;
 	Vector3 operator-()const;

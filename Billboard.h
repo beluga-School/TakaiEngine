@@ -5,12 +5,13 @@
 class Billboard : public Obj3d
 {
 public:
-	Billboard(View* view,bool yBillboardMode);
+	Billboard(Camera* view,bool yBillboardMode);
 
-	View* view = nullptr;
+	Camera* view = nullptr;
 
 	void Update(XMMATRIX& matProjection);
-	void Draw(Texture* texture);
+	void Draw();
 public:
 	bool yBillboardMode = false;
+	XMMATRIX matBillboardY;
 };
