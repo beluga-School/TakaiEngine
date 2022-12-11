@@ -15,11 +15,6 @@ private:
 
 	Input* input = Input::GetInstance();
 
-	Model cube = Cube();
-	Model plane = Plate();
-	Model triangle = Triangle();
-	Model line = Line();
-
 	Model triangleM = Model();
 	Model skydome = Model();
 

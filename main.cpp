@@ -40,6 +40,7 @@ using namespace DirectX;
 
 #include "SceneManager.h"
 
+#include "ImguiManager.h"
 
 //windowsアプリでのエントリーポイント(main関数)
 int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
@@ -83,22 +84,26 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 
 #pragma region 描画初期化処理
 
-	//--depthこっから
-
+	//depth関連の処理
 	CreateDepthView();
 
-	//--depthここまで
+	//テクスチャの読み込み
+	TextureManager* tManager = TextureManager::GetInstance();
+	tManager->Initialize();
+	tManager->PreLoad();
 
-	GameScene gameScene_;
-
-	//WICテクスチャのロード
-	TextureManager::GetInstance()->Initialize();
-	TextureManager::GetInstance()->PreLoad();
+	//imguiの初期化
+	ImguiManager *imguiManager = ImguiManager::GetInstance();
+	imguiManager->Initialize();
 
 	SpriteCommon::spriteCommon.Initialize();
 
+	//モデルの読み込み
 	ModelManager::GetInstance()->PreLoad();
 
+	GameScene gameScene_;
+
+	//3dオブジェクト用のパイプライン生成
 	PipelineSet object3dPipelineSet = CreateObject3DPipeline();
 
 	//ジオメトリオブジェクト用パイプライン生成
@@ -111,8 +116,8 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	SpriteSetSize(pizzaSprite, { 100,100 });
 
 	Sprite slimeSprite;
-	SpriteCreate(&slimeSprite, &TextureManager::GetInstance()->pizza, { 0.5f,0.5f });
-	SpriteInit(slimeSprite, SpriteCommon::spriteCommon,{ 200,200 }, 45,{1,0,1,1});
+	SpriteCreate(&slimeSprite, &TextureManager::GetInstance()->slime, { 0.5f,0.5f });
+	SpriteInit(slimeSprite, SpriteCommon::spriteCommon,{ 100,100 }, 0,{1,1,1,1});
 
 	//デバッグテキスト生成
 
@@ -143,6 +148,11 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	cubeObj.SetModel(&ModelManager::GetInstance()->cubeM);
 	cubeObj.SetTexture(&TextureManager::GetInstance()->slime);
 
+	Obj3d daruma;
+	daruma.Initialize();
+	daruma.SetModel(&ModelManager::GetInstance()->darumaM);
+	daruma.SetTexture(&TextureManager::GetInstance()->white);
+
 	cubeObj.position = { 0,0,10 };
 
 	Billboard billboard = Billboard(camera,false);
@@ -158,8 +168,6 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	};
 
 	camera->SetEye({ 0,20,-10 });
-
-	//camera->SetEye({ 10,10,10 });
 
 #pragma endregion 描画初期化処理
 
@@ -179,27 +187,30 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	pEmitter.Initialize();
 	pEmitter.SetInfo({ -10,-10,20 }, 10, 5,{0,0.5f,1,1}, 1, true);
 
-	ParticleEmitter pEmitter2;
+	/*ParticleEmitter pEmitter2;
 	pEmitter2.Initialize();
 	pEmitter2.SetInfo({ 10,10,10 }, 3, 1, { 1,1,1,1 }, 1);	
 	
 	ParticleEmitter pEmitter3;
 	pEmitter3.Initialize();
-	pEmitter3.SetInfo({ 20,-20,10 }, 10, 1, { 0,0.1f,0.1f,1 }, 10);
+	pEmitter3.SetInfo({ 20,-20,10 }, 10, 1, { 0,0.1f,0.1f,1 }, 10);*/
 
-	SceneManager sceneManager;
+	SceneManager* sceneManager = SceneManager::GetInstance();
 
 	Scene Tscene("Title");
 	Scene Nscene("newGame");
 	Scene Cscene("gameClear");
 	Scene Oscene("gameOver");
 
-	sceneManager.LoadScene(Tscene);
-	sceneManager.LoadScene(Nscene);
-	sceneManager.LoadScene(Cscene);
-	sceneManager.LoadScene(Oscene);
+	sceneManager->LoadScene(Tscene);
+	sceneManager->LoadScene(Nscene);
+	sceneManager->LoadScene(Cscene);
+	sceneManager->LoadScene(Oscene);
 
-	sceneManager.ChangeScene("Title");
+	sceneManager->ChangeScene("Title");
+
+	GUI gui("sprite postion");
+	GUI gui2("hogehoge");
 
 	//ゲームループ
 	while (true){
@@ -220,15 +231,26 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		
 		ClearDrawScreen();
 
-		//更新処理
+		imguiManager->PreUpdate();
+		
+		gui.Begin({ 10,100 }, { 500,100 });
 
+		ImGui::SliderFloat("position.x", &slimeSprite.position.x,100.0f,300.0f);
+		ImGui::SliderFloat("position.y", &slimeSprite.position.y,100.0f,300.0f);
+
+		gui.End();
+
+		gui2.Begin({ 1000,100 }, { 100,100 });
+		gui2.End();
+
+		//更新処理
 		gameScene_.Update();
 
 		input_->Update();
 
 		pEmitter.Update();
-		pEmitter2.Update();
-		pEmitter3.Update();
+		//pEmitter2.Update();
+		//pEmitter3.Update();
 
 		//カメラ座標を動かす
 		if (input_->PushKey(DIK_RIGHT)) {
@@ -278,25 +300,25 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	
 		if (input_->TriggerKey(DIK_1))
 		{
-			sceneManager.ChangeScene("Title");
+			sceneManager->ChangeScene("Title");
 			//TimeManager::fixFPS = 30;
 			//TimeManager::fps = 0;
 		}
 		if (input_->TriggerKey(DIK_2))
 		{
-			sceneManager.ChangeScene("newGame");
+			sceneManager->ChangeScene("newGame");
 			//TimeManager::fixFPS = 60;
 			//TimeManager::fps = 0;
 		}
 		if (input_->TriggerKey(DIK_3))
 		{
-			sceneManager.ChangeScene("gameClear");
+			sceneManager->ChangeScene("gameClear");
 			//TimeManager::fixFPS = 120;
 			//TimeManager::fps = 0;
 		}
 		if (input_->TriggerKey(DIK_4))
 		{
-			sceneManager.ChangeScene("gameOver");
+			sceneManager->ChangeScene("gameOver");
 			//TimeManager::fixFPS = 120;
 			//TimeManager::fps = 0;
 		}
@@ -307,6 +329,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		skydome.Update(camera->matView, camera->matProjection);
 
 		cubeObj.Update(camera->matView, camera->matProjection);
+		daruma.Update(camera->matView, camera->matProjection);
 		billboard.Update(camera->matProjection);
 
 		SpriteUpdate(pizzaSprite, SpriteCommon::spriteCommon);
@@ -325,20 +348,21 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 			"particles.size " + std::to_string(particleManager->particles.size()), 50, 350);
 
 		debugText.Print(SpriteCommon::spriteCommon,
-			sceneManager.nowScene->str, 50, 400);
+			sceneManager->nowScene->str, 50, 400);
 
 		///---DirectX毎フレーム処理 ここまで---///
 #pragma endregion DirectX毎フレーム処理
 
 #pragma region グラフィックスコマンド
 		//--4.描画コマンドここから--//
-		BasicObjectPreDraw( object3dPipelineSet);
+		BasicObjectPreDraw(object3dPipelineSet);
 
 		//描画処理
 		gameScene_.Draw();
 
 		billboard.Draw();
 		cubeObj.Draw();
+		daruma.DrawMaterial();
 		
 		skydome.DrawMaterial();
 
@@ -352,7 +376,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 
 		//スプライト単体描画
 		//SpriteDraw(pizzaSprite);
-		//SpriteDraw(slimeSprite);
+		SpriteDraw(slimeSprite);
 
 		debugText.DrawAll();
 
@@ -361,6 +385,10 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 #pragma endregion グラフィックスコマンド
 
 #pragma region 画面入れ替え
+
+		imguiManager->PreDraw();
+
+		imguiManager->Draw();
 
 		PostDraw();
 
@@ -375,6 +403,8 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 			break;
 		}
 	}
+
+	imguiManager->Finalize();
 
 	gameScene_.End();
 

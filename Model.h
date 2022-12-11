@@ -51,6 +51,7 @@ public:
 	Model skyDomeM;
 	Model triangleM;
 	Model boardM;
+	Model darumaM;
 
 	void PreLoad();
 
@@ -59,33 +60,4 @@ public:
 		return &instance;
 	};
 	
-};
-
-
-class Cube : public Model
-{
-public:
-	Cube();
-	~Cube(){};
-};
-
-class Plate : public Model
-{
-public:
-	Plate();
-	~Plate() {};
-};
-
-class Triangle : public Model
-{
-public:
-	Triangle();
-	~Triangle() {};
-};
-
-class Line : public Model
-{
-public:
-	Line();
-	~Line() {};
 };
