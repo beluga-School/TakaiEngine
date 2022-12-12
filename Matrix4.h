@@ -26,6 +26,13 @@ public:
 	static Matrix4 translate(const Vector3& t);
 	static Vector3 transform(const Vector3& v, const Matrix4& m);
 
+	//横ベクトルを抽出する
+	Vector3 ExtractAxisX();
+	//上方向ベクトルを抽出する
+	Vector3 ExtractAxisY();
+	//正面ベクトルを抽出する
+	Vector3 ExtractAxisZ();
+
 	float* operator[](int i);
 
 	float& operator()(int i, int j);
