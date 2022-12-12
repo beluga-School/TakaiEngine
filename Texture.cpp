@@ -206,7 +206,7 @@ void TextureManager::Initialize()
 void TextureManager::PreLoad()
 {
 	//white.CreateWhiteTexture();
-	white.Load(L"Resources\\white.png");
+	white.CreateWhiteTexture();
 	slime.Load(L"Resources\\slime.png");
 	def.Load(L"Resources\\default.png");
 	pizza.Load(L"Resources\\pizza.png");

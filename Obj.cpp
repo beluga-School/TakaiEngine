@@ -13,7 +13,8 @@ void Obj3d::SetTexture(Texture* texture)
 
 void Obj3d::Initialize()
 {
-
+	model = &ModelManager::GetInstance()->cubeM;
+	texture = &TextureManager::GetInstance()->def;
 }
 
 void Obj3d::Update(XMMATRIX& matView, XMMATRIX& matProjection)

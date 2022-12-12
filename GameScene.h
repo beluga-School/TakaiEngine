@@ -1,12 +1,15 @@
 #pragma once
 #include "Input.h"
-
-#include "Obj.h"
+#include "Pipeline.h"
+#include "Sprite.h"
+#include "ClearDrawScreen.h"
+#include "Particle.h"
+#include "ViewProjection.h"
+#include "Billboard.h"
 
 class GameScene
 {
 public:
-	
 	void Initialize();
 	void Update();
 	void Draw();
@@ -14,15 +17,17 @@ public:
 private:
 
 	Input* input = Input::GetInstance();
+	Sprite pizzaSprite;
+	Sprite slimeSprite;
+	PipelineSet object3dPipelineSet;
+	PipelineSet geometryObjectPipelineSet;
+	Obj3d cubeObj;
+	Obj3d daruma;
+	Camera* camera = Camera::camera;
+	Billboard billboard = Billboard(camera, false);
+	ParticleManager* particleManager = ParticleManager::Getinstance();
+	Obj3d skydome;
 
-	Model triangleM = Model();
-	Model skydome = Model();
-
-	std::unique_ptr<Texture> zawa = std::make_unique<Texture>();
-	std::unique_ptr<Texture> slime = std::make_unique<Texture>();
-	std::unique_ptr<Texture> pizza = std::make_unique<Texture>();
-	std::unique_ptr<Texture> tyusiten = std::make_unique<Texture>();
-	std::unique_ptr<Texture> sinomiya = std::make_unique<Texture>();
-	std::unique_ptr<Texture> white = std::make_unique<Texture>();
+	Obj3d stage;
 };
 
