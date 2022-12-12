@@ -41,6 +41,7 @@ using namespace DirectX;
 #include "SceneManager.h"
 
 #include "ImguiManager.h"
+#include <string>
 
 //windowsアプリでのエントリーポイント(main関数)
 int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
@@ -123,6 +124,10 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	pEmitter.Initialize();
 	pEmitter.SetInfo({ -10,-10,20 }, 10, 5,{0,0.5f,1,1}, 1, true);
 
+	GUI gui("hoge");
+
+	float hoge = 0;
+
 	//ゲームループ
 	while (true){
 
@@ -144,10 +149,21 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 
 		imguiManager->PreUpdate();
 
+		gui.Begin({10,10},{500,500});
+		ImGui::SliderFloat("fov", &gameScene_.camera->fovAngle, 30, 100);
+		ImGui::SliderFloat("farZ", &gameScene_.camera->farZ, 100, 1000);
+		ImGui::SliderFloat("camEyeY", &gameScene_.camera->eye.y, -100, 100);
+
+		gui.End();
+
 		//更新処理
 		input_->Update();
 	
 		gameScene_.Update();
+
+		debugText.Print(SpriteCommon::spriteCommon,
+			"a" + std::to_string(1),
+			50, 100);
 
 		pEmitter.Update();
 

@@ -17,33 +17,40 @@ void Obj3d::Initialize()
 	texture = &TextureManager::GetInstance()->def;
 }
 
-void Obj3d::Update(XMMATRIX& matView, XMMATRIX& matProjection)
+void Obj3d::Update(Matrix4& matView, Matrix4& matProjection)
 {
-	XMMATRIX matScale;	//スケーリング行列
-	XMMATRIX matRot;	//回転行列
-	XMMATRIX matTrans;	//平行移動行列
+	Matrix4 matScale;	//スケーリング行列
+	Matrix4 matRot;	//回転行列
+	Matrix4 matTrans;	//平行移動行列
 
-	matScale = XMMatrixScaling(scale.x, scale.y, scale.z);
-	matRot = XMMatrixIdentity();
-	matRot *= XMMatrixRotationZ(rotation.z);
-	matRot *= XMMatrixRotationX(rotation.x);
-	matRot *= XMMatrixRotationY(rotation.y);
-	matTrans = XMMatrixTranslation(
-		position.x, position.y, position.z);
+	//matScale = XMMatrixScaling(scale.x, scale.y, scale.z);
+	//スケールを設定
+	matScale = Matrix4::Identity();
+	matScale = Matrix4::scale(scale);
 
-	matWorld = XMMatrixIdentity();
-	matWorld *= matScale;
-	matWorld *= matRot;
-	matWorld *= matTrans;
+	//回転を設定
+	matRot = Matrix4::Identity();
+	matRot = Matrix4::rotateZ(rotation.z) * Matrix4::rotateX(rotation.x) * Matrix4::rotateY(rotation.y);
+
+	//matRot = XMMatrixIdentity();
+	//matRot *= XMMatrixRotationZ(rotation.z);
+	//matRot *= XMMatrixRotationX(rotation.x);
+	//matRot *= XMMatrixRotationY(rotation.y);
+
+	matTrans = Matrix4::Identity();
+	matTrans = Matrix4::translate(position);
+	//matTrans = XMMatrixTranslation(position.x, position.y, position.z);
+
+	matWorld = Matrix4::Identity();
+	matWorld = matScale * matRot * matTrans;
 
 	if (parent != nullptr)
 	{	
 		if (notScaleFlag)
 		{
-			XMMATRIX matRotPar;
-			XMMATRIX matTransPar;
+			/*Matrix4 matRotPar;
+			Matrix4 matTransPar;
 
-			matRotPar = XMMatrixIdentity();
 			matRotPar *= XMMatrixRotationZ(parent->rotation.z);
 			matRotPar *= XMMatrixRotationX(parent->rotation.x);
 			matRotPar *= XMMatrixRotationY(parent->rotation.y);
@@ -52,11 +59,11 @@ void Obj3d::Update(XMMATRIX& matView, XMMATRIX& matProjection)
 				parent->position.x, parent->position.y, parent->position.z);
 
 			matWorld *= matRotPar;
-			matWorld *= matTransPar;
+			matWorld *= matTransPar;*/
 		}
 		else
 		{
-			matWorld *= parent->matWorld;
+			matWorld = matWorld * parent->matWorld;
 		}
 
 	}
@@ -80,9 +87,9 @@ void Obj3d::Update(XMMATRIX& matView, XMMATRIX& matProjection)
 Vector3 Obj3d::GetWorldTrans()
 {
 	Vector3 worldTrans={
-		matWorld.r[3].m128_f32[0],
-		matWorld.r[3].m128_f32[1],
-		matWorld.r[3].m128_f32[2]
+		matWorld.m[3][0],
+		matWorld.m[3][1],
+		matWorld.m[3][2]
 	};
 	return worldTrans;
 }

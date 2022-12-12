@@ -7,6 +7,7 @@ using namespace DirectX;
 #include "Model.h"
 #include "Texture.h"
 #include <memory>
+#include "Matrix4.h"
 
 struct ConstBufferDataB1
 {
@@ -32,16 +33,14 @@ public:
 
 	ConstBuffer<ConstBufferDataB1> constBufferMaterial;
 
-	XMFLOAT3 scale = { 1.0f,1.0f,1.0f };
-	XMFLOAT3 rotation = { 0,0,0 };
-	XMFLOAT3 position = { 0,0,0 };
+	Vector3 scale = { 1.0f,1.0f,1.0f };
+	Vector3 rotation = { 0,0,0 };
+	Vector3 position = { 0,0,0 };
 
 	XMFLOAT4 color = { 1.0f,1.0f,1.0f,1.0f };
 
-	XMMATRIX matWorld;	//ワールド変換行列
-	//XMMATRIX matScale;	//スケーリング行列
-	//XMMATRIX matRot;	//回転行列
-	//XMMATRIX matTrans;	//平行移動行列
+	Matrix4 matWorld;
+	//XMMATRIX matWorld;	//ワールド変換行列
 
 	bool notScaleFlag = false;
 
@@ -53,11 +52,12 @@ public:
 	void Initialize();
 	void SetModel(Model *model);
 	void SetTexture(Texture *texture);
-	void Update(XMMATRIX& matView, XMMATRIX& matProjection);
+	void Update(Matrix4& matView, Matrix4& matProjection);
 
 	Vector3 GetWorldTrans();
 
 	void Draw();
 	void DrawMaterial();
+
 };
 

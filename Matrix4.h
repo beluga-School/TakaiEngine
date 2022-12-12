@@ -26,6 +26,11 @@ public:
 	static Matrix4 translate(const Vector3& t);
 	static Vector3 transform(const Vector3& v, const Matrix4& m);
 
+	//左手系のパースペクティブ射影変換行列を求める
+	static Matrix4 PerspectiveFovLH(float fovAngleY,float nearZ,float farZ);
+	//左手系のビュー変換行列を求める
+	static Matrix4 LookAtLH(Vector3 eye, Vector3 target, Vector3 up);
+
 	//横ベクトルを抽出する
 	Vector3 ExtractAxisX();
 	//上方向ベクトルを抽出する

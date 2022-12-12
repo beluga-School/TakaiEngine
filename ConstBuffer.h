@@ -11,12 +11,14 @@ using namespace DirectX;
 #pragma comment(lib,"d3dcompiler.lib")
 #include <DirectXTex.h>
 
+#include "Matrix4.h"
+
 struct ConstBufferDataMaterial {
 	XMFLOAT4 color;	//F(RGBA)
 };
 
 struct ConstBufferDataTransform {
-	XMMATRIX mat;	//3D•ÏŠ·s—ñ
+	Matrix4 mat;	//3D•ÏŠ·s—ñ
 };
 
 struct ConstBufferDataSprite {

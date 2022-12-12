@@ -1,4 +1,5 @@
 #include "Matrix4.h"
+#include "Util.h"
 #include <math.h>
 
 Matrix4::Matrix4()
@@ -43,8 +44,7 @@ Matrix4 Matrix4::Identity()
 
 Matrix4 Matrix4::scale(const Vector3& s)
 {
-	Matrix4 result;
-	result.Identity();
+	Matrix4 result = Matrix4::Identity();
 
 	result.m[0][0] = s.x;
 	result.m[1][1] = s.y;
@@ -70,8 +70,7 @@ Vector3 Matrix4::ExtractAxisZ()
 
 Matrix4 Matrix4::rotateX(float angle)
 {
-	Matrix4 result;
-	result.Identity();
+	Matrix4 result = Matrix4::Identity();
 
 	result.m[1][1] = cos(angle);
 	result.m[1][2] = sin(angle);
@@ -83,8 +82,7 @@ Matrix4 Matrix4::rotateX(float angle)
 
 Matrix4 Matrix4::rotateY(float angle)
 {
-	Matrix4 result;
-	result.Identity();
+	Matrix4 result = Matrix4::Identity();
 
 	result.m[0][0] = cos(angle);
 	result.m[0][2] = -sin(angle);
@@ -96,8 +94,7 @@ Matrix4 Matrix4::rotateY(float angle)
 
 Matrix4 Matrix4::rotateZ(float angle)
 {
-	Matrix4 result;
-	result.Identity();
+	Matrix4 result = Matrix4::Identity();
 
 	result.m[0][0] = cos(angle);
 	result.m[0][1] = sin(angle);
@@ -109,8 +106,7 @@ Matrix4 Matrix4::rotateZ(float angle)
 
 Matrix4 Matrix4::translate(const Vector3& t)
 {
-	Matrix4 result;
-	result.Identity();
+	Matrix4 result = Matrix4::Identity();
 
 	result.m[3][0] = t.x;
 	result.m[3][1] = t.y;
@@ -131,6 +127,64 @@ Vector3 Matrix4::transform(const Vector3& v, const Matrix4& m)
 	};
 
 	return result;
+}
+
+Matrix4 Matrix4::PerspectiveFovLH(float fovAngleY, float nearZ, float farZ)
+{
+
+	Matrix4 process1 = Matrix4::Identity();
+
+	process1.m[0][0] = Util::window_height / Util::window_width;
+
+	Matrix4 process2 = Matrix4::Identity();
+	process2.m[0][0] = 1 / tanf(fovAngleY / 2);
+	process2.m[1][1] = 1 / tanf(fovAngleY / 2);
+
+	Matrix4 process3 = Matrix4::Identity();
+
+	process3.m[2][2] = farZ * (1 / (farZ - nearZ));
+	process3.m[3][2] = farZ * (-nearZ / (farZ - nearZ));
+
+	Matrix4 perspective = Matrix4::Identity();
+
+	perspective = process1 * process2 * process3;
+
+	perspective.m[2][3] = 1;
+	perspective.m[3][3] = 0;
+
+	return perspective;
+}
+
+Matrix4 Matrix4::LookAtLH(Vector3 eye, Vector3 target, Vector3 up)
+{
+	Matrix4 camTrans = Matrix4::Identity();
+	camTrans = Matrix4::translate(-eye);
+
+	Vector3 localZ = target - eye;
+	localZ.normalize();
+	Vector3 localX = up.GetCross(localZ);
+	localX.normalize();
+	Vector3 localY = localZ.GetCross(localX);
+	localY.normalize();
+
+	Matrix4 camRot = Matrix4::Identity();
+	camRot.m[0][0] = localX.x;
+	camRot.m[1][0] = localX.y;
+	camRot.m[2][0] = localX.z;
+
+	camRot.m[0][1] = localY.x;
+	camRot.m[1][1] = localY.y;
+	camRot.m[2][1] = localY.z;
+
+	camRot.m[0][2] = localZ.x;
+	camRot.m[1][2] = localZ.y;
+	camRot.m[2][2] = localZ.z;
+
+	Matrix4 lookAt = Matrix4::Identity();
+
+	lookAt = camTrans * camRot;
+
+	return lookAt;
 }
 
 float* Matrix4::operator[](int i) {

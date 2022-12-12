@@ -14,7 +14,7 @@ public:
 	void Update();
 	void Draw();
 	void End();
-private:
+public:
 
 	Input* input = Input::GetInstance();
 	Sprite pizzaSprite;
@@ -24,8 +24,8 @@ private:
 	Obj3d cubeObj;
 	Obj3d daruma;
 	Camera* camera = Camera::camera;
-	Billboard billboard = Billboard(camera, false);
-	ParticleManager* particleManager = ParticleManager::Getinstance();
+	//Billboard billboard = Billboard(camera, false);
+	//ParticleManager* particleManager = ParticleManager::Getinstance();
 	Obj3d skydome;
 
 	Obj3d stage;

@@ -18,7 +18,7 @@ void GameScene::Initialize()
 	SpriteInit(slimeSprite, SpriteCommon::spriteCommon, { 100,100 }, 0, { 1,1,1,1 });
 
 	//ジオメトリオブジェクト生成
-	particleManager->Initialize();
+	//particleManager->Initialize();
 
 	skydome.Initialize();
 
@@ -34,15 +34,15 @@ void GameScene::Initialize()
 	daruma.SetModel(&ModelManager::GetInstance()->darumaM);
 	daruma.SetTexture(&TextureManager::GetInstance()->white);
 
-	billboard.Initialize();
+	/*billboard.Initialize();
 	billboard.SetModel(&ModelManager::GetInstance()->boardM);
 	billboard.SetTexture(&TextureManager::GetInstance()->pizza);
 
 	billboard.position = { 10,10,10 };
-	billboard.scale = { 3,3,3 };
+	billboard.scale = { 3,3,3 };*/
 
 	camera->target = {
-		0,0,0
+		0,-10,0
 	};
 
 	camera->SetEye({ 0,20,-10 });
@@ -101,14 +101,16 @@ void GameScene::Update()
 	camera->UpdatematView();
 
 	//オブジェクトの更新
-	particleManager->Update(camera->matView, camera->matProjection);
+	//particleManager->Update(camera->matView, camera->matProjection);
 
 	skydome.Update(camera->matView, camera->matProjection);
 
-	daruma.Update(camera->matView, camera->matProjection);
-	billboard.Update(camera->matProjection);
-
 	stage.Update(camera->matView, camera->matProjection);
+
+	daruma.Update(camera->matView, camera->matProjection);
+	//billboard.Update(camera->matProjection);
+
+	
 }
 
 void GameScene::Draw()
@@ -119,7 +121,7 @@ void GameScene::Draw()
 
 	stage.Draw();
 
-	billboard.Draw();
+	//billboard.Draw();
 	daruma.DrawMaterial();
 
 	skydome.DrawMaterial();

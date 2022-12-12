@@ -32,16 +32,21 @@ public:
 	/// <returns></returns>
 	void normalize();
 	
+	/// <summary>
+	/// 内積
+	/// </summary>
+	/// <param name="v"></param>
+	/// <returns></returns>
 	float dot(const Vector3& v)const;
 
 	/// <summary>
-	/// 内積
+	/// 外積
 	/// 本体を書き換える　変数に代入したい場合はGetCrossを使用してください
 	/// </summary>
 	void cross(const Vector3& v);
 	
 	/// <summary>
-	/// 内積
+	/// 外積
 	/// 結果をreturnし、本体を書き換えない 本体を書き換えたい場合はcrossを使用してください
 	/// </summary>
 	Vector3 GetCross(const Vector3& v)const;

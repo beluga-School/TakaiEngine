@@ -7,15 +7,16 @@ using namespace DirectX;
 #include "Vector3.h"
 #include "Util.h"
 #include <memory>
+#include "Matrix4.h"
 
 class Camera
 {
 public:
 
-	XMMATRIX matView;
-	XMFLOAT3 eye;	//視点座標
-	XMFLOAT3 target;	//注視点座標
-	XMFLOAT3 up;		//上方向ベクトル
+	Matrix4 matView;
+	Vector3 eye;	//視点座標
+	Vector3 target;	//注視点座標
+	Vector3 up;		//上方向ベクトル
 
 	float aspect = Util::window_width / Util::window_height;
 	float nearClip = 0.1f;
@@ -23,7 +24,7 @@ public:
 	float fovAngle = 60;
 
 	//射影変換行列(投資投影)
-	XMMATRIX matProjection;
+	Matrix4 matProjection;
 
 public:
 	Camera()
