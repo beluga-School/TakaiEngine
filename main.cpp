@@ -149,10 +149,12 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 
 		imguiManager->PreUpdate();
 
-		gui.Begin({10,10},{500,500});
+		gui.Begin({10,10},{500,200});
 		ImGui::SliderFloat("fov", &gameScene_.camera->fovAngle, 30, 100);
-		ImGui::SliderFloat("farZ", &gameScene_.camera->farZ, 100, 1000);
-		ImGui::SliderFloat("camEyeY", &gameScene_.camera->eye.y, -100, 100);
+		ImGui::SliderFloat("camEyeY", &gameScene_.camera->eye.y, -50, 50);
+		ImGui::SliderFloat("camTargetY", &gameScene_.camera->target.y, -50, 50);
+		ImGui::Text("ArrowKey:camera move");
+		ImGui::Text("colflag %d",gameScene_.colflag);
 
 		gui.End();
 

@@ -6,6 +6,7 @@
 #include "Particle.h"
 #include "ViewProjection.h"
 #include "Billboard.h"
+#include "Player.h"
 
 class GameScene
 {
@@ -22,12 +23,15 @@ public:
 	PipelineSet object3dPipelineSet;
 	PipelineSet geometryObjectPipelineSet;
 	Obj3d cubeObj;
-	Obj3d daruma;
+	
 	Camera* camera = Camera::camera;
 	//Billboard billboard = Billboard(camera, false);
 	//ParticleManager* particleManager = ParticleManager::Getinstance();
 	Obj3d skydome;
 
-	Obj3d stage;
+	Block stage;
+	Mob daruma;
+
+	bool colflag = false;
 };
 

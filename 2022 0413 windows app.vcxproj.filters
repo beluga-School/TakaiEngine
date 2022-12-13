@@ -76,6 +76,12 @@
     <Filter Include="ヘッダー ファイル\ImGui">
       <UniqueIdentifier>{00f41909-9548-42cd-be41-44f86e7521c2}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\Game\Charactor">
+      <UniqueIdentifier>{3dc3946a-e343-4223-9cad-c16ebeddf8c8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\Game\Charactor">
+      <UniqueIdentifier>{4c5ef092-c777-4322-a608-d892c67febec}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -156,9 +162,6 @@
     <ClCompile Include="ClearDrawScreen.cpp">
       <Filter>ソース ファイル\Common</Filter>
     </ClCompile>
-    <ClCompile Include="MathF.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
     <ClCompile Include="SceneManager.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
@@ -185,6 +188,15 @@
     </ClCompile>
     <ClCompile Include="ImguiManager.cpp">
       <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Collision.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Player.cpp">
+      <Filter>ソース ファイル\Game\Charactor</Filter>
+    </ClCompile>
+    <ClCompile Include="MathF.cpp">
+      <Filter>ソース ファイル\Math</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -254,9 +266,6 @@
     <ClInclude Include="WinAPI.h">
       <Filter>ヘッダー ファイル\Common</Filter>
     </ClInclude>
-    <ClInclude Include="Util.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
     <ClInclude Include="Pipeline.h">
       <Filter>ヘッダー ファイル\Common</Filter>
     </ClInclude>
@@ -265,9 +274,6 @@
     </ClInclude>
     <ClInclude Include="ClearDrawScreen.h">
       <Filter>ヘッダー ファイル\Common</Filter>
-    </ClInclude>
-    <ClInclude Include="MathF.h">
-      <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="SceneManager.h">
       <Filter>ヘッダー ファイル</Filter>
@@ -298,6 +304,18 @@
     </ClInclude>
     <ClInclude Include="ImguiManager.h">
       <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Collision.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Util.h">
+      <Filter>ヘッダー ファイル\Util</Filter>
+    </ClInclude>
+    <ClInclude Include="MathF.h">
+      <Filter>ヘッダー ファイル\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="Player.h">
+      <Filter>ヘッダー ファイル\Game\Charactor</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

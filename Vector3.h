@@ -38,7 +38,7 @@ public:
 	/// <param name="v"></param>
 	/// <returns></returns>
 	float dot(const Vector3& v)const;
-
+	
 	/// <summary>
 	/// 外積
 	/// 本体を書き換える　変数に代入したい場合はGetCrossを使用してください

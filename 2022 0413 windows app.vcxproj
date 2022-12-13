@@ -172,6 +172,8 @@
     <ClCompile Include="Model.cpp" />
     <ClCompile Include="Obj.cpp" />
     <ClCompile Include="Pipeline.cpp" />
+    <ClCompile Include="Collision.cpp" />
+    <ClCompile Include="Player.cpp" />
     <ClCompile Include="SceneManager.cpp" />
     <ClCompile Include="Shader.cpp" />
     <ClCompile Include="Sound.cpp" />
@@ -210,6 +212,8 @@
     <ClInclude Include="Model.h" />
     <ClInclude Include="Obj.h" />
     <ClInclude Include="Pipeline.h" />
+    <ClInclude Include="Collision.h" />
+    <ClInclude Include="Player.h" />
     <ClInclude Include="Result.h" />
     <ClInclude Include="SceneManager.h" />
     <ClInclude Include="Shader.h" />

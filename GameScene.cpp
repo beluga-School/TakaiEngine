@@ -1,5 +1,6 @@
 #include "GameScene.h"
 #include "TimeManager.h"
+#include "Collision.h"
 
 void GameScene::Initialize()
 {
@@ -33,6 +34,7 @@ void GameScene::Initialize()
 	daruma.Initialize();
 	daruma.SetModel(&ModelManager::GetInstance()->darumaM);
 	daruma.SetTexture(&TextureManager::GetInstance()->white);
+	daruma.scale = { 5,5,5 };
 
 	/*billboard.Initialize();
 	billboard.SetModel(&ModelManager::GetInstance()->boardM);
@@ -42,10 +44,10 @@ void GameScene::Initialize()
 	billboard.scale = { 3,3,3 };*/
 
 	camera->target = {
-		0,-10,0
+		0,0,0
 	};
 
-	camera->SetEye({ 0,20,-10 });
+	camera->SetEye({ 0,10,-30 });
 
 	stage.Initialize();
 	stage.position = { 0,-10,0 };
@@ -57,45 +59,53 @@ void GameScene::Update()
 	//カメラ座標を動かす
 	if (input->PushKey(DIK_RIGHT)) {
 		camera->eye.x += 20 * TimeManager::deltaTime;
+		camera->target.x += 20 * TimeManager::deltaTime;
 	}
 	if (input->PushKey(DIK_LEFT)) {
 		camera->eye.x -= 20 * TimeManager::deltaTime;
-	}
-	if (input->PushKey(DIK_UP)) {
-		camera->eye.y += 20 * TimeManager::deltaTime;
-	}
-	if (input->PushKey(DIK_DOWN)) {
-		camera->eye.y -= 20 * TimeManager::deltaTime;
-	}
-
-	if (input->PushKey(DIK_D)) {
-
-		camera->eye.x += 20 * TimeManager::deltaTime;
-		camera->target.x += 20 * TimeManager::deltaTime;
-	}
-	if (input->PushKey(DIK_A)) {
-
-		camera->eye.x -= 20 * TimeManager::deltaTime;
 		camera->target.x -= 20 * TimeManager::deltaTime;
 	}
-	if (input->PushKey(DIK_W)) {
-
+	if (input->PushKey(DIK_UP)) {
 		camera->eye.z += 20 * TimeManager::deltaTime;
 		camera->target.z += 20 * TimeManager::deltaTime;
 	}
-	if (input->PushKey(DIK_S)) {
-
+	if (input->PushKey(DIK_DOWN)) {
 		camera->eye.z -= 20 * TimeManager::deltaTime;
 		camera->target.z -= 20 * TimeManager::deltaTime;
+	}
+
+	if (input->PushKey(DIK_D)) {
+		daruma.position.x += 10.0f * TimeManager::deltaTime;
+		//camera->eye.x += 20 * TimeManager::deltaTime;
+		//camera->target.x += 20 * TimeManager::deltaTime;
+	}
+	if (input->PushKey(DIK_A)) {
+		daruma.position.x -= 10.0f * TimeManager::deltaTime;
+		//camera->eye.x -= 20 * TimeManager::deltaTime;
+		//camera->target.x -= 20 * TimeManager::deltaTime;
+	}
+	if (input->PushKey(DIK_W)) {
+		daruma.position.z += 10.0f * TimeManager::deltaTime;
+		//camera->eye.z += 20 * TimeManager::deltaTime;
+		//camera->target.z += 20 * TimeManager::deltaTime;
+	}
+	if (input->PushKey(DIK_S)) {
+		daruma.position.z -= 10.0f * TimeManager::deltaTime;
+		//camera->eye.z -= 20 * TimeManager::deltaTime;
+		//camera->target.z -= 20 * TimeManager::deltaTime;
 	}
 
 	camera->UpdatematView();
 
 	if (input->TriggerKey(DIK_R))
 	{
-		camera->Initialize();
-		camera->eye.y = 20.0f;
-		camera->UpdatematView();
+		daruma.position = { 0,10,0 };
+		daruma.jumpPower = 0;
+	}
+
+	if (input->TriggerKey(DIK_SPACE))
+	{
+		daruma.jumpPower = 1;
 	}
 
 	camera->UpdatematView();
@@ -106,11 +116,39 @@ void GameScene::Update()
 	skydome.Update(camera->matView, camera->matProjection);
 
 	stage.Update(camera->matView, camera->matProjection);
+	stage.cubeCol.position = stage.position;
+	stage.cubeCol.scale = stage.scale;
+
+
+	if (!CubeCollision(stage.cubeCol, daruma.cubeCol))
+	{
+		//重力を加速
+		daruma.jumpPower += daruma.gravity;
+		//Y軸方向への重力を付与
+		daruma.position.y += daruma.jumpPower;
+	}
+
+	//雑押し戻し、これだと箱にくっついてしまうのでよくない
+	if (CubeCollision(stage.cubeCol, daruma.cubeCol))
+	{
+		daruma.position.y = stage.position.y + stage.scale.y;
+		daruma.jumpPower = 0;
+	}
+
+	Plane plane;
+	plane.normal = { 1,0,0 };
+
+	colflag = false;
+	if (RayPlaneCollision(daruma.rayCol, plane))
+	{
+		colflag = true;
+	}
 
 	daruma.Update(camera->matView, camera->matProjection);
-	//billboard.Update(camera->matProjection);
-
-	
+	daruma.cubeCol.position = daruma.position;
+	daruma.cubeCol.scale = daruma.scale;
+	daruma.rayCol.start = daruma.position;
+	daruma.rayCol.direction = { -1,0,0 };
 }
 
 void GameScene::Draw()
@@ -135,7 +173,7 @@ void GameScene::Draw()
 
 	//スプライト単体描画
 	//SpriteDraw(pizzaSprite);
-	SpriteDraw(slimeSprite);
+	//SpriteDraw(slimeSprite);
 }
 
 void GameScene::End()
