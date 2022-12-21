@@ -1,21 +1,30 @@
 #pragma once
 #include "Obj.h"
-#include "Collision.h"
+#include "Mob.h"
+#include "Input.h"
 
-class Mob : public Obj3d
+class Player : public Mob
 {
 public:
-	Mob();
+	Player() {
+		gravity = -0.1f;
+		jumpPower = 0;
+		model = &ModelManager::GetInstance()->darumaM;
+	};
 
-	float gravity;
-	float jumpPower;
+	void Update();
+	void Draw();
 
-	Cube cubeCol;
-	Ray rayCol;
-};
+	Vector3 moveValue;
 
-class Block : public Obj3d
-{
-public:
-	Cube cubeCol;
+	//’n–Ê‚Éİ’u‚µ‚Ä‚¢‚é‚©
+	bool onGround = false;
+
+private:
+	//‰¡ˆÚ“®
+	void Move();
+	//cˆÚ“®
+	void Jump();
+
+	Input* input = Input::GetInstance();
 };

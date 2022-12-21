@@ -52,6 +52,11 @@ void GameScene::Initialize()
 	stage.Initialize();
 	stage.position = { 0,-10,0 };
 	stage.scale = { 10,10,10 };
+
+	board.Initialize();
+	board.SetModel(&ModelManager::GetInstance()->boardM);
+	board.scale = { 2,2,2 };
+	board.position = { 0,10,0 };
 }
 
 void GameScene::Update()
@@ -74,38 +79,12 @@ void GameScene::Update()
 		camera->target.z -= 20 * TimeManager::deltaTime;
 	}
 
-	if (input->PushKey(DIK_D)) {
-		daruma.position.x += 10.0f * TimeManager::deltaTime;
-		//camera->eye.x += 20 * TimeManager::deltaTime;
-		//camera->target.x += 20 * TimeManager::deltaTime;
-	}
-	if (input->PushKey(DIK_A)) {
-		daruma.position.x -= 10.0f * TimeManager::deltaTime;
-		//camera->eye.x -= 20 * TimeManager::deltaTime;
-		//camera->target.x -= 20 * TimeManager::deltaTime;
-	}
-	if (input->PushKey(DIK_W)) {
-		daruma.position.z += 10.0f * TimeManager::deltaTime;
-		//camera->eye.z += 20 * TimeManager::deltaTime;
-		//camera->target.z += 20 * TimeManager::deltaTime;
-	}
-	if (input->PushKey(DIK_S)) {
-		daruma.position.z -= 10.0f * TimeManager::deltaTime;
-		//camera->eye.z -= 20 * TimeManager::deltaTime;
-		//camera->target.z -= 20 * TimeManager::deltaTime;
-	}
-
 	camera->UpdatematView();
 
 	if (input->TriggerKey(DIK_R))
 	{
 		daruma.position = { 0,10,0 };
 		daruma.jumpPower = 0;
-	}
-
-	if (input->TriggerKey(DIK_SPACE))
-	{
-		daruma.jumpPower = 1;
 	}
 
 	camera->UpdatematView();
@@ -118,37 +97,16 @@ void GameScene::Update()
 	stage.Update(camera->matView, camera->matProjection);
 	stage.cubeCol.position = stage.position;
 	stage.cubeCol.scale = stage.scale;
+	stage.cubeCol.upPlane.normal = { 0,1,0.5f };
 
-
-	if (!CubeCollision(stage.cubeCol, daruma.cubeCol))
+	if (RayPlaneCollision(daruma.rayCol, stage.cubeCol.upPlane))
 	{
-		//d—Í‚ð‰Á‘¬
-		daruma.jumpPower += daruma.gravity;
-		//YŽ²•ûŒü‚Ö‚Ìd—Í‚ð•t—^
-		daruma.position.y += daruma.jumpPower;
+		daruma.onGround = true;
 	}
 
-	//ŽG‰Ÿ‚µ–ß‚µA‚±‚ê‚¾‚Æ” ‚É‚­‚Á‚Â‚¢‚Ä‚µ‚Ü‚¤‚Ì‚Å‚æ‚­‚È‚¢
-	if (CubeCollision(stage.cubeCol, daruma.cubeCol))
-	{
-		daruma.position.y = stage.position.y + stage.scale.y;
-		daruma.jumpPower = 0;
-	}
+	daruma.Update();
 
-	Plane plane;
-	plane.normal = { 1,0,0 };
-
-	colflag = false;
-	if (RayPlaneCollision(daruma.rayCol, plane))
-	{
-		colflag = true;
-	}
-
-	daruma.Update(camera->matView, camera->matProjection);
-	daruma.cubeCol.position = daruma.position;
-	daruma.cubeCol.scale = daruma.scale;
-	daruma.rayCol.start = daruma.position;
-	daruma.rayCol.direction = { -1,0,0 };
+	board.Update(camera->matView, camera->matProjection);
 }
 
 void GameScene::Draw()
@@ -163,6 +121,8 @@ void GameScene::Draw()
 	daruma.DrawMaterial();
 
 	skydome.DrawMaterial();
+
+	board.Draw();
 
 	GeometryObjectPreDraw(geometryObjectPipelineSet);
 	//particleManager->Draw(&TextureManager::GetInstance()->particle);

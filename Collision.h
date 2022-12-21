@@ -32,7 +32,9 @@ struct Cube
 	};
 };
 
+
 bool RayPlaneCollision(Ray ray,Plane plane);
+
 bool CubeCollision(Cube cube1, Cube cube2);
 bool PlaneCubeCollision(Plane plane, Cube cube);
 

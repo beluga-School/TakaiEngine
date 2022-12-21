@@ -7,6 +7,7 @@
 #include "ViewProjection.h"
 #include "Billboard.h"
 #include "Player.h"
+#include "Block.h"
 
 class GameScene
 {
@@ -28,9 +29,10 @@ public:
 	//Billboard billboard = Billboard(camera, false);
 	//ParticleManager* particleManager = ParticleManager::Getinstance();
 	Obj3d skydome;
+	Obj3d board;
 
 	Block stage;
-	Mob daruma;
+	Player daruma;
 
 	bool colflag = false;
 };

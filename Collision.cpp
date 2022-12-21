@@ -15,6 +15,7 @@ bool RayPlaneCollision(Ray ray, Plane plane)
 	const float epsilon = 1.0e-5f;
 
 	float d1 = plane.normal.dot(ray.direction);
+	//float d1 = ray.direction.dot(plane.normal);
 	//ƒŒƒC‚ª•½–Ê‚ÆŒð‚í‚ç‚È‚¢•ûŒü‚É‚Ì‚Ñ‚Ä‚¢‚é‚È‚ç“–‚½‚ç‚È‚¢‚Ì‚Åfalse
 	if (d1 > 0)
 	{
@@ -22,6 +23,7 @@ bool RayPlaneCollision(Ray ray, Plane plane)
 	}
 
 	float d2 = plane.normal.dot(ray.start);
+	//float d2 = ray.start.dot(plane.normal);
 
 	float distance = d2 - plane.distance;
 
@@ -33,6 +35,34 @@ bool RayPlaneCollision(Ray ray, Plane plane)
 	}
 
 	return true;
+}
+
+Vector3 RayPlaneInter(Ray ray, Plane plane)
+{
+	Vector3 inter = {0,0,0};
+
+	float d1 = plane.normal.dot(ray.direction);
+	//float d1 = ray.direction.dot(plane.normal);
+	//ƒŒƒC‚ª•½–Ê‚ÆŒð‚í‚ç‚È‚¢•ûŒü‚É‚Ì‚Ñ‚Ä‚¢‚é‚È‚ç“–‚½‚ç‚È‚¢‚Ì‚Åfalse
+	if (d1 > 0)
+	{
+		return {0,0,0};
+	}
+
+	float d2 = plane.normal.dot(ray.start);
+	//float d2 = ray.start.dot(plane.normal);
+
+	float distance = d2 - plane.distance;
+
+	float t = distance / -d1;
+
+	if (t < 0)
+	{
+		return { 0,0,0 };
+	}
+
+	inter = ray.start + (t * ray.direction);
+	return inter;
 }
 
 bool CubeCollision(Cube cube1, Cube cube2)

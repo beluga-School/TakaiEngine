@@ -124,7 +124,8 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	pEmitter.Initialize();
 	pEmitter.SetInfo({ -10,-10,20 }, 10, 5,{0,0.5f,1,1}, 1, true);
 
-	GUI gui("hoge");
+	GUI gui("GUI");
+	GUI gui2("How to operate");
 
 	float hoge = 0;
 
@@ -153,10 +154,19 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		ImGui::SliderFloat("fov", &gameScene_.camera->fovAngle, 30, 100);
 		ImGui::SliderFloat("camEyeY", &gameScene_.camera->eye.y, -50, 50);
 		ImGui::SliderFloat("camTargetY", &gameScene_.camera->target.y, -50, 50);
-		ImGui::Text("ArrowKey:camera move");
-		ImGui::Text("colflag %d",gameScene_.colflag);
+		ImGui::SliderFloat("darumaPosY", &gameScene_.daruma.position.y, -50, 50);
+		ImGui::SliderFloat("darumarota", &gameScene_.daruma.rotation.z, -50, 50);
+		ImGui::SliderFloat("darumarota", &gameScene_.daruma.rotation.y, -50, 50);
+		ImGui::Text("colflag %d",gameScene_.daruma.onGround);
 
 		gui.End();
+
+		gui2.Begin({Util::window_width - 200,10},{200,200});
+		ImGui::Text("W,A,S,D:darumaObject move");
+		ImGui::Text("ArrowKey:camera move");
+		ImGui::Text("RKey:daruma pos reset");
+		
+		gui2.End();
 
 		//XVˆ—
 		input_->Update();
