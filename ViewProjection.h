@@ -20,8 +20,8 @@ public:
 
 	float aspect = Util::window_width / Util::window_height;
 	float nearClip = 0.1f;
-	float farZ = 1000.0f;
-	float fovAngle = 60;
+	float farZ = 10000.0f;
+	float fovAngle = 90;
 
 	//Ë‰e•ÏŠ·s—ñ(“Š‘“Š‰e)
 	Matrix4 matProjection;

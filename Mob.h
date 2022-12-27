@@ -7,10 +7,42 @@ class Mob : public Obj3d
 public:
 	Mob();
 
-	virtual void Update() = 0;
+	void Initialize();
+	void Update();
+
+	void PreJump();
+	void PostJump();
+	
+	/// <summary>
+	/// 移動方向ベクトルの抽出と、移動値の初期化
+	/// </summary>
+	void PreMove();
+
+	/// <summary>
+	/// ワールド行列の更新と地面判定の初期化
+	/// </summary>
+	void PostMove();
+
+	//受ける重力
 	float gravity;
+
+	//ジャンプ力
 	float jumpPower;
 
+	//地面に設置しているか
+	bool onGround = false;
+
+	//1フレームで移動する値
+	Vector3 moveValue;
+
+	//正面ベクトル
+	Vector3 centerVec;
+
+	//左方向ベクトル
+	Vector3 leftVec;
+
+	//四角の当たり判定
 	Cube cubeCol;
+
 	Ray rayCol;
 };

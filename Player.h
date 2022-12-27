@@ -7,24 +7,20 @@ class Player : public Mob
 {
 public:
 	Player() {
-		gravity = -0.1f;
-		jumpPower = 0;
-		model = &ModelManager::GetInstance()->darumaM;
+		Initialize();
 	};
 
+	void Initialize();
 	void Update();
-	void Draw();
-
-	Vector3 moveValue;
-
-	//地面に設置しているか
-	bool onGround = false;
 
 private:
+	///---クラス内で使用する関数群
+
 	//横移動
 	void Move();
 	//縦移動
 	void Jump();
 
+	///---シングルトン
 	Input* input = Input::GetInstance();
 };

@@ -6,4 +6,11 @@ class Block : public Obj3d
 {
 public:
 	Cube cubeCol;
+
+	Block() {
+		Initialize();
+	};
+	
+	void Initialize();
+	void Update();
 };

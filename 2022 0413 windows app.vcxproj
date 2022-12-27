@@ -156,6 +156,7 @@
     <ClCompile Include="DebugText.cpp" />
     <ClCompile Include="DirectXInit.cpp" />
     <ClCompile Include="GameScene.cpp" />
+    <ClCompile Include="GroundEnemy.cpp" />
     <ClCompile Include="ImguiManager.cpp" />
     <ClCompile Include="imgui\imgui.cpp" />
     <ClCompile Include="imgui\imgui_demo.cpp" />
@@ -180,6 +181,7 @@
     <ClCompile Include="Shader.cpp" />
     <ClCompile Include="Sound.cpp" />
     <ClCompile Include="Sprite.cpp" />
+    <ClCompile Include="Stage.cpp" />
     <ClCompile Include="StringUtil.cpp" />
     <ClCompile Include="Texture.cpp" />
     <ClCompile Include="TimeManager.cpp" />
@@ -198,6 +200,7 @@
     <ClInclude Include="DebugText.h" />
     <ClInclude Include="DirectXInit.h" />
     <ClInclude Include="GameScene.h" />
+    <ClInclude Include="GroundEnemy.h" />
     <ClInclude Include="ImguiManager.h" />
     <ClInclude Include="imgui\imconfig.h" />
     <ClInclude Include="imgui\imgui.h" />
@@ -223,6 +226,7 @@
     <ClInclude Include="Shader.h" />
     <ClInclude Include="Sound.h" />
     <ClInclude Include="Sprite.h" />
+    <ClInclude Include="Stage.h" />
     <ClInclude Include="StringUtil.h" />
     <ClInclude Include="Texture.h" />
     <ClInclude Include="TimeManager.h" />

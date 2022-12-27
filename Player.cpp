@@ -1,79 +1,59 @@
 #include "Player.h"
-#include "ViewProjection.h"
 #include "TimeManager.h"
 #include "ImguiManager.h"
 
 GUI gui("hoge");
 
+void Player::Initialize()
+{
+	gravity = -0.1f;
+	jumpPower = 0;
+	model = &ModelManager::GetInstance()->cubeM;
+	texture = &TextureManager::GetInstance()->def;
+	scale = { 5,5,5 };
+}
+
 void Player::Update()
 {
+	PreMove();
+
 	Move();
 
 	Jump();
 
-	//地面に埋まっていたら地面の上まで座標を移動
-	if (onGround)
-	{
-		moveValue.y += 0.1f;
-	}
-
-	position += moveValue;
-
-	Obj3d::Update(Camera::camera->matView, Camera::camera->matProjection);
-	cubeCol.position = position;
-	cubeCol.scale = scale;
-	rayCol.start = position;
-	rayCol.direction = { -1,0,0 };
-
-	gui.Begin({ 10,10 }, { 100,100 });
-	ImGui::Text("onground %d", onGround);
-
-	gui.End();
-
-	//地面についているかの判定をリセット
-	onGround = false;
-}
-
-void Player::Draw()
-{
-	Obj3d::Draw();
+	PostMove();
 }
 
 void Player::Move()
 {
-	moveValue = { 0,0,0 };
+	float moveVairitu = 10;
 
 	if (input->PushKey(DIK_D)) {
-		moveValue.x += 10.0f * TimeManager::deltaTime;
+		moveValue.x -= leftVec.x * moveVairitu * TimeManager::deltaTime;
+		moveValue.z -= leftVec.z * moveVairitu * TimeManager::deltaTime;
 	}
 	if (input->PushKey(DIK_A)) {
-		moveValue.x -= 10.0f * TimeManager::deltaTime;
+		moveValue.x += leftVec.x * moveVairitu * TimeManager::deltaTime;
+		moveValue.z += leftVec.z * moveVairitu * TimeManager::deltaTime;
 	}
 	if (input->PushKey(DIK_W)) {
-		moveValue.z += 10.0f * TimeManager::deltaTime;
+		moveValue.x -= centerVec.x * moveVairitu * TimeManager::deltaTime;
+		moveValue.z -= centerVec.z * moveVairitu * TimeManager::deltaTime;
 	}
 	if (input->PushKey(DIK_S)) {
-		moveValue.z -= 10.0f * TimeManager::deltaTime;
+		moveValue.x += centerVec.x * moveVairitu * TimeManager::deltaTime;
+		moveValue.z += centerVec.z * moveVairitu * TimeManager::deltaTime;
 	}
 }
 
 void Player::Jump()
 {
-	if (input->PushKey(DIK_SPACE))
+	PreJump();
+
+	if (input->PushKey(DIK_SPACE) && onGround)
 	{
 		jumpPower = 1;
 	}
-	if (onGround == false)
-	{
-		jumpPower += gravity;
-	}
 
-	if (onGround)
-	{
-		jumpPower = 0;
-		
-	}
-
-	moveValue.y += jumpPower;
-
+	PostJump();
 }

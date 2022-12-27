@@ -22,26 +22,15 @@ void GameScene::Initialize()
 	//particleManager->Initialize();
 
 	skydome.Initialize();
-
-	//どのモデルの形を使うかを設定
 	skydome.SetModel(&ModelManager::GetInstance()->skyDomeM);
-
 	skydome.SetTexture(&TextureManager::GetInstance()->slime);
+	skydome.scale = { 10,10,10 };
 
 	//ビュー変換行列(透視投影)を計算
 	camera->Initialize();
 
 	daruma.Initialize();
-	daruma.SetModel(&ModelManager::GetInstance()->darumaM);
-	daruma.SetTexture(&TextureManager::GetInstance()->white);
-	daruma.scale = { 5,5,5 };
-
-	/*billboard.Initialize();
-	billboard.SetModel(&ModelManager::GetInstance()->boardM);
-	billboard.SetTexture(&TextureManager::GetInstance()->pizza);
-
-	billboard.position = { 10,10,10 };
-	billboard.scale = { 3,3,3 };*/
+	gEnemy.Initialize();
 
 	camera->target = {
 		0,0,0
@@ -49,64 +38,41 @@ void GameScene::Initialize()
 
 	camera->SetEye({ 0,10,-30 });
 
-	stage.Initialize();
-	stage.position = { 0,-10,0 };
-	stage.scale = { 10,10,10 };
-
-	board.Initialize();
-	board.SetModel(&ModelManager::GetInstance()->boardM);
-	board.scale = { 2,2,2 };
-	board.position = { 0,10,0 };
+	stage.SetStage1();
 }
 
 void GameScene::Update()
 {
-	//カメラ座標を動かす
-	if (input->PushKey(DIK_RIGHT)) {
-		camera->eye.x += 20 * TimeManager::deltaTime;
-		camera->target.x += 20 * TimeManager::deltaTime;
-	}
-	if (input->PushKey(DIK_LEFT)) {
-		camera->eye.x -= 20 * TimeManager::deltaTime;
-		camera->target.x -= 20 * TimeManager::deltaTime;
-	}
-	if (input->PushKey(DIK_UP)) {
-		camera->eye.z += 20 * TimeManager::deltaTime;
-		camera->target.z += 20 * TimeManager::deltaTime;
-	}
-	if (input->PushKey(DIK_DOWN)) {
-		camera->eye.z -= 20 * TimeManager::deltaTime;
-		camera->target.z -= 20 * TimeManager::deltaTime;
-	}
+	CameraUpdate();
 
-	camera->UpdatematView();
+	if (input->PushKey(DIK_RIGHT))
+	{
+		daruma.rotation.y += 1 * TimeManager::deltaTime;
+	}
+	if (input->PushKey(DIK_LEFT))
+	{
+		daruma.rotation.y -= 1 * TimeManager::deltaTime;
+	}
 
 	if (input->TriggerKey(DIK_R))
 	{
 		daruma.position = { 0,10,0 };
+		daruma.rotation = { 0,0,0 };
 		daruma.jumpPower = 0;
 	}
-
-	camera->UpdatematView();
 
 	//オブジェクトの更新
 	//particleManager->Update(camera->matView, camera->matProjection);
 
 	skydome.Update(camera->matView, camera->matProjection);
 
-	stage.Update(camera->matView, camera->matProjection);
-	stage.cubeCol.position = stage.position;
-	stage.cubeCol.scale = stage.scale;
-	stage.cubeCol.upPlane.normal = { 0,1,0.5f };
+	stage.Update();
 
-	if (RayPlaneCollision(daruma.rayCol, stage.cubeCol.upPlane))
-	{
-		daruma.onGround = true;
-	}
+	stage.CheckMobCol(daruma);
+	stage.CheckMobCol(gEnemy);
 
 	daruma.Update();
-
-	board.Update(camera->matView, camera->matProjection);
+	gEnemy.Update();
 }
 
 void GameScene::Draw()
@@ -117,12 +83,10 @@ void GameScene::Draw()
 
 	stage.Draw();
 
-	//billboard.Draw();
-	daruma.DrawMaterial();
+	daruma.Draw();
+	gEnemy.Draw();
 
 	skydome.DrawMaterial();
-
-	board.Draw();
 
 	GeometryObjectPreDraw(geometryObjectPipelineSet);
 	//particleManager->Draw(&TextureManager::GetInstance()->particle);
@@ -138,4 +102,47 @@ void GameScene::Draw()
 
 void GameScene::End()
 {
+}
+
+int upCam = 0;
+void GameScene::CameraUpdate()
+{
+	if (input->TriggerKey(DIK_1))
+	{
+		upCam = 1;
+	}
+	if (input->TriggerKey(DIK_2))
+	{
+		upCam = 2;
+	}
+	if (input->TriggerKey(DIK_0))
+	{
+		upCam = 0;
+	}
+
+	Vector3 cVec = {0,0,0};
+	switch (upCam)
+	{
+	case 0:
+		//カメラ座標をプレイヤーに追従
+		cVec = daruma.centerVec * 20;
+		camera->eye = daruma.position + cVec;
+		camera->eye.y += 10;
+		camera->target = daruma.position;
+		camera->target.y += 5;
+		break;
+	case 1:
+		camera->eye = daruma.position;
+		camera->eye.z += 1;
+		camera->eye.y += 35;
+		camera->target = daruma.position;
+		break;
+	case 2:
+		camera->eye = daruma.position;
+		camera->eye.z += 35;
+		camera->target = daruma.position;
+		break;
+	}
+
+	camera->UpdatematView();
 }

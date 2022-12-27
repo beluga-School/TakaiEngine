@@ -7,7 +7,8 @@
 #include "ViewProjection.h"
 #include "Billboard.h"
 #include "Player.h"
-#include "Block.h"
+#include "Stage.h"
+#include "GroundEnemy.h"
 
 class GameScene
 {
@@ -16,6 +17,9 @@ public:
 	void Update();
 	void Draw();
 	void End();
+
+	//カメラの更新(プレイヤーに追従)
+	void CameraUpdate();
 public:
 
 	Input* input = Input::GetInstance();
@@ -23,16 +27,15 @@ public:
 	Sprite slimeSprite;
 	PipelineSet object3dPipelineSet;
 	PipelineSet geometryObjectPipelineSet;
-	Obj3d cubeObj;
 	
 	Camera* camera = Camera::camera;
 	//Billboard billboard = Billboard(camera, false);
 	//ParticleManager* particleManager = ParticleManager::Getinstance();
 	Obj3d skydome;
-	Obj3d board;
 
-	Block stage;
+	Stage stage;
 	Player daruma;
+	GroundEnemy gEnemy;
 
 	bool colflag = false;
 };

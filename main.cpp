@@ -93,6 +93,13 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	tManager->Initialize();
 	tManager->PreLoad();
 
+	//デバッグテキスト生成
+	std::unique_ptr<Texture> debugFont = std::make_unique<Texture>();
+	debugFont->Load(L"Resources/debugfont.png");
+
+	DebugText debugText;
+	debugText.Initialize(debugFont.get());
+
 	//imguiの初期化
 	ImguiManager *imguiManager = ImguiManager::GetInstance();
 	imguiManager->Initialize();
@@ -102,15 +109,9 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	//モデルの読み込み
 	ModelManager::GetInstance()->PreLoad();
 
-	//デバッグテキスト生成
-	std::unique_ptr<Texture> debugFont = std::make_unique<Texture>();
-	debugFont->Load(L"Resources/debugfont.png");
-
-	DebugText debugText;
-	debugText.Initialize(debugFont.get());
-
 	GameScene gameScene_;
 	gameScene_.Initialize();
+
 
 #pragma endregion 描画初期化処理
 

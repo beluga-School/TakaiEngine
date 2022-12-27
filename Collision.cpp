@@ -1,4 +1,5 @@
 #include "Collision.h"
+#include "Vector2.h"
 
 template <typename T>
 T Abs(T a)
@@ -35,6 +36,22 @@ bool RayPlaneCollision(Ray ray, Plane plane)
 	}
 
 	return true;
+}
+
+bool RectangleXZCollision(Cube cube1, Cube cube2)
+{
+	float DistanceX = cube1.position.x - cube2.position.x;
+	float DistanceZ = cube1.position.z - cube2.position.z;
+
+	DistanceX = Abs(DistanceX);
+	DistanceZ = Abs(DistanceZ);
+
+	if (DistanceX <= cube1.scale.x * 0.5f + cube2.scale.x * 0.5f &&
+		DistanceZ <= cube1.scale.z * 0.5f + cube2.scale.z * 0.5f)
+	{
+		return true;
+	}
+	return false;
 }
 
 Vector3 RayPlaneInter(Ray ray, Plane plane)
