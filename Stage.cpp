@@ -8,8 +8,8 @@ void Stage::SetStage1()
 	SetBlock({ 0,-30,0 }, { 30,50,30 });
 	SetBlock({ 30,-20,0 }, { 30,50,30 });
 	SetBlock({ -30,-20,0 }, { 30,50,30 });
-	SetBlock({ 0,-20,30 }, { 30,50,30 });
 	SetBlock({ 0,-20,-30 }, { 30,50,30 });
+	SetBlock({ 0,-20,30 }, { 30,50,30 });
 }
 
 void Stage::SetBlock(Vector3 pos, Vector3 scale)
@@ -52,66 +52,45 @@ void Stage::CheckMobCol(Mob& mob)
 	for (Block& block : blockList)
 	{
 		//そのブロックの上面より上にいるか(そのブロックの上に立っているか)
-		bool onG = tempCol.position.y > block.position.y + block.scale.y * 0.5f;
+		bool up = tempCol.position.y > block.position.y + block.scale.y * 0.5f;
+		//そのブロックの正面より手前にいるか
+		bool center = tempCol.position.z > block.position.z + block.scale.z * 0.5f;
 
-		ImGui::Text("onG %d", onG);
+		bool back = tempCol.position.z < block.position.z - block.scale.z * 0.5f;
+		
+		bool left = tempCol.position.x > block.position.x + block.scale.x * 0.5f;
+		
+		bool right = tempCol.position.x < block.position.x - block.scale.x * 0.5f;
 
 		//上面の当たり判定
-		if (CubeCollision(tempCol, block.cubeCol))
+		if (up)
 		{
-			if (onG)
+			while (CubeCollision(tempCol, block.cubeCol))
 			{
-				while (CubeCollision(tempCol, block.cubeCol))
-				{
-					tempCol.position.y += 0.1f;
-					mob.jumpPower = 0;
-					mob.moveValue.y += 0.1f;
-					mob.onGround = true;
-				}
+				tempCol.position.y += 0.1f;
+				mob.moveValue.y += 0.1f;
+				mob.jumpPower = 0;
+				mob.onGround = true;
 			}
-			//右面の当たり判定
-			if (mob.moveValue.x > 0 && onG == false)
+		}
+
+		if (up == false && CubeCollision(tempCol, block.cubeCol))
+		{
+			if (right)
 			{
-				while (mob.moveValue.x >= 0)
-				{
-					tempCol.position.x -= 0.1f;
-					mob.moveValue.x -= 0.1f;
-				}
 				mob.moveValue.x = 0;
-				ImGui::Text("migi");
 			}
-			//左面の当たり判定
-			if (mob.moveValue.x < 0 && onG == false)
+			if (left)
 			{
-				while (mob.moveValue.x <= 0)
-				{
-					tempCol.position.x += 0.1f;
-					mob.moveValue.x += 0.1f;
-				}
 				mob.moveValue.x = 0;
-				ImGui::Text("hidari");
 			}
-			//正面の当たり判定
-			if (mob.moveValue.z > 0 && onG == false)
+			if (back)
 			{
-				while (mob.moveValue.z >= 0)
-				{
-					tempCol.position.z -= 0.1f;
-					mob.moveValue.z -= 0.1f;
-				}
 				mob.moveValue.z = 0;
-				ImGui::Text("mae");
 			}
-			//後面の当たり判定
-			if (mob.moveValue.z < 0 && onG == false)
+			if (center)
 			{
-				while (mob.moveValue.z <= 0)
-				{
-					tempCol.position.z += 0.1f;
-					mob.moveValue.z += 0.1f;
-				}
 				mob.moveValue.z = 0;
-				ImGui::Text("usiro");
 			}
 		}
 	}

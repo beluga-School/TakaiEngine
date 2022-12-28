@@ -71,10 +71,6 @@ void GameScene::Update()
 
 	stage.Update();
 
-	gui.Begin({ 10,10 }, { 300,100 });
-
-	ImGui::Text("mob.onGround1 %d", daruma.onGround);
-
 	daruma.Update();
 	//“–‚½‚è”»’è‚ÆˆÚ“®’l‚ðŒ³‚É‰¼ˆÚ“®
 	stage.CheckMobCol(daruma);
@@ -83,6 +79,8 @@ void GameScene::Update()
 	{
 		daruma.jumpPower = 2;
 	}
+
+	gui.Begin({ 10,10 }, { 300,100 });
 
 	ImGui::Text("mob.moveValue %f %f %f", daruma.moveValue.x, daruma.moveValue.y, daruma.moveValue.z);
 	ImGui::Text("jumpPower %f", daruma.jumpPower);
