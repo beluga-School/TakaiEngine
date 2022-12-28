@@ -1,6 +1,7 @@
 #include "GameScene.h"
 #include "TimeManager.h"
 #include "Collision.h"
+#include "ImguiManager.h"
 
 void GameScene::Initialize()
 {
@@ -41,6 +42,8 @@ void GameScene::Initialize()
 	stage.SetStage1();
 }
 
+GUI gui("hoge");
+
 void GameScene::Update()
 {
 	CameraUpdate();
@@ -68,11 +71,30 @@ void GameScene::Update()
 
 	stage.Update();
 
-	stage.CheckMobCol(daruma);
-	stage.CheckMobCol(gEnemy);
+	gui.Begin({ 10,10 }, { 300,100 });
+
+	ImGui::Text("mob.onGround1 %d", daruma.onGround);
 
 	daruma.Update();
-	gEnemy.Update();
+	//“–‚½‚è”»’è‚ÆˆÚ“®’l‚ðŒ³‚É‰¼ˆÚ“®
+	stage.CheckMobCol(daruma);
+
+	if (input->PushKey(DIK_SPACE) && daruma.onGround)
+	{
+		daruma.jumpPower = 2;
+	}
+
+	ImGui::Text("mob.moveValue %f %f %f", daruma.moveValue.x, daruma.moveValue.y, daruma.moveValue.z);
+	ImGui::Text("jumpPower %f", daruma.jumpPower);
+	ImGui::Text("mob.onGround2 %d", daruma.onGround);
+
+	gui.End();
+
+	daruma.PostMove();
+
+	//stage.CheckMobCol(gEnemy);
+
+	//gEnemy.Update();
 }
 
 void GameScene::Draw()

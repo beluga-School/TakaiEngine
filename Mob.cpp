@@ -10,6 +10,7 @@ void Mob::Initialize()
 {
 	gravity = -0.1f;
 	jumpPower = 0;
+	moveMag = 1;
 }
 
 void Mob::Update()
@@ -21,15 +22,7 @@ void Mob::Update()
 	rayCol.direction = { 0,-1,0 };
 }
 
-void Mob::PreJump()
-{
-	if (onGround)
-	{
-		jumpPower = 0;
-	}
-}
-
-void Mob::PostJump()
+void Mob::AddGravity()
 {
 	//重力の加算
 	if (onGround == false)
@@ -42,12 +35,16 @@ void Mob::PostJump()
 
 void Mob::PreMove()
 {
+	//移動量を初期化
+	moveValue = { 0,0,0 };
+
+	//地面についているかの判定をリセット
+	onGround = false;
+
 	centerVec = matWorld.ExtractAxisZ();
 	leftVec = matWorld.ExtractAxisX();
 	centerVec.normalize();
 	leftVec.normalize();
-
-	moveValue = { 0,0,0 };
 }
 
 void Mob::PostMove()
@@ -57,7 +54,4 @@ void Mob::PostMove()
 
 	//ワールド行列の更新
 	Mob::Update();
-
-	//地面についているかの判定をリセット
-	onGround = false;
 }

@@ -7,6 +7,7 @@ void GroundEnemy::Initialize()
 	texture = &TextureManager::GetInstance()->slime;
 	position = { 10,30,0 };
 	scale = { 3,3,3 };
+	moveMag = 5;
 }
 
 void GroundEnemy::Update()
@@ -18,8 +19,8 @@ void GroundEnemy::Update()
 	//地面にいるときにまっすぐ前に進む
 	if (onGround)
 	{
-		moveValue.x += centerVec.x;
-		moveValue.z += centerVec.z;
+		moveValue.x += centerVec.x * moveMag;
+		moveValue.z += centerVec.z * moveMag;
 	}
 
 	PostMove();
@@ -27,13 +28,11 @@ void GroundEnemy::Update()
 
 void GroundEnemy::Jump()
 {
-	PreJump();
-
 	//地面についたらジャンプする
 	if (onGround)
 	{
 		jumpPower = 2;
 	}
 
-	PostJump();
+	AddGravity();
 }

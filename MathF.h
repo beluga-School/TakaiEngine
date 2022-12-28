@@ -1,5 +1,7 @@
 #pragma once
-#include"Vector2.h"
+#include "Vector2.h"
+#include "Vector3.h"
+
 namespace MathF
 {
 	const float PI = 3.141592654f;
@@ -51,4 +53,6 @@ namespace MathF
 	/// <param name="num">nowFlame/endFlame</param>
 	/// <returns></returns>
 	float EaseOutQuad(float num);
+
+	float GetAngleBetweenTwoLine(Vector3 vec1,Vector3 vec2);
 };

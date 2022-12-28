@@ -59,4 +59,9 @@ namespace MathF
 	{
 		return 1 - (1 - num) * (1 - num);
 	}
+
+	float GetAngleBetweenTwoLine(Vector3 vec1, Vector3 vec2)
+	{
+		return acosf(vec1.dot(vec2) / (vec1.length() * vec2.length()));
+	}
 }

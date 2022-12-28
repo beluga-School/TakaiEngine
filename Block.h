@@ -5,7 +5,12 @@
 class Block : public Obj3d
 {
 public:
+
 	Cube cubeCol;
+
+	Vector3 upVec;
+	Vector3 centerVec;
+	Vector3 leftVec;
 
 	Block() {
 		Initialize();
@@ -13,4 +18,6 @@ public:
 	
 	void Initialize();
 	void Update();
+
+	void ExtractVec();
 };

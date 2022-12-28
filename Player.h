@@ -18,8 +18,6 @@ private:
 
 	//‰¡ˆÚ“®
 	void Move();
-	//cˆÚ“®
-	void Jump();
 
 	///---ƒVƒ“ƒOƒ‹ƒgƒ“
 	Input* input = Input::GetInstance();

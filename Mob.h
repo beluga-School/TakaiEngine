@@ -10,16 +10,15 @@ public:
 	void Initialize();
 	void Update();
 
-	void PreJump();
-	void PostJump();
+	void AddGravity();
 	
 	/// <summary>
-	/// 移動方向ベクトルの抽出と、移動値の初期化
+	/// 移動方向ベクトルの抽出
 	/// </summary>
 	void PreMove();
 
 	/// <summary>
-	/// ワールド行列の更新と地面判定の初期化
+	/// ワールド行列の更新と地面判定の初期化と移動値の初期化
 	/// </summary>
 	void PostMove();
 
@@ -28,6 +27,9 @@ public:
 
 	//ジャンプ力
 	float jumpPower;
+	
+	//移動量(秒単位で動く量)
+	float moveMag;
 
 	//地面に設置しているか
 	bool onGround = false;
