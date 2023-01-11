@@ -38,6 +38,8 @@ public:
 	//正面ベクトルを抽出する
 	Vector3 ExtractAxisZ();
 
+	static Matrix4 RotArbitrary(Vector3 axis,float rad);
+
 	float* operator[](int i);
 
 	float& operator()(int i, int j);

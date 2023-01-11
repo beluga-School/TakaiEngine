@@ -60,7 +60,7 @@ public:
 	void Update();
 };
 
-class ParticleManager
+class GParticleManager
 {
 public:
 	ConstBuffer<ParticleConstBufferData> constBufferParticle;
@@ -82,14 +82,14 @@ public:
 
 	void Draw(Texture* texture);
 
-	static ParticleManager *Getinstance();
+	static GParticleManager*Getinstance();
 
 private:
-	ParticleManager() {};
-	~ParticleManager() {};
+	GParticleManager() {};
+	~GParticleManager() {};
 
-	ParticleManager(const ParticleManager& a) = delete;
-	ParticleManager& operator=(const ParticleManager&) = delete;
+	GParticleManager(const GParticleManager& a) = delete;
+	GParticleManager& operator=(const GParticleManager&) = delete;
 };
 
 class ParticleEmitter

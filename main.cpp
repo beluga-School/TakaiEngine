@@ -22,7 +22,6 @@ using namespace DirectX;
 #include "Vertex.h"
 
 #include "ViewProjection.h"
-#include "Vector3.h"
 #include "Texture.h"
 
 #include "Sprite.h"
@@ -37,8 +36,6 @@ using namespace DirectX;
 
 #include "Particle.h"
 #include "MathF.h"
-
-#include "SceneManager.h"
 
 #include "ImguiManager.h"
 #include <string>
@@ -65,8 +62,8 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 #ifdef  _DEBUG
 	ID3D12InfoQueue* infoQueue;
 	if (SUCCEEDED(DX12->device->QueryInterface(IID_PPV_ARGS(&infoQueue)))) {
-		infoQueue->GetBreakOnSeverity(D3D12_MESSAGE_SEVERITY_CORRUPTION);//ヤバイエラー時にとまと
-		infoQueue->GetBreakOnSeverity(D3D12_MESSAGE_SEVERITY_ERROR);	 //エラー時に止まる
+		infoQueue->SetBreakOnSeverity(D3D12_MESSAGE_SEVERITY_CORRUPTION, true);//ヤバイエラー時にとまと
+		infoQueue->SetBreakOnSeverity(D3D12_MESSAGE_SEVERITY_ERROR,true);	 //エラー時に止まる
 		infoQueue->Release();
 	}
 #endif  _DEBUG
@@ -109,7 +106,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	//モデルの読み込み
 	ModelManager::GetInstance()->PreLoad();
 
-	GameScene gameScene_;
+	Game gameScene_;
 	gameScene_.Initialize();
 
 
@@ -121,12 +118,9 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	SoundData curser = soundManager.SoundLoadWave("Resources\\sound\\curser.wav");
 
 	//ゲームループ内で使う変数の宣言
-	ParticleEmitter pEmitter;
-	pEmitter.Initialize();
-	pEmitter.SetInfo({ -10,-10,20 }, 10, 5,{0,0.5f,1,1}, 1, true);
-
-	GUI gui("GUI");
-	GUI gui2("How to operate");
+	//ParticleEmitter pEmitter;
+	//pEmitter.Initialize();
+	//pEmitter.SetInfo({ -10,-10,20 }, 10, 5,{0,0.5f,1,1}, 1, true);
 
 	float hoge = 0;
 
@@ -151,34 +145,16 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 
 		imguiManager->PreUpdate();
 
-		gui.Begin({10,10},{500,200});
-		ImGui::SliderFloat("fov", &gameScene_.camera->fovAngle, 30, 100);
-		ImGui::SliderFloat("camEyeY", &gameScene_.camera->eye.y, -50, 50);
-		ImGui::SliderFloat("camTargetY", &gameScene_.camera->target.y, -50, 50);
-		ImGui::SliderFloat("darumaPosY", &gameScene_.daruma.position.y, -50, 50);
-		ImGui::SliderFloat("darumarota", &gameScene_.daruma.rotation.z, -50, 50);
-		ImGui::SliderFloat("darumarota", &gameScene_.daruma.rotation.y, -50, 50);
-		ImGui::Text("colflag %d",gameScene_.daruma.onGround);
-
-		gui.End();
-
-		gui2.Begin({Util::window_width - 200,10},{200,200});
-		ImGui::Text("W,A,S,D:darumaObject move");
-		ImGui::Text("ArrowKey:camera move");
-		ImGui::Text("RKey:daruma pos reset");
-		
-		gui2.End();
-
 		//更新処理
 		input_->Update();
 	
+		//gui2.Begin({ 800,10 }, { 200,200 });
+
 		gameScene_.Update();
 
-		debugText.Print(SpriteCommon::spriteCommon,
-			"a" + std::to_string(1),
-			50, 100);
+		//gui2.End();
 
-		pEmitter.Update();
+		//pEmitter.Update();
 
 		///---DirectX毎フレーム処理 ここまで---///
 #pragma endregion DirectX毎フレーム処理

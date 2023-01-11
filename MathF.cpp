@@ -64,4 +64,13 @@ namespace MathF
 	{
 		return acosf(vec1.dot(vec2) / (vec1.length() * vec2.length()));
 	}
+
+	float DegConvRad(float frequencymethod)
+	{
+		return PI / 180 * frequencymethod;
+	}
+
+	float RadConvDeg(float rad) {
+		return 180 / PI * rad;
+	}
 }

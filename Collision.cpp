@@ -1,15 +1,6 @@
 #include "Collision.h"
 #include "Vector2.h"
-
-template <typename T>
-T Abs(T a)
-{
-	if (a < 0)
-	{
-		a = -a;
-	}
-	return a;
-}
+#include "MathF.h"
 
 bool RayPlaneCollision(Ray ray, Plane plane)
 {
@@ -43,8 +34,8 @@ bool RectangleXZCollision(Cube cube1, Cube cube2)
 	float DistanceX = cube1.position.x - cube2.position.x;
 	float DistanceZ = cube1.position.z - cube2.position.z;
 
-	DistanceX = Abs(DistanceX);
-	DistanceZ = Abs(DistanceZ);
+	DistanceX = MathF::Abs(DistanceX);
+	DistanceZ = MathF::Abs(DistanceZ);
 
 	if (DistanceX <= cube1.scale.x * 0.5f + cube2.scale.x * 0.5f &&
 		DistanceZ <= cube1.scale.z * 0.5f + cube2.scale.z * 0.5f)
@@ -88,9 +79,9 @@ bool CubeCollision(Cube cube1, Cube cube2)
 	float DistanceY = cube1.position.y - cube2.position.y;
 	float DistanceZ = cube1.position.z - cube2.position.z;
 
-	DistanceX = Abs(DistanceX);
-	DistanceY = Abs(DistanceY);
-	DistanceZ = Abs(DistanceZ);
+	DistanceX = MathF::Abs(DistanceX);
+	DistanceY = MathF::Abs(DistanceY);
+	DistanceZ = MathF::Abs(DistanceZ);
 
 	if (DistanceX <= cube1.scale.x * 0.5f + cube2.scale.x * 0.5f &&
 		DistanceY <= cube1.scale.y * 0.5f + cube2.scale.y * 0.5f &&
@@ -107,9 +98,9 @@ bool BoxColAABB(const Obj3d& colA, const Obj3d& colB)
 	int DistanceY = colA.matWorld.m[3][1] - colB.matWorld.m[3][1];
 	int DistanceZ = colA.matWorld.m[3][2] - colB.matWorld.m[3][2];
 
-	DistanceX = Abs(DistanceX);
-	DistanceY = Abs(DistanceY);
-	DistanceZ = Abs(DistanceZ);
+	DistanceX = MathF::Abs(DistanceX);
+	DistanceY = MathF::Abs(DistanceY);
+	DistanceZ = MathF::Abs(DistanceZ);
 
 	if (DistanceX <= colA.scale.x * 0.5f + colB.scale.x * 0.5f &&
 		DistanceY <= colA.scale.y * 0.5f + colB.scale.y * 0.5f &&

@@ -205,10 +205,19 @@ void TextureManager::Initialize()
 
 void TextureManager::PreLoad()
 {
-	//white.CreateWhiteTexture();
+	bugfix.CreateWhiteTexture();
 	white.CreateWhiteTexture();
 	slime.Load(L"Resources\\slime.png");
 	def.Load(L"Resources\\default.png");
 	pizza.Load(L"Resources\\pizza.png");
 	particle.Load(L"Resources\\particle.png");
+	goalS.Load(L"Resources\\goal.png");
+	blockTex.Load(L"Resources\\blockTexture.png");
+	wispTex.Load(L"Resources\\firewisp\\tex.png");
+	titleTex.Load(L"Resources\\Title.png");
+	startTex.Load(L"Resources\\Start.png");
+	spaceTex.Load(L"Resources\\Space.png");
+	goalBlockTex.Load(L"Resources\\goalBlock.png");
+	dashIcon.Load(L"Resources\\dashIcon.png");
+	dashCool.Load(L"Resources\\dashCool.png");
 }

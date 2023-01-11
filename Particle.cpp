@@ -4,12 +4,12 @@
 #include "MathF.h"
 #include "ViewProjection.h"
 
-void ParticleManager::CreateParticle(XMFLOAT3 spawnPos, XMFLOAT3 velocity, float scale, float speed, bool redChange, float maxLifeTime, XMFLOAT4 color)
+void GParticleManager::CreateParticle(XMFLOAT3 spawnPos, XMFLOAT3 velocity, float scale, float speed, bool redChange, float maxLifeTime, XMFLOAT4 color)
 {
 	particles.emplace_back(spawnPos, velocity, scale, speed,maxLifeTime,color,redChange);
 }
 
-void ParticleManager::Initialize()
+void GParticleManager::Initialize()
 {
 	DirectX12 *dx12 = DirectX12::GetInstance();
 
@@ -50,7 +50,7 @@ void ParticleManager::Initialize()
 	vbView.StrideInBytes = sizeof(VertexPos);
 }
 
-void ParticleManager::Update(XMMATRIX& matView, XMMATRIX& matProjection)
+void GParticleManager::Update(XMMATRIX& matView, XMMATRIX& matProjection)
 {
 	particles.remove_if([](Particle& particle)
 		{
@@ -87,7 +87,7 @@ void ParticleManager::Update(XMMATRIX& matView, XMMATRIX& matProjection)
 
 }
 
-void ParticleManager::Draw(Texture* texture)
+void GParticleManager::Draw(Texture* texture)
 {
 	DirectX12* dx12 = DirectX12::GetInstance();
 	TextureManager* texM = TextureManager::GetInstance();
@@ -109,9 +109,9 @@ void ParticleManager::Draw(Texture* texture)
 	dx12->commandList->DrawInstanced(min(particles.size(),vertexCount), 1, 0, 0);
 }
 
-ParticleManager *ParticleManager::Getinstance()
+GParticleManager* GParticleManager::Getinstance()
 {
-	static ParticleManager instance;
+	static GParticleManager instance;
 	return &instance;
 }
 
@@ -192,7 +192,7 @@ void ParticleEmitter::SetInfo(Vector3 pos, float range, float scale, XMFLOAT4 co
 
 void ParticleEmitter::Update()
 {
-	ParticleManager* pManager = ParticleManager::Getinstance();
+	GParticleManager* pManager = GParticleManager::Getinstance();
 
 	for (int i = 0; i < spawnNum; i++)
 	{

@@ -180,5 +180,8 @@ void ModelManager::PreLoad()
 	skyDomeM.CreateModel("skydome");
 	boardM.CreateModel("board");
 	darumaM.CreateModel("boss");
+	firewispM.CreateModel("firewisp");
+	playerM.CreateModel("player");
+	beetleM.CreateModel("beetle");
 	//triangleM.CreateModel("triangle_mat");
 }

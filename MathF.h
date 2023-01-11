@@ -55,4 +55,18 @@ namespace MathF
 	float EaseOutQuad(float num);
 
 	float GetAngleBetweenTwoLine(Vector3 vec1,Vector3 vec2);
+
+	float DegConvRad(float frequencymethod);
+
+	float RadConvDeg(float rad);
+
+	template <typename T>
+	T Abs(T a)
+	{
+		if (a < 0)
+		{
+			a = -a;
+		}
+		return a;
+	}
 };

@@ -5,11 +5,71 @@
 
 void Stage::SetStage1()
 {
-	SetBlock({ 0,-30,0 }, { 30,50,30 });
-	SetBlock({ 30,-20,0 }, { 30,50,30 });
-	SetBlock({ -30,-20,0 }, { 30,50,30 });
-	SetBlock({ 0,-20,-30 }, { 30,50,30 });
-	SetBlock({ 0,-20,30 }, { 30,50,30 });
+	//スタート地点回り
+	SetBlock({  0,-80,0 }, { 30,100,30 });
+	SetBlock({  30,-80,0 }, { 30,100,30 });
+	SetBlock({  -30,-80,0 }, { 30,100,30 });
+	
+	SetBlock({  0,-40,-30 }, { 30,30,30 });
+	SetBlock({  30,-40,-30 }, { 30,30,30 });
+	SetBlock({  -30,-40,-30 }, { 30,30,30 });
+
+	
+	SetBlock({  0,-30,-70 }, { 30,30,30 });
+	SetBlock({  30,-30,-70 }, { 30,30,30 });
+	SetBlock({  -30,-30,-70 }, { 30,30,30 });
+
+	SetBlock({  0,-20,-150 }, { 28,30,30 });
+	SetBlock({  28,-20,-150 }, { 28,30,30 });
+	SetBlock({  -28,-20,-150 }, { 28,30,30 });
+
+	SetBlock({  0,0,-200 }, { 30,30,100 });
+	SetBlock({ 30,0,-200 }, { 30,30,100 });
+	SetBlock({ -30,0,-200 }, { 30,30,100 });
+
+	//1層目中盤
+	SetBlock({ -50,40,-300 }, { 30,100,30 });
+
+	SetBlock({ 0,90,-380 }, { 30,30,30 });
+	SetBlock({ 30,90,-380 }, { 30,30,30 });
+	SetBlock({ -30,90,-380 }, { 30,30,30 });
+
+	SetBlock({ 50,80,-400 }, { 30,30,30 });
+	SetBlock({ 80,70,-420 }, { 30,30,30 });
+	SetBlock({ 120,60,-500 }, { 30,30,30 });
+	SetBlock({ 70,90,-530 }, { 30,30,30 });
+
+
+	SetBlock({ -50,100,-400 }, { 30,30,30 });
+	SetBlock({ -40,110,-440 }, { 30,30,30 });
+	SetBlock({ -30,120,-480 }, { 30,30,30 });
+
+	//登る場所
+	SetBlock({ 0,180,-560 }, { 30,100,30 });
+	
+
+
+	//2階層目
+	SetBlock({ 0,230,-480 }, { 100,10,100 });
+	for (int i = 0; i < 5; i++)
+	{
+		SetBlock({ 
+			0,
+			240 + i * 5.0f,
+			-430 + 30.0f * i }, { 30,10,30 });
+	}
+
+	for (int i = 0; i < 3; i++)
+	{
+		SetBlock({ 0,210,-280 +30.0f * i }, { 30,30,30 });
+		SetBlock({ 30,210,-280 +30.0f * i }, { 30,30,30 });
+		SetBlock({ -30,210,-280 +30.0f * i }, { 30,30,30 });
+	}
+
+	SetBlock({ 0,250,-100 }, { 30,30,100 });
+	SetBlock({ 0,270,0 }, { 30,30,100 });
+	SetBlock({ 0,290,100 }, { 30,30,100 });
+
 }
 
 void Stage::SetBlock(Vector3 pos, Vector3 scale)
@@ -18,6 +78,8 @@ void Stage::SetBlock(Vector3 pos, Vector3 scale)
 	blockList.back().position = pos;
 	blockList.back().scale = scale;
 	blockList.back().rotation = {0,0,0};
+	blockList.back().texture = &TextureManager::GetInstance()->blockTex;
+	blockList.back().color = { 0.8f ,0.8f ,0.8f ,1};
 	//blockList.back().cubeCol.upPlane.normal = { 0,1,0 };
 }
 
@@ -35,65 +97,4 @@ void Stage::Draw()
 	{
 		block.Draw();
 	}
-}
-
-GUI gui3("hoge2");
-
-void Stage::CheckMobCol(Mob& mob)
-{
-	Cube tempCol = mob.cubeCol;
-
-	//仮移動
-	//ここで移動値を足すのだから、移動値を先に決めておかなければならない
-	tempCol.position += mob.moveValue;
-
-	gui3.Begin({ 800,100 }, { 500,300 });
-
-	for (Block& block : blockList)
-	{
-		//そのブロックの上面より上にいるか(そのブロックの上に立っているか)
-		bool up = tempCol.position.y > block.position.y + block.scale.y * 0.5f;
-		//そのブロックの正面より手前にいるか
-		bool center = tempCol.position.z > block.position.z + block.scale.z * 0.5f;
-
-		bool back = tempCol.position.z < block.position.z - block.scale.z * 0.5f;
-		
-		bool left = tempCol.position.x > block.position.x + block.scale.x * 0.5f;
-		
-		bool right = tempCol.position.x < block.position.x - block.scale.x * 0.5f;
-
-		//上面の当たり判定
-		if (up)
-		{
-			while (CubeCollision(tempCol, block.cubeCol))
-			{
-				tempCol.position.y += 0.1f;
-				mob.moveValue.y += 0.1f;
-				mob.jumpPower = 0;
-				mob.onGround = true;
-			}
-		}
-
-		if (up == false && CubeCollision(tempCol, block.cubeCol))
-		{
-			if (right)
-			{
-				mob.moveValue.x = 0;
-			}
-			if (left)
-			{
-				mob.moveValue.x = 0;
-			}
-			if (back)
-			{
-				mob.moveValue.z = 0;
-			}
-			if (center)
-			{
-				mob.moveValue.z = 0;
-			}
-		}
-	}
-
-	gui3.End();
 }

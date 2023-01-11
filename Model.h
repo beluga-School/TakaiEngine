@@ -52,6 +52,9 @@ public:
 	Model triangleM;
 	Model boardM;
 	Model darumaM;
+	Model firewispM;
+	Model playerM;
+	Model beetleM;
 
 	void PreLoad();
 

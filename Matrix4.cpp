@@ -68,6 +68,43 @@ Vector3 Matrix4::ExtractAxisZ()
 	return Vector3(m[2][0], m[2][1], m[2][2]);
 }
 
+Matrix4 Matrix4::RotArbitrary(Vector3 axis, float rad)
+{
+	//クオータニオンというもの
+	axis.normalize();
+	float sn = sin(rad / 2);
+	axis.x *= sn;
+	axis.y *= sn;
+	axis.z *= sn;
+	float w = cos(rad / 2);
+
+
+	Vector3 X = {
+		1 - (2 * (axis.y * axis.y)) - (2 * (axis.z * axis.z)),
+		(2 * axis.x * axis.y) + (2 * w * axis.z),
+		(2 * axis.x * axis.z) - (2 * w * axis.y),
+	};
+
+	Vector3 Y = {
+		(2 * axis.x * axis.y) - (2 * w * axis.z),
+		1 - (2 * (axis.x * axis.x)) - (2 * (axis.z * axis.z)),
+		(2 * axis.y * axis.z) + (2 * w * axis.x),
+	};
+
+	Vector3 Z = {
+		(2 * axis.x * axis.z) + (2 * w * axis.y),
+		(2 * axis.y * axis.z) - (2 * w * axis.x),
+		1 - (2 * (axis.x * axis.x)) - (2 * (axis.y * axis.y)),
+	};
+
+	return Matrix4(
+		X.x, X.y, X.z, 0,
+		Y.x, Y.y, Y.z, 0,
+		Z.x, Z.y, Z.z, 0,
+		0, 0, 0, 1
+	);
+}
+
 Matrix4 Matrix4::rotateX(float angle)
 {
 	Matrix4 result = Matrix4::Identity();

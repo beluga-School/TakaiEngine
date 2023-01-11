@@ -69,8 +69,19 @@ public:
 	Texture pizza;
 	Texture def;
 	Texture particle;
+	Texture goalS;
+	Texture blockTex;
+	Texture wispTex;
+	Texture titleTex;
+	Texture startTex;
+	Texture spaceTex;
+	Texture goalBlockTex;
+	Texture dashIcon;
+	Texture dashCool;
 
 private:
+	Texture bugfix;
+
 	TextureManager(){};
 	~TextureManager(){};
 	TextureManager(const TextureManager& a) = delete;

@@ -1,6 +1,7 @@
 #pragma once
 #include "Obj.h"
 #include "Collision.h"
+#include "Stage.h"
 
 class Mob : public Obj3d
 {
@@ -11,6 +12,8 @@ public:
 	void Update();
 
 	void AddGravity();
+
+	void CheckHitColStage(Stage stage);
 	
 	/// <summary>
 	/// 移動方向ベクトルの抽出
