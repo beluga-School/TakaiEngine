@@ -10,7 +10,6 @@ void Player::Respawn()
 	position = spawnPos;
 	rotation = { 0,0,0 };
 	jumpPower = 0;
-	hp = 10;
 	isDead = false;
 }
 
@@ -25,6 +24,10 @@ void Player::Initialize()
 	moveMag = 30;
 
 	mutekiTimer = 0;
+	
+	jump = SoundManager::GetInstance()->SoundLoadWave("Resources\\sound\\jump.wav");
+	dash = SoundManager::GetInstance()->SoundLoadWave("Resources\\sound\\dash.wav");
+	hit = SoundManager::GetInstance()->SoundLoadWave("Resources\\sound\\hit.wav");
 
 	Respawn();
 }
@@ -55,6 +58,11 @@ void Player::Update(const Stage& stage)
 	{
 		Respawn();
 		HitEffect();
+	}
+
+	if (position.y >= 200)
+	{
+		spawnPos = { 0,250,-560 };
 	}
 
 	isWallGrap = false;
@@ -159,11 +167,24 @@ void Player::Update(const Stage& stage)
 
 	max = { 1920 / 2,1080 / 2 };
 
-	ShowCursor(false);
-
 	GetCursorPos(&point);
 
-	SetCursorPos(max.x, max.y);
+	static bool hoge = true;
+
+	/*if (input->TriggerKey(DIK_N))
+	{
+		hoge = !hoge;
+	}*/
+
+	if (hoge)
+	{
+		SetCursorPos(max.x, max.y);
+		ShowCursor(false);
+	}
+	else
+	{
+		ShowCursor(true);
+	}
 
 	horizontalRotation += (point.x - max.x) * mouseSpd;
 	verticalRotation += (point.y - max.y) * mouseSpd;
@@ -214,6 +235,7 @@ void Player::Move()
 
 		dashVec = Camera::camera->target - Camera::camera->eye;
 		dashVec.normalize();
+		SoundManager::GetInstance()->SoundPlayWave(dash);
 	}
 	if (isDash)
 	{
@@ -239,6 +261,7 @@ void Player::Jump()
 	if (input->PushKey(DIK_SPACE) && onGround)
 	{
 		jumpPower = 2;
+		SoundManager::GetInstance()->SoundPlayWave(jump);
 	}
 }
 
@@ -248,6 +271,7 @@ void Player::HitEffect()
 	{
 		mutekiTimer = 0.01f;
 		hp -= 1;
+		SoundManager::GetInstance()->SoundPlayWave(hit);
 	}
 }
 

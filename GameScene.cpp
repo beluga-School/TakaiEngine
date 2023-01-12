@@ -52,45 +52,140 @@ void Game::Initialize()
 	SpriteInit(dashCoolSprite, SpriteCommon::spriteCommon,
 		{ Util::window_width -100,Util::window_height - 100 }, 0);
 	SpriteSetSize(dashCoolSprite, { 150,150 });
+	
+	SpriteCreate(&redScreenSprite, &TextureManager::GetInstance()->redScreen, { 0.5f,0.5f });
+	SpriteInit(redScreenSprite, SpriteCommon::spriteCommon,
+		{ Util::window_width / 2,Util::window_height / 2 }, 0);
+	SpriteSetSize(redScreenSprite, { Util::window_width,Util::window_height });
+	
+	SpriteCreate(&setumeiSprite, &TextureManager::GetInstance()->setumei, { 0.5f,0.5f });
+	SpriteInit(setumeiSprite, SpriteCommon::spriteCommon,
+		{200,170 }, 0);
+	SpriteSetSize(setumeiSprite, { 300 * 1.25f,250 * 1.25f });
+	
+	SpriteCreate(&gameOverSprite, &TextureManager::GetInstance()->gameOver, { 0.5f,0.5f });
+	SpriteInit(gameOverSprite, SpriteCommon::spriteCommon,
+		{ Util::window_width / 2,Util::window_height / 2 }, 0);
+	
+	float scaleMag = 2;
+	for (int i = 0; i < 10; i++)
+	{
+		SpriteCreate(&hpBarSprite[i], &TextureManager::GetInstance()->hpBar, { 0.5f,0.5f });
+		SpriteInit(hpBarSprite[i], SpriteCommon::spriteCommon,
+			{ 100 + i * hpBarSprite[i].size.x * scaleMag,Util::window_height - 50}, 0);
+		SpriteSetSize(hpBarSprite[i], { hpBarSprite[i].size.x * scaleMag,hpBarSprite[i].size.y * scaleMag });
+	}
 
 	//ビュー変換行列(透視投影)を計算
 	camera->Initialize();
 
-	player.Initialize();
-	player.position = player.spawnPos;
-
 	goal.Initialize();
-	goal.position = {0,350,130};
+	goal.position = { 0,350,130 };
 	goal.scale = { 10,10,10 };
 	goal.texture = &TextureManager::GetInstance()->goalBlockTex;
 
+	redScreenSprite.color.w = 0.0f;
+
 	stage.SetStage1();
 
-	SetAirEnemy({ 0,30,-190 });
-	SetAirEnemy({ 0,30,-210 });
-	SetAirEnemy({ 0,30,-230 });
+	push = SoundManager::GetInstance()->SoundLoadWave("Resources\\sound\\push.wav");
+	
+	float a = -2.0f;
+	float b = 2.0f;
 
-	SetAirEnemy({ 80,110,-440 });
-	SetAirEnemy({ 0,140,-380 });
+	int r = 0;
 
-	SetAirEnemy({ 0,260,-480 });
-	SetAirEnemy({ 50,260,-480 });
-	SetAirEnemy({ -50,260,-480 });
+	for (int i = 0; i < max; i++)
+	{
+		cube[i].Initialize();
+		cube[i].SetModel(&ModelManager::GetInstance()->cubeM);
+		cube[i].SetTexture(&TextureManager::GetInstance()->white);
 
-	SetGroundEnemy({ 0,30,-190 });
+		cube[i].scale = { MathF::GetRand(3,7),MathF::GetRand(3,7),MathF::GetRand(3,7) };
+
+		r = MathF::GetRandInt(0,4);
+
+		switch (r)
+		{
+		case 0:
+			cube[i].color = { 0.0f, 220.0f / 255.0f, 1.0f, 1 };
+			break;
+		case 1:
+			cube[i].color = { 220.0f / 255.0f, 1.0f, 0.0f, 1 };
+			break;
+		case 2:
+			cube[i].color = { 1.0f,0.0f , 220.0f / 255.0f, 1 };
+			break;
+		}
+	}
+
+	for (int i = 0; i < 100; i++)
+	{
+		cube[i].position.x = MathF::GetRand(150.0f, 400.0f);
+		cube[i].position.y = MathF::GetRand(-500.0f, 800.0f);
+		cube[i].position.z = MathF::GetRand(200.0f, -700.0f);
+
+		cuberotaVec[i] = { MathF::GetRand(a,b),MathF::GetRand(a,b),MathF::GetRand(a,b) };
+	}
+
+	for (int i = 100; i < 200; i++)
+	{
+		cube[i].position.x = MathF::GetRand(-150.0f, -400.0f);
+		cube[i].position.y = MathF::GetRand(-500.0f, 800.0f);
+		cube[i].position.z = MathF::GetRand(200.0f, -700.0f);
+
+		cuberotaVec[i] = { MathF::GetRand(a,b),MathF::GetRand(a,b),MathF::GetRand(a,b) };
+	}
+
+	for (int i = 200; i < 300; i++)
+	{
+		cube[i].position.x = MathF::GetRand(-150.0f, 150.0f);
+		cube[i].position.y = MathF::GetRand(-500.0f, -200.0f);
+		cube[i].position.z = MathF::GetRand(200.0f, -700.0f);
+
+		cuberotaVec[i] = { MathF::GetRand(a,b),MathF::GetRand(a,b),MathF::GetRand(a,b) };
+	}
+
+	for (int i = 300; i < 400; i++)
+	{
+		cube[i].position.x = MathF::GetRand(-150.0f, 150.0f);
+		cube[i].position.y = MathF::GetRand(500.0f, 700.0f);
+		cube[i].position.z = MathF::GetRand(200.0f, -700.0f);
+
+		cuberotaVec[i] = { MathF::GetRand(a,b),MathF::GetRand(a,b),MathF::GetRand(a,b) };
+	}
+
+	for (int i = 400; i < 450; i++)
+	{
+		cube[i].position.x = MathF::GetRand(-150.0f, 150.0f);
+		cube[i].position.y = MathF::GetRand(-500.0f, 700.0f);
+		cube[i].position.z = MathF::GetRand(200.0f, 300.0f);
+
+		cuberotaVec[i] = { MathF::GetRand(a,b),MathF::GetRand(a,b),MathF::GetRand(a,b) };
+	}
+
+	for (int i = 450; i < 500; i++)
+	{
+		cube[i].position.x = MathF::GetRand(-150.0f, 150.0f);
+		cube[i].position.y = MathF::GetRand(-500.0f, 700.0f);
+		cube[i].position.z = MathF::GetRand(-650.0f, -700.0f);
+
+		cuberotaVec[i] = { MathF::GetRand(3.0f,5.0f),MathF::GetRand(3.0f,5.0f),MathF::GetRand(3.0f,5.0f) };
+	}
+
+	Reset();
 }
 
 void Game::Update()
 {
-
-
 	switch (scene)
 	{
 	case Scene::Title:
 		if (input->TriggerKey(DIK_SPACE))
 		{
 			SceneChange(Scene::Game);
-			player.Respawn();
+			Reset();
+			SoundManager::GetInstance()->SoundPlayWave(push);
 		}
 
 		SpriteUpdate(TitleSprite, SpriteCommon::spriteCommon);
@@ -107,11 +202,26 @@ void Game::Update()
 		CameraUpdate();
 		//オブジェクトの更新
 		skydome.Update(camera->matView, camera->matProjection);
+		for (int i = 0; i < max; i++)
+		{
+			cube[i].rotation += cuberotaVec[i] * TimeManager::deltaTime;
+			cube[i].Update(camera->matView, camera->matProjection);
+		}
+
 
 		stage.Update();
 		goal.Update();
 
+		if (player.position.y <= -200)
+		{
+			DamageEffect();
+		}
 		player.Update(stage);
+
+		if (redScreenSprite.color.w > 0)
+		{
+			redScreenSprite.color.w -= TimeManager::deltaTime;
+		}
 
 		gEnemyList.remove_if([](GroundEnemy& enemy) {
 			return enemy.isDead;
@@ -126,6 +236,9 @@ void Game::Update()
 				{
 					ParticleManager::GetInstance()->CreateCubeParticle(gEnemy.position, { 3,3,3 }, 20.0f, { 1.0f,1.0f,1.0f,1.0f });
 				}
+
+				DamageEffect();
+				player.HitEffect();
 			}
 		}
 
@@ -141,6 +254,7 @@ void Game::Update()
 				if (CubeCollision(bullet.cubeCol, player.cubeCol))
 				{
 					bullet.isDead = true;
+					DamageEffect();
 					player.HitEffect();
 				}
 				for (const Block& block : stage.blockList)
@@ -168,13 +282,16 @@ void Game::Update()
 		}
 
 		SpriteUpdate(dashIconSprite, SpriteCommon::spriteCommon);
+		SpriteUpdate(redScreenSprite, SpriteCommon::spriteCommon);
+		SpriteUpdate(setumeiSprite, SpriteCommon::spriteCommon);
 
 		break;
 	case Scene::Clear:
 		if (input->TriggerKey(DIK_SPACE))
 		{
 			SceneChange(Scene::Title);
-			player.Respawn();
+			Reset();
+			SoundManager::GetInstance()->SoundPlayWave(push);
 		}
 
 		SpriteUpdate(goalSprite, SpriteCommon::spriteCommon);
@@ -184,8 +301,12 @@ void Game::Update()
 		if (input->TriggerKey(DIK_SPACE))
 		{
 			SceneChange(Scene::Game);
-			player.Respawn();
+			Reset();
+			SoundManager::GetInstance()->SoundPlayWave(push);
 		}
+
+		SpriteUpdate(gameOverSprite, SpriteCommon::spriteCommon);
+
 		break;
 	}
 
@@ -233,6 +354,12 @@ void Game::Draw()
 
 		skydome.Draw();
 
+
+		for (int i = 0; i < max; i++)
+		{
+			cube[i].Draw();
+		}
+
 		ParticleManager::GetInstance()->Draw();
 
 		GeometryObjectPreDraw(geometryObjectPipelineSet);
@@ -240,10 +367,19 @@ void Game::Draw()
 		//スプライトの前描画(共通コマンド)
 		SpriteCommonBeginDraw(SpriteCommon::spriteCommon);
 		SpriteDraw(dashIconSprite);
+		SpriteDraw(setumeiSprite);
+
 		if (player.dashCool > 0)
 		{
 			SpriteDraw(dashCoolSprite);
 		}
+		
+		for (int i = 0; i < player.hp; i++)
+		{
+			SpriteDraw(hpBarSprite[i]);
+		}
+
+		SpriteDraw(redScreenSprite);
 
 		break;
 	case Scene::Clear:
@@ -258,6 +394,13 @@ void Game::Draw()
 
 		break;
 	case Scene::GameOver:
+		BasicObjectPreDraw(object3dPipelineSet);
+
+		GeometryObjectPreDraw(geometryObjectPipelineSet);
+
+		//スプライトの前描画(共通コマンド)
+		SpriteCommonBeginDraw(SpriteCommon::spriteCommon);
+		SpriteDraw(gameOverSprite);
 
 		break;
 	}
@@ -364,4 +507,36 @@ void Game::SetGroundEnemy(Vector3 position)
 {
 	gEnemyList.emplace_back();
 	gEnemyList.back().Initialize(position);
+}
+
+void Game::Reset()
+{
+	player.spawnPos = { 0,0,0 };
+	player.hp = 10;
+	player.Respawn();
+
+	SetAirEnemy({ 0,30,-190 });
+	SetAirEnemy({ 0,30,-210 });
+	SetAirEnemy({ 0,30,-230 });
+
+	SetAirEnemy({ 80,110,-440 });
+	SetAirEnemy({ 0,140,-380 });
+
+	SetAirEnemy({ 0,260,-480 });
+	SetAirEnemy({ 50,260,-480 });
+	SetAirEnemy({ -50,260,-480 });
+
+	SetGroundEnemy({ 0,30,-190 });
+}
+
+void Game::DamageEffect()
+{
+	if (player.mutekiTimer <= 0 && player.isDash == false)
+	{
+		redScreenSprite.color.w = 1.0f;
+		for (int i = 0; i < 10; i++)
+		{
+			ParticleManager::GetInstance()->CreateCubeParticle(player.position, { 3,3,3 }, 20.0f, { 1,1,1,1 });
+		}
+	}
 }

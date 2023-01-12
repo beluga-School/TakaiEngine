@@ -112,15 +112,18 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 
 #pragma endregion 描画初期化処理
 
-	SoundManager soundManager;
-	soundManager.Initialize();
+	SoundManager *soundManager = SoundManager::GetInstance();
+	soundManager->Initialize();
 
-	SoundData curser = soundManager.SoundLoadWave("Resources\\sound\\curser.wav");
+	SoundData curser = soundManager->SoundLoadWave("Resources\\sound\\curser.wav");
+	SoundData bgm = soundManager->SoundLoadWave("Resources\\sound\\bgm.wav");
 
 	//ゲームループ内で使う変数の宣言
 	//ParticleEmitter pEmitter;
 	//pEmitter.Initialize();
 	//pEmitter.SetInfo({ -10,-10,20 }, 10, 5,{0,0.5f,1,1}, 1, true);
+
+	soundManager->SoundPlayWave(bgm);
 
 	float hoge = 0;
 
@@ -195,10 +198,11 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 
 	//音声データは先にxAudio2を解放しなければならない
 	//xAudio2の解放
-	soundManager.End();
+	soundManager->End();
 
 	//音声データの解放
-	soundManager.SoundUnload(&curser);
+	soundManager->SoundUnload(&curser);
+	soundManager->SoundUnload(&bgm);
 
 	//ウィンドウクラスを登録解除
 	UnregisterClass(winApi->w.lpszClassName, winApi->w.hInstance);

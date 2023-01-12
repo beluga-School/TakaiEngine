@@ -78,6 +78,10 @@ public:
 	Texture goalBlockTex;
 	Texture dashIcon;
 	Texture dashCool;
+	Texture hpBar;
+	Texture redScreen;
+	Texture setumei;
+	Texture gameOver;
 
 private:
 	Texture bugfix;

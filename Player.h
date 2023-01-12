@@ -4,6 +4,7 @@
 #include "Input.h"
 #include "Stage.h"
 #include "Vector2.h"
+#include "Sound.h"
 
 class Player : public Mob
 {
@@ -52,6 +53,10 @@ public:
 	Vector2 max;
 
 	void HitEffect();
+
+	SoundData jump;
+	SoundData dash;
+	SoundData hit;
 
 private:
 	///---クラス内で使用する関数群

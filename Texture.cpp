@@ -220,4 +220,8 @@ void TextureManager::PreLoad()
 	goalBlockTex.Load(L"Resources\\goalBlock.png");
 	dashIcon.Load(L"Resources\\dashIcon.png");
 	dashCool.Load(L"Resources\\dashCool.png");
+	hpBar.Load(L"Resources\\hpbar.png");
+	redScreen.Load(L"Resources\\redScreen.png");
+	setumei.Load(L"Resources\\setumei.png");
+	gameOver.Load(L"Resources\\GameOver.png");
 }

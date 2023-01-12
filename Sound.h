@@ -41,6 +41,11 @@ public:
 	void SoundUnload(SoundData* soundData);
 	//xAudio2‚Ì‰ð•ú
 	void End();
+
+	static SoundManager* GetInstance() {
+		static SoundManager instance;
+		return &instance;
+	};
 private:
 	ComPtr<IXAudio2> xAudio2;
 	IXAudio2MasteringVoice* masterVoice;

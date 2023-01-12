@@ -10,6 +10,7 @@
 #include "GroundEnemy.h"
 #include "GoalObject.h"
 #include "AirEnemy.h"
+#include "Sound.h"
 
 enum class Scene
 {
@@ -18,6 +19,8 @@ enum class Scene
 	Clear,
 	GameOver,
 };
+
+const int max = 500;
 
 class Game
 {
@@ -36,7 +39,10 @@ public:
 
 	void SetAirEnemy(Vector3 position);
 	void SetGroundEnemy(Vector3 position);
-public:
+private:
+
+	void Reset();
+	void DamageEffect();
 
 	Input* input = Input::GetInstance();
 	Sprite sceneChangeBlockOut;
@@ -59,6 +65,15 @@ public:
 	Sprite spaceSprite;
 	Sprite dashIconSprite;
 	Sprite dashCoolSprite;
+	Sprite hpBarSprite[10];
+	Sprite redScreenSprite;
+	Sprite setumeiSprite;
+	Sprite gameOverSprite;
+
+	Obj3d cube[max];
+	Vector3 cuberotaVec[max];
+
+	SoundData push;
 
 	Scene scene = Scene::Title;
 	Scene nextScene = scene;
