@@ -63,6 +63,11 @@ void Game::Initialize()
 		{200,170 }, 0);
 	SpriteSetSize(setumeiSprite, { 300 * 1.25f,250 * 1.25f });
 	
+	SpriteCreate(&setumei2Sprite, &TextureManager::GetInstance()->setumei2, { 0.5f,0.5f });
+	SpriteInit(setumei2Sprite, SpriteCommon::spriteCommon,
+		{Util::window_width / 2 + 420,170 }, 0);
+	SpriteSetSize(setumei2Sprite, { 300 * 1.25f,250 * 1.25f });
+	
 	SpriteCreate(&gameOverSprite, &TextureManager::GetInstance()->gameOver, { 0.5f,0.5f });
 	SpriteInit(gameOverSprite, SpriteCommon::spriteCommon,
 		{ Util::window_width / 2,Util::window_height / 2 }, 0);
@@ -89,6 +94,8 @@ void Game::Initialize()
 	stage.SetStage1();
 
 	push = SoundManager::GetInstance()->SoundLoadWave("Resources\\sound\\push.wav");
+	goalSound = SoundManager::GetInstance()->SoundLoadWave("Resources\\sound\\goal.wav");
+	deadEnemy = SoundManager::GetInstance()->SoundLoadWave("Resources\\sound\\deadenemy.wav");
 	
 	float a = -2.0f;
 	float b = 2.0f;
@@ -194,6 +201,8 @@ void Game::Update()
 
 		break;
 	case Scene::Game:
+		setumeiEndTime += TimeManager::deltaTime;
+
 		if (player.isDead)
 		{
 			SceneChange(Scene::GameOver);
@@ -232,6 +241,7 @@ void Game::Update()
 			if (CubeCollision(player.cubeCol, gEnemy.cubeCol))
 			{
 				gEnemy.isDead = true;
+				SoundManager::GetInstance()->SoundPlayWave(deadEnemy);
 				for (int i = 0; i < 10; i++)
 				{
 					ParticleManager::GetInstance()->CreateCubeParticle(gEnemy.position, { 3,3,3 }, 20.0f, { 1.0f,1.0f,1.0f,1.0f });
@@ -269,6 +279,7 @@ void Game::Update()
 			if (CubeCollision(player.cubeCol, airEnemy.cubeCol))
 			{
 				airEnemy.isDead = true;
+				SoundManager::GetInstance()->SoundPlayWave(deadEnemy);
 				for (int i = 0; i < 10; i++)
 				{
 					ParticleManager::GetInstance()->CreateCubeParticle(airEnemy.position,{3,3,3}, 20.0f, { 1.0f,1.0f,1.0f,1.0f });
@@ -278,12 +289,25 @@ void Game::Update()
 
 		if (CubeCollision(player.cubeCol, goal.cubeCol))
 		{
+			if (goalSoundFlag == false)
+			{
+				SoundManager::GetInstance()->SoundPlayWave(goalSound);
+				goalSoundFlag = true;
+			}
+
 			SceneChange(Scene::Clear);
+		}
+
+		if (setumeiEndTime > 20.0f)
+		{
+			if (setumeiSprite.color.w > 0)setumeiSprite.color.w -= TimeManager::deltaTime;
+			if (setumei2Sprite.color.w > 0)setumei2Sprite.color.w -= TimeManager::deltaTime;
 		}
 
 		SpriteUpdate(dashIconSprite, SpriteCommon::spriteCommon);
 		SpriteUpdate(redScreenSprite, SpriteCommon::spriteCommon);
 		SpriteUpdate(setumeiSprite, SpriteCommon::spriteCommon);
+		SpriteUpdate(setumei2Sprite, SpriteCommon::spriteCommon);
 
 		break;
 	case Scene::Clear:
@@ -295,6 +319,7 @@ void Game::Update()
 		}
 
 		SpriteUpdate(goalSprite, SpriteCommon::spriteCommon);
+		SpriteUpdate(spaceSprite, SpriteCommon::spriteCommon);
 
 		break;
 	case Scene::GameOver:
@@ -306,6 +331,7 @@ void Game::Update()
 		}
 
 		SpriteUpdate(gameOverSprite, SpriteCommon::spriteCommon);
+		SpriteUpdate(spaceSprite, SpriteCommon::spriteCommon);
 
 		break;
 	}
@@ -367,7 +393,9 @@ void Game::Draw()
 		//スプライトの前描画(共通コマンド)
 		SpriteCommonBeginDraw(SpriteCommon::spriteCommon);
 		SpriteDraw(dashIconSprite);
+
 		SpriteDraw(setumeiSprite);
+		SpriteDraw(setumei2Sprite);
 
 		if (player.dashCool > 0)
 		{
@@ -390,7 +418,7 @@ void Game::Draw()
 		//スプライトの前描画(共通コマンド)
 		SpriteCommonBeginDraw(SpriteCommon::spriteCommon);
 		SpriteDraw(goalSprite);
-
+		SpriteDraw(spaceSprite);
 
 		break;
 	case Scene::GameOver:
@@ -401,6 +429,7 @@ void Game::Draw()
 		//スプライトの前描画(共通コマンド)
 		SpriteCommonBeginDraw(SpriteCommon::spriteCommon);
 		SpriteDraw(gameOverSprite);
+		SpriteDraw(spaceSprite);
 
 		break;
 	}
@@ -413,6 +442,10 @@ void Game::Draw()
 void Game::End()
 {
 	ParticleManager::GetInstance()->AllDelete();
+
+	player.End();
+	SoundManager::GetInstance()->SoundUnload(&push);
+	SoundManager::GetInstance()->SoundUnload(&goalSound);
 }
 
 int upCam = 0;
@@ -420,7 +453,7 @@ float mag = 20;
 
 void Game::CameraUpdate()
 {
-	if (input->TriggerKey(DIK_1))
+	/*if (input->TriggerKey(DIK_1))
 	{
 		upCam = 1;
 	}
@@ -431,7 +464,7 @@ void Game::CameraUpdate()
 	if (input->TriggerKey(DIK_0))
 	{
 		upCam = 0;
-	}
+	}*/
 
 	Vector3 cVec = {0,0,0};
 
@@ -497,20 +530,33 @@ void Game::SceneChangeUpdate()
 	}
 }
 
-void Game::SetAirEnemy(Vector3 position)
+void Game::SetAirEnemy(Vector3 position,bool hanten)
 {
 	airEnemyList.emplace_back();
 	airEnemyList.back().Initialize(position);
+	if (hanten)
+	{
+		airEnemyList.back().rotation.y = 3.14f / 2;
+	}
 }
 
-void Game::SetGroundEnemy(Vector3 position)
+void Game::SetGroundEnemy(Vector3 position, bool hanten)
 {
 	gEnemyList.emplace_back();
 	gEnemyList.back().Initialize(position);
+	if (hanten)
+	{
+		gEnemyList.back().rotation.y = 3.14f / 2;
+	}
 }
 
 void Game::Reset()
 {
+	goalSoundFlag = false;
+	setumeiEndTime = 0;
+	setumeiSprite.color.w = 1;
+	setumei2Sprite.color.w = 1;
+
 	player.spawnPos = { 0,0,0 };
 	player.hp = 10;
 	player.Respawn();
@@ -522,11 +568,18 @@ void Game::Reset()
 	SetAirEnemy({ 80,110,-440 });
 	SetAirEnemy({ 0,140,-380 });
 
-	SetAirEnemy({ 0,260,-480 });
-	SetAirEnemy({ 50,260,-480 });
-	SetAirEnemy({ -50,260,-480 });
+	SetAirEnemy({ 0,260,-480 },1);
+	SetAirEnemy({ 50,260,-480 },1);
+	SetAirEnemy({ -50,260,-480 },1);
 
 	SetGroundEnemy({ 0,30,-190 });
+
+	SetGroundEnemy({ 20,240,-240 },1);
+	SetGroundEnemy({ -20,240,-240 },1);
+
+	SetAirEnemy({ 0,300,50 },1);
+	SetAirEnemy({ 0,330,70 },1);
+	SetAirEnemy({ 0,360,90 },1);
 }
 
 void Game::DamageEffect()

@@ -223,5 +223,6 @@ void TextureManager::PreLoad()
 	hpBar.Load(L"Resources\\hpbar.png");
 	redScreen.Load(L"Resources\\redScreen.png");
 	setumei.Load(L"Resources\\setumei.png");
+	setumei2.Load(L"Resources\\setumei2.png");
 	gameOver.Load(L"Resources\\GameOver.png");
 }

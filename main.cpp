@@ -123,7 +123,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	//pEmitter.Initialize();
 	//pEmitter.SetInfo({ -10,-10,20 }, 10, 5,{0,0.5f,1,1}, 1, true);
 
-	soundManager->SoundPlayWave(bgm);
+	soundManager->SoundPlayWave(bgm,true);
 
 	float hoge = 0;
 

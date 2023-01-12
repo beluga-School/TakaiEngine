@@ -24,10 +24,14 @@ public:
 
 	void Draw();
 
+	void End();
+
 	bool isWallGrap = false;
 	bool isDash = false;
 	float dashTimer = 0;
 	Vector3 dashVec = { 0,0,0 };
+
+	bool jumpSoundFlag = false;
 
 	//Vector3 spawnPos = { 0,330,-560 };
 	Vector3 spawnPos = { 0,0,0 };

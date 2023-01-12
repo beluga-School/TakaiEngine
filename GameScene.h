@@ -37,8 +37,8 @@ public:
 	void SceneChange(Scene scene);
 	void SceneChangeUpdate();
 
-	void SetAirEnemy(Vector3 position);
-	void SetGroundEnemy(Vector3 position);
+	void SetAirEnemy(Vector3 position, bool hanten = false);
+	void SetGroundEnemy(Vector3 position, bool hanten = false);
 private:
 
 	void Reset();
@@ -68,12 +68,19 @@ private:
 	Sprite hpBarSprite[10];
 	Sprite redScreenSprite;
 	Sprite setumeiSprite;
+	Sprite setumei2Sprite;
 	Sprite gameOverSprite;
 
 	Obj3d cube[max];
 	Vector3 cuberotaVec[max];
 
 	SoundData push;
+	SoundData goalSound;
+	SoundData deadEnemy;
+
+	float setumeiEndTime = 0;
+
+	bool goalSoundFlag = false;
 
 	Scene scene = Scene::Title;
 	Scene nextScene = scene;

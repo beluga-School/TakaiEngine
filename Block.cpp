@@ -23,6 +23,9 @@ bool Block::CheckDirections(Cube cubeCol, CheckDirection CD) const
 	case CheckDirection::CD_UP:
 		return cubeCol.position.y > position.y + scale.y * 0.5f;
 		break;
+	case CheckDirection::CD_DOWN:
+		return cubeCol.position.y < position.y - scale.y * 0.5f;
+		break;
 	case CheckDirection::CD_CENTER:
 		return cubeCol.position.z > position.z + scale.z * 0.5f;;
 		break;

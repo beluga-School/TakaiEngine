@@ -81,6 +81,7 @@ public:
 	Texture hpBar;
 	Texture redScreen;
 	Texture setumei;
+	Texture setumei2;
 	Texture gameOver;
 
 private:

@@ -5,6 +5,7 @@
 enum class CheckDirection
 {
 	CD_UP,
+	CD_DOWN,
 	CD_CENTER,
 	CD_BACK,
 	CD_LEFT,

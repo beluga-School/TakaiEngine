@@ -50,10 +50,6 @@ void Player::Update(const Stage& stage)
 		isDead = true;
 	}
 
-	if (input->TriggerKey(DIK_R))
-	{
-		Respawn();
-	}
 	if (position.y <= -200)
 	{
 		Respawn();
@@ -91,6 +87,8 @@ void Player::Update(const Stage& stage)
 	for (const Block& block : stage.blockList)
 	{
 		bool up = block.CheckDirections(tempCol, CheckDirection::CD_UP);
+		bool down = block.CheckDirections(tempCol, CheckDirection::CD_DOWN);
+
 		bool center = block.CheckDirections(tempCol, CheckDirection::CD_CENTER);
 		bool back = block.CheckDirections(tempCol, CheckDirection::CD_BACK);
 		bool left = block.CheckDirections(tempCol, CheckDirection::CD_LEFT);
@@ -105,6 +103,16 @@ void Player::Update(const Stage& stage)
 				moveValue.y += 0.1f;
 				jumpPower = 0;
 				onGround = true;
+			}
+		}
+
+		if (down)
+		{
+			while (CubeCollision(tempCol, block.cubeCol))
+			{
+				tempCol.position.y -= 0.1f;
+				moveValue.y -= 0.1f;
+				jumpPower = 0;
 			}
 		}
 
@@ -138,6 +146,16 @@ void Player::Update(const Stage& stage)
 			if (CubeCollision(tempCol, block.cubeCol))
 			{
 				isWallGrap = true;
+			}
+		}
+
+		if (up == false && down == false && isWallGrap == false)
+		{
+			while (CubeCollision(tempCol, block.cubeCol))
+			{
+				tempCol.position.y += 0.1f;
+				moveValue.y += 0.1f;
+				jumpPower = 0;
 			}
 		}
 	}
@@ -261,7 +279,16 @@ void Player::Jump()
 	if (input->PushKey(DIK_SPACE) && onGround)
 	{
 		jumpPower = 2;
-		SoundManager::GetInstance()->SoundPlayWave(jump);
+		if (jumpSoundFlag == false)
+		{
+			SoundManager::GetInstance()->SoundPlayWave(jump);
+		}
+		jumpSoundFlag = true;
+	}
+
+	if (input->ReleaseKey(DIK_SPACE))
+	{
+		jumpSoundFlag = false;
 	}
 }
 
@@ -281,4 +308,11 @@ void Player::Draw()
 	{
 		Obj3d::DrawMaterial();
 	}
+}
+
+void Player::End()
+{
+	SoundManager::GetInstance()->SoundUnload(&jump);
+	SoundManager::GetInstance()->SoundUnload(&dash);
+	SoundManager::GetInstance()->SoundUnload(&hit);
 }
