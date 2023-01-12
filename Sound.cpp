@@ -77,7 +77,7 @@ SoundData SoundManager::SoundLoadWave(const char* filename)
 	return soundData;
 }
 
-void SoundManager::SoundPlayWave(const SoundData& soundData,bool loopFlag)
+void SoundManager::SoundPlayWave(const SoundData& soundData,bool loopFlag, float volume)
 {
 	//波形フォーマットからSourceVoiceの生成
 	IXAudio2SourceVoice* pSourceVoice = nullptr;
@@ -95,7 +95,8 @@ void SoundManager::SoundPlayWave(const SoundData& soundData,bool loopFlag)
 		buf.LoopCount = XAUDIO2_LOOP_INFINITE;
 	}
 
-	pSourceVoice->SetVolume(0.1f);
+	//音量を調整
+	pSourceVoice->SetVolume(volume);
 
 	//波形データの再生
 	result = pSourceVoice->SubmitSourceBuffer(&buf);

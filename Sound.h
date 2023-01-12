@@ -36,7 +36,7 @@ public:
 	//‰¹º“Ç‚İ‚İ
 	SoundData SoundLoadWave(const char* filename);
 	//‰¹ºÄ¶
-	void SoundPlayWave(const SoundData& soundData,bool loopFlag = false);
+	void SoundPlayWave(const SoundData& soundData,bool loopFlag = false, float volume = 0.1f);
 	//‰¹º‰ğ•ú
 	void SoundUnload(SoundData* soundData);
 	//xAudio2‚Ì‰ğ•ú
