@@ -82,7 +82,7 @@ private:
 
 	bool goalSoundFlag = false;
 
-	Scene scene = Scene::Title;
+	Scene scene = Scene::Game;
 	Scene nextScene = scene;
 
 	GoalObject goal;

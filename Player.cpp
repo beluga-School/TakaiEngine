@@ -18,8 +18,9 @@ void Player::Initialize()
 	gravity = -0.1f;
 	jumpPower = 0;
 
-	model = &ModelManager::GetInstance()->playerM;
+	model = &ModelManager::GetInstance()->subDevM;
 	texture = &TextureManager::GetInstance()->white;
+	color = { 1,0,0,1 };
 	scale = { 5,5,5 };
 	moveMag = 30;
 
@@ -306,7 +307,7 @@ void Player::Draw()
 {
 	if (blinkTimer % 5 == 0)
 	{
-		Obj3d::DrawMaterial();
+		Obj3d::Draw();
 	}
 }
 

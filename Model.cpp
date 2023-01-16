@@ -183,5 +183,6 @@ void ModelManager::PreLoad()
 	firewispM.CreateModel("firewisp");
 	playerM.CreateModel("player");
 	beetleM.CreateModel("beetle");
+	subDevM.CreateModel("subDev");
 	//triangleM.CreateModel("triangle_mat");
 }

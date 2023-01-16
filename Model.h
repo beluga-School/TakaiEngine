@@ -19,6 +19,7 @@ public:
 	std::vector<uint16_t> indices;
 
 	Material material;
+	
 	/*ConstBuffer<ConstBufferDataB1> constBufferMaterial;*/
 
 	/// <summary>
@@ -55,6 +56,7 @@ public:
 	Model firewispM;
 	Model playerM;
 	Model beetleM;
+	Model subDevM;
 
 	void PreLoad();
 
