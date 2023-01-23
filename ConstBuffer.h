@@ -17,10 +17,6 @@ struct ConstBufferDataMaterial {
 	XMFLOAT4 color;	//色(RGBA)
 };
 
-struct ConstBufferDataTransform {
-	Matrix4 mat;	//3D変換行列
-};
-
 struct ConstBufferDataSprite {
 	XMFLOAT4 color;	//色(RGBA)
 	XMMATRIX mat;	//3D変換行列

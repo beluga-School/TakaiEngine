@@ -18,9 +18,8 @@ void Player::Initialize()
 	gravity = -0.1f;
 	jumpPower = 0;
 
-	model = &ModelManager::GetInstance()->subDevM;
+	model = &ModelManager::GetInstance()->subDevM2;
 	texture = &TextureManager::GetInstance()->white;
-	color = { 1,0,0,1 };
 	scale = { 5,5,5 };
 	moveMag = 30;
 
@@ -35,6 +34,7 @@ void Player::Initialize()
 
 void Player::Update(const Stage& stage)
 {
+
 	if (mutekiTimer > 0)
 	{
 		mutekiTimer += TimeManager::deltaTime;

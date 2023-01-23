@@ -10,6 +10,7 @@
 
 #include "ConstBuffer.h"
 #include "Material.h"
+#include <unordered_map>
 
 class Model : public VertexData
 {
@@ -17,6 +18,8 @@ public:
 
 	std::vector<Vertex> vertices;	//こいつらが頑張ればmodel読み込みもいけるっピ
 	std::vector<uint16_t> indices;
+
+	std::unordered_map<unsigned short, std::vector<unsigned short>> smoothData;
 
 	Material material;
 	
@@ -32,7 +35,7 @@ public:
 	/// モデルを読み込んで生成する関数
 	/// </summary>
 	/// <param name="dx12_"></param>
-	void CreateModel(const std::string t);
+	void CreateModel(const std::string t,bool smoothing = false);
 
 	/// <summary>
 	/// マテリアル読み込み
@@ -57,6 +60,7 @@ public:
 	Model playerM;
 	Model beetleM;
 	Model subDevM;
+	Model subDevM2;
 
 	void PreLoad();
 

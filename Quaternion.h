@@ -5,28 +5,43 @@
 class Quaternion
 {
 public:
-	float x;
-	float y;
-	float z;
+	Vector3 vector;
 	float w;
 
 	Quaternion() {
 		IdentityQuaternion();
 	};
 
-	//単位クオータニオン
+	Quaternion(float x,float y,float z,float w) {
+		vector = { x,y,z };
+		this->w = w;
+	};
+
+	//単位クォータニオン
 	static Quaternion IdentityQuaternion();
 
-	Quaternion Conjugate();
+	/// <summary>
+	/// 共役クォータニオン
+	/// 本体を書き換える
+	/// </summary>
+	void Conjugate();
 
-	float Norm();
+	/// <summary>
+	/// 共役クォータニオン
+	/// 共役を入手する
+	/// </summary>
+	/// <returns></returns>
+	Quaternion GetConjugate();
+
+	float GetNorm()const;
 
 	void Normalize();
+	Quaternion GetNormalize();
 
-	void Inverse();
-
-	//自身との掛け算
-	const Quaternion operator*(const Quaternion& q);
+	//クォータニオンとの掛け算
+	Quaternion operator*(Quaternion& r);
+	
+	Quaternion GetInverse();
 
 	Vector3 RotateVector(const Vector3& vector);
 
@@ -34,4 +49,3 @@ public:
 };
 
 Quaternion MakeAxisAngle(const Vector3& axis, float angle);
-

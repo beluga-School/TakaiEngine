@@ -69,7 +69,7 @@ void Model::LoadMaterial(const std::string& directoryPath, const std::string& fi
 	file.close();
 }
 
-void Model::CreateModel(const std::string t)
+void Model::CreateModel(const std::string t, bool smoothing)
 {
 	std::ifstream file;
 	//objファイルを開く
@@ -88,6 +88,8 @@ void Model::CreateModel(const std::string t)
 	vector<XMFLOAT3> positions;	//頂点データ
 	vector<XMFLOAT3> normals;	//法線ベクトル
 	vector<XMFLOAT2> texcoords;	//テクスチャuv
+
+
 
 	string line;
 	while (getline(file, line))
@@ -157,7 +159,7 @@ void Model::CreateModel(const std::string t)
 				index_stream >> indexTexcoord;
 				index_stream.seekg(1, ios_base::cur);//スラッシュを飛ばす
 				index_stream >> indexNormal;
-				
+
 				Vertex vertex{};
 				vertex.pos = positions[indexPosition - 1];
 				vertex.normal = normals[indexNormal - 1];
@@ -166,23 +168,76 @@ void Model::CreateModel(const std::string t)
 
 				//頂点インデックスに追加
 				indices.emplace_back((unsigned short)indices.size());
+
+				//ここでデータを保持
+				if (smoothing)
+				{
+					smoothData[indexPosition].emplace_back(vertices.size() - 1);
+				}
 			}
 		}
 	}
 	file.close();
+
+	for (int i = 0; i < indices.size() / 3; i++)
+	{	//三角形1つごとに計算していく
+		//三角形のインデックスを取り出して、一時的な変数にいれる
+		unsigned short indices0 = indices[i * 3 + 0];
+		unsigned short indices1 = indices[i * 3 + 1];
+		unsigned short indices2 = indices[i * 3 + 2];
+		//三角形を構成する頂点座標をベクトルに代入
+		XMVECTOR p0 = XMLoadFloat3(&vertices[indices0].pos);
+		XMVECTOR p1 = XMLoadFloat3(&vertices[indices1].pos);
+		XMVECTOR p2 = XMLoadFloat3(&vertices[indices2].pos);
+
+		//p0→p1ベクトル、p0→p2ベクトルを計算(ベクトルの減算)
+		XMVECTOR v1 = XMVectorSubtract(p1, p0);
+		XMVECTOR v2 = XMVectorSubtract(p2, p0);
+		//外積は両方から垂直なベクトル
+		XMVECTOR normal = XMVector3Cross(v1, v2);
+		//正規化(長さを1にする)
+		normal = XMVector3Normalize(normal);
+		//求めた法線を頂点データに代入
+		XMStoreFloat3(&vertices[indices0].normal, normal);
+		XMStoreFloat3(&vertices[indices1].normal, normal);
+		XMStoreFloat3(&vertices[indices2].normal, normal);
+	}
+
+	if (smoothing)
+	{
+		//ここで保持したデータを使ってスムージングを計算
+		for (auto itr = smoothData.begin(); itr != smoothData.end(); ++itr)
+		{
+			std::vector<unsigned short>& v = itr->second;
+
+			XMVECTOR normal = {};
+			for (unsigned short index : v)
+			{
+				normal += XMVectorSet(vertices[index].normal.x, vertices[index].normal.y, vertices[index].normal.z, 0);
+			}
+
+			normal = XMVector3Normalize(normal / (float)v.size());
+
+			for (unsigned short index : v)
+			{
+				vertices[index].normal = { normal.m128_f32[0],normal.m128_f32[1] ,normal.m128_f32[2] };
+			}
+		}
+	}
 
 	CreateVertex(vertices, indices);
 }
 
 void ModelManager::PreLoad()
 {
-	cubeM.CreateModel("Cube");
+	cubeM.CreateModel("Cube", true);
 	skyDomeM.CreateModel("skydome");
 	boardM.CreateModel("board");
 	darumaM.CreateModel("boss");
-	firewispM.CreateModel("firewisp");
-	playerM.CreateModel("player");
+	firewispM.CreateModel("firewisp",true);
+	playerM.CreateModel("player", true);
 	beetleM.CreateModel("beetle");
 	subDevM.CreateModel("subDev");
+	subDevM2.CreateModel("subDev",true);
 	//triangleM.CreateModel("triangle_mat");
 }

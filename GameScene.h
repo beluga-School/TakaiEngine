@@ -55,6 +55,9 @@ private:
 
 	Stage stage;
 	Player player;
+
+	Obj3d obj3d;
+
 	std::list<GroundEnemy> gEnemyList;
 
 	std::list<AirEnemy> airEnemyList;

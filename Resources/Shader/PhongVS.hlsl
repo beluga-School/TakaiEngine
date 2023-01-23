@@ -17,14 +17,14 @@ VSOutput main(float4 pos : POSITION, float3 normal : NORMAL, float2 uv : TEXCOOR
     
     float3 eyedir = normalize(eye - pos.xyz);
     
-    float3 reflect = normalize(lightcolor + 2 * dot(-lightdir, normal) * normal);
+    float3 reflect = normalize(lightdir + 2 * dot(-lightdir, normal) * normal);
     
-    float3 specular = pow(saturate(dot(reflect, eye)), shininess) * m_specular;
+    float3 specular = pow(saturate(dot(reflect, eyedir)), shininess) * m_specular;
     
     VSOutput output;
     output.svpos = mul(mat, pos);
 
-    output.color.rgb = (ambient * diffuse + specular) * lightcolor;
+    output.color.rgb = (ambient + diffuse + specular) * lightcolor;
     output.color.a = m_alpha;
     output.uv = uv;
     

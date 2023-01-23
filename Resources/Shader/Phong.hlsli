@@ -15,6 +15,12 @@ cbuffer cbuff2 : register(b2)
 {
     float4 color; //カラー
 };
+    
+cbuffer cbuff2 : register(b3)
+{
+    float3 lightv;      //ライトの方向ベクトル
+    float3 lightcolor;  //ライトの色(RGB)
+};
 
 struct VSOutput
 {

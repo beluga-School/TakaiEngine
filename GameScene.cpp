@@ -4,6 +4,7 @@
 #include "ImguiManager.h"
 #include "MathF.h"
 #include "ObjParticle.h"
+#include "Quaternion.h"
 
 void Game::Initialize()
 {
@@ -24,6 +25,9 @@ void Game::Initialize()
 	skydome.SetTexture(&TextureManager::GetInstance()->white);
 	skydome.scale = { 10,10,10 };
 	skydome.color = { 0.05f,0.05f,0.05f,1.0f };
+	skydome.model->material.ambient = { 0,0,0 };
+	skydome.model->material.diffuse = { 0,0,0 };
+	skydome.model->material.specular = { 0,0,0 };
 
 	SpriteCreate(&goalSprite, &TextureManager::GetInstance()->goalS, { 0.5f,0.5f });
 	SpriteInit(goalSprite, SpriteCommon::spriteCommon, { Util::window_width / 2,Util::window_height / 2 }, 0);
@@ -97,6 +101,13 @@ void Game::Initialize()
 	goalSound = SoundManager::GetInstance()->SoundLoadWave("Resources\\sound\\goal.wav");
 	deadEnemy = SoundManager::GetInstance()->SoundLoadWave("Resources\\sound\\deadenemy.wav");
 	
+	obj3d.Initialize();
+	obj3d.position = player.spawnPos;
+	obj3d.position.y -= 20;
+	obj3d.scale = { 4,4,4 };
+	obj3d.model = &ModelManager::GetInstance()->firewispM;
+	obj3d.texture = &TextureManager::GetInstance()->white;
+
 	float a = -2.0f;
 	float b = 2.0f;
 
@@ -179,6 +190,8 @@ void Game::Initialize()
 
 		cuberotaVec[i] = { MathF::GetRand(3.0f,5.0f),MathF::GetRand(3.0f,5.0f),MathF::GetRand(3.0f,5.0f) };
 	}
+
+	player.Initialize();
 
 	Reset();
 }
@@ -304,6 +317,8 @@ void Game::Update()
 			if (setumei2Sprite.color.w > 0)setumei2Sprite.color.w -= TimeManager::deltaTime;
 		}
 
+		obj3d.Update(camera->matView,camera->matProjection);
+
 		SpriteUpdate(dashIconSprite, SpriteCommon::spriteCommon);
 		SpriteUpdate(redScreenSprite, SpriteCommon::spriteCommon);
 		SpriteUpdate(setumeiSprite, SpriteCommon::spriteCommon);
@@ -340,6 +355,7 @@ void Game::Update()
 	ParticleManager::GetInstance()->Update();
 
 	SceneChangeUpdate();
+
 }
 
 void Game::Draw()
@@ -368,6 +384,8 @@ void Game::Draw()
 		goal.Draw();
 
 		player.Draw();
+		obj3d.DrawMaterial();
+
 		for (GroundEnemy& gEnemy : gEnemyList)
 		{
 			gEnemy.DrawMaterial();
@@ -394,8 +412,8 @@ void Game::Draw()
 		SpriteCommonBeginDraw(SpriteCommon::spriteCommon);
 		SpriteDraw(dashIconSprite);
 
-		SpriteDraw(setumeiSprite);
-		SpriteDraw(setumei2Sprite);
+		//SpriteDraw(setumeiSprite);
+		//SpriteDraw(setumei2Sprite);
 
 		if (player.dashCool > 0)
 		{
@@ -453,7 +471,7 @@ float mag = 20;
 
 void Game::CameraUpdate()
 {
-	/*if (input->TriggerKey(DIK_1))
+	if (input->TriggerKey(DIK_1))
 	{
 		upCam = 1;
 	}
@@ -464,7 +482,7 @@ void Game::CameraUpdate()
 	if (input->TriggerKey(DIK_0))
 	{
 		upCam = 0;
-	}*/
+	}
 
 	Vector3 cVec = {0,0,0};
 
@@ -496,7 +514,7 @@ void Game::CameraUpdate()
 		break;
 	case 2:
 		camera->eye = player.position;
-		camera->eye.z += 35;
+		camera->eye.z += 10;
 		camera->target = player.position;
 		break;
 	}

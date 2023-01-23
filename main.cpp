@@ -125,7 +125,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 
 	soundManager->SoundPlayWave(bgm,true);
 
-	float hoge = 0;
+	GUI gui("hoge");
 
 	//ÉQÅ[ÉÄÉãÅ[Év
 	while (true){
@@ -153,7 +153,9 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	
 		//gui2.Begin({ 800,10 }, { 200,200 });
 
+		gui.Begin({ 800,10 }, { 400,200 });
 		gameScene_.Update();
+		gui.End();
 
 		//gui2.End();
 

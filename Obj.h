@@ -8,6 +8,7 @@ using namespace DirectX;
 #include "Texture.h"
 #include <memory>
 #include "Matrix4.h"
+#include "Light.h"
 
 struct ConstBufferDataB1
 {
@@ -22,6 +23,10 @@ struct ConstBufferDataB1
 struct ConstBufferBrightness
 {
 	XMFLOAT4 brightness;		//カラー
+};
+
+struct ConstBufferDataTransform {
+	Matrix4 mat;	//3D変換行列
 };
 
 class Obj3d
@@ -40,7 +45,6 @@ public:
 	XMFLOAT4 color = { 1.0f,1.0f,1.0f,1.0f };
 
 	Matrix4 matWorld;
-	//XMMATRIX matWorld;	//ワールド変換行列
 
 	bool notScaleFlag = false;
 
