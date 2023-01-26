@@ -1,6 +1,7 @@
 #pragma once
 #include "Vector3.h"
 #include "Matrix4.h"
+#include <math.h>
 
 class Quaternion
 {
@@ -19,6 +20,8 @@ public:
 
 	//単位クォータニオン
 	static Quaternion IdentityQuaternion();
+
+	float Dot(Quaternion& r);
 
 	/// <summary>
 	/// 共役クォータニオン
@@ -40,6 +43,7 @@ public:
 
 	//クォータニオンとの掛け算
 	Quaternion operator*(Quaternion& r);
+	Quaternion operator-();
 	
 	Quaternion GetInverse();
 
@@ -49,3 +53,11 @@ public:
 };
 
 Quaternion MakeAxisAngle(const Vector3& axis, float angle);
+
+//球面線形補間
+Quaternion Slerp(Quaternion& start,Quaternion& end, float t);
+
+const Quaternion operator+(const Quaternion& q, const Quaternion& r);
+const Quaternion operator-(const Quaternion& q, const Quaternion& r);
+const Quaternion operator*(const Quaternion& q, const float& f);
+const Quaternion operator*(const float& f, const Quaternion& q);

@@ -356,6 +356,49 @@ void Game::Update()
 
 	SceneChangeUpdate();
 
+	Quaternion rotation0 = MakeAxisAngle({ 0.71f,0.71f ,0.0f }, 0.3f);
+	Quaternion rotation1 = MakeAxisAngle({ 0.71f,0.0f ,0.71f }, 3.141592f);
+	
+	Quaternion interpolate0 = Slerp(rotation0, rotation1, 0.0f);
+	Quaternion interpolate1 = Slerp(rotation0, rotation1, 0.3f);
+	Quaternion interpolate2 = Slerp(rotation0, rotation1, 0.5f);
+	Quaternion interpolate3 = Slerp(rotation0, rotation1, 0.7f);
+	Quaternion interpolate4 = Slerp(rotation0, rotation1, 1.0f);
+
+	ImGui::Text("interpolate0 %f %f %f %f",
+		interpolate0.vector.x,
+		interpolate0.vector.y,
+		interpolate0.vector.z,
+		interpolate0.w
+	);
+
+	ImGui::Text("interpolate1 %f %f %f %f",
+		interpolate1.vector.x,
+		interpolate1.vector.y,
+		interpolate1.vector.z,
+		interpolate1.w
+	);
+
+	ImGui::Text("interpolate2 %f %f %f %f",
+		interpolate2.vector.x,
+		interpolate2.vector.y,
+		interpolate2.vector.z,
+		interpolate2.w
+	);
+
+	ImGui::Text("interpolate3 %f %f %f %f",
+		interpolate3.vector.x,
+		interpolate3.vector.y,
+		interpolate3.vector.z,
+		interpolate3.w
+	);
+
+	ImGui::Text("interpolate4 %f %f %f %f",
+		interpolate4.vector.x,
+		interpolate4.vector.y,
+		interpolate4.vector.z,
+		interpolate4.w
+	);
 }
 
 void Game::Draw()

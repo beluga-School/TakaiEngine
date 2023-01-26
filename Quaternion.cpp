@@ -1,5 +1,6 @@
 #include "Quaternion.h"
 #include <math.h>
+#include "MathF.h"
 
 Quaternion Quaternion::IdentityQuaternion()
 {
@@ -7,6 +8,12 @@ Quaternion Quaternion::IdentityQuaternion()
 	temp.vector = { 0,0,0 };
 	temp.w = 1;
 	return temp;
+}
+
+float Quaternion::Dot(Quaternion& r)
+{
+	float cos = (vector.x * r.vector.x) + (vector.y * r.vector.y) + (vector.z * r.vector.z) + (w * r.w);
+	return MathF::RadConvDeg(acosf(cos));
 }
 
 void Quaternion::Conjugate()
@@ -123,6 +130,13 @@ Quaternion Quaternion::operator*(Quaternion& r)
 	return temp;
 }
 
+Quaternion Quaternion::operator-()
+{
+	vector = -vector;
+	w = -w;
+	return *this;
+}
+
 Quaternion MakeAxisAngle(const Vector3& axis, float angle)
 {
 	Vector3 axis2 = axis;
@@ -132,4 +146,57 @@ Quaternion MakeAxisAngle(const Vector3& axis, float angle)
 	q.vector = axis * sinf(angle / 2);
 
 	return q;
+}
+
+Quaternion Slerp(Quaternion& start, Quaternion& end, float t)
+{
+	float dot = start.Dot(end);
+	if (dot < 0)
+	{
+		//‚à‚¤•Ð•û‚Ì‰ñ“]‚ð—˜—p‚·‚é
+		start = -start;
+		dot = -dot;//“àÏ‚à”½“]
+	}
+
+	//‚È‚·Šp‚ð‹‚ß‚é
+	float theta = acosf(dot);
+
+	//theta‚Æsin‚ðŽg‚Á‚Ä•âŠÔŒW”scale0,scale1‚ð‹‚ß‚é
+	float scale0 = sinf((1 - t) * theta) / sinf(theta);
+	float scale1 = sinf(t * theta) / sinf(theta);
+
+	//‚»‚ê‚¼‚ê‚Ì•âŠÔŒW”‚ð—˜—p‚µ‚Ä•âŠÔŒã‚ÌQuaternion‚ð‹‚ß‚é
+	return scale0 * start + scale1 * end;
+}
+
+const Quaternion operator+(const Quaternion& q, const Quaternion& r)
+{
+	Quaternion temp;
+	temp.vector = q.vector + r.vector;
+	temp.w = q.w + r.w;
+	return temp;
+}
+
+const Quaternion operator-(const Quaternion& q, const Quaternion& r)
+{
+	Quaternion temp;
+	temp.vector = q.vector - r.vector;
+	temp.w = q.w - r.w;
+	return temp;
+}
+
+const Quaternion operator*(const Quaternion& q, const float& f)
+{
+	Quaternion temp;
+	temp.vector = q.vector * f;
+	temp.w = q.w * f;
+	return temp;
+}
+
+const Quaternion operator*(const float& f, const Quaternion& q)
+{
+	Quaternion temp;
+	temp.vector = q.vector * f;
+	temp.w = q.w * f;
+	return temp;
 }
