@@ -43,8 +43,15 @@ public:
 
 	//クォータニオンとの掛け算
 	Quaternion operator*(Quaternion& r);
+
+	Quaternion operator+();
 	Quaternion operator-();
 	
+	Quaternion& operator+=(const Quaternion& q);
+	Quaternion& operator-=(const Quaternion& q);
+	Quaternion& operator*=(float s);
+	Quaternion& operator/=(float s);
+
 	Quaternion GetInverse();
 
 	Vector3 RotateVector(const Vector3& vector);
@@ -55,9 +62,10 @@ public:
 Quaternion MakeAxisAngle(const Vector3& axis, float angle);
 
 //球面線形補間
-Quaternion Slerp(Quaternion& start,Quaternion& end, float t);
+Quaternion Slerp(Quaternion& q,Quaternion& r, float t);
 
 const Quaternion operator+(const Quaternion& q, const Quaternion& r);
 const Quaternion operator-(const Quaternion& q, const Quaternion& r);
 const Quaternion operator*(const Quaternion& q, const float& f);
 const Quaternion operator*(const float& f, const Quaternion& q);
+const Quaternion operator/(const Quaternion& q, const float& f);

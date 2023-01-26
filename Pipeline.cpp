@@ -13,11 +13,11 @@ PipelineSet CreateObject3DPipeline()
 	//シェーダー
 	Shader shader_;
 
-	//shader_.vsBlob = shader_.Compile(L"Resources\\Shader\\OBJVS.hlsl", "vs_5_0", shader_.vsBlob.Get(), "main");
-	//shader_.psBlob = shader_.Compile(L"Resources\\Shader\\OBJPS.hlsl", "ps_5_0", shader_.psBlob.Get(), "main");
+	shader_.vsBlob = shader_.Compile(L"Resources\\Shader\\OBJVS.hlsl", "vs_5_0", shader_.vsBlob.Get(), "main");
+	shader_.psBlob = shader_.Compile(L"Resources\\Shader\\OBJPS.hlsl", "ps_5_0", shader_.psBlob.Get(), "main");
 	
-	shader_.vsBlob = shader_.Compile(L"Resources\\Shader\\PhongVS.hlsl", "vs_5_0", shader_.vsBlob.Get(), "main");
-	shader_.psBlob = shader_.Compile(L"Resources\\Shader\\PhongPS.hlsl", "ps_5_0", shader_.psBlob.Get(), "main");
+	//shader_.vsBlob = shader_.Compile(L"Resources\\Shader\\PhongVS.hlsl", "vs_5_0", shader_.vsBlob.Get(), "main");
+	//shader_.psBlob = shader_.Compile(L"Resources\\Shader\\PhongPS.hlsl", "ps_5_0", shader_.psBlob.Get(), "main");
 	
 	//shader_.vsBlob = shader_.Compile(L"LambertVS.hlsl", "vs_5_0", shader_.vsBlob.Get(), "main");
 	//shader_.psBlob = shader_.Compile(L"LambertPS.hlsl", "ps_5_0", shader_.psBlob.Get(), "main");

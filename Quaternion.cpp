@@ -1,6 +1,7 @@
 #include "Quaternion.h"
 #include <math.h>
 #include "MathF.h"
+#include <cmath>
 
 Quaternion Quaternion::IdentityQuaternion()
 {
@@ -12,8 +13,7 @@ Quaternion Quaternion::IdentityQuaternion()
 
 float Quaternion::Dot(Quaternion& r)
 {
-	float cos = (vector.x * r.vector.x) + (vector.y * r.vector.y) + (vector.z * r.vector.z) + (w * r.w);
-	return MathF::RadConvDeg(acosf(cos));
+	return (vector.x * r.vector.x) + (vector.y * r.vector.y) + (vector.z * r.vector.z) + (w * r.w);
 }
 
 void Quaternion::Conjugate()
@@ -130,10 +130,50 @@ Quaternion Quaternion::operator*(Quaternion& r)
 	return temp;
 }
 
+Quaternion Quaternion::operator+()
+{
+	return *this;
+}
+
 Quaternion Quaternion::operator-()
 {
-	vector = -vector;
-	w = -w;
+	return Quaternion(-vector.x,-vector.y,-vector.z,-w);
+}
+
+
+Quaternion& Quaternion::operator+=(const Quaternion& q)
+{
+	vector.x += q.vector.x;
+	vector.y += q.vector.y;
+	vector.z += q.vector.z;
+	w += q.w;
+	return *this;
+}
+
+Quaternion& Quaternion::operator-=(const Quaternion& q)
+{
+	vector.x -= q.vector.x;
+	vector.y -= q.vector.y;
+	vector.z -= q.vector.z;
+	w -= q.w;
+	return *this;
+}
+
+Quaternion& Quaternion::operator*=(float s)
+{
+	vector.x *= s;
+	vector.y *= s;
+	vector.z *= s;
+	w *= s;
+	return *this;
+}
+
+Quaternion& Quaternion::operator/=(float s)
+{
+	vector.x /= s;
+	vector.y /= s;
+	vector.z /= s;
+	w /= s;
 	return *this;
 }
 
@@ -148,55 +188,57 @@ Quaternion MakeAxisAngle(const Vector3& axis, float angle)
 	return q;
 }
 
-Quaternion Slerp(Quaternion& start, Quaternion& end, float t)
+Quaternion Slerp(Quaternion& q, Quaternion& r, float t)
 {
-	float dot = start.Dot(end);
+	float dot = q.Dot(r);
 	if (dot < 0)
 	{
 		//Ç‡Ç§ï–ï˚ÇÃâÒì]ÇóòópÇ∑ÇÈ
-		start = -start;
+		q = -q;
 		dot = -dot;//ì‡êœÇ‡îΩì]
 	}
 
 	//Ç»Ç∑äpÇãÅÇﬂÇÈ
-	float theta = acosf(dot);
+	float theta = std::acos(dot);
 
 	//thetaÇ∆sinÇégÇ¡Çƒï‚ä‘åWêîscale0,scale1ÇãÅÇﬂÇÈ
 	float scale0 = sinf((1 - t) * theta) / sinf(theta);
 	float scale1 = sinf(t * theta) / sinf(theta);
 
+	if (dot > 1.0f - 0.0005f)
+	{
+		return (1.0f - t) * q + t * r;
+	}
+
 	//ÇªÇÍÇºÇÍÇÃï‚ä‘åWêîÇóòópÇµÇƒï‚ä‘å„ÇÃQuaternionÇãÅÇﬂÇÈ
-	return scale0 * start + scale1 * end;
+	return scale0 * q + scale1 * r;
 }
 
 const Quaternion operator+(const Quaternion& q, const Quaternion& r)
 {
-	Quaternion temp;
-	temp.vector = q.vector + r.vector;
-	temp.w = q.w + r.w;
-	return temp;
+	Quaternion temp(q);
+	return temp += r;
 }
 
 const Quaternion operator-(const Quaternion& q, const Quaternion& r)
 {
-	Quaternion temp;
-	temp.vector = q.vector - r.vector;
-	temp.w = q.w - r.w;
-	return temp;
+	Quaternion temp(q);
+	return temp -= r;
 }
 
 const Quaternion operator*(const Quaternion& q, const float& f)
 {
-	Quaternion temp;
-	temp.vector = q.vector * f;
-	temp.w = q.w * f;
-	return temp;
+	Quaternion temp(q);
+	return temp *= f;
 }
 
 const Quaternion operator*(const float& f, const Quaternion& q)
 {
-	Quaternion temp;
-	temp.vector = q.vector * f;
-	temp.w = q.w * f;
-	return temp;
+	return q * f;
+}
+
+const Quaternion operator/(const Quaternion& q, float s)
+{
+	Quaternion tmp(q);
+	return tmp /= s;
 }

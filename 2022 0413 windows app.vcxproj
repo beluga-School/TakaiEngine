@@ -197,6 +197,7 @@
     <ClCompile Include="Vertex.cpp" />
     <ClCompile Include="ViewProjection.cpp" />
     <ClCompile Include="WinAPI.cpp" />
+    <ClCompile Include="WinSockManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AirEnemy.h" />
@@ -248,6 +249,7 @@
     <ClInclude Include="Vertex.h" />
     <ClInclude Include="ViewProjection.h" />
     <ClInclude Include="WinAPI.h" />
+    <ClInclude Include="WinSockManager.h" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="DirectXTex\DirectXTex_Desktop_2022_Win10.vcxproj">
