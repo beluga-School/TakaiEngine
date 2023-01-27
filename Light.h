@@ -7,6 +7,7 @@
 struct LightConstBufferData
 {
 	Vector3 direction;
+	float pad;
 	Vector3 color;
 };
 
@@ -29,6 +30,7 @@ public:
 	void TransferBuffer();
 
 	void SetLightDirection(Vector3 lightdir);
+	void SetLightColor(Vector3 color);
 
 private:
 	//定数バッファ

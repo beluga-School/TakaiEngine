@@ -137,5 +137,5 @@ void CubeParticle::Update()
 	cube.rotation.y += rotateSpeed.y * TimeManager::deltaTime;
 	cube.rotation.z += rotateSpeed.z * TimeManager::deltaTime;
 
-	cube.Update(Camera::camera->matView,Camera::camera->matProjection);
+	cube.Update(*Camera::camera);
 }

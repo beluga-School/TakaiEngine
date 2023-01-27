@@ -11,7 +11,7 @@ void Block::Initialize()
 
 void Block::Update()
 {
-	Obj3d::Update(Camera::camera->matView, Camera::camera->matProjection);
+	Obj3d::Update(*Camera::camera);
 	cubeCol.position = position;
 	cubeCol.scale = scale;
 }

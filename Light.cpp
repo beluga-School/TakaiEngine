@@ -24,11 +24,17 @@ void Light::Draw(UINT rootParameterIndex)
 void Light::TransferBuffer()
 {
 	constBuff.constBufferData->direction = -direction;
-	constBuff.constBufferData->color = -color;
+	constBuff.constBufferData->color = color;
 }
 
 void Light::SetLightDirection(Vector3 lightdir)
 {
 	direction = lightdir;
+	dirty = true;
+}
+
+void Light::SetLightColor(Vector3 color)
+{
+	this->color = color;
 	dirty = true;
 }

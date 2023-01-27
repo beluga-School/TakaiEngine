@@ -212,5 +212,5 @@ void ParticleEmitter::Update()
 				color);
 	}
 
-	emitter.Update(Camera::camera->matView, Camera::camera->matProjection);
+	emitter.Update(*Camera::camera);
 }

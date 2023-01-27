@@ -141,16 +141,16 @@ void Game::Initialize()
 	{
 		cube[i].position.x = MathF::GetRand(150.0f, 400.0f);
 		cube[i].position.y = MathF::GetRand(-500.0f, 800.0f);
-		cube[i].position.z = MathF::GetRand(200.0f, -700.0f);
+		cube[i].position.z = MathF::GetRand(-700.0f, 200.0f);
 
 		cuberotaVec[i] = { MathF::GetRand(a,b),MathF::GetRand(a,b),MathF::GetRand(a,b) };
 	}
 
 	for (int i = 100; i < 200; i++)
 	{
-		cube[i].position.x = MathF::GetRand(-150.0f, -400.0f);
+		cube[i].position.x = MathF::GetRand(-400.0f, -150.0f);
 		cube[i].position.y = MathF::GetRand(-500.0f, 800.0f);
-		cube[i].position.z = MathF::GetRand(200.0f, -700.0f);
+		cube[i].position.z = MathF::GetRand(-700.0f, 200.0f);
 
 		cuberotaVec[i] = { MathF::GetRand(a,b),MathF::GetRand(a,b),MathF::GetRand(a,b) };
 	}
@@ -159,7 +159,7 @@ void Game::Initialize()
 	{
 		cube[i].position.x = MathF::GetRand(-150.0f, 150.0f);
 		cube[i].position.y = MathF::GetRand(-500.0f, -200.0f);
-		cube[i].position.z = MathF::GetRand(200.0f, -700.0f);
+		cube[i].position.z = MathF::GetRand(-700.0f, 200.0f);
 
 		cuberotaVec[i] = { MathF::GetRand(a,b),MathF::GetRand(a,b),MathF::GetRand(a,b) };
 	}
@@ -168,7 +168,7 @@ void Game::Initialize()
 	{
 		cube[i].position.x = MathF::GetRand(-150.0f, 150.0f);
 		cube[i].position.y = MathF::GetRand(500.0f, 700.0f);
-		cube[i].position.z = MathF::GetRand(200.0f, -700.0f);
+		cube[i].position.z = MathF::GetRand(-700.0f, 200.0f);
 
 		cuberotaVec[i] = { MathF::GetRand(a,b),MathF::GetRand(a,b),MathF::GetRand(a,b) };
 	}
@@ -186,7 +186,7 @@ void Game::Initialize()
 	{
 		cube[i].position.x = MathF::GetRand(-150.0f, 150.0f);
 		cube[i].position.y = MathF::GetRand(-500.0f, 700.0f);
-		cube[i].position.z = MathF::GetRand(-650.0f, -700.0f);
+		cube[i].position.z = MathF::GetRand(-700.0f, -650.0f);
 
 		cuberotaVec[i] = { MathF::GetRand(3.0f,5.0f),MathF::GetRand(3.0f,5.0f),MathF::GetRand(3.0f,5.0f) };
 	}
@@ -194,6 +194,10 @@ void Game::Initialize()
 	player.Initialize();
 
 	Reset();
+
+	light = Light::Create();
+	light->SetLightColor({ 1,1,1 });
+	Obj3d::SetLight(light);
 }
 
 void Game::Update()
@@ -223,11 +227,11 @@ void Game::Update()
 
 		CameraUpdate();
 		//オブジェクトの更新
-		skydome.Update(camera->matView, camera->matProjection);
+		skydome.Update(*camera);
 		for (int i = 0; i < max; i++)
 		{
 			cube[i].rotation += cuberotaVec[i] * TimeManager::deltaTime;
-			cube[i].Update(camera->matView, camera->matProjection);
+			cube[i].Update(*camera);
 		}
 
 
@@ -317,7 +321,8 @@ void Game::Update()
 			if (setumei2Sprite.color.w > 0)setumei2Sprite.color.w -= TimeManager::deltaTime;
 		}
 
-		obj3d.Update(camera->matView,camera->matProjection);
+		obj3d.rotation.y += TimeManager::deltaTime;
+		obj3d.Update(*camera);
 
 		SpriteUpdate(dashIconSprite, SpriteCommon::spriteCommon);
 		SpriteUpdate(redScreenSprite, SpriteCommon::spriteCommon);
@@ -361,12 +366,8 @@ void Game::Update()
 
 	Quaternion dirToDir = DirectionToDirection(direction1, direction2);
 
-	ImGui::Text("dirToDir %f %f %f %f",
-		dirToDir.vector.x,
-		dirToDir.vector.y,
-		dirToDir.vector.z,
-		dirToDir.w
-	);
+	//light->Update();
+
 }
 
 void Game::Draw()
@@ -417,6 +418,8 @@ void Game::Draw()
 
 		ParticleManager::GetInstance()->Draw();
 
+		//light->Draw(4);
+
 		GeometryObjectPreDraw(geometryObjectPipelineSet);
 
 		//スプライトの前描画(共通コマンド)
@@ -465,7 +468,6 @@ void Game::Draw()
 
 	SpriteCommonBeginDraw(SpriteCommon::spriteCommon);
 	SpriteDraw(sceneChangeBlockOut);
-
 }
 
 void Game::End()
@@ -475,6 +477,8 @@ void Game::End()
 	player.End();
 	SoundManager::GetInstance()->SoundUnload(&push);
 	SoundManager::GetInstance()->SoundUnload(&goalSound);
+
+	delete light;
 }
 
 int upCam = 0;

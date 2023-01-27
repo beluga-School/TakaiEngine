@@ -10,7 +10,8 @@ public:
 	float w;
 
 	Quaternion() {
-		IdentityQuaternion();
+		vector = {0,0,0};
+		w = 1;
 	};
 
 	Quaternion(float x,float y,float z,float w) {

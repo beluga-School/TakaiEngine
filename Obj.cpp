@@ -1,6 +1,8 @@
 #include "Obj.h"
 #include "Result.h"
 
+Light* Obj3d::light = nullptr;
+
 void Obj3d::SetModel(Model* model)
 {
 	this->model = model;
@@ -17,7 +19,7 @@ void Obj3d::Initialize()
 	texture = &TextureManager::GetInstance()->def;
 }
 
-void Obj3d::Update(Matrix4& matView, Matrix4& matProjection)
+void Obj3d::Update(Camera& camera)
 {
 	Matrix4 matScale;	//スケーリング行列
 	Matrix4 matRot;	//回転行列
@@ -68,9 +70,12 @@ void Obj3d::Update(Matrix4& matView, Matrix4& matProjection)
 
 	}
 
-	constBufferT.constBufferData->mat = matWorld * matView * matProjection;
-	////	 ↑ 行列はなんと掛け算によって1つにまとめることができるんです！！！！
-	////		行列は掛ける順番によって結果が変わるので注意！！！注意！！！注意！！！
+	light->Update();
+
+	//constBufferT.constBufferData->mat = matWorld * matView * matProjection;
+	constBufferT.constBufferData->viewproj = camera.matView * camera.matProjection;
+	constBufferT.constBufferData->world = matWorld;
+	constBufferT.constBufferData->cameraPos = camera.eye;
 
 	//constBufferM.constBufferData->color = XMFLOAT4(1, 1, 1, 1.0f);
 
@@ -116,6 +121,8 @@ void Obj3d::Draw() {
 	dx12->commandList->SetGraphicsRootConstantBufferView(2, constBufferT.buffer->GetGPUVirtualAddress());
 	
 	dx12->commandList->SetGraphicsRootConstantBufferView(3, constBufferB.buffer->GetGPUVirtualAddress());
+
+	light->Draw(4);
 
 	//描画コマンド
 	dx12->commandList->DrawIndexedInstanced(model->indices.size() , 1, 0, 0, 0);

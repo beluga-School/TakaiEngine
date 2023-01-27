@@ -11,6 +11,7 @@
 #include "GoalObject.h"
 #include "AirEnemy.h"
 #include "Sound.h"
+#include "Light.h"
 
 enum class Scene
 {
@@ -91,5 +92,7 @@ private:
 	GoalObject goal;
 	
 	bool colflag = false;
+
+	Light *light = nullptr;
 };
 

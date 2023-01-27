@@ -13,11 +13,11 @@ PipelineSet CreateObject3DPipeline()
 	//シェーダー
 	Shader shader_;
 
-	shader_.vsBlob = shader_.Compile(L"Resources\\Shader\\OBJVS.hlsl", "vs_5_0", shader_.vsBlob.Get(), "main");
-	shader_.psBlob = shader_.Compile(L"Resources\\Shader\\OBJPS.hlsl", "ps_5_0", shader_.psBlob.Get(), "main");
+	//shader_.vsBlob = shader_.Compile(L"Resources\\Shader\\OBJVS.hlsl", "vs_5_0", shader_.vsBlob.Get(), "main");
+	//shader_.psBlob = shader_.Compile(L"Resources\\Shader\\OBJPS.hlsl", "ps_5_0", shader_.psBlob.Get(), "main");
 	
-	//shader_.vsBlob = shader_.Compile(L"Resources\\Shader\\PhongVS.hlsl", "vs_5_0", shader_.vsBlob.Get(), "main");
-	//shader_.psBlob = shader_.Compile(L"Resources\\Shader\\PhongPS.hlsl", "ps_5_0", shader_.psBlob.Get(), "main");
+	shader_.vsBlob = shader_.Compile(L"Resources\\Shader\\PhongVS.hlsl", "vs_5_0", shader_.vsBlob.Get(), "main");
+	shader_.psBlob = shader_.Compile(L"Resources\\Shader\\PhongPS.hlsl", "ps_5_0", shader_.psBlob.Get(), "main");
 	
 	//shader_.vsBlob = shader_.Compile(L"LambertVS.hlsl", "vs_5_0", shader_.vsBlob.Get(), "main");
 	//shader_.psBlob = shader_.Compile(L"LambertPS.hlsl", "ps_5_0", shader_.psBlob.Get(), "main");
@@ -128,7 +128,7 @@ PipelineSet CreateObject3DPipeline()
 	descriptorRange.OffsetInDescriptorsFromTableStart = D3D12_DESCRIPTOR_RANGE_OFFSET_APPEND;
 
 	//ルートパラメータの設定
-	D3D12_ROOT_PARAMETER rootParams[4] = {};
+	D3D12_ROOT_PARAMETER rootParams[5] = {};
 	//定数バッファ0番 b0
 	rootParams[0].ParameterType = D3D12_ROOT_PARAMETER_TYPE_CBV;	//種類
 	rootParams[0].Descriptor.ShaderRegister = 0;					//定数バッファ番号
@@ -149,6 +149,12 @@ PipelineSet CreateObject3DPipeline()
 	rootParams[3].Descriptor.ShaderRegister = 2;					//定数バッファ番号
 	rootParams[3].Descriptor.RegisterSpace = 0;						//デフォルト値
 	rootParams[3].ShaderVisibility = D3D12_SHADER_VISIBILITY_ALL;	//すべてのシェーダから見える
+	//定数バッファ3番 b3
+	rootParams[4].ParameterType = D3D12_ROOT_PARAMETER_TYPE_CBV;	//種類
+	rootParams[4].Descriptor.ShaderRegister = 3;					//定数バッファ番号
+	rootParams[4].Descriptor.RegisterSpace = 0;						//デフォルト値
+	rootParams[4].ShaderVisibility = D3D12_SHADER_VISIBILITY_ALL;	//すべてのシェーダから見える
+
 
 	//テクスチャサンプラーの生成 s0
 	D3D12_STATIC_SAMPLER_DESC samplerDesc{};

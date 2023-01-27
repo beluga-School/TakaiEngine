@@ -15,8 +15,6 @@ using namespace DirectX;
 #include "DirectXInit.h"
 #include <vector>
 
-std::vector<int>;
-
 //頂点データ構造体
 struct Vertex
 {

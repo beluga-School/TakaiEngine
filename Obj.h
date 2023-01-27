@@ -9,6 +9,7 @@ using namespace DirectX;
 #include <memory>
 #include "Matrix4.h"
 #include "Light.h"
+#include "ViewProjection.h"
 
 struct ConstBufferDataB1
 {
@@ -26,12 +27,18 @@ struct ConstBufferBrightness
 };
 
 struct ConstBufferDataTransform {
-	Matrix4 mat;	//3D変換行列
+	//Matrix4 mat;	//3D変換行列
+	Matrix4 viewproj;	//ビュープロ行列
+	Matrix4 world;		//ワールド行列
+	Vector3 cameraPos;	//カメラ座標(ワールド行列)
 };
 
 class Obj3d
 {
 public:
+	//全てのオブジェクトで共通のライトデータ
+	static Light* light;
+
 	ConstBuffer<ConstBufferDataTransform> constBufferT;
 	ConstBuffer<ConstBufferDataMaterial> constBufferM;
 	ConstBuffer<ConstBufferBrightness> constBufferB;
@@ -52,11 +59,16 @@ public:
 	Texture *texture = nullptr;
 
 	Model* model = nullptr;
+
 public:
+	static void SetLight(Light* light){
+		Obj3d::light = light;
+	};
+
 	void Initialize();
 	void SetModel(Model *model);
 	void SetTexture(Texture *texture);
-	void Update(Matrix4& matView, Matrix4& matProjection);
+	void Update(Camera& camera);
 
 	Vector3 GetWorldTrans();
 
