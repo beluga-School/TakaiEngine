@@ -205,7 +205,8 @@ Quaternion Slerp(Quaternion& q, Quaternion& r, float t)
 	float scale0 = sinf((1 - t) * theta) / sinf(theta);
 	float scale1 = sinf(t * theta) / sinf(theta);
 
-	if (dot > 1.0f - 0.0005f)
+	float EPSILON = 0.0005f;
+	if (dot > 1.0f - EPSILON)
 	{
 		return (1.0f - t) * q + t * r;
 	}
@@ -241,4 +242,20 @@ const Quaternion operator/(const Quaternion& q, float s)
 {
 	Quaternion tmp(q);
 	return tmp /= s;
+}
+
+Quaternion DirectionToDirection(const Vector3& u, const Vector3& v)
+{
+	Vector3 a = u.GetNormalize();
+	Vector3 b = v.GetNormalize();
+
+	float dot = a.dot(b);
+
+	//äOêœ
+	Vector3 cross = a.GetCross(b);
+	Vector3 axis = cross.GetNormalize();
+
+	float theta = std::acos(dot);
+
+	return MakeAxisAngle(axis,theta);
 }

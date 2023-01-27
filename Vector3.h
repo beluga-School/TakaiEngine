@@ -22,7 +22,7 @@ public:
 	/// </summary>
 	/// <param name="v"></param>
 	/// <returns></returns>
-	Vector3 GetNormalize();
+	Vector3 GetNormalize()const;
 	
 	/// <summary>
 	/// ê≥ãKâª

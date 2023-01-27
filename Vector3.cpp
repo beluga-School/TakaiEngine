@@ -13,7 +13,7 @@ float Vector3::length() const {
 	return sqrtf(x * x + y * y + z * z);
 }
 
-Vector3 Vector3::GetNormalize() {
+Vector3 Vector3::GetNormalize()const {
 	Vector3 v;
 	float len = length();
 	if (len != 0)

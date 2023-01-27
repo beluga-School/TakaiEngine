@@ -69,3 +69,5 @@ const Quaternion operator-(const Quaternion& q, const Quaternion& r);
 const Quaternion operator*(const Quaternion& q, const float& f);
 const Quaternion operator*(const float& f, const Quaternion& q);
 const Quaternion operator/(const Quaternion& q, const float& f);
+
+Quaternion DirectionToDirection(const Vector3& u, const Vector3& v);;
