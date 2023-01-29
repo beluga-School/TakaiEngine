@@ -11,12 +11,16 @@ struct LightConstBufferData
 	Vector3 color;
 };
 
-class Light
+class DirectionalLight
 {
-public:
-	static Light* Create() {
+public://変数
+	Vector3 direction = { 1,0,0 };
+	Vector3 color = { 1,1,1 };
+
+public://関数
+	static DirectionalLight* Create() {
 		//3Dオブジェクトのインスタンスを生成
-		Light* instance = new Light();
+		DirectionalLight* instance = new DirectionalLight();
 		//初期化
 		instance->Initialize();
 		//生成したインスタンスを返す
@@ -32,12 +36,11 @@ public:
 	void SetLightDirection(Vector3 lightdir);
 	void SetLightColor(Vector3 color);
 
-private:
+	bool active = false;
+
+private://変数
 	//定数バッファ
 	ConstBuffer<LightConstBufferData> constBuff;
-
-	Vector3 direction = { 1,0,0};
-	Vector3 color = { 1,1,1 };
 
 	bool dirty = false;
 };

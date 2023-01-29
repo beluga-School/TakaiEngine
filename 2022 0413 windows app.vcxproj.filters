@@ -82,6 +82,24 @@
     <Filter Include="ヘッダー ファイル\Game\Charactor">
       <UniqueIdentifier>{4c5ef092-c777-4322-a608-d892c67febec}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\Light">
+      <UniqueIdentifier>{3c1e7dee-81fa-4053-85e4-831f12f7370d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\Light">
+      <UniqueIdentifier>{bd29e37c-22d6-4cb5-a55e-e98b587699d6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\Particle">
+      <UniqueIdentifier>{be682b69-4609-4ef3-8dc8-8d211e0b7e54}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\libManage">
+      <UniqueIdentifier>{e5881891-c317-4255-8361-a5bebfe8e22b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\libManage">
+      <UniqueIdentifier>{5826963a-4c4d-48a3-a88c-99e8edf39bd9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Particle">
+      <UniqueIdentifier>{460b4cdc-d13a-4f0a-9bbe-019b405a216e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -180,9 +198,6 @@
     <ClCompile Include="imgui\imgui_widgets.cpp">
       <Filter>ソース ファイル\ImGui</Filter>
     </ClCompile>
-    <ClCompile Include="ImguiManager.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
     <ClCompile Include="Player.cpp">
       <Filter>ソース ファイル\Game\Charactor</Filter>
     </ClCompile>
@@ -207,29 +222,35 @@
     <ClCompile Include="Collision.cpp">
       <Filter>ソース ファイル\Game</Filter>
     </ClCompile>
-    <ClCompile Include="GoalObject.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="ObjParticle.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="Bullet.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="Quaternion.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="Light.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="Vector4.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="WinSockManager.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
     <ClCompile Include="AirEnemy.cpp">
       <Filter>ソース ファイル\Game\Charactor</Filter>
+    </ClCompile>
+    <ClCompile Include="DirectionalLight.cpp">
+      <Filter>ソース ファイル\Light</Filter>
+    </ClCompile>
+    <ClCompile Include="Bullet.cpp">
+      <Filter>ソース ファイル\Game</Filter>
+    </ClCompile>
+    <ClCompile Include="Quaternion.cpp">
+      <Filter>ソース ファイル\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="Vector4.cpp">
+      <Filter>ソース ファイル\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="GoalObject.cpp">
+      <Filter>ソース ファイル\Game</Filter>
+    </ClCompile>
+    <ClCompile Include="ImguiManager.cpp">
+      <Filter>ソース ファイル\libManage</Filter>
+    </ClCompile>
+    <ClCompile Include="WinSockManager.cpp">
+      <Filter>ソース ファイル\libManage</Filter>
+    </ClCompile>
+    <ClCompile Include="ObjParticle.cpp">
+      <Filter>ソース ファイル\Particle</Filter>
+    </ClCompile>
+    <ClCompile Include="LightGroup.cpp">
+      <Filter>ソース ファイル\Light</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -332,9 +353,6 @@
     <ClInclude Include="imgui\imstb_truetype.h">
       <Filter>ヘッダー ファイル\ImGui</Filter>
     </ClInclude>
-    <ClInclude Include="ImguiManager.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
     <ClInclude Include="Util.h">
       <Filter>ヘッダー ファイル\Util</Filter>
     </ClInclude>
@@ -359,29 +377,35 @@
     <ClInclude Include="Collision.h">
       <Filter>ヘッダー ファイル\Game</Filter>
     </ClInclude>
-    <ClInclude Include="GoalObject.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="ObjParticle.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Bullet.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Quaternion.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Light.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Vector4.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="WinSockManager.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
     <ClInclude Include="AirEnemy.h">
       <Filter>ヘッダー ファイル\Game\Charactor</Filter>
+    </ClInclude>
+    <ClInclude Include="Bullet.h">
+      <Filter>ヘッダー ファイル\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="DirectionalLight.h">
+      <Filter>ヘッダー ファイル\Light</Filter>
+    </ClInclude>
+    <ClInclude Include="Quaternion.h">
+      <Filter>ヘッダー ファイル\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="Vector4.h">
+      <Filter>ヘッダー ファイル\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="GoalObject.h">
+      <Filter>ヘッダー ファイル\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="ImguiManager.h">
+      <Filter>ヘッダー ファイル\libManage</Filter>
+    </ClInclude>
+    <ClInclude Include="WinSockManager.h">
+      <Filter>ヘッダー ファイル\libManage</Filter>
+    </ClInclude>
+    <ClInclude Include="ObjParticle.h">
+      <Filter>ヘッダー ファイル\Particle</Filter>
+    </ClInclude>
+    <ClInclude Include="LightGroup.h">
+      <Filter>ヘッダー ファイル\Light</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

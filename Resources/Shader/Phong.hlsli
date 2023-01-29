@@ -18,16 +18,27 @@ cbuffer cbuff2 : register(b2)
 {
     float4 color; //カラー
 };
-    
+
+struct DirLight
+{
+    float3 lightv;
+    float3 lightcolor;
+    uint active;
+};
+
 cbuffer cbuff3 : register(b3)
 {
-    float3 lightv : packoffset(c0); //ライトの方向ベクトル
-    float3 lightcolor : packoffset(c1); //ライトの色(RGB)
+    //float3 lightv : packoffset(c0); //ライトの方向ベクトル
+    //float3 lightcolor : packoffset(c1); //ライトの色(RGB)
+    float3 ambientColor : packoffset(c0);
+    DirLight dirLights[3] : packoffset(c1);
 };
 
 struct VSOutput
 {
     float4 svpos : SV_POSITION;
-    float4 color : COLOR;
+    //float4 color : COLOR;
+    float4 worldPos : POSITION; //ワールド座標
+    float3 normal : NORMAL;     //法線
     float2 uv : TEXCOORD;
 };

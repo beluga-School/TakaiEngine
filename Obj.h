@@ -8,7 +8,7 @@ using namespace DirectX;
 #include "Texture.h"
 #include <memory>
 #include "Matrix4.h"
-#include "Light.h"
+#include "LightGroup.h"
 #include "ViewProjection.h"
 
 struct ConstBufferDataB1
@@ -43,7 +43,7 @@ class Obj3d
 {
 public:
 	//全てのオブジェクトで共通のライトデータ
-	static Light* light;
+	static LightGroup* lightGroup;
 	static PipeLineMode mode;
 
 	ConstBuffer<ConstBufferDataTransform> constBufferT;
@@ -68,8 +68,8 @@ public:
 	Model* model = nullptr;
 
 public:
-	static void SetLight(Light* light){
-		Obj3d::light = light;
+	static void SetLight(LightGroup* light){
+		Obj3d::lightGroup = light;
 	};
 
 	void Initialize();

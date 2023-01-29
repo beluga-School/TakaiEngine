@@ -11,7 +11,7 @@
 #include "GoalObject.h"
 #include "AirEnemy.h"
 #include "Sound.h"
-#include "Light.h"
+#include "LightGroup.h"
 
 //enum class Scene
 //{
@@ -89,6 +89,6 @@ private:
 	
 	bool colflag = false;
 
-	Light *light = nullptr;
+	LightGroup *lightGroup = nullptr;
 };
 

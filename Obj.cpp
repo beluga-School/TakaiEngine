@@ -1,7 +1,7 @@
 #include "Obj.h"
 #include "Result.h"
 
-Light* Obj3d::light = nullptr;
+LightGroup* Obj3d::lightGroup = nullptr;
 PipeLineMode Obj3d::mode = PipeLineMode::PHONG;
 
 void Obj3d::SetModel(Model* model)
@@ -71,7 +71,7 @@ void Obj3d::Update(Camera& camera)
 
 	}
 
-	light->Update();
+	lightGroup->Update();
 
 	//constBufferT.constBufferData->mat = matWorld * matView * matProjection;
 	constBufferT.constBufferData->viewproj = camera.matView * camera.matProjection;
@@ -125,7 +125,7 @@ void Obj3d::Draw() {
 
 	if (mode == PipeLineMode::PHONG)
 	{
-		light->Draw(4);
+		lightGroup->Draw(4);
 	}
 
 	//描画コマンド
@@ -156,7 +156,7 @@ void Obj3d::DrawMaterial() {
 
 	if (mode == PipeLineMode::PHONG)
 	{
-		light->Draw(4);
+		lightGroup->Draw(4);
 	}
 
 	//描画コマンド

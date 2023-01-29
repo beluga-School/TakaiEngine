@@ -172,11 +172,11 @@ void Game::Initialize()
 
 	Reset();
 
-	light = Light::Create();
-	light->SetLightColor({ 1,1,1 });
-	Obj3d::SetLight(light);
+	lightGroup = LightGroup::Create();
+	Obj3d::SetLight(lightGroup);
 
 	lightObj.Initialize();
+	lightObj.position = { 0.5f,0,0 };
 	lightObj.scale = { 3,3,3 };
 	lightObj.model = &ModelManager::GetInstance()->cubeM;
 	lightObj.texture = &TextureManager::GetInstance()->white;
@@ -196,11 +196,14 @@ void Game::Update()
 		Obj3d::mode = PipeLineMode::PHONG;
 	}
 
-	ImGui::SliderFloat("lightX", &lightObj.position.x, -10, 10);
+	/*ImGui::SliderFloat("lightX", &lightObj.position.x, -10, 10);
 	ImGui::SliderFloat("lightY", &lightObj.position.y, -10, 10);
 	ImGui::SliderFloat("lightZ", &lightObj.position.z, -10, 10);
 
-	light->SetLightDirection(lightObj.position);
+	for (int i = 0; i < DirLightNum; i++)
+	{
+		lightGroup->SetDirLightColor(i,lightObj.position);
+	}*/
 
 	lightObj.Update(*camera);
 
@@ -358,7 +361,7 @@ void Game::End()
 	SoundManager::GetInstance()->SoundUnload(&push);
 	SoundManager::GetInstance()->SoundUnload(&goalSound);
 
-	delete light;
+	delete lightGroup;
 }
 
 int upCam = 0;
