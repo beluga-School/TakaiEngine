@@ -8,7 +8,10 @@ cbuffer cbuff0 : register(b0)
 
 cbuffer cbuff1 : register(b1)
 {
-    matrix mat; //3D変換行列
+    //matrix mat; //3D変換行列
+    matrix viewproj; //ビュープロ行列
+    matrix world; //ワールド行列
+    float3 cameraPos; //カメラ座標(ワールド座標)
 };
 
 cbuffer cbuff2 : register(b2)

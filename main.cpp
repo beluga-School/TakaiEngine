@@ -123,9 +123,9 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	//pEmitter.Initialize();
 	//pEmitter.SetInfo({ -10,-10,20 }, 10, 5,{0,0.5f,1,1}, 1, true);
 
-	soundManager->SoundPlayWave(bgm,true);
+	//soundManager->SoundPlayWave(bgm,true);
 
-	//GUI gui("hoge");
+	GUI gui("GameSceneGUI");
 
 	//ゲームループ
 	while (true){
@@ -151,13 +151,9 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		//更新処理
 		input_->Update();
 	
-		//gui2.Begin({ 800,10 }, { 200,200 });
-
-		//gui.Begin({ 800,10 }, { 400,200 });
+		gui.Begin({ 800,10 }, { 400,200 });
 		gameScene_.Update();
-		//gui.End();
-
-		//gui2.End();
+		gui.End();
 
 		//pEmitter.Update();
 

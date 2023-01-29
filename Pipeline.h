@@ -22,6 +22,8 @@ struct PipelineSet
 
 PipelineSet CreateObject3DPipeline();
 
+PipelineSet CreateLambertPipeline();
+
 PipelineSet CreateSpritePipeline();
 
 PipelineSet CreateGeometryPipeline();

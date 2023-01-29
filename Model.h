@@ -57,6 +57,7 @@ public:
 	Model boardM;
 	Model darumaM;
 	Model firewispM;
+	Model firewispSmoothingM;
 	Model playerM;
 	Model beetleM;
 	Model subDevM;

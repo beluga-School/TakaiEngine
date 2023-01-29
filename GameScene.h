@@ -13,14 +13,13 @@
 #include "Sound.h"
 #include "Light.h"
 
-enum class Scene
-{
-	Title,
-	Game,
-	Clear,
-	GameOver,
-};
-
+//enum class Scene
+//{
+//	Title,
+//	Game,
+//	Clear,
+//	GameOver,
+//};
 const int max = 500;
 
 class Game
@@ -35,8 +34,8 @@ public:
 	void CameraUpdate();
 
 	//シーンチェンジの暗転
-	void SceneChange(Scene scene);
-	void SceneChangeUpdate();
+	//void SceneChange(Scene scene);
+	//void SceneChangeUpdate();
 
 	void SetAirEnemy(Vector3 position, bool hanten = false);
 	void SetGroundEnemy(Vector3 position, bool hanten = false);
@@ -46,7 +45,7 @@ private:
 	void DamageEffect();
 
 	Input* input = Input::GetInstance();
-	Sprite sceneChangeBlockOut;
+
 	PipelineSet object3dPipelineSet;
 	PipelineSet geometryObjectPipelineSet;
 	
@@ -57,7 +56,9 @@ private:
 	Stage stage;
 	Player player;
 
-	Obj3d obj3d;
+	Obj3d firewispnorm;
+	Obj3d firewispsmooth;
+	Obj3d lightObj;
 
 	std::list<GroundEnemy> gEnemyList;
 
@@ -67,9 +68,6 @@ private:
 	Sprite TitleSprite;
 	Sprite startSprite;
 	Sprite spaceSprite;
-	Sprite dashIconSprite;
-	Sprite dashCoolSprite;
-	Sprite hpBarSprite[10];
 	Sprite redScreenSprite;
 	Sprite setumeiSprite;
 	Sprite setumei2Sprite;
@@ -86,10 +84,8 @@ private:
 
 	bool goalSoundFlag = false;
 
-	Scene scene = Scene::Game;
-	Scene nextScene = scene;
-
-	GoalObject goal;
+	//Scene scene = Scene::Game;
+	//Scene nextScene = scene;
 	
 	bool colflag = false;
 

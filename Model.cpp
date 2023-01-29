@@ -234,8 +234,9 @@ void ModelManager::PreLoad()
 	skyDomeM.CreateModel("skydome");
 	boardM.CreateModel("board");
 	darumaM.CreateModel("boss");
-	firewispM.CreateModel("firewisp",true);
-	playerM.CreateModel("player", true);
+	firewispM.CreateModel("firewisp");
+	firewispSmoothingM.CreateModel("firewisp",true);
+	playerM.CreateModel("player");
 	beetleM.CreateModel("beetle");
 	subDevM.CreateModel("subDev");
 	subDevM2.CreateModel("subDev",true);

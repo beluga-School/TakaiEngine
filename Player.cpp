@@ -188,32 +188,32 @@ void Player::Update(const Stage& stage)
 
 	GetCursorPos(&point);
 
-	static bool hoge = true;
+	static bool hoge = false;
 
-	/*if (input->TriggerKey(DIK_N))
+	if (input->TriggerKey(DIK_N))
 	{
 		hoge = !hoge;
-	}*/
+	}
 
 	if (hoge)
 	{
 		SetCursorPos(max.x, max.y);
 		ShowCursor(false);
+	
+		horizontalRotation += (point.x - max.x) * mouseSpd;
+		verticalRotation += (point.y - max.y) * mouseSpd;
+
+		if (verticalRotation > MathF::PI / 2 - MathF::DegConvRad(1.0f)) verticalRotation = MathF::PI / 2 - MathF::DegConvRad(1.0f);
+		if (verticalRotation < -MathF::PI / 2 + MathF::DegConvRad(1.0f)) verticalRotation = -MathF::PI / 2 + MathF::DegConvRad(1.0f);
+
+		//‰ñ“]‚ðÝ’è
+		rotation.x = -verticalRotation;
+		rotation.y = horizontalRotation;
 	}
 	else
 	{
 		ShowCursor(true);
 	}
-
-	horizontalRotation += (point.x - max.x) * mouseSpd;
-	verticalRotation += (point.y - max.y) * mouseSpd;
-
-	if (verticalRotation > MathF::PI / 2 - MathF::DegConvRad(1.0f)) verticalRotation = MathF::PI / 2 - MathF::DegConvRad(1.0f);
-	if (verticalRotation < -MathF::PI / 2 + MathF::DegConvRad(1.0f)) verticalRotation = -MathF::PI / 2 + MathF::DegConvRad(1.0f);
-
-	//‰ñ“]‚ðÝ’è
-	rotation.x = -verticalRotation;
-	rotation.y = horizontalRotation;
 
 	//À•W‚ÌXV
 	position += moveValue;

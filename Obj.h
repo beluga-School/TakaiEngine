@@ -33,11 +33,18 @@ struct ConstBufferDataTransform {
 	Vector3 cameraPos;	//カメラ座標(ワールド行列)
 };
 
+enum class PipeLineMode
+{
+	LAMBERT,
+	PHONG,
+};
+
 class Obj3d
 {
 public:
 	//全てのオブジェクトで共通のライトデータ
 	static Light* light;
+	static PipeLineMode mode;
 
 	ConstBuffer<ConstBufferDataTransform> constBufferT;
 	ConstBuffer<ConstBufferDataMaterial> constBufferM;

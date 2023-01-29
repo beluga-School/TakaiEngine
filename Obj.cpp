@@ -2,6 +2,7 @@
 #include "Result.h"
 
 Light* Obj3d::light = nullptr;
+PipeLineMode Obj3d::mode = PipeLineMode::PHONG;
 
 void Obj3d::SetModel(Model* model)
 {
@@ -122,7 +123,10 @@ void Obj3d::Draw() {
 	
 	dx12->commandList->SetGraphicsRootConstantBufferView(3, constBufferB.buffer->GetGPUVirtualAddress());
 
-	light->Draw(4);
+	if (mode == PipeLineMode::PHONG)
+	{
+		light->Draw(4);
+	}
 
 	//描画コマンド
 	dx12->commandList->DrawIndexedInstanced(model->indices.size() , 1, 0, 0, 0);
@@ -149,6 +153,11 @@ void Obj3d::DrawMaterial() {
 	dx12->commandList->SetGraphicsRootConstantBufferView(2, constBufferT.buffer->GetGPUVirtualAddress());
 
 	dx12->commandList->SetGraphicsRootConstantBufferView(3, constBufferB.buffer->GetGPUVirtualAddress());
+
+	if (mode == PipeLineMode::PHONG)
+	{
+		light->Draw(4);
+	}
 
 	//描画コマンド
 	dx12->commandList->DrawIndexedInstanced(model->indices.size(), 1, 0, 0, 0);
