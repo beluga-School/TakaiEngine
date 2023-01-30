@@ -3,6 +3,8 @@
 #include "Result.h"
 #include "Util.h"
 #include "Texture.h"
+#include "LightGroup.h"
+#include "Obj.h"
 
 ComPtr<ID3D12DescriptorHeap> dsvHeap = nullptr;
 
@@ -122,6 +124,8 @@ void BasicObjectPreDraw(PipelineSet objectPipelineSet)
 
 	//SRVヒープの設定コマンド
 	dx12->commandList->SetDescriptorHeaps(1, texM->srvHeap.GetAddressOf());
+
+	LightGroup::lightGroup->Draw(4);
 }
 
 void GeometryObjectPreDraw(PipelineSet geometryPipelineSet)

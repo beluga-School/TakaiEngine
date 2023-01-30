@@ -173,7 +173,13 @@ void Game::Initialize()
 	Reset();
 
 	lightGroup = LightGroup::Create();
-	Obj3d::SetLight(lightGroup);
+	//lightGroup->SetDirLightActive(0, false);
+	//lightGroup->SetDirLightActive(1, false);
+	//lightGroup->SetDirLightActive(2, false);
+
+	lightGroup->SetPointLightActive(0, true);
+	lightGroup->SetPointLightPos(0, { 0.5f,1.0f,0.0f });
+	LightGroup::SetLight(lightGroup);
 
 	lightObj.Initialize();
 	lightObj.position = { 0.5f,0,0 };
@@ -184,16 +190,18 @@ void Game::Initialize()
 
 void Game::Update()
 {
+
 	setumeiEndTime += TimeManager::deltaTime;
 
+	ImGui::Text("FPS %f", TimeManager::fps);
 
 	if (ImGui::Button("LAMBERT"))
 	{
-		Obj3d::mode = PipeLineMode::LAMBERT;
+		object3dPipelineSet = CreateLambertPipeline();
 	}
 	if (ImGui::Button("PHONG"))
 	{
-		Obj3d::mode = PipeLineMode::PHONG;
+		object3dPipelineSet = CreateObject3DPipeline();
 	}
 
 	/*ImGui::SliderFloat("lightX", &lightObj.position.x, -10, 10);
@@ -207,19 +215,10 @@ void Game::Update()
 
 	lightObj.Update(*camera);
 
-	switch (Obj3d::mode)
-	{
-	case PipeLineMode::LAMBERT:
-		object3dPipelineSet = CreateLambertPipeline();
-		break;
-	case PipeLineMode::PHONG:
-		object3dPipelineSet = CreateObject3DPipeline();
-		break;
-	}
-
 	CameraUpdate();
 	//オブジェクトの更新
 	skydome.Update(*camera);
+
 	for (int i = 0; i < max; i++)
 	{
 		cube[i].rotation += cuberotaVec[i] * TimeManager::deltaTime;
@@ -311,6 +310,8 @@ void Game::Update()
 	SpriteUpdate(setumei2Sprite, SpriteCommon::spriteCommon);
 
 	ParticleManager::GetInstance()->Update();
+	
+	lightGroup->Update();
 }
 
 void Game::Draw()
@@ -345,7 +346,7 @@ void Game::Draw()
 
 	ParticleManager::GetInstance()->Draw();
 
-	GeometryObjectPreDraw(geometryObjectPipelineSet);
+	//GeometryObjectPreDraw(geometryObjectPipelineSet);
 
 	//スプライトの前描画(共通コマンド)
 	SpriteCommonBeginDraw(SpriteCommon::spriteCommon);

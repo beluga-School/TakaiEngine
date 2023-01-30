@@ -33,18 +33,9 @@ struct ConstBufferDataTransform {
 	Vector3 cameraPos;	//カメラ座標(ワールド行列)
 };
 
-enum class PipeLineMode
-{
-	LAMBERT,
-	PHONG,
-};
-
 class Obj3d
 {
 public:
-	//全てのオブジェクトで共通のライトデータ
-	static LightGroup* lightGroup;
-	static PipeLineMode mode;
 
 	ConstBuffer<ConstBufferDataTransform> constBufferT;
 	ConstBuffer<ConstBufferDataMaterial> constBufferM;
@@ -68,9 +59,6 @@ public:
 	Model* model = nullptr;
 
 public:
-	static void SetLight(LightGroup* light){
-		Obj3d::lightGroup = light;
-	};
 
 	void Initialize();
 	void SetModel(Model *model);

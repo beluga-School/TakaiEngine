@@ -1,9 +1,6 @@
 #include "Obj.h"
 #include "Result.h"
 
-LightGroup* Obj3d::lightGroup = nullptr;
-PipeLineMode Obj3d::mode = PipeLineMode::PHONG;
-
 void Obj3d::SetModel(Model* model)
 {
 	this->model = model;
@@ -71,8 +68,6 @@ void Obj3d::Update(Camera& camera)
 
 	}
 
-	lightGroup->Update();
-
 	//constBufferT.constBufferData->mat = matWorld * matView * matProjection;
 	constBufferT.constBufferData->viewproj = camera.matView * camera.matProjection;
 	constBufferT.constBufferData->world = matWorld;
@@ -123,11 +118,6 @@ void Obj3d::Draw() {
 	
 	dx12->commandList->SetGraphicsRootConstantBufferView(3, constBufferB.buffer->GetGPUVirtualAddress());
 
-	if (mode == PipeLineMode::PHONG)
-	{
-		lightGroup->Draw(4);
-	}
-
 	//描画コマンド
 	dx12->commandList->DrawIndexedInstanced(model->indices.size() , 1, 0, 0, 0);
 }
@@ -153,11 +143,6 @@ void Obj3d::DrawMaterial() {
 	dx12->commandList->SetGraphicsRootConstantBufferView(2, constBufferT.buffer->GetGPUVirtualAddress());
 
 	dx12->commandList->SetGraphicsRootConstantBufferView(3, constBufferB.buffer->GetGPUVirtualAddress());
-
-	if (mode == PipeLineMode::PHONG)
-	{
-		lightGroup->Draw(4);
-	}
 
 	//描画コマンド
 	dx12->commandList->DrawIndexedInstanced(model->indices.size(), 1, 0, 0, 0);

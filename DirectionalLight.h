@@ -4,18 +4,18 @@
 #include "Vector4.h"
 #include "ConstBuffer.h"
 
-struct LightConstBufferData
-{
-	Vector3 direction;
-	float pad;
-	Vector3 color;
-};
-
 class DirectionalLight
 {
 public://変数
 	Vector3 direction = { 1,0,0 };
 	Vector3 color = { 1,1,1 };
+
+	struct ConstBufferData
+	{
+		Vector3 direction;
+		bool active;
+		Vector3 color;
+	};
 
 public://関数
 	static DirectionalLight* Create() {
@@ -40,7 +40,7 @@ public://関数
 
 private://変数
 	//定数バッファ
-	ConstBuffer<LightConstBufferData> constBuff;
+	ConstBuffer<ConstBufferData> constBuff;
 
 	bool dirty = false;
 };

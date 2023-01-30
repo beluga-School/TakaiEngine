@@ -1,6 +1,8 @@
 #include "LightGroup.h"
 #include "DirectXInit.h"
 
+LightGroup* LightGroup::lightGroup = nullptr;
+
 LightGroup* LightGroup::Create()
 {
 	LightGroup* instance = new LightGroup();
@@ -50,31 +52,75 @@ void LightGroup::TransferBuffer()
 			constBuff.constBufferData->dirLights[i].active = false;
 		}
 	}
+	for (int i = 0; i < PointLightNum; i++)
+	{
+		if (pointLights[i].active) {
+			constBuff.constBufferData->pointLights[i].active = true;
+			constBuff.constBufferData->pointLights[i].lightPos = pointLights[i].lightPos;
+			constBuff.constBufferData->pointLights[i].lightColor = pointLights[i].lightColor;
+			constBuff.constBufferData->pointLights[i].lighttAtten = pointLights[i].lightAtten;
+		}
+		else
+		{
+			constBuff.constBufferData->pointLights[i].active = false;
+		}
+	}
 }
 
-void LightGroup::SetAmbientColor(Vector3& color)
+void LightGroup::SetAmbientColor(const Vector3& color)
 {
 	ambienColor = color;
 	dirty = true;
 }
 
-void LightGroup::SetDirLightActive(int index, bool active)
+void LightGroup::SetDirLightActive(int index, const bool& active)
 {
 	assert(0 <= index && index < DirLightNum);
 	dirLights[index].active = active;
 }
 
-void LightGroup::SetDirLightDir(int index, Vector3 lightdir)
+void LightGroup::SetDirLightDir(int index, const Vector3& lightdir)
 {
 	assert(0 <= index && index < DirLightNum);
 	dirLights[index].direction = lightdir;
 	dirty = true;
 }
 
-void LightGroup::SetDirLightColor(int index, Vector3 lightcolor)
+void LightGroup::SetDirLightColor(int index, const Vector3& lightcolor)
 {
 	assert(0 <= index && index < DirLightNum);
 	dirLights[index].color = lightcolor;
+	dirty = true;
+}
+
+void LightGroup::SetPointLightActive(int index, const bool& active)
+{
+	assert(0 <= index && index < PointLightNum);
+
+	pointLights[index].active = active;
+}
+
+void LightGroup::SetPointLightPos(int index, const Vector3& pos)
+{
+	assert(0 <= index && index < PointLightNum);
+
+	pointLights[index].lightPos = pos;
+	dirty = true;
+}
+
+void LightGroup::SetPointLightColor(int index, const Vector3& color)
+{
+	assert(0 <= index && index < PointLightNum);
+
+	pointLights[index].lightColor = color;
+	dirty = true;
+}
+
+void LightGroup::SetPointLightAtten(int index, const Vector3& atten)
+{
+	assert(0 <= index && index < PointLightNum);
+
+	pointLights[index].lightAtten = atten;
 	dirty = true;
 }
 
