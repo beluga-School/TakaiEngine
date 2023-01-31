@@ -15,6 +15,7 @@ public://•Ï”
 		Vector3 direction;
 		bool active;
 		Vector3 color;
+		float pad;
 	};
 
 public://ŠÖ”

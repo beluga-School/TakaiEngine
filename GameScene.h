@@ -58,6 +58,7 @@ private:
 
 	Obj3d firewispnorm;
 	Obj3d firewispsmooth;
+	Obj3d sphereObj;
 	Obj3d lightObj;
 
 	std::list<GroundEnemy> gEnemyList;

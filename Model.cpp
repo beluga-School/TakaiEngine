@@ -239,6 +239,6 @@ void ModelManager::PreLoad()
 	playerM.CreateModel("player");
 	beetleM.CreateModel("beetle");
 	subDevM.CreateModel("subDev");
-	subDevM2.CreateModel("subDev",true);
+	sphereM.CreateModel("Sphere",true);
 	//triangleM.CreateModel("triangle_mat");
 }

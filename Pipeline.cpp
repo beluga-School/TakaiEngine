@@ -206,8 +206,8 @@ PipelineSet CreateLambertPipeline()
 	//シェーダー
 	Shader shader_;
 
-	shader_.vsBlob = shader_.Compile(L"LambertVS.hlsl", "vs_5_0", shader_.vsBlob.Get(), "main");
-	shader_.psBlob = shader_.Compile(L"LambertPS.hlsl", "ps_5_0", shader_.psBlob.Get(), "main");
+	shader_.vsBlob = shader_.Compile(L"Resources\\Shader\\LambertVS.hlsl", "vs_5_0", shader_.vsBlob.Get(), "main");
+	shader_.psBlob = shader_.Compile(L"Resources\\Shader\\LambertPS.hlsl", "ps_5_0", shader_.psBlob.Get(), "main");
 
 	//グラフィックスパイプライン設定
 	D3D12_GRAPHICS_PIPELINE_STATE_DESC pipelineDesc{};

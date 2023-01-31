@@ -18,7 +18,7 @@ void Player::Initialize()
 	gravity = -0.1f;
 	jumpPower = 0;
 
-	model = &ModelManager::GetInstance()->subDevM2;
+	model = &ModelManager::GetInstance()->cubeM;
 	texture = &TextureManager::GetInstance()->white;
 	scale = { 5,5,5 };
 	moveMag = 30;
@@ -213,7 +213,36 @@ void Player::Update(const Stage& stage)
 	else
 	{
 		ShowCursor(true);
+
+		if (input->PushKey(DIK_RIGHT))
+		{
+			rotation.y += TimeManager::deltaTime;
+		}
+		if (input->PushKey(DIK_LEFT))
+		{
+			rotation.y -= TimeManager::deltaTime;
+		}
+		if (input->PushKey(DIK_UP))
+		{
+			rotation.x += TimeManager::deltaTime;
+		}
+		if (input->PushKey(DIK_DOWN))
+		{
+			rotation.x -= TimeManager::deltaTime;
+		}
+
+		if (rotation.x > MathF::PI / 2 - MathF::DegConvRad(1.0f)) rotation.x = MathF::PI / 2 - MathF::DegConvRad(1.0f);
+		if (rotation.x < -MathF::PI / 2 + MathF::DegConvRad(1.0f)) rotation.x = -MathF::PI / 2 + MathF::DegConvRad(1.0f);
 	}
+	if (input->TriggerKey(DIK_R))
+	{
+		rotation.x = 0;
+		//rotation.y = 0;
+		verticalRotation = 0;
+		//horizontalRotation = 0;
+	}
+
+	ImGui::Text("Toggle :[N.key] |cameraMouseMoveMode %d", hoge);
 
 	//ç¿ïWÇÃçXêV
 	position += moveValue;

@@ -253,7 +253,7 @@
       <Filter>ソース ファイル\Light</Filter>
     </ClCompile>
     <ClCompile Include="PointLight.cpp">
-      <Filter>ソース ファイル</Filter>
+      <Filter>ソース ファイル\Light</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -411,7 +411,7 @@
       <Filter>ヘッダー ファイル\Light</Filter>
     </ClInclude>
     <ClInclude Include="PointLight.h">
-      <Filter>ヘッダー ファイル</Filter>
+      <Filter>ヘッダー ファイル\Light</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -431,10 +431,10 @@
     <None Include="Resources\Shader\Particle.hlsli">
       <Filter>シェーダー</Filter>
     </None>
-    <None Include="Lambert.hlsli">
+    <None Include="Resources\Shader\Phong.hlsli">
       <Filter>シェーダー</Filter>
     </None>
-    <None Include="Resources\Shader\Phong.hlsli">
+    <None Include="Resources\Shader\Lambert.hlsli">
       <Filter>シェーダー</Filter>
     </None>
   </ItemGroup>
@@ -475,16 +475,16 @@
     <FxCompile Include="Resources\Shader\ParticleVS.hlsl">
       <Filter>シェーダー</Filter>
     </FxCompile>
-    <FxCompile Include="LambertPS.hlsl">
-      <Filter>シェーダー</Filter>
-    </FxCompile>
-    <FxCompile Include="LambertVS.hlsl">
-      <Filter>シェーダー</Filter>
-    </FxCompile>
     <FxCompile Include="Resources\Shader\PhongVS.hlsl">
       <Filter>シェーダー</Filter>
     </FxCompile>
     <FxCompile Include="Resources\Shader\PhongPS.hlsl">
+      <Filter>シェーダー</Filter>
+    </FxCompile>
+    <FxCompile Include="Resources\Shader\LambertPS.hlsl">
+      <Filter>シェーダー</Filter>
+    </FxCompile>
+    <FxCompile Include="Resources\Shader\LambertVS.hlsl">
       <Filter>シェーダー</Filter>
     </FxCompile>
   </ItemGroup>

@@ -69,12 +69,12 @@ public://関数
 	//標準のライト設定
 	void DefaultLightSet();
 
+	DirectionalLight dirLights[DirLightNum];
+	PointLight pointLights[DirLightNum];
+
 private:
 	//環境光の色
 	Vector3 ambienColor = { 1,1,1 };
-
-	DirectionalLight dirLights[DirLightNum];
-	PointLight pointLights[DirLightNum];
 
 	bool dirty = false;
 };

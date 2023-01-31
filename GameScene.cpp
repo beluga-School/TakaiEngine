@@ -84,6 +84,12 @@ void Game::Initialize()
 	firewispsmooth.scale = { 10,10,10 };
 	firewispsmooth.model = &ModelManager::GetInstance()->firewispSmoothingM;
 	firewispsmooth.texture = &TextureManager::GetInstance()->white;
+	
+	sphereObj.Initialize();
+	sphereObj.position = { -20,-20,0 };
+	sphereObj.scale = { 10,10,10 };
+	sphereObj.model = &ModelManager::GetInstance()->sphereM;
+	sphereObj.texture = &TextureManager::GetInstance()->white;
 
 	float a = -2.0f;
 	float b = 2.0f;
@@ -188,6 +194,8 @@ void Game::Initialize()
 	lightObj.texture = &TextureManager::GetInstance()->white;
 }
 
+GUI gui2("Light");
+
 void Game::Update()
 {
 
@@ -204,14 +212,88 @@ void Game::Update()
 		object3dPipelineSet = CreateObject3DPipeline();
 	}
 
-	/*ImGui::SliderFloat("lightX", &lightObj.position.x, -10, 10);
-	ImGui::SliderFloat("lightY", &lightObj.position.y, -10, 10);
-	ImGui::SliderFloat("lightZ", &lightObj.position.z, -10, 10);
+	static float lightColor[3] = { 1.0f,0,0};
+	static float lightColor2[3] = { 0,1.0f,0 };
+	static float lightColor3[3] = { 0,0,1.0f };
 
-	for (int i = 0; i < DirLightNum; i++)
+	static float lightDir[3] = {0,-1.0f,0};
+	static float lightDir2[3] = { 0.5f,0.1f,0.2f };
+	static float lightDir3[3] = { -0.5f,0.1f,-0.2f };
+
+	static float lightPointPos[3] = { 0.5f,1,0 };
+	static float lightPointColor[3] = { 1,1,1 };
+	
+	gui2.Begin({ 10,100 }, { 500,300 });
+	ImGui::ColorEdit3("light1RGB", lightColor);
+	ImGui::ColorEdit3("light2RGB", lightColor2);
+	ImGui::ColorEdit3("light3RGB", lightColor3);
+	ImGui::SliderFloat3("light1Dir", lightDir,-10,10);
+	ImGui::SliderFloat3("light2Dir", lightDir2, -10, 10);
+	ImGui::SliderFloat3("light3Dir", lightDir3, -10, 10);
+	
+	ImGui::ColorEdit3("lightPointRGB", lightPointColor);
+	ImGui::SliderFloat3("lightPointPos", lightPointPos, -100, 100);
+
+
+	if (ImGui::Button("lightReset"))
 	{
-		lightGroup->SetDirLightColor(i,lightObj.position);
-	}*/
+		lightColor[0] = 1.0f;
+		lightColor[1] = 0;
+		lightColor[2] = 0;
+
+		lightColor2[0] = 0;
+		lightColor2[1] = 1.0f;
+		lightColor2[2] = 0;
+		
+		lightColor3[0] = 0.0f;
+		lightColor3[1] = 0.0f;
+		lightColor3[2] = 1.0f;
+
+		lightDir[0] = 0;
+		lightDir[1] = -1.0f;
+		lightDir[2] = 0;
+
+		lightDir2[0] = 0.5f;
+		lightDir2[1] = 0.1f;
+		lightDir2[2] = 0.2f;
+
+		lightDir3[0] = -0.5f;
+		lightDir3[1] = 0.1f;
+		lightDir3[2] = -0.2f;
+	}
+
+	static bool hoge2 = true;
+	static bool hoge3 = true;
+
+	if (ImGui::Button("DirActive"))
+	{
+		hoge2 = !hoge2;
+
+		lightGroup->SetDirLightActive(0, hoge2);
+		lightGroup->SetDirLightActive(1, hoge2);
+		lightGroup->SetDirLightActive(2, hoge2);
+	}
+	if (ImGui::Button("PointActive"))
+	{
+		hoge3 = !hoge3;
+
+		lightGroup->SetPointLightActive(0, hoge3);
+	}
+
+	gui2.End();
+
+	lightGroup->SetDirLightColor(0, { lightColor[0], lightColor[1] , lightColor[2]});
+	lightGroup->SetDirLightColor(1, { lightColor2[0], lightColor2[1] , lightColor2[2] });
+	lightGroup->SetDirLightColor(2, { lightColor3[0], lightColor3[1] , lightColor3[2] });
+
+	lightGroup->SetDirLightDir(0, { lightDir[0],lightDir[1] ,lightDir[2]});
+	lightGroup->SetDirLightDir(1, { lightDir2[0],lightDir2[1] ,lightDir2[2] });
+	lightGroup->SetDirLightDir(2, { lightDir3[0],lightDir3[1] ,lightDir3[2] });
+	
+	lightGroup->SetPointLightPos(0, { lightPointPos[0],lightPointPos[1] ,lightPointPos[2] });
+	lightGroup->SetPointLightColor(0, { lightPointColor[0],lightPointColor[1] ,lightPointColor[2] });
+
+	lightObj.position = lightGroup->pointLights->lightPos;
 
 	lightObj.Update(*camera);
 
@@ -304,6 +386,9 @@ void Game::Update()
 	
 	firewispsmooth.rotation.y += TimeManager::deltaTime;
 	firewispsmooth.Update(*camera);
+	
+	sphereObj.rotation.y += TimeManager::deltaTime;
+	sphereObj.Update(*camera);
 
 	SpriteUpdate(redScreenSprite, SpriteCommon::spriteCommon);
 	SpriteUpdate(setumeiSprite, SpriteCommon::spriteCommon);
@@ -326,6 +411,8 @@ void Game::Draw()
 	player.Draw();
 	firewispnorm.DrawMaterial();
 	firewispsmooth.DrawMaterial();
+
+	sphereObj.Draw();
 
 	for (GroundEnemy& gEnemy : gEnemyList)
 	{
@@ -370,7 +457,7 @@ float mag = 20;
 
 void Game::CameraUpdate()
 {
-	if (input->TriggerKey(DIK_1))
+	/*if (input->TriggerKey(DIK_1))
 	{
 		upCam = 1;
 	}
@@ -381,7 +468,7 @@ void Game::CameraUpdate()
 	if (input->TriggerKey(DIK_0))
 	{
 		upCam = 0;
-	}
+	}*/
 
 	Vector3 cVec = {0,0,0};
 

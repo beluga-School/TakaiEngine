@@ -61,7 +61,7 @@ public:
 	Model playerM;
 	Model beetleM;
 	Model subDevM;
-	Model subDevM2;
+	Model sphereM;
 
 	void PreLoad();
 
