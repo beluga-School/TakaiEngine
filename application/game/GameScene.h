@@ -56,9 +56,8 @@ private:
 	Stage stage;
 	Player player;
 
-	Obj3d firewispnorm;
 	Obj3d firewispsmooth;
-	Obj3d sphereObj;
+	Obj3d board;
 	Obj3d lightObj;
 
 	std::list<GroundEnemy> gEnemyList;

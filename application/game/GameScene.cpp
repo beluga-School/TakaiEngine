@@ -67,23 +67,17 @@ void Game::Initialize()
 	goalSound = SoundManager::GetInstance()->SoundLoadWave("Resources\\sound\\goal.wav");
 	deadEnemy = SoundManager::GetInstance()->SoundLoadWave("Resources\\sound\\deadenemy.wav");
 	
-	firewispnorm.Initialize();
-	firewispnorm.position = {0,-20,0};
-	firewispnorm.scale = { 10,10,10 };
-	firewispnorm.model = &ModelManager::GetInstance()->firewispM;
-	firewispnorm.texture = &TextureManager::GetInstance()->white;
-	
 	firewispsmooth.Initialize();
-	firewispsmooth.position = { 20,-20,0 };
+	firewispsmooth.position = { 60,-20,0 };
 	firewispsmooth.scale = { 10,10,10 };
 	firewispsmooth.model = &ModelManager::GetInstance()->firewispSmoothingM;
 	firewispsmooth.texture = &TextureManager::GetInstance()->white;
 	
-	sphereObj.Initialize();
-	sphereObj.position = { -20,-20,0 };
-	sphereObj.scale = { 10,10,10 };
-	sphereObj.model = &ModelManager::GetInstance()->sphereM;
-	sphereObj.texture = &TextureManager::GetInstance()->white;
+	board.Initialize();
+	board.rotation = { 0,0,MathF::DegConvRad(270) };
+	board.scale = { 10,10,10 };
+	board.model = &ModelManager::GetInstance()->boardM;
+	board.texture = &TextureManager::GetInstance()->white;
 
 	float a = -2.0f;
 	float b = 2.0f;
@@ -246,6 +240,11 @@ void Game::Update()
 	ImGui::SliderFloat3("light1Dir", lightDir,-10,10);
 	ImGui::SliderFloat3("light2Dir", lightDir2, -10, 10);
 	ImGui::SliderFloat3("light3Dir", lightDir3, -10, 10);
+	ImGui::Text("%f %f %f", 
+		firewispsmooth.position.x,
+		firewispsmooth.position.y,
+		firewispsmooth.position.z
+		);
 	
 	ImGui::ColorEdit3("lightPointRGB", lightPointColor);
 	ImGui::SliderFloat3("lightPointPos", lightPointPos, -100, 100);
@@ -393,14 +392,42 @@ void Game::Update()
 		}
 	}
 
-	firewispnorm.rotation.y += TimeManager::deltaTime;
-	firewispnorm.Update(*camera);
-	
+	Sphere sphereCol;
+	sphereCol.center = firewispsmooth.position;
+	sphereCol.radius = firewispsmooth.scale.x;
+
+	Plane planeCol;
+	planeCol.normal = { 0,1,0 };
+	planeCol.distance = board.position.y;
+
+	static float timer = 0.0f;
+	static float timechange = 1.0f;
+	if (timer > 1.0f)
+	{
+		timechange = -1.0f;
+	}
+	if (timer < -1.0f)
+	{
+		timechange = 1.0f;
+	}
+	timer += timechange * TimeManager::deltaTime;
+
+	firewispsmooth.position.y -= 5.0f * timechange * TimeManager::deltaTime;
+	if (SpherePlaneCollision(sphereCol, planeCol))
+	{
+		firewispsmooth.color = { 1,0,0,1 };
+	}
+	else
+	{
+		firewispsmooth.color = { 1,1,1,1 };
+	}
+
 	firewispsmooth.rotation.y += TimeManager::deltaTime;
 	firewispsmooth.Update(*camera);
-	
-	sphereObj.rotation.y += TimeManager::deltaTime;
-	sphereObj.Update(*camera);
+
+	board.position = { 60,-30.0f,0 };
+
+	board.Update(*camera);
 
 	SpriteUpdate(redScreenSprite, SpriteCommon::spriteCommon);
 	SpriteUpdate(slimeSprite, SpriteCommon::spriteCommon);
@@ -419,10 +446,9 @@ void Game::Draw()
 	lightObj.Draw();
 
 	player.Draw();
-	firewispnorm.DrawMaterial();
-	firewispsmooth.DrawMaterial();
 
-	sphereObj.Draw();
+	firewispsmooth.DrawMaterial();
+	board.Draw();
 
 	for (GroundEnemy& gEnemy : gEnemyList)
 	{

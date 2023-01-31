@@ -1,6 +1,7 @@
 #include "Collision.h"
 #include "Vector2.h"
 #include "MathF.h"
+#include <math.h>
 
 bool RayPlaneCollision(Ray ray, Plane plane)
 {
@@ -109,4 +110,14 @@ bool BoxColAABB(const Obj3d& colA, const Obj3d& colB)
 		return true;
 	}
 	return false;
+}
+
+bool SpherePlaneCollision(const Sphere& sphere, const Plane& plane)
+{
+	float distV = sphere.center.dot(plane.normal);
+	float dist = distV - plane.distance;
+
+	if (fabsf(dist) > sphere.radius)return false;
+
+	return true;
 }

@@ -33,6 +33,12 @@ struct Cube
 	};
 };
 
+struct Sphere
+{
+	Vector3 center = { 0,0,0 };
+	float radius = 1.0f;
+};
+
 
 //ƒŒƒC‚Æ•½–Ê‚Ì“–‚½‚è”»’è
 bool RayPlaneCollision(Ray ray,Plane plane);
@@ -44,3 +50,5 @@ bool CubeCollision(Cube cube1, Cube cube2);
 bool PlaneCubeCollision(Plane plane, Cube cube);
 
 bool BoxColAABB(const Obj3d& colA, const Obj3d& colB);
+
+bool SpherePlaneCollision(const Sphere& sphere, const Plane &plane);
