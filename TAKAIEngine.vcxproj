@@ -24,6 +24,7 @@
     <ProjectGuid>{6bd7858b-0204-4c4f-a9b7-a943b12fc9e6}</ProjectGuid>
     <RootNamespace>My20220413windowsapp</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+    <ProjectName>TAKAIEngine</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -121,8 +122,7 @@
       <PreprocessorDefinitions>_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
-      <AdditionalIncludeDirectories>
-      </AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)engine\2d;$(ProjectDir)engine\3d;$(ProjectDir)engine\common;$(ProjectDir)engine\input;$(ProjectDir)engine\libManage;$(ProjectDir)engine\light;$(ProjectDir)engine\math;$(ProjectDir)engine\shader;$(ProjectDir)engine\sound;$(ProjectDir)engine\util;$(ProjectDir)application\particle;$(ProjectDir)application\game;$(ProjectDir)engine\imgui;$(ProjectDir)engine;$(ProjectDir)application;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -138,8 +138,7 @@
       <PreprocessorDefinitions>NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
-      <AdditionalIncludeDirectories>
-      </AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)engine\2d;$(ProjectDir)engine\3d;$(ProjectDir)engine\common;$(ProjectDir)engine\input;$(ProjectDir)engine\libManage;$(ProjectDir)engine\light;$(ProjectDir)engine\math;$(ProjectDir)engine\shader;$(ProjectDir)engine\sound;$(ProjectDir)engine\util;$(ProjectDir)application\particle;$(ProjectDir)application\game;$(ProjectDir)engine\imgui;$(ProjectDir)engine;$(ProjectDir)application;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -149,111 +148,111 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="AirEnemy.cpp" />
-    <ClCompile Include="Billboard.cpp" />
-    <ClCompile Include="Block.cpp" />
-    <ClCompile Include="Bullet.cpp" />
-    <ClCompile Include="ClearDrawScreen.cpp" />
-    <ClCompile Include="ConstBuffer.cpp" />
-    <ClCompile Include="DebugText.cpp" />
-    <ClCompile Include="DirectXInit.cpp" />
-    <ClCompile Include="GameScene.cpp" />
-    <ClCompile Include="GoalObject.cpp" />
-    <ClCompile Include="GroundEnemy.cpp" />
-    <ClCompile Include="ImguiManager.cpp" />
-    <ClCompile Include="imgui\imgui.cpp" />
-    <ClCompile Include="imgui\imgui_demo.cpp" />
-    <ClCompile Include="imgui\imgui_draw.cpp" />
-    <ClCompile Include="imgui\imgui_impl_dx12.cpp" />
-    <ClCompile Include="imgui\imgui_impl_win32.cpp" />
-    <ClCompile Include="imgui\imgui_tables.cpp" />
-    <ClCompile Include="imgui\imgui_widgets.cpp" />
-    <ClCompile Include="DirectionalLight.cpp" />
-    <ClCompile Include="LightGroup.cpp" />
-    <ClCompile Include="Mob.cpp" />
-    <ClCompile Include="ObjParticle.cpp" />
-    <ClCompile Include="Particle.cpp" />
-    <ClCompile Include="Input.cpp" />
-    <ClCompile Include="main.cpp" />
-    <ClCompile Include="Material.cpp" />
-    <ClCompile Include="MathF.cpp" />
-    <ClCompile Include="Matrix4.cpp" />
-    <ClCompile Include="Model.cpp" />
-    <ClCompile Include="Obj.cpp" />
-    <ClCompile Include="Pipeline.cpp" />
-    <ClCompile Include="Collision.cpp" />
-    <ClCompile Include="Player.cpp" />
-    <ClCompile Include="PointLight.cpp" />
-    <ClCompile Include="Quaternion.cpp" />
-    <ClCompile Include="Shader.cpp" />
-    <ClCompile Include="Sound.cpp" />
-    <ClCompile Include="Sprite.cpp" />
-    <ClCompile Include="Stage.cpp" />
-    <ClCompile Include="StringUtil.cpp" />
-    <ClCompile Include="Texture.cpp" />
-    <ClCompile Include="TimeManager.cpp" />
-    <ClCompile Include="Util.cpp" />
-    <ClCompile Include="Vector2.cpp" />
-    <ClCompile Include="Vector3.cpp" />
-    <ClCompile Include="Vector4.cpp" />
-    <ClCompile Include="Vertex.cpp" />
-    <ClCompile Include="ViewProjection.cpp" />
-    <ClCompile Include="WinAPI.cpp" />
-    <ClCompile Include="WinSockManager.cpp" />
+    <ClCompile Include="application\game\AirEnemy.cpp" />
+    <ClCompile Include="engine\3d\Billboard.cpp" />
+    <ClCompile Include="application\game\Block.cpp" />
+    <ClCompile Include="application\game\Bullet.cpp" />
+    <ClCompile Include="engine\common\ClearDrawScreen.cpp" />
+    <ClCompile Include="engine\common\ConstBuffer.cpp" />
+    <ClCompile Include="engine\imgui\imgui.cpp" />
+    <ClCompile Include="engine\imgui\imgui_demo.cpp" />
+    <ClCompile Include="engine\imgui\imgui_draw.cpp" />
+    <ClCompile Include="engine\imgui\imgui_impl_dx12.cpp" />
+    <ClCompile Include="engine\imgui\imgui_impl_win32.cpp" />
+    <ClCompile Include="engine\imgui\imgui_tables.cpp" />
+    <ClCompile Include="engine\imgui\imgui_widgets.cpp" />
+    <ClCompile Include="engine\2d\DebugText.cpp" />
+    <ClCompile Include="engine\common\DirectXInit.cpp" />
+    <ClCompile Include="application\game\GameScene.cpp" />
+    <ClCompile Include="application\game\GoalObject.cpp" />
+    <ClCompile Include="application\game\GroundEnemy.cpp" />
+    <ClCompile Include="engine\libManage\ImguiManager.cpp" />
+    <ClCompile Include="engine\light\DirectionalLight.cpp" />
+    <ClCompile Include="engine\light\LightGroup.cpp" />
+    <ClCompile Include="application\game\Mob.cpp" />
+    <ClCompile Include="application\particle\ObjParticle.cpp" />
+    <ClCompile Include="engine\Particle.cpp" />
+    <ClCompile Include="engine\input\Input.cpp" />
+    <ClCompile Include="application\main.cpp" />
+    <ClCompile Include="engine\3d\Material.cpp" />
+    <ClCompile Include="engine\math\MathF.cpp" />
+    <ClCompile Include="engine\math\Matrix4.cpp" />
+    <ClCompile Include="engine\3d\Model.cpp" />
+    <ClCompile Include="engine\3d\Obj.cpp" />
+    <ClCompile Include="engine\common\Pipeline.cpp" />
+    <ClCompile Include="application\game\Collision.cpp" />
+    <ClCompile Include="application\game\Player.cpp" />
+    <ClCompile Include="engine\light\PointLight.cpp" />
+    <ClCompile Include="engine\math\Quaternion.cpp" />
+    <ClCompile Include="engine\shader\Shader.cpp" />
+    <ClCompile Include="engine\sound\Sound.cpp" />
+    <ClCompile Include="engine\2d\Sprite.cpp" />
+    <ClCompile Include="application\game\Stage.cpp" />
+    <ClCompile Include="engine\util\StringUtil.cpp" />
+    <ClCompile Include="engine\2d\Texture.cpp" />
+    <ClCompile Include="engine\util\TimeManager.cpp" />
+    <ClCompile Include="engine\util\Util.cpp" />
+    <ClCompile Include="engine\math\Vector2.cpp" />
+    <ClCompile Include="engine\math\Vector3.cpp" />
+    <ClCompile Include="engine\math\Vector4.cpp" />
+    <ClCompile Include="engine\3d\Vertex.cpp" />
+    <ClCompile Include="engine\3d\ViewProjection.cpp" />
+    <ClCompile Include="engine\3d\WinAPI.cpp" />
+    <ClCompile Include="engine\libManage\WinSockManager.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="AirEnemy.h" />
-    <ClInclude Include="Billboard.h" />
-    <ClInclude Include="Block.h" />
-    <ClInclude Include="Bullet.h" />
-    <ClInclude Include="ClearDrawScreen.h" />
-    <ClInclude Include="ConstBuffer.h" />
-    <ClInclude Include="DebugText.h" />
-    <ClInclude Include="DirectXInit.h" />
-    <ClInclude Include="GameScene.h" />
-    <ClInclude Include="GoalObject.h" />
-    <ClInclude Include="GroundEnemy.h" />
-    <ClInclude Include="ImguiManager.h" />
-    <ClInclude Include="imgui\imconfig.h" />
-    <ClInclude Include="imgui\imgui.h" />
-    <ClInclude Include="imgui\imgui_impl_dx12.h" />
-    <ClInclude Include="imgui\imgui_impl_win32.h" />
-    <ClInclude Include="imgui\imgui_internal.h" />
-    <ClInclude Include="imgui\imstb_rectpack.h" />
-    <ClInclude Include="imgui\imstb_textedit.h" />
-    <ClInclude Include="imgui\imstb_truetype.h" />
-    <ClInclude Include="DirectionalLight.h" />
-    <ClInclude Include="LightGroup.h" />
-    <ClInclude Include="Mob.h" />
-    <ClInclude Include="ObjParticle.h" />
-    <ClInclude Include="Particle.h" />
-    <ClInclude Include="Input.h" />
-    <ClInclude Include="Material.h" />
-    <ClInclude Include="MathF.h" />
-    <ClInclude Include="Matrix4.h" />
-    <ClInclude Include="Model.h" />
-    <ClInclude Include="Obj.h" />
-    <ClInclude Include="Pipeline.h" />
-    <ClInclude Include="Collision.h" />
-    <ClInclude Include="Player.h" />
-    <ClInclude Include="PointLight.h" />
-    <ClInclude Include="Quaternion.h" />
-    <ClInclude Include="Result.h" />
-    <ClInclude Include="Shader.h" />
-    <ClInclude Include="Sound.h" />
-    <ClInclude Include="Sprite.h" />
-    <ClInclude Include="Stage.h" />
-    <ClInclude Include="StringUtil.h" />
-    <ClInclude Include="Texture.h" />
-    <ClInclude Include="TimeManager.h" />
-    <ClInclude Include="Util.h" />
-    <ClInclude Include="Vector2.h" />
-    <ClInclude Include="Vector3.h" />
-    <ClInclude Include="Vector4.h" />
-    <ClInclude Include="Vertex.h" />
-    <ClInclude Include="ViewProjection.h" />
-    <ClInclude Include="WinAPI.h" />
-    <ClInclude Include="WinSockManager.h" />
+    <ClInclude Include="application\game\AirEnemy.h" />
+    <ClInclude Include="engine\3d\Billboard.h" />
+    <ClInclude Include="application\game\Block.h" />
+    <ClInclude Include="application\game\Bullet.h" />
+    <ClInclude Include="engine\common\ClearDrawScreen.h" />
+    <ClInclude Include="engine\common\ConstBuffer.h" />
+    <ClInclude Include="engine\imgui\imconfig.h" />
+    <ClInclude Include="engine\imgui\imgui.h" />
+    <ClInclude Include="engine\imgui\imgui_impl_dx12.h" />
+    <ClInclude Include="engine\imgui\imgui_impl_win32.h" />
+    <ClInclude Include="engine\imgui\imgui_internal.h" />
+    <ClInclude Include="engine\imgui\imstb_rectpack.h" />
+    <ClInclude Include="engine\imgui\imstb_textedit.h" />
+    <ClInclude Include="engine\imgui\imstb_truetype.h" />
+    <ClInclude Include="engine\2d\DebugText.h" />
+    <ClInclude Include="engine\common\DirectXInit.h" />
+    <ClInclude Include="application\game\GameScene.h" />
+    <ClInclude Include="application\game\GoalObject.h" />
+    <ClInclude Include="application\game\GroundEnemy.h" />
+    <ClInclude Include="engine\libManage\ImguiManager.h" />
+    <ClInclude Include="engine\light\DirectionalLight.h" />
+    <ClInclude Include="engine\light\LightGroup.h" />
+    <ClInclude Include="application\game\Mob.h" />
+    <ClInclude Include="application\particle\ObjParticle.h" />
+    <ClInclude Include="engine\Particle.h" />
+    <ClInclude Include="engine\input\Input.h" />
+    <ClInclude Include="engine\3d\Material.h" />
+    <ClInclude Include="engine\math\MathF.h" />
+    <ClInclude Include="engine\math\Matrix4.h" />
+    <ClInclude Include="engine\3d\Model.h" />
+    <ClInclude Include="engine\3d\Obj.h" />
+    <ClInclude Include="engine\common\Pipeline.h" />
+    <ClInclude Include="application\game\Collision.h" />
+    <ClInclude Include="application\game\Player.h" />
+    <ClInclude Include="engine\light\PointLight.h" />
+    <ClInclude Include="engine\math\Quaternion.h" />
+    <ClInclude Include="engine\common\Result.h" />
+    <ClInclude Include="engine\shader\Shader.h" />
+    <ClInclude Include="engine\sound\Sound.h" />
+    <ClInclude Include="engine\2d\Sprite.h" />
+    <ClInclude Include="application\game\Stage.h" />
+    <ClInclude Include="engine\util\StringUtil.h" />
+    <ClInclude Include="engine\2d\Texture.h" />
+    <ClInclude Include="engine\util\TimeManager.h" />
+    <ClInclude Include="engine\util\Util.h" />
+    <ClInclude Include="engine\math\Vector2.h" />
+    <ClInclude Include="engine\math\Vector3.h" />
+    <ClInclude Include="engine\math\Vector4.h" />
+    <ClInclude Include="engine\3d\Vertex.h" />
+    <ClInclude Include="engine\3d\ViewProjection.h" />
+    <ClInclude Include="engine\common\WinAPI.h" />
+    <ClInclude Include="engine\libManage\WinSockManager.h" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="DirectXTex\DirectXTex_Desktop_2022_Win10.vcxproj">
@@ -261,7 +260,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <None Include="imgui\imgui.ini" />
+    <None Include="engine\imgui\imgui.ini" />
     <None Include="Resources\Shader\Basic.hlsli" />
     <None Include="Resources\Shader\GeometryHeader.hlsli" />
     <None Include="Resources\Shader\Lambert.hlsli" />
