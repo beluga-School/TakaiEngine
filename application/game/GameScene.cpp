@@ -48,15 +48,9 @@ void Game::Initialize()
 		{ Util::window_width / 2,Util::window_height / 2 }, 0);
 	SpriteSetSize(redScreenSprite, { Util::window_width,Util::window_height });
 	
-	SpriteCreate(&setumeiSprite, &TextureManager::GetInstance()->setumei, { 0.5f,0.5f });
-	SpriteInit(setumeiSprite, SpriteCommon::spriteCommon,
-		{200,170 }, 0);
-	SpriteSetSize(setumeiSprite, { 300 * 1.25f,250 * 1.25f });
-	
-	SpriteCreate(&setumei2Sprite, &TextureManager::GetInstance()->setumei2, { 0.5f,0.5f });
-	SpriteInit(setumei2Sprite, SpriteCommon::spriteCommon,
-		{Util::window_width / 2 + 420,170 }, 0);
-	SpriteSetSize(setumei2Sprite, { 300 * 1.25f,250 * 1.25f });
+	SpriteCreate(&slimeSprite, &TextureManager::GetInstance()->slime, { 0.5f,0.5f });
+	SpriteInit(slimeSprite, SpriteCommon::spriteCommon,
+		{Util::window_width - 100,100 }, 0);
 	
 	SpriteCreate(&gameOverSprite, &TextureManager::GetInstance()->gameOver, { 0.5f,0.5f });
 	SpriteInit(gameOverSprite, SpriteCommon::spriteCommon,
@@ -202,11 +196,33 @@ void Game::Update()
 	setumeiEndTime += TimeManager::deltaTime;
 
 	ImGui::Text("FPS %f", TimeManager::fps);
+	ImGui::Text("MAXFPS %f", TimeManager::fixFPS);
+	
+	if (ImGui::Button("30FPS"))
+	{
+		TimeManager::fps = 0;
+		TimeManager::fixFPS = 30;
+	}
+	ImGui::SameLine();
+	if (ImGui::Button("60FPS"))
+	{
+		TimeManager::fps = 0;
+		TimeManager::fixFPS = 60;
+	}
+	ImGui::SameLine();
+	if (ImGui::Button("144FPS"))
+	{
+		TimeManager::fps = 0;
+		TimeManager::fixFPS = 144;
+	}
+
+	ImGui::Text("CheckConnectPad %d", input->CheckConnectPad());
 
 	if (ImGui::Button("LAMBERT"))
 	{
 		object3dPipelineSet = CreateLambertPipeline();
 	}
+	ImGui::SameLine();
 	if (ImGui::Button("PHONG"))
 	{
 		object3dPipelineSet = CreateObject3DPipeline();
@@ -261,6 +277,7 @@ void Game::Update()
 		lightDir3[1] = 0.1f;
 		lightDir3[2] = -0.2f;
 	}
+	ImGui::SameLine();
 
 	static bool hoge2 = true;
 	static bool hoge3 = true;
@@ -273,6 +290,7 @@ void Game::Update()
 		lightGroup->SetDirLightActive(1, hoge2);
 		lightGroup->SetDirLightActive(2, hoge2);
 	}
+	ImGui::SameLine();
 	if (ImGui::Button("PointActive"))
 	{
 		hoge3 = !hoge3;
@@ -375,12 +393,6 @@ void Game::Update()
 		}
 	}
 
-	if (setumeiEndTime > 20.0f)
-	{
-		if (setumeiSprite.color.w > 0)setumeiSprite.color.w -= TimeManager::deltaTime;
-		if (setumei2Sprite.color.w > 0)setumei2Sprite.color.w -= TimeManager::deltaTime;
-	}
-
 	firewispnorm.rotation.y += TimeManager::deltaTime;
 	firewispnorm.Update(*camera);
 	
@@ -391,9 +403,7 @@ void Game::Update()
 	sphereObj.Update(*camera);
 
 	SpriteUpdate(redScreenSprite, SpriteCommon::spriteCommon);
-	SpriteUpdate(setumeiSprite, SpriteCommon::spriteCommon);
-	SpriteUpdate(setumei2Sprite, SpriteCommon::spriteCommon);
-
+	SpriteUpdate(slimeSprite, SpriteCommon::spriteCommon);
 	ParticleManager::GetInstance()->Update();
 	
 	lightGroup->Update();
@@ -439,6 +449,7 @@ void Game::Draw()
 	SpriteCommonBeginDraw(SpriteCommon::spriteCommon);
 
 	SpriteDraw(redScreenSprite);
+	SpriteDraw(slimeSprite);
 }
 
 void Game::End()
@@ -557,8 +568,6 @@ void Game::Reset()
 {
 	goalSoundFlag = false;
 	setumeiEndTime = 0;
-	setumeiSprite.color.w = 1;
-	setumei2Sprite.color.w = 1;
 
 	player.spawnPos = { 0,0,0 };
 	player.hp = 10;

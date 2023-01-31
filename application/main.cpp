@@ -70,11 +70,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 
 	Input* input_ = Input::GetInstance();
 
-	//DirectInputの初期化
-	input_->DirectInputInit();
-
-	//キーボードデバイスの生成
-	input_->DirectInputCreate();
+	input_->Initialize();
 
 	///---DirectX初期化処理　ここまで---///
 

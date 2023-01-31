@@ -132,8 +132,8 @@
     <GenerateManifest>true</GenerateManifest>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|X64'">
-    <OutDir>$(SolutionDir)..\TAKAIEngine_Generated\Outputs\$(Configuration)\</OutDir>
-    <IntDir>$(SolutionDir)..\TAKAIEngine_Generated\Obj\$(ProjectName)\$(Configuration)\</IntDir>
+    <OutDir>$(SolutionDir)..\TAKAIEngineGenerated\Outputs\$(Configuration)\</OutDir>
+    <IntDir>$(SolutionDir)..\TAKAIEngineGenerated\Obj\$(ProjectName)\$(Configuration)\</IntDir>
     <TargetName>DirectXTex</TargetName>
     <GenerateManifest>true</GenerateManifest>
     <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);$(SolutionDir)DirectXTex</IncludePath>
@@ -151,8 +151,8 @@
     <GenerateManifest>true</GenerateManifest>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|X64'">
-    <OutDir>$(SolutionDir)..\TAKAIEngine_Generated\Outputs\$(Configuration)\</OutDir>
-    <IntDir>$(SolutionDir)..\TAKAIEngine_Generated\Obj\$(ProjectName)\$(Configuration)\</IntDir>
+    <OutDir>$(SolutionDir)..\TAKAIEngineGenerated\Outputs\$(Configuration)\</OutDir>
+    <IntDir>$(SolutionDir)..\TAKAIEngineGenerated\Obj\$(ProjectName)\$(Configuration)\</IntDir>
     <TargetName>DirectXTex</TargetName>
     <GenerateManifest>true</GenerateManifest>
     <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);$(SolutionDir)DirectXTex</IncludePath>
@@ -170,8 +170,8 @@
     <GenerateManifest>true</GenerateManifest>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Profile|X64'">
-    <OutDir>$(SolutionDir)..\TAKAIEngine_Generated\Outputs\$(Configuration)\</OutDir>
-    <IntDir>$(SolutionDir)..\TAKAIEngine_Generated\Obj\$(ProjectName)\$(Configuration)\</IntDir>
+    <OutDir>$(SolutionDir)..\TAKAIEngineGenerated\Outputs\$(Configuration)\</OutDir>
+    <IntDir>$(SolutionDir)..\TAKAIEngineGenerated\Obj\$(ProjectName)\$(Configuration)\</IntDir>
     <TargetName>DirectXTex</TargetName>
     <GenerateManifest>true</GenerateManifest>
     <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);$(SolutionDir)DirectXTex</IncludePath>

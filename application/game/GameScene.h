@@ -70,8 +70,7 @@ private:
 	Sprite startSprite;
 	Sprite spaceSprite;
 	Sprite redScreenSprite;
-	Sprite setumeiSprite;
-	Sprite setumei2Sprite;
+	Sprite slimeSprite;
 	Sprite gameOverSprite;
 
 	Obj3d cube[max];
