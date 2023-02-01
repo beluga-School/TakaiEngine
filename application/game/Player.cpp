@@ -260,21 +260,43 @@ void Player::Move()
 {
 	if (isDash == false)
 	{
-		if (input->PushKey(DIK_D) || input->LStickTilt(RIGHT)) {
-			moveValue.x -= leftVec.x * moveMag * TimeManager::deltaTime;
-			moveValue.z -= leftVec.z * moveMag * TimeManager::deltaTime;
+		if (input->CheckConnectPad() == false)
+		{
+			if (input->PushKey(DIK_D)) {
+				moveValue.x -= leftVec.x * moveMag * TimeManager::deltaTime;
+				moveValue.z -= leftVec.z * moveMag * TimeManager::deltaTime;
+			}
+			if (input->PushKey(DIK_A)) {
+				moveValue.x += leftVec.x * moveMag * TimeManager::deltaTime;
+				moveValue.z += leftVec.z * moveMag * TimeManager::deltaTime;
+			}
+			if (input->PushKey(DIK_W)) {
+				moveValue.x -= centerVec.x * moveMag * TimeManager::deltaTime;
+				moveValue.z -= centerVec.z * moveMag * TimeManager::deltaTime;
+			}
+			if (input->PushKey(DIK_S)) {
+				moveValue.x += centerVec.x * moveMag * TimeManager::deltaTime;
+				moveValue.z += centerVec.z * moveMag * TimeManager::deltaTime;
+			}
 		}
-		if (input->PushKey(DIK_A) || input->LStickTilt(LEFT)) {
-			moveValue.x += leftVec.x * moveMag * TimeManager::deltaTime;
-			moveValue.z += leftVec.z * moveMag * TimeManager::deltaTime;
-		}
-		if (input->PushKey(DIK_W) || input->LStickTilt(UP)) {
-			moveValue.x -= centerVec.x * moveMag * TimeManager::deltaTime;
-			moveValue.z -= centerVec.z * moveMag * TimeManager::deltaTime;
-		}
-		if (input->PushKey(DIK_S) || input->LStickTilt(DOWN)) {
-			moveValue.x += centerVec.x * moveMag * TimeManager::deltaTime;
-			moveValue.z += centerVec.z * moveMag * TimeManager::deltaTime;
+		else
+		{
+			if (input->LStickTilt(RIGHT)) {
+				moveValue.x -= leftVec.x * moveMag * TimeManager::deltaTime;
+				moveValue.z -= leftVec.z * moveMag * TimeManager::deltaTime;
+			}
+			if (input->LStickTilt(LEFT)) {
+				moveValue.x += leftVec.x * moveMag * TimeManager::deltaTime;
+				moveValue.z += leftVec.z * moveMag * TimeManager::deltaTime;
+			}
+			if (input->LStickTilt(UP)) {
+				moveValue.x -= centerVec.x * moveMag * TimeManager::deltaTime;
+				moveValue.z -= centerVec.z * moveMag * TimeManager::deltaTime;
+			}
+			if (input->LStickTilt(DOWN)) {
+				moveValue.x += centerVec.x * moveMag * TimeManager::deltaTime;
+				moveValue.z += centerVec.z * moveMag * TimeManager::deltaTime;
+			}
 		}
 
 		moveValue.x = Util::Clamp(moveValue.x, -1.0f, 1.0f);
