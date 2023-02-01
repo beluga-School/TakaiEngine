@@ -240,5 +240,5 @@ void ModelManager::PreLoad()
 	beetleM.CreateModel("beetle");
 	subDevM.CreateModel("subDev");
 	sphereM.CreateModel("Sphere",true);
-	//triangleM.CreateModel("triangle_mat");
+	triangleM.CreateModel("triangle");
 }

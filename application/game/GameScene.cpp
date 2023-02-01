@@ -73,11 +73,23 @@ void Game::Initialize()
 	firewispsmooth.model = &ModelManager::GetInstance()->firewispSmoothingM;
 	firewispsmooth.texture = &TextureManager::GetInstance()->white;
 	
+	firewispCheckTriangle.Initialize();
+	firewispCheckTriangle.position = { 40,-20,0 };
+	firewispCheckTriangle.scale = { 10,10,10 };
+	firewispCheckTriangle.model = &ModelManager::GetInstance()->firewispSmoothingM;
+	firewispCheckTriangle.texture = &TextureManager::GetInstance()->white;
+	
 	board.Initialize();
 	board.rotation = { 0,0,MathF::DegConvRad(270) };
 	board.scale = { 10,10,10 };
 	board.model = &ModelManager::GetInstance()->boardM;
 	board.texture = &TextureManager::GetInstance()->white;
+
+	triangle.Initialize();
+	triangle.position = { 40,-20,0 };
+	triangle.scale = { 10,10,10 };
+	triangle.model = &ModelManager::GetInstance()->triangleM;
+	triangle.texture = &TextureManager::GetInstance()->white;
 
 	float a = -2.0f;
 	float b = 2.0f;
@@ -186,10 +198,7 @@ GUI gui2("Light");
 
 void Game::Update()
 {
-
-	setumeiEndTime += TimeManager::deltaTime;
-
-	ImGui::Text("FPS %f", TimeManager::fps);
+	/*ImGui::Text("FPS %f", TimeManager::fps);
 	ImGui::Text("MAXFPS %f", TimeManager::fixFPS);
 	
 	if (ImGui::Button("30FPS"))
@@ -312,7 +321,7 @@ void Game::Update()
 
 	lightObj.position = lightGroup->pointLights->lightPos;
 
-	lightObj.Update(*camera);
+	lightObj.Update(*camera);*/
 
 	CameraUpdate();
 	//オブジェクトの更新
@@ -392,6 +401,8 @@ void Game::Update()
 		}
 	}
 
+	//当たり判定実装
+	//球と無限平面の当たり判定
 	Sphere sphereCol;
 	sphereCol.center = firewispsmooth.position;
 	sphereCol.radius = firewispsmooth.scale.x;
@@ -429,6 +440,57 @@ void Game::Update()
 
 	board.Update(*camera);
 
+	//球と三角形の当たり判定(上手にできてない)
+	ImGui::SliderFloat("triangle.x", &triangle.position.x, -100, 100);
+	ImGui::SliderFloat("triangle.y", &triangle.position.y, -100, 100);
+	ImGui::SliderFloat("triangle.z", &triangle.position.z, -100, 100);
+
+	Triangle triangleCol;
+	triangleCol.pos0 = {
+		triangle.position.x + triangle.scale.x / 2,
+		triangle.position.y + triangle.scale.y / 2,
+		triangle.position.z + triangle.scale.z / 2
+	};
+
+	triangleCol.pos1 = {
+		triangle.position.x + triangle.scale.x / 2,
+		triangle.position.y + triangle.scale.y / 2,
+		triangle.position.z - triangle.scale.z / 2
+	};
+
+	triangleCol.pos2 = {
+	triangle.position.x - triangle.scale.x / 2,
+	triangle.position.y + triangle.scale.y / 2,
+	triangle.position.z - triangle.scale.z / 2
+	};
+
+	triangleCol.normal = {
+		triangle.model->vertices[0].normal.x,
+		triangle.model->vertices[0].normal.y,
+		triangle.model->vertices[0].normal.z
+	};
+
+	Sphere sphereColCheckTri;
+	sphereColCheckTri.center = firewispCheckTriangle.position;
+	sphereColCheckTri.radius = firewispCheckTriangle.scale.x;
+
+	ImGui::SliderFloat("sphere.x", &firewispCheckTriangle.position.x, -100, 100);
+	ImGui::SliderFloat("sphere.y", &firewispCheckTriangle.position.y, -100, 100);
+	ImGui::SliderFloat("sphere.z", &firewispCheckTriangle.position.z, -100, 100);
+
+	if (CheckSphere2Triangle(sphereColCheckTri, triangleCol))
+	{
+		firewispCheckTriangle.color = { 1,0,0,1 };
+	}
+	else
+	{
+		firewispCheckTriangle.color = { 1,1,1,1 };
+	}
+
+	triangle.Update(*camera);
+
+	firewispCheckTriangle.Update(*camera);
+
 	SpriteUpdate(redScreenSprite, SpriteCommon::spriteCommon);
 	SpriteUpdate(slimeSprite, SpriteCommon::spriteCommon);
 	ParticleManager::GetInstance()->Update();
@@ -449,6 +511,9 @@ void Game::Draw()
 
 	firewispsmooth.DrawMaterial();
 	board.Draw();
+
+	firewispCheckTriangle.DrawMaterial();
+	triangle.Draw();
 
 	for (GroundEnemy& gEnemy : gEnemyList)
 	{

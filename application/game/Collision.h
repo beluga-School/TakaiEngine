@@ -39,6 +39,14 @@ struct Sphere
 	float radius = 1.0f;
 };
 
+struct Triangle
+{
+	Vector3 pos0;
+	Vector3 pos1;
+	Vector3 pos2;
+
+	Vector3 normal;
+};
 
 //ƒŒƒC‚Æ•½–Ê‚Ì“–‚½‚è”»’è
 bool RayPlaneCollision(Ray ray,Plane plane);
@@ -52,3 +60,7 @@ bool PlaneCubeCollision(Plane plane, Cube cube);
 bool BoxColAABB(const Obj3d& colA, const Obj3d& colB);
 
 bool SpherePlaneCollision(const Sphere& sphere, const Plane &plane);
+
+Vector3 ClosestPtPoint2Triangle(const Vector3& point, const Triangle& triangle);
+
+bool CheckSphere2Triangle(const Sphere& sphere, const Triangle& triangle);

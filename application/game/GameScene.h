@@ -56,9 +56,12 @@ private:
 	Stage stage;
 	Player player;
 
+	//“–‚½‚è”»’è‚·‚é‚½‚ß‚Ì‚â‚Â‚ç
 	Obj3d firewispsmooth;
+	Obj3d firewispCheckTriangle;
 	Obj3d board;
 	Obj3d lightObj;
+	Obj3d triangle;
 
 	std::list<GroundEnemy> gEnemyList;
 
