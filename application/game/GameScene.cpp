@@ -74,7 +74,7 @@ void Game::Initialize()
 	firewispsmooth.texture = &TextureManager::GetInstance()->white;
 	
 	firewispCheckTriangle.Initialize();
-	firewispCheckTriangle.position = { 40,-20,0 };
+	firewispCheckTriangle.position = { 30,-20,0 };
 	firewispCheckTriangle.scale = { 10,10,10 };
 	firewispCheckTriangle.model = &ModelManager::GetInstance()->firewispSmoothingM;
 	firewispCheckTriangle.texture = &TextureManager::GetInstance()->white;
@@ -447,21 +447,21 @@ void Game::Update()
 
 	Triangle triangleCol;
 	triangleCol.pos0 = {
-		triangle.position.x + triangle.scale.x / 2,
-		triangle.position.y + triangle.scale.y / 2,
-		triangle.position.z + triangle.scale.z / 2
+		triangle.position.x + (triangle.model->vertices[0].pos.x * triangle.scale.x / 2),
+		triangle.position.y + (triangle.model->vertices[0].pos.y * triangle.scale.y / 2),
+		triangle.position.z + (triangle.model->vertices[0].pos.z * triangle.scale.z / 2)
 	};
 
 	triangleCol.pos1 = {
-		triangle.position.x + triangle.scale.x / 2,
-		triangle.position.y + triangle.scale.y / 2,
-		triangle.position.z - triangle.scale.z / 2
+		triangle.position.x + (triangle.model->vertices[1].pos.x * triangle.scale.x / 2),
+		triangle.position.y + (triangle.model->vertices[1].pos.y * triangle.scale.y / 2),
+		triangle.position.z + (triangle.model->vertices[1].pos.z * triangle.scale.z / 2)
 	};
 
 	triangleCol.pos2 = {
-	triangle.position.x - triangle.scale.x / 2,
-	triangle.position.y + triangle.scale.y / 2,
-	triangle.position.z - triangle.scale.z / 2
+		triangle.position.x + (triangle.model->vertices[2].pos.x * triangle.scale.x / 2),
+		triangle.position.y + (triangle.model->vertices[2].pos.y * triangle.scale.y / 2),
+		triangle.position.z + (triangle.model->vertices[2].pos.z * triangle.scale.z / 2)
 	};
 
 	triangleCol.normal = {
@@ -474,9 +474,8 @@ void Game::Update()
 	sphereColCheckTri.center = firewispCheckTriangle.position;
 	sphereColCheckTri.radius = firewispCheckTriangle.scale.x;
 
-	ImGui::SliderFloat("sphere.x", &firewispCheckTriangle.position.x, -100, 100);
-	ImGui::SliderFloat("sphere.y", &firewispCheckTriangle.position.y, -100, 100);
-	ImGui::SliderFloat("sphere.z", &firewispCheckTriangle.position.z, -100, 100);
+	firewispCheckTriangle.position.x -= 10.0f * timechange * TimeManager::deltaTime;
+	firewispCheckTriangle.position.z -= 10.0f * timechange * TimeManager::deltaTime;
 
 	if (CheckSphere2Triangle(sphereColCheckTri, triangleCol))
 	{
