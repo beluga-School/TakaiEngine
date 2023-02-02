@@ -70,13 +70,13 @@ void Game::Initialize()
 	firewispsmooth.Initialize();
 	firewispsmooth.position = { 60,-20,0 };
 	firewispsmooth.scale = { 10,10,10 };
-	firewispsmooth.model = &ModelManager::GetInstance()->firewispSmoothingM;
+	firewispsmooth.model = &ModelManager::GetInstance()->sphereM;
 	firewispsmooth.texture = &TextureManager::GetInstance()->white;
 	
 	firewispCheckTriangle.Initialize();
 	firewispCheckTriangle.position = { 30,-20,0 };
 	firewispCheckTriangle.scale = { 10,10,10 };
-	firewispCheckTriangle.model = &ModelManager::GetInstance()->firewispSmoothingM;
+	firewispCheckTriangle.model = &ModelManager::GetInstance()->sphereM;
 	firewispCheckTriangle.texture = &TextureManager::GetInstance()->white;
 	
 	board.Initialize();
@@ -84,7 +84,7 @@ void Game::Initialize()
 	board.scale = { 10,10,10 };
 	board.model = &ModelManager::GetInstance()->boardM;
 	board.texture = &TextureManager::GetInstance()->white;
-
+	
 	triangle.Initialize();
 	triangle.position = { 40,-20,0 };
 	triangle.scale = { 10,10,10 };
@@ -405,11 +405,11 @@ void Game::Update()
 	//‹…‚Æ–³ŒÀ•½–Ê‚Ì“–‚½‚è”»’è
 	Sphere sphereCol;
 	sphereCol.center = firewispsmooth.position;
-	sphereCol.radius = firewispsmooth.scale.x;
+	sphereCol.radius = firewispsmooth.scale.x * 2;
 
 	Plane planeCol;
 	planeCol.normal = { 0,1,0 };
-	planeCol.distance = board.position.y;
+	planeCol.distance = board.position.y - 1.0f;
 
 	static float timer = 0.0f;
 	static float timechange = 1.0f;
@@ -423,7 +423,7 @@ void Game::Update()
 	}
 	timer += timechange * TimeManager::deltaTime;
 
-	firewispsmooth.position.y -= 5.0f * timechange * TimeManager::deltaTime;
+	firewispsmooth.position.y -= 15.0f * timechange * TimeManager::deltaTime;
 	if (SpherePlaneCollision(sphereCol, planeCol))
 	{
 		firewispsmooth.color = { 1,0,0,1 };
@@ -508,10 +508,10 @@ void Game::Draw()
 
 	player.Draw();
 
-	firewispsmooth.DrawMaterial();
+	firewispsmooth.Draw();
 	board.Draw();
 
-	firewispCheckTriangle.DrawMaterial();
+	firewispCheckTriangle.Draw();
 	triangle.Draw();
 
 	for (GroundEnemy& gEnemy : gEnemyList)
