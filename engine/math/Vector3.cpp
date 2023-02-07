@@ -59,6 +59,30 @@ Vector3 Vector3::GetCross(const Vector3& v)const
 	return vec3;
 }
 
+Vector3 Vector3::lerp(const Vector3& start, const Vector3& end, const float t)
+{
+	float easeVal = t;
+	return start * (1.0f - easeVal) + end * t;
+}
+
+Vector3 Vector3::easeInQuad(const Vector3& start, const Vector3& end, const float t)
+{
+	float easeVal = pow(t,2);
+	return start * (1.0f - easeVal) + end * t;
+}
+
+Vector3 Vector3::easeOutQuad(const Vector3& start, const Vector3& end, const float t)
+{
+	float easeVal = t * (2 - t);
+	return start * (1.0f - easeVal) + end * t;
+}
+
+Vector3 Vector3::easeInOutQuad(const Vector3& start, const Vector3& end, const float t)
+{
+	float easeVal = (t * t) * (3 - (2 * t));
+	return start * (1.0f - easeVal) + end * t;
+}
+
 float Vector3::dot(const Vector3& v) const
 {
 	return x * v.x + y * v.y + z * v.z;
@@ -137,9 +161,4 @@ const Vector3 operator/(const Vector3& v, float s)
 {
 	Vector3 temp(v);
 	return temp /= s;
-}
-
-const Vector3 lerp(const Vector3& start, const Vector3& end, const float t)
-{
-	return start * (1.0f - t) + end * t;
 }

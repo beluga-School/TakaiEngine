@@ -51,6 +51,19 @@ public:
 	/// </summary>
 	Vector3 GetCross(const Vector3& v)const;
 
+	/// <summary>
+	/// 直線移動するイージング
+	/// </summary>
+	/// <param name="start"></param>
+	/// <param name="end"></param>
+	/// <param name="t"></param>
+	/// <returns></returns>
+	static Vector3 lerp(const Vector3& start, const Vector3& end, const float t);
+
+	static Vector3 easeInQuad(const Vector3& start, const Vector3& end, const float t);
+	static Vector3 easeOutQuad(const Vector3& start, const Vector3& end, const float t);
+	static Vector3 easeInOutQuad(const Vector3& start, const Vector3& end, const float t);
+
 	Vector3 operator+()const;
 	Vector3 operator-()const;
 
@@ -65,12 +78,3 @@ const Vector3 operator-(const Vector3& v1, const Vector3& v2);
 const Vector3 operator*(const Vector3& v1, float s);
 const Vector3 operator*(float s, const Vector3& v1);
 const Vector3 operator/(const Vector3& v1, float s);
-
-/// <summary>
-/// 線形補完(1次関数補完)
-/// </summary>
-/// <param name="start">開始位置</param>
-/// <param name="end">終了位置</param>
-/// <param name="t">時間の割合</param>
-/// <returns></returns>
-const Vector3 lerp(const Vector3& start, const Vector3& end, const float t);

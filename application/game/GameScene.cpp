@@ -198,7 +198,7 @@ GUI gui2("Light");
 
 void Game::Update()
 {
-	/*ImGui::Text("FPS %f", TimeManager::fps);
+	ImGui::Text("FPS %f", TimeManager::fps);
 	ImGui::Text("MAXFPS %f", TimeManager::fixFPS);
 	
 	if (ImGui::Button("30FPS"))
@@ -319,9 +319,9 @@ void Game::Update()
 	lightGroup->SetPointLightPos(0, { lightPointPos[0],lightPointPos[1] ,lightPointPos[2] });
 	lightGroup->SetPointLightColor(0, { lightPointColor[0],lightPointColor[1] ,lightPointColor[2] });
 
-	lightObj.position = lightGroup->pointLights->lightPos;
+	//lightObj.position = lightGroup->pointLights->lightPos;
 
-	lightObj.Update(*camera);*/
+
 
 	CameraUpdate();
 	//オブジェクトの更新
@@ -423,7 +423,12 @@ void Game::Update()
 	}
 	timer += timechange * TimeManager::deltaTime;
 
-	firewispsmooth.position.y -= 15.0f * timechange * TimeManager::deltaTime;
+	if (input->PushKey(DIK_7))sphereVal.Start();
+	sphereVal.Update();
+	firewispsmooth.position = Vector3::easeInQuad({50,0,30},{-50,0,30}, sphereVal.GetTimeRate());
+	firewispCheckTriangle.position = Vector3::easeInOutQuad({ 50,-10,30 }, { -50,-10,30 }, sphereVal.GetTimeRate());
+	lightObj.position = Vector3::easeOutQuad({ 50,10,30 }, { -50,10,30 }, sphereVal.GetTimeRate());
+
 	if (SpherePlaneCollision(sphereCol, planeCol))
 	{
 		firewispsmooth.color = { 1,0,0,1 };
@@ -474,9 +479,7 @@ void Game::Update()
 	sphereColCheckTri.center = firewispCheckTriangle.position;
 	sphereColCheckTri.radius = firewispCheckTriangle.scale.x;
 
-	firewispCheckTriangle.position.x -= 10.0f * timechange * TimeManager::deltaTime;
-	firewispCheckTriangle.position.z -= 10.0f * timechange * TimeManager::deltaTime;
-
+	
 	if (CheckSphere2Triangle(sphereColCheckTri, triangleCol))
 	{
 		firewispCheckTriangle.color = { 1,0,0,1 };
@@ -494,6 +497,8 @@ void Game::Update()
 	SpriteUpdate(slimeSprite, SpriteCommon::spriteCommon);
 	ParticleManager::GetInstance()->Update();
 	
+	lightObj.Update(*camera);
+
 	lightGroup->Update();
 }
 
