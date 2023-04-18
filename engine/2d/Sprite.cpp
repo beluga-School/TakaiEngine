@@ -9,106 +9,26 @@ void SpriteCommon::Initialize()
 	spriteCommon = SpriteCommonCreate();
 }
 
-void SpriteCreate(Sprite* sprite, Texture* tex,XMFLOAT2 anchorpoint, bool isFlipX, bool isFlipY)
-{
-	DirectX12* dx12 = DirectX12::GetInstance();
-
-	result = S_FALSE;
-
-	//新規スプライトを生成
-	//Sprite sprite{};
-
-	//頂点データ
-	VertexPosUV vertices[] = {
-		//x      y      z        u    v
-		{{  0.0f,100.0f,  0.0f},{0.0f,1.0f}},//左下
-		{{  0.0f,  0.0f,  0.0f},{0.0f,0.0f}},//左上
-		{{100.0f,100.0f,  0.0f},{1.0f,1.0f}},//右下
-		{{100.0f,  0.0f,  0.0f},{1.0f,0.0f}},//右上
-	};
-
-	//頂点バッファの設定
-	D3D12_HEAP_PROPERTIES heapProp{};		//ヒープ設定
-	heapProp.Type = D3D12_HEAP_TYPE_UPLOAD;	//GPUへの転送用
-
-	D3D12_RESOURCE_DESC resDesc{};
-	resDesc.Dimension = D3D12_RESOURCE_DIMENSION_BUFFER;
-	//ここ悪いかもしれん
-	resDesc.Width = sizeof(vertices);	//頂点データ全体のサイズ
-	resDesc.Height = 1;
-	resDesc.DepthOrArraySize = 1;
-	resDesc.MipLevels = 1;
-	resDesc.SampleDesc.Count = 1;
-	resDesc.Layout = D3D12_TEXTURE_LAYOUT_ROW_MAJOR;
-
-	//頂点バッファ生成
-	result = dx12->device->CreateCommittedResource(
-		&heapProp,
-		D3D12_HEAP_FLAG_NONE,
-		&resDesc,
-		D3D12_RESOURCE_STATE_GENERIC_READ,
-		nullptr,
-		IID_PPV_ARGS(sprite->vertBuff.GetAddressOf()));
-
-	//頂点バッファへのデータ転送
-	/*VertexPosUV* vertMap = nullptr;
-	result = sprite.vertBuff->Map(0, nullptr, (void**)&vertMap);
-	memcpy(vertMap, vertices, sizeof(vertices));
-	sprite.vertBuff->Unmap(0, nullptr);*/
-
-	sprite->vbView.BufferLocation = sprite->vertBuff->GetGPUVirtualAddress();
-	sprite->vbView.SizeInBytes = sizeof(vertices);
-	sprite->vbView.StrideInBytes = sizeof(vertices[0]);
-
-	//定数バッファの設定
-	//平行投影行列
-	sprite->constBuffer.constBufferData->mat =
-		XMMatrixOrthographicOffCenterLH(
-		0.0f, Util::window_width, Util::window_height, 0.0f, 0.0f, 1.0f);
-
-	//色指定
-	sprite->constBuffer.constBufferData->color = XMFLOAT4(1, 1, 1, 1.0f);
-
-	sprite->tex = tex;
-
-	sprite->size = { (float)tex->getResDesc.Width,(float)tex->getResDesc.Height };
-
-	sprite->cutSize = sprite->size;
-
-	sprite->anchorpoint = anchorpoint;
-
-	sprite->isFlipX = isFlipX;
-	sprite->isFlipY = isFlipY;
-
-	SpriteTransferVertexBuffer(*sprite);
-}
-
-void SpriteInit(Sprite& sprite, SpriteCommon& spriteCommon, XMFLOAT2 pos, float rotation, XMFLOAT4 color)
-{
-	sprite.position.x = pos.x;
-	sprite.position.y = pos.y;
-	sprite.position.z = 0;
-	sprite.rotation = rotation;
-	sprite.color = color;
-
-	SpriteUpdate(sprite, spriteCommon);
-}
-
-void SpriteUpdate(Sprite& sprite, const SpriteCommon& spriteCommon)
-{
-	//ワールド行列の更新
-	sprite.matWorld = XMMatrixIdentity();
-	//Z軸回転
-	sprite.matWorld *= XMMatrixRotationZ(XMConvertToRadians(sprite.rotation));
-	//平行移動
-	sprite.matWorld *= XMMatrixTranslation(sprite.position.x, sprite.position.y, sprite.position.z);
-
-	//定数バッファの転送
-	result = sprite.constBuffer.buffer->Map(0, nullptr, (void**)&sprite.constBuffer.constBufferData);
-	sprite.constBuffer.constBufferData->mat = sprite.matWorld * spriteCommon.matProjection;
-	sprite.constBuffer.constBufferData->color = sprite.color;
-	sprite.constBuffer.buffer->Unmap(0, nullptr);
-}
+//void SpriteUpdate(Sprite& sprite, const SpriteCommon& spriteCommon)
+//{
+//	//ワールド行列の更新
+//	sprite.matWorld = XMMatrixIdentity();
+//	//Z軸回転
+//	sprite.matWorld *= XMMatrixRotationZ(XMConvertToRadians(sprite.rotation));
+//	//平行移動
+//	sprite.matWorld *= XMMatrixTranslation(sprite.position.x, sprite.position.y, sprite.position.z);
+//
+//	//定数バッファの転送
+//	result = sprite.constBuffer.buffer->Map(0, nullptr, (void**)&sprite.constBuffer.constBufferData);
+//	sprite.constBuffer.constBufferData->mat = sprite.matWorld * spriteCommon.matProjection;
+//	
+//	sprite.constBuffer.constBufferData->color.x = sprite.color.f4.vec.x;
+//	sprite.constBuffer.constBufferData->color.y = sprite.color.f4.vec.y;
+//	sprite.constBuffer.constBufferData->color.z = sprite.color.f4.vec.z;
+//	sprite.constBuffer.constBufferData->color.w = sprite.color.f4.w;
+//	
+//	sprite.constBuffer.buffer->Unmap(0, nullptr);
+//}
 
 void SpriteTransferVertexBuffer(const Sprite& sprite)
 {
@@ -190,24 +110,24 @@ void SpriteCommonBeginDraw(const SpriteCommon& spriteCommon)
 	dx12->commandList->SetDescriptorHeaps(1, texM->srvHeap.GetAddressOf());
 }
 
-void SpriteDraw(const Sprite& sprite)
-{
-	DirectX12* dx12 = DirectX12::GetInstance();
-	TextureManager* texM = TextureManager::GetInstance();
-
-	if (sprite.isInvisible)
-	{
-		return;
-	}
-
-	dx12->commandList->IASetVertexBuffers(0, 1, &sprite.vbView);
-
-	dx12->commandList->SetGraphicsRootDescriptorTable(1, sprite.tex->gpuHandle);
-
-	dx12->commandList->SetGraphicsRootConstantBufferView(0, sprite.constBuffer.buffer->GetGPUVirtualAddress());
-
-	dx12->commandList->DrawInstanced(4, 1, 0, 0);
-}
+//void SpriteDraw(const Sprite& sprite)
+//{
+//	DirectX12* dx12 = DirectX12::GetInstance();
+//	TextureManager* texM = TextureManager::GetInstance();
+//
+//	if (sprite.isInvisible)
+//	{
+//		return;
+//	}
+//
+//	dx12->commandList->IASetVertexBuffers(0, 1, &sprite.vbView);
+//
+//	dx12->commandList->SetGraphicsRootDescriptorTable(1, sprite.tex->gpuHandle);
+//
+//	dx12->commandList->SetGraphicsRootConstantBufferView(0, sprite.constBuffer.buffer->GetGPUVirtualAddress());
+//
+//	dx12->commandList->DrawInstanced(4, 1, 0, 0);
+//}
 
 void SpriteSetSize(Sprite& sprite, XMFLOAT2 size)
 {
@@ -230,4 +150,168 @@ SpriteCommon SpriteCommonCreate()
 		0.0f, (float)Util::window_width, (float)Util::window_height, 0.0f, 0.0f, 1.0f);
 
 	return spriteCommon;
+}
+
+Sprite::Sprite()
+{
+	this->tex = &TextureManager::GetInstance()->def;
+
+	position.x = 0;
+	position.y = 0;
+	position.z = 0;
+	rotation = 0;
+	color = {1,1,1,1};
+
+	Init();
+}
+
+Sprite::Sprite(Texture* tex, Vector2 anchorpoint)
+{
+	this->tex = tex;
+
+	size = { (float)tex->getResDesc.Width,(float)tex->getResDesc.Height };
+
+	cutSize = size;
+
+	this->anchorpoint = { anchorpoint .x,anchorpoint .y};
+
+	Init();
+}
+
+void Sprite::SetTexture(Texture* tex)
+{
+	this->tex = tex;
+
+	size = { (float)tex->getResDesc.Width,(float)tex->getResDesc.Height };
+
+	cutSize = size;
+
+	SpriteTransferVertexBuffer(*this);
+}
+
+void Sprite::SetAnchor(Vector2 anchorpoint)
+{
+	this->anchorpoint = { anchorpoint.x,anchorpoint.y };
+
+	SpriteTransferVertexBuffer(*this);
+}
+
+void Sprite::SetPos(Vector2 pos)
+{
+	position.x = pos.x;
+	position.y = pos.y;
+	position.z = 0;
+}
+
+void Sprite::SetRotation(float rotation)
+{
+	this->rotation = rotation;
+}
+
+void Sprite::SetColor(Color color)
+{
+	this->color = color;
+}
+
+void Sprite::Update()
+{
+	//ワールド行列の更新
+	matWorld = XMMatrixIdentity();
+	//Z軸回転
+	matWorld *= XMMatrixRotationZ(XMConvertToRadians(rotation));
+	//平行移動
+	matWorld *= XMMatrixTranslation(position.x, position.y, position.z);
+
+	//定数バッファの転送
+	result = constBuffer.buffer->Map(0, nullptr, (void**)&constBuffer.constBufferData);
+	constBuffer.constBufferData->mat = matWorld * SpriteCommon::spriteCommon.matProjection;
+
+	constBuffer.constBufferData->color.x = color.f4.vec.x;
+	constBuffer.constBufferData->color.y = color.f4.vec.y;
+	constBuffer.constBufferData->color.z = color.f4.vec.z;
+	constBuffer.constBufferData->color.w = color.f4.w;
+
+	constBuffer.buffer->Unmap(0, nullptr);
+}
+
+void Sprite::Draw()
+{
+	DirectX12* dx12 = DirectX12::GetInstance();
+	TextureManager* texM = TextureManager::GetInstance();
+
+	if (isInvisible)
+	{
+		return;
+	}
+
+	dx12->commandList->IASetVertexBuffers(0, 1, &vbView);
+
+	dx12->commandList->SetGraphicsRootDescriptorTable(1, tex->gpuHandle);
+
+	dx12->commandList->SetGraphicsRootConstantBufferView(0, constBuffer.buffer->GetGPUVirtualAddress());
+
+	dx12->commandList->DrawInstanced(4, 1, 0, 0);
+}
+
+void Sprite::Init()
+{
+	DirectX12* dx12 = DirectX12::GetInstance();
+
+	result = S_FALSE;
+
+	//新規スプライトを生成
+	//Sprite sprite{};
+
+	//頂点データ
+	VertexPosUV vertices[] = {
+		//x      y      z        u    v
+		{{  0.0f,100.0f,  0.0f},{0.0f,1.0f}},//左下
+		{{  0.0f,  0.0f,  0.0f},{0.0f,0.0f}},//左上
+		{{100.0f,100.0f,  0.0f},{1.0f,1.0f}},//右下
+		{{100.0f,  0.0f,  0.0f},{1.0f,0.0f}},//右上
+	};
+
+	//頂点バッファの設定
+	D3D12_HEAP_PROPERTIES heapProp{};		//ヒープ設定
+	heapProp.Type = D3D12_HEAP_TYPE_UPLOAD;	//GPUへの転送用
+
+	D3D12_RESOURCE_DESC resDesc{};
+	resDesc.Dimension = D3D12_RESOURCE_DIMENSION_BUFFER;
+	//ここ悪いかもしれん
+	resDesc.Width = sizeof(vertices);	//頂点データ全体のサイズ
+	resDesc.Height = 1;
+	resDesc.DepthOrArraySize = 1;
+	resDesc.MipLevels = 1;
+	resDesc.SampleDesc.Count = 1;
+	resDesc.Layout = D3D12_TEXTURE_LAYOUT_ROW_MAJOR;
+
+	//頂点バッファ生成
+	result = dx12->device->CreateCommittedResource(
+		&heapProp,
+		D3D12_HEAP_FLAG_NONE,
+		&resDesc,
+		D3D12_RESOURCE_STATE_GENERIC_READ,
+		nullptr,
+		IID_PPV_ARGS(vertBuff.GetAddressOf()));
+
+	//頂点バッファへのデータ転送
+	/*VertexPosUV* vertMap = nullptr;
+	result = sprite.vertBuff->Map(0, nullptr, (void**)&vertMap);
+	memcpy(vertMap, vertices, sizeof(vertices));
+	sprite.vertBuff->Unmap(0, nullptr);*/
+
+	vbView.BufferLocation = vertBuff->GetGPUVirtualAddress();
+	vbView.SizeInBytes = sizeof(vertices);
+	vbView.StrideInBytes = sizeof(vertices[0]);
+
+	//定数バッファの設定
+	//平行投影行列
+	constBuffer.constBufferData->mat =
+		XMMatrixOrthographicOffCenterLH(
+			0.0f, Util::window_width, Util::window_height, 0.0f, 0.0f, 1.0f);
+
+	//色指定
+	constBuffer.constBufferData->color = XMFLOAT4(1, 1, 1, 1.0f);
+
+	SpriteTransferVertexBuffer(*this);
 }

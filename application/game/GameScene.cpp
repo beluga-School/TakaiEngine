@@ -25,41 +25,49 @@ void Game::Initialize()
 	skydome.model->material.diffuse = { 0,0,0 };
 	skydome.model->material.specular = { 0,0,0 };
 
-	SpriteCreate(&goalSprite, &TextureManager::GetInstance()->goalS, { 0.5f,0.5f });
-	SpriteInit(goalSprite, SpriteCommon::spriteCommon, { Util::window_width / 2,Util::window_height / 2 }, 0);
+	goalSprite.SetTexture(&TextureManager::GetInstance()->goalS);
+	goalSprite.SetPos({ Util::window_width / 2, Util::window_height / 2 });
+	//SpriteCreate(&goalSprite, &TextureManager::GetInstance()->goalS, { 0.5f,0.5f });
+	//SpriteInit(goalSprite, SpriteCommon::spriteCommon, { Util::window_width / 2,Util::window_height / 2 }, 0);
 	SpriteSetSize(goalSprite, { 1280,720 });
 	
-	SpriteCreate(&TitleSprite, &TextureManager::GetInstance()->titleTex, { 0.5f,0.5f });
-	SpriteInit(TitleSprite, SpriteCommon::spriteCommon, { Util::window_width / 2,Util::window_height / 2 }, 0);
+	TitleSprite.SetTexture(&TextureManager::GetInstance()->titleTex);
+	TitleSprite.SetPos({ Util::window_width / 2,Util::window_height / 2 });
+	//SpriteCreate(&TitleSprite, &TextureManager::GetInstance()->titleTex, { 0.5f,0.5f });
+	//SpriteInit(TitleSprite, SpriteCommon::spriteCommon, { Util::window_width / 2,Util::window_height / 2 }, 0);
 	SpriteSetSize(TitleSprite, { 1280,720 });
 
-	SpriteCreate(&startSprite, &TextureManager::GetInstance()->startTex, { 0.5f,0.5f });
-	SpriteInit(startSprite, SpriteCommon::spriteCommon, 
-		{ Util::window_width / 2,Util::window_height / 2 + 100 }, 0);
+	startSprite.SetTexture(&TextureManager::GetInstance()->startTex);
+	startSprite.SetPos({ Util::window_width / 2,Util::window_height / 2 + 100 });
+	//SpriteCreate(&startSprite, &TextureManager::GetInstance()->startTex, { 0.5f,0.5f });
+	//SpriteInit(startSprite, SpriteCommon::spriteCommon, { Util::window_width / 2,Util::window_height / 2 + 100 }, 0);
 	SpriteSetSize(startSprite, { 600,150 });
 	
-	SpriteCreate(&spaceSprite, &TextureManager::GetInstance()->spaceTex, { 0.5f,0.5f });
-	SpriteInit(spaceSprite, SpriteCommon::spriteCommon,
-		{ Util::window_width / 2,Util::window_height / 2 + 200 }, 0);
+	spaceSprite.SetTexture(&TextureManager::GetInstance()->spaceTex);
+	spaceSprite.SetPos({ Util::window_width / 2,Util::window_height / 2 + 200 });
+	spaceSprite.SetColor({1,1,1,0});
+	//SpriteCreate(&spaceSprite, &TextureManager::GetInstance()->spaceTex, { 0.5f,0.5f });
+	//SpriteInit(spaceSprite, SpriteCommon::spriteCommon,{ Util::window_width / 2,Util::window_height / 2 + 200 }, 0);
 	SpriteSetSize(spaceSprite, { 600,150 });
 
-	SpriteCreate(&redScreenSprite, &TextureManager::GetInstance()->redScreen, { 0.5f,0.5f });
-	SpriteInit(redScreenSprite, SpriteCommon::spriteCommon,
-		{ Util::window_width / 2,Util::window_height / 2 }, 0);
+	redScreenSprite.SetTexture(&TextureManager::GetInstance()->redScreen);
+	redScreenSprite.SetPos({ Util::window_width / 2,Util::window_height / 2 });
+	//SpriteCreate(&redScreenSprite, &TextureManager::GetInstance()->redScreen, { 0.5f,0.5f });
+	//SpriteInit(redScreenSprite, SpriteCommon::spriteCommon,{ Util::window_width / 2,Util::window_height / 2 }, 0);
 	SpriteSetSize(redScreenSprite, { Util::window_width,Util::window_height });
 	
-	SpriteCreate(&slimeSprite, &TextureManager::GetInstance()->slime, { 0.5f,0.5f });
-	SpriteInit(slimeSprite, SpriteCommon::spriteCommon,
-		{Util::window_width - 100,100 }, 0);
+	slimeSprite.SetTexture(&TextureManager::GetInstance()->slime);
+	slimeSprite.SetPos({ Util::window_width - 100,100 });
+	//SpriteCreate(&slimeSprite, &TextureManager::GetInstance()->slime, { 0.5f,0.5f });
+	//SpriteInit(slimeSprite, SpriteCommon::spriteCommon,{Util::window_width - 100,100 }, 0);
 	
-	SpriteCreate(&gameOverSprite, &TextureManager::GetInstance()->gameOver, { 0.5f,0.5f });
-	SpriteInit(gameOverSprite, SpriteCommon::spriteCommon,
-		{ Util::window_width / 2,Util::window_height / 2 }, 0);
+	gameOverSprite.SetTexture(&TextureManager::GetInstance()->gameOver);
+	gameOverSprite.SetPos({ Util::window_width / 2,Util::window_height / 2 });
+	//SpriteCreate(&gameOverSprite, &TextureManager::GetInstance()->gameOver, { 0.5f,0.5f });
+	//SpriteInit(gameOverSprite, SpriteCommon::spriteCommon,{ Util::window_width / 2,Util::window_height / 2 }, 0);
 
 	//ビュー変換行列(透視投影)を計算
 	camera->Initialize();
-
-	redScreenSprite.color.w = 0.0f;
 
 	stage.SetStage1();
 
@@ -341,9 +349,9 @@ void Game::Update()
 	}
 	player.Update(stage);
 
-	if (redScreenSprite.color.w > 0)
+	if (redScreenSprite.color.f4.w > 0)
 	{
-		redScreenSprite.color.w -= TimeManager::deltaTime;
+		redScreenSprite.color.f4.w -= TimeManager::deltaTime;
 	}
 	
 
@@ -494,8 +502,8 @@ void Game::Update()
 
 	firewispCheckTriangle.Update(*camera);
 
-	SpriteUpdate(redScreenSprite, SpriteCommon::spriteCommon);
-	SpriteUpdate(slimeSprite, SpriteCommon::spriteCommon);
+	redScreenSprite.Update(); //SpriteUpdate(redScreenSprite, SpriteCommon::spriteCommon);
+	slimeSprite.Update(); //SpriteUpdate(slimeSprite, SpriteCommon::spriteCommon);
 	ParticleManager::GetInstance()->Update();
 	
 	lightObj.Update(*camera);
@@ -544,8 +552,8 @@ void Game::Draw()
 	//スプライトの前描画(共通コマンド)
 	SpriteCommonBeginDraw(SpriteCommon::spriteCommon);
 
-	SpriteDraw(redScreenSprite);
-	SpriteDraw(slimeSprite);
+	redScreenSprite.Draw();
+	slimeSprite.Draw();
 }
 
 void Game::End()
@@ -694,7 +702,7 @@ void Game::DamageEffect()
 {
 	if (player.mutekiTimer <= 0 && player.isDash == false)
 	{
-		redScreenSprite.color.w = 1.0f;
+		redScreenSprite.color.f4.w = 1.0f;
 		for (int i = 0; i < 10; i++)
 		{
 			ParticleManager::GetInstance()->CreateCubeParticle(player.position, { 3,3,3 }, 20.0f, { 1,1,1,1 });

@@ -1,6 +1,7 @@
 #pragma once
 #include "Vector3.h"
 #include "Vector2.h"
+#include "Color.h"
 
 #include "DirectXInit.h"
 #include <vector>
@@ -32,6 +33,21 @@ struct VertexPosUV
 
 struct Sprite
 {
+	//とりあえずテクスチャーを入れてスプライトを作る
+	//以前設定してたフリップとかは別で設定する
+	Sprite();
+	Sprite(Texture* tex,Vector2 anchorpoint = {0.5f,0.5f});
+
+	void SetTexture(Texture* tex);
+	void SetAnchor(Vector2 anchorpoint);
+
+	void SetPos(Vector2 pos);
+	void SetRotation(float rotation);
+	void SetColor(Color color);
+
+	void Update();
+	void Draw();
+
 	//頂点バッファ
 	Microsoft::WRL::ComPtr<ID3D12Resource> vertBuff;
 	//頂点バッファビュー
@@ -46,7 +62,7 @@ struct Sprite
 	//ワールド行列
 	XMMATRIX matWorld;
 	//色
-	XMFLOAT4 color = { 1,1,1,1 };
+	Color color = { 1,1,1,1 };
 
 	Texture *tex;
 
@@ -62,6 +78,8 @@ struct Sprite
 
 	bool isInvisible = false;
 
+private:
+	void Init();
 };
 
 struct SpriteCommon
@@ -76,20 +94,20 @@ struct SpriteCommon
 };
 
 //スプライトの生成
-void SpriteCreate(Sprite *sprite,Texture* tex, XMFLOAT2 anchorpoint,bool isFlipX = false, bool isFlipY = false);
+//void SpriteCreate(Sprite *sprite,Texture* tex, XMFLOAT2 anchorpoint,bool isFlipX = false, bool isFlipY = false);
 
 //スプライトの変数の初期化
-void SpriteInit(Sprite& sprite, SpriteCommon& spriteCommon,XMFLOAT2 pos = {0,0}, float rotation = 0.0f, XMFLOAT4 color = {1,1,1,1});
+//void SpriteInit(Sprite& sprite, SpriteCommon& spriteCommon,XMFLOAT2 pos = {0,0}, float rotation = 0.0f, XMFLOAT4 color = {1,1,1,1});
 
 //スプライト共通グラフィックコマンドのセット
 void SpriteCommonBeginDraw(const SpriteCommon& spriteCommon);
 
-void SpriteUpdate(Sprite& sprite,const SpriteCommon& spriteCommon);
+//void SpriteUpdate(Sprite& sprite,const SpriteCommon& spriteCommon);
 
 void SpriteTransferVertexBuffer(const Sprite& sprite);
 
 void SpriteSetSize(Sprite& sprite, XMFLOAT2 size);
 
-void SpriteDraw(const Sprite& sprite);
+//void SpriteDraw(const Sprite& sprite);
 
 SpriteCommon SpriteCommonCreate();

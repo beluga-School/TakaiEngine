@@ -156,6 +156,7 @@
     <ClCompile Include="engine\3d\Billboard.cpp" />
     <ClCompile Include="application\game\Block.cpp" />
     <ClCompile Include="application\game\Bullet.cpp" />
+    <ClCompile Include="engine\Color.cpp" />
     <ClCompile Include="engine\common\ClearDrawScreen.cpp" />
     <ClCompile Include="engine\common\ConstBuffer.cpp" />
     <ClCompile Include="engine\2d\DebugText.cpp" />
@@ -209,6 +210,7 @@
     <ClInclude Include="engine\3d\Billboard.h" />
     <ClInclude Include="application\game\Block.h" />
     <ClInclude Include="application\game\Bullet.h" />
+    <ClInclude Include="engine\Color.h" />
     <ClInclude Include="engine\common\ClearDrawScreen.h" />
     <ClInclude Include="engine\common\ConstBuffer.h" />
     <ClInclude Include="engine\2d\DebugText.h" />

@@ -4,7 +4,8 @@ void DebugText::Initialize(Texture* tex)
 {
 	for (int i = 0; i < _countof(sprites); i++)
 	{
-		SpriteCreate(&sprites[i],tex,{0.5f,0.5f});
+		sprites[i].SetTexture(tex);
+		//SpriteCreate(&sprites[i],tex,{0.5f,0.5f});
 	}
 }
 
@@ -39,7 +40,7 @@ void DebugText::Print(const SpriteCommon& spritecommon, const std::string& text,
 
 		SpriteTransferVertexBuffer(sprites[spriteIndex]);
 
-		SpriteUpdate(sprites[spriteIndex], spritecommon);
+		sprites[spriteIndex].Update();//SpriteUpdate(sprites[spriteIndex], spritecommon);
 
 		spriteIndex++;
 	}
@@ -49,7 +50,7 @@ void DebugText::DrawAll()
 {
 	for (int i = 0; i < spriteIndex; i++)
 	{
-		SpriteDraw(sprites[i]);
+		sprites[i].Draw();
 	}
 }
 
