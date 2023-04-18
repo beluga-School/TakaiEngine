@@ -345,6 +345,7 @@ void Game::Update()
 	{
 		redScreenSprite.color.w -= TimeManager::deltaTime;
 	}
+	
 
 	gEnemyList.remove_if([](GroundEnemy& enemy) {
 		return enemy.isDead;
