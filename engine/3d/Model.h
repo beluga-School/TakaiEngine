@@ -11,6 +11,9 @@
 #include "ConstBuffer.h"
 #include "Material.h"
 #include <unordered_map>
+#include <assimp/Importer.hpp>
+#include <assimp/scene.h>
+#include <assimp/postprocess.h> 
 
 class Model : public VertexData
 {
@@ -24,6 +27,8 @@ public:
 	Material material;
 	
 	/*ConstBuffer<ConstBufferDataB1> constBufferMaterial;*/
+
+	bool AssimpLoader(const std::string t);
 
 	/// <summary>
 	/// プログラムで作成したモデルを生成する用の関数
