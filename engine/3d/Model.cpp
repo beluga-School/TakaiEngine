@@ -32,84 +32,38 @@ bool Model::AssimpLoader(const std::string t)
 	
 	//こっから変換したやつらを使っていつも通り読み込み
 	
-	//ここらへんはwhileで回してたところ
+	//必要な情報まとめ(たぶん)
+	//以下3つはvertexデータ(CreateModelのv,vt,nで読み込んでいたところ)
+	//座標
+
+	//uv
+
+	//法線
+
+	//以下5つはマテリアルデータ(LoadMaterialで読み込んでいたところ)
+	//マテリアル名(いる？ここで直接読み込むようになるならいらないかも)
+	aiMaterial* mat = *scene->mMaterials;
 	
-	//
+	aiString name;
+	mat->Get(AI_MATKEY_NAME, name);
 
-	//ここでマテリアルを読み込む
-	//マテリアルのファイル名読み込み
-	//string filename;
-	//line_stream >> filename;
+	//アンビエント
+	aiColor3D ambient;
+	mat->Get(AI_MATKEY_COLOR_AMBIENT, ambient);
+	
+	//ディフューズ
+	aiColor3D diffuse;
+	mat->Get(AI_MATKEY_COLOR_DIFFUSE, diffuse);
 
-	////マテリアル読み込み
-	//LoadMaterial(directoryPath, filename);
+	//スペキュラー
+	aiColor3D specular;
+	mat->Get(AI_MATKEY_COLOR_SPECULAR, specular);
 
-	//if (key == "v")
-	//{
-	//	//X,Y,Z座標読み込み
-	//	XMFLOAT3 position{};
-	//	line_stream >> position.x;
-	//	line_stream >> position.y;
-	//	line_stream >> position.z;
+	//マテリアルのテクスチャ名
 
-	//	//座標データに追加
-	//	positions.emplace_back(position);
-	//}
-	//if (key == "vt")
-	//{
-	//	//U,V成分読み込み
-	//	XMFLOAT2 texcoord{};
-	//	line_stream >> texcoord.x;
-	//	line_stream >> texcoord.y;
-	//	//V方向反転
-	//	texcoord.y = 1.0f - texcoord.y;
-	//	//テクスチャ座標データに追加
-	//	texcoords.emplace_back(texcoord);
-	//}
-	//if (key == "vn")
-	//{
-	//	//X,Y,Z成分読み込み
-	//	XMFLOAT3 normal{};
-	//	line_stream >> normal.x;
-	//	line_stream >> normal.y;
-	//	line_stream >> normal.z;
-	//	//法線ベクトルデータに追加
-	//	normals.emplace_back(normal);
-	//}
 
-	//if (key == "f")
-	//{
-	//	string index_string;
-	//	while (getline(line_stream, index_string, ' '))
-	//	{
-	//		//頂点インデックス1個分の文字列をストリームに変換
-	//		istringstream index_stream(index_string);
-	//		uint16_t indexPosition, indexTexcoord, indexNormal;
-	//		index_stream >> indexPosition;
-	//		index_stream.seekg(1, ios_base::cur);//スラッシュを飛ばす
-	//		index_stream >> indexTexcoord;
-	//		index_stream.seekg(1, ios_base::cur);//スラッシュを飛ばす
-	//		index_stream >> indexNormal;
-
-	//		Vertex vertex{};
-	//		vertex.pos = positions[indexPosition - 1];
-	//		vertex.normal = normals[indexNormal - 1];
-	//		vertex.uv = texcoords[indexTexcoord - 1];
-	//		vertices.emplace_back(vertex);
-
-	//		//頂点インデックスに追加
-	//		indices.emplace_back((unsigned short)indices.size());
-
-	//		////ここでデータを保持
-	//		//if (smoothing)
-	//		//{
-	//		//	smoothData[indexPosition].emplace_back(vertices.size() - 1);
-	//		//}
-	//	}
-	//}
-
-	//file.close();
-
+	//こっからは読みだした情報を使ってデータを使えるようにしていく
+	
 	//for (int i = 0; i < indices.size() / 3; i++)
 	//{	//三角形1つごとに計算していく
 	//	//三角形のインデックスを取り出して、一時的な変数にいれる
