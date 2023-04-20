@@ -11,9 +11,6 @@
 #include "ConstBuffer.h"
 #include "Material.h"
 #include <unordered_map>
-#include <assimp/Importer.hpp>
-#include <assimp/scene.h>
-#include <assimp/postprocess.h> 
 
 class Model : public VertexData
 {
@@ -67,6 +64,7 @@ public:
 	Model beetleM;
 	Model subDevM;
 	Model sphereM;
+	Model beetleAss;
 
 	void PreLoad();
 
