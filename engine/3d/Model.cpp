@@ -1,6 +1,7 @@
 #include "Model.h"
 using namespace std;
 #include "StringUtil.h"
+
 #include <assimp/Importer.hpp>
 #include <assimp/scene.h>
 #include <assimp/postprocess.h> 
@@ -20,10 +21,10 @@ bool Model::AssimpLoader(const std::string t)
 		directoryPath + filename,
 		aiProcess_CalcTangentSpace |
 		aiProcess_Triangulate |
-		aiProcess_JoinIdenticalVertices |
 		aiProcess_SortByPType |
-		aiProcess_ConvertToLeftHanded |
-		aiProcess_FixInfacingNormals
+		aiProcess_GenNormals |
+		aiProcess_FixInfacingNormals | 
+		aiProcess_ConvertToLeftHanded
 	);
 
 	//ダメならダメ
@@ -33,6 +34,8 @@ bool Model::AssimpLoader(const std::string t)
 		return false;
 	}
 
+	//多分これらの処理をノードごとにしないといけないため、ここでノード分ぶん回すforが入る
+	
 	//自分の都合のいい形式にここで変換する
 	vector<XMFLOAT3> positions;	//頂点データ
 	vector<XMFLOAT3> normals;	//法線ベクトル
@@ -40,13 +43,18 @@ bool Model::AssimpLoader(const std::string t)
 
 	UINT backIndex = 0;	//インデックスを足す
 
-	//多分これらの処理をノードごとにしないといけないため、ここでノード分ぶん回すforが入る
+	std::function<void(aiNode*)>loadNode = [&](aiNode* node) {
+		for (unsigned int i = 0; i < node->mNumChildren; i++)
+		{
+			loadNode(node->mChildren[i]);
+		};
+	};
 
 	//メッシュごとに情報を保存
-	aiMesh* mesh = *scene->mMeshes;
-
 	for (unsigned int k = 0; k < scene->mNumMeshes; k++)
 	{
+		//node->mMeshes[k];
+		aiMesh* mesh = scene->mMeshes[k];
 		for (unsigned int i = 0; i < mesh->mNumVertices; i++)
 		{
 			//以下3つはvertexデータ(CreateModelのv,vt,nで読み込んでいたところ)
@@ -159,6 +167,8 @@ bool Model::AssimpLoader(const std::string t)
 	//なのに足りてないのでここで配列外を参照してエラーになる
 	//解決方法 childrenがあるっぽいので、そこに足りないverticesが入ってるかも
 	//とりあえずノードの数分回す設計にしてみる
+
+	//回答　aiProcess_JoinIdenticalVertices が頂点を統括しちゃってたっぽい
 
 	for (unsigned int i = 0; i < indices.size() / 3; i++)
 	{	//三角形1つごとに計算していく

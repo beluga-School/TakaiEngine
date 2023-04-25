@@ -27,6 +27,8 @@ public:
 
 	bool AssimpLoader(const std::string t);
 
+	//void LoadMesh(aiNode* node,const aiScene* scene);
+
 	/// <summary>
 	/// プログラムで作成したモデルを生成する用の関数
 	/// </summary>

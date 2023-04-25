@@ -39,6 +39,7 @@ bool Block::CheckDirections(Cube cubeCol, CheckDirection CD) const
 		return cubeCol.position.x < position.x - scale.x * 0.5f;
 		break;
 	}
+	return false;
 }
 
 void Block::ExtractVec()
