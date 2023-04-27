@@ -37,9 +37,6 @@
     <Filter Include="ソース ファイル\Game">
       <UniqueIdentifier>{4021a4b7-e2d0-4e83-b627-6b2d6fbe2339}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\Input">
-      <UniqueIdentifier>{f70ac3f1-7517-4bb3-a9b5-e711cb76005c}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ソース ファイル\Shader">
       <UniqueIdentifier>{6ef2f347-e1f9-4394-b1cd-0982c044845e}</UniqueIdentifier>
     </Filter>
@@ -99,6 +96,9 @@
     </Filter>
     <Filter Include="ソース ファイル\Particle">
       <UniqueIdentifier>{460b4cdc-d13a-4f0a-9bbe-019b405a216e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Input">
+      <UniqueIdentifier>{f70ac3f1-7517-4bb3-a9b5-e711cb76005c}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -256,6 +256,9 @@
       <Filter>ソース ファイル\ImGui</Filter>
     </ClCompile>
     <ClCompile Include="engine\Color.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="AssimpLoader.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
   </ItemGroup>
@@ -417,6 +420,9 @@
       <Filter>ヘッダー ファイル\ImGui</Filter>
     </ClInclude>
     <ClInclude Include="engine\Color.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="AssimpLoader.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>

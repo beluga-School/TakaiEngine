@@ -6,7 +6,7 @@
 
 using namespace std;
 
-std::string ConvertWCharToString(wchar_t* t) 
+std::string ConvertWCharToString(const wchar_t* t) 
 {
     wstring wString(t);
 

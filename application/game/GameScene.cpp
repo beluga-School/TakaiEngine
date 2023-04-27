@@ -461,27 +461,27 @@ void Game::Update()
 
 	Triangle triangleCol;
 	triangleCol.pos0 = {
-		triangle.position.x + (triangle.model->vertices[0].pos.x * triangle.scale.x / 2),
-		triangle.position.y + (triangle.model->vertices[0].pos.y * triangle.scale.y / 2),
-		triangle.position.z + (triangle.model->vertices[0].pos.z * triangle.scale.z / 2)
+		triangle.position.x + (triangle.model->mesh.vertices[0].pos.x * triangle.scale.x / 2),
+		triangle.position.y + (triangle.model->mesh.vertices[0].pos.y * triangle.scale.y / 2),
+		triangle.position.z + (triangle.model->mesh.vertices[0].pos.z * triangle.scale.z / 2)
 	};
 
 	triangleCol.pos1 = {
-		triangle.position.x + (triangle.model->vertices[1].pos.x * triangle.scale.x / 2),
-		triangle.position.y + (triangle.model->vertices[1].pos.y * triangle.scale.y / 2),
-		triangle.position.z + (triangle.model->vertices[1].pos.z * triangle.scale.z / 2)
+		triangle.position.x + (triangle.model->mesh.vertices[1].pos.x * triangle.scale.x / 2),
+		triangle.position.y + (triangle.model->mesh.vertices[1].pos.y * triangle.scale.y / 2),
+		triangle.position.z + (triangle.model->mesh.vertices[1].pos.z * triangle.scale.z / 2)
 	};
 
 	triangleCol.pos2 = {
-		triangle.position.x + (triangle.model->vertices[2].pos.x * triangle.scale.x / 2),
-		triangle.position.y + (triangle.model->vertices[2].pos.y * triangle.scale.y / 2),
-		triangle.position.z + (triangle.model->vertices[2].pos.z * triangle.scale.z / 2)
+		triangle.position.x + (triangle.model->mesh.vertices[2].pos.x * triangle.scale.x / 2),
+		triangle.position.y + (triangle.model->mesh.vertices[2].pos.y * triangle.scale.y / 2),
+		triangle.position.z + (triangle.model->mesh.vertices[2].pos.z * triangle.scale.z / 2)
 	};
 
 	triangleCol.normal = {
-		triangle.model->vertices[0].normal.x,
-		triangle.model->vertices[0].normal.y,
-		triangle.model->vertices[0].normal.z
+		triangle.model->mesh.vertices[0].normal.x,
+		triangle.model->mesh.vertices[0].normal.y,
+		triangle.model->mesh.vertices[0].normal.z
 	};
 
 	Sphere sphereColCheckTri;

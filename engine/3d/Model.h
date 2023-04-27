@@ -12,12 +12,17 @@
 #include "Material.h"
 #include <unordered_map>
 
+struct Mesh
+{
+	std::vector<Vertex> vertices;	//頂点データ配列
+	std::vector<uint16_t> indices;	//インデックス配列
+	std::wstring diffuseMap;		//テクスチャのファイル
+};
+
 class Model : public VertexData
 {
 public:
-
-	std::vector<Vertex> vertices;	//こいつらが頑張ればmodel読み込みもいけるっピ
-	std::vector<uint16_t> indices;
+	Mesh mesh;
 
 	std::unordered_map<unsigned short, std::vector<unsigned short>> smoothData;
 
