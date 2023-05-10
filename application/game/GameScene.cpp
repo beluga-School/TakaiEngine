@@ -206,6 +206,8 @@ GUI gui2("Light");
 
 void Game::Update()
 {
+
+#pragma region Imguiの処理
 	ImGui::Text("FPS %f", TimeManager::fps);
 	ImGui::Text("MAXFPS %f", TimeManager::fixFPS);
 	
@@ -329,7 +331,7 @@ void Game::Update()
 
 	//lightObj.position = lightGroup->pointLights->lightPos;
 
-
+#pragma endregion
 
 	CameraUpdate();
 	//オブジェクトの更新
@@ -353,7 +355,6 @@ void Game::Update()
 	{
 		redScreenSprite.color.f4.w -= TimeManager::deltaTime;
 	}
-	
 
 	gEnemyList.remove_if([](GroundEnemy& enemy) {
 		return enemy.isDead;

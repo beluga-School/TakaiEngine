@@ -30,6 +30,7 @@ using namespace DirectX;
 #include "Billboard.h"
 
 #include "GameScene.h"
+#include "DemoScene.h"
 
 #include "Sound.h"
 #include "DebugText.h"
@@ -105,6 +106,8 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	Game gameScene_;
 	gameScene_.Initialize();
 
+	DemoScene demo;
+	demo.Initialize();
 
 #pragma endregion 描画初期化処理
 
@@ -142,14 +145,16 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		
 		ClearDrawScreen();
 
-		//imguiManager->PreUpdate();
+		imguiManager->PreUpdate();
 
 		//更新処理
 		input_->Update();
 	
 		gui.Begin({ 800,10 }, { 400,200 });
-		gameScene_.Update();
+		//gameScene_.Update();
 		gui.End();
+
+		demo.Update();
 
 		//pEmitter.Update();
 
@@ -158,7 +163,8 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 
 #pragma region グラフィックスコマンド
 		//--4.描画コマンドここから--//
-		gameScene_.Draw();
+		//gameScene_.Draw();
+		demo.Draw();
 
 		debugText.DrawAll();
 
@@ -168,9 +174,9 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 
 #pragma region 画面入れ替え
 
-		//imguiManager->PreDraw();
+		imguiManager->PreDraw();
 
-		//imguiManager->Draw();
+		imguiManager->Draw();
 
 		PostDraw();
 
