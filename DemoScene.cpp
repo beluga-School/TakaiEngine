@@ -3,9 +3,27 @@
 #include <Sprite.h>
 #include <SceneManager.h>
 #include "GameScene.h"
+#include "AssimpLoader.h"
+
+const wchar_t* modelFile = L"Resources/sphere_fbx/sphere.fbx";
+std::vector<Mesh> meshes;
 
 void DemoScene::Initialize()
 {
+	ImportSettings importSetting =
+	{
+		modelFile,
+		meshes,
+		false,
+		false,
+	};
+	AssimpLoader loader;
+	
+	if (!loader.Load(importSetting))
+	{
+		//return;
+	}
+
 	//3dオブジェクト用のパイプライン生成
 	object3dPipelineSet = CreateObject3DPipeline();
 

@@ -49,22 +49,24 @@ bool AssimpLoader::Load(ImportSettings settings)
 
 	Assimp::Importer importer;
 
-	const aiScene *scene = 
-		importer.ReadFile(path,
-			aiProcess_Triangulate |
-			aiProcess_PreTransformVertices | 
-			aiProcess_CalcTangentSpace |
-			aiProcess_GenSmoothNormals |
-			aiProcess_GenUVCoords |
-			aiProcess_RemoveRedundantMaterials |
-			aiProcess_OptimizeMeshes 
-			//aiProcess_ConvertToLeftHanded
-			);
+	int flag = 0;
+	flag |= aiProcess_Triangulate;
+	flag |= aiProcess_PreTransformVertices;
+	flag |= aiProcess_CalcTangentSpace;
+	flag |= aiProcess_GenSmoothNormals;
+	flag |= aiProcess_GenUVCoords;
+	flag |= aiProcess_RemoveRedundantMaterials;
+	flag |= aiProcess_OptimizeMeshes;
+
+	auto scene = importer.ReadFile(path, flag);
+			
+
 	if (scene == nullptr)
 	{
 		//エラーがでたら表示
 		OutputDebugStringA(importer.GetErrorString());
-		assert(0);
+		//assert(0);
+		return false;
 	}
 
 	//読み込んだデータをMeshに保存
