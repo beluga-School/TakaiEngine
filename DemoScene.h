@@ -2,8 +2,10 @@
 #include "Pipeline.h"
 #include "ViewProjection.h"
 #include "Obj.h"
+#include "IScene.h"
+#include "Input.h"
 
-class DemoScene
+class DemoScene : public IScene
 {
 public:
 	void Initialize();
@@ -16,5 +18,6 @@ private:
 	Camera* camera = Camera::camera;
 
 	Obj3d sphere;
+	Input* input = Input::GetInstance();
 };
 

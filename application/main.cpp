@@ -29,8 +29,10 @@ using namespace DirectX;
 #include "ClearDrawScreen.h"
 #include "Billboard.h"
 
-#include "GameScene.h"
 #include "DemoScene.h"
+#include "SceneFactory.h"
+
+#include "SceneManager.h"
 
 #include "Sound.h"
 #include "DebugText.h"
@@ -103,19 +105,22 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	//モデルの読み込み
 	ModelManager::GetInstance()->PreLoad();
 
-	Game gameScene_;
-	gameScene_.Initialize();
+	LightGroup::lightGroup = LightGroup::Create();
 
-	DemoScene demo;
-	demo.Initialize();
+	SceneManager *scenemanager = SceneManager::Get();
+	
+	//シーンファクトリーを生成し、マネージャにセット
+	SceneFactory *sceneFactory = new SceneFactory();
+	scenemanager->SetSceneFactory(sceneFactory);
+
+	//scenemanager->ChangeScene("DEMO");
+	DemoScene *demo = new DemoScene();
+	scenemanager->SetScene(demo);
 
 #pragma endregion 描画初期化処理
 
 	SoundManager *soundManager = SoundManager::GetInstance();
 	soundManager->Initialize();
-
-	SoundData curser = soundManager->SoundLoadWave("Resources\\sound\\curser.wav");
-	SoundData bgm = soundManager->SoundLoadWave("Resources\\sound\\bgm.wav");
 
 	//ゲームループ内で使う変数の宣言
 	//ParticleEmitter pEmitter;
@@ -154,7 +159,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		//gameScene_.Update();
 		gui.End();
 
-		demo.Update();
+		scenemanager->Update();
 
 		//pEmitter.Update();
 
@@ -164,7 +169,8 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 #pragma region グラフィックスコマンド
 		//--4.描画コマンドここから--//
 		//gameScene_.Draw();
-		demo.Draw();
+
+		scenemanager->Draw();
 
 		debugText.DrawAll();
 
@@ -194,15 +200,12 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 
 	imguiManager->Finalize();
 
-	gameScene_.End();
+	scenemanager->End();
+	delete sceneFactory;
 
 	//音声データは先にxAudio2を解放しなければならない
 	//xAudio2の解放
 	soundManager->End();
-
-	//音声データの解放
-	soundManager->SoundUnload(&curser);
-	soundManager->SoundUnload(&bgm);
 
 	//ウィンドウクラスを登録解除
 	UnregisterClass(winApi->w.lpszClassName, winApi->w.hInstance);

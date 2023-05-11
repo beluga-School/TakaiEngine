@@ -1,6 +1,8 @@
 #include "DemoScene.h"
 #include <ClearDrawScreen.h>
 #include <Sprite.h>
+#include <SceneManager.h>
+#include "GameScene.h"
 
 void DemoScene::Initialize()
 {
@@ -16,6 +18,13 @@ void DemoScene::Initialize()
 
 void DemoScene::Update()
 {
+	if (input->TriggerKey(DIK_K))
+	{
+		Game* game = new Game();
+		sceneManager->SetScene(game);
+		//sceneManager->ChangeScene("GAMEPLAY");
+	}
+
 	camera->UpdatematView();
 	sphere.Update(*camera);
 }

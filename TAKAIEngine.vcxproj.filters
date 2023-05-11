@@ -100,6 +100,39 @@
     <Filter Include="ソース ファイル\Input">
       <UniqueIdentifier>{f70ac3f1-7517-4bb3-a9b5-e711cb76005c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\Scene">
+      <UniqueIdentifier>{2c6ff3ad-9765-446e-9ab0-ff9007a90aba}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\Scene">
+      <UniqueIdentifier>{d5b9a130-95c7-4f91-bc2a-ca21813dc49d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Scene\IScene">
+      <UniqueIdentifier>{36625483-a30b-4c59-ac7a-e6a0ffe6b7ed}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Scene\DemoScene">
+      <UniqueIdentifier>{3dd87bb2-25f3-4e33-bd37-68681c1108df}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Scene\GameScene">
+      <UniqueIdentifier>{8e46dd71-6d8e-4d20-b769-7ce98ccfa71c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine">
+      <UniqueIdentifier>{9ac39836-34e0-440a-82e7-c53f19651d9a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Application">
+      <UniqueIdentifier>{4263170a-accd-44e1-84e1-cd993642407c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\SceneManager">
+      <UniqueIdentifier>{f3484d3c-6d17-46af-aca0-f73b2276367e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\SceneManager\SceneManager">
+      <UniqueIdentifier>{fee5a9b7-2409-49be-955f-f5ee04527f3e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\SceneManager\AbstractSceneFactory">
+      <UniqueIdentifier>{ff2eb1df-23c4-41d7-937d-86e0977d5754}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\SceneManager\SceneFactory">
+      <UniqueIdentifier>{3fe952bd-63c0-4e0b-abd9-fbb138561e11}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="application\main.cpp">
@@ -125,9 +158,6 @@
     </ClCompile>
     <ClCompile Include="engine\common\DirectXInit.cpp">
       <Filter>ソース ファイル\Common</Filter>
-    </ClCompile>
-    <ClCompile Include="application\game\GameScene.cpp">
-      <Filter>ソース ファイル\Game</Filter>
     </ClCompile>
     <ClCompile Include="engine\Particle.cpp">
       <Filter>ソース ファイル\3D</Filter>
@@ -261,11 +291,20 @@
     <ClCompile Include="engine\AssimpLoader.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="IScene.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
     <ClCompile Include="DemoScene.cpp">
-      <Filter>ソース ファイル</Filter>
+      <Filter>ソース ファイル\Scene\DemoScene</Filter>
+    </ClCompile>
+    <ClCompile Include="application\game\GameScene.cpp">
+      <Filter>ソース ファイル\Scene\GameScene</Filter>
+    </ClCompile>
+    <ClCompile Include="IScene.cpp">
+      <Filter>ソース ファイル\Scene\IScene</Filter>
+    </ClCompile>
+    <ClCompile Include="SceneManager.cpp">
+      <Filter>ソース ファイル\SceneManager\SceneManager</Filter>
+    </ClCompile>
+    <ClCompile Include="SceneFactory.cpp">
+      <Filter>ソース ファイル\SceneManager\SceneFactory</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -289,9 +328,6 @@
     </ClInclude>
     <ClInclude Include="engine\2d\DebugText.h">
       <Filter>ヘッダー ファイル\Util</Filter>
-    </ClInclude>
-    <ClInclude Include="application\game\GameScene.h">
-      <Filter>ヘッダー ファイル\Game</Filter>
     </ClInclude>
     <ClInclude Include="engine\Particle.h">
       <Filter>ヘッダー ファイル\3D</Filter>
@@ -431,11 +467,23 @@
     <ClInclude Include="engine\AssimpLoader.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="IScene.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
     <ClInclude Include="DemoScene.h">
-      <Filter>ヘッダー ファイル</Filter>
+      <Filter>ソース ファイル\Scene\DemoScene</Filter>
+    </ClInclude>
+    <ClInclude Include="application\game\GameScene.h">
+      <Filter>ソース ファイル\Scene\GameScene</Filter>
+    </ClInclude>
+    <ClInclude Include="IScene.h">
+      <Filter>ソース ファイル\Scene\IScene</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneManager.h">
+      <Filter>ソース ファイル\SceneManager\SceneManager</Filter>
+    </ClInclude>
+    <ClInclude Include="AbstractSceneFactory.h">
+      <Filter>ソース ファイル\SceneManager\AbstractSceneFactory</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneFactory.h">
+      <Filter>ソース ファイル\SceneManager\SceneFactory</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -12,6 +12,7 @@
 #include "AirEnemy.h"
 #include "Sound.h"
 #include "LightGroup.h"
+#include "IScene.h"
 
 //enum class Scene
 //{
@@ -22,7 +23,7 @@
 //};
 const int max = 500;
 
-class Game
+class Game : public IScene
 {
 public:
 	void Initialize();
