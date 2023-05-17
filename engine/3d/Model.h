@@ -30,8 +30,6 @@ public:
 	
 	/*ConstBuffer<ConstBufferDataB1> constBufferMaterial;*/
 
-	bool AssimpLoader(const std::string t);
-
 	//void LoadMesh(aiNode* node,const aiScene* scene);
 
 	/// <summary>
@@ -71,7 +69,6 @@ public:
 	Model beetleM;
 	Model subDevM;
 	Model sphereM;
-	Model beetleAss;
 
 	void PreLoad();
 

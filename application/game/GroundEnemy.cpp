@@ -6,7 +6,7 @@
 void GroundEnemy::Initialize(Vector3 position)
 {
 	Mob::Initialize();
-	model = &ModelManager::GetInstance()->beetleAss;
+	model = &ModelManager::GetInstance()->beetleM;
 	texture = &TextureManager::GetInstance()->slime;
 	this->position = position;
 	scale = { 5,5,5 };

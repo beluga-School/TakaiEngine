@@ -207,6 +207,7 @@
     <ClCompile Include="External\imgui\imgui_tables.cpp" />
     <ClCompile Include="External\imgui\imgui_widgets.cpp" />
     <ClCompile Include="IScene.cpp" />
+    <ClCompile Include="LevelLoader.cpp" />
     <ClCompile Include="SceneFactory.cpp" />
     <ClCompile Include="SceneManager.cpp" />
   </ItemGroup>
@@ -268,6 +269,8 @@
     <ClInclude Include="External\imgui\imstb_textedit.h" />
     <ClInclude Include="External\imgui\imstb_truetype.h" />
     <ClInclude Include="IScene.h" />
+    <ClInclude Include="json.hpp" />
+    <ClInclude Include="LevelLoader.h" />
     <ClInclude Include="SceneFactory.h" />
     <ClInclude Include="SceneManager.h" />
   </ItemGroup>

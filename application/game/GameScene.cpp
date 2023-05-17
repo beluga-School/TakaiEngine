@@ -27,45 +27,31 @@ void Game::Initialize()
 
 	goalSprite.SetTexture(&TextureManager::GetInstance()->goalS);
 	goalSprite.SetPos({ Util::window_width / 2, Util::window_height / 2 });
-	//SpriteCreate(&goalSprite, &TextureManager::GetInstance()->goalS, { 0.5f,0.5f });
-	//SpriteInit(goalSprite, SpriteCommon::spriteCommon, { Util::window_width / 2,Util::window_height / 2 }, 0);
 	SpriteSetSize(goalSprite, { 1280,720 });
 	
 	TitleSprite.SetTexture(&TextureManager::GetInstance()->titleTex);
 	TitleSprite.SetPos({ Util::window_width / 2,Util::window_height / 2 });
-	//SpriteCreate(&TitleSprite, &TextureManager::GetInstance()->titleTex, { 0.5f,0.5f });
-	//SpriteInit(TitleSprite, SpriteCommon::spriteCommon, { Util::window_width / 2,Util::window_height / 2 }, 0);
 	SpriteSetSize(TitleSprite, { 1280,720 });
 
 	startSprite.SetTexture(&TextureManager::GetInstance()->startTex);
 	startSprite.SetPos({ Util::window_width / 2,Util::window_height / 2 + 100 });
-	//SpriteCreate(&startSprite, &TextureManager::GetInstance()->startTex, { 0.5f,0.5f });
-	//SpriteInit(startSprite, SpriteCommon::spriteCommon, { Util::window_width / 2,Util::window_height / 2 + 100 }, 0);
 	SpriteSetSize(startSprite, { 600,150 });
 	
 	spaceSprite.SetTexture(&TextureManager::GetInstance()->spaceTex);
 	spaceSprite.SetPos({ Util::window_width / 2,Util::window_height / 2 + 200 });
 	spaceSprite.SetColor({1,1,1,0});
-	//SpriteCreate(&spaceSprite, &TextureManager::GetInstance()->spaceTex, { 0.5f,0.5f });
-	//SpriteInit(spaceSprite, SpriteCommon::spriteCommon,{ Util::window_width / 2,Util::window_height / 2 + 200 }, 0);
 	SpriteSetSize(spaceSprite, { 600,150 });
 
 	redScreenSprite.SetTexture(&TextureManager::GetInstance()->redScreen);
 	redScreenSprite.SetPos({ Util::window_width / 2,Util::window_height / 2 });
-	//SpriteCreate(&redScreenSprite, &TextureManager::GetInstance()->redScreen, { 0.5f,0.5f });
-	//SpriteInit(redScreenSprite, SpriteCommon::spriteCommon,{ Util::window_width / 2,Util::window_height / 2 }, 0);
 	SpriteSetSize(redScreenSprite, { Util::window_width,Util::window_height });
 	
 	slimeSprite.SetTexture(&TextureManager::GetInstance()->slime);
 	slimeSprite.SetPos({ Util::window_width - 100,100 });
-	//SpriteCreate(&slimeSprite, &TextureManager::GetInstance()->slime, { 0.5f,0.5f });
-	//SpriteInit(slimeSprite, SpriteCommon::spriteCommon,{Util::window_width - 100,100 }, 0);
-	
+
 	gameOverSprite.SetTexture(&TextureManager::GetInstance()->gameOver);
 	gameOverSprite.SetPos({ Util::window_width / 2,Util::window_height / 2 });
-	//SpriteCreate(&gameOverSprite, &TextureManager::GetInstance()->gameOver, { 0.5f,0.5f });
-	//SpriteInit(gameOverSprite, SpriteCommon::spriteCommon,{ Util::window_width / 2,Util::window_height / 2 }, 0);
-
+	
 	//ƒrƒ…[•ÏŠ·s—ñ(“§Ž‹“Š‰e)‚ðŒvŽZ
 	camera->Initialize();
 

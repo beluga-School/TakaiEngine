@@ -6,6 +6,8 @@
 #include "AssimpLoader.h"
 
 const wchar_t* modelFile = L"Resources/sphere_fbx/sphere.fbx";
+std::vector<Obj3d> spherefbx;
+
 std::vector<Mesh> meshes;
 
 void DemoScene::Initialize()
@@ -21,7 +23,21 @@ void DemoScene::Initialize()
 	
 	if (!loader.Load(importSetting))
 	{
-		//return;
+		assert(0);
+	}
+
+	spherefbx.reserve(meshes.size());
+	for (size_t i = 0; i < meshes.size(); i++)
+	{
+		spherefbx.emplace_back();
+		spherefbx.back().Initialize();
+
+		auto vertices = meshes[i].vertices;
+
+		auto indices = meshes[i].indices;
+
+		spherefbx.back().model->CreateVertex(vertices, indices);
+
 	}
 
 	//3dオブジェクト用のパイプライン生成
@@ -45,6 +61,11 @@ void DemoScene::Update()
 
 	camera->UpdatematView();
 	sphere.Update(*camera);
+
+	for (size_t i = 0; i < meshes.size(); i++)
+	{
+		spherefbx[i].Update(*camera);
+	}
 }
 
 void DemoScene::Draw()
@@ -52,6 +73,14 @@ void DemoScene::Draw()
 	BasicObjectPreDraw(object3dPipelineSet);
 
 	sphere.Draw();
+
+	DirectX12* dx12 = DirectX12::GetInstance();
+	TextureManager* texM = TextureManager::GetInstance();
+
+	for (size_t i = 0; i < meshes.size(); i++)
+	{
+		spherefbx[i].Draw();
+	}
 
 	//スプライトの前描画(共通コマンド)
 	SpriteCommonBeginDraw(SpriteCommon::spriteCommon);

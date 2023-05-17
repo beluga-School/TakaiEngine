@@ -30,6 +30,7 @@ using namespace DirectX;
 #include "Billboard.h"
 
 #include "DemoScene.h"
+#include "GameScene.h"
 #include "SceneFactory.h"
 
 #include "SceneManager.h"
@@ -113,8 +114,8 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	SceneFactory *sceneFactory = new SceneFactory();
 	scenemanager->SetSceneFactory(sceneFactory);
 
-	//scenemanager->ChangeScene("DEMO");
 	DemoScene *demo = new DemoScene();
+	//Game *game = new Game();
 	scenemanager->SetScene(demo);
 
 #pragma endregion •`‰æ‰Šú‰»ˆ—

@@ -165,11 +165,6 @@ using namespace std;
 //	return true;
 //}
 
-bool Model::AssimpLoader(const std::string t)
-{
-
-}
-
 void Model::CreateDefaultModel()
 {
 	CreateVertex(mesh.vertices, mesh.indices);
