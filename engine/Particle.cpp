@@ -90,7 +90,7 @@ void GParticleManager::Update(XMMATRIX& matView, XMMATRIX& matProjection)
 void GParticleManager::Draw(Texture* texture)
 {
 	DirectX12* dx12 = DirectX12::GetInstance();
-	TextureManager* texM = TextureManager::GetInstance();
+	TextureManager* texM = TextureManager::Get();
 
 	//SRVヒープの先頭から順番にSRVをルートパラメータ1番に設定
 	//ルートパラメータ1番はテクスチャバッファ
@@ -165,8 +165,8 @@ void ParticleEmitter::Initialize()
 {
 	emitter.Initialize();
 	emitter.position = { 0,0,0 };
-	emitter.SetModel(&ModelManager::GetInstance()->cubeM);
-	emitter.SetTexture(&TextureManager::GetInstance()->white);
+	emitter.SetModel(ModelManager::Get()->GetModel("Cube"));
+	emitter.SetTexture(&TextureManager::Get()->white);
 }
 
 void ParticleEmitter::SetInfo(Vector3 pos, float range, float scale, XMFLOAT4 color, int spawnNum, bool redChange)

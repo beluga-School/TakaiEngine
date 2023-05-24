@@ -35,7 +35,7 @@ public:
 
 public://キーボード
 
-	static Input* GetInstance();
+	static Input* Get();
 
 	bool PushKey(unsigned char keys);
 	bool TriggerKey(unsigned char keys);

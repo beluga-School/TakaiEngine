@@ -94,7 +94,7 @@ void ClearDrawScreen()
 void BasicObjectPreDraw(PipelineSet objectPipelineSet)
 {
 	DirectX12* dx12 = DirectX12::GetInstance();
-	TextureManager* texM = TextureManager::GetInstance();
+	TextureManager* texM = TextureManager::Get();
 
 	D3D12_VIEWPORT viewport{};
 	viewport.Width = Util::window_width;
@@ -131,7 +131,7 @@ void BasicObjectPreDraw(PipelineSet objectPipelineSet)
 void GeometryObjectPreDraw(PipelineSet geometryPipelineSet)
 {
 	DirectX12* dx12 = DirectX12::GetInstance();
-	TextureManager* texM = TextureManager::GetInstance();
+	TextureManager* texM = TextureManager::Get();
 
 	D3D12_VIEWPORT viewport{};
 	viewport.Width = Util::window_width;

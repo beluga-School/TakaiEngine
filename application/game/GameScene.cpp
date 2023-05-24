@@ -17,39 +17,39 @@ void Game::Initialize()
 	//スプライト
 
 	skydome.Initialize();
-	skydome.SetModel(&ModelManager::GetInstance()->skyDomeM);
-	skydome.SetTexture(&TextureManager::GetInstance()->white);
+	skydome.SetModel(ModelManager::Get()->GetModel("skydome"));
+	skydome.SetTexture(&TextureManager::Get()->white);
 	skydome.scale = { 10,10,10 };
 	skydome.color = { 0.05f,0.05f,0.05f,1.0f };
 	skydome.model->material.ambient = { 0,0,0 };
 	skydome.model->material.diffuse = { 0,0,0 };
 	skydome.model->material.specular = { 0,0,0 };
 
-	goalSprite.SetTexture(&TextureManager::GetInstance()->goalS);
+	goalSprite.SetTexture(TextureManager::GetTexture("goal"));
 	goalSprite.SetPos({ Util::window_width / 2, Util::window_height / 2 });
 	SpriteSetSize(goalSprite, { 1280,720 });
 	
-	TitleSprite.SetTexture(&TextureManager::GetInstance()->titleTex);
+	TitleSprite.SetTexture(TextureManager::GetTexture("Title"));
 	TitleSprite.SetPos({ Util::window_width / 2,Util::window_height / 2 });
 	SpriteSetSize(TitleSprite, { 1280,720 });
 
-	startSprite.SetTexture(&TextureManager::GetInstance()->startTex);
+	startSprite.SetTexture(TextureManager::GetTexture("Start"));
 	startSprite.SetPos({ Util::window_width / 2,Util::window_height / 2 + 100 });
 	SpriteSetSize(startSprite, { 600,150 });
 	
-	spaceSprite.SetTexture(&TextureManager::GetInstance()->spaceTex);
+	spaceSprite.SetTexture(TextureManager::GetTexture("Space"));
 	spaceSprite.SetPos({ Util::window_width / 2,Util::window_height / 2 + 200 });
 	spaceSprite.SetColor({1,1,1,0});
 	SpriteSetSize(spaceSprite, { 600,150 });
 
-	redScreenSprite.SetTexture(&TextureManager::GetInstance()->redScreen);
+	redScreenSprite.SetTexture(TextureManager::GetTexture("redScreen"));
 	redScreenSprite.SetPos({ Util::window_width / 2,Util::window_height / 2 });
 	SpriteSetSize(redScreenSprite, { Util::window_width,Util::window_height });
 	
-	slimeSprite.SetTexture(&TextureManager::GetInstance()->slime);
+	slimeSprite.SetTexture(TextureManager::GetTexture("slime"));
 	slimeSprite.SetPos({ Util::window_width - 100,100 });
 
-	gameOverSprite.SetTexture(&TextureManager::GetInstance()->gameOver);
+	gameOverSprite.SetTexture(TextureManager::GetTexture("GameOver"));
 	gameOverSprite.SetPos({ Util::window_width / 2,Util::window_height / 2 });
 	
 	//ビュー変換行列(透視投影)を計算
@@ -64,26 +64,26 @@ void Game::Initialize()
 	firewispsmooth.Initialize();
 	firewispsmooth.position = { 60,-20,0 };
 	firewispsmooth.scale = { 10,10,10 };
-	firewispsmooth.model = &ModelManager::GetInstance()->sphereM;
-	firewispsmooth.texture = &TextureManager::GetInstance()->white;
+	firewispsmooth.model = ModelManager::Get()->GetModel("firewisp");
+	firewispsmooth.texture = &TextureManager::Get()->white;
 	
 	firewispCheckTriangle.Initialize();
 	firewispCheckTriangle.position = { 30,-20,0 };
 	firewispCheckTriangle.scale = { 10,10,10 };
-	firewispCheckTriangle.model = &ModelManager::GetInstance()->sphereM;
-	firewispCheckTriangle.texture = &TextureManager::GetInstance()->white;
+	firewispCheckTriangle.model = ModelManager::Get()->GetModel("sphere");
+	firewispCheckTriangle.texture = &TextureManager::Get()->white;
 	
 	board.Initialize();
 	board.rotation = { 0,0,MathF::DegConvRad(270) };
 	board.scale = { 10,10,10 };
-	board.model = &ModelManager::GetInstance()->boardM;
-	board.texture = &TextureManager::GetInstance()->white;
+	board.model = ModelManager::Get()->ModelManager::Get()->GetModel("board");
+	board.texture = &TextureManager::Get()->white;
 	
 	triangle.Initialize();
 	triangle.position = { 40,-20,0 };
 	triangle.scale = { 10,10,10 };
-	triangle.model = &ModelManager::GetInstance()->triangleM;
-	triangle.texture = &TextureManager::GetInstance()->white;
+	triangle.model = ModelManager::Get()->GetModel("triangle");
+	triangle.texture = &TextureManager::Get()->white;
 
 	float a = -2.0f;
 	float b = 2.0f;
@@ -93,8 +93,8 @@ void Game::Initialize()
 	for (int i = 0; i < max; i++)
 	{
 		cube[i].Initialize();
-		cube[i].SetModel(&ModelManager::GetInstance()->cubeM);
-		cube[i].SetTexture(&TextureManager::GetInstance()->white);
+		cube[i].SetModel(ModelManager::Get()->GetModel("Cube"));
+		cube[i].SetTexture(&TextureManager::Get()->white);
 
 		cube[i].scale = { MathF::GetRand(3,7),MathF::GetRand(3,7),MathF::GetRand(3,7) };
 
@@ -184,140 +184,140 @@ void Game::Initialize()
 	lightObj.Initialize();
 	lightObj.position = { 0.5f,0,0 };
 	lightObj.scale = { 3,3,3 };
-	lightObj.model = &ModelManager::GetInstance()->cubeM;
-	lightObj.texture = &TextureManager::GetInstance()->white;
+	lightObj.model = ModelManager::Get()->GetModel("Cube");
+	lightObj.texture = &TextureManager::Get()->white;
 }
 
-GUI gui2("Light");
+//GUI gui2("Light");
 
 void Game::Update()
 {
 
-#pragma region Imguiの処理
-	ImGui::Text("FPS %f", TimeManager::fps);
-	ImGui::Text("MAXFPS %f", TimeManager::fixFPS);
-	
-	if (ImGui::Button("30FPS"))
-	{
-		TimeManager::fps = 0;
-		TimeManager::fixFPS = 30;
-	}
-	ImGui::SameLine();
-	if (ImGui::Button("60FPS"))
-	{
-		TimeManager::fps = 0;
-		TimeManager::fixFPS = 60;
-	}
-	ImGui::SameLine();
-	if (ImGui::Button("144FPS"))
-	{
-		TimeManager::fps = 0;
-		TimeManager::fixFPS = 144;
-	}
-
-	ImGui::Text("CheckConnectPad %d", input->CheckConnectPad());
-
-	if (ImGui::Button("LAMBERT"))
-	{
-		object3dPipelineSet = CreateLambertPipeline();
-	}
-	ImGui::SameLine();
-	if (ImGui::Button("PHONG"))
-	{
-		object3dPipelineSet = CreateObject3DPipeline();
-	}
-
-	static float lightColor[3] = { 1.0f,0,0};
-	static float lightColor2[3] = { 0,1.0f,0 };
-	static float lightColor3[3] = { 0,0,1.0f };
-
-	static float lightDir[3] = {0,-1.0f,0};
-	static float lightDir2[3] = { 0.5f,0.1f,0.2f };
-	static float lightDir3[3] = { -0.5f,0.1f,-0.2f };
-
-	static float lightPointPos[3] = { 0.5f,1,0 };
-	static float lightPointColor[3] = { 1,1,1 };
-	
-	gui2.Begin({ 10,100 }, { 500,300 });
-	ImGui::ColorEdit3("light1RGB", lightColor);
-	ImGui::ColorEdit3("light2RGB", lightColor2);
-	ImGui::ColorEdit3("light3RGB", lightColor3);
-	ImGui::SliderFloat3("light1Dir", lightDir,-10,10);
-	ImGui::SliderFloat3("light2Dir", lightDir2, -10, 10);
-	ImGui::SliderFloat3("light3Dir", lightDir3, -10, 10);
-	ImGui::Text("%f %f %f", 
-		firewispsmooth.position.x,
-		firewispsmooth.position.y,
-		firewispsmooth.position.z
-		);
-	
-	ImGui::ColorEdit3("lightPointRGB", lightPointColor);
-	ImGui::SliderFloat3("lightPointPos", lightPointPos, -100, 100);
-
-
-	if (ImGui::Button("lightReset"))
-	{
-		lightColor[0] = 1.0f;
-		lightColor[1] = 0;
-		lightColor[2] = 0;
-
-		lightColor2[0] = 0;
-		lightColor2[1] = 1.0f;
-		lightColor2[2] = 0;
-		
-		lightColor3[0] = 0.0f;
-		lightColor3[1] = 0.0f;
-		lightColor3[2] = 1.0f;
-
-		lightDir[0] = 0;
-		lightDir[1] = -1.0f;
-		lightDir[2] = 0;
-
-		lightDir2[0] = 0.5f;
-		lightDir2[1] = 0.1f;
-		lightDir2[2] = 0.2f;
-
-		lightDir3[0] = -0.5f;
-		lightDir3[1] = 0.1f;
-		lightDir3[2] = -0.2f;
-	}
-	ImGui::SameLine();
-
-	static bool hoge2 = true;
-	static bool hoge3 = true;
-
-	if (ImGui::Button("DirActive"))
-	{
-		hoge2 = !hoge2;
-
-		lightGroup->SetDirLightActive(0, hoge2);
-		lightGroup->SetDirLightActive(1, hoge2);
-		lightGroup->SetDirLightActive(2, hoge2);
-	}
-	ImGui::SameLine();
-	if (ImGui::Button("PointActive"))
-	{
-		hoge3 = !hoge3;
-
-		lightGroup->SetPointLightActive(0, hoge3);
-	}
-
-	gui2.End();
-
-	lightGroup->SetDirLightColor(0, { lightColor[0], lightColor[1] , lightColor[2]});
-	lightGroup->SetDirLightColor(1, { lightColor2[0], lightColor2[1] , lightColor2[2] });
-	lightGroup->SetDirLightColor(2, { lightColor3[0], lightColor3[1] , lightColor3[2] });
-
-	lightGroup->SetDirLightDir(0, { lightDir[0],lightDir[1] ,lightDir[2]});
-	lightGroup->SetDirLightDir(1, { lightDir2[0],lightDir2[1] ,lightDir2[2] });
-	lightGroup->SetDirLightDir(2, { lightDir3[0],lightDir3[1] ,lightDir3[2] });
-	
-	lightGroup->SetPointLightPos(0, { lightPointPos[0],lightPointPos[1] ,lightPointPos[2] });
-	lightGroup->SetPointLightColor(0, { lightPointColor[0],lightPointColor[1] ,lightPointColor[2] });
-
-	//lightObj.position = lightGroup->pointLights->lightPos;
-
-#pragma endregion
+//#pragma region Imguiの処理
+//	ImGui::Text("FPS %f", TimeManager::fps);
+//	ImGui::Text("MAXFPS %f", TimeManager::fixFPS);
+//	
+//	if (ImGui::Button("30FPS"))
+//	{
+//		TimeManager::fps = 0;
+//		TimeManager::fixFPS = 30;
+//	}
+//	ImGui::SameLine();
+//	if (ImGui::Button("60FPS"))
+//	{
+//		TimeManager::fps = 0;
+//		TimeManager::fixFPS = 60;
+//	}
+//	ImGui::SameLine();
+//	if (ImGui::Button("144FPS"))
+//	{
+//		TimeManager::fps = 0;
+//		TimeManager::fixFPS = 144;
+//	}
+//
+//	ImGui::Text("CheckConnectPad %d", input->CheckConnectPad());
+//
+//	if (ImGui::Button("LAMBERT"))
+//	{
+//		object3dPipelineSet = CreateLambertPipeline();
+//	}
+//	ImGui::SameLine();
+//	if (ImGui::Button("PHONG"))
+//	{
+//		object3dPipelineSet = CreateObject3DPipeline();
+//	}
+//
+//	static float lightColor[3] = { 1.0f,0,0};
+//	static float lightColor2[3] = { 0,1.0f,0 };
+//	static float lightColor3[3] = { 0,0,1.0f };
+//
+//	static float lightDir[3] = {0,-1.0f,0};
+//	static float lightDir2[3] = { 0.5f,0.1f,0.2f };
+//	static float lightDir3[3] = { -0.5f,0.1f,-0.2f };
+//
+//	static float lightPointPos[3] = { 0.5f,1,0 };
+//	static float lightPointColor[3] = { 1,1,1 };
+//	
+//	gui2.Begin({ 10,100 }, { 500,300 });
+//	ImGui::ColorEdit3("light1RGB", lightColor);
+//	ImGui::ColorEdit3("light2RGB", lightColor2);
+//	ImGui::ColorEdit3("light3RGB", lightColor3);
+//	ImGui::SliderFloat3("light1Dir", lightDir,-10,10);
+//	ImGui::SliderFloat3("light2Dir", lightDir2, -10, 10);
+//	ImGui::SliderFloat3("light3Dir", lightDir3, -10, 10);
+//	ImGui::Text("%f %f %f", 
+//		firewispsmooth.position.x,
+//		firewispsmooth.position.y,
+//		firewispsmooth.position.z
+//		);
+//	
+//	ImGui::ColorEdit3("lightPointRGB", lightPointColor);
+//	ImGui::SliderFloat3("lightPointPos", lightPointPos, -100, 100);
+//
+//
+//	if (ImGui::Button("lightReset"))
+//	{
+//		lightColor[0] = 1.0f;
+//		lightColor[1] = 0;
+//		lightColor[2] = 0;
+//
+//		lightColor2[0] = 0;
+//		lightColor2[1] = 1.0f;
+//		lightColor2[2] = 0;
+//		
+//		lightColor3[0] = 0.0f;
+//		lightColor3[1] = 0.0f;
+//		lightColor3[2] = 1.0f;
+//
+//		lightDir[0] = 0;
+//		lightDir[1] = -1.0f;
+//		lightDir[2] = 0;
+//
+//		lightDir2[0] = 0.5f;
+//		lightDir2[1] = 0.1f;
+//		lightDir2[2] = 0.2f;
+//
+//		lightDir3[0] = -0.5f;
+//		lightDir3[1] = 0.1f;
+//		lightDir3[2] = -0.2f;
+//	}
+//	ImGui::SameLine();
+//
+//	static bool hoge2 = true;
+//	static bool hoge3 = true;
+//
+//	if (ImGui::Button("DirActive"))
+//	{
+//		hoge2 = !hoge2;
+//
+//		lightGroup->SetDirLightActive(0, hoge2);
+//		lightGroup->SetDirLightActive(1, hoge2);
+//		lightGroup->SetDirLightActive(2, hoge2);
+//	}
+//	ImGui::SameLine();
+//	if (ImGui::Button("PointActive"))
+//	{
+//		hoge3 = !hoge3;
+//
+//		lightGroup->SetPointLightActive(0, hoge3);
+//	}
+//
+//	gui2.End();
+//
+//	lightGroup->SetDirLightColor(0, { lightColor[0], lightColor[1] , lightColor[2]});
+//	lightGroup->SetDirLightColor(1, { lightColor2[0], lightColor2[1] , lightColor2[2] });
+//	lightGroup->SetDirLightColor(2, { lightColor3[0], lightColor3[1] , lightColor3[2] });
+//
+//	lightGroup->SetDirLightDir(0, { lightDir[0],lightDir[1] ,lightDir[2]});
+//	lightGroup->SetDirLightDir(1, { lightDir2[0],lightDir2[1] ,lightDir2[2] });
+//	lightGroup->SetDirLightDir(2, { lightDir3[0],lightDir3[1] ,lightDir3[2] });
+//	
+//	lightGroup->SetPointLightPos(0, { lightPointPos[0],lightPointPos[1] ,lightPointPos[2] });
+//	lightGroup->SetPointLightColor(0, { lightPointColor[0],lightPointColor[1] ,lightPointColor[2] });
+//
+//	//lightObj.position = lightGroup->pointLights->lightPos;
+//
+//#pragma endregion
 
 	CameraUpdate();
 	//オブジェクトの更新
@@ -441,10 +441,10 @@ void Game::Update()
 
 	board.Update(*camera);
 
-	//球と三角形の当たり判定(上手にできてない)
-	ImGui::SliderFloat("triangle.x", &triangle.position.x, -100, 100);
-	ImGui::SliderFloat("triangle.y", &triangle.position.y, -100, 100);
-	ImGui::SliderFloat("triangle.z", &triangle.position.z, -100, 100);
+	////球と三角形の当たり判定(上手にできてない)
+	//ImGui::SliderFloat("triangle.x", &triangle.position.x, -100, 100);
+	//ImGui::SliderFloat("triangle.y", &triangle.position.y, -100, 100);
+	//ImGui::SliderFloat("triangle.z", &triangle.position.z, -100, 100);
 
 	Triangle triangleCol;
 	triangleCol.pos0 = {

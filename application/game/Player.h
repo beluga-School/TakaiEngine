@@ -72,5 +72,5 @@ private:
 	void Jump();
 
 	///---ƒVƒ“ƒOƒ‹ƒgƒ“
-	Input* input = Input::GetInstance();
+	Input* input = Input::Get();
 };

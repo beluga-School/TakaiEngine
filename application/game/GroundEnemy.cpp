@@ -6,8 +6,8 @@
 void GroundEnemy::Initialize(Vector3 position)
 {
 	Mob::Initialize();
-	model = &ModelManager::GetInstance()->beetleM;
-	texture = &TextureManager::GetInstance()->slime;
+	model = ModelManager::GetModel("beetle");
+	texture = TextureManager::GetTexture("slime");
 	this->position = position;
 	scale = { 5,5,5 };
 	rotation.y = -MathF::PI / 2;

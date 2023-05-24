@@ -2,9 +2,9 @@
 #include <fstream>
 #include <cassert>
 
-LevelData LevelLoader::Load(std::string filename)
+LevelData *LevelLoader::Load(std::string filename)
 {
-	const std::string fullpath = "Resource/" + filename + "/json";
+	const std::string fullpath = "Resources/" + filename + ".json";
 
 	//ファイルストリーム
 	std::ifstream file;
@@ -43,7 +43,7 @@ LevelData LevelLoader::Load(std::string filename)
 		ObjectLoad(levelData, object);
 	}
 
-	return *levelData;
+	return levelData;
 }
 
 void LevelLoader::ObjectLoad(LevelData* levelData, nlohmann::json& object)
@@ -87,22 +87,28 @@ void LevelLoader::ObjectLoad(LevelData* levelData, nlohmann::json& object)
 
 		//collider
 		nlohmann::json& collider = object["collider"];
-		//中心点
-		objectData.collider.center.x = (float)collider["center"][1];
-		objectData.collider.center.y = (float)collider["center"][2];
-		objectData.collider.center.z = (float)collider["center"][0];
-		//大きさ
-		objectData.collider.size.x = (float)collider["size"][1];
-		objectData.collider.size.y = (float)collider["size"][2];
-		objectData.collider.size.z = (float)collider["size"][0];
+		if (collider != nullptr)
+		{
+			//中心点
+			objectData.collider.center.x = (float)collider["center"][1];
+			objectData.collider.center.y = (float)collider["center"][2];
+			objectData.collider.center.z = (float)collider["center"][0];
+			//大きさ
+			objectData.collider.size.x = (float)collider["size"][1];
+			objectData.collider.size.y = (float)collider["size"][2];
+			objectData.collider.size.z = (float)collider["size"][0];
+		}
 
 		//子ノードがいるなら再帰
 		//reverveしてメモリを確保しないと、メモリが移動する危険性あり
 		if (object.contains("children"))
 		{
-			reservenum++;
-			levelData->objects.reserve(reservenum);
-			ObjectLoad(levelData, object);
+			//reservenum++;
+			//levelData->objects.reserve(reservenum);
+			for (nlohmann::json& object_ : object["children"])
+			{
+				ObjectLoad(levelData, object_);
+			}
 		}
 	}
 }

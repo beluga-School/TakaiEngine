@@ -4,6 +4,7 @@
 #include <SceneManager.h>
 #include "GameScene.h"
 #include "AssimpLoader.h"
+#include <TimeManager.h>
 
 const wchar_t* modelFile = L"Resources/sphere_fbx/sphere.fbx";
 std::vector<Obj3d> spherefbx;
@@ -12,6 +13,7 @@ std::vector<Mesh> meshes;
 
 void DemoScene::Initialize()
 {
+	//fbx読み込みの形跡
 	ImportSettings importSetting =
 	{
 		modelFile,
@@ -45,49 +47,145 @@ void DemoScene::Initialize()
 
 	camera->Initialize();
 
-	sphere.Initialize();
-	sphere.SetModel(&ModelManager::GetInstance()->sphereM);
-	sphere.SetTexture(&TextureManager::GetInstance()->white);
+	skydome.Initialize();
+	skydome.SetModel(ModelManager::Get()->GetModel("skydome"));
+	skydome.SetTexture(&TextureManager::Get()->white);
+	skydome.scale = { 10,10,10 };
+	skydome.color = { 1.f,1.f,1.f,1.0f };
+
+	/*sphere.Initialize();
+	sphere.SetModel(&ModelManager::Get()->sphereM);
+	sphere.SetTexture(&TextureManager::Get()->white);*/
+
+	LevelData* data = LevelLoader::Get()->Load("test");
+
+	SetObject(data);
+
+	camera->eye.y = 50;
+	camera->eye.z = -150;
+
+	ModelManager::LoadModel("beetle","beetle");
+	ModelManager::LoadModel("firewisp","firewisp");
+	ModelManager::LoadModel("boss","boss");
+
+	
+	slime.SetTexture(TextureManager::GetTexture("slime"));
+	slime.position = { 0,0,0 };
 }
 
 void DemoScene::Update()
 {
-	if (input->TriggerKey(DIK_K))
+	if (input->TriggerKey(DIK_O))
 	{
 		Game* game = new Game();
 		sceneManager->SetScene(game);
 		//sceneManager->ChangeScene("GAMEPLAY");
 	}
 
-	camera->UpdatematView();
-	sphere.Update(*camera);
+	float speed = 100.0f;
 
-	for (size_t i = 0; i < meshes.size(); i++)
+	if (input->Get()->PushKey(DIK_D))
+	{
+		camera->eye.x += speed * TimeManager::deltaTime;
+		camera->target.x += speed * TimeManager::deltaTime;
+	}
+	if(input->Get()->PushKey(DIK_A))
+	{ 
+		camera->eye.x -= speed * TimeManager::deltaTime;
+		camera->target.x -= speed * TimeManager::deltaTime;
+	}
+
+	if (input->Get()->PushKey(DIK_W))
+	{
+		camera->eye.y += speed * TimeManager::deltaTime;
+	}
+	if (input->Get()->PushKey(DIK_S))
+	{
+		camera->eye.y -= speed * TimeManager::deltaTime;
+	}
+
+	if (input->Get()->PushKey(DIK_UP))
+	{
+		camera->eye.z += speed * TimeManager::deltaTime;
+		camera->target.z += speed * TimeManager::deltaTime;
+	}
+	if (input->Get()->PushKey(DIK_DOWN))
+	{
+		camera->eye.z -= speed * TimeManager::deltaTime;
+		camera->target.z -= speed * TimeManager::deltaTime;
+	}
+	if (input->Get()->PushKey(DIK_I))
+	{
+		camera->eye.y += speed * TimeManager::deltaTime;
+		camera->target.y += speed * TimeManager::deltaTime;
+	}
+	if (input->Get()->PushKey(DIK_K))
+	{
+		camera->eye.y -= speed * TimeManager::deltaTime;
+		camera->target.y -= speed * TimeManager::deltaTime;
+	}
+	camera->UpdatematView();
+	//sphere.Update(*camera);
+
+	/*for (size_t i = 0; i < meshes.size(); i++)
 	{
 		spherefbx[i].Update(*camera);
+	}*/
+
+	skydome.Update(*camera);
+	for (auto& obj : obj3ds)
+	{
+		obj.Update(*camera);
 	}
+
+	slime.Update();
+	
 }
 
 void DemoScene::Draw()
 {
 	BasicObjectPreDraw(object3dPipelineSet);
 
-	sphere.Draw();
+	skydome.DrawMaterial();
+	//sphere.Draw();
 
-	DirectX12* dx12 = DirectX12::GetInstance();
-	TextureManager* texM = TextureManager::GetInstance();
+	for (auto& obj : obj3ds)
+	{
+		obj.Draw();
+	}
 
-	for (size_t i = 0; i < meshes.size(); i++)
+	/*for (size_t i = 0; i < meshes.size(); i++)
 	{
 		spherefbx[i].Draw();
-	}
+	}*/
 
 	//スプライトの前描画(共通コマンド)
 	SpriteCommonBeginDraw(SpriteCommon::spriteCommon);
 
+	slime.Draw();
 }
 
 void DemoScene::End()
 {
+	obj3ds.clear();
+}
 
+void DemoScene::SetObject(LevelData* data)
+{
+	for (auto& objectData : data->objects)
+	{
+		//とりあえずキューブで配置
+		//TODO:file_nameから逆引きできるようにしたい
+		obj3ds.emplace_back();
+		obj3ds.back().Initialize();
+		//モデル設定
+		obj3ds.back().SetModel(ModelManager::GetModel(objectData.fileName));
+		obj3ds.back().SetTexture(&TextureManager::Get()->white);
+		//座標
+		obj3ds.back().position = objectData.translation;
+		//回転角
+		obj3ds.back().rotation = objectData.rotation;
+		//大きさ
+		obj3ds.back().scale = objectData.scaling;
+	}
 }

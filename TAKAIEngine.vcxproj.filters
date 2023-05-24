@@ -5,16 +5,9 @@
       <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
       <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
     </Filter>
-    <Filter Include="ヘッダー ファイル">
-      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
-      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
-    </Filter>
     <Filter Include="リソース ファイル">
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
-    </Filter>
-    <Filter Include="ヘッダー ファイル\Math">
-      <UniqueIdentifier>{c4fac199-f60a-419b-99fe-c83b80a4e341}</UniqueIdentifier>
     </Filter>
     <Filter Include="シェーダー">
       <UniqueIdentifier>{c6f9bfd7-4cdc-4bc1-88fc-6fb58ea4aae6}</UniqueIdentifier>
@@ -43,50 +36,14 @@
     <Filter Include="ソース ファイル\Sound">
       <UniqueIdentifier>{2c20569e-1a1f-4c2c-871a-616b9191c2d6}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ヘッダー ファイル\Common">
-      <UniqueIdentifier>{b3865467-abfa-44d7-8c0e-89257d30c1f2}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ヘッダー ファイル\2D">
-      <UniqueIdentifier>{a183c1c1-c234-44f8-99f0-b90776435a09}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ヘッダー ファイル\3D">
-      <UniqueIdentifier>{6d03ee47-ac74-4a58-b5cd-2f197653c57c}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ヘッダー ファイル\Util">
-      <UniqueIdentifier>{01937895-7493-40a8-a9e8-46dce691cbc9}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ヘッダー ファイル\Game">
-      <UniqueIdentifier>{c9f8c3b4-5148-4c24-bed1-434a4e227e2e}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ヘッダー ファイル\Input">
-      <UniqueIdentifier>{f735d136-fa94-4cdf-8759-d28389718371}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ヘッダー ファイル\Shader">
-      <UniqueIdentifier>{50eb1d78-ff15-44ab-9049-1e691ba58985}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ヘッダー ファイル\Sound">
-      <UniqueIdentifier>{8b6fba3d-4d25-43d6-ab91-19406a81514d}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ソース ファイル\ImGui">
       <UniqueIdentifier>{08fb1cf9-0e96-4542-bf80-1f06f3a6c784}</UniqueIdentifier>
     </Filter>
     <Filter Include="ソース ファイル\Game\Charactor">
       <UniqueIdentifier>{3dc3946a-e343-4223-9cad-c16ebeddf8c8}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ヘッダー ファイル\Game\Charactor">
-      <UniqueIdentifier>{4c5ef092-c777-4322-a608-d892c67febec}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ソース ファイル\Light">
       <UniqueIdentifier>{3c1e7dee-81fa-4053-85e4-831f12f7370d}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ヘッダー ファイル\Light">
-      <UniqueIdentifier>{bd29e37c-22d6-4cb5-a55e-e98b587699d6}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ヘッダー ファイル\Particle">
-      <UniqueIdentifier>{be682b69-4609-4ef3-8dc8-8d211e0b7e54}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ヘッダー ファイル\libManage">
-      <UniqueIdentifier>{e5881891-c317-4255-8361-a5bebfe8e22b}</UniqueIdentifier>
     </Filter>
     <Filter Include="ソース ファイル\libManage">
       <UniqueIdentifier>{5826963a-4c4d-48a3-a88c-99e8edf39bd9}</UniqueIdentifier>
@@ -99,9 +56,6 @@
     </Filter>
     <Filter Include="ソース ファイル\Scene">
       <UniqueIdentifier>{2c6ff3ad-9765-446e-9ab0-ff9007a90aba}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ヘッダー ファイル\Scene">
-      <UniqueIdentifier>{d5b9a130-95c7-4f91-bc2a-ca21813dc49d}</UniqueIdentifier>
     </Filter>
     <Filter Include="ソース ファイル\Scene\IScene">
       <UniqueIdentifier>{36625483-a30b-4c59-ac7a-e6a0ffe6b7ed}</UniqueIdentifier>
@@ -135,6 +89,52 @@
     </Filter>
     <Filter Include="Engine\External\ImGui">
       <UniqueIdentifier>{00f41909-9548-42cd-be41-44f86e7521c2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\ヘッダー ファイル">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
+    <Filter Include="ソース ファイル\ヘッダー ファイル\Math">
+      <UniqueIdentifier>{c4fac199-f60a-419b-99fe-c83b80a4e341}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\ヘッダー ファイル\Common">
+      <UniqueIdentifier>{b3865467-abfa-44d7-8c0e-89257d30c1f2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\ヘッダー ファイル\2D">
+      <UniqueIdentifier>{a183c1c1-c234-44f8-99f0-b90776435a09}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\ヘッダー ファイル\3D">
+      <UniqueIdentifier>{6d03ee47-ac74-4a58-b5cd-2f197653c57c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\ヘッダー ファイル\Util">
+      <UniqueIdentifier>{01937895-7493-40a8-a9e8-46dce691cbc9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\ヘッダー ファイル\Game">
+      <UniqueIdentifier>{c9f8c3b4-5148-4c24-bed1-434a4e227e2e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\ヘッダー ファイル\Game\Charactor">
+      <UniqueIdentifier>{4c5ef092-c777-4322-a608-d892c67febec}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\ヘッダー ファイル\Input">
+      <UniqueIdentifier>{f735d136-fa94-4cdf-8759-d28389718371}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\ヘッダー ファイル\Shader">
+      <UniqueIdentifier>{50eb1d78-ff15-44ab-9049-1e691ba58985}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\ヘッダー ファイル\Sound">
+      <UniqueIdentifier>{8b6fba3d-4d25-43d6-ab91-19406a81514d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\ヘッダー ファイル\Light">
+      <UniqueIdentifier>{bd29e37c-22d6-4cb5-a55e-e98b587699d6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\ヘッダー ファイル\Particle">
+      <UniqueIdentifier>{be682b69-4609-4ef3-8dc8-8d211e0b7e54}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\ヘッダー ファイル\libManage">
+      <UniqueIdentifier>{e5881891-c317-4255-8361-a5bebfe8e22b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\ヘッダー ファイル\Scene">
+      <UniqueIdentifier>{d5b9a130-95c7-4f91-bc2a-ca21813dc49d}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -315,133 +315,133 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="engine\math\Vector2.h">
-      <Filter>ヘッダー ファイル\Math</Filter>
+      <Filter>ソース ファイル\ヘッダー ファイル\Math</Filter>
     </ClInclude>
     <ClInclude Include="engine\math\Vector3.h">
-      <Filter>ヘッダー ファイル\Math</Filter>
+      <Filter>ソース ファイル\ヘッダー ファイル\Math</Filter>
     </ClInclude>
     <ClInclude Include="engine\math\Matrix4.h">
-      <Filter>ヘッダー ファイル\Math</Filter>
+      <Filter>ソース ファイル\ヘッダー ファイル\Math</Filter>
     </ClInclude>
     <ClInclude Include="engine\common\DirectXInit.h">
-      <Filter>ヘッダー ファイル\Common</Filter>
+      <Filter>ソース ファイル\ヘッダー ファイル\Common</Filter>
     </ClInclude>
     <ClInclude Include="engine\common\ConstBuffer.h">
-      <Filter>ヘッダー ファイル\Common</Filter>
+      <Filter>ソース ファイル\ヘッダー ファイル\Common</Filter>
     </ClInclude>
     <ClInclude Include="engine\3d\Billboard.h">
-      <Filter>ヘッダー ファイル\3D</Filter>
+      <Filter>ソース ファイル\ヘッダー ファイル\3D</Filter>
     </ClInclude>
     <ClInclude Include="engine\2d\DebugText.h">
-      <Filter>ヘッダー ファイル\Util</Filter>
+      <Filter>ソース ファイル\ヘッダー ファイル\Util</Filter>
     </ClInclude>
     <ClInclude Include="engine\Particle.h">
-      <Filter>ヘッダー ファイル\3D</Filter>
+      <Filter>ソース ファイル\ヘッダー ファイル\3D</Filter>
     </ClInclude>
     <ClInclude Include="engine\3d\Material.h">
-      <Filter>ヘッダー ファイル\3D</Filter>
+      <Filter>ソース ファイル\ヘッダー ファイル\3D</Filter>
     </ClInclude>
     <ClInclude Include="engine\3d\Model.h">
-      <Filter>ヘッダー ファイル\3D</Filter>
+      <Filter>ソース ファイル\ヘッダー ファイル\3D</Filter>
     </ClInclude>
     <ClInclude Include="engine\input\Input.h">
-      <Filter>ヘッダー ファイル\Input</Filter>
+      <Filter>ソース ファイル\ヘッダー ファイル\Input</Filter>
     </ClInclude>
     <ClInclude Include="engine\3d\Obj.h">
-      <Filter>ヘッダー ファイル\3D</Filter>
+      <Filter>ソース ファイル\ヘッダー ファイル\3D</Filter>
     </ClInclude>
     <ClInclude Include="engine\common\Result.h">
-      <Filter>ヘッダー ファイル\Util</Filter>
+      <Filter>ソース ファイル\ヘッダー ファイル\Util</Filter>
     </ClInclude>
     <ClInclude Include="engine\shader\Shader.h">
-      <Filter>ヘッダー ファイル\Shader</Filter>
+      <Filter>ソース ファイル\ヘッダー ファイル\Shader</Filter>
     </ClInclude>
     <ClInclude Include="engine\sound\Sound.h">
-      <Filter>ヘッダー ファイル\Sound</Filter>
+      <Filter>ソース ファイル\ヘッダー ファイル\Sound</Filter>
     </ClInclude>
     <ClInclude Include="engine\util\StringUtil.h">
-      <Filter>ヘッダー ファイル\Util</Filter>
+      <Filter>ソース ファイル\ヘッダー ファイル\Util</Filter>
     </ClInclude>
     <ClInclude Include="engine\util\TimeManager.h">
-      <Filter>ヘッダー ファイル\Util</Filter>
+      <Filter>ソース ファイル\ヘッダー ファイル\Util</Filter>
     </ClInclude>
     <ClInclude Include="engine\3d\Vertex.h">
-      <Filter>ヘッダー ファイル\3D</Filter>
+      <Filter>ソース ファイル\ヘッダー ファイル\3D</Filter>
     </ClInclude>
     <ClInclude Include="engine\3d\ViewProjection.h">
-      <Filter>ヘッダー ファイル\3D</Filter>
+      <Filter>ソース ファイル\ヘッダー ファイル\3D</Filter>
     </ClInclude>
     <ClInclude Include="engine\common\WinAPI.h">
-      <Filter>ヘッダー ファイル\Common</Filter>
+      <Filter>ソース ファイル\ヘッダー ファイル\Common</Filter>
     </ClInclude>
     <ClInclude Include="engine\common\Pipeline.h">
-      <Filter>ヘッダー ファイル\Common</Filter>
+      <Filter>ソース ファイル\ヘッダー ファイル\Common</Filter>
     </ClInclude>
     <ClInclude Include="engine\2d\Texture.h">
-      <Filter>ヘッダー ファイル\2D</Filter>
+      <Filter>ソース ファイル\ヘッダー ファイル\2D</Filter>
     </ClInclude>
     <ClInclude Include="engine\common\ClearDrawScreen.h">
-      <Filter>ヘッダー ファイル\Common</Filter>
+      <Filter>ソース ファイル\ヘッダー ファイル\Common</Filter>
     </ClInclude>
     <ClInclude Include="engine\util\Util.h">
-      <Filter>ヘッダー ファイル\Util</Filter>
+      <Filter>ソース ファイル\ヘッダー ファイル\Util</Filter>
     </ClInclude>
     <ClInclude Include="engine\math\MathF.h">
-      <Filter>ヘッダー ファイル\Math</Filter>
+      <Filter>ソース ファイル\ヘッダー ファイル\Math</Filter>
     </ClInclude>
     <ClInclude Include="application\game\Player.h">
-      <Filter>ヘッダー ファイル\Game\Charactor</Filter>
+      <Filter>ソース ファイル\ヘッダー ファイル\Game\Charactor</Filter>
     </ClInclude>
     <ClInclude Include="application\game\Mob.h">
-      <Filter>ヘッダー ファイル\Game</Filter>
+      <Filter>ソース ファイル\ヘッダー ファイル\Game</Filter>
     </ClInclude>
     <ClInclude Include="application\game\Block.h">
-      <Filter>ヘッダー ファイル\Game</Filter>
+      <Filter>ソース ファイル\ヘッダー ファイル\Game</Filter>
     </ClInclude>
     <ClInclude Include="application\game\Stage.h">
-      <Filter>ヘッダー ファイル\Game</Filter>
+      <Filter>ソース ファイル\ヘッダー ファイル\Game</Filter>
     </ClInclude>
     <ClInclude Include="application\game\GroundEnemy.h">
-      <Filter>ヘッダー ファイル\Game\Charactor</Filter>
+      <Filter>ソース ファイル\ヘッダー ファイル\Game\Charactor</Filter>
     </ClInclude>
     <ClInclude Include="application\game\Collision.h">
-      <Filter>ヘッダー ファイル\Game</Filter>
+      <Filter>ソース ファイル\ヘッダー ファイル\Game</Filter>
     </ClInclude>
     <ClInclude Include="application\game\AirEnemy.h">
-      <Filter>ヘッダー ファイル\Game\Charactor</Filter>
+      <Filter>ソース ファイル\ヘッダー ファイル\Game\Charactor</Filter>
     </ClInclude>
     <ClInclude Include="application\game\Bullet.h">
-      <Filter>ヘッダー ファイル\Game</Filter>
+      <Filter>ソース ファイル\ヘッダー ファイル\Game</Filter>
     </ClInclude>
     <ClInclude Include="engine\light\DirectionalLight.h">
-      <Filter>ヘッダー ファイル\Light</Filter>
+      <Filter>ソース ファイル\ヘッダー ファイル\Light</Filter>
     </ClInclude>
     <ClInclude Include="engine\math\Quaternion.h">
-      <Filter>ヘッダー ファイル\Math</Filter>
+      <Filter>ソース ファイル\ヘッダー ファイル\Math</Filter>
     </ClInclude>
     <ClInclude Include="engine\math\Vector4.h">
-      <Filter>ヘッダー ファイル\Math</Filter>
+      <Filter>ソース ファイル\ヘッダー ファイル\Math</Filter>
     </ClInclude>
     <ClInclude Include="application\game\GoalObject.h">
-      <Filter>ヘッダー ファイル\Game</Filter>
+      <Filter>ソース ファイル\ヘッダー ファイル\Game</Filter>
     </ClInclude>
     <ClInclude Include="engine\libManage\ImguiManager.h">
-      <Filter>ヘッダー ファイル\libManage</Filter>
+      <Filter>ソース ファイル\ヘッダー ファイル\libManage</Filter>
     </ClInclude>
     <ClInclude Include="engine\libManage\WinSockManager.h">
-      <Filter>ヘッダー ファイル\libManage</Filter>
+      <Filter>ソース ファイル\ヘッダー ファイル\libManage</Filter>
     </ClInclude>
     <ClInclude Include="application\particle\ObjParticle.h">
-      <Filter>ヘッダー ファイル\Particle</Filter>
+      <Filter>ソース ファイル\ヘッダー ファイル\Particle</Filter>
     </ClInclude>
     <ClInclude Include="engine\light\LightGroup.h">
-      <Filter>ヘッダー ファイル\Light</Filter>
+      <Filter>ソース ファイル\ヘッダー ファイル\Light</Filter>
     </ClInclude>
     <ClInclude Include="engine\light\PointLight.h">
-      <Filter>ヘッダー ファイル\Light</Filter>
+      <Filter>ソース ファイル\ヘッダー ファイル\Light</Filter>
     </ClInclude>
     <ClInclude Include="engine\2d\Sprite.h">
-      <Filter>ヘッダー ファイル\2D</Filter>
+      <Filter>ソース ファイル\ヘッダー ファイル\2D</Filter>
     </ClInclude>
     <ClInclude Include="External\imgui\imconfig.h">
       <Filter>Engine\External\ImGui</Filter>
@@ -468,10 +468,10 @@
       <Filter>Engine\External\ImGui</Filter>
     </ClInclude>
     <ClInclude Include="engine\Color.h">
-      <Filter>ヘッダー ファイル</Filter>
+      <Filter>ソース ファイル\ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="engine\AssimpLoader.h">
-      <Filter>ヘッダー ファイル</Filter>
+      <Filter>ソース ファイル\ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="DemoScene.h">
       <Filter>ソース ファイル\Scene\DemoScene</Filter>
@@ -495,7 +495,7 @@
       <Filter>Engine\External</Filter>
     </ClInclude>
     <ClInclude Include="LevelLoader.h">
-      <Filter>ヘッダー ファイル</Filter>
+      <Filter>ソース ファイル\ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

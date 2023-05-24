@@ -27,7 +27,7 @@ public:
 	std::unordered_map<unsigned short, std::vector<unsigned short>> smoothData;
 
 	Material material;
-	
+
 	/*ConstBuffer<ConstBufferDataB1> constBufferMaterial;*/
 
 	//void LoadMesh(aiNode* node,const aiScene* scene);
@@ -58,7 +58,7 @@ private:
 class ModelManager
 {
 public:
-	Model cubeM;
+	/*Model cubeM;
 	Model skyDomeM;
 	Model triangleM;
 	Model boardM;
@@ -68,13 +68,22 @@ public:
 	Model playerM;
 	Model beetleM;
 	Model subDevM;
-	Model sphereM;
+	Model sphereM;*/
 
 	void PreLoad();
 
-	static ModelManager* GetInstance() {
+	static void LoadModel(const std::string filepath, const std::string handle, bool smooth = false);
+
+	static Model* GetModel(const std::string handle);
+
+	static ModelManager* Get() {
 		static ModelManager instance;
 		return &instance;
 	};
-	
+
+private:
+	static std::map<std::string, Model> models;
+
+	ModelManager(){};
+	~ModelManager(){};
 };

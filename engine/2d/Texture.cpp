@@ -3,6 +3,8 @@
 #include "DirectXInit.h"
 #include <memory>
 
+std::map<std::string, Texture> TextureManager::textures;
+
 void Texture::CreateWhiteTexture()
 {
 	const size_t textureWidth = 256;
@@ -62,7 +64,7 @@ void Texture::CreateWhiteTexture()
 	);
 	assert(SUCCEEDED(result));
 
-	TextureManager* tManager = TextureManager::GetInstance();
+	TextureManager* tManager = TextureManager::Get();
 
 	//ハンドルを取得する部分
 	//gpuハンドルを取得
@@ -159,7 +161,7 @@ void Texture::Load(const wchar_t* t)
 		assert(SUCCEEDED(result));
 	}
 
-	TextureManager *tManager = TextureManager::GetInstance();
+	TextureManager *tManager = TextureManager::Get();
 
 	//ハンドルを取得する部分
 	//gpuハンドルを取得
@@ -207,22 +209,44 @@ void TextureManager::PreLoad()
 {
 	bugfix.CreateWhiteTexture();
 	white.CreateWhiteTexture();
-	slime.Load(L"Resources\\slime.png");
-	def.Load(L"Resources\\default.png");
-	pizza.Load(L"Resources\\pizza.png");
-	particle.Load(L"Resources\\particle.png");
-	goalS.Load(L"Resources\\goal.png");
-	blockTex.Load(L"Resources\\blockTexture.png");
-	wispTex.Load(L"Resources\\firewisp\\tex.png");
-	titleTex.Load(L"Resources\\Title.png");
-	startTex.Load(L"Resources\\Start.png");
-	spaceTex.Load(L"Resources\\Space.png");
-	goalBlockTex.Load(L"Resources\\goalBlock.png");
-	dashIcon.Load(L"Resources\\dashIcon.png");
-	dashCool.Load(L"Resources\\dashCool.png");
-	hpBar.Load(L"Resources\\hpbar.png");
-	redScreen.Load(L"Resources\\redScreen.png");
-	setumei.Load(L"Resources\\setumei.png");
-	setumei2.Load(L"Resources\\setumei2.png");
-	gameOver.Load(L"Resources\\GameOver.png");
+
+	Load("Resources\\slime.png", "slime");
+	Load("Resources\\default.png", "default");
+	Load("Resources\\pizza.png", "pizza");
+	Load("Resources\\particle.png", "particle");
+	Load("Resources\\goal.png", "goal");
+	Load("Resources\\blockTexture.png", "blockTexture");
+	Load("Resources\\firewisp\\tex.png", "firewisp");
+	Load("Resources\\Title.png", "Title");
+	Load("Resources\\Start.png", "Start");
+	Load("Resources\\Space.png", "Space");
+	Load("Resources\\goalBlock.png", "goalBlock");
+	Load("Resources\\dashIcon.png", "dashIcon");
+	Load("Resources\\dashCool.png", "dashCool");
+	Load("Resources\\hpbar.png", "hpbar");
+	Load("Resources\\redScreen.png", "redScreen");
+	Load("Resources\\setumei.png", "setumei");
+	Load("Resources\\setumei2.png", "setumei2");
+	Load("Resources\\GameOver.png", "GameOver");
+}
+
+//ネットで拾ってきたstring->wstring変換
+std::wstring convString(const std::string& input)
+{
+	size_t i;
+	wchar_t* buffer = new wchar_t[input.size() + 1];
+	mbstowcs_s(&i, buffer, input.size() + 1, input.c_str(), _TRUNCATE);
+	std::wstring result = buffer;
+	delete[] buffer;
+	return result;
+}
+
+void TextureManager::Load(const std::string filepath, const std::string handle)
+{
+	textures[handle].Load(convString(filepath).c_str());
+}
+
+Texture* TextureManager::GetTexture(const std::string handle)
+{
+	return &textures[handle];
 }

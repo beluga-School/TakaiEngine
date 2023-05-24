@@ -26,11 +26,20 @@ struct LevelData
 class LevelLoader
 {
 public:
-	LevelData Load(std::string filename);
+	LevelData *Load(std::string filename);
+
+	static LevelLoader* Get()
+	{
+		static LevelLoader instance;
+		return &instance;
+	}
 
 private:
 	void ObjectLoad(LevelData* levelData, nlohmann::json& object);
 
 	int reservenum = 0;
+
+	LevelLoader(){};
+	~LevelLoader(){};
 };
 

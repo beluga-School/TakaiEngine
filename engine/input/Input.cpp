@@ -12,7 +12,7 @@ Input::~Input()
 
 }
 
-Input* Input::GetInstance()
+Input* Input::Get()
 {
 	static Input instance;
 	return &instance;
@@ -222,10 +222,10 @@ bool Input::ReleaseRT(bool hard)
 void Input::Initialize()
 {
 	//DirectInputの初期化
-	GetInstance()->DirectInputInit();
+	Get()->DirectInputInit();
 
 	//キーボードデバイスの生成
-	GetInstance()->DirectInputCreate();
+	Get()->DirectInputCreate();
 
 	//パッドが接続されているか
 	CheckConnectPad();

@@ -6,6 +6,8 @@ using namespace std;
 #include <assimp/scene.h>
 #include <assimp/postprocess.h> 
 
+std::map<std::string, Model> ModelManager::models;
+
 //bool Model::AssimpLoader(const std::string t)
 //{
 //	//インポーターを生成
@@ -234,9 +236,8 @@ void Model::LoadMaterial(const std::string& directoryPath, const std::string& fi
 
 void Model::CreateModel(const std::string t, bool smoothing)
 {
-	std::ifstream file;
 	//objファイルを開く
-	//file.open(t);
+	std::ifstream file;
 	const string modelname = t;
 	const string filename = modelname + ".obj";
 	const string directoryPath = "Resources/" + modelname + "/";
@@ -393,7 +394,7 @@ void Model::CreateModel(const std::string t, bool smoothing)
 
 void ModelManager::PreLoad()
 {
-	cubeM.CreateModel("Cube", true);
+	/*cubeM.CreateModel("Cube",true);
 	skyDomeM.CreateModel("skydome");
 	boardM.CreateModel("board");
 	darumaM.CreateModel("boss");
@@ -403,6 +404,27 @@ void ModelManager::PreLoad()
 	subDevM.CreateModel("subDev");
 	sphereM.CreateModel("Sphere",true);
 	triangleM.CreateModel("triangle");
-	beetleM.CreateModel("beetle");
+	beetleM.CreateModel("beetle");*/
 	//beetleAss.AssimpLoader("beetle");
+
+	LoadModel("Cube","Cube");
+	LoadModel("skydome","skydome");
+	LoadModel("board","board");
+	LoadModel("boss","boss");
+	LoadModel("firewisp","firewisp");
+	LoadModel("player","player");
+	LoadModel("subDev","subDev");
+	LoadModel("Sphere","Sphere");
+	LoadModel("triangle","triangle");
+	LoadModel("beetle","beetle");
+}
+
+void ModelManager::LoadModel(const std::string filepath, const std::string handle, bool smooth)
+{
+	models[handle].CreateModel(filepath, smooth);
+}
+
+Model* ModelManager::GetModel(const std::string handle)
+{
+	return &models[handle];
 }

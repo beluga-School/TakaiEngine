@@ -58,7 +58,7 @@ void ParticleManager::Draw()
 CubeParticle::CubeParticle()
 {
 	cube.Initialize();
-	cube.SetTexture(&TextureManager::GetInstance()->white);
+	cube.SetTexture(&TextureManager::Get()->white);
 
 	cube.color = {
 		218.0f / 255.0f,
@@ -70,7 +70,7 @@ CubeParticle::CubeParticle()
 CubeParticle::CubeParticle(Vector3 pos, Vector3 scale, float moveDistance, XMFLOAT4 color)
 {
 	cube.Initialize();
-	cube.SetTexture(&TextureManager::GetInstance()->white);
+	cube.SetTexture(&TextureManager::Get()->white);
 
 	Set(pos,scale, moveDistance, color);
 }

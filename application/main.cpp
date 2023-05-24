@@ -72,7 +72,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	}
 #endif  _DEBUG
 
-	Input* input_ = Input::GetInstance();
+	Input* input_ = Input::Get();
 
 	input_->Initialize();
 
@@ -86,7 +86,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	CreateDepthView();
 
 	//テクスチャの読み込み
-	TextureManager* tManager = TextureManager::GetInstance();
+	TextureManager* tManager = TextureManager::Get();
 	tManager->Initialize();
 	tManager->PreLoad();
 
@@ -98,13 +98,13 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	debugText.Initialize(debugFont.get());
 
 	//imguiの初期化
-	ImguiManager *imguiManager = ImguiManager::GetInstance();
-	imguiManager->Initialize();
+	//ImguiManager *imguiManager = ImguiManager::GetInstance();
+	//imguiManager->Initialize();
 
 	SpriteCommon::spriteCommon.Initialize();
 
 	//モデルの読み込み
-	ModelManager::GetInstance()->PreLoad();
+	ModelManager::Get()->PreLoad();
 
 	LightGroup::lightGroup = LightGroup::Create();
 
@@ -130,7 +130,6 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 
 	//soundManager->SoundPlayWave(bgm,true);
 
-	GUI gui("GameSceneGUI");
 
 	//ゲームループ
 	while (true){
@@ -151,14 +150,14 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		
 		ClearDrawScreen();
 
-		imguiManager->PreUpdate();
+		//imguiManager->PreUpdate();
 
 		//更新処理
 		input_->Update();
 	
-		gui.Begin({ 800,10 }, { 400,200 });
+		
 		//gameScene_.Update();
-		gui.End();
+
 
 		scenemanager->Update();
 
@@ -181,9 +180,9 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 
 #pragma region 画面入れ替え
 
-		imguiManager->PreDraw();
+		//imguiManager->PreDraw();
 
-		imguiManager->Draw();
+		//imguiManager->Draw();
 
 		PostDraw();
 
@@ -199,9 +198,8 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		}
 	}
 
-	imguiManager->Finalize();
+	//imguiManager->Finalize();
 
-	scenemanager->End();
 	delete sceneFactory;
 
 	//音声データは先にxAudio2を解放しなければならない

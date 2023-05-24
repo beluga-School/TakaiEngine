@@ -13,8 +13,8 @@ void Obj3d::SetTexture(Texture* texture)
 
 void Obj3d::Initialize()
 {
-	model = &ModelManager::GetInstance()->cubeM;
-	texture = &TextureManager::GetInstance()->def;
+	model = ModelManager::GetModel("Cube");
+	texture = TextureManager::GetTexture("default");
 }
 
 void Obj3d::Update(Camera& camera)
@@ -97,7 +97,7 @@ Vector3 Obj3d::GetWorldTrans()
 
 void Obj3d::Draw() {
 	DirectX12* dx12 = DirectX12::GetInstance();
-	TextureManager* texM = TextureManager::GetInstance();
+	TextureManager* texM = TextureManager::Get();
 	
 	//SRVヒープの先頭から順番にSRVをルートパラメータ1番に設定
 	//ルートパラメータ1番はテクスチャバッファ
@@ -124,7 +124,7 @@ void Obj3d::Draw() {
 
 void Obj3d::DrawMaterial() {
 	DirectX12* dx12 = DirectX12::GetInstance();
-	TextureManager* texM = TextureManager::GetInstance();
+	TextureManager* texM = TextureManager::Get();
 
 	//SRVヒープの先頭から順番にSRVをルートパラメータ1番に設定
 	//ルートパラメータ1番はテクスチャバッファ

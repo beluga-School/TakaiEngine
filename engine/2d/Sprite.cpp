@@ -98,7 +98,7 @@ void SpriteTransferVertexBuffer(const Sprite& sprite)
 void SpriteCommonBeginDraw(const SpriteCommon& spriteCommon)
 {
 	DirectX12* dx12 = DirectX12::GetInstance();
-	TextureManager* texM = TextureManager::GetInstance();
+	TextureManager* texM = TextureManager::Get();
 
 	//パイプラインステートの設定
 	dx12->commandList->SetPipelineState(spriteCommon.pipelineSet.pipelinestate.Get());
@@ -154,7 +154,7 @@ SpriteCommon SpriteCommonCreate()
 
 Sprite::Sprite()
 {
-	this->tex = &TextureManager::GetInstance()->def;
+	this->tex = TextureManager::GetTexture("default");
 
 	position.x = 0;
 	position.y = 0;
@@ -237,7 +237,7 @@ void Sprite::Update()
 void Sprite::Draw()
 {
 	DirectX12* dx12 = DirectX12::GetInstance();
-	TextureManager* texM = TextureManager::GetInstance();
+	TextureManager* texM = TextureManager::Get();
 
 	if (isInvisible)
 	{

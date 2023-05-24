@@ -10,6 +10,7 @@ using namespace DirectX;
 #pragma comment(lib,"d3dcompiler.lib")
 #include <DirectXTex.h>
 #include "DirectXInit.h"
+#include <map>
 
 const size_t kMaxSRVCount = 2056;
 
@@ -47,7 +48,7 @@ private:
 class TextureManager
 {
 public:
-	static TextureManager* GetInstance() {
+	static TextureManager* Get() {
 		static TextureManager instance;
 		return &instance;
 	};
@@ -63,9 +64,13 @@ public:
 	void Initialize();
 	void PreLoad();
 
+	static void Load(const std::string filepath,const std::string handle);
+
+	static Texture* GetTexture(const std::string handle);
+
 public:
 	Texture white;
-	Texture slime;
+	/*Texture slime;
 	Texture pizza;
 	Texture def;
 	Texture particle;
@@ -82,10 +87,12 @@ public:
 	Texture redScreen;
 	Texture setumei;
 	Texture setumei2;
-	Texture gameOver;
+	Texture gameOver;*/
 
 private:
 	Texture bugfix;
+
+	static std::map<std::string, Texture> textures;
 
 	TextureManager(){};
 	~TextureManager(){};

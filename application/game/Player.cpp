@@ -18,8 +18,8 @@ void Player::Initialize()
 	gravity = -0.1f;
 	jumpPower = 0;
 
-	model = &ModelManager::GetInstance()->cubeM;
-	texture = &TextureManager::GetInstance()->white;
+	model = ModelManager::Get()->GetModel("Cube");
+	texture = &TextureManager::Get()->white;
 	scale = { 5,5,5 };
 	moveMag = 30;
 
@@ -245,7 +245,7 @@ void Player::Update(const Stage& stage)
 		//horizontalRotation = 0;
 	}
 
-	ImGui::Text("Toggle :[N.key] |cameraMouseMoveMode %d", hoge);
+	//ImGui::Text("Toggle :[N.key] |cameraMouseMoveMode %d", hoge);
 
 	//ç¿ïWÇÃçXêV
 	position += moveValue;
