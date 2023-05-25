@@ -6,42 +6,8 @@
 #include "AssimpLoader.h"
 #include <TimeManager.h>
 
-const wchar_t* modelFile = L"Resources/sphere_fbx/sphere.fbx";
-std::vector<Obj3d> spherefbx;
-
-std::vector<Mesh> meshes;
-
 void DemoScene::Initialize()
 {
-	//fbx読み込みの形跡
-	ImportSettings importSetting =
-	{
-		modelFile,
-		meshes,
-		false,
-		false,
-	};
-	AssimpLoader loader;
-	
-	if (!loader.Load(importSetting))
-	{
-		assert(0);
-	}
-
-	spherefbx.reserve(meshes.size());
-	for (size_t i = 0; i < meshes.size(); i++)
-	{
-		spherefbx.emplace_back();
-		spherefbx.back().Initialize();
-
-		auto vertices = meshes[i].vertices;
-
-		auto indices = meshes[i].indices;
-
-		spherefbx.back().model->CreateVertex(vertices, indices);
-
-	}
-
 	//3dオブジェクト用のパイプライン生成
 	object3dPipelineSet = CreateObject3DPipeline();
 
@@ -53,11 +19,13 @@ void DemoScene::Initialize()
 	skydome.scale = { 10,10,10 };
 	skydome.color = { 1.f,1.f,1.f,1.0f };
 
-	/*sphere.Initialize();
-	sphere.SetModel(&ModelManager::Get()->sphereM);
-	sphere.SetTexture(&TextureManager::Get()->white);*/
+	cube.Initialize();
+	cube.SetModel(ModelManager::GetModel("Cube"));
+	cube.SetTexture(&TextureManager::Get()->white);
 
 	LevelData* data = LevelLoader::Get()->Load("test");
+
+	LevelLoader::Get();
 
 	SetObject(data);
 
@@ -82,55 +50,10 @@ void DemoScene::Update()
 		//sceneManager->ChangeScene("GAMEPLAY");
 	}
 
-	float speed = 100.0f;
-
-	if (input->Get()->PushKey(DIK_D))
-	{
-		camera->eye.x += speed * TimeManager::deltaTime;
-		camera->target.x += speed * TimeManager::deltaTime;
-	}
-	if(input->Get()->PushKey(DIK_A))
-	{ 
-		camera->eye.x -= speed * TimeManager::deltaTime;
-		camera->target.x -= speed * TimeManager::deltaTime;
-	}
-
-	if (input->Get()->PushKey(DIK_W))
-	{
-		camera->eye.y += speed * TimeManager::deltaTime;
-	}
-	if (input->Get()->PushKey(DIK_S))
-	{
-		camera->eye.y -= speed * TimeManager::deltaTime;
-	}
-
-	if (input->Get()->PushKey(DIK_UP))
-	{
-		camera->eye.z += speed * TimeManager::deltaTime;
-		camera->target.z += speed * TimeManager::deltaTime;
-	}
-	if (input->Get()->PushKey(DIK_DOWN))
-	{
-		camera->eye.z -= speed * TimeManager::deltaTime;
-		camera->target.z -= speed * TimeManager::deltaTime;
-	}
-	if (input->Get()->PushKey(DIK_I))
-	{
-		camera->eye.y += speed * TimeManager::deltaTime;
-		camera->target.y += speed * TimeManager::deltaTime;
-	}
-	if (input->Get()->PushKey(DIK_K))
-	{
-		camera->eye.y -= speed * TimeManager::deltaTime;
-		camera->target.y -= speed * TimeManager::deltaTime;
-	}
+	camera->DebugMove();
 	camera->UpdatematView();
-	//sphere.Update(*camera);
 
-	/*for (size_t i = 0; i < meshes.size(); i++)
-	{
-		spherefbx[i].Update(*camera);
-	}*/
+	cube.Update(*camera);
 
 	skydome.Update(*camera);
 	for (auto& obj : obj3ds)
@@ -147,17 +70,12 @@ void DemoScene::Draw()
 	BasicObjectPreDraw(object3dPipelineSet);
 
 	skydome.DrawMaterial();
-	//sphere.Draw();
+	cube.Draw();
 
 	for (auto& obj : obj3ds)
 	{
 		obj.Draw();
 	}
-
-	/*for (size_t i = 0; i < meshes.size(); i++)
-	{
-		spherefbx[i].Draw();
-	}*/
 
 	//スプライトの前描画(共通コマンド)
 	SpriteCommonBeginDraw(SpriteCommon::spriteCommon);

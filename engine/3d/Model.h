@@ -52,7 +52,7 @@ public:
 	void LoadMaterial(const std::string& directoryPath, const std::string& filename);
 
 private:
-	DirectX12* dx12 = DirectX12::GetInstance();
+	DirectX12* dx12 = DirectX12::Get();
 };
 
 class ModelManager

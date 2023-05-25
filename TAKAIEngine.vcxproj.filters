@@ -136,6 +136,9 @@
     <Filter Include="ソース ファイル\ヘッダー ファイル\Scene">
       <UniqueIdentifier>{d5b9a130-95c7-4f91-bc2a-ca21813dc49d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\Scene\FBXLoadDemoScene">
+      <UniqueIdentifier>{75730180-a73e-4437-9ca6-81d1c495a48e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="application\main.cpp">
@@ -311,6 +314,9 @@
     </ClCompile>
     <ClCompile Include="LevelLoader.cpp">
       <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="FBXLoadDemoScene.cpp">
+      <Filter>ソース ファイル\Scene\FBXLoadDemoScene</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -496,6 +502,9 @@
     </ClInclude>
     <ClInclude Include="LevelLoader.h">
       <Filter>ソース ファイル\ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="FBXLoadDemoScene.h">
+      <Filter>ソース ファイル\Scene\FBXLoadDemoScene</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

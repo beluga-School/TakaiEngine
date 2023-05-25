@@ -5,7 +5,7 @@
 
 PipelineSet CreateObject3DPipeline()
 {
-	DirectX12* dx12 = DirectX12::GetInstance();
+	DirectX12* dx12 = DirectX12::Get();
 
 	//パイプライン構造体
 	PipelineSet pipelineSet;
@@ -198,7 +198,7 @@ PipelineSet CreateObject3DPipeline()
 
 PipelineSet CreateLambertPipeline()
 {
-	DirectX12* dx12 = DirectX12::GetInstance();
+	DirectX12* dx12 = DirectX12::Get();
 
 	//パイプライン構造体
 	PipelineSet pipelineSet;
@@ -379,7 +379,7 @@ PipelineSet CreateLambertPipeline()
 
 PipelineSet CreateSpritePipeline()
 {
-	DirectX12* dx12 = DirectX12::GetInstance();
+	DirectX12* dx12 = DirectX12::Get();
 
 	PipelineSet spritePipelineSet;
 
@@ -551,7 +551,7 @@ PipelineSet CreateSpritePipeline()
 
 PipelineSet CreateGeometryPipeline()
 {
-	DirectX12* dx12 = DirectX12::GetInstance();
+	DirectX12* dx12 = DirectX12::Get();
 
 	//パイプライン構造体
 	PipelineSet pipelineSet;

@@ -35,7 +35,6 @@ void SceneManager::Draw()
 
 void SceneManager::End()
 {
-	currentscene->End();
 	delete currentscene;
 }
 

@@ -34,7 +34,7 @@ public:
 	ComPtr<ID3D12Fence> fence;
 	UINT64 fenceVal = 0;
 
-	static DirectX12* GetInstance();
+	static DirectX12* Get();
 
 private:
 	void yobidasi();

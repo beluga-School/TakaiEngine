@@ -193,7 +193,7 @@ void Texture::Load(const wchar_t* t)
 
 void TextureManager::Initialize()
 {
-	DirectX12 *dx12 = DirectX12::GetInstance();
+	DirectX12 *dx12 = DirectX12::Get();
 
 	//デスクリプタヒープの設定
 	srvHeapDesc.Type = D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV;

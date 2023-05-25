@@ -30,7 +30,7 @@ void LightGroup::Update()
 
 void LightGroup::Draw(UINT index)
 {
-	DirectX12::GetInstance()->commandList->SetGraphicsRootConstantBufferView(index,
+	DirectX12::Get()->commandList->SetGraphicsRootConstantBufferView(index,
 		constBuff.buffer->GetGPUVirtualAddress());
 }
 

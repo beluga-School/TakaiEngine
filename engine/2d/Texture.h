@@ -41,7 +41,7 @@ private:
 	//ÉäÉ\Å[ÉXê›íË
 	D3D12_RESOURCE_DESC resDesc{};
 
-	DirectX12* dx12 = DirectX12::GetInstance();
+	DirectX12* dx12 = DirectX12::Get();
 
 };
 

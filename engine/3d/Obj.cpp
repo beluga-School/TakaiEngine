@@ -96,7 +96,7 @@ Vector3 Obj3d::GetWorldTrans()
 }
 
 void Obj3d::Draw() {
-	DirectX12* dx12 = DirectX12::GetInstance();
+	DirectX12* dx12 = DirectX12::Get();
 	TextureManager* texM = TextureManager::Get();
 	
 	//SRVヒープの先頭から順番にSRVをルートパラメータ1番に設定
@@ -123,7 +123,7 @@ void Obj3d::Draw() {
 }
 
 void Obj3d::DrawMaterial() {
-	DirectX12* dx12 = DirectX12::GetInstance();
+	DirectX12* dx12 = DirectX12::Get();
 	TextureManager* texM = TextureManager::Get();
 
 	//SRVヒープの先頭から順番にSRVをルートパラメータ1番に設定

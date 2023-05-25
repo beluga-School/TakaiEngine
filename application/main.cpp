@@ -31,6 +31,7 @@ using namespace DirectX;
 
 #include "DemoScene.h"
 #include "GameScene.h"
+#include <FBXLoadDemoScene.h>
 #include "SceneFactory.h"
 
 #include "SceneManager.h"
@@ -61,7 +62,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 #endif _DEBUG
 
 	WinAPI* winApi = WinAPI::GetInstance();
-	DirectX12* DX12 = DirectX12::GetInstance();
+	DirectX12* DX12 = DirectX12::Get();
 
 #ifdef  _DEBUG
 	ID3D12InfoQueue* infoQueue;
@@ -115,6 +116,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	scenemanager->SetSceneFactory(sceneFactory);
 
 	DemoScene *demo = new DemoScene();
+	//FBXLoadDemoScene* loaddemo = new FBXLoadDemoScene();
 	//Game *game = new Game();
 	scenemanager->SetScene(demo);
 

@@ -37,6 +37,8 @@ public:
 	void SetEye(Vector3 eye);
 	void SetEyeXMF(XMFLOAT3 eye);
 
+	void DebugMove();
+
 	static std::unique_ptr<Camera> defaultCam;
 	static Camera *camera;
 

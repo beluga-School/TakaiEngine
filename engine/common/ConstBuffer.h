@@ -33,7 +33,7 @@ public:
 	ConstBuffer();
 	~ConstBuffer();
 private:
-	DirectX12* dx12 = DirectX12::GetInstance();
+	DirectX12* dx12 = DirectX12::Get();
 };
 
 template<class Format>

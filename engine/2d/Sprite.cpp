@@ -97,7 +97,7 @@ void SpriteTransferVertexBuffer(const Sprite& sprite)
 
 void SpriteCommonBeginDraw(const SpriteCommon& spriteCommon)
 {
-	DirectX12* dx12 = DirectX12::GetInstance();
+	DirectX12* dx12 = DirectX12::Get();
 	TextureManager* texM = TextureManager::Get();
 
 	//パイプラインステートの設定
@@ -236,7 +236,7 @@ void Sprite::Update()
 
 void Sprite::Draw()
 {
-	DirectX12* dx12 = DirectX12::GetInstance();
+	DirectX12* dx12 = DirectX12::Get();
 	TextureManager* texM = TextureManager::Get();
 
 	if (isInvisible)
@@ -255,7 +255,7 @@ void Sprite::Draw()
 
 void Sprite::Init()
 {
-	DirectX12* dx12 = DirectX12::GetInstance();
+	DirectX12* dx12 = DirectX12::Get();
 
 	result = S_FALSE;
 

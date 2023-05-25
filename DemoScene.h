@@ -21,7 +21,7 @@ private:
 	PipelineSet object3dPipelineSet;
 	Camera* camera = Camera::camera;
 
-	Obj3d sphere;
+	Obj3d cube;
 	Obj3d skydome;
 	Input* input = Input::Get();
 

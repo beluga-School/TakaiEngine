@@ -27,7 +27,7 @@ void GUI::End()
 void ImguiManager::Initialize()
 {
 	WinAPI* winapi = WinAPI::GetInstance();
-	DirectX12* dx12 = DirectX12::GetInstance();
+	DirectX12* dx12 = DirectX12::Get();
 	TextureManager* tManager = TextureManager::Get();
 
 	IMGUI_CHECKVERSION();
@@ -60,7 +60,7 @@ void ImguiManager::PreUpdate()
 
 void ImguiManager::Draw()
 {
-	DirectX12* dx12 = DirectX12::GetInstance();
+	DirectX12* dx12 = DirectX12::Get();
 	TextureManager* tManager = TextureManager::Get();
 
 	dx12->commandList->SetDescriptorHeaps(1, tManager->srvHeap.GetAddressOf());

@@ -183,7 +183,7 @@ void DirectX12::CreateFence()
 	result = device->CreateFence(fenceVal, D3D12_FENCE_FLAG_NONE, IID_PPV_ARGS(&fence));
 }
 
-DirectX12* DirectX12::GetInstance()
+DirectX12* DirectX12::Get()
 {
 	static DirectX12 instance;
 	return &instance;

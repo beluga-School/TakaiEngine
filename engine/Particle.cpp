@@ -11,7 +11,7 @@ void GParticleManager::CreateParticle(XMFLOAT3 spawnPos, XMFLOAT3 velocity, floa
 
 void GParticleManager::Initialize()
 {
-	DirectX12 *dx12 = DirectX12::GetInstance();
+	DirectX12 *dx12 = DirectX12::Get();
 
 	//頂点データ全体のサイズ = 頂点データ一つ分のサイズ * 頂点データの要素数
 	UINT sizeVB = static_cast<UINT>(vertexCount * sizeof(VertexPos));
@@ -89,7 +89,7 @@ void GParticleManager::Update(XMMATRIX& matView, XMMATRIX& matProjection)
 
 void GParticleManager::Draw(Texture* texture)
 {
-	DirectX12* dx12 = DirectX12::GetInstance();
+	DirectX12* dx12 = DirectX12::Get();
 	TextureManager* texM = TextureManager::Get();
 
 	//SRVヒープの先頭から順番にSRVをルートパラメータ1番に設定

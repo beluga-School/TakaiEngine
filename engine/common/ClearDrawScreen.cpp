@@ -14,7 +14,7 @@ D3D12_RESOURCE_BARRIER barrierDesc{};
 
 void CreateDepthView()
 {
-	DirectX12* dx12 = DirectX12::GetInstance();
+	DirectX12* dx12 = DirectX12::Get();
 
 	D3D12_RESOURCE_DESC depthResourceDesc{};
 	depthResourceDesc.Dimension = D3D12_RESOURCE_DIMENSION_TEXTURE2D;
@@ -64,7 +64,7 @@ void CreateDepthView()
 
 void ClearDrawScreen()
 {
-	DirectX12* dx12 = DirectX12::GetInstance();
+	DirectX12* dx12 = DirectX12::Get();
 
 	FLOAT clearColor[] = { 0.1f,0.25f,0.5f,0.0f };
 
@@ -93,7 +93,7 @@ void ClearDrawScreen()
 
 void BasicObjectPreDraw(PipelineSet objectPipelineSet)
 {
-	DirectX12* dx12 = DirectX12::GetInstance();
+	DirectX12* dx12 = DirectX12::Get();
 	TextureManager* texM = TextureManager::Get();
 
 	D3D12_VIEWPORT viewport{};
@@ -130,7 +130,7 @@ void BasicObjectPreDraw(PipelineSet objectPipelineSet)
 
 void GeometryObjectPreDraw(PipelineSet geometryPipelineSet)
 {
-	DirectX12* dx12 = DirectX12::GetInstance();
+	DirectX12* dx12 = DirectX12::Get();
 	TextureManager* texM = TextureManager::Get();
 
 	D3D12_VIEWPORT viewport{};
@@ -164,7 +164,7 @@ void GeometryObjectPreDraw(PipelineSet geometryPipelineSet)
 
 void PostDraw()
 {
-	DirectX12* dx12 = DirectX12::GetInstance();
+	DirectX12* dx12 = DirectX12::Get();
 
 	//5.リソースバリアを戻す
 	barrierDesc.Transition.StateBefore = D3D12_RESOURCE_STATE_RENDER_TARGET;	//描画状態から
