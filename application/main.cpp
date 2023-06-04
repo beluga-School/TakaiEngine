@@ -45,6 +45,7 @@ using namespace DirectX;
 #include "ImguiManager.h"
 #include <string>
 
+
 //windowsアプリでのエントリーポイント(main関数)
 int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 
