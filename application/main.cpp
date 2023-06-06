@@ -100,8 +100,8 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	debugText.Initialize(debugFont.get());
 
 	//imgui‚Ì‰Šú‰»
-	//ImguiManager *imguiManager = ImguiManager::GetInstance();
-	//imguiManager->Initialize();
+	ImguiManager *imguiManager = ImguiManager::GetInstance();
+	imguiManager->Initialize();
 
 	SpriteCommon::spriteCommon.Initialize();
 
@@ -153,7 +153,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		
 		ClearDrawScreen();
 
-		//imguiManager->PreUpdate();
+		imguiManager->PreUpdate();
 
 		//XVˆ—
 		input_->Update();
@@ -183,9 +183,9 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 
 #pragma region ‰æ–Ê“ü‚ê‘Ö‚¦
 
-		//imguiManager->PreDraw();
+		imguiManager->PreDraw();
 
-		//imguiManager->Draw();
+		imguiManager->Draw();
 
 		PostDraw();
 
@@ -201,7 +201,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		}
 	}
 
-	//imguiManager->Finalize();
+	imguiManager->Finalize();
 
 	delete sceneFactory;
 

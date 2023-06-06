@@ -89,6 +89,7 @@ void LevelLoader::ObjectLoad(LevelData* levelData, nlohmann::json& object)
 		nlohmann::json& collider = object["collider"];
 		if (collider != nullptr)
 		{
+			objectData.collider.have = true;
 			//’†S“_
 			objectData.collider.center.x = (float)collider["center"][1];
 			objectData.collider.center.y = (float)collider["center"][2];

@@ -19,26 +19,19 @@ void DemoScene::Initialize()
 	skydome.scale = { 10,10,10 };
 	skydome.color = { 1.f,1.f,1.f,1.0f };
 
-	cube.Initialize();
-	cube.SetModel(ModelManager::GetModel("Cube"));
-	cube.SetTexture(&TextureManager::Get()->white);
-
-	LevelData* data = LevelLoader::Get()->Load("test");
-
-	LevelLoader::Get();
-
-	SetObject(data);
-
 	camera->eye.y = 50;
 	camera->eye.z = -150;
 
 	ModelManager::LoadModel("beetle","beetle");
 	ModelManager::LoadModel("firewisp","firewisp");
 	ModelManager::LoadModel("boss","boss");
-
+	ModelManager::LoadModel("BlankCube","BlankCube");
 	
 	slime.SetTexture(TextureManager::GetTexture("slime"));
 	slime.position = { 0,0,0 };
+
+	LevelData* data = LevelLoader::Get()->Load("chilrdrenTest");
+	SetObject(data);
 }
 
 void DemoScene::Update()
@@ -50,19 +43,28 @@ void DemoScene::Update()
 		//sceneManager->ChangeScene("GAMEPLAY");
 	}
 
+	if (input->TriggerKey(DIK_R))
+	{
+		obj3ds.clear();
+		SetObject(LevelLoader::Get()->Load("chilrdrenTest"));
+	}
+
 	camera->DebugMove();
 	camera->UpdatematView();
 
-	cube.Update(*camera);
-
 	skydome.Update(*camera);
+	gui.Begin({ 100,100 }, { 1,1 });
 	for (auto& obj : obj3ds)
 	{
 		obj.Update(*camera);
+		ImGui::Text("position.x %f",obj.position.x );
+		ImGui::Text("position.y %f",obj.position.y );
+		ImGui::Text("position.z %f",obj.position.z );
 	}
+	gui.End();
 
 	slime.Update();
-	
+
 }
 
 void DemoScene::Draw()
@@ -70,7 +72,6 @@ void DemoScene::Draw()
 	BasicObjectPreDraw(object3dPipelineSet);
 
 	skydome.DrawMaterial();
-	cube.Draw();
 
 	for (auto& obj : obj3ds)
 	{
@@ -90,20 +91,38 @@ void DemoScene::End()
 
 void DemoScene::SetObject(LevelData* data)
 {
-	for (auto& objectData : data->objects)
+	/*auto itr = particles.begin();
+	itr != particles.end(); itr++*/
+	for (auto objectData = data->objects.begin(); objectData != data->objects.end(); objectData++)
 	{
 		//とりあえずキューブで配置
 		//TODO:file_nameから逆引きできるようにしたい
 		obj3ds.emplace_back();
 		obj3ds.back().Initialize();
 		//モデル設定
-		obj3ds.back().SetModel(ModelManager::GetModel(objectData.fileName));
+		obj3ds.back().SetModel(ModelManager::GetModel(objectData->fileName));
 		obj3ds.back().SetTexture(&TextureManager::Get()->white);
 		//座標
-		obj3ds.back().position = objectData.translation;
+		obj3ds.back().position = objectData->translation;
 		//回転角
-		obj3ds.back().rotation = objectData.rotation;
+		obj3ds.back().rotation = objectData->rotation;
 		//大きさ
-		obj3ds.back().scale = objectData.scaling;
+		obj3ds.back().scale = objectData->scaling;
+
+		//当たり判定を作成
+		if (objectData->collider.have)
+		{
+			obj3ds.emplace_back();
+			obj3ds.back().Initialize();
+
+			obj3ds.back().SetModel(ModelManager::GetModel("BlankCube"));
+			obj3ds.back().SetTexture(&TextureManager::Get()->white);
+
+			//objectData -= 1;
+			obj3ds.back().position = objectData->translation;
+			//objectData += 1;
+			obj3ds.back().scale = objectData->collider.size;
+			obj3ds.back().rotation = { 0,0,0 };
+		}
 	}
 }

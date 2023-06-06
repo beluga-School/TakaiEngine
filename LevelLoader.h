@@ -9,6 +9,7 @@ struct LevelData
 	struct ColliderData {
 		Vector3 center;
 		Vector3 size;
+		bool have = false;
 	};
 	struct ObjectData {
 		std::string fileName;

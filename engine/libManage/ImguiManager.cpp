@@ -44,11 +44,13 @@ void ImguiManager::Initialize()
 	ImGui_ImplWin32_Init(winapi->hwnd);
 	ImGui_ImplDX12_Init(dx12->device.Get(),
 		NUM_FRAMES_IN_FLIGHT,
-		DXGI_FORMAT_R8G8B8A8_UNORM,
+		//SRGB‚ª‚Â‚¢‚Ä‚È‚©‚Á‚½‚º™
+		DXGI_FORMAT_R8G8B8A8_UNORM_SRGB,
 		tManager->srvHeap.Get(),
 		tManager->srvHeap.Get()->GetCPUDescriptorHandleForHeapStart(),
 		tManager->srvHeap.Get()->GetGPUDescriptorHandleForHeapStart()
 	);
+	//DXGI_FORMAT_R8G8B8A8_UNORM_SRGB;
 }
 
 void ImguiManager::PreUpdate()

@@ -6,6 +6,7 @@
 #include "Input.h"
 #include <LevelLoader.h>
 #include <Sprite.h>
+#include <ImguiManager.h>
 
 class DemoScene : public IScene
 {
@@ -21,12 +22,13 @@ private:
 	PipelineSet object3dPipelineSet;
 	Camera* camera = Camera::camera;
 
-	Obj3d cube;
 	Obj3d skydome;
 	Input* input = Input::Get();
 
 	Sprite slime;
 
 	std::list<Obj3d> obj3ds;
+
+	GUI gui = "position";
 };
 
