@@ -46,6 +46,7 @@ using namespace DirectX;
 #include <string>
 
 //構成がx64のみに確認したらなってなかったので削除
+//ソリューションプラットフォームがx64のみ
 
 //windowsアプリでのエントリーポイント(main関数)
 int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
