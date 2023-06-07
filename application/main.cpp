@@ -46,7 +46,8 @@ using namespace DirectX;
 
 //構成がx64のみに確認したらなってなかったので削除
 //ソリューションプラットフォームがx64のみ
-//警告をエラーとして扱う様に設定し、起動はできるようになった
+//警告をエラーとして扱う様に設定
+//警告をすべて削除
 
 //windowsアプリでのエントリーポイント(main関数)
 //int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) 
