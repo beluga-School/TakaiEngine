@@ -108,22 +108,6 @@ Vector2 Vector2::operator /(float& other) const
 	return v;
 }
 
-Vector2 Vector2::operator *(double& other) const
-{
-	Vector2 v;
-	v.x = x * other;
-	v.y = y * other;
-	return v;
-}
-
-Vector2 Vector2::operator /(double& other) const
-{
-	Vector2 v;
-	v.x = x / other;
-	v.y = y / other;
-	return v;
-}
-
 //é©êgÇèëÇ´ä∑Ç¶ÇÈÇ‚Ç¬ÇÁ
 Vector2 Vector2::operator +=(const Vector2& other)
 {
@@ -214,38 +198,6 @@ Vector2 Vector2::operator *=(float& scolor)
 }
 
 Vector2 Vector2::operator /=(float& scolor)
-{
-	x /= scolor;
-	y /= scolor;
-
-	return *this;
-}
-
-Vector2 Vector2::operator +=(double& scolor)
-{
-	x += scolor;
-	y += scolor;
-
-	return *this;
-}
-
-Vector2 Vector2::operator -=(double& scolor)
-{
-	x -= scolor;
-	y -= scolor;
-
-	return *this;
-}
-
-Vector2 Vector2::operator *=(double& scolor)
-{
-	x *= scolor;
-	y *= scolor;
-
-	return *this;
-}
-
-Vector2 Vector2::operator /=(double& scolor)
 {
 	x /= scolor;
 	y /= scolor;

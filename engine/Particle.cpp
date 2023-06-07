@@ -106,7 +106,7 @@ void GParticleManager::Draw(Texture* texture)
 	dx12->commandList->SetGraphicsRootConstantBufferView(0, constBufferParticle.buffer->GetGPUVirtualAddress());
 
 	//•`‰æƒRƒ}ƒ“ƒh
-	dx12->commandList->DrawInstanced(min(particles.size(),vertexCount), 1, 0, 0);
+	dx12->commandList->DrawInstanced(min((UINT)particles.size(),vertexCount), 1, 0, 0);
 }
 
 GParticleManager* GParticleManager::Getinstance()

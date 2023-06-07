@@ -18,7 +18,7 @@ namespace MathF
 	/// </summary>
 	/// <param name="min">最小値</param>
 	/// <param name="max">最大値</param>
-	int GetRandInt(int min, int max);
+	//int GetRandInt(int min, int max);
 
 	/// <summary>
 	/// 単振動をした値を返す

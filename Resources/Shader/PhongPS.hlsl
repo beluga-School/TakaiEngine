@@ -39,7 +39,7 @@ float4 main(VSOutput input) : SV_TARGET
             float3 lightv = pointLights[i].lightpos - input.worldPos.xyz;
             lightv = normalize(lightv);
             //ƒxƒNƒgƒ‹‚Ì’·‚³
-            float3 d = length(lightv);
+            float d = length(lightv);
             //‹——£Œ¸ŠŒW”
             float atten = 1.0f / (
             pointLights[i].lightatten.x +

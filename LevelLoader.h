@@ -2,7 +2,12 @@
 #include <string>
 #include <Vector3.h>
 #include <vector>
+
+//外部のライブラリで出た警告は無視
+#pragma warning (push)
+#pragma warning ( disable : 26800)
 #include <json.hpp>
+#pragma warning (pop)
 
 struct LevelData
 {

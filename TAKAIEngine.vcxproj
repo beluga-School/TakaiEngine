@@ -64,6 +64,7 @@
       <ConformanceMode>true</ConformanceMode>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <AdditionalIncludeDirectories>$(ProjectDir)engine\2d;$(ProjectDir)engine\3d;$(ProjectDir)engine\common;$(ProjectDir)engine\input;$(ProjectDir)engine\libManage;$(ProjectDir)engine\light;$(ProjectDir)engine\math;$(ProjectDir)engine\shader;$(ProjectDir)engine\sound;$(ProjectDir)engine\util;$(ProjectDir)application\particle;$(ProjectDir)application\game;$(ProjectDir)engine\imgui;$(ProjectDir)engine;$(ProjectDir)application;$(ProjectDir)External;$(ProjectDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <TreatWarningAsError>true</TreatWarningAsError>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -80,6 +81,7 @@
       <ConformanceMode>true</ConformanceMode>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <AdditionalIncludeDirectories>$(ProjectDir)engine\2d;$(ProjectDir)engine\3d;$(ProjectDir)engine\common;$(ProjectDir)engine\input;$(ProjectDir)engine\libManage;$(ProjectDir)engine\light;$(ProjectDir)engine\math;$(ProjectDir)engine\shader;$(ProjectDir)engine\sound;$(ProjectDir)engine\util;$(ProjectDir)application\particle;$(ProjectDir)application\game;$(ProjectDir)engine\imgui;$(ProjectDir)engine;$(ProjectDir)application;$(ProjectDir)External;$(ProjectDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <TreatWarningAsError>true</TreatWarningAsError>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -135,7 +137,6 @@
     <ClCompile Include="engine\3d\Vertex.cpp" />
     <ClCompile Include="engine\3d\ViewProjection.cpp" />
     <ClCompile Include="engine\3d\WinAPI.cpp" />
-    <ClCompile Include="engine\libManage\WinSockManager.cpp" />
     <ClCompile Include="External\imgui\imgui.cpp" />
     <ClCompile Include="External\imgui\imgui_demo.cpp" />
     <ClCompile Include="External\imgui\imgui_draw.cpp" />
@@ -197,7 +198,6 @@
     <ClInclude Include="engine\3d\Vertex.h" />
     <ClInclude Include="engine\3d\ViewProjection.h" />
     <ClInclude Include="engine\common\WinAPI.h" />
-    <ClInclude Include="engine\libManage\WinSockManager.h" />
     <ClInclude Include="External\imgui\imconfig.h" />
     <ClInclude Include="External\imgui\imgui.h" />
     <ClInclude Include="External\imgui\imgui_impl_dx12.h" />

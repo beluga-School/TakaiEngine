@@ -1,10 +1,11 @@
 #pragma once
+#include <stdint.h>
 
 namespace Util
 {
 	//ウィンドウサイズ
-	const float window_width = 1280;
-	const float window_height = 720;
+	const uint32_t window_width = 1280;
+	const uint32_t window_height = 720;
 
 	template <class T>
 	T Clamp(T t,T min, T max)

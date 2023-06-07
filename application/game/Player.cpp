@@ -197,7 +197,7 @@ void Player::Update(const Stage& stage)
 
 	if (hoge)
 	{
-		SetCursorPos(max.x, max.y);
+		SetCursorPos((int)max.x, (int)max.y);
 		ShowCursor(false);
 	
 		horizontalRotation += (point.x - max.x) * mouseSpd;

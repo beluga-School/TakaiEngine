@@ -119,7 +119,7 @@ void Obj3d::Draw() {
 	dx12->commandList->SetGraphicsRootConstantBufferView(3, constBufferB.buffer->GetGPUVirtualAddress());
 
 	//描画コマンド
-	dx12->commandList->DrawIndexedInstanced(model->mesh.indices.size() , 1, 0, 0, 0);
+	dx12->commandList->DrawIndexedInstanced((UINT)model->mesh.indices.size() , 1, 0, 0, 0);
 }
 
 void Obj3d::DrawMaterial() {
@@ -145,5 +145,5 @@ void Obj3d::DrawMaterial() {
 	dx12->commandList->SetGraphicsRootConstantBufferView(3, constBufferB.buffer->GetGPUVirtualAddress());
 
 	//描画コマンド
-	dx12->commandList->DrawIndexedInstanced(model->mesh.indices.size(), 1, 0, 0, 0);
+	dx12->commandList->DrawIndexedInstanced((UINT)model->mesh.indices.size(), 1, 0, 0, 0);
 }

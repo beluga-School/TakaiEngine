@@ -98,7 +98,7 @@ void Game::Initialize()
 
 		cube[i].scale = { MathF::GetRand(3,7),MathF::GetRand(3,7),MathF::GetRand(3,7) };
 
-		r = MathF::GetRandInt(0,4);
+		//r = MathF::GetRandInt(0,4);
 
 		switch (r)
 		{

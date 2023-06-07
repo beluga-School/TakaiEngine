@@ -24,7 +24,7 @@ class Model : public VertexData
 public:
 	Mesh mesh;
 
-	std::unordered_map<unsigned short, std::vector<unsigned short>> smoothData;
+	std::unordered_map<uint16_t, std::vector<uint16_t>> smoothData;
 
 	Material material;
 

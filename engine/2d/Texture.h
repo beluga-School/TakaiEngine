@@ -8,7 +8,12 @@
 using namespace DirectX;
 #include <d3dcompiler.h>
 #pragma comment(lib,"d3dcompiler.lib")
+
+#pragma warning (push)
+#pragma warning( disable : 26813 )
 #include <DirectXTex.h>
+#pragma warning (pop)
+
 #include "DirectXInit.h"
 #include <map>
 

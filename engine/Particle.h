@@ -5,7 +5,6 @@
 using namespace DirectX;
 #include <d3dcompiler.h>
 #pragma comment(lib,"d3dcompiler.lib")
-#include <DirectXTex.h>
 
 #include "DirectXInit.h"
 #include <vector>
@@ -27,7 +26,7 @@ struct ParticleConstBufferData
 	XMMATRIX billboardMat;
 };
 
-const int vertexCount = 1000;
+const uint32_t vertexCount = 1000;
 
 class Particle
 {

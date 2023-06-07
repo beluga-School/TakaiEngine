@@ -53,9 +53,6 @@ public:
 	Vector2 operator *(float& other) const;
 	Vector2 operator /(float& other) const;
 
-	Vector2 operator *(double& other) const;
-	Vector2 operator /(double& other) const;
-
 	//©g‚ğ‘‚«Š·‚¦‚é‚â‚Â‚ç
 	Vector2 operator +=(const Vector2& other);
 	Vector2 operator -=(const Vector2& other);
@@ -71,9 +68,4 @@ public:
 	Vector2 operator -=(float& scolor);
 	Vector2 operator *=(float& scolor);
 	Vector2 operator /=(float& scolor);
-
-	Vector2 operator +=(double& scolor);
-	Vector2 operator -=(double& scolor);
-	Vector2 operator *=(double& scolor);
-	Vector2 operator /=(double& scolor);
 };

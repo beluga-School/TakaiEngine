@@ -72,11 +72,11 @@ Matrix4 Matrix4::RotArbitrary(Vector3 axis, float rad)
 {
 	//クオータニオンというもの
 	axis.normalize();
-	float sn = sin(rad / 2);
+	float sn = (float)sin(rad / 2.f);
 	axis.x *= sn;
 	axis.y *= sn;
 	axis.z *= sn;
-	float w = cos(rad / 2);
+	float w = (float)cos(rad / 2.f);
 
 
 	Vector3 X = {
@@ -109,10 +109,10 @@ Matrix4 Matrix4::rotateX(float angle)
 {
 	Matrix4 result = Matrix4::Identity();
 
-	result.m[1][1] = cos(angle);
-	result.m[1][2] = sin(angle);
-	result.m[2][1] = -sin(angle);
-	result.m[2][2] = cos(angle);
+	result.m[1][1] = cosf(angle);
+	result.m[1][2] = sinf(angle);
+	result.m[2][1] = -sinf(angle);
+	result.m[2][2] = cosf(angle);
 
 	return result;
 }
@@ -121,10 +121,10 @@ Matrix4 Matrix4::rotateY(float angle)
 {
 	Matrix4 result = Matrix4::Identity();
 
-	result.m[0][0] = cos(angle);
-	result.m[0][2] = -sin(angle);
-	result.m[2][0] = sin(angle);
-	result.m[2][2] = cos(angle);
+	result.m[0][0] = cosf(angle);
+	result.m[0][2] = -sinf(angle);
+	result.m[2][0] = sinf(angle);
+	result.m[2][2] = cosf(angle);
 
 	return result;
 }
@@ -133,10 +133,10 @@ Matrix4 Matrix4::rotateZ(float angle)
 {
 	Matrix4 result = Matrix4::Identity();
 
-	result.m[0][0] = cos(angle);
-	result.m[0][1] = sin(angle);
-	result.m[1][0] = -sin(angle);
-	result.m[1][1] = cos(angle);
+	result.m[0][0] = cosf(angle);
+	result.m[0][1] = sinf(angle);
+	result.m[1][0] = -sinf(angle);
+	result.m[1][1] = cosf(angle);
 
 	return result;
 }
@@ -171,7 +171,7 @@ Matrix4 Matrix4::PerspectiveFovLH(float fovAngleY, float nearZ, float farZ)
 
 	Matrix4 process1 = Matrix4::Identity();
 
-	process1.m[0][0] = Util::window_height / Util::window_width;
+	process1.m[0][0] = (float)Util::window_height / (float)Util::window_width;
 
 	Matrix4 process2 = Matrix4::Identity();
 	process2.m[0][0] = 1 / tanf(fovAngleY / 2);

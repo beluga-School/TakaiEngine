@@ -95,9 +95,9 @@ bool CubeCollision(Cube cube1, Cube cube2)
 
 bool BoxColAABB(const Obj3d& colA, const Obj3d& colB)
 {
-	int DistanceX = colA.matWorld.m[3][0] - colB.matWorld.m[3][0];
-	int DistanceY = colA.matWorld.m[3][1] - colB.matWorld.m[3][1];
-	int DistanceZ = colA.matWorld.m[3][2] - colB.matWorld.m[3][2];
+	int DistanceX = (int)colA.matWorld.m[3][0] - (int)colB.matWorld.m[3][0];
+	int DistanceY = (int)colA.matWorld.m[3][1] - (int)colB.matWorld.m[3][1];
+	int DistanceZ = (int)colA.matWorld.m[3][2] - (int)colB.matWorld.m[3][2];
 
 	DistanceX = MathF::Abs(DistanceX);
 	DistanceY = MathF::Abs(DistanceY);

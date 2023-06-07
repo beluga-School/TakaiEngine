@@ -1,6 +1,7 @@
 #include "Model.h"
 using namespace std;
 #include "StringUtil.h"
+#include <Vector2.h>
 
 #include <assimp/Importer.hpp>
 #include <assimp/scene.h>
@@ -251,9 +252,9 @@ void Model::CreateModel(const std::string t, bool smoothing)
 		assert(0);
 	}
 
-	vector<XMFLOAT3> positions;	//頂点データ
-	vector<XMFLOAT3> normals;	//法線ベクトル
-	vector<XMFLOAT2> texcoords;	//テクスチャuv
+	vector<Vector3> positions;	//頂点データ
+	vector<Vector3> normals;	//法線ベクトル
+	vector<Vector2> texcoords;	//テクスチャuv
 
 
 
@@ -282,7 +283,7 @@ void Model::CreateModel(const std::string t, bool smoothing)
 		if (key == "v")
 		{
 			//X,Y,Z座標読み込み
-			XMFLOAT3 position{};
+			Vector3 position{};
 			line_stream >> position.x;
 			line_stream >> position.y;
 			line_stream >> position.z;
@@ -293,7 +294,7 @@ void Model::CreateModel(const std::string t, bool smoothing)
 		if (key == "vt")
 		{
 			//U,V成分読み込み
-			XMFLOAT2 texcoord{};
+			Vector2 texcoord{};
 			line_stream >> texcoord.x;
 			line_stream >> texcoord.y;
 			//V方向反転
@@ -304,7 +305,7 @@ void Model::CreateModel(const std::string t, bool smoothing)
 		if (key == "vn")
 		{
 			//X,Y,Z成分読み込み
-			XMFLOAT3 normal{};
+			Vector3 normal{};
 			line_stream >> normal.x;
 			line_stream >> normal.y;
 			line_stream >> normal.z;
@@ -327,9 +328,17 @@ void Model::CreateModel(const std::string t, bool smoothing)
 				index_stream >> indexNormal;
 
 				Vertex vertex{};
-				vertex.pos = positions[indexPosition - 1];
-				vertex.normal = normals[indexNormal - 1];
-				vertex.uv = texcoords[indexTexcoord - 1];
+				vertex.pos.x = positions[indexPosition - 1].x;
+				vertex.pos.y = positions[indexPosition - 1].y;
+				vertex.pos.z = positions[indexPosition - 1].z;
+
+				vertex.normal.x = normals[indexNormal - 1].x;
+				vertex.normal.y = normals[indexNormal - 1].y;
+				vertex.normal.z = normals[indexNormal - 1].z;
+				
+				vertex.uv.x = texcoords[indexTexcoord - 1].x;
+				vertex.uv.y = texcoords[indexTexcoord - 1].y;
+				
 				mesh.vertices.emplace_back(vertex);
 
 				//頂点インデックスに追加
@@ -338,7 +347,7 @@ void Model::CreateModel(const std::string t, bool smoothing)
 				//ここでデータを保持
 				if (smoothing)
 				{
-					smoothData[indexPosition].emplace_back(mesh.vertices.size() - 1);
+					smoothData[indexPosition].emplace_back((uint16_t)mesh.vertices.size() - 1);
 				}
 			}
 		}

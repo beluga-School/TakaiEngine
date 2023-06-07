@@ -10,7 +10,6 @@
 using namespace DirectX;
 #include <d3dcompiler.h>
 #pragma comment(lib,"d3dcompiler.lib")
-#include <DirectXTex.h>
 
 #include "DirectXInit.h"
 #include <vector>

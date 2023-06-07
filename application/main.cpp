@@ -8,7 +8,6 @@
 using namespace DirectX;
 #include <d3dcompiler.h>
 #pragma comment(lib,"d3dcompiler.lib")
-#include <DirectXTex.h>
 #include <iostream>
 #include <memory>
 
@@ -47,9 +46,12 @@ using namespace DirectX;
 
 //構成がx64のみに確認したらなってなかったので削除
 //ソリューションプラットフォームがx64のみ
+//警告をエラーとして扱う様に設定し、起動はできるようになった
 
 //windowsアプリでのエントリーポイント(main関数)
-int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
+//int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) 
+int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_  HINSTANCE hPrevInstance, _In_ LPSTR lpCmdLine, _In_ int nShowCmd)
+{
 
 	///---DirectX初期化処理　ここから---///
 	

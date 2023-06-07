@@ -1,4 +1,4 @@
-#include "Particle.hlsli"
+#include "GeometryHeader.hlsli"
 
 VSOutput main( float4 pos : POSITION )
 {

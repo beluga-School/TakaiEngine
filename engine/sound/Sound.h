@@ -48,5 +48,5 @@ public:
 	};
 private:
 	ComPtr<IXAudio2> xAudio2;
-	IXAudio2MasteringVoice* masterVoice;
+	IXAudio2MasteringVoice* masterVoice = nullptr;
 };

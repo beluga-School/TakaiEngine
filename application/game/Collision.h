@@ -16,7 +16,7 @@ struct Plane
 {
 	//法線ベクトル
 	Vector3 normal;
-	float distance;
+	float distance = 0.0f;
 };
 
 struct Cube

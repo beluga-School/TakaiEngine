@@ -67,19 +67,19 @@ Vector3 Vector3::lerp(const Vector3& start, const Vector3& end, const float t)
 
 Vector3 Vector3::easeInQuad(const Vector3& start, const Vector3& end, const float t)
 {
-	float easeVal = pow(t,2);
+	float easeVal = pow(t,2.f);
 	return start * (1.0f - easeVal) + end * t;
 }
 
 Vector3 Vector3::easeOutQuad(const Vector3& start, const Vector3& end, const float t)
 {
-	float easeVal = t * (2 - t);
+	float easeVal = t * (2.f - t);
 	return start * (1.0f - easeVal) + end * t;
 }
 
 Vector3 Vector3::easeInOutQuad(const Vector3& start, const Vector3& end, const float t)
 {
-	float easeVal = (t * t) * (3 - (2 * t));
+	float easeVal = (t * t) * (3.f - (2.f * t));
 	return start * (1.0f - easeVal) + end * t;
 }
 
