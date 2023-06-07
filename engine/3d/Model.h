@@ -51,6 +51,8 @@ public:
 	/// <param name="filename"></param>
 	void LoadMaterial(const std::string& directoryPath, const std::string& filename);
 
+	std::string saveModelname = "";
+
 private:
 	DirectX12* dx12 = DirectX12::Get();
 };

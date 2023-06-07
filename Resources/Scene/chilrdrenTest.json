@@ -45,12 +45,12 @@
         },
         {
             "type": "MESH",
-            "name": "Cube.002",
+            "name": "Cube.001",
             "transform": {
                 "translation": [
-                    2.4049813747406006,
-                    -2.1297872066497803,
-                    3.367239475250244
+                    0.0,
+                    5.785645484924316,
+                    1.091874122619629
                 ],
                 "rotation": [
                     0.0,
@@ -63,7 +63,7 @@
                     1.0
                 ]
             },
-            "file_name": "firewisp",
+            "file_name": "boss",
             "collider": {
                 "type": "BOX",
                 "center": [
@@ -80,12 +80,12 @@
             "children": [
                 {
                     "type": "MESH",
-                    "name": "Cube.001",
+                    "name": "Cube",
                     "transform": {
                         "translation": [
-                            -2.4049813747406006,
-                            7.915432929992676,
-                            -2.2753653526306152
+                            0.0,
+                            -18.213638305664062,
+                            -1.091874122619629
                         ],
                         "rotation": [
                             0.0,
@@ -98,7 +98,7 @@
                             1.0
                         ]
                     },
-                    "file_name": "boss",
+                    "file_name": "beetle",
                     "collider": {
                         "type": "BOX",
                         "center": [
@@ -107,20 +107,20 @@
                             0.0
                         ],
                         "size": [
-                            2.0,
-                            2.0,
+                            20.0,
+                            20.0,
                             2.0
                         ]
                     },
                     "children": [
                         {
                             "type": "MESH",
-                            "name": "Cube",
+                            "name": "Cube.002",
                             "transform": {
                                 "translation": [
-                                    0.0,
-                                    -23.471664428710938,
-                                    -1.091874122619629
+                                    2.4049813747406006,
+                                    10.298206329345703,
+                                    3.367239475250244
                                 ],
                                 "rotation": [
                                     0.0,
@@ -133,7 +133,7 @@
                                     1.0
                                 ]
                             },
-                            "file_name": "beetle",
+                            "file_name": "firewisp",
                             "collider": {
                                 "type": "BOX",
                                 "center": [
@@ -142,8 +142,8 @@
                                     0.0
                                 ],
                                 "size": [
-                                    20.0,
-                                    20.0,
+                                    2.0,
+                                    2.0,
                                     2.0
                                 ]
                             }

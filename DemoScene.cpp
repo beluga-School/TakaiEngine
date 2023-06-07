@@ -30,7 +30,7 @@ void DemoScene::Initialize()
 	slime.SetTexture(TextureManager::GetTexture("slime"));
 	slime.position = { 0,0,0 };
 
-	LevelData* data = LevelLoader::Get()->Load("chilrdrenTest");
+	LevelData* data = LevelLoader::Get()->Load("Scene/worldTest_Children");
 	SetObject(data);
 }
 
@@ -46,7 +46,7 @@ void DemoScene::Update()
 	if (input->TriggerKey(DIK_R))
 	{
 		obj3ds.clear();
-		SetObject(LevelLoader::Get()->Load("chilrdrenTest"));
+		SetObject(LevelLoader::Get()->Load("Scene/worldTest_Children"));
 	}
 
 	camera->DebugMove();
@@ -57,6 +57,7 @@ void DemoScene::Update()
 	for (auto& obj : obj3ds)
 	{
 		obj.Update(*camera);
+		ImGui::Text(obj.model->saveModelname.c_str());
 		ImGui::Text("position.x %f",obj.position.x );
 		ImGui::Text("position.y %f",obj.position.y );
 		ImGui::Text("position.z %f",obj.position.z );
@@ -100,7 +101,16 @@ void DemoScene::SetObject(LevelData* data)
 		obj3ds.emplace_back();
 		obj3ds.back().Initialize();
 		//モデル設定
-		obj3ds.back().SetModel(ModelManager::GetModel(objectData->fileName));
+		//ファイルネームが設定されてるならそれで
+		if (objectData->fileName != "")
+		{
+			obj3ds.back().SetModel(ModelManager::GetModel(objectData->fileName));
+		}
+		//ないなら四角をデフォで設定
+		else
+		{
+			obj3ds.back().SetModel(ModelManager::GetModel("Cube"));
+		}
 		obj3ds.back().SetTexture(&TextureManager::Get()->white);
 		//座標
 		obj3ds.back().position = objectData->translation;
@@ -118,9 +128,7 @@ void DemoScene::SetObject(LevelData* data)
 			obj3ds.back().SetModel(ModelManager::GetModel("BlankCube"));
 			obj3ds.back().SetTexture(&TextureManager::Get()->white);
 
-			//objectData -= 1;
 			obj3ds.back().position = objectData->translation;
-			//objectData += 1;
 			obj3ds.back().scale = objectData->collider.size;
 			obj3ds.back().rotation = { 0,0,0 };
 		}

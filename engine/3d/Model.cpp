@@ -243,6 +243,8 @@ void Model::CreateModel(const std::string t, bool smoothing)
 	const string directoryPath = "Resources/" + modelname + "/";
 	file.open(directoryPath + filename);
 
+	saveModelname = modelname;
+
 	//ファイルオープン失敗をチェック
 	if (file.fail())
 	{
