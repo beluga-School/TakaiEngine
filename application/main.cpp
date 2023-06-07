@@ -48,12 +48,12 @@ using namespace DirectX;
 //ソリューションプラットフォームがx64のみ
 //警告をエラーとして扱う様に設定
 //警告をすべて削除
+//リンカ警告をエラーとして扱うように設定
 
 //windowsアプリでのエントリーポイント(main関数)
 //int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) 
 int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_  HINSTANCE hPrevInstance, _In_ LPSTR lpCmdLine, _In_ int nShowCmd)
 {
-
 	///---DirectX初期化処理　ここから---///
 	
 #ifdef  _DEBUG
