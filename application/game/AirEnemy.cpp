@@ -10,7 +10,7 @@ void AirEnemy::Initialize(Vector3 setPos)
 	texture = TextureManager::GetTexture("firewisp");
 	position = setPos;
 	scale = { 8,8,8 };
-	rotation.y = -MathF::PI / 2;
+	rotation.y = -MathF::PIf / 2;
 	moveMag = 5;
 }
 

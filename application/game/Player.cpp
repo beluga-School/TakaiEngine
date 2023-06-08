@@ -203,8 +203,8 @@ void Player::Update(const Stage& stage)
 		horizontalRotation += (point.x - max.x) * mouseSpd;
 		verticalRotation += (point.y - max.y) * mouseSpd;
 
-		if (verticalRotation > MathF::PI / 2 - MathF::DegConvRad(1.0f)) verticalRotation = MathF::PI / 2 - MathF::DegConvRad(1.0f);
-		if (verticalRotation < -MathF::PI / 2 + MathF::DegConvRad(1.0f)) verticalRotation = -MathF::PI / 2 + MathF::DegConvRad(1.0f);
+		if (verticalRotation > MathF::PIf / 2 - MathF::DegConvRad(1.0f)) verticalRotation = MathF::PIf / 2 - MathF::DegConvRad(1.0f);
+		if (verticalRotation < -MathF::PIf / 2 + MathF::DegConvRad(1.0f)) verticalRotation = -MathF::PIf / 2 + MathF::DegConvRad(1.0f);
 
 		//‰ñ“]‚ðÝ’è
 		rotation.x = -verticalRotation;
@@ -234,8 +234,8 @@ void Player::Update(const Stage& stage)
 			rotation.x -= TimeManager::deltaTime;
 		}
 
-		if (rotation.x > MathF::PI / 2 - MathF::DegConvRad(1.0f)) rotation.x = MathF::PI / 2 - MathF::DegConvRad(1.0f);
-		if (rotation.x < -MathF::PI / 2 + MathF::DegConvRad(1.0f)) rotation.x = -MathF::PI / 2 + MathF::DegConvRad(1.0f);
+		if (rotation.x > MathF::PIf / 2 - MathF::DegConvRad(1.0f)) rotation.x = MathF::PIf / 2 - MathF::DegConvRad(1.0f);
+		if (rotation.x < -MathF::PIf / 2 + MathF::DegConvRad(1.0f)) rotation.x = -MathF::PIf / 2 + MathF::DegConvRad(1.0f);
 	}
 	if (input->TriggerKey(DIK_R))
 	{

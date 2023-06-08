@@ -10,7 +10,7 @@ void GroundEnemy::Initialize(Vector3 position)
 	texture = TextureManager::GetTexture("slime");
 	this->position = position;
 	scale = { 5,5,5 };
-	rotation.y = -MathF::PI / 2;
+	rotation.y = -MathF::PIf / 2;
 	moveMag = 5;
 }
 

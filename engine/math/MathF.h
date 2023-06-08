@@ -4,7 +4,7 @@
 
 namespace MathF
 {
-	const float PI = 3.141592654f;
+	const float PIf = 3.141592654f;
 
 	/// <summary>
 	/// ƒ‰ƒ“ƒ_ƒ€‚È’l‚ðŽæ“¾(floatŒ^)

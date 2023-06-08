@@ -49,6 +49,7 @@ using namespace DirectX;
 //警告をエラーとして扱う様に設定
 //警告をすべて削除
 //リンカ警告をエラーとして扱うように設定
+//日本語のファイル名はもともと入っていないぜ
 
 //windowsアプリでのエントリーポイント(main関数)
 //int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) 

@@ -63,7 +63,7 @@
       <PreprocessorDefinitions>_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
-      <AdditionalIncludeDirectories>$(ProjectDir)engine\2d;$(ProjectDir)engine\3d;$(ProjectDir)engine\common;$(ProjectDir)engine\input;$(ProjectDir)engine\libManage;$(ProjectDir)engine\light;$(ProjectDir)engine\math;$(ProjectDir)engine\shader;$(ProjectDir)engine\sound;$(ProjectDir)engine\util;$(ProjectDir)application\particle;$(ProjectDir)application\game;$(ProjectDir)engine\imgui;$(ProjectDir)engine;$(ProjectDir)application;$(ProjectDir)External;$(ProjectDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)engine\2d;$(ProjectDir)engine\3d;$(ProjectDir)engine\common;$(ProjectDir)engine\input;$(ProjectDir)engine\libManage;$(ProjectDir)engine\light;$(ProjectDir)engine\math;$(ProjectDir)engine\shader;$(ProjectDir)engine\sound;$(ProjectDir)engine\util;$(ProjectDir)application\particle;$(ProjectDir)application\game;$(ProjectDir)engine\imgui;$(ProjectDir)engine;$(ProjectDir)application;$(ProjectDir)External;$(ProjectDir);$(ProjectDir)engine\scene;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <TreatWarningAsError>true</TreatWarningAsError>
     </ClCompile>
     <Link>
@@ -81,7 +81,7 @@
       <PreprocessorDefinitions>NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
-      <AdditionalIncludeDirectories>$(ProjectDir)engine\2d;$(ProjectDir)engine\3d;$(ProjectDir)engine\common;$(ProjectDir)engine\input;$(ProjectDir)engine\libManage;$(ProjectDir)engine\light;$(ProjectDir)engine\math;$(ProjectDir)engine\shader;$(ProjectDir)engine\sound;$(ProjectDir)engine\util;$(ProjectDir)application\particle;$(ProjectDir)application\game;$(ProjectDir)engine\imgui;$(ProjectDir)engine;$(ProjectDir)application;$(ProjectDir)External;$(ProjectDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)engine\2d;$(ProjectDir)engine\3d;$(ProjectDir)engine\common;$(ProjectDir)engine\input;$(ProjectDir)engine\libManage;$(ProjectDir)engine\light;$(ProjectDir)engine\math;$(ProjectDir)engine\shader;$(ProjectDir)engine\sound;$(ProjectDir)engine\util;$(ProjectDir)application\particle;$(ProjectDir)application\game;$(ProjectDir)engine\imgui;$(ProjectDir)engine;$(ProjectDir)application;$(ProjectDir)External;$(ProjectDir);$(ProjectDir)engine\scene;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <TreatWarningAsError>true</TreatWarningAsError>
     </ClCompile>
     <Link>
@@ -94,7 +94,6 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="application\game\AirEnemy.cpp" />
-    <ClCompile Include="DemoScene.cpp" />
     <ClCompile Include="engine\3d\Billboard.cpp" />
     <ClCompile Include="application\game\Block.cpp" />
     <ClCompile Include="application\game\Bullet.cpp" />
@@ -107,6 +106,7 @@
     <ClCompile Include="application\game\GameScene.cpp" />
     <ClCompile Include="application\game\GoalObject.cpp" />
     <ClCompile Include="application\game\GroundEnemy.cpp" />
+    <ClCompile Include="engine\LevelLoader.cpp" />
     <ClCompile Include="engine\libManage\ImguiManager.cpp" />
     <ClCompile Include="engine\light\DirectionalLight.cpp" />
     <ClCompile Include="engine\light\LightGroup.cpp" />
@@ -125,12 +125,18 @@
     <ClCompile Include="application\game\Player.cpp" />
     <ClCompile Include="engine\light\PointLight.cpp" />
     <ClCompile Include="engine\math\Quaternion.cpp" />
+    <ClCompile Include="engine\scene\DemoScene.cpp" />
+    <ClCompile Include="engine\scene\FBXLoadDemoScene.cpp" />
+    <ClCompile Include="engine\scene\IScene.cpp" />
+    <ClCompile Include="engine\scene\SceneFactory.cpp" />
+    <ClCompile Include="engine\scene\SceneManager.cpp" />
     <ClCompile Include="engine\shader\Shader.cpp" />
     <ClCompile Include="engine\sound\Sound.cpp" />
     <ClCompile Include="engine\2d\Sprite.cpp" />
     <ClCompile Include="application\game\Stage.cpp" />
     <ClCompile Include="engine\util\StringUtil.cpp" />
     <ClCompile Include="engine\2d\Texture.cpp" />
+    <ClCompile Include="engine\util\TEasing.cpp" />
     <ClCompile Include="engine\util\TimeManager.cpp" />
     <ClCompile Include="engine\util\Util.cpp" />
     <ClCompile Include="engine\math\Vector2.cpp" />
@@ -146,16 +152,9 @@
     <ClCompile Include="External\imgui\imgui_impl_win32.cpp" />
     <ClCompile Include="External\imgui\imgui_tables.cpp" />
     <ClCompile Include="External\imgui\imgui_widgets.cpp" />
-    <ClCompile Include="FBXLoadDemoScene.cpp" />
-    <ClCompile Include="IScene.cpp" />
-    <ClCompile Include="LevelLoader.cpp" />
-    <ClCompile Include="SceneFactory.cpp" />
-    <ClCompile Include="SceneManager.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="AbstractSceneFactory.h" />
     <ClInclude Include="application\game\AirEnemy.h" />
-    <ClInclude Include="DemoScene.h" />
     <ClInclude Include="engine\3d\Billboard.h" />
     <ClInclude Include="application\game\Block.h" />
     <ClInclude Include="application\game\Bullet.h" />
@@ -168,6 +167,7 @@
     <ClInclude Include="application\game\GameScene.h" />
     <ClInclude Include="application\game\GoalObject.h" />
     <ClInclude Include="application\game\GroundEnemy.h" />
+    <ClInclude Include="engine\LevelLoader.h" />
     <ClInclude Include="engine\libManage\ImguiManager.h" />
     <ClInclude Include="engine\light\DirectionalLight.h" />
     <ClInclude Include="engine\light\LightGroup.h" />
@@ -186,12 +186,19 @@
     <ClInclude Include="engine\light\PointLight.h" />
     <ClInclude Include="engine\math\Quaternion.h" />
     <ClInclude Include="engine\common\Result.h" />
+    <ClInclude Include="engine\scene\AbstractSceneFactory.h" />
+    <ClInclude Include="engine\scene\DemoScene.h" />
+    <ClInclude Include="engine\scene\FBXLoadDemoScene.h" />
+    <ClInclude Include="engine\scene\IScene.h" />
+    <ClInclude Include="engine\scene\SceneFactory.h" />
+    <ClInclude Include="engine\scene\SceneManager.h" />
     <ClInclude Include="engine\shader\Shader.h" />
     <ClInclude Include="engine\sound\Sound.h" />
     <ClInclude Include="engine\2d\Sprite.h" />
     <ClInclude Include="application\game\Stage.h" />
     <ClInclude Include="engine\util\StringUtil.h" />
     <ClInclude Include="engine\2d\Texture.h" />
+    <ClInclude Include="engine\util\TEasing.h" />
     <ClInclude Include="engine\util\TimeManager.h" />
     <ClInclude Include="engine\util\Util.h" />
     <ClInclude Include="engine\math\Vector2.h" />
@@ -208,12 +215,7 @@
     <ClInclude Include="External\imgui\imstb_rectpack.h" />
     <ClInclude Include="External\imgui\imstb_textedit.h" />
     <ClInclude Include="External\imgui\imstb_truetype.h" />
-    <ClInclude Include="FBXLoadDemoScene.h" />
-    <ClInclude Include="IScene.h" />
-    <ClInclude Include="json.hpp" />
-    <ClInclude Include="LevelLoader.h" />
-    <ClInclude Include="SceneFactory.h" />
-    <ClInclude Include="SceneManager.h" />
+    <ClInclude Include="External\json.hpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="External\imgui\imgui.ini" />

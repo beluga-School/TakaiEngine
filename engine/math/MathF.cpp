@@ -32,7 +32,7 @@ namespace MathF
 
 	float SimpleHarmonicMotion(float time, float amplitude, float period)
 	{
-		return amplitude * sinf(2 * PI * time / period);
+		return amplitude * sinf(2 * PIf * time / period);
 	}
 
 	Vector2 CircularMotion(Vector2 CenterPoint, float radius, float angle)
@@ -67,10 +67,10 @@ namespace MathF
 
 	float DegConvRad(float frequencymethod)
 	{
-		return PI / 180 * frequencymethod;
+		return PIf / 180 * frequencymethod;
 	}
 
 	float RadConvDeg(float rad) {
-		return 180 / PI * rad;
+		return 180 / PIf * rad;
 	}
 }
