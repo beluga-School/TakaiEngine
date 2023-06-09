@@ -71,7 +71,7 @@ void WinAPI::SetWindowClass()
 	msg = {};
 }
 
-WinAPI* WinAPI::GetInstance()
+WinAPI* WinAPI::Get()
 {
 	static WinAPI instance;
 	return &instance;

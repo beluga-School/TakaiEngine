@@ -26,7 +26,7 @@ void GUI::End()
 
 void ImguiManager::Initialize()
 {
-	WinAPI* winapi = WinAPI::GetInstance();
+	WinAPI* winapi = WinAPI::Get();
 	DirectX12* dx12 = DirectX12::Get();
 	TextureManager* tManager = TextureManager::Get();
 

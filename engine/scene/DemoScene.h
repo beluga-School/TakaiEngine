@@ -23,7 +23,7 @@ private:
 	Camera* camera = Camera::camera;
 
 	Obj3d skydome;
-	Input* input = Input::Get();
+	InputKey* input = InputKey::Get();
 
 	Sprite slime;
 

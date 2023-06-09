@@ -1,46 +1,49 @@
 #include "Input.h"
 #include "Result.h"
 
-Input::Input()
+using namespace Input;
+
+InputKey::InputKey()
 {
 	keyboard = nullptr;
 	directInput = nullptr;
 }
 
-Input::~Input()
+InputKey::~InputKey()
 {
 
 }
 
-Input* Input::Get()
+InputKey* InputKey::Get()
 {
-	static Input instance;
+	static InputKey instance;
 	return &instance;
 }
 
-bool Input::PushKey(unsigned char keys)
+bool InputKey::PushKey(unsigned char keys)
 {
 	return key[keys];
 }
 
-bool Input::TriggerKey(unsigned char keys)
+bool InputKey::TriggerKey(unsigned char keys)
 {
 	return key[keys] && !oldkey[keys];
 }
 
-bool Input::ReleaseKey(unsigned char keys)
+bool InputKey::ReleaseKey(unsigned char keys)
 {
 	return !key[keys] && oldkey[keys];;
 }
 
-void Input::DirectInputInit()
+void InputKey::DirectInputInit()
 {
+	//これはキーボードの入力を初期化してるんやね～～
 	result = DirectInput8Create(
 		winApi->w.hInstance, DIRECTINPUT_VERSION, IID_IDirectInput8, (void**)&directInput, nullptr);
 	assert(SUCCEEDED(result));
 }
 
-void Input::DirectInputCreate()
+void InputKey::DirectInputCreate()
 {
 	//キーボードデバイスの生成
 	result = directInput->CreateDevice(GUID_SysKeyboard, &keyboard, NULL);
@@ -55,28 +58,28 @@ void Input::DirectInputCreate()
 	assert(SUCCEEDED(result));
 }
 
-bool Input::CheckConnectPad(int padIndex)
+bool InputKey::CheckConnectPad(int padIndex)
 {
 	result = XInputGetState(padIndex,&pState);
 	return result == ERROR_SUCCESS;
 }
 
-bool Input::PushPadButton(UINT pad_num)
+bool InputKey::PushPadButton(UINT pad_num)
 {
 	return pState.Gamepad.wButtons & pad_num;
 }
 
-bool Input::TriggerPadButton(UINT pad_num)
+bool InputKey::TriggerPadButton(UINT pad_num)
 {
 	return (pState.Gamepad.wButtons & pad_num) != 0 && (oldpState.Gamepad.wButtons & pad_num) == 0;
 }
 
-bool Input::ReleasePadButton(UINT pad_num)
+bool InputKey::ReleasePadButton(UINT pad_num)
 {
 	return (pState.Gamepad.wButtons & pad_num) == 0 && (oldpState.Gamepad.wButtons & pad_num) != 0;
 }
 
-Vector2 Input::GetLStickMove()
+Vector2 InputKey::GetLStickMove()
 {
 	Vector2 temp = {
 		static_cast<float>(pState.Gamepad.sThumbLX),
@@ -85,7 +88,7 @@ Vector2 Input::GetLStickMove()
 	return { temp.x / STICK_MAX, temp.y / STICK_MAX };
 }
 
-Vector2 Input::GetRStickMove()
+Vector2 InputKey::GetRStickMove()
 {
 	Vector2 temp = {
 		static_cast<float>(pState.Gamepad.sThumbRX),
@@ -94,7 +97,7 @@ Vector2 Input::GetRStickMove()
 	return { temp.x / STICK_MAX, temp.y / STICK_MAX };
 }
 
-bool Input::LStickTilt(STICK_VEC vec)
+bool InputKey::LStickTilt(STICK_VEC vec)
 {
 	Vector2 temp = {
 		static_cast<float>(pState.Gamepad.sThumbLX),
@@ -122,7 +125,7 @@ bool Input::LStickTilt(STICK_VEC vec)
 	return false;
 }
 
-bool Input::RStickTilt(STICK_VEC vec)
+bool InputKey::RStickTilt(STICK_VEC vec)
 {
 	Vector2 temp = {
 		static_cast<float>(pState.Gamepad.sThumbRX),
@@ -150,18 +153,18 @@ bool Input::RStickTilt(STICK_VEC vec)
 	return false;
 }
 
-BYTE Input::PushLT()
+BYTE InputKey::PushLT()
 {
 	return pState.Gamepad.bLeftTrigger > XINPUT_GAMEPAD_TRIGGER_THRESHOLD;
 }
 
-BYTE Input::PushRT()
+BYTE InputKey::PushRT()
 {
 	return pState.Gamepad.bRightTrigger > XINPUT_GAMEPAD_TRIGGER_THRESHOLD;
 
 }
 
-bool Input::TriggerLT(bool hard)
+bool InputKey::TriggerLT(bool hard)
 {
 	if (hard)
 	{
@@ -176,7 +179,7 @@ bool Input::TriggerLT(bool hard)
 	}
 }
 
-bool Input::TriggerRT(bool hard)
+bool InputKey::TriggerRT(bool hard)
 {
 	if (hard)
 	{
@@ -191,7 +194,7 @@ bool Input::TriggerRT(bool hard)
 	}
 }
 
-bool Input::ReleaseLT(bool hard)
+bool InputKey::ReleaseLT(bool hard)
 {
 	if (hard)
 	{
@@ -205,7 +208,7 @@ bool Input::ReleaseLT(bool hard)
 	}
 }
 
-bool Input::ReleaseRT(bool hard)
+bool InputKey::ReleaseRT(bool hard)
 {
 	if (hard)
 	{
@@ -219,7 +222,7 @@ bool Input::ReleaseRT(bool hard)
 	}
 }
 
-void Input::Initialize()
+void InputKey::Initialize()
 {
 	//DirectInputの初期化
 	Get()->DirectInputInit();
@@ -231,7 +234,7 @@ void Input::Initialize()
 	CheckConnectPad();
 }
 
-void Input::Update()
+void InputKey::Update()
 {
 	//キーボード情報の取得開始
 	keyboard->Acquire();
@@ -265,4 +268,84 @@ void Input::Update()
 		pState.Gamepad.sThumbRX = 0;
 		pState.Gamepad.sThumbRY = 0;
 	}
+}
+
+void InputKey::Finalize()
+{
+	keyboard->Release();
+	directInput->Release();
+}
+
+Vector2 Input::Mouse::GetPos()
+{
+	return Mouse::Get()->curser;
+}
+
+Vector2 Input::Mouse::GetVelocity()
+{
+	return Vector2((float)Mouse::Get()->state.lX, (float)Mouse::Get()->state.lY);
+}
+
+void Input::Mouse::Initialize()
+{
+	//キーボードデバイスの生成
+	result = InputKey::Get()->directInput->CreateDevice(GUID_SysMouse, &Mouse::Get()->mouse, NULL);
+	assert(SUCCEEDED(result));
+
+	//デバイスのフォーマットを設定
+	result = Mouse::Get()->mouse->SetDataFormat(&c_dfDIMouse);
+	assert(SUCCEEDED(result));
+
+	//ウィンドウ外ならマウスの取得をせず
+	//他のアプリケーションもそのデバイスを取得できるように
+	result = Mouse::Get()->mouse->SetCooperativeLevel(WinAPI::Get()->hwnd, DISCL_NONEXCLUSIVE | DISCL_FOREGROUND);
+	assert(SUCCEEDED(result));
+}
+
+void Mouse::Update()
+{
+	Mouse* instance = Mouse::Get();
+	//前回フレームの入力を保存
+	instance->oldState = instance->state;
+
+	//入力デバイスの制御を開始
+	instance->mouse->Acquire();
+	instance->mouse->Poll();
+	
+	//デバイスの状態を取得
+	instance->mouse->GetDeviceState(sizeof(DIMOUSESTATE), &instance->state);
+
+	//マウス座標取得
+	POINT p;
+	GetCursorPos(&p);
+
+	ScreenToClient(WinAPI::Get()->hwnd, &p);
+	instance->curser = {(float)p.x,(float)p.y};
+}
+
+void Mouse::Finalize()
+{
+	Mouse::Get()->mouse->Unacquire();
+	Mouse::Get()->mouse->Release();
+}
+
+bool Input::Mouse::Down(Click c)
+{
+	return Mouse::Get()->state.rgbButtons[(int)c] & (0x80);
+}
+
+bool Input::Mouse::Triggered(Click c)
+{
+	return (Mouse::Get()->state.rgbButtons[(int)c] & (0x80)) && !(Mouse::Get()->oldState.rgbButtons[(int)c] & (0x80));
+}
+
+bool Input::Mouse::Released(Click c)
+{
+	return !(Mouse::Get()->state.rgbButtons[(int)c] & (0x80)) && (Mouse::Get()->oldState.rgbButtons[(int)c] & (0x80));
+}
+
+Mouse* Mouse::Get()
+{
+	static Mouse obj;
+	return &obj;
 }

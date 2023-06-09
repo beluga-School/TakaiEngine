@@ -9,6 +9,7 @@
 #include <Xinput.h>
 #include "Vector2.h"
 #include "WinAPI.h"
+#include <stdint.h>
 
 enum STICK_VEC
 {
@@ -18,7 +19,49 @@ enum STICK_VEC
 	LEFT,
 };
 
-class Input
+enum class Click
+{
+	LEFT = 0,
+	RIGHT = 1,
+	MIDDLE = 2,
+	MB4 = 3,
+};
+
+namespace Input
+{
+	class Mouse
+	{
+	public:
+
+		static void Initialize();
+		static void Update();
+		static void Finalize();
+
+		//座標を取得
+		static Vector2 GetPos();
+		//1フレーム内での移動量を取得
+		static Vector2 GetVelocity();
+
+		//押している間
+		static bool Down(Click c);
+		//押した瞬間
+		static bool Triggered(Click c);
+		//離した瞬間
+		static bool Released(Click c);
+
+		static Mouse* Get();
+
+	private:
+		IDirectInputDevice8* mouse;
+		Vector2 curser;
+		DIMOUSESTATE state;
+		DIMOUSESTATE oldState;
+
+	};
+}
+
+//キーボード、パッド、マウスでクラスわけして、namespaceでまとめる形にする
+class InputKey
 {
 public:
 	/// <summary>
@@ -33,9 +76,11 @@ public:
 	/// </summary>
 	void Update();
 
+	void Finalize();
+
 public://キーボード
 
-	static Input* Get();
+	static InputKey* Get();
 
 	bool PushKey(unsigned char keys);
 	bool TriggerKey(unsigned char keys);
@@ -134,9 +179,9 @@ public://コントローラー
 	/// <returns></returns>
 	bool ReleaseRT(bool hard = false);
 
+	IDirectInput8* directInput;
 private://キーボード
 	IDirectInputDevice8* keyboard;
-	IDirectInput8* directInput;
 
 	unsigned char key[256] = {};
 	unsigned char oldkey[256] = {};
@@ -150,11 +195,10 @@ private://コントローラー
 	XINPUT_STATE oldpState;
 
 private:
-	Input();
-	~Input();
-	Input(const Input& a) = delete;
-	Input& operator=(const Input&) = delete;
+	InputKey();
+	~InputKey();
+	InputKey(const InputKey& a) = delete;
+	InputKey& operator=(const InputKey&) = delete;
 
-	WinAPI *winApi = WinAPI::GetInstance();
+	WinAPI *winApi = WinAPI::Get();
 };
-

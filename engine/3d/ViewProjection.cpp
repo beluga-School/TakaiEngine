@@ -41,53 +41,53 @@ void Camera::DebugMove()
 {
 	float speed = 100.0f;
 
-	if (Input::Get()->PushKey(DIK_D))
+	if (InputKey::Get()->PushKey(DIK_D))
 	{
 		camera->eye.x += speed * TimeManager::deltaTime;
 		camera->target.x += speed * TimeManager::deltaTime;
 	}
-	if (Input::Get()->PushKey(DIK_A))
+	if (InputKey::Get()->PushKey(DIK_A))
 	{
 		camera->eye.x -= speed * TimeManager::deltaTime;
 		camera->target.x -= speed * TimeManager::deltaTime;
 	}
 
-	if (Input::Get()->PushKey(DIK_W))
+	if (InputKey::Get()->PushKey(DIK_W))
 	{
 		camera->eye.y += (speed / 2.f) * TimeManager::deltaTime;
 	}
-	if (Input::Get()->PushKey(DIK_S))
+	if (InputKey::Get()->PushKey(DIK_S))
 	{
 		camera->eye.y -= (speed / 2.f) * TimeManager::deltaTime;
 	}
 
-	if (Input::Get()->PushKey(DIK_UP))
+	if (InputKey::Get()->PushKey(DIK_UP))
 	{
 		camera->eye.z += speed * TimeManager::deltaTime;
 		camera->target.z += speed * TimeManager::deltaTime;
 	}
-	if (Input::Get()->PushKey(DIK_DOWN))
+	if (InputKey::Get()->PushKey(DIK_DOWN))
 	{
 		camera->eye.z -= speed * TimeManager::deltaTime;
 		camera->target.z -= speed * TimeManager::deltaTime;
 	}
 
 
-	if (Input::Get()->PushKey(DIK_RIGHT))
+	if (InputKey::Get()->PushKey(DIK_RIGHT))
 	{
 		camera->eye.x += speed * TimeManager::deltaTime;
 	}
-	if (Input::Get()->PushKey(DIK_LEFT))
+	if (InputKey::Get()->PushKey(DIK_LEFT))
 	{
 		camera->eye.x -= speed * TimeManager::deltaTime;
 	}
 
-	if (Input::Get()->PushKey(DIK_I))
+	if (InputKey::Get()->PushKey(DIK_I))
 	{
 		camera->eye.y += speed * TimeManager::deltaTime;
 		camera->target.y += speed * TimeManager::deltaTime;
 	}
-	if (Input::Get()->PushKey(DIK_K))
+	if (InputKey::Get()->PushKey(DIK_K))
 	{
 		camera->eye.y -= speed * TimeManager::deltaTime;
 		camera->target.y -= speed * TimeManager::deltaTime;

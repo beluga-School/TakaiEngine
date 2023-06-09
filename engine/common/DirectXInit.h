@@ -65,5 +65,5 @@ private:
 	DirectX12(const DirectX12& a) = delete;
 	DirectX12& operator=(const DirectX12&) = delete;
 
-	WinAPI* winapi = WinAPI::GetInstance();
+	WinAPI* winapi = WinAPI::Get();
 };
