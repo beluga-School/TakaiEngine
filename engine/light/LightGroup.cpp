@@ -1,14 +1,12 @@
 #include "LightGroup.h"
 #include "DirectXInit.h"
 
-LightGroup* LightGroup::lightGroup = nullptr;
+std::unique_ptr<LightGroup> LightGroup::lightGroup = nullptr;
 
-LightGroup* LightGroup::Create()
+void LightGroup::Create()
 {
-	LightGroup* instance = new LightGroup();
-	instance->Initialize();
-
-	return instance;
+	lightGroup = std::make_unique<LightGroup>();
+	lightGroup->Initialize();
 }
 
 void LightGroup::Initialize()

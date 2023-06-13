@@ -172,14 +172,13 @@ void Game::Initialize()
 
 	Reset();
 
-	lightGroup = LightGroup::Create();
+	LightGroup::Create();
 	//lightGroup->SetDirLightActive(0, false);
 	//lightGroup->SetDirLightActive(1, false);
 	//lightGroup->SetDirLightActive(2, false);
 
-	lightGroup->SetPointLightActive(0, true);
-	lightGroup->SetPointLightPos(0, { 0.5f,1.0f,0.0f });
-	LightGroup::SetLight(lightGroup);
+	LightGroup::lightGroup->SetPointLightActive(0, true);
+	LightGroup::lightGroup->SetPointLightPos(0, { 0.5f,1.0f,0.0f });
 
 	lightObj.Initialize();
 	lightObj.position = { 0.5f,0,0 };
@@ -495,7 +494,7 @@ void Game::Update()
 	
 	lightObj.Update(*camera);
 
-	lightGroup->Update();
+	LightGroup::lightGroup->Update();
 }
 
 void Game::Draw()
@@ -550,8 +549,6 @@ void Game::End()
 	player.End();
 	SoundManager::GetInstance()->SoundUnload(&push);
 	SoundManager::GetInstance()->SoundUnload(&goalSound);
-
-	delete lightGroup;
 }
 
 int upCam = 0;

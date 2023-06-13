@@ -3,6 +3,8 @@
 #include "Vector3.h"
 #include "ConstBuffer.h"
 #include "PointLight.h"
+#include <stdlib.h>
+#include <memory>
 
 //ライトの数
 static const int DirLightNum = 3;
@@ -23,18 +25,20 @@ struct LightGroupData
 class LightGroup
 {
 public://変数
+	
+
 	//全てのオブジェクトで共通のライトデータ
-	static LightGroup* lightGroup;
-	static void SetLight(LightGroup* light) {
+	static std::unique_ptr<LightGroup> lightGroup;
+	/*static void SetLight(std::unique_ptr<LightGroup> light) {
 		lightGroup = light;
-	};
+	};*/
 	   
 	//定数バッファ
 	ConstBuffer<LightGroupData> constBuff;
 
 public://関数
 	//インスタンス生成
-	static LightGroup* Create();
+	static void Create();
 
 	//初期化
 	void Initialize();

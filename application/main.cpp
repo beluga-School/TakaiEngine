@@ -115,13 +115,13 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_  HINSTANCE hPrevInstance, 
 	//モデルの読み込み
 	ModelManager::Get()->PreLoad();
 
-	LightGroup::lightGroup = LightGroup::Create();
+	LightGroup::Create();
 
 	SceneManager *scenemanager = SceneManager::Get();
 	
 	//シーンファクトリーを生成し、マネージャにセット
-	SceneFactory *sceneFactory = new SceneFactory();
-	scenemanager->SetSceneFactory(sceneFactory);
+	//SceneFactory *sceneFactory = new SceneFactory();
+	//scenemanager->SetSceneFactory(sceneFactory);
 
 	DemoScene *demo = new DemoScene();
 	//FBXLoadDemoScene* loaddemo = new FBXLoadDemoScene();
@@ -132,14 +132,6 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_  HINSTANCE hPrevInstance, 
 
 	SoundManager *soundManager = SoundManager::GetInstance();
 	soundManager->Initialize();
-
-	//ゲームループ内で使う変数の宣言
-	//ParticleEmitter pEmitter;
-	//pEmitter.Initialize();
-	//pEmitter.SetInfo({ -10,-10,20 }, 10, 5,{0,0.5f,1,1}, 1, true);
-
-	//soundManager->SoundPlayWave(bgm,true);
-
 
 	//ゲームループ
 	while (true){
@@ -210,7 +202,7 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_  HINSTANCE hPrevInstance, 
 
 	imguiManager->Finalize();
 
-	delete sceneFactory;
+	//delete sceneFactory;
 
 	//音声データは先にxAudio2を解放しなければならない
 	//xAudio2の解放

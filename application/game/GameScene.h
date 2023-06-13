@@ -92,8 +92,6 @@ private:
 	
 	bool colflag = false;
 
-	LightGroup *lightGroup = nullptr;
-
 	Util::lerpVariables sphereVal;
 };
 
