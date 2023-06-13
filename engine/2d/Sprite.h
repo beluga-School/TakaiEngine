@@ -22,7 +22,7 @@ using namespace DirectX;
 #include "Texture.h"
 
 //テクスチャの最大枚数(今は手作業でテクスチャの方と合わせてる)
-const int spriteSRVCount = 2056;
+const int32_t spriteSRVCount = 2056;
 
 struct VertexPosUV
 {

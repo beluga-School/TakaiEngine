@@ -35,7 +35,7 @@ void VertexData::CreateVertex(std::vector<Vertex> vertices, std::vector<uint16_t
 	result = vertBuff->Map(0, nullptr, (void**)&vertMap);
 	assert(SUCCEEDED(result));
 	//全頂点に対して
-	for (int i = 0; i < vertices.size(); i++) {
+	for (int32_t i = 0; i < vertices.size(); i++) {
 		vertMap[i] = vertices[i];	//	座標をコピー
 	}
 	//繋がりを解除
@@ -74,7 +74,7 @@ void VertexData::CreateVertex(std::vector<Vertex> vertices, std::vector<uint16_t
 	uint16_t* indexMap = nullptr;
 	result = indexBuff->Map(0, nullptr, (void**)&indexMap);
 	//全インデックスに対して
-	for (int i = 0; i < indices.size(); i++) {
+	for (int32_t i = 0; i < indices.size(); i++) {
 		indexMap[i] = indices[i];	//インデックスをコピー
 	}
 	//マッピング解除

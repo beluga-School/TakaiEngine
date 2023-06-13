@@ -2,7 +2,7 @@
 
 void DebugText::Initialize(Texture* tex)
 {
-	for (int i = 0; i < _countof(sprites); i++)
+	for (int32_t i = 0; i < _countof(sprites); i++)
 	{
 		sprites[i].SetTexture(tex);
 		//SpriteCreate(&sprites[i],tex,{0.5f,0.5f});
@@ -12,7 +12,7 @@ void DebugText::Initialize(Texture* tex)
 void DebugText::Print(const SpriteCommon& spritecommon, const std::string& text, float x, float y, float scale)
 {
 	//全ての文字について
-	for (int i = 0; i < text.size(); i++)
+	for (int32_t i = 0; i < text.size(); i++)
 	{
 		//最大文字数超過
 		if (spriteIndex >= maxCharCount) {
@@ -23,13 +23,13 @@ void DebugText::Print(const SpriteCommon& spritecommon, const std::string& text,
 		const unsigned char& character = text[i];
 
 		//ASCIIコードの2段分飛ばした番号を計算
-		int fontIndex = character - 32;
+		int32_t fontIndex = character - 32;
 		if (character >= 0x7f) {
 			fontIndex = 0;
 		}
 
-		int fontIndexY = fontIndex / fontLineCount;
-		int fontIndexX = fontIndex % fontLineCount;
+		int32_t fontIndexY = fontIndex / fontLineCount;
+		int32_t fontIndexX = fontIndex % fontLineCount;
 
 		//座標計算
 		sprites[spriteIndex].position = { x + fontWidth * scale * i,y,0 };
@@ -48,7 +48,7 @@ void DebugText::Print(const SpriteCommon& spritecommon, const std::string& text,
 
 void DebugText::DrawAll()
 {
-	for (int i = 0; i < spriteIndex; i++)
+	for (int32_t i = 0; i < spriteIndex; i++)
 	{
 		sprites[i].Draw();
 	}
@@ -56,7 +56,7 @@ void DebugText::DrawAll()
 
 void DebugText::PostDraw()
 {
-	for (int i = 0; i < spriteIndex; i++)
+	for (int32_t i = 0; i < spriteIndex; i++)
 	{
 		sprites[i].position = { 0,0,0 };
 		sprites[i].size = { 0,0 };

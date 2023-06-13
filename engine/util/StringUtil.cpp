@@ -11,7 +11,7 @@ std::string ConvertWCharToString(const wchar_t* t)
     wstring wString(t);
 
     //wstring Å® SJIS
-    int iBufferSize = WideCharToMultiByte(
+    int32_t iBufferSize = WideCharToMultiByte(
         CP_OEMCP,
         0,
         wString.c_str(),
@@ -52,7 +52,7 @@ wstring ConvertStringToWChar(std::string str)
     string wString(str);
 
     //wstring Å® SJIS
-    int iBufferSize = MultiByteToWideChar(
+    int32_t iBufferSize = MultiByteToWideChar(
         CP_OEMCP,
         0,
         wString.c_str(),

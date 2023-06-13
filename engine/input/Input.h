@@ -54,10 +54,10 @@ namespace Input
 		static Mouse* Get();
 
 	private:
-		IDirectInputDevice8* mouse;
-		Vector2 curser;
-		DIMOUSESTATE state;
-		DIMOUSESTATE oldState;
+		IDirectInputDevice8* mouse = nullptr;
+		Vector2 curser{};
+		DIMOUSESTATE state{};
+		DIMOUSESTATE oldState{};
 
 	};
 }
@@ -92,7 +92,7 @@ public://コントローラー
 
 	const float STICK_MAX = 32768.0f;
 
-	bool CheckConnectPad(int padIndex = 0);
+	bool CheckConnectPad(int32_t padIndex = 0);
 
 	/// <summary>
 	/// ゲームパッドのボタンが押されているか
@@ -193,8 +193,8 @@ private://キーボード
 
 private://コントローラー
 	
-	XINPUT_STATE pState;
-	XINPUT_STATE oldpState;
+	XINPUT_STATE pState{};
+	XINPUT_STATE oldpState{};
 
 private:
 	InputKey();

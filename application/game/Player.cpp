@@ -163,7 +163,7 @@ void Player::Update(const Stage& stage)
 
 	if (onGround && oldGround == false)
 	{
-		for (int i = 0; i < 10; i++)
+		for (int32_t i = 0; i < 10; i++)
 		{
 			ParticleManager::GetInstance()->CreateCubeParticle(position, { 2,2,2 }, 20.0f, { 0.3f,0.3f,0.3f,0.5f });
 		}
@@ -197,7 +197,7 @@ void Player::Update(const Stage& stage)
 
 	if (hoge)
 	{
-		SetCursorPos((int)max.x, (int)max.y);
+		SetCursorPos((int32_t)max.x, (int32_t)max.y);
 		ShowCursor(false);
 	
 		horizontalRotation += (point.x - max.x) * mouseSpd;

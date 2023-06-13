@@ -39,7 +39,7 @@ void ImguiManager::Initialize()
 	//imgui‚ÌF‚ðÝ’è
 	ImGui::StyleColorsDark();
 
-	static int const NUM_FRAMES_IN_FLIGHT = 3;
+	static int32_t const NUM_FRAMES_IN_FLIGHT = 3;
 
 	ImGui_ImplWin32_Init(winapi->hwnd);
 	ImGui_ImplDX12_Init(dx12->device.Get(),

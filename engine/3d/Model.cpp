@@ -9,165 +9,6 @@ using namespace std;
 
 std::map<std::string, Model> ModelManager::models;
 
-//bool Model::AssimpLoader(const std::string t)
-//{
-//	//インポーターを生成
-//	Assimp::Importer importer;
-//
-//	//ファイル内に.objと.mtlを入れて、それらの名前がファイル名と一致している場合のみ読み込み
-//	const string modelname = t;
-//	const string filename = modelname + ".obj";
-//	const string directoryPath = "Resources/" + modelname + "/";
-//
-//	//assimpでファイル読み込み(assimpの形式)
-//	const aiScene* scene = importer.ReadFile(
-//		directoryPath + filename,
-//		aiProcess_CalcTangentSpace |
-//		aiProcess_Triangulate |
-//		aiProcess_SortByPType |
-//		aiProcess_GenNormals |
-//		aiProcess_FixInfacingNormals | 
-//		aiProcess_ConvertToLeftHanded
-//	);
-//
-//	//ダメならダメ
-//	if (scene == nullptr)
-//	{
-//		//importer.GetErrorString();
-//		return false;
-//	}
-//
-//	//多分これらの処理をノードごとにしないといけないため、ここでノード分ぶん回すforが入る
-//	
-//	//自分の都合のいい形式にここで変換する
-//	vector<XMFLOAT3> positions;	//頂点データ
-//	vector<XMFLOAT3> normals;	//法線ベクトル
-//	vector<XMFLOAT2> texcoords;	//テクスチャuv
-//
-//	UINT backIndex = 0;	//インデックスを足す
-//
-//	std::function<void(aiNode*)>loadNode = [&](aiNode* node) {
-//		for (unsigned int i = 0; i < node->mNumChildren; i++)
-//		{
-//			loadNode(node->mChildren[i]);
-//		};
-//	};
-//
-//	//メッシュごとに情報を保存
-//	for (unsigned int k = 0; k < scene->mNumMeshes; k++)
-//	{
-//		//node->mMeshes[k];
-//		aiMesh* mesh = scene->mMeshes[k];
-//		for (unsigned int i = 0; i < mesh->mNumVertices; i++)
-//		{
-//			//以下3つはvertexデータ(CreateModelのv,vt,nで読み込んでいたところ)
-//			//座標
-//			aiVector3D vertex = mesh->mVertices[i];
-//			//何も理解してないけどワールド変換行列を掛けないと正しくモデルを読み込めないらしいので掛ける
-//			//たぶんここのmRootNodeは、後でfor文にしたときにノードごとのやつにしないといけない
-//			//あと、なんか子オブジェクトの行列も全部掛けないと行けないらしい　それが一番わからん
-//			vertex *= scene->mRootNode->mTransformation;
-//
-//			positions.emplace_back();
-//			positions.back().x = vertex.x;
-//			positions.back().y = vertex.y;
-//			positions.back().z = vertex.z;
-//
-//			backIndex++;
-//
-//			//法線
-//			if (mesh->mNormals)
-//			{
-//				aiVector3D norm = mesh->mNormals[i];
-//				norm.Normalize();
-//				normals.emplace_back(norm.x, norm.y, norm.z);
-//			}
-//
-//			//uv
-//			if (mesh->HasTextureCoords(0))
-//			{
-//				texcoords.push_back({
-//					mesh->mTextureCoords[0][i].x,
-//					mesh->mTextureCoords[0][i].y
-//					});
-//			}
-//
-//			vertices.emplace_back(Vertex{
-//				positions.back(),
-//				normals.back(),
-//				texcoords.back()
-//				});
-//		}
-//
-//		for (unsigned int j = 0; j < mesh->mNumFaces; j++)
-//		{
-//			aiFace face = mesh->mFaces[j];
-//			for (unsigned int i = 0; i < face.mNumIndices; i++)
-//			{
-//				UINT ind = face.mIndices[i];
-//
-//				indices.emplace_back(ind + backIndex);
-//			}
-//		}
-//	}
-//
-//	//Wrelf先生はここで上の処理をまとめて関数にしてあった
-//	//fNode(scene->mRootNode) //←これ
-//
-//	for (unsigned int i = 0; i < scene->mNumMaterials; i++)
-//	{
-//		//以下5つはマテリアルデータ(LoadMaterialで読み込んでいたところ)
-//		//マテリアル名(いる？ここで直接読み込むようになるならいらないかも)
-//		aiMaterial* mat = scene->mMaterials[i];
-//
-//		aiString name;
-//		mat->Get(AI_MATKEY_NAME, name);
-//		material.name = name.C_Str();
-//
-//		//アンビエント
-//		aiColor3D ambient;
-//		mat->Get(AI_MATKEY_COLOR_AMBIENT, ambient);
-//		material.ambient = { ambient.r,ambient.g,ambient.b };
-//
-//		//ディフューズ
-//		aiColor3D diffuse;
-//		mat->Get(AI_MATKEY_COLOR_DIFFUSE, diffuse);
-//		material.diffuse = { diffuse.r,diffuse.g,diffuse.b };
-//
-//		//スペキュラー
-//		aiColor3D specular;
-//		mat->Get(AI_MATKEY_COLOR_SPECULAR, specular);
-//		material.specular = { specular.r,specular.g,specular.b };
-//
-//		//マテリアルのテクスチャ名
-//		aiString texname;
-//		
-//		int h = mat->GetTextureCount(aiTextureType_DIFFUSE);
-//		
-//		if (h)
-//		{
-//			mat->GetTexture(
-//				aiTextureType_DIFFUSE,
-//				0,
-//				&texname);
-//			material.textureFilename = texname.C_Str();
-//			
-//			//問題点その1:materialのtextureFilenameが正しく読み込めてない
-//			//解決方法の検討はまだついてない
-//			material.tex->Load(ConvertStringToWChar(directoryPath + "tex.png").c_str());
-//		}
-//		else
-//		{
-//			material.tex->Load(ConvertStringToWChar("Resources/default.png").c_str());
-//		}
-//	}
-//
-//	CreateVertex(vertices, indices);
-//
-//	//ここでimporterを殺してきれいに
-//	return true;
-//}
-
 void Model::CreateDefaultModel()
 {
 	CreateVertex(mesh.vertices, mesh.indices);
@@ -342,7 +183,7 @@ void Model::CreateModel(const std::string t, bool smoothing)
 				mesh.vertices.emplace_back(vertex);
 
 				//頂点インデックスに追加
-				mesh.indices.emplace_back((unsigned short)mesh.indices.size());
+				mesh.indices.emplace_back((uint16_t)mesh.indices.size());
 
 				//ここでデータを保持
 				if (smoothing)
@@ -354,12 +195,12 @@ void Model::CreateModel(const std::string t, bool smoothing)
 	}
 	file.close();
 
-	for (int i = 0; i < mesh.indices.size() / 3; i++)
+	for (int32_t i = 0; i < mesh.indices.size() / 3; i++)
 	{	//三角形1つごとに計算していく
 		//三角形のインデックスを取り出して、一時的な変数にいれる
-		unsigned short indices0 = mesh.indices[i * 3 + 0];
-		unsigned short indices1 = mesh.indices[i * 3 + 1];
-		unsigned short indices2 = mesh.indices[i * 3 + 2];
+		uint16_t indices0 = mesh.indices[i * 3 + 0];
+		uint16_t indices1 = mesh.indices[i * 3 + 1];
+		uint16_t indices2 = mesh.indices[i * 3 + 2];
 		//三角形を構成する頂点座標をベクトルに代入
 		XMVECTOR p0 = XMLoadFloat3(&mesh.vertices[indices0].pos);
 		XMVECTOR p1 = XMLoadFloat3(&mesh.vertices[indices1].pos);
@@ -383,17 +224,17 @@ void Model::CreateModel(const std::string t, bool smoothing)
 		//ここで保持したデータを使ってスムージングを計算
 		for (auto itr = smoothData.begin(); itr != smoothData.end(); ++itr)
 		{
-			std::vector<unsigned short>& v = itr->second;
+			std::vector<uint16_t>& v = itr->second;
 
 			XMVECTOR normal = {};
-			for (unsigned short index : v)
+			for (uint16_t index : v)
 			{
 				normal += XMVectorSet(mesh.vertices[index].normal.x, mesh.vertices[index].normal.y, mesh.vertices[index].normal.z, 0);
 			}
 
 			normal = XMVector3Normalize(normal / (float)v.size());
 
-			for (unsigned short index : v)
+			for (uint16_t index : v)
 			{
 				mesh.vertices[index].normal = { normal.m128_f32[0],normal.m128_f32[1] ,normal.m128_f32[2] };
 			}

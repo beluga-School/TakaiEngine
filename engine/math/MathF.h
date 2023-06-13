@@ -14,13 +14,6 @@ namespace MathF
 	float GetRand(float min, float max);
 
 	/// <summary>
-	/// ランダムな値を取得(int型)
-	/// </summary>
-	/// <param name="min">最小値</param>
-	/// <param name="max">最大値</param>
-	//int GetRandInt(int min, int max);
-
-	/// <summary>
 	/// 単振動をした値を返す
 	/// </summary>
 	/// <param name="time">経過時間</param>

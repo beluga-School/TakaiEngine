@@ -53,7 +53,7 @@ PipelineSet CreateObject3DPipeline()
 	blenddesc.SrcBlendAlpha = D3D12_BLEND_ZERO;		//ソースの値を100%使う
 	blenddesc.DestBlendAlpha = D3D12_BLEND_ZERO;	//デストの値を  0%使う
 
-	int blendMode = ALPHA;
+	int32_t blendMode = ALPHA;
 
 	if (blendMode == ADD)
 	{
@@ -240,7 +240,7 @@ PipelineSet CreateLambertPipeline()
 	blenddesc.SrcBlendAlpha = D3D12_BLEND_ZERO;		//ソースの値を100%使う
 	blenddesc.DestBlendAlpha = D3D12_BLEND_ZERO;	//デストの値を  0%使う
 
-	int blendMode = ALPHA;
+	int32_t blendMode = ALPHA;
 
 	if (blendMode == ADD)
 	{
@@ -421,7 +421,7 @@ PipelineSet CreateSpritePipeline()
 	blenddesc2.DestBlendAlpha = D3D12_BLEND_ZERO;	//デストの値を  0%使う
 
 
-	int blendMode2 = ALPHA;
+	int32_t blendMode2 = ALPHA;
 
 	if (blendMode2 == ADD)
 	{
@@ -596,7 +596,7 @@ PipelineSet CreateGeometryPipeline()
 	blenddesc.SrcBlendAlpha = D3D12_BLEND_ZERO;		//ソースの値を100%使う
 	blenddesc.DestBlendAlpha = D3D12_BLEND_ZERO;	//デストの値を  0%使う
 
-	int blendMode = ADD;
+	int32_t blendMode = ADD;
 
 	if (blendMode == ADD)
 	{

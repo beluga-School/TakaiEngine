@@ -44,7 +44,7 @@ public:
 
 	XMFLOAT3 colorRand = { 0,0,0 };
 
-	VertexPos vertPos;
+	VertexPos vertPos{};
 
 	bool isDead = false;
 
@@ -106,7 +106,7 @@ public:
 	/// <param name="scale">パーティクルの大きさ</param>
 	/// <param name="color">パーティクルの色</param>
 	/// <param name="spawnNum">1秒間に発生するパーティクルの数 最低値は1</param>
-	void SetInfo(Vector3 pos,float range,float scale, XMFLOAT4 color,int spawnNum = 1,bool redChange = false);
+	void SetInfo(Vector3 pos,float range,float scale, XMFLOAT4 color, int32_t spawnNum = 1,bool redChange = false);
 
 	void Update();
 
@@ -116,7 +116,7 @@ private:
 	float initScale = 1;
 	XMFLOAT4 color = { 1,1,1,1 };
 	//一秒間に発生する数
-	int spawnNum = 10;
+	int32_t spawnNum = 10;
 
 	bool redChange = false;
 

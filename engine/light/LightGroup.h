@@ -7,10 +7,10 @@
 #include <memory>
 
 //ライトの数
-static const int DirLightNum = 3;
+static const int32_t DirLightNum = 3;
 
 //点光源の数
-static const int PointLightNum = 3;
+static const int32_t PointLightNum = 3;
 
 struct LightGroupData
 {
@@ -55,20 +55,20 @@ public://関数
 	void SetAmbientColor(const Vector3& color);
 
 	//平行光源の有効フラグをセット
-	void SetDirLightActive(int index, const bool& active);
+	void SetDirLightActive(int32_t index, const bool& active);
 
 	//平行光源のライト方向をセット
-	void SetDirLightDir(int index, const Vector3& lightdir);
+	void SetDirLightDir(int32_t index, const Vector3& lightdir);
 	
 	//平行光源のライト方向をセット
-	void SetDirLightColor(int index, const Vector3& lightcolor);
+	void SetDirLightColor(int32_t index, const Vector3& lightcolor);
 
 	//点光源
 	
-	void SetPointLightActive(int index, const bool& active);
-	void SetPointLightPos(int index, const Vector3& pos);
-	void SetPointLightColor(int index, const Vector3& color);
-	void SetPointLightAtten(int index, const Vector3& atten);
+	void SetPointLightActive(int32_t index, const bool& active);
+	void SetPointLightPos(int32_t index, const Vector3& pos);
+	void SetPointLightColor(int32_t index, const Vector3& color);
+	void SetPointLightAtten(int32_t index, const Vector3& atten);
 
 	//標準のライト設定
 	void DefaultLightSet();

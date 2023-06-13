@@ -76,7 +76,7 @@ Vector2 Vector2::operator /(const Vector2& other) const
 	return v;
 }
 
-Vector2 Vector2::operator *(int& other) const
+Vector2 Vector2::operator *(int32_t& other) const
 {
 	Vector2 v;
 	v.x = x * other;
@@ -84,7 +84,7 @@ Vector2 Vector2::operator *(int& other) const
 	return v;
 }
 
-Vector2 Vector2::operator /(int& other) const
+Vector2 Vector2::operator /(int32_t& other) const
 {
 	Vector2 v;
 	v.x = x / other;
@@ -141,7 +141,7 @@ Vector2 Vector2::operator /=(const Vector2& other)
 	return *this;
 }
 
-Vector2 Vector2::operator +=(int& scolor)
+Vector2 Vector2::operator +=(int32_t& scolor)
 {
 	x += scolor;
 	y += scolor;
@@ -149,7 +149,7 @@ Vector2 Vector2::operator +=(int& scolor)
 	return *this;
 }
 
-Vector2 Vector2::operator -=(int& scolor)
+Vector2 Vector2::operator -=(int32_t& scolor)
 {
 	x -= scolor;
 	y -= scolor;
@@ -157,7 +157,7 @@ Vector2 Vector2::operator -=(int& scolor)
 	return *this;
 }
 
-Vector2 Vector2::operator *=(int& scolor)
+Vector2 Vector2::operator *=(int32_t& scolor)
 {
 	x *= scolor;
 	y *= scolor;
@@ -165,7 +165,7 @@ Vector2 Vector2::operator *=(int& scolor)
 	return *this;
 }
 
-Vector2 Vector2::operator /=(int& scolor)
+Vector2 Vector2::operator /=(int32_t& scolor)
 {
 	x /= scolor;
 	y /= scolor;

@@ -21,7 +21,7 @@
 //	Clear,
 //	GameOver,
 //};
-const int max = 500;
+const uint32_t max = 500;
 
 class Game : public IScene
 {

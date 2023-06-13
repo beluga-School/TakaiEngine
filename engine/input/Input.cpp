@@ -7,6 +7,8 @@ InputKey::InputKey()
 {
 	keyboard = nullptr;
 	directInput = nullptr;
+	pState = {};
+	oldpState = {};
 }
 
 InputKey::~InputKey()
@@ -58,7 +60,7 @@ void InputKey::DirectInputCreate()
 	assert(SUCCEEDED(result));
 }
 
-bool InputKey::CheckConnectPad(int padIndex)
+bool InputKey::CheckConnectPad(int32_t padIndex)
 {
 	result = XInputGetState(padIndex,&pState);
 	return result == ERROR_SUCCESS;
@@ -240,7 +242,7 @@ void InputKey::Update()
 	keyboard->Acquire();
 
 	//‘SƒL[‚Ì“ü—Íó‘Ô‚ğæ“¾‚·‚é
-	for (int i = 0; i < 256; i++)
+	for (int32_t i = 0; i < 256; i++)
 	{
 		oldkey[i] = key[i];
 	}
@@ -331,17 +333,17 @@ void Mouse::Finalize()
 
 bool Input::Mouse::Down(Click c)
 {
-	return Mouse::Get()->state.rgbButtons[(int)c] & (0x80);
+	return Mouse::Get()->state.rgbButtons[static_cast<int32_t>(c)] & (0x80);
 }
 
 bool Input::Mouse::Triggered(Click c)
 {
-	return (Mouse::Get()->state.rgbButtons[(int)c] & (0x80)) && !(Mouse::Get()->oldState.rgbButtons[(int)c] & (0x80));
+	return (Mouse::Get()->state.rgbButtons[static_cast<int32_t>(c)] & (0x80)) && !(Mouse::Get()->oldState.rgbButtons[static_cast<int32_t>(c)] & (0x80));
 }
 
 bool Input::Mouse::Released(Click c)
 {
-	return !(Mouse::Get()->state.rgbButtons[(int)c] & (0x80)) && (Mouse::Get()->oldState.rgbButtons[(int)c] & (0x80));
+	return !(Mouse::Get()->state.rgbButtons[static_cast<int32_t>(c)] & (0x80)) && (Mouse::Get()->oldState.rgbButtons[static_cast<int32_t>(c)] & (0x80));
 }
 
 float Input::Mouse::Wheel()

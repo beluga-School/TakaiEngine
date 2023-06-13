@@ -1,4 +1,6 @@
 #pragma once
+#include <stdint.h>
+
 class Vector2
 {
 public:
@@ -47,8 +49,8 @@ public:
 	Vector2 operator *(const Vector2& other) const;
 	Vector2 operator /(const Vector2& other) const;
 
-	Vector2 operator *(int& other) const;
-	Vector2 operator /(int& other) const;
+	Vector2 operator *(int32_t& other) const;
+	Vector2 operator /(int32_t& other) const;
 
 	Vector2 operator *(float& other) const;
 	Vector2 operator /(float& other) const;
@@ -59,10 +61,10 @@ public:
 	Vector2 operator *=(const Vector2& other);
 	Vector2 operator /=(const Vector2& other);
 
-	Vector2 operator +=(int& scolor);
-	Vector2 operator -=(int& scolor);
-	Vector2 operator *=(int& scolor);
-	Vector2 operator /=(int& scolor);
+	Vector2 operator +=(int32_t& scolor);
+	Vector2 operator -=(int32_t& scolor);
+	Vector2 operator *=(int32_t& scolor);
+	Vector2 operator /=(int32_t& scolor);
 
 	Vector2 operator +=(float& scolor);
 	Vector2 operator -=(float& scolor);

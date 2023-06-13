@@ -1,11 +1,12 @@
 #pragma once
 #include "Vector3.h"
+#include <stdint.h>
 
 class Matrix4
 {
 public:
-	static const int ROW = 4;
-	static const int COL = 4;
+	static const int32_t ROW = 4;
+	static const int32_t COL = 4;
 	float m[ROW][COL];
 
 	Matrix4();	//’PˆÊs—ñ‚ğ‘ã“ü
@@ -40,9 +41,9 @@ public:
 
 	static Matrix4 RotArbitrary(Vector3 axis,float rad);
 
-	float* operator[](int i);
+	float* operator[](int32_t i);
 
-	float& operator()(int i, int j);
+	float& operator()(int32_t i, int32_t j);
 
 	Matrix4& operator=(const Matrix4& a);
 	//static Matrix4& operator*=(Matrix4& m1, Matrix4& m2);

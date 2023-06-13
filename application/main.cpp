@@ -52,8 +52,7 @@ using namespace DirectX;
 //日本語のファイル名はもともと入っていないぜ
 
 //windowsアプリでのエントリーポイント(main関数)
-//int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) 
-int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_  HINSTANCE hPrevInstance, _In_ LPSTR lpCmdLine, _In_ int nShowCmd)
+int32_t WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_  HINSTANCE hPrevInstance, _In_ LPSTR lpCmdLine, _In_ int32_t nShowCmd)
 {
 	///---DirectX初期化処理　ここから---///
 	

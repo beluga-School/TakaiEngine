@@ -43,7 +43,7 @@ public:
 private:
 	void ObjectLoad(LevelData* levelData, nlohmann::json& object);
 
-	int reservenum = 0;
+	int32_t reservenum = 0;
 
 	LevelLoader(){};
 	~LevelLoader(){};

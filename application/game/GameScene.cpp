@@ -88,9 +88,9 @@ void Game::Initialize()
 	float a = -2.0f;
 	float b = 2.0f;
 
-	int r = 0;
+	int32_t r = 0;
 
-	for (int i = 0; i < max; i++)
+	for (int32_t i = 0; i < max; i++)
 	{
 		cube[i].Initialize();
 		cube[i].SetModel(ModelManager::Get()->GetModel("Cube"));
@@ -114,7 +114,7 @@ void Game::Initialize()
 		}
 	}
 
-	for (int i = 0; i < 100; i++)
+	for (int32_t i = 0; i < 100; i++)
 	{
 		cube[i].position.x = MathF::GetRand(150.0f, 400.0f);
 		cube[i].position.y = MathF::GetRand(-500.0f, 800.0f);
@@ -123,7 +123,7 @@ void Game::Initialize()
 		cuberotaVec[i] = { MathF::GetRand(a,b),MathF::GetRand(a,b),MathF::GetRand(a,b) };
 	}
 
-	for (int i = 100; i < 200; i++)
+	for (int32_t i = 100; i < 200; i++)
 	{
 		cube[i].position.x = MathF::GetRand(-400.0f, -150.0f);
 		cube[i].position.y = MathF::GetRand(-500.0f, 800.0f);
@@ -132,7 +132,7 @@ void Game::Initialize()
 		cuberotaVec[i] = { MathF::GetRand(a,b),MathF::GetRand(a,b),MathF::GetRand(a,b) };
 	}
 
-	for (int i = 200; i < 300; i++)
+	for (int32_t i = 200; i < 300; i++)
 	{
 		cube[i].position.x = MathF::GetRand(-150.0f, 150.0f);
 		cube[i].position.y = MathF::GetRand(-500.0f, -200.0f);
@@ -141,7 +141,7 @@ void Game::Initialize()
 		cuberotaVec[i] = { MathF::GetRand(a,b),MathF::GetRand(a,b),MathF::GetRand(a,b) };
 	}
 
-	for (int i = 300; i < 400; i++)
+	for (int32_t i = 300; i < 400; i++)
 	{
 		cube[i].position.x = MathF::GetRand(-150.0f, 150.0f);
 		cube[i].position.y = MathF::GetRand(500.0f, 700.0f);
@@ -150,7 +150,7 @@ void Game::Initialize()
 		cuberotaVec[i] = { MathF::GetRand(a,b),MathF::GetRand(a,b),MathF::GetRand(a,b) };
 	}
 
-	for (int i = 400; i < 450; i++)
+	for (int32_t i = 400; i < 450; i++)
 	{
 		cube[i].position.x = MathF::GetRand(-150.0f, 150.0f);
 		cube[i].position.y = MathF::GetRand(-500.0f, 700.0f);
@@ -159,7 +159,7 @@ void Game::Initialize()
 		cuberotaVec[i] = { MathF::GetRand(a,b),MathF::GetRand(a,b),MathF::GetRand(a,b) };
 	}
 
-	for (int i = 450; i < 500; i++)
+	for (int32_t i = 450; i < 500; i++)
 	{
 		cube[i].position.x = MathF::GetRand(-150.0f, 150.0f);
 		cube[i].position.y = MathF::GetRand(-500.0f, 700.0f);
@@ -322,7 +322,7 @@ void Game::Update()
 	//オブジェクトの更新
 	skydome.Update(*camera);
 
-	for (int i = 0; i < max; i++)
+	for (int32_t i = 0; i < max; i++)
 	{
 		cube[i].rotation += cuberotaVec[i] * TimeManager::deltaTime;
 		cube[i].Update(*camera);
@@ -351,7 +351,7 @@ void Game::Update()
 		{
 			gEnemy.isDead = true;
 			SoundManager::GetInstance()->SoundPlayWave(deadEnemy);
-			for (int i = 0; i < 10; i++)
+			for (int32_t i = 0; i < 10; i++)
 			{
 				ParticleManager::GetInstance()->CreateCubeParticle(gEnemy.position, { 3,3,3 }, 20.0f, { 1.0f,1.0f,1.0f,1.0f });
 			}
@@ -389,7 +389,7 @@ void Game::Update()
 		{
 			airEnemy.isDead = true;
 			SoundManager::GetInstance()->SoundPlayWave(deadEnemy);
-			for (int i = 0; i < 10; i++)
+			for (int32_t i = 0; i < 10; i++)
 			{
 				ParticleManager::GetInstance()->CreateCubeParticle(airEnemy.position, { 3,3,3 }, 20.0f, { 1.0f,1.0f,1.0f,1.0f });
 			}
@@ -526,7 +526,7 @@ void Game::Draw()
 
 	skydome.Draw();
 
-	for (int i = 0; i < max; i++)
+	for (int32_t i = 0; i < max; i++)
 	{
 		cube[i].Draw();
 	}
@@ -551,7 +551,7 @@ void Game::End()
 	SoundManager::GetInstance()->SoundUnload(&goalSound);
 }
 
-int upCam = 0;
+int32_t upCam = 0;
 float mag = 20;
 
 void Game::CameraUpdate()
@@ -687,7 +687,7 @@ void Game::DamageEffect()
 	if (player.mutekiTimer <= 0 && player.isDash == false)
 	{
 		redScreenSprite.color.f4.w = 1.0f;
-		for (int i = 0; i < 10; i++)
+		for (int32_t i = 0; i < 10; i++)
 		{
 			ParticleManager::GetInstance()->CreateCubeParticle(player.position, { 3,3,3 }, 20.0f, { 1,1,1,1 });
 		}

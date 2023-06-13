@@ -132,6 +132,8 @@ Particle::Particle(XMFLOAT3 spawnPos, XMFLOAT3 velocity, float scale, float spee
 	colorRand.z = MathF::GetRand(0.1f, 1);
 
 	this->redChange = redChange;
+
+	vertPos = {};
 }
 
 void Particle::Update()
@@ -169,7 +171,7 @@ void ParticleEmitter::Initialize()
 	emitter.SetTexture(&TextureManager::Get()->white);
 }
 
-void ParticleEmitter::SetInfo(Vector3 pos, float range, float scale, XMFLOAT4 color, int spawnNum, bool redChange)
+void ParticleEmitter::SetInfo(Vector3 pos, float range, float scale, XMFLOAT4 color, int32_t spawnNum, bool redChange)
 {
 	emitter.position = {
 		pos.x,
@@ -194,7 +196,7 @@ void ParticleEmitter::Update()
 {
 	GParticleManager* pManager = GParticleManager::Getinstance();
 
-	for (int i = 0; i < spawnNum; i++)
+	for (int32_t i = 0; i < spawnNum; i++)
 	{
 		pManager->CreateParticle({
 	emitter.position.x + MathF::GetRand(-range,range),

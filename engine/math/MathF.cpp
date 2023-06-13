@@ -17,19 +17,6 @@ namespace MathF
 		return get_rand_uni_real(eng);
 	}
 
-	//int GetRandInt(int min, int max)
-	//{
-	//	// —”¶¬Ší
-	//	static std::random_device rd;
-	//	static std::default_random_engine eng(rd());
-
-	//	// •ª•z¶¬Ší
-	//	std::uniform_real_distribution<float> get_rand_uni_real(min, max);
-
-	//	// —”‚ğ¶¬
-	//	return static_cast<int>(get_rand_uni_real(eng));
-	//}
-
 	float SimpleHarmonicMotion(float time, float amplitude, float period)
 	{
 		return amplitude * sinf(2 * PIf * time / period);

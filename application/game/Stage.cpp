@@ -49,7 +49,7 @@ void Stage::SetStage1()
 
 	//2ŠK‘w–Ú
 	SetBlock({ 0,230,-480 }, { 100,10,100 });
-	for (int i = 0; i < 5; i++)
+	for (int32_t i = 0; i < 5; i++)
 	{
 		SetBlock({ 
 			0,
@@ -57,7 +57,7 @@ void Stage::SetStage1()
 			-430 + 30.0f * i }, { 30,10,30 });
 	}
 
-	for (int i = 0; i < 3; i++)
+	for (int32_t i = 0; i < 3; i++)
 	{
 		SetBlock({ 0,210,-280 +30.0f * i }, { 30,30,30 });
 		SetBlock({ 30,210,-280 +30.0f * i }, { 30,30,30 });

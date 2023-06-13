@@ -4,9 +4,9 @@
 
 Matrix4::Matrix4()
 {
-	for (int i = 0; i < ROW; i++)
+	for (int32_t i = 0; i < ROW; i++)
 	{
-		for (int j = 0; j < COL; j++)
+		for (int32_t j = 0; j < COL; j++)
 		{
 			if (i == j) {m[i][j] = 1;}
 			else {m[i][j] = 0;}
@@ -30,9 +30,9 @@ Matrix4 Matrix4::Identity()
 {
 	Matrix4 result;
 
-	for (int i = 0; i < ROW; i++)
+	for (int32_t i = 0; i < ROW; i++)
 	{
-		for (int j = 0; j < COL; j++)
+		for (int32_t j = 0; j < COL; j++)
 		{
 			if (i == j) { result.m[i][j] = 1; }
 			else { result.m[i][j] = 0; }
@@ -224,19 +224,19 @@ Matrix4 Matrix4::LookAtLH(Vector3 eye, Vector3 target, Vector3 up)
 	return lookAt;
 }
 
-float* Matrix4::operator[](int i) {
+float* Matrix4::operator[](int32_t i) {
 	return m[i];
 }
 
-float& Matrix4::operator()(int i, int j) {
+float& Matrix4::operator()(int32_t i, int32_t j) {
 	return m[i][j];
 }
 
 Matrix4& Matrix4::operator=(const Matrix4& a)
 {
-	for (int i = 0; i < ROW; i++)
+	for (int32_t i = 0; i < ROW; i++)
 	{
-		for (int j = 0; j < COL; j++)
+		for (int32_t j = 0; j < COL; j++)
 		{
 			this->m[i][j] = a.m[i][j];
 		}
@@ -318,25 +318,3 @@ Matrix4 Matrix4::operator*(const Matrix4& a) const
 		m[3][0] * a.m[0][3] + m[3][1] * a.m[1][3] + m[3][2] * a.m[2][3] + m[3][3] * a.m[3][3]
 	);
 }
-
-//Matrix4& Matrix4::operator*=(Matrix4& m1, Matrix4& m2)
-//{
-//	Matrix4 result;
-//	result.Identity();
-//
-//	for (int i = 0; i < 4; i++)
-//	{
-//		for (int j = 0; j < 4; j++)
-//		{
-//			for (int k = 0; k < 4; k++)
-//			{
-//				result[i * 4 + j] += m1[i * 4 + k] * m2[k * 4 + j];
-//			}
-//		}
-//	}
-//}
-//
-//Vector3 Matrix4::operator*(const Vector3& v, const Matrix4& m)
-//{
-//	return transform(v, m);
-//}

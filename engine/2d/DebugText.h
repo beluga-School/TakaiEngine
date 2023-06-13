@@ -13,13 +13,13 @@ public:
 
 private:
 
-	static const int maxCharCount = 256;
-	static const int fontWidth = 9;
-	static const int fontHeight = 18;
-	static const int fontLineCount = 14;
+	static const int32_t maxCharCount = 256;
+	static const int32_t fontWidth = 9;
+	static const int32_t fontHeight = 18;
+	static const int32_t fontLineCount = 14;
 
 	Sprite sprites[maxCharCount];
 
-	int spriteIndex = 0;
+	int32_t spriteIndex = 0;
 };
 

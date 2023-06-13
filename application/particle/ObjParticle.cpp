@@ -13,7 +13,7 @@ ParticleManager* ParticleManager::GetInstance()
 void ParticleManager::CreatePool()
 {
 	float maxPool = 200;
-	for (int i = 0; i < maxPool; i++)
+	for (int32_t i = 0; i < maxPool; i++)
 	{
 		cubePool.emplace_back(new CubeParticle());
 	}

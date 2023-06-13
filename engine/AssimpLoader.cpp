@@ -49,7 +49,7 @@ bool AssimpLoader::Load(ImportSettings settings)
 
 	Assimp::Importer importer;
 
-	int flag = 0;
+	int32_t flag = 0;
 	flag |= aiProcess_Triangulate;
 	flag |= aiProcess_PreTransformVertices;
 	flag |= aiProcess_CalcTangentSpace;
@@ -92,7 +92,7 @@ void AssimpLoader::LoadMesh(Mesh& dst, const aiMesh* src, bool inverseU, bool in
 
 	dst.vertices.resize(src->mNumVertices);
 
-	for (unsigned int i = 0u; i < src->mNumVertices; ++i)
+	for (uint32_t i = 0u; i < src->mNumVertices; ++i)
 	{
 		aiVector3D* position = &(src->mVertices[i]);
 		aiVector3D* normal = &(src->mNormals[i]);
@@ -118,7 +118,7 @@ void AssimpLoader::LoadMesh(Mesh& dst, const aiMesh* src, bool inverseU, bool in
 
 	dst.indices.resize(src->mNumFaces * 3);
 
-	for (unsigned int i = 0u; i < src->mNumFaces; ++i)
+	for (uint32_t i = 0u; i < src->mNumFaces; ++i)
 	{
 		const aiFace& face = src->mFaces[i];
 

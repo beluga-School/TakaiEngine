@@ -26,7 +26,7 @@ struct SoundData
 {
 	WAVEFORMATEX wfex;
 	BYTE* pBuffer;
-	unsigned int bufferSize;
+	uint32_t bufferSize;
 };
 
 class SoundManager

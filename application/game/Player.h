@@ -48,11 +48,11 @@ public:
 
 	bool oldGround = false;
 
-	int hp = 0;
+	int32_t hp = 0;
 	bool isDead = false;
 
 	float mutekiTimer = 0;
-	int blinkTimer = 0;
+	int32_t blinkTimer = 0;
 
 	Vector2 max;
 
