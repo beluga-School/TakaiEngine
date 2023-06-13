@@ -116,7 +116,7 @@ Vector3& Vector3::operator-=(const Vector3& v)
 	return *this;
 }
 
-Vector3& Vector3::operator*=(float s)
+Vector3& Vector3::operator*=(const float s)
 {
 	x *= s;
 	y *= s;
@@ -124,7 +124,7 @@ Vector3& Vector3::operator*=(float s)
 	return *this;
 }
 
-Vector3& Vector3::operator/=(float s)
+Vector3& Vector3::operator/=(const float s)
 {
 	x /= s;
 	y /= s;
@@ -146,18 +146,18 @@ const Vector3 operator-(const Vector3& v1, const Vector3& v2)
 	return temp -= v2;
 }
 
-const Vector3 operator*(const Vector3& v, float s)
+const Vector3 operator*(const Vector3& v, const float s)
 {
 	Vector3 temp(v);
 	return temp *= s;
 }
 
-const Vector3 operator*(float s, const Vector3& v)
+const Vector3 operator*(const float s, const Vector3& v)
 {
 	return v * s;
 }
 
-const Vector3 operator/(const Vector3& v, float s)
+const Vector3 operator/(const Vector3& v, const float s)
 {
 	Vector3 temp(v);
 	return temp /= s;

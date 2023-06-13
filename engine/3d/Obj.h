@@ -54,16 +54,16 @@ public:
 	bool notScaleFlag = false;
 
 	Obj3d* parent = nullptr;
-	Texture *texture = nullptr;
+	const Texture *texture = nullptr;
 
-	Model* model = nullptr;
+	const Model* model = nullptr;
 
 public:
 
 	void Initialize();
-	void SetModel(Model *model);
-	void SetTexture(Texture *texture);
-	void Update(Camera& camera);
+	void SetModel(const Model *model);
+	void SetTexture(const Texture *texture);
+	void Update(const Camera& camera);
 
 	Vector3 GetWorldTrans();
 

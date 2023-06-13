@@ -1,12 +1,12 @@
 #include "Obj.h"
 #include "Result.h"
 
-void Obj3d::SetModel(Model* model)
+void Obj3d::SetModel(const Model* model)
 {
 	this->model = model;
 }
 
-void Obj3d::SetTexture(Texture* texture)
+void Obj3d::SetTexture(const Texture* texture)
 {
 	this->texture = texture;
 }
@@ -17,7 +17,7 @@ void Obj3d::Initialize()
 	texture = TextureManager::GetTexture("default");
 }
 
-void Obj3d::Update(Camera& camera)
+void Obj3d::Update(const Camera& camera)
 {
 	Matrix4 matScale;	//スケーリング行列
 	Matrix4 matRot;	//回転行列
