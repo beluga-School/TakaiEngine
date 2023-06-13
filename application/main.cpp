@@ -68,7 +68,7 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_  HINSTANCE hPrevInstance, 
 
 #endif _DEBUG
 
-	WinAPI* winApi = WinAPI::GetInstance();
+	WinAPI* winApi = WinAPI::Get();
 	DirectX12* DX12 = DirectX12::Get();
 
 #ifdef  _DEBUG
@@ -81,9 +81,10 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_  HINSTANCE hPrevInstance, 
 	}
 #endif  _DEBUG
 
-	Input* input_ = Input::Get();
+	InputKey* input_ = InputKey::Get();
 
 	input_->Initialize();
+	Input::Mouse::Initialize();
 
 	///---DirectX初期化処理　ここまで---///
 
@@ -156,7 +157,7 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_  HINSTANCE hPrevInstance, 
 
 		//更新処理
 		input_->Update();
-	
+		Input::Mouse::Update();
 		
 		//gameScene_.Update();
 
@@ -203,6 +204,10 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_  HINSTANCE hPrevInstance, 
 	imguiManager->Finalize();
 
 	//delete sceneFactory;
+
+	//入力デバイスの解放
+	Input::Mouse::Finalize();
+	input_->Finalize();
 
 	//音声データは先にxAudio2を解放しなければならない
 	//xAudio2の解放

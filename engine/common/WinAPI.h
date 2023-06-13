@@ -13,7 +13,7 @@ public:
 	//ウィンドウクラスの設定
 	WNDCLASSEX w{};
 
-	static WinAPI* GetInstance();
+	static WinAPI* Get();
 
 private:
 	WinAPI();

@@ -53,15 +53,27 @@ void DemoScene::Update()
 	camera->UpdatematView();
 
 	skydome.Update(*camera);
-	gui.Begin({ 100,100 }, { 1,1 });
 	for (auto& obj : obj3ds)
 	{
 		obj.Update(*camera);
-		ImGui::Text(obj.model->saveModelname.c_str());
-		ImGui::Text("position.x %f",obj.position.x );
-		ImGui::Text("position.y %f",obj.position.y );
-		ImGui::Text("position.z %f",obj.position.z );
 	}
+	gui.Begin({ 100,100 }, { 10,10});
+
+	ImGui::Text("getMousePos %f %f", Input::Mouse::GetPos().x, Input::Mouse::GetPos().y);
+	ImGui::Text("getMouseVel %f %f", Input::Mouse::GetVelocity().x, Input::Mouse::GetVelocity().y);
+	ImGui::Text("Click:L %d", Input::Mouse::Down(Click::LEFT));
+	ImGui::Text("Click:R %d", Input::Mouse::Down(Click::RIGHT));
+	ImGui::Text("Click:M %d", Input::Mouse::Down(Click::MIDDLE));
+	ImGui::Text("Click:MB4 %d", Input::Mouse::Down(Click::MB4));
+	ImGui::Text("Trigger:L %d", Input::Mouse::Triggered(Click::LEFT));
+	ImGui::Text("Trigger:R %d", Input::Mouse::Triggered(Click::RIGHT));
+	ImGui::Text("Trigger:M %d", Input::Mouse::Triggered(Click::MIDDLE));
+	ImGui::Text("Trigger:MB4 %d", Input::Mouse::Triggered(Click::MB4));
+	ImGui::Text("Release:L %d", Input::Mouse::Released(Click::LEFT));
+	ImGui::Text("Release:R %d", Input::Mouse::Released(Click::RIGHT));
+	ImGui::Text("Release:M %d", Input::Mouse::Released(Click::MIDDLE));
+	ImGui::Text("Release:MB4 %d", Input::Mouse::Released(Click::MB4));
+
 	gui.End();
 
 	slime.Update();
