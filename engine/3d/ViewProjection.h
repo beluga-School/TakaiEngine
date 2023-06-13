@@ -9,6 +9,8 @@ using namespace DirectX;
 #include <memory>
 #include "Matrix4.h"
 
+class Obj3d;
+
 class Camera
 {
 public:
@@ -37,12 +39,11 @@ public:
 	void SetEye(Vector3 eye);
 	void SetEyeXMF(XMFLOAT3 eye);
 
-	void DebugMove();
-
 	static std::unique_ptr<Camera> defaultCam;
 	static Camera *camera;
 
 private:
-
+	float debugAngleX = 0;
+	float debugAngleY = 0;
 };
 

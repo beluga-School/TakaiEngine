@@ -393,6 +393,9 @@
     <ClCompile Include="engine\util\TEasing.cpp">
       <Filter>Engine\Util\TEasing</Filter>
     </ClCompile>
+    <ClCompile Include="DebugCamera.cpp">
+      <Filter>Engine\3D\Camera</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="engine\shader\Shader.h">
@@ -580,6 +583,9 @@
     </ClInclude>
     <ClInclude Include="engine\util\TEasing.h">
       <Filter>Engine\Util\TEasing</Filter>
+    </ClInclude>
+    <ClInclude Include="DebugCamera.h">
+      <Filter>Engine\3D\Camera</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

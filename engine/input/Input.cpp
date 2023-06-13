@@ -344,6 +344,11 @@ bool Input::Mouse::Released(Click c)
 	return !(Mouse::Get()->state.rgbButtons[(int)c] & (0x80)) && (Mouse::Get()->oldState.rgbButtons[(int)c] & (0x80));
 }
 
+float Input::Mouse::Wheel()
+{
+	return (float)Mouse::Get()->state.lZ;
+}
+
 Mouse* Mouse::Get()
 {
 	static Mouse obj;

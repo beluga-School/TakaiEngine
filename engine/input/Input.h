@@ -48,6 +48,8 @@ namespace Input
 		static bool Triggered(Click c);
 		//—£‚µ‚½uŠÔ
 		static bool Released(Click c);
+		//ƒzƒC[ƒ‹‚Ì‰ñ“]
+		static float Wheel();
 
 		static Mouse* Get();
 

@@ -53,7 +53,6 @@ void FBXLoadDemoScene::Initialize()
 
 void FBXLoadDemoScene::Update()
 {
-	camera->DebugMove();
 	camera->UpdatematView();
 
 	for (size_t i = 0; i < meshes.size(); i++)

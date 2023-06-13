@@ -56,9 +56,9 @@ namespace MathF
 
 	float GetAngleBetweenTwoLine(Vector3 vec1,Vector3 vec2);
 
-	float DegConvRad(float frequencymethod);
+	float AngleConvRad(float angle);
 
-	float RadConvDeg(float rad);
+	float RadConvAngle(float rad);
 
 	template <typename T>
 	T Abs(T a)

@@ -94,6 +94,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="application\game\AirEnemy.cpp" />
+    <ClCompile Include="DebugCamera.cpp" />
     <ClCompile Include="engine\3d\Billboard.cpp" />
     <ClCompile Include="application\game\Block.cpp" />
     <ClCompile Include="application\game\Bullet.cpp" />
@@ -155,6 +156,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="application\game\AirEnemy.h" />
+    <ClInclude Include="DebugCamera.h" />
     <ClInclude Include="engine\3d\Billboard.h" />
     <ClInclude Include="application\game\Block.h" />
     <ClInclude Include="application\game\Bullet.h" />

@@ -7,6 +7,7 @@
 #include <LevelLoader.h>
 #include <Sprite.h>
 #include <ImguiManager.h>
+#include <DebugCamera.h>
 
 class DemoScene : public IScene
 {
@@ -30,5 +31,7 @@ private:
 	std::list<Obj3d> obj3ds;
 
 	GUI gui = "position";
+
+	DebugCamera cameraObject;
 };
 

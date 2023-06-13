@@ -74,7 +74,7 @@ void Game::Initialize()
 	firewispCheckTriangle.texture = &TextureManager::Get()->white;
 	
 	board.Initialize();
-	board.rotation = { 0,0,MathF::DegConvRad(270) };
+	board.rotation = { 0,0,MathF::AngleConvRad(270) };
 	board.scale = { 10,10,10 };
 	board.model = ModelManager::Get()->ModelManager::Get()->GetModel("board");
 	board.texture = &TextureManager::Get()->white;
