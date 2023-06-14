@@ -69,7 +69,7 @@ void Model::LoadMaterial(const std::string& directoryPath, const std::string& fi
 		{
 			line_stream >> material.textureFilename;
 
-			material.tex->Load(ConvertStringToWChar(directoryPath + material.textureFilename).c_str());
+			material.tex->Load(*ConvertStringToWChar(directoryPath + material.textureFilename).c_str());
 		}
 	}
 	//ƒtƒ@ƒCƒ‹‚ð•Â‚¶‚é

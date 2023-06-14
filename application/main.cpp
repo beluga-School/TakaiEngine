@@ -101,7 +101,7 @@ int32_t WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_  HINSTANCE hPrevInstan
 
 	//デバッグテキスト生成
 	std::unique_ptr<Texture> debugFont = std::make_unique<Texture>();
-	debugFont->Load(L"Resources/debugfont.png");
+	debugFont->Load(*L"Resources/debugfont.png");
 
 	DebugText debugText;
 	debugText.Initialize(debugFont.get());
@@ -123,10 +123,10 @@ int32_t WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_  HINSTANCE hPrevInstan
 	//SceneFactory *sceneFactory = new SceneFactory();
 	//scenemanager->SetSceneFactory(sceneFactory);
 
-	//DemoScene *demo = new DemoScene();
-	FBXLoadDemoScene* loaddemo = new FBXLoadDemoScene();
+	DemoScene *demo = new DemoScene();
+	//FBXLoadDemoScene* loaddemo = new FBXLoadDemoScene();
 	//Game *game = new Game();
-	scenemanager->SetScene(loaddemo);
+	scenemanager->SetScene(demo);
 
 #pragma endregion 描画初期化処理
 

@@ -1,7 +1,7 @@
 #include "Vertex.h"
 #include "Result.h"
 
-void VertexData::CreateVertex(std::vector<Vertex> vertices, std::vector<uint16_t> indices)
+void VertexData::CreateVertex(const std::vector<Vertex> &vertices,const std::vector<uint16_t> &indices)
 {
 	//頂点データ全体のサイズ = 頂点データ一つ分のサイズ * 頂点データの要素数
 	UINT sizeVB = static_cast<UINT>(sizeof(vertices[0]) * vertices.size());

@@ -36,9 +36,6 @@ public:
 	void Initialize();
 	void UpdatematView();
 
-	void SetEye(Vector3 eye);
-	void SetEyeXMF(XMFLOAT3 eye);
-
 	static std::unique_ptr<Camera> defaultCam;
 	static Camera *camera;
 

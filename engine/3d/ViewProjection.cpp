@@ -25,16 +25,16 @@ void Camera::UpdatematView()
 	matProjection = Matrix4::PerspectiveFovLH(XMConvertToRadians(fovAngle), nearClip, farZ);
 }
 
-void Camera::SetEye(Vector3 eye)
-{
-	this->eye = eye;
-	UpdatematView();
-}
-
-void Camera::SetEyeXMF(XMFLOAT3 eye)
-{
-	this->eye.x = eye.x;
-	this->eye.y = eye.y;
-	this->eye.z = eye.z;
-	UpdatematView();
-}
+//void Camera::SetEye(Vector3 eye)
+//{
+//	this->eye = eye;
+//	UpdatematView();
+//}
+//
+//void Camera::SetEyeXMF(XMFLOAT3 eye)
+//{
+//	this->eye.x = eye.x;
+//	this->eye.y = eye.y;
+//	this->eye.z = eye.z;
+//	UpdatematView();
+//}

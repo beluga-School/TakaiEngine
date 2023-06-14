@@ -23,7 +23,7 @@ class Texture
 {
 public:
 
-	void Load(const wchar_t* t);
+	void Load(const wchar_t& t);
 
 	void CreateWhiteTexture();
 
@@ -69,30 +69,12 @@ public:
 	void Initialize();
 	void PreLoad();
 
-	static void Load(const std::string filepath,const std::string handle);
-
-	static Texture* GetTexture(const std::string handle);
+	static void Load(const std::string &filepath,const std::string &handle);
+	
+	static Texture* GetTexture(const std::string &handle);
 
 public:
 	Texture white;
-	/*Texture slime;
-	Texture pizza;
-	Texture def;
-	Texture particle;
-	Texture goalS;
-	Texture blockTex;
-	Texture wispTex;
-	Texture titleTex;
-	Texture startTex;
-	Texture spaceTex;
-	Texture goalBlockTex;
-	Texture dashIcon;
-	Texture dashCool;
-	Texture hpBar;
-	Texture redScreen;
-	Texture setumei;
-	Texture setumei2;
-	Texture gameOver;*/
 
 private:
 	Texture bugfix;

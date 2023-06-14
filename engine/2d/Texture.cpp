@@ -94,7 +94,7 @@ void Texture::CreateWhiteTexture()
 	getResDesc = textureResourceDesc;
 }
 
-void Texture::Load(const wchar_t* t)
+void Texture::Load(const wchar_t& t)
 {
 	//リソース設定
 	resDesc.Dimension = D3D12_RESOURCE_DIMENSION_BUFFER;
@@ -104,7 +104,7 @@ void Texture::Load(const wchar_t* t)
 	resDesc.Layout = D3D12_TEXTURE_LAYOUT_ROW_MAJOR;
 
 	result = LoadFromWICFile(
-		t,	//ここに読み込みたいファイルのパスを入れる
+		&t,	//ここに読み込みたいファイルのパスを入れる
 		WIC_FLAGS_NONE,
 		&metadata, scratchImg
 	);
@@ -241,12 +241,12 @@ std::wstring convString(const std::string& input)
 	return result;
 }
 
-void TextureManager::Load(const std::string filepath, const std::string handle)
+void TextureManager::Load(const std::string &filepath, const std::string &handle)
 {
-	textures[handle].Load(convString(filepath).c_str());
+	textures[handle].Load(*convString(filepath).c_str());
 }
 
-Texture* TextureManager::GetTexture(const std::string handle)
+Texture* TextureManager::GetTexture(const std::string &handle)
 {
 	return &textures[handle];
 }

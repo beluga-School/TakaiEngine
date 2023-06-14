@@ -31,7 +31,7 @@ public:
 	//頂点バッファビューの作成
 	D3D12_VERTEX_BUFFER_VIEW vbView{};
 
-	void CreateVertex(std::vector<Vertex> vertices, std::vector<uint16_t> indices);
+	void CreateVertex(const std::vector<Vertex> &vertices,const std::vector<uint16_t> &indices);
 	
 	ComPtr<ID3D12Resource> vertBuff = nullptr;
 	ComPtr<ID3D12Resource> indexBuff = nullptr;
