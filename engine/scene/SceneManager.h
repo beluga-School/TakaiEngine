@@ -1,6 +1,7 @@
 #pragma once
 #include "IScene.h"
 #include "AbstractSceneFactory.h"
+#include <memory>
 
 class SceneManager
 {
@@ -12,17 +13,18 @@ public:
 	void End();
 
 	//現在のシーン
-	IScene* currentscene = nullptr;
+	std::unique_ptr<IScene> currentscene = nullptr;
 
 	//ファクトリーを使用したシーン切り替え(バグあり)
 	//void ChangeScene(const std::string& sceneName);
-	
-	void SetScene(IScene& nextScene_) {
-		nextscene = &nextScene_;
-	};
 
-	void SetSceneFactory(const AbstractSceneFactory& sceneFactory_) {
-		sceneFactory = &sceneFactory_;
+	template <class NextScene> void ChangeScene()
+	{
+		nextscene = std::make_unique<NextScene>();
+	}
+
+	void SetSceneFactory(std::unique_ptr<AbstractSceneFactory>& sceneFactory_) {
+		sceneFactory = std::move(sceneFactory_);
 	}
 
 	static SceneManager* Get()
@@ -32,8 +34,8 @@ public:
 	}
 
 private:
-	IScene* nextscene = nullptr;
-	const AbstractSceneFactory* sceneFactory = nullptr;
+	std::unique_ptr<IScene> nextscene = nullptr;
+	std::unique_ptr<AbstractSceneFactory> sceneFactory = nullptr;
 
 	SceneManager(){};
 	~SceneManager() {

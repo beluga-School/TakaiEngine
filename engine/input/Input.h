@@ -1,5 +1,5 @@
-#pragma once
-#define DIRECTINPUT_VERSION 0x0800	//DirectInput‚Ìƒo[ƒWƒ‡ƒ“w’è
+ï»¿#pragma once
+#define DIRECTINPUT_VERSION 0x0800	//DirectInputã®ãƒãƒ¼ã‚¸ãƒ§ãƒ³æŒ‡å®š
 #include <dinput.h>
 
 #pragma comment(lib,"dinput8.lib")
@@ -37,18 +37,18 @@ namespace Input
 		static void Update();
 		static void Finalize();
 
-		//À•W‚ğæ“¾
+		//åº§æ¨™ã‚’å–å¾—
 		static Vector2 GetPos();
-		//1ƒtƒŒ[ƒ€“à‚Å‚ÌˆÚ“®—Ê‚ğæ“¾
+		//1ãƒ•ãƒ¬ãƒ¼ãƒ å†…ã§ã®ç§»å‹•é‡ã‚’å–å¾—
 		static Vector2 GetVelocity();
 
-		//‰Ÿ‚µ‚Ä‚¢‚éŠÔ
-		static bool Down(Click c);
-		//‰Ÿ‚µ‚½uŠÔ
-		static bool Triggered(Click c);
-		//—£‚µ‚½uŠÔ
-		static bool Released(Click c);
-		//ƒzƒC[ƒ‹‚Ì‰ñ“]
+		//æŠ¼ã—ã¦ã„ã‚‹é–“
+		static bool Down(const Click& c);
+		//æŠ¼ã—ãŸç¬é–“
+		static bool Triggered(const Click& c);
+		//é›¢ã—ãŸç¬é–“
+		static bool Released(const Click& c);
+		//ãƒ›ã‚¤ãƒ¼ãƒ«ã®å›è»¢
 		static float Wheel();
 
 		static Mouse* Get();
@@ -60,147 +60,158 @@ namespace Input
 		DIMOUSESTATE oldState{};
 
 	};
+
+	class Pad
+	{
+	public:
+		Pad();
+
+		/// <summary>
+		/// ã‚­ãƒ¼ãƒœãƒ¼ãƒ‰ã€ãƒ‘ãƒƒãƒ‰ã®æ›´æ–°
+		/// ä¸€åº¦ã ã‘å‘¼ã¹ã°å•é¡Œãªã„
+		/// </summary>
+		void Update();
+
+	public://ã‚³ãƒ³ãƒˆãƒ­ãƒ¼ãƒ©ãƒ¼
+
+		static const float STICK_MAX;
+
+		static bool CheckConnectPad(const int32_t& padIndex = 0);
+
+		/// <summary>
+		/// ã‚²ãƒ¼ãƒ ãƒ‘ãƒƒãƒ‰ã®ãƒœã‚¿ãƒ³ãŒæŠ¼ã•ã‚Œã¦ã„ã‚‹ã‹
+		/// </summary>
+		/// <param name="pad_num">XINPUT_GAMEPAD_Aãªã©ã€XINPUTã®ãƒã‚¯ãƒ­ã‚’å…¥ã‚Œã‚‹</param>
+		/// <returns></returns>
+		static bool PushPadButton(const UINT& pad_num);
+
+		/// <summary>
+		/// ã‚²ãƒ¼ãƒ ãƒ‘ãƒƒãƒ‰ã®ãƒœã‚¿ãƒ³ãŒæŠ¼ã•ã‚ŒãŸç¬é–“ã‹
+		/// </summary>
+		/// <param name="pad_num">XINPUT_GAMEPAD_Aãªã©ã€XINPUTã®ãƒã‚¯ãƒ­ã‚’å…¥ã‚Œã‚‹</param>
+		/// <returns></returns>
+		static bool TriggerPadButton(const UINT& pad_num);
+
+		/// <summary>
+		/// ã‚²ãƒ¼ãƒ ãƒ‘ãƒƒãƒ‰ã®ãƒœã‚¿ãƒ³ãŒé›¢ã•ã‚ŒãŸç¬é–“ã‹
+		/// </summary>
+		/// <param name="pad_num">XINPUT_GAMEPAD_Aãªã©ã€XINPUTã®ãƒã‚¯ãƒ­ã‚’å…¥ã‚Œã‚‹</param>
+		/// <returns></returns>
+		static bool ReleasePadButton(const UINT& pad_num);
+
+		/// <summary>
+		/// Lã‚¹ãƒ†ã‚£ãƒƒã‚¯ã®å‚¾ãã‚’å–å¾—ã™ã‚‹
+		/// </summary>
+		/// <returns></returns>
+		static Vector2 GetLStickMove();
+
+		/// <summary>
+		/// Rã‚¹ãƒ†ã‚£ãƒƒã‚¯ã®å‚¾ãã‚’å–å¾—ã™ã‚‹
+		/// </summary>
+		/// <returns></returns>
+		static Vector2 GetRStickMove();
+
+		/// <summary>
+		/// Lã‚¹ãƒ†ã‚£ãƒƒã‚¯ãŒæŒ‡å®šã—ãŸæ–¹å‘ã«å‚¾ã„ã¦ã„ã‚‹ã‹ã‚’å–å¾—ã™ã‚‹
+		/// </summary>
+		/// <param name="vec">UP,DOWNãªã©</param>
+		/// <returns></returns>
+		static bool LStickTilt(const STICK_VEC& vec);
+
+		/// <summary>
+		/// Rã‚¹ãƒ†ã‚£ãƒƒã‚¯ãŒæŒ‡å®šã—ãŸæ–¹å‘ã«å‚¾ã„ã¦ã„ã‚‹ã‹ã‚’å–å¾—ã™ã‚‹
+		/// </summary>
+		/// <param name="vec">UP,DOWNãªã©</param>
+		/// <returns></returns>
+		static bool RStickTilt(const STICK_VEC& vec);
+
+		/// <summary>
+		/// LTriggerã‚’æŠ¼ã—ã¦ã„ã‚‹ã‹
+		/// </summary>
+		/// <returns></returns>
+		static BYTE PushLT();
+
+		/// <summary>
+		/// RTriggerã‚’æŠ¼ã—ã¦ã„ã‚‹ã‹
+		/// </summary>
+		/// <returns></returns>
+		static BYTE PushRT();
+
+		/// <summary>
+		///  LTriggerã‚’æŠ¼ã—ãŸç¬é–“ã‹
+		/// </summary>
+		/// <param name="hard">trueã®å ´åˆã€ã‚ˆã‚Šå¼·ãæŠ¼ã—è¾¼ã¾ãªã„ã¨åˆ¤å®šã•ã‚Œãªããªã‚‹</param>
+		/// <returns></returns>
+		static bool TriggerLT(const bool& hard = false);
+
+		/// <summary>
+		///  RTriggerã‚’æŠ¼ã—ãŸç¬é–“ã‹
+		/// </summary>
+		/// <param name="hard">trueã®å ´åˆã€ã‚ˆã‚Šå¼·ãæŠ¼ã—è¾¼ã¾ãªã„ã¨åˆ¤å®šã•ã‚Œãªããªã‚‹</param>
+		/// <returns></returns>
+		static bool TriggerRT(const bool& hard = false);
+
+		/// <summary>
+		/// LTriggerã‚’é›¢ã—ãŸç¬é–“ã‹
+		/// </summary>
+		/// <param name="hard">trueã®å ´åˆã€ã‚ˆã‚Šå¼·ãæŠ¼ã—è¾¼ã¾ãªã„ã¨åˆ¤å®šã•ã‚Œãªããªã‚‹</param>
+		/// <returns></returns>
+		static bool ReleaseLT(const bool& hard = false);
+
+		/// <summary>
+		/// RTriggerã‚’é›¢ã—ãŸç¬é–“ã‹
+		/// </summary>
+		/// <param name="hard">trueã®å ´åˆã€ã‚ˆã‚Šå¼·ãæŠ¼ã—è¾¼ã¾ãªã„ã¨åˆ¤å®šã•ã‚Œãªããªã‚‹</param>
+		/// <returns></returns>
+		static bool ReleaseRT(const bool& hard = false);
+	private://ã‚³ãƒ³ãƒˆãƒ­ãƒ¼ãƒ©ãƒ¼
+		static XINPUT_STATE pState;
+		static XINPUT_STATE oldpState;
+	};
+
+	class Keyboard
+	{
+	public:
+		/// <summary>
+		/// ã‚­ãƒ¼ãƒœãƒ¼ãƒ‰ã€ãƒ‘ãƒƒãƒ‰ã®åˆæœŸåŒ–
+		/// ä¸€åº¦ã ã‘å‘¼ã¹ã°å•é¡Œãªã„
+		/// </summary>
+		void Initialize();
+
+		/// <summary>
+		/// ã‚­ãƒ¼ãƒœãƒ¼ãƒ‰ã€ãƒ‘ãƒƒãƒ‰ã®æ›´æ–°
+		/// ä¸€åº¦ã ã‘å‘¼ã¹ã°å•é¡Œãªã„
+		/// </summary>
+		void Update();
+
+		void Finalize();
+
+	public://ã‚­ãƒ¼ãƒœãƒ¼ãƒ‰
+
+		static Keyboard* Get();
+
+		static bool PushKey(const uint8_t& keys);
+		static bool TriggerKey(const uint8_t& keys);
+		static bool ReleaseKey(const uint8_t& keys);
+
+		IDirectInput8* directInput;
+	private://ã‚­ãƒ¼ãƒœãƒ¼ãƒ‰
+		IDirectInputDevice8* keyboard;
+
+		static uint8_t key[256];
+		static uint8_t oldkey[256];
+
+		void DirectInputInit();
+		void DirectInputCreate();
+
+	private:
+		Keyboard();
+		~Keyboard();
+		Keyboard(const Keyboard& a) = delete;
+		Keyboard& operator=(const Keyboard&) = delete;
+
+		WinAPI* winApi = WinAPI::Get();
+	};
 }
 
-//ƒL[ƒ{[ƒhAƒpƒbƒhAƒ}ƒEƒX‚ÅƒNƒ‰ƒX‚í‚¯‚µ‚ÄAnamespace‚Å‚Ü‚Æ‚ß‚éŒ`‚É‚·‚é
-class InputKey
-{
-public:
-	/// <summary>
-	/// ƒL[ƒ{[ƒhAƒpƒbƒh‚Ì‰Šú‰»
-	/// ˆê“x‚¾‚¯ŒÄ‚×‚Î–â‘è‚È‚¢
-	/// </summary>
-	void Initialize();
-
-	/// <summary>
-	/// ƒL[ƒ{[ƒhAƒpƒbƒh‚ÌXV
-	/// ˆê“x‚¾‚¯ŒÄ‚×‚Î–â‘è‚È‚¢
-	/// </summary>
-	void Update();
-
-	void Finalize();
-
-public://ƒL[ƒ{[ƒh
-
-	static InputKey* Get();
-
-	bool PushKey(unsigned char keys);
-	bool TriggerKey(unsigned char keys);
-	bool ReleaseKey(unsigned char keys);
-
-public://ƒRƒ“ƒgƒ[ƒ‰[
-
-	const float STICK_MAX = 32768.0f;
-
-	bool CheckConnectPad(int32_t padIndex = 0);
-
-	/// <summary>
-	/// ƒQ[ƒ€ƒpƒbƒh‚Ìƒ{ƒ^ƒ“‚ª‰Ÿ‚³‚ê‚Ä‚¢‚é‚©
-	/// </summary>
-	/// <param name="pad_num">XINPUT_GAMEPAD_A‚È‚ÇAXINPUT‚Ìƒ}ƒNƒ‚ğ“ü‚ê‚é</param>
-	/// <returns></returns>
-	bool PushPadButton(UINT pad_num);
-	
-	/// <summary>
-	/// ƒQ[ƒ€ƒpƒbƒh‚Ìƒ{ƒ^ƒ“‚ª‰Ÿ‚³‚ê‚½uŠÔ‚©
-	/// </summary>
-	/// <param name="pad_num">XINPUT_GAMEPAD_A‚È‚ÇAXINPUT‚Ìƒ}ƒNƒ‚ğ“ü‚ê‚é</param>
-	/// <returns></returns>
-	bool TriggerPadButton(UINT pad_num);
-	
-	/// <summary>
-	/// ƒQ[ƒ€ƒpƒbƒh‚Ìƒ{ƒ^ƒ“‚ª—£‚³‚ê‚½uŠÔ‚©
-	/// </summary>
-	/// <param name="pad_num">XINPUT_GAMEPAD_A‚È‚ÇAXINPUT‚Ìƒ}ƒNƒ‚ğ“ü‚ê‚é</param>
-	/// <returns></returns>
-	bool ReleasePadButton(UINT pad_num);
-	
-	/// <summary>
-	/// LƒXƒeƒBƒbƒN‚ÌŒX‚«‚ğæ“¾‚·‚é
-	/// </summary>
-	/// <returns></returns>
-	Vector2 GetLStickMove();
-
-	/// <summary>
-	/// RƒXƒeƒBƒbƒN‚ÌŒX‚«‚ğæ“¾‚·‚é
-	/// </summary>
-	/// <returns></returns>
-	Vector2 GetRStickMove();
-
-	/// <summary>
-	/// LƒXƒeƒBƒbƒN‚ªw’è‚µ‚½•ûŒü‚ÉŒX‚¢‚Ä‚¢‚é‚©‚ğæ“¾‚·‚é
-	/// </summary>
-	/// <param name="vec">UP,DOWN‚È‚Ç</param>
-	/// <returns></returns>
-	bool LStickTilt(STICK_VEC vec);
-
-	/// <summary>
-	/// RƒXƒeƒBƒbƒN‚ªw’è‚µ‚½•ûŒü‚ÉŒX‚¢‚Ä‚¢‚é‚©‚ğæ“¾‚·‚é
-	/// </summary>
-	/// <param name="vec">UP,DOWN‚È‚Ç</param>
-	/// <returns></returns>
-	bool RStickTilt(STICK_VEC vec);
-
-	/// <summary>
-	/// LTrigger‚ğ‰Ÿ‚µ‚Ä‚¢‚é‚©
-	/// </summary>
-	/// <returns></returns>
-	BYTE PushLT();
-	
-	/// <summary>
-	/// RTrigger‚ğ‰Ÿ‚µ‚Ä‚¢‚é‚©
-	/// </summary>
-	/// <returns></returns>
-	BYTE PushRT();
-
-	/// <summary>
-	///  LTrigger‚ğ‰Ÿ‚µ‚½uŠÔ‚©
-	/// </summary>
-	/// <param name="hard">true‚Ìê‡A‚æ‚è‹­‚­‰Ÿ‚µ‚Ü‚È‚¢‚Æ”»’è‚³‚ê‚È‚­‚È‚é</param>
-	/// <returns></returns>
-	bool TriggerLT(bool hard = false);
-
-	/// <summary>
-	///  RTrigger‚ğ‰Ÿ‚µ‚½uŠÔ‚©
-	/// </summary>
-	/// <param name="hard">true‚Ìê‡A‚æ‚è‹­‚­‰Ÿ‚µ‚Ü‚È‚¢‚Æ”»’è‚³‚ê‚È‚­‚È‚é</param>
-	/// <returns></returns>
-	bool TriggerRT(bool hard = false);
-
-	/// <summary>
-	/// LTrigger‚ğ—£‚µ‚½uŠÔ‚©
-	/// </summary>
-	/// <param name="hard">true‚Ìê‡A‚æ‚è‹­‚­‰Ÿ‚µ‚Ü‚È‚¢‚Æ”»’è‚³‚ê‚È‚­‚È‚é</param>
-	/// <returns></returns>
-	bool ReleaseLT(bool hard = false);
-
-	/// <summary>
-	/// RTrigger‚ğ—£‚µ‚½uŠÔ‚©
-	/// </summary>
-	/// <param name="hard">true‚Ìê‡A‚æ‚è‹­‚­‰Ÿ‚µ‚Ü‚È‚¢‚Æ”»’è‚³‚ê‚È‚­‚È‚é</param>
-	/// <returns></returns>
-	bool ReleaseRT(bool hard = false);
-
-	IDirectInput8* directInput;
-private://ƒL[ƒ{[ƒh
-	IDirectInputDevice8* keyboard;
-
-	unsigned char key[256] = {};
-	unsigned char oldkey[256] = {};
-
-	void DirectInputInit();
-	void DirectInputCreate();
-
-private://ƒRƒ“ƒgƒ[ƒ‰[
-	
-	XINPUT_STATE pState{};
-	XINPUT_STATE oldpState{};
-
-private:
-	InputKey();
-	~InputKey();
-	InputKey(const InputKey& a) = delete;
-	InputKey& operator=(const InputKey&) = delete;
-
-	WinAPI *winApi = WinAPI::Get();
-};
+//ã‚­ãƒ¼ãƒœãƒ¼ãƒ‰ã€ãƒ‘ãƒƒãƒ‰ã€ãƒã‚¦ã‚¹ã§ã‚¯ãƒ©ã‚¹ã‚ã‘ã—ã¦ã€namespaceã§ã¾ã¨ã‚ã‚‹å½¢ã«ã™ã‚‹

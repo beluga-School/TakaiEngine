@@ -72,5 +72,5 @@ private:
 	void Jump();
 
 	///---ƒVƒ“ƒOƒ‹ƒgƒ“
-	InputKey* input = InputKey::Get();
+	Input::Keyboard* input = Input::Keyboard::Get();
 };

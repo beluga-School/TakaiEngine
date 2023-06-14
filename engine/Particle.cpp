@@ -4,7 +4,9 @@
 #include "MathF.h"
 #include "ViewProjection.h"
 
-void GParticleManager::CreateParticle(XMFLOAT3 spawnPos, XMFLOAT3 velocity, float scale, float speed, bool redChange, float maxLifeTime, XMFLOAT4 color)
+void GParticleManager::CreateParticle(const Vector3& spawnPos, const Vector3& velocity,
+	const float& scale, const float& speed, const bool& redChange,
+	const float& maxLifeTime, const Vector4& color)
 {
 	particles.emplace_back(spawnPos, velocity, scale, speed,maxLifeTime,color,redChange);
 }
@@ -115,23 +117,25 @@ GParticleManager* GParticleManager::Getinstance()
 	return &instance;
 }
 
-Particle::Particle(XMFLOAT3 spawnPos, XMFLOAT3 velocity, float scale, float speed, float maxLifeTime, XMFLOAT4 color, bool redChange)
+Particle::Particle(const Vector3& spawnPos_, const Vector3& velocity_,
+	const float& scale_, const float& speed_, const float& maxLifeTime_,
+	const Vector4& color_, const bool& redChange_)
 {
-	this->position = spawnPos;
-	this->velocity = velocity;
-	this->speed = speed;
+	position = spawnPos_;
+	velocity = velocity_;
+	speed = speed_;
 
-	this->maxLifeTime = maxLifeTime;
+	maxLifeTime = maxLifeTime_;
 
-	this->scale = scale;
+	scale = scale_;
 
-	this->color = color;
+	color = color_;
 
 	colorRand.x = MathF::GetRand(0.1f, 1);
 	colorRand.y = MathF::GetRand(0.1f, 1);
 	colorRand.z = MathF::GetRand(0.1f, 1);
 
-	this->redChange = redChange;
+	redChange = redChange_;
 
 	vertPos = {};
 }
@@ -171,7 +175,8 @@ void ParticleEmitter::Initialize()
 	emitter.SetTexture(&TextureManager::Get()->white);
 }
 
-void ParticleEmitter::SetInfo(Vector3 pos, float range, float scale, XMFLOAT4 color, int32_t spawnNum, bool redChange)
+void ParticleEmitter::SetInfo(const Vector3& pos, const float& range_, const float& scale_,
+	const Vector4& color_, const int32_t& spawnNum_, const bool& redChange_)
 {
 	emitter.position = {
 		pos.x,
@@ -179,16 +184,18 @@ void ParticleEmitter::SetInfo(Vector3 pos, float range, float scale, XMFLOAT4 co
 		pos.z
 	};
 
-	this->range = range;
-	this->initScale = scale;
+	range = range_;
+	initScale = scale_;
+
+	color = color_;
+	spawnNum = spawnNum_;
+
 	if (spawnNum <= 0)
 	{
 		spawnNum = 1;
 	}
-	this->color = color;
-	this->spawnNum = spawnNum;
 
-	this->redChange = redChange;
+	redChange = redChange_;
 
 }
 

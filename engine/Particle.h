@@ -13,11 +13,14 @@ using namespace DirectX;
 #include <list>
 #include "Obj.h"
 
+#include <Vector3.h>
+#include <Vector4.h>
+
 struct VertexPos
 {
-	XMFLOAT3 pos;
+	Vector3 pos;
 	float scale;
-	XMFLOAT4 color;
+	Vector4 color;
 };
 
 struct ParticleConstBufferData
@@ -32,17 +35,17 @@ class Particle
 {
 public:
 	//座標
-	XMFLOAT3 position;
+	Vector3 position;
 	//方向
-	XMFLOAT3 velocity;
+	Vector3 velocity;
 	//速度
 	float speed;
 	//大きさ
 	float scale;
 	//色
-	XMFLOAT4 color;
+	Vector4 color;
 
-	XMFLOAT3 colorRand = { 0,0,0 };
+	Vector3 colorRand = { 0,0,0 };
 
 	VertexPos vertPos{};
 
@@ -54,7 +57,9 @@ public:
 
 	bool redChange = false;
 
-	Particle(XMFLOAT3 spawnPos, XMFLOAT3 velocity,float scale, float speed, float maxLifeTime,XMFLOAT4 color, bool redChange);
+	Particle(const Vector3& spawnPos,const Vector3& velocity,
+		const float& scale, const float& speed, const float& maxLifeTime, 
+		const Vector4& color,const bool& redChange);
 
 	void Update();
 };
@@ -73,7 +78,9 @@ public:
 
 	//VertexPos verticesPoint[vertexCount];
 	std::list<Particle> particles;
-	void CreateParticle(XMFLOAT3 spawnPos, XMFLOAT3 velocity, float scale, float speed, bool redChange, float maxLifeTime = 1.0f, XMFLOAT4 color = {1,1,1,1});
+	void CreateParticle(const Vector3& spawnPos,const Vector3& velocity,
+		const float& scale, const float& speed, const bool& redChange,
+		const float& maxLifeTime = 1.0f,const Vector4& color = {1,1,1,1});
 
 	void Initialize();
 	
@@ -106,7 +113,8 @@ public:
 	/// <param name="scale">パーティクルの大きさ</param>
 	/// <param name="color">パーティクルの色</param>
 	/// <param name="spawnNum">1秒間に発生するパーティクルの数 最低値は1</param>
-	void SetInfo(Vector3 pos,float range,float scale, XMFLOAT4 color, int32_t spawnNum = 1,bool redChange = false);
+	void SetInfo(const Vector3& pos,const float& range, const float& scale,
+		const Vector4& color,const int32_t& spawnNum = 1,const bool& redChange = false);
 
 	void Update();
 
@@ -114,7 +122,7 @@ private:
 	Model model;
 	float range = 10;
 	float initScale = 1;
-	XMFLOAT4 color = { 1,1,1,1 };
+	Vector4 color = { 1,1,1,1 };
 	//一秒間に発生する数
 	int32_t spawnNum = 10;
 

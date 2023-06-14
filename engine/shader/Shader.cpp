@@ -2,7 +2,9 @@
 #include "Result.h"
 #include "DirectXInit.h"
 
-ID3DBlob* Shader::Compile(const wchar_t *shaderFilename, LPCSTR shadermodelname,ID3DBlob *blob , LPCSTR entrypointname)
+ID3DBlob* Shader::Compile(const wchar_t *shaderFilename, 
+	const LPCSTR& shadermodelname,ID3DBlob *blob , 
+	const LPCSTR& entrypointname)
 {
 	//シェーダの読み込みとコンパイル
 	result = D3DCompileFromFile(

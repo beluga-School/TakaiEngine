@@ -80,7 +80,7 @@ int32_t WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_  HINSTANCE hPrevInstan
 	}
 #endif  _DEBUG
 
-	InputKey* input_ = InputKey::Get();
+	Input::Keyboard* input_ = Input::Keyboard::Get();
 
 	input_->Initialize();
 	Input::Mouse::Initialize();
@@ -123,10 +123,7 @@ int32_t WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_  HINSTANCE hPrevInstan
 	//SceneFactory *sceneFactory = new SceneFactory();
 	//scenemanager->SetSceneFactory(sceneFactory);
 
-	DemoScene *demo = new DemoScene();
-	//FBXLoadDemoScene* loaddemo = new FBXLoadDemoScene();
-	//Game *game = new Game();
-	scenemanager->SetScene(*demo);
+	scenemanager->ChangeScene<DemoScene>();
 
 #pragma endregion •`‰æ‰Šú‰»ˆ—
 

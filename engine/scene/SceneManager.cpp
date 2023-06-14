@@ -10,11 +10,10 @@ void SceneManager::Update()
 		//旧シーンの終了
 		if (currentscene) {
 			currentscene->End();
-			delete currentscene;
 		}
 
 		//切り替え
-		currentscene = nextscene;
+		currentscene.swap(nextscene);
 		nextscene = nullptr;
 
 		//シーンマネージャを現在シーンにセット
@@ -35,7 +34,7 @@ void SceneManager::Draw()
 
 void SceneManager::End()
 {
-	delete currentscene;
+	
 }
 
 //void SceneManager::ChangeScene(const std::string& sceneName)

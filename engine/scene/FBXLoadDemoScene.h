@@ -20,7 +20,7 @@ private:
 
 	Obj3d sphere;
 	Obj3d skydome;
-	InputKey* input = InputKey::Get();
+	Input::Keyboard* input = Input::Keyboard::Get();
 
 	//const wchar_t* modelFile = L"Resources/Cube_gltf/cube.glb";
 	//const wchar_t* modelFile = L"Resources/Cube_two/Cube_two.glb";

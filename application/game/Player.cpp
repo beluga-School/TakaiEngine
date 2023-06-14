@@ -176,7 +176,7 @@ void Player::Update(const Stage& stage)
 		jumpPower = 0;
 		moveValue.y = 0;
 
-		if (input->PushKey(DIK_W) || input->LStickTilt(UP))
+		if (input->PushKey(DIK_W) || Input::Pad::LStickTilt(UP))
 		{
 			moveValue.y = 20 * TimeManager::deltaTime;
 		}
@@ -214,8 +214,8 @@ void Player::Update(const Stage& stage)
 	{
 		ShowCursor(true);
 
-		rotation.x += input->GetRStickMove().y * TimeManager::deltaTime;
-		rotation.y += input->GetRStickMove().x * TimeManager::deltaTime;
+		rotation.x += Input::Pad::GetRStickMove().y * TimeManager::deltaTime;
+		rotation.y += Input::Pad::GetRStickMove().x * TimeManager::deltaTime;
 
 		if (input->PushKey(DIK_RIGHT))
 		{
@@ -260,7 +260,7 @@ void Player::Move()
 {
 	if (isDash == false)
 	{
-		if (input->CheckConnectPad() == false)
+		if (Input::Pad::CheckConnectPad() == false)
 		{
 			if (input->PushKey(DIK_D)) {
 				moveValue.x -= leftVec.x * moveMag * TimeManager::deltaTime;
@@ -281,19 +281,19 @@ void Player::Move()
 		}
 		else
 		{
-			if (input->LStickTilt(RIGHT)) {
+			if (Input::Pad::LStickTilt(RIGHT)) {
 				moveValue.x -= leftVec.x * moveMag * TimeManager::deltaTime;
 				moveValue.z -= leftVec.z * moveMag * TimeManager::deltaTime;
 			}
-			if (input->LStickTilt(LEFT)) {
+			if (Input::Pad::LStickTilt(LEFT)) {
 				moveValue.x += leftVec.x * moveMag * TimeManager::deltaTime;
 				moveValue.z += leftVec.z * moveMag * TimeManager::deltaTime;
 			}
-			if (input->LStickTilt(UP)) {
+			if (Input::Pad::LStickTilt(UP)) {
 				moveValue.x -= centerVec.x * moveMag * TimeManager::deltaTime;
 				moveValue.z -= centerVec.z * moveMag * TimeManager::deltaTime;
 			}
-			if (input->LStickTilt(DOWN)) {
+			if (Input::Pad::LStickTilt(DOWN)) {
 				moveValue.x += centerVec.x * moveMag * TimeManager::deltaTime;
 				moveValue.z += centerVec.z * moveMag * TimeManager::deltaTime;
 			}
@@ -303,7 +303,7 @@ void Player::Move()
 		moveValue.z = Util::Clamp(moveValue.z, -1.0f, 1.0f);
 	}
 
-	if ((input->TriggerKey(DIK_LSHIFT) || input->TriggerRT(1)) && 
+	if ((input->TriggerKey(DIK_LSHIFT) || Input::Pad::TriggerRT(1)) &&
 		dashCool <= 0) 
 	{
 		isDash = true;
@@ -336,7 +336,7 @@ void Player::Move()
 
 void Player::Jump()
 {
-	if ((input->TriggerKey(DIK_SPACE) || input->TriggerPadButton(XINPUT_GAMEPAD_A)) && onGround)
+	if ((input->TriggerKey(DIK_SPACE) || Input::Pad::TriggerPadButton(XINPUT_GAMEPAD_A)) && onGround)
 	{
 		jumpPower = 2;
 		if (jumpSoundFlag == false)
@@ -346,7 +346,7 @@ void Player::Jump()
 		jumpSoundFlag = true;
 	}
 
-	if ((input->ReleaseKey(DIK_SPACE) || input->ReleasePadButton(XINPUT_GAMEPAD_A)))
+	if ((input->ReleaseKey(DIK_SPACE) || Input::Pad::ReleasePadButton(XINPUT_GAMEPAD_A)))
 	{
 		jumpSoundFlag = false;
 	}

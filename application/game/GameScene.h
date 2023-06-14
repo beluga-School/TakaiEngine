@@ -46,7 +46,7 @@ private:
 	void Reset();
 	void DamageEffect();
 
-	InputKey* input = InputKey::Get();
+	Input::Keyboard* input = Input::Keyboard::Get();
 
 	PipelineSet object3dPipelineSet;
 	PipelineSet geometryObjectPipelineSet;
