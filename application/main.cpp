@@ -110,7 +110,7 @@ int32_t WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_  HINSTANCE hPrevInstan
 	ImguiManager *imguiManager = ImguiManager::GetInstance();
 	imguiManager->Initialize();
 
-	SpriteCommon::spriteCommon.Initialize();
+	SpriteCommon::mSpriteCommon.Initialize();
 
 	//ƒ‚ƒfƒ‹‚Ì“Ç‚Ýž‚Ý
 	ModelManager::Get()->PreLoad();

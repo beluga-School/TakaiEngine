@@ -123,7 +123,7 @@ void BasicObjectPreDraw(const PipelineSet& objectPipelineSet)
 	dx12->commandList->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 
 	//SRVヒープの設定コマンド
-	dx12->commandList->SetDescriptorHeaps(1, texM->srvHeap.GetAddressOf());
+	dx12->commandList->SetDescriptorHeaps(1, texM->mSrvHeap.GetAddressOf());
 
 	LightGroup::lightGroup->Draw(4);
 }
@@ -159,7 +159,7 @@ void GeometryObjectPreDraw(const PipelineSet& geometryPipelineSet)
 	dx12->commandList->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_POINTLIST);
 
 	//SRVヒープの設定コマンド
-	dx12->commandList->SetDescriptorHeaps(1, texM->srvHeap.GetAddressOf());
+	dx12->commandList->SetDescriptorHeaps(1, texM->mSrvHeap.GetAddressOf());
 }
 
 void PostDraw()

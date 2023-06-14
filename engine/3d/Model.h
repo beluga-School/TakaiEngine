@@ -22,11 +22,11 @@ struct Mesh
 class Model : public VertexData
 {
 public:
-	Mesh mesh;
+	Mesh mMesh;
 
-	std::unordered_map<uint16_t, std::vector<uint16_t>> smoothData;
+	std::unordered_map<uint16_t, std::vector<uint16_t>> mSmoothData;
 
-	Material material;
+	Material mMaterial;
 
 	/*ConstBuffer<ConstBufferDataB1> constBufferMaterial;*/
 
@@ -51,10 +51,7 @@ public:
 	/// <param name="filename"></param>
 	void LoadMaterial(const std::string& directoryPath, const std::string& filename);
 
-	std::string saveModelname = "";
-
-private:
-	DirectX12* dx12 = DirectX12::Get();
+	std::string mSaveModelname = "";
 };
 
 class ModelManager
@@ -72,7 +69,7 @@ public:
 	};
 
 private:
-	static std::map<std::string, Model> models;
+	static std::map<std::string, Model> mModels;
 
 	ModelManager(){};
 	~ModelManager(){};

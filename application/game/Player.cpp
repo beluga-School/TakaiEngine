@@ -19,7 +19,7 @@ void Player::Initialize()
 	jumpPower = 0;
 
 	model = ModelManager::Get()->GetModel("Cube");
-	texture = &TextureManager::Get()->white;
+	texture = TextureManager::Get()->GetTexture("white");
 	scale = { 5,5,5 };
 	moveMag = 30;
 
@@ -311,7 +311,7 @@ void Player::Move()
 		dashTimer = 0;
 		dashCool = 2;
 
-		dashVec = Camera::camera->target - Camera::camera->eye;
+		dashVec = Camera::mCamera->mTarget - Camera::mCamera->mEye;
 		dashVec.normalize();
 		SoundManager::GetInstance()->SoundPlayWave(dash);
 	}

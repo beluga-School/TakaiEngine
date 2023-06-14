@@ -96,7 +96,7 @@ void GParticleManager::Draw(Texture* texture)
 
 	//SRVヒープの先頭から順番にSRVをルートパラメータ1番に設定
 	//ルートパラメータ1番はテクスチャバッファ
-	dx12->commandList->SetGraphicsRootDescriptorTable(1, texture->gpuHandle);
+	dx12->commandList->SetGraphicsRootDescriptorTable(1, texture->mGpuHandle);
 
 	//頂点バッファの設定
 	dx12->commandList->IASetVertexBuffers(0, 1, &vbView);
@@ -172,7 +172,7 @@ void ParticleEmitter::Initialize()
 	emitter.Initialize();
 	emitter.position = { 0,0,0 };
 	emitter.SetModel(ModelManager::Get()->GetModel("Cube"));
-	emitter.SetTexture(&TextureManager::Get()->white);
+	emitter.SetTexture(TextureManager::Get()->GetTexture("white"));
 }
 
 void ParticleEmitter::SetInfo(const Vector3& pos, const float& range_, const float& scale_,
@@ -221,5 +221,5 @@ void ParticleEmitter::Update()
 				color);
 	}
 
-	emitter.Update(*Camera::camera);
+	emitter.Update(*Camera::mCamera);
 }

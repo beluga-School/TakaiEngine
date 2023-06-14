@@ -7,11 +7,11 @@ using namespace std;
 #include <assimp/scene.h>
 #include <assimp/postprocess.h> 
 
-std::map<std::string, Model> ModelManager::models;
+std::map<std::string, Model> ModelManager::mModels;
 
 void Model::CreateDefaultModel()
 {
-	CreateVertex(mesh.vertices, mesh.indices);
+	CreateVertex(mMesh.vertices, mMesh.indices);
 }
 
 void Model::LoadMaterial(const std::string& directoryPath, const std::string& filename)
@@ -44,32 +44,32 @@ void Model::LoadMaterial(const std::string& directoryPath, const std::string& fi
 		//先頭文字列がnewmtlならマテリアル名
 		if (key == "newmtl") {
 			//マテリアル名
-			line_stream >> material.name;
+			line_stream >> mMaterial.mName;
 		}
 
 		if (key == "Ka") {
-			line_stream >> material.ambient.x;
-			line_stream >> material.ambient.y;
-			line_stream >> material.ambient.z;
+			line_stream >> mMaterial.mAmbient.x;
+			line_stream >> mMaterial.mAmbient.y;
+			line_stream >> mMaterial.mAmbient.z;
 		}
 
 		if (key == "Kd") {
-			line_stream >> material.diffuse.x;
-			line_stream >> material.diffuse.y;
-			line_stream >> material.diffuse.z;
+			line_stream >> mMaterial.mDiffuse.x;
+			line_stream >> mMaterial.mDiffuse.y;
+			line_stream >> mMaterial.mDiffuse.z;
 		}
 
 		if (key == "Ks") {
-			line_stream >> material.specular.x;
-			line_stream >> material.specular.y;
-			line_stream >> material.specular.z;
+			line_stream >> mMaterial.mSpecular.x;
+			line_stream >> mMaterial.mSpecular.y;
+			line_stream >> mMaterial.mSpecular.z;
 		}
 
 		if (key == "map_Kd")
 		{
-			line_stream >> material.textureFilename;
+			line_stream >> mMaterial.mTextureFilename;
 
-			material.tex->Load(*ConvertStringToWChar(directoryPath + material.textureFilename).c_str());
+			mMaterial.mTextire->Load(*ConvertStringToWChar(directoryPath + mMaterial.mTextureFilename).c_str());
 		}
 	}
 	//ファイルを閉じる
@@ -85,7 +85,7 @@ void Model::CreateModel(const std::string t, bool smoothing)
 	const string directoryPath = "Resources/" + modelname + "/";
 	file.open(directoryPath + filename);
 
-	saveModelname = modelname;
+	mSaveModelname = modelname;
 
 	//ファイルオープン失敗をチェック
 	if (file.fail())
@@ -180,31 +180,31 @@ void Model::CreateModel(const std::string t, bool smoothing)
 				vertex.uv.x = texcoords[indexTexcoord - 1].x;
 				vertex.uv.y = texcoords[indexTexcoord - 1].y;
 				
-				mesh.vertices.emplace_back(vertex);
+				mMesh.vertices.emplace_back(vertex);
 
 				//頂点インデックスに追加
-				mesh.indices.emplace_back((uint16_t)mesh.indices.size());
+				mMesh.indices.emplace_back((uint16_t)mMesh.indices.size());
 
 				//ここでデータを保持
 				if (smoothing)
 				{
-					smoothData[indexPosition].emplace_back((uint16_t)mesh.vertices.size() - 1);
+					mSmoothData[indexPosition].emplace_back((uint16_t)mMesh.vertices.size() - 1);
 				}
 			}
 		}
 	}
 	file.close();
 
-	for (int32_t i = 0; i < mesh.indices.size() / 3; i++)
+	for (int32_t i = 0; i < mMesh.indices.size() / 3; i++)
 	{	//三角形1つごとに計算していく
 		//三角形のインデックスを取り出して、一時的な変数にいれる
-		uint16_t indices0 = mesh.indices[i * 3 + 0];
-		uint16_t indices1 = mesh.indices[i * 3 + 1];
-		uint16_t indices2 = mesh.indices[i * 3 + 2];
+		uint16_t indices0 = mMesh.indices[i * 3 + 0];
+		uint16_t indices1 = mMesh.indices[i * 3 + 1];
+		uint16_t indices2 = mMesh.indices[i * 3 + 2];
 		//三角形を構成する頂点座標をベクトルに代入
-		XMVECTOR p0 = XMLoadFloat3(&mesh.vertices[indices0].pos);
-		XMVECTOR p1 = XMLoadFloat3(&mesh.vertices[indices1].pos);
-		XMVECTOR p2 = XMLoadFloat3(&mesh.vertices[indices2].pos);
+		XMVECTOR p0 = XMLoadFloat3(&mMesh.vertices[indices0].pos);
+		XMVECTOR p1 = XMLoadFloat3(&mMesh.vertices[indices1].pos);
+		XMVECTOR p2 = XMLoadFloat3(&mMesh.vertices[indices2].pos);
 
 		//p0→p1ベクトル、p0→p2ベクトルを計算(ベクトルの減算)
 		XMVECTOR v1 = XMVectorSubtract(p1, p0);
@@ -214,34 +214,34 @@ void Model::CreateModel(const std::string t, bool smoothing)
 		//正規化(長さを1にする)
 		normal = XMVector3Normalize(normal);
 		//求めた法線を頂点データに代入
-		XMStoreFloat3(&mesh.vertices[indices0].normal, normal);
-		XMStoreFloat3(&mesh.vertices[indices1].normal, normal);
-		XMStoreFloat3(&mesh.vertices[indices2].normal, normal);
+		XMStoreFloat3(&mMesh.vertices[indices0].normal, normal);
+		XMStoreFloat3(&mMesh.vertices[indices1].normal, normal);
+		XMStoreFloat3(&mMesh.vertices[indices2].normal, normal);
 	}
 
 	if (smoothing)
 	{
 		//ここで保持したデータを使ってスムージングを計算
-		for (auto itr = smoothData.begin(); itr != smoothData.end(); ++itr)
+		for (auto itr = mSmoothData.begin(); itr != mSmoothData.end(); ++itr)
 		{
 			std::vector<uint16_t>& v = itr->second;
 
 			XMVECTOR normal = {};
 			for (uint16_t index : v)
 			{
-				normal += XMVectorSet(mesh.vertices[index].normal.x, mesh.vertices[index].normal.y, mesh.vertices[index].normal.z, 0);
+				normal += XMVectorSet(mMesh.vertices[index].normal.x, mMesh.vertices[index].normal.y, mMesh.vertices[index].normal.z, 0);
 			}
 
 			normal = XMVector3Normalize(normal / (float)v.size());
 
 			for (uint16_t index : v)
 			{
-				mesh.vertices[index].normal = { normal.m128_f32[0],normal.m128_f32[1] ,normal.m128_f32[2] };
+				mMesh.vertices[index].normal = { normal.m128_f32[0],normal.m128_f32[1] ,normal.m128_f32[2] };
 			}
 		}
 	}
 
-	CreateVertex(mesh.vertices, mesh.indices);
+	CreateVertex(mMesh.vertices, mMesh.indices);
 }
 
 void ModelManager::PreLoad()
@@ -273,10 +273,10 @@ void ModelManager::PreLoad()
 
 void ModelManager::LoadModel(const std::string filepath, const std::string handle, bool smooth)
 {
-	models[handle].CreateModel(filepath, smooth);
+	mModels[handle].CreateModel(filepath, smooth);
 }
 
 Model* ModelManager::GetModel(const std::string handle)
 {
-	return &models[handle];
+	return &mModels[handle];
 }

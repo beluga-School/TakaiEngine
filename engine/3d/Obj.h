@@ -47,7 +47,7 @@ public:
 	Vector3 rotation = { 0,0,0 };
 	Vector3 position = { 0,0,0 };
 
-	XMFLOAT4 color = { 1.0f,1.0f,1.0f,1.0f };
+	XMFLOAT4 color_ = { 1.0f,1.0f,1.0f,1.0f };
 
 	Matrix4 matWorld;
 

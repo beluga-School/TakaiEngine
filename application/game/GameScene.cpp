@@ -16,15 +16,15 @@ void Game::Initialize()
 
 	//スプライト
 	//天球を暗くする
-	ModelManager::Get()->GetModel("skydome")->material.ambient = { 0,0,0 };
-	ModelManager::Get()->GetModel("skydome")->material.diffuse = { 0,0,0 };
-	ModelManager::Get()->GetModel("skydome")->material.specular = { 0,0,0 };
+	ModelManager::Get()->GetModel("skydome")->mMaterial.mAmbient = { 0,0,0 };
+	ModelManager::Get()->GetModel("skydome")->mMaterial.mDiffuse = { 0,0,0 };
+	ModelManager::Get()->GetModel("skydome")->mMaterial.mSpecular = { 0,0,0 };
 
 	skydome.Initialize();
 	skydome.SetModel(ModelManager::Get()->GetModel("skydome"));
-	skydome.SetTexture(&TextureManager::Get()->white);
+	skydome.SetTexture(TextureManager::Get()->GetTexture("white"));
 	skydome.scale = { 10,10,10 };
-	skydome.color = { 0.05f,0.05f,0.05f,1.0f };
+	skydome.color_ = { 0.05f,0.05f,0.05f,1.0f };
 
 	goalSprite.SetTexture(*TextureManager::GetTexture("goal"));
 	goalSprite.SetPos({ Util::window_width / 2, Util::window_height / 2 });
@@ -66,25 +66,25 @@ void Game::Initialize()
 	firewispsmooth.position = { 60,-20,0 };
 	firewispsmooth.scale = { 10,10,10 };
 	firewispsmooth.model = ModelManager::Get()->GetModel("firewisp");
-	firewispsmooth.texture = &TextureManager::Get()->white;
+	firewispsmooth.texture = TextureManager::Get()->GetTexture("white");
 	
 	firewispCheckTriangle.Initialize();
 	firewispCheckTriangle.position = { 30,-20,0 };
 	firewispCheckTriangle.scale = { 10,10,10 };
 	firewispCheckTriangle.model = ModelManager::Get()->GetModel("sphere");
-	firewispCheckTriangle.texture = &TextureManager::Get()->white;
+	firewispCheckTriangle.texture = TextureManager::Get()->GetTexture("white");
 	
 	board.Initialize();
 	board.rotation = { 0,0,MathF::AngleConvRad(270) };
 	board.scale = { 10,10,10 };
 	board.model = ModelManager::Get()->ModelManager::Get()->GetModel("board");
-	board.texture = &TextureManager::Get()->white;
+	board.texture = TextureManager::Get()->GetTexture("white");
 	
 	triangle.Initialize();
 	triangle.position = { 40,-20,0 };
 	triangle.scale = { 10,10,10 };
 	triangle.model = ModelManager::Get()->GetModel("triangle");
-	triangle.texture = &TextureManager::Get()->white;
+	triangle.texture = TextureManager::Get()->GetTexture("white");
 
 	float a = -2.0f;
 	float b = 2.0f;
@@ -95,7 +95,7 @@ void Game::Initialize()
 	{
 		cube[i].Initialize();
 		cube[i].SetModel(ModelManager::Get()->GetModel("Cube"));
-		cube[i].SetTexture(&TextureManager::Get()->white);
+		cube[i].SetTexture(TextureManager::Get()->GetTexture("white"));
 
 		cube[i].scale = { MathF::GetRand(3,7),MathF::GetRand(3,7),MathF::GetRand(3,7) };
 
@@ -104,13 +104,13 @@ void Game::Initialize()
 		switch (r)
 		{
 		case 0:
-			cube[i].color = { 0.0f, 220.0f / 255.0f, 1.0f, 1 };
+			cube[i].color_ = { 0.0f, 220.0f / 255.0f, 1.0f, 1 };
 			break;
 		case 1:
-			cube[i].color = { 220.0f / 255.0f, 1.0f, 0.0f, 1 };
+			cube[i].color_ = { 220.0f / 255.0f, 1.0f, 0.0f, 1 };
 			break;
 		case 2:
-			cube[i].color = { 1.0f,0.0f , 220.0f / 255.0f, 1 };
+			cube[i].color_ = { 1.0f,0.0f , 220.0f / 255.0f, 1 };
 			break;
 		}
 	}
@@ -185,7 +185,7 @@ void Game::Initialize()
 	lightObj.position = { 0.5f,0,0 };
 	lightObj.scale = { 3,3,3 };
 	lightObj.model = ModelManager::Get()->GetModel("Cube");
-	lightObj.texture = &TextureManager::Get()->white;
+	lightObj.texture = TextureManager::Get()->GetTexture("white");
 }
 
 //GUI gui2("Light");
@@ -337,9 +337,9 @@ void Game::Update()
 	}
 	player.Update(stage);
 
-	if (redScreenSprite.color.f4.w > 0)
+	if (redScreenSprite.mColor.f4.w > 0)
 	{
-		redScreenSprite.color.f4.w -= TimeManager::deltaTime;
+		redScreenSprite.mColor.f4.w -= TimeManager::deltaTime;
 	}
 
 	gEnemyList.remove_if([](GroundEnemy& enemy) {
@@ -427,11 +427,11 @@ void Game::Update()
 
 	if (SpherePlaneCollision(sphereCol, planeCol))
 	{
-		firewispsmooth.color = { 1,0,0,1 };
+		firewispsmooth.color_ = { 1,0,0,1 };
 	}
 	else
 	{
-		firewispsmooth.color = { 1,1,1,1 };
+		firewispsmooth.color_ = { 1,1,1,1 };
 	}
 
 	firewispsmooth.rotation.y += TimeManager::deltaTime;
@@ -448,27 +448,27 @@ void Game::Update()
 
 	Triangle triangleCol;
 	triangleCol.pos0 = {
-		triangle.position.x + (triangle.model->mesh.vertices[0].pos.x * triangle.scale.x / 2),
-		triangle.position.y + (triangle.model->mesh.vertices[0].pos.y * triangle.scale.y / 2),
-		triangle.position.z + (triangle.model->mesh.vertices[0].pos.z * triangle.scale.z / 2)
+		triangle.position.x + (triangle.model->mMesh.vertices[0].pos.x * triangle.scale.x / 2),
+		triangle.position.y + (triangle.model->mMesh.vertices[0].pos.y * triangle.scale.y / 2),
+		triangle.position.z + (triangle.model->mMesh.vertices[0].pos.z * triangle.scale.z / 2)
 	};
 
 	triangleCol.pos1 = {
-		triangle.position.x + (triangle.model->mesh.vertices[1].pos.x * triangle.scale.x / 2),
-		triangle.position.y + (triangle.model->mesh.vertices[1].pos.y * triangle.scale.y / 2),
-		triangle.position.z + (triangle.model->mesh.vertices[1].pos.z * triangle.scale.z / 2)
+		triangle.position.x + (triangle.model->mMesh.vertices[1].pos.x * triangle.scale.x / 2),
+		triangle.position.y + (triangle.model->mMesh.vertices[1].pos.y * triangle.scale.y / 2),
+		triangle.position.z + (triangle.model->mMesh.vertices[1].pos.z * triangle.scale.z / 2)
 	};
 
 	triangleCol.pos2 = {
-		triangle.position.x + (triangle.model->mesh.vertices[2].pos.x * triangle.scale.x / 2),
-		triangle.position.y + (triangle.model->mesh.vertices[2].pos.y * triangle.scale.y / 2),
-		triangle.position.z + (triangle.model->mesh.vertices[2].pos.z * triangle.scale.z / 2)
+		triangle.position.x + (triangle.model->mMesh.vertices[2].pos.x * triangle.scale.x / 2),
+		triangle.position.y + (triangle.model->mMesh.vertices[2].pos.y * triangle.scale.y / 2),
+		triangle.position.z + (triangle.model->mMesh.vertices[2].pos.z * triangle.scale.z / 2)
 	};
 
 	triangleCol.normal = {
-		triangle.model->mesh.vertices[0].normal.x,
-		triangle.model->mesh.vertices[0].normal.y,
-		triangle.model->mesh.vertices[0].normal.z
+		triangle.model->mMesh.vertices[0].normal.x,
+		triangle.model->mMesh.vertices[0].normal.y,
+		triangle.model->mMesh.vertices[0].normal.z
 	};
 
 	Sphere sphereColCheckTri;
@@ -478,11 +478,11 @@ void Game::Update()
 	
 	if (CheckSphere2Triangle(sphereColCheckTri, triangleCol))
 	{
-		firewispCheckTriangle.color = { 1,0,0,1 };
+		firewispCheckTriangle.color_ = { 1,0,0,1 };
 	}
 	else
 	{
-		firewispCheckTriangle.color = { 1,1,1,1 };
+		firewispCheckTriangle.color_ = { 1,1,1,1 };
 	}
 
 	triangle.Update(*camera);
@@ -537,7 +537,7 @@ void Game::Draw()
 	//GeometryObjectPreDraw(geometryObjectPipelineSet);
 
 	//スプライトの前描画(共通コマンド)
-	SpriteCommonBeginDraw(SpriteCommon::spriteCommon);
+	SpriteCommonBeginDraw(SpriteCommon::mSpriteCommon);
 
 	redScreenSprite.Draw();
 	slimeSprite.Draw();
@@ -577,10 +577,10 @@ void Game::CameraUpdate()
 	case 0:
 		//カメラ座標をプレイヤーに追従
 		cVec = player.centerVec * mag;
-		camera->eye = player.position + cVec;
-		camera->eye.y += 15;
-		camera->target = player.position;
-		camera->target.y += 10;
+		camera->mEye = player.position + cVec;
+		camera->mEye.y += 15;
+		camera->mTarget = player.position;
+		camera->mTarget.y += 10;
 		if (player.isDash)
 		{
 			if (mag < 40)mag += 20 * TimeManager::deltaTime;
@@ -592,15 +592,15 @@ void Game::CameraUpdate()
 
 		break;
 	case 1:
-		camera->eye = player.position;
-		camera->eye.z += 1;
-		camera->eye.y += 35;
-		camera->target = player.position;
+		camera->mEye = player.position;
+		camera->mEye.z += 1;
+		camera->mEye.y += 35;
+		camera->mTarget = player.position;
 		break;
 	case 2:
-		camera->eye = player.position;
-		camera->eye.z += 10;
-		camera->target = player.position;
+		camera->mEye = player.position;
+		camera->mEye.z += 10;
+		camera->mTarget = player.position;
 		break;
 	}
 
@@ -687,7 +687,7 @@ void Game::DamageEffect()
 {
 	if (player.mutekiTimer <= 0 && player.isDash == false)
 	{
-		redScreenSprite.color.f4.w = 1.0f;
+		redScreenSprite.mColor.f4.w = 1.0f;
 		for (int32_t i = 0; i < 10; i++)
 		{
 			ParticleManager::GetInstance()->CreateCubeParticle(player.position, { 3,3,3 }, 20.0f, { 1,1,1,1 });

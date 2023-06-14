@@ -46,9 +46,9 @@ void ImguiManager::Initialize()
 		NUM_FRAMES_IN_FLIGHT,
 		//SRGB‚ª‚Â‚¢‚Ä‚È‚©‚Á‚½‚º™
 		DXGI_FORMAT_R8G8B8A8_UNORM_SRGB,
-		tManager->srvHeap.Get(),
-		tManager->srvHeap.Get()->GetCPUDescriptorHandleForHeapStart(),
-		tManager->srvHeap.Get()->GetGPUDescriptorHandleForHeapStart()
+		tManager->mSrvHeap.Get(),
+		tManager->mSrvHeap.Get()->GetCPUDescriptorHandleForHeapStart(),
+		tManager->mSrvHeap.Get()->GetGPUDescriptorHandleForHeapStart()
 	);
 	//DXGI_FORMAT_R8G8B8A8_UNORM_SRGB;
 }
@@ -65,7 +65,7 @@ void ImguiManager::Draw()
 	DirectX12* dx12 = DirectX12::Get();
 	TextureManager* tManager = TextureManager::Get();
 
-	dx12->commandList->SetDescriptorHeaps(1, tManager->srvHeap.GetAddressOf());
+	dx12->commandList->SetDescriptorHeaps(1, tManager->mSrvHeap.GetAddressOf());
 	ImGui_ImplDX12_RenderDrawData(ImGui::GetDrawData(), dx12->commandList.Get());
 }
 

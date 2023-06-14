@@ -17,12 +17,12 @@ void DemoScene::Initialize()
 
 	skydome.Initialize();
 	skydome.SetModel(ModelManager::Get()->GetModel("skydome"));
-	skydome.SetTexture(&TextureManager::Get()->white);
+	skydome.SetTexture(TextureManager::Get()->GetTexture("white"));
 	skydome.scale = { 10,10,10 };
-	skydome.color = { 1.f,1.f,1.f,1.0f };
+	skydome.color_ = { 1.f,1.f,1.f,1.0f };
 
-	camera->eye.y = 50;
-	camera->eye.z = -150;
+	camera->mEye.y = 50;
+	camera->mEye.z = -150;
 
 	ModelManager::LoadModel("beetle","beetle");
 	ModelManager::LoadModel("firewisp","firewisp");
@@ -30,7 +30,7 @@ void DemoScene::Initialize()
 	ModelManager::LoadModel("BlankCube","BlankCube");
 	
 	slime.SetTexture(*TextureManager::GetTexture("slime"));
-	slime.position = { 0,0,0 };
+	slime.mPosition = { 0,0,0 };
 
 	LevelData* data = LevelLoader::Get()->Load("Scene/worldTest_Children");
 	SetObject(*data);
@@ -78,7 +78,7 @@ void DemoScene::Draw()
 	}
 
 	//スプライトの前描画(共通コマンド)
-	SpriteCommonBeginDraw(SpriteCommon::spriteCommon);
+	SpriteCommonBeginDraw(SpriteCommon::mSpriteCommon);
 
 	slime.Draw();
 }
@@ -109,7 +109,7 @@ void DemoScene::SetObject(LevelData& data)
 		{
 			obj3ds.back().SetModel(ModelManager::GetModel("Cube"));
 		}
-		obj3ds.back().SetTexture(&TextureManager::Get()->white);
+		obj3ds.back().SetTexture(TextureManager::Get()->GetTexture("white"));
 		//座標
 		obj3ds.back().position = objectData->translation;
 		//回転角
@@ -124,7 +124,7 @@ void DemoScene::SetObject(LevelData& data)
 			obj3ds.back().Initialize();
 
 			obj3ds.back().SetModel(ModelManager::GetModel("BlankCube"));
-			obj3ds.back().SetTexture(&TextureManager::Get()->white);
+			obj3ds.back().SetTexture(TextureManager::Get()->GetTexture("white"));
 
 			obj3ds.back().position = objectData->translation;
 			obj3ds.back().scale = objectData->collider.size;

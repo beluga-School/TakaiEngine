@@ -16,7 +16,7 @@ public:
 
 private:
 	PipelineSet object3dPipelineSet;
-	Camera* camera = Camera::camera;
+	Camera* camera = Camera::mCamera;
 
 	Obj3d sphere;
 	Obj3d skydome;

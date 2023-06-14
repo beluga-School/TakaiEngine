@@ -6,9 +6,9 @@ void Bullet::Initialize(const Vector3& position_)
 {
 	position = position_;
 	model = ModelManager::Get()->GetModel("Cube");
-	texture = &TextureManager::Get()->white;
+	texture = TextureManager::Get()->GetTexture("white");
 	scale = { 5,5,5 };
-	color = { 1.0f,1.0f,0.0f,1.0f };
+	color_ = { 1.0f,1.0f,0.0f,1.0f };
 }
 
 void Bullet::SetTarget(const Mob &targetMob)
@@ -25,7 +25,7 @@ void Bullet::Update()
 	//ç¿ïWÇÃçXêV
 	position += 150 * targetVec * TimeManager::deltaTime;
 
-	Obj3d::Update(*Camera::camera);
+	Obj3d::Update(*Camera::mCamera);
 	cubeCol.position = position;
 	cubeCol.scale = scale;
 }

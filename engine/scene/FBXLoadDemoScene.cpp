@@ -40,8 +40,8 @@ void FBXLoadDemoScene::Initialize()
 		Model *model;
 		model = ModelManager::GetModel("Cube");
 		model->CreateVertex(vertices, indices);
-		model->mesh.vertices = vertices;
-		model->mesh.indices = indices;
+		model->mMesh.vertices = vertices;
+		model->mMesh.indices = indices;
 
 		spherefbx.back().SetModel(model);
 	}
@@ -53,9 +53,9 @@ void FBXLoadDemoScene::Initialize()
 
 	skydome.Initialize();
 	skydome.SetModel(ModelManager::Get()->GetModel("skydome"));
-	skydome.SetTexture(&TextureManager::Get()->white);
+	skydome.SetTexture(TextureManager::Get()->GetTexture("white"));
 	skydome.scale = { 10,10,10 };
-	skydome.color = { 1.f,1.f,1.f,1.0f };
+	skydome.color_ = { 1.f,1.f,1.f,1.0f };
 
 	debugCamera.Initialize();
 }
@@ -86,7 +86,7 @@ void FBXLoadDemoScene::Draw()
 	}
 
 	//スプライトの前描画(共通コマンド)
-	SpriteCommonBeginDraw(SpriteCommon::spriteCommon);
+	SpriteCommonBeginDraw(SpriteCommon::mSpriteCommon);
 
 }
 

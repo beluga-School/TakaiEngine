@@ -5,24 +5,24 @@
 #include <MathF.h>
 #include <ImguiManager.h>
 
-std::unique_ptr<Camera> Camera::defaultCam = std::make_unique<Camera>();
-Camera* Camera::camera = defaultCam.get();
+std::unique_ptr<Camera> Camera::mDefaultCam = std::make_unique<Camera>();
+Camera* Camera::mCamera = mDefaultCam.get();
 
 void Camera::Initialize()
 {
-	eye = { 0, 0, -5 };		//視点座標
-	target = {0, 0, 0};		//注視点座標
-	up = { 0, 1, 0 };		//上方向ベクトル
+	mEye = { 0, 0, -5 };		//視点座標
+	mTarget = {0, 0, 0};		//注視点座標
+	mUp = { 0, 1, 0 };		//上方向ベクトル
 	UpdatematView();
 
-	matProjection = Matrix4::PerspectiveFovLH(XMConvertToRadians(fovAngle), nearClip, farZ);
+	mMatProjection = Matrix4::PerspectiveFovLH(XMConvertToRadians(mFovAngle), mNearClip, mFarZ);
 }
 
 void Camera::UpdatematView()
 {
-	matView = Matrix4::LookAtLH(eye, target, up);
+	mMatView = Matrix4::LookAtLH(mEye, mTarget, mUp);
 
-	matProjection = Matrix4::PerspectiveFovLH(XMConvertToRadians(fovAngle), nearClip, farZ);
+	mMatProjection = Matrix4::PerspectiveFovLH(XMConvertToRadians(mFovAngle), mNearClip, mFarZ);
 }
 
 //void Camera::SetEye(Vector3 eye)

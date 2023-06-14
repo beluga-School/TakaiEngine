@@ -28,25 +28,23 @@ public:
 	void CreateWhiteTexture();
 
 	//外部から参照する用のリソース設定(書き換えてもテクスチャ側には影響しない)
-	D3D12_RESOURCE_DESC getResDesc;
+	D3D12_RESOURCE_DESC mGetResDesc;
 
-	Microsoft::WRL::ComPtr<ID3D12Resource> texBuff;
+	Microsoft::WRL::ComPtr<ID3D12Resource> mTexBuff;
 	
-	D3D12_GPU_DESCRIPTOR_HANDLE gpuHandle = { 0 };
+	D3D12_GPU_DESCRIPTOR_HANDLE mGpuHandle = { 0 };
 
-	D3D12_CPU_DESCRIPTOR_HANDLE cpuHandle = { 0 };
+	D3D12_CPU_DESCRIPTOR_HANDLE mCpuHandle = { 0 };
 
 private:
-	TexMetadata metadata{};
-	ScratchImage scratchImg{};
-	ScratchImage mipChain{};
+	TexMetadata mMetadata{};
+	ScratchImage mScratchImg{};
+	ScratchImage mMipChain{};
 
 	//シェーダリソースビュー設定
-	D3D12_SHADER_RESOURCE_VIEW_DESC srvDesc{};//設定構造体
+	D3D12_SHADER_RESOURCE_VIEW_DESC mSrvDesc{};//設定構造体
 	//リソース設定
-	D3D12_RESOURCE_DESC resDesc{};
-
-	DirectX12* dx12 = DirectX12::Get();
+	D3D12_RESOURCE_DESC mResDesc{};
 
 };
 
@@ -59,12 +57,12 @@ public:
 	};
 
 	//デスクリプタヒープの設定
-	D3D12_DESCRIPTOR_HEAP_DESC srvHeapDesc = {};
+	D3D12_DESCRIPTOR_HEAP_DESC mSrvHeapDesc = {};
 
-	ComPtr<ID3D12DescriptorHeap> srvHeap;
+	ComPtr<ID3D12DescriptorHeap> mSrvHeap;
 
 	//SRVヒープの大きさ
-	UINT SRVHandleSize = 0;
+	UINT mSRVHandleSize = 0;
 
 	void Initialize();
 	void PreLoad();
@@ -73,13 +71,12 @@ public:
 	
 	static Texture* GetTexture(const std::string &handle);
 
-public:
-	Texture white;
 
 private:
-	Texture bugfix;
+	//テクスチャの1枚目が、デバッグテキストの物になっちゃってるバグがあるのでそれを入れる用のテクスチャ
+	Texture bugfix_;
 
-	static std::map<std::string, Texture> textures;
+	static std::map<std::string, Texture> textures_;
 
 	TextureManager(){};
 	~TextureManager(){};

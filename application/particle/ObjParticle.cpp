@@ -58,9 +58,9 @@ void ParticleManager::Draw()
 CubeParticle::CubeParticle()
 {
 	cube.Initialize();
-	cube.SetTexture(&TextureManager::Get()->white);
+	cube.SetTexture(TextureManager::Get()->GetTexture("white"));
 
-	cube.color = {
+	cube.color_ = {
 		218.0f / 255.0f,
 		159.0f / 255.0f,
 		64.0f / 255.0f,
@@ -70,7 +70,7 @@ CubeParticle::CubeParticle()
 CubeParticle::CubeParticle(const Vector3& pos, const Vector3& scale, const float& moveDistance, const XMFLOAT4& color)
 {
 	cube.Initialize();
-	cube.SetTexture(&TextureManager::Get()->white);
+	cube.SetTexture(TextureManager::Get()->GetTexture("white"));
 
 	Set(pos,scale, moveDistance, color);
 }
@@ -89,7 +89,7 @@ void CubeParticle::Set(const Vector3& pos, const Vector3& scale, const float& mo
 		scale.z
 	};
 
-	cube.color = {
+	cube.color_ = {
 		color.x,
 		color.y,
 		color.z,
@@ -137,5 +137,5 @@ void CubeParticle::Update()
 	cube.rotation.y += rotateSpeed.y * TimeManager::deltaTime;
 	cube.rotation.z += rotateSpeed.z * TimeManager::deltaTime;
 
-	cube.Update(*Camera::camera);
+	cube.Update(*Camera::mCamera);
 }

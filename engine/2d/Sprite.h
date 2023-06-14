@@ -51,34 +51,34 @@ struct Sprite
 	void Draw();
 
 	//頂点バッファ
-	Microsoft::WRL::ComPtr<ID3D12Resource> vertBuff;
+	Microsoft::WRL::ComPtr<ID3D12Resource> mVertBuff;
 	//頂点バッファビュー
-	D3D12_VERTEX_BUFFER_VIEW vbView{};
+	D3D12_VERTEX_BUFFER_VIEW mVbView{};
 	//定数バッファ
-	ConstBuffer<ConstBufferDataSprite> constBuffer;
+	ConstBuffer<ConstBufferDataSprite> mConstBuffer;
 
 	//Z軸回りの回転角
-	float rotation = 0.0f;
+	float mRotation = 0.0f;
 	//座標
-	Vector3 position = { 0,0,0 };
+	Vector3 mPosition = { 0,0,0 };
 	//ワールド行列
-	XMMATRIX matWorld;
+	XMMATRIX mMatWorld;
 	//色
-	Color color = { 1,1,1,1 };
+	Color mColor = { 1,1,1,1 };
 
-	const Texture *tex;
+	const Texture *mTexture;
 
-	Vector2 size;
+	Vector2 mSize;
 
-	Vector2 anchorpoint = { 0.5f,0.5f };
+	Vector2 mAnchorpoint = { 0.5f,0.5f };
 
-	bool isFlipX = false;
-	bool isFlipY = false;
+	bool mIsFlipX = false;
+	bool mIsFlipY = false;
 
-	Vector2 texLeftTop = {0,0};
-	Vector2 cutSize;
+	Vector2 mTexLeftTop = {0,0};
+	Vector2 mCutSize;
 
-	bool isInvisible = false;
+	bool mIsInvisible = false;
 
 private:
 	void Init();
@@ -86,13 +86,13 @@ private:
 
 struct SpriteCommon
 {
-	PipelineSet pipelineSet;
+	PipelineSet mPipelineSet;
 	//射影行列
-	XMMATRIX matProjection{};
+	XMMATRIX mMatProjection{};
 
 	static void Initialize();
 
-	static SpriteCommon spriteCommon;
+	static SpriteCommon mSpriteCommon;
 };
 
 //スプライト共通グラフィックコマンドのセット

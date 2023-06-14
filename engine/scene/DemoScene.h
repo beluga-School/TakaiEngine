@@ -21,7 +21,7 @@ private:
 	void SetObject(LevelData& data);
 	
 	PipelineSet object3dPipelineSet;
-	Camera* camera = Camera::camera;
+	Camera* camera = Camera::mCamera;
 
 	Obj3d skydome;
 	Input::Keyboard* input = Input::Keyboard::Get();

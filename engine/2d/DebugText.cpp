@@ -32,11 +32,11 @@ void DebugText::Print(const SpriteCommon& spritecommon, const std::string& text,
 		int32_t fontIndexX = fontIndex % fontLineCount;
 
 		//ç¿ïWåvéZ
-		sprites[spriteIndex].position = { x + fontWidth * scale * i,y,0 };
-		sprites[spriteIndex].texLeftTop = 
+		sprites[spriteIndex].mPosition = { x + fontWidth * scale * i,y,0 };
+		sprites[spriteIndex].mTexLeftTop = 
 		{(float)fontIndexX * fontWidth,(float)fontIndexY * fontHeight};
-		sprites[spriteIndex].cutSize = { fontWidth,fontHeight };
-		sprites[spriteIndex].size = { fontWidth * scale,fontHeight * scale };
+		sprites[spriteIndex].mCutSize = { fontWidth,fontHeight };
+		sprites[spriteIndex].mSize = { fontWidth * scale,fontHeight * scale };
 
 		SpriteTransferVertexBuffer(sprites[spriteIndex]);
 
@@ -58,8 +58,8 @@ void DebugText::PostDraw()
 {
 	for (int32_t i = 0; i < spriteIndex; i++)
 	{
-		sprites[i].position = { 0,0,0 };
-		sprites[i].size = { 0,0 };
+		sprites[i].mPosition = { 0,0,0 };
+		sprites[i].mSize = { 0,0 };
 	}
 	spriteIndex = 0;
 }
