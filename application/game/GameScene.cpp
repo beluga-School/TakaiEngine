@@ -633,7 +633,7 @@ void Game::CameraUpdate()
 //	}
 //}
 
-void Game::SetAirEnemy(Vector3 position,bool hanten)
+void Game::SetAirEnemy(const Vector3& position,const bool& hanten)
 {
 	airEnemyList.emplace_back();
 	airEnemyList.back().Initialize(position);
@@ -643,7 +643,7 @@ void Game::SetAirEnemy(Vector3 position,bool hanten)
 	}
 }
 
-void Game::SetGroundEnemy(Vector3 position, bool hanten)
+void Game::SetGroundEnemy(const Vector3& position,const bool& hanten)
 {
 	gEnemyList.emplace_back();
 	gEnemyList.back().Initialize(position);

@@ -39,8 +39,8 @@ public:
 	//void SceneChange(Scene scene);
 	//void SceneChangeUpdate();
 
-	void SetAirEnemy(Vector3 position, bool hanten = false);
-	void SetGroundEnemy(Vector3 position, bool hanten = false);
+	void SetAirEnemy(const Vector3& position, const bool& hanten = false);
+	void SetGroundEnemy(const Vector3& position, const bool& hanten = false);
 private:
 
 	void Reset();

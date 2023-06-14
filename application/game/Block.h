@@ -36,7 +36,7 @@ public:
 	/// <param name="cubeCol"></param>
 	/// <param name="CD"></param>
 	/// <returns></returns>
-	bool CheckDirections(Cube cubeCol, CheckDirection CD)const;
+	bool CheckDirections(const Cube& cubeCol, const CheckDirection& CD)const;
 
 	void ExtractVec();
 };

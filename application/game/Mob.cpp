@@ -33,7 +33,7 @@ void Mob::AddGravity()
 	moveValue.y += jumpPower;
 }
 
-void Mob::CheckHitColStage(Stage stage)
+void Mob::CheckHitColStage(Stage& stage)
 {
 	Cube tempCol = cubeCol;
 

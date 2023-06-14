@@ -16,7 +16,7 @@ void Block::Update()
 	cubeCol.scale = scale;
 }
 
-bool Block::CheckDirections(Cube cubeCol, CheckDirection CD) const
+bool Block::CheckDirections(const Cube& cubeCol, const CheckDirection& CD) const
 {
 	switch (CD)
 	{

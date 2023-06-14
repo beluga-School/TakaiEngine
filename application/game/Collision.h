@@ -49,13 +49,12 @@ struct Triangle
 };
 
 //ƒŒƒC‚Æ•½–Ê‚Ì“–‚½‚è”»’è
-bool RayPlaneCollision(Ray ray,Plane plane);
+bool RayPlaneCollision(const Ray& ray,const Plane& plane);
 
 //y²‚ğ0‚Æ‚µ‚ÄAx‚Æz‚Ì2²‚ÅlŠp“¯m‚Å”»’è‚·‚é“–‚½‚è”»’è
-bool RectangleXZCollision(Cube cube1, Cube cube2);
+bool RectangleXZCollision(const Cube& cube1,const Cube& cube2);
 
-bool CubeCollision(Cube cube1, Cube cube2);
-bool PlaneCubeCollision(Plane plane, Cube cube);
+bool CubeCollision(const Cube& cube1,const Cube& cube2);
 
 bool BoxColAABB(const Obj3d& colA, const Obj3d& colB);
 

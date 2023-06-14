@@ -2,9 +2,9 @@
 #include "ViewProjection.h"
 #include "TimeManager.h"
 
-void Bullet::Initialize(Vector3 position)
+void Bullet::Initialize(const Vector3& position_)
 {
-	this->position = position;
+	position = position_;
 	model = ModelManager::Get()->GetModel("Cube");
 	texture = &TextureManager::Get()->white;
 	scale = { 5,5,5 };

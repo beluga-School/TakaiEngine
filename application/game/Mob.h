@@ -13,7 +13,7 @@ public:
 
 	void AddGravity();
 
-	void CheckHitColStage(Stage stage);
+	void CheckHitColStage(Stage& stage);
 	
 	/// <summary>
 	/// 移動方向ベクトルの抽出

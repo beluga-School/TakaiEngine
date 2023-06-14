@@ -33,7 +33,7 @@ void DemoScene::Initialize()
 	slime.position = { 0,0,0 };
 
 	LevelData* data = LevelLoader::Get()->Load("Scene/worldTest_Children");
-	SetObject(data);
+	SetObject(*data);
 }
 
 void DemoScene::Update()
@@ -47,7 +47,7 @@ void DemoScene::Update()
 	if (input->TriggerKey(DIK_R))
 	{
 		obj3ds.clear();
-		SetObject(LevelLoader::Get()->Load("Scene/worldTest_Children"));
+		SetObject(*LevelLoader::Get()->Load("Scene/worldTest_Children"));
 	}
 
 	camera->UpdatematView();
@@ -88,11 +88,11 @@ void DemoScene::End()
 	obj3ds.clear();
 }
 
-void DemoScene::SetObject(LevelData* data)
+void DemoScene::SetObject(LevelData& data)
 {
 	/*auto itr = particles.begin();
 	itr != particles.end(); itr++*/
-	for (auto objectData = data->objects.begin(); objectData != data->objects.end(); objectData++)
+	for (auto objectData = data.objects.begin(); objectData != data.objects.end(); objectData++)
 	{
 		//とりあえずキューブで配置
 		//TODO:file_nameから逆引きできるようにしたい

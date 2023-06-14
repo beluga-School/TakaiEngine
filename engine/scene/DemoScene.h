@@ -18,7 +18,7 @@ public:
 	void End();
 
 private:
-	void SetObject(LevelData* data);
+	void SetObject(LevelData& data);
 	
 	PipelineSet object3dPipelineSet;
 	Camera* camera = Camera::camera;

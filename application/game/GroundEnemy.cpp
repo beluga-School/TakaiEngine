@@ -3,12 +3,12 @@
 #include "TimeManager.h"
 #include "MathF.h"
 
-void GroundEnemy::Initialize(Vector3 position)
+void GroundEnemy::Initialize(const Vector3& position_)
 {
 	Mob::Initialize();
 	model = ModelManager::GetModel("beetle");
 	texture = TextureManager::GetTexture("slime");
-	this->position = position;
+	position = position_;
 	scale = { 5,5,5 };
 	rotation.y = -MathF::PIf / 2;
 	moveMag = 5;

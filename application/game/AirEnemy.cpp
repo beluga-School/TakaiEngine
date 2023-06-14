@@ -3,12 +3,12 @@
 #include "MathF.h"
 #include "Util.h"
 
-void AirEnemy::Initialize(Vector3 setPos)
+void AirEnemy::Initialize(const Vector3& position_)
 {
 	Mob::Initialize();
 	model = ModelManager::GetModel("firewisp");
 	texture = TextureManager::GetTexture("firewisp");
-	position = setPos;
+	position = position_;
 	scale = { 8,8,8 };
 	rotation.y = -MathF::PIf / 2;
 	moveMag = 5;

@@ -32,7 +32,7 @@ struct LevelData
 class LevelLoader
 {
 public:
-	LevelData *Load(std::string filename);
+	LevelData *Load(const std::string &filename);
 
 	static LevelLoader* Get()
 	{
@@ -41,7 +41,7 @@ public:
 	}
 
 private:
-	void ObjectLoad(LevelData* levelData, nlohmann::json& object);
+	void ObjectLoad(LevelData& levelData, nlohmann::json& object);
 
 	int32_t reservenum = 0;
 

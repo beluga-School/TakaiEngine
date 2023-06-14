@@ -3,7 +3,7 @@
 #include "MathF.h"
 #include <math.h>
 
-bool RayPlaneCollision(Ray ray, Plane plane)
+bool RayPlaneCollision(const Ray& ray, const Plane& plane)
 {
 	const float epsilon = 1.0e-5f;
 
@@ -30,7 +30,7 @@ bool RayPlaneCollision(Ray ray, Plane plane)
 	return true;
 }
 
-bool RectangleXZCollision(Cube cube1, Cube cube2)
+bool RectangleXZCollision(const Cube& cube1, const Cube& cube2)
 {
 	float DistanceX = cube1.position.x - cube2.position.x;
 	float DistanceZ = cube1.position.z - cube2.position.z;
@@ -46,7 +46,7 @@ bool RectangleXZCollision(Cube cube1, Cube cube2)
 	return false;
 }
 
-Vector3 RayPlaneInter(Ray ray, Plane plane)
+Vector3 RayPlaneInter(const Ray& ray, const Plane& plane)
 {
 	Vector3 inter = {0,0,0};
 
@@ -74,7 +74,7 @@ Vector3 RayPlaneInter(Ray ray, Plane plane)
 	return inter;
 }
 
-bool CubeCollision(Cube cube1, Cube cube2)
+bool CubeCollision(const Cube& cube1, const Cube& cube2)
 {
 	float DistanceX = cube1.position.x - cube2.position.x;
 	float DistanceY = cube1.position.y - cube2.position.y;

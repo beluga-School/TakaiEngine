@@ -70,7 +70,7 @@ void Stage::SetStage1()
 
 }
 
-void Stage::SetBlock(Vector3 pos, Vector3 scale)
+void Stage::SetBlock(const Vector3& pos,const Vector3& scale)
 {
 	blockList.emplace_back();
 	blockList.back().position = pos;

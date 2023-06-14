@@ -24,9 +24,9 @@ class CubeParticle : public IParticle
 {
 public:
 	CubeParticle();
-	CubeParticle(Vector3 pos,Vector3 scale, float moveDistance, XMFLOAT4 color);
+	CubeParticle(const Vector3& pos, const Vector3& scale, const float& moveDistance,const XMFLOAT4& color);
 
-	void Set(Vector3 pos, Vector3 scale,float moveDistance,XMFLOAT4 color);
+	void Set(const Vector3& pos, const Vector3& scale,const float& moveDistance,const XMFLOAT4& color);
 
 	void Update();
 private:
@@ -50,7 +50,7 @@ public:
 	void CreatePool();
 	void AllDelete();
 
-	void CreateCubeParticle(Vector3 pos, Vector3 scale, float moveDistance, XMFLOAT4 color);
+	void CreateCubeParticle(const Vector3& pos, const Vector3& scale, const float& moveDistance, const XMFLOAT4& color);
 
 	void Update();
 	void Draw();

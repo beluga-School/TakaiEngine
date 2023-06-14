@@ -10,7 +10,7 @@ public:
 		Initialize({0,0,0});
 	};
 
-	void Initialize(Vector3 setPos);
+	void Initialize(const Vector3& position);
 	void Update(const Stage& stage, const Mob& targetMob);
 	void Draw();
 

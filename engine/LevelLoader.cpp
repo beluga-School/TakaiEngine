@@ -2,7 +2,7 @@
 #include <fstream>
 #include <cassert>
 
-LevelData *LevelLoader::Load(std::string filename)
+LevelData *LevelLoader::Load(const std::string& filename)
 {
 	const std::string fullpath = "Resources/" + filename + ".json";
 
@@ -33,20 +33,20 @@ LevelData *LevelLoader::Load(std::string filename)
 		deserialized["name"].get<std::string>();
 	//正しいレベルデータファイルかチェック
 	assert(name.compare("scene") == 0);
-
+	
 	//レベルデータ格納用インスタンスを生成
-	LevelData* levelData = new LevelData();
+	LevelData *levelData = new LevelData();
 
 	//"objects"の全オブジェクトを走査
 	for (nlohmann::json& object : deserialized["objects"])
 	{
-		ObjectLoad(levelData, object);
+		ObjectLoad(*levelData, object);
 	}
 
 	return levelData;
 }
 
-void LevelLoader::ObjectLoad(LevelData* levelData, nlohmann::json& object)
+void LevelLoader::ObjectLoad(LevelData& levelData,nlohmann::json& object)
 {
 	//"type"データがなければ不正とする
 	assert(object.contains("type"));
@@ -58,9 +58,9 @@ void LevelLoader::ObjectLoad(LevelData* levelData, nlohmann::json& object)
 	if (type.compare("MESH") == 0)
 	{
 		//要素追加
-		levelData->objects.emplace_back(LevelData::ObjectData{});
+		levelData.objects.emplace_back(LevelData::ObjectData{});
 		//今追加した要素の参照を得る
-		LevelData::ObjectData& objectData = levelData->objects.back();
+		LevelData::ObjectData& objectData = levelData.objects.back();
 
 		if (object.contains("file_name")) {
 			objectData.fileName = object["file_name"];

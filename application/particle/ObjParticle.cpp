@@ -26,7 +26,7 @@ void ParticleManager::AllDelete()
 	}
 }
 
-void ParticleManager::CreateCubeParticle(Vector3 pos, Vector3 scale, float moveDistance, XMFLOAT4 color)
+void ParticleManager::CreateCubeParticle(const Vector3& pos, const Vector3& scale, const float& moveDistance, const XMFLOAT4& color)
 {
 	for (unique_ptr<CubeParticle>& pat : cubePool) {
 		if (pat->isdead) {
@@ -67,7 +67,7 @@ CubeParticle::CubeParticle()
 		1 };
 }
 
-CubeParticle::CubeParticle(Vector3 pos, Vector3 scale, float moveDistance, XMFLOAT4 color)
+CubeParticle::CubeParticle(const Vector3& pos, const Vector3& scale, const float& moveDistance, const XMFLOAT4& color)
 {
 	cube.Initialize();
 	cube.SetTexture(&TextureManager::Get()->white);
@@ -75,7 +75,7 @@ CubeParticle::CubeParticle(Vector3 pos, Vector3 scale, float moveDistance, XMFLO
 	Set(pos,scale, moveDistance, color);
 }
 
-void CubeParticle::Set(Vector3 pos, Vector3 scale, float moveDistance, XMFLOAT4 color)
+void CubeParticle::Set(const Vector3& pos, const Vector3& scale, const float& moveDistance, const XMFLOAT4& color)
 {
 	cube.position ={
 		pos.x,
