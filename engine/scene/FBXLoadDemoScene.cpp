@@ -33,9 +33,17 @@ void FBXLoadDemoScene::Initialize()
 		spherefbx.emplace_back();
 		spherefbx.back().Initialize();
 
-		spherefbx.back().model->CreateVertex(vertices, indices);
+		/*spherefbx.back().model->CreateVertex(vertices, indices);
 		spherefbx.back().model->mesh.vertices = vertices;
-		spherefbx.back().model->mesh.indices = indices;
+		spherefbx.back().model->mesh.indices = indices;*/
+
+		Model *model;
+		model = ModelManager::GetModel("Cube");
+		model->CreateVertex(vertices, indices);
+		model->mesh.vertices = vertices;
+		model->mesh.indices = indices;
+
+		spherefbx.back().SetModel(model);
 	}
 
 	//3dオブジェクト用のパイプライン生成
@@ -49,6 +57,7 @@ void FBXLoadDemoScene::Initialize()
 	skydome.scale = { 10,10,10 };
 	skydome.color = { 1.f,1.f,1.f,1.0f };
 
+	debugCamera.Initialize();
 }
 
 void FBXLoadDemoScene::Update()
@@ -61,6 +70,8 @@ void FBXLoadDemoScene::Update()
 	}
 
 	skydome.Update(*camera);
+
+	debugCamera.Update();
 }
 
 void FBXLoadDemoScene::Draw()
@@ -72,19 +83,7 @@ void FBXLoadDemoScene::Draw()
 	for (size_t i = 0; i < meshes.size(); i++)
 	{
 		spherefbx[i].Draw();
-		//auto vbView = vertexDatas[i].vbView; // そのメッシュに対応する頂点バッファ
-		//auto ibView = vertexDatas[i].ibView; // そのメッシュに対応する頂点バッファ
-
-		//DirectX12::Get()->commandList->SetGraphicsRootConstantBufferView(0, constantBuffer[currentIndex]->GetAddress());
-
-		//DirectX12::Get()->commandList->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
-		//DirectX12::Get()->commandList->IASetVertexBuffers(0, 1, &vbView);
-		//DirectX12::Get()->commandList->IASetIndexBuffer(&ibView);
-
-		//DirectX12::Get()->commandList->DrawIndexedInstanced(meshes[i].indices.size(), 1, 0, 0, 0); // インデックスの数分描画する
-
 	}
-
 
 	//スプライトの前描画(共通コマンド)
 	SpriteCommonBeginDraw(SpriteCommon::spriteCommon);

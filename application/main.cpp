@@ -123,10 +123,10 @@ int32_t WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_  HINSTANCE hPrevInstan
 	//SceneFactory *sceneFactory = new SceneFactory();
 	//scenemanager->SetSceneFactory(sceneFactory);
 
-	DemoScene *demo = new DemoScene();
-	//FBXLoadDemoScene* loaddemo = new FBXLoadDemoScene();
+	//DemoScene *demo = new DemoScene();
+	FBXLoadDemoScene* loaddemo = new FBXLoadDemoScene();
 	//Game *game = new Game();
-	scenemanager->SetScene(demo);
+	scenemanager->SetScene(loaddemo);
 
 #pragma endregion •`‰æ‰Šú‰»ˆ—
 

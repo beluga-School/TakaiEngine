@@ -15,15 +15,16 @@ void Game::Initialize()
 	geometryObjectPipelineSet = CreateGeometryPipeline();
 
 	//スプライト
+	//天球を暗くする
+	ModelManager::Get()->GetModel("skydome")->material.ambient = { 0,0,0 };
+	ModelManager::Get()->GetModel("skydome")->material.diffuse = { 0,0,0 };
+	ModelManager::Get()->GetModel("skydome")->material.specular = { 0,0,0 };
 
 	skydome.Initialize();
 	skydome.SetModel(ModelManager::Get()->GetModel("skydome"));
 	skydome.SetTexture(&TextureManager::Get()->white);
 	skydome.scale = { 10,10,10 };
 	skydome.color = { 0.05f,0.05f,0.05f,1.0f };
-	skydome.model->material.ambient = { 0,0,0 };
-	skydome.model->material.diffuse = { 0,0,0 };
-	skydome.model->material.specular = { 0,0,0 };
 
 	goalSprite.SetTexture(TextureManager::GetTexture("goal"));
 	goalSprite.SetPos({ Util::window_width / 2, Util::window_height / 2 });

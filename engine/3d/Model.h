@@ -60,18 +60,6 @@ private:
 class ModelManager
 {
 public:
-	/*Model cubeM;
-	Model skyDomeM;
-	Model triangleM;
-	Model boardM;
-	Model darumaM;
-	Model firewispM;
-	Model firewispSmoothingM;
-	Model playerM;
-	Model beetleM;
-	Model subDevM;
-	Model sphereM;*/
-
 	void PreLoad();
 
 	static void LoadModel(const std::string filepath, const std::string handle, bool smooth = false);

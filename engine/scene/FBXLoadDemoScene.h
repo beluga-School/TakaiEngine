@@ -4,6 +4,7 @@
 #include <ViewProjection.h>
 #include <Obj.h>
 #include <Input.h>
+#include <DebugCamera.h>
 
 class FBXLoadDemoScene : public IScene
 {
@@ -22,10 +23,12 @@ private:
 	InputKey* input = InputKey::Get();
 
 	//const wchar_t* modelFile = L"Resources/Cube_gltf/cube.glb";
-	const wchar_t* modelFile = L"Resources/Cube_two/Cube_two.glb";
-	//const wchar_t* modelFile = L"Resources/sphere_fbx/sphere.fbx";
+	//const wchar_t* modelFile = L"Resources/Cube_two/Cube_two.glb";
+	const wchar_t* modelFile = L"Resources/sphere_fbx/sphere.fbx";
 	//const wchar_t* modelFile = L"Resources/Alicia/Alicia_solid_MMD.fbx";
 	
+	DebugCamera debugCamera;
+
 	std::vector<Obj3d> spherefbx;
 
 	std::vector<Mesh> meshes;
