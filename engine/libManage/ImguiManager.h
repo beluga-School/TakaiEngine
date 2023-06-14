@@ -3,16 +3,17 @@
 #include "imgui_impl_win32.h"
 #include "imgui_impl_dx12.h"
 #include "Vector2.h"
+#include <string>
 
 class GUI
 {
 public:
-	GUI(const char* name);
+	GUI(const std::string& name);
 	
-	void Begin(Vector2 pos, Vector2 size);
+	void Begin(const Vector2& pos,const Vector2 &size);
 	void End();
 private:
-	const char* name;
+	std::string name;
 	bool setPosFlag = false;
 };
 

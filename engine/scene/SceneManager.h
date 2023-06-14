@@ -16,12 +16,13 @@ public:
 
 	//ファクトリーを使用したシーン切り替え(バグあり)
 	//void ChangeScene(const std::string& sceneName);
-	void SetScene(IScene* nextScene) {
-		nextscene = nextScene;
+	
+	void SetScene(IScene& nextScene_) {
+		nextscene = &nextScene_;
 	};
 
-	void SetSceneFactory(AbstractSceneFactory *sceneFactory) {
-		this->sceneFactory = sceneFactory;
+	void SetSceneFactory(const AbstractSceneFactory& sceneFactory_) {
+		sceneFactory = &sceneFactory_;
 	}
 
 	static SceneManager* Get()
@@ -32,7 +33,7 @@ public:
 
 private:
 	IScene* nextscene = nullptr;
-	AbstractSceneFactory* sceneFactory = nullptr;
+	const AbstractSceneFactory* sceneFactory = nullptr;
 
 	SceneManager(){};
 	~SceneManager() {

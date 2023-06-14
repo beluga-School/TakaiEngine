@@ -18,7 +18,7 @@ void SceneManager::Update()
 		nextscene = nullptr;
 
 		//シーンマネージャを現在シーンにセット
-		currentscene->SetManager(this);
+		currentscene->SetManager(*this);
 		//次シーンを初期化
 		currentscene->Initialize();
 	}

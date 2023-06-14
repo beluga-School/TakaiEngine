@@ -3,12 +3,12 @@
 #include "DirectXInit.h"
 #include "Texture.h"
 
-GUI::GUI(const char* name)
+GUI::GUI(const std::string& name_)
 {
-	this->name = name;
+	name = name_;
 }
 
-void GUI::Begin(Vector2 pos, Vector2 size)
+void GUI::Begin(const Vector2& pos,const Vector2 &size)
 {
 	if (setPosFlag == false)
 	{
@@ -16,7 +16,7 @@ void GUI::Begin(Vector2 pos, Vector2 size)
 		ImGui::SetNextWindowPos(ImVec2(pos.x, pos.y));
 		ImGui::SetNextWindowSize(ImVec2(size.x, size.y));
 	}
-	ImGui::Begin(name);
+	ImGui::Begin(name.c_str());
 }
 
 void GUI::End()

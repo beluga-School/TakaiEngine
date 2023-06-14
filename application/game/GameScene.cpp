@@ -26,31 +26,31 @@ void Game::Initialize()
 	skydome.scale = { 10,10,10 };
 	skydome.color = { 0.05f,0.05f,0.05f,1.0f };
 
-	goalSprite.SetTexture(TextureManager::GetTexture("goal"));
+	goalSprite.SetTexture(*TextureManager::GetTexture("goal"));
 	goalSprite.SetPos({ Util::window_width / 2, Util::window_height / 2 });
-	SpriteSetSize(goalSprite, { 1280,720 });
+	goalSprite.SetSize({ 1280, 720 });
 	
-	TitleSprite.SetTexture(TextureManager::GetTexture("Title"));
+	TitleSprite.SetTexture(*TextureManager::GetTexture("Title"));
 	TitleSprite.SetPos({ Util::window_width / 2,Util::window_height / 2 });
-	SpriteSetSize(TitleSprite, { 1280,720 });
+	TitleSprite.SetSize({ 1280,720 });
 
-	startSprite.SetTexture(TextureManager::GetTexture("Start"));
+	startSprite.SetTexture(*TextureManager::GetTexture("Start"));
 	startSprite.SetPos({ Util::window_width / 2,Util::window_height / 2 + 100 });
-	SpriteSetSize(startSprite, { 600,150 });
+	startSprite.SetSize({ 600,150 });
 	
-	spaceSprite.SetTexture(TextureManager::GetTexture("Space"));
+	spaceSprite.SetTexture(*TextureManager::GetTexture("Space"));
 	spaceSprite.SetPos({ Util::window_width / 2,Util::window_height / 2 + 200 });
 	spaceSprite.SetColor({1,1,1,0});
-	SpriteSetSize(spaceSprite, { 600,150 });
+	spaceSprite.SetSize({ 600,150 });
 
-	redScreenSprite.SetTexture(TextureManager::GetTexture("redScreen"));
+	redScreenSprite.SetTexture(*TextureManager::GetTexture("redScreen"));
 	redScreenSprite.SetPos({ Util::window_width / 2,Util::window_height / 2 });
-	SpriteSetSize(redScreenSprite, { Util::window_width,Util::window_height });
+	redScreenSprite.SetSize({ Util::window_width,Util::window_height });
 	
-	slimeSprite.SetTexture(TextureManager::GetTexture("slime"));
+	slimeSprite.SetTexture(*TextureManager::GetTexture("slime"));
 	slimeSprite.SetPos({ Util::window_width - 100,100 });
 
-	gameOverSprite.SetTexture(TextureManager::GetTexture("GameOver"));
+	gameOverSprite.SetTexture(*TextureManager::GetTexture("GameOver"));
 	gameOverSprite.SetPos({ Util::window_width / 2,Util::window_height / 2 });
 	
 	//ビュー変換行列(透視投影)を計算

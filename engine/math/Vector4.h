@@ -11,7 +11,7 @@ struct Vector4
 		w = 0;
 	};
 
-	Vector4(float x, float y, float z, float w) {
+	Vector4(const float& x,const float& y,const float& z,const float& w) {
 		vec = { x,y,z };
 		this->w = w;
 	};

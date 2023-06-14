@@ -15,10 +15,10 @@ Matrix4::Matrix4()
 }
 
 Matrix4::Matrix4(
-	float x00, float x01, float x02, float x03,
-	float x10, float x11, float x12, float x13,
-	float x20, float x21, float x22, float x23,
-	float x30, float x31, float x32, float x33)
+	const float& x00,const float& x01,const float& x02,const float& x03,
+	const float& x10,const float& x11,const float& x12,const float& x13,
+	const float& x20,const float& x21,const float& x22,const float& x23,
+	const float& x30,const float& x31,const float& x32,const float& x33)
 {
 	m[0][0] = x00; m[0][1] = x01; m[0][2] = x02; m[0][3] = x03;
 	m[1][0] = x10; m[1][1] = x11; m[1][2] = x12; m[1][3] = x13;
@@ -68,7 +68,7 @@ Vector3 Matrix4::ExtractAxisZ()
 	return Vector3(m[2][0], m[2][1], m[2][2]);
 }
 
-Matrix4 Matrix4::RotArbitrary(Vector3 axis, float rad)
+Matrix4 Matrix4::RotArbitrary(Vector3& axis,const float& rad)
 {
 	//クオータニオンというもの
 	axis.normalize();
@@ -105,7 +105,7 @@ Matrix4 Matrix4::RotArbitrary(Vector3 axis, float rad)
 	);
 }
 
-Matrix4 Matrix4::rotateX(float angle)
+Matrix4 Matrix4::rotateX(const float& angle)
 {
 	Matrix4 result = Matrix4::Identity();
 
@@ -117,7 +117,7 @@ Matrix4 Matrix4::rotateX(float angle)
 	return result;
 }
 
-Matrix4 Matrix4::rotateY(float angle)
+Matrix4 Matrix4::rotateY(const float& angle)
 {
 	Matrix4 result = Matrix4::Identity();
 
@@ -129,7 +129,7 @@ Matrix4 Matrix4::rotateY(float angle)
 	return result;
 }
 
-Matrix4 Matrix4::rotateZ(float angle)
+Matrix4 Matrix4::rotateZ(const float& angle)
 {
 	Matrix4 result = Matrix4::Identity();
 
@@ -166,7 +166,7 @@ Vector3 Matrix4::transform(const Vector3& v, const Matrix4& m)
 	return result;
 }
 
-Matrix4 Matrix4::PerspectiveFovLH(float fovAngleY, float nearZ, float farZ)
+Matrix4 Matrix4::PerspectiveFovLH(const float& fovAngleY,const float& nearZ,const float& farZ)
 {
 
 	Matrix4 process1 = Matrix4::Identity();
@@ -192,7 +192,7 @@ Matrix4 Matrix4::PerspectiveFovLH(float fovAngleY, float nearZ, float farZ)
 	return perspective;
 }
 
-Matrix4 Matrix4::LookAtLH(Vector3 eye, Vector3 target, Vector3 up)
+Matrix4 Matrix4::LookAtLH(const Vector3& eye,const Vector3& target,const Vector3& up)
 {
 	Matrix4 camTrans = Matrix4::Identity();
 	camTrans = Matrix4::translate(-eye);
@@ -224,11 +224,11 @@ Matrix4 Matrix4::LookAtLH(Vector3 eye, Vector3 target, Vector3 up)
 	return lookAt;
 }
 
-float* Matrix4::operator[](int32_t i) {
+float* Matrix4::operator[](const int32_t& i) {
 	return m[i];
 }
 
-float& Matrix4::operator()(int32_t i, int32_t j) {
+float& Matrix4::operator()(const int32_t& i,const int32_t& j) {
 	return m[i][j];
 }
 

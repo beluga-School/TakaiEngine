@@ -1,7 +1,7 @@
 #include "DirectXInit.h"
 #include "Result.h"
 
-void DirectX12::yobidasi()
+void DirectX12::Execution()
 {
 	AdapterSort();
 

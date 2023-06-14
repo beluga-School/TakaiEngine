@@ -5,8 +5,8 @@ void CreateDepthView();
 
 void ClearDrawScreen();
 
-void BasicObjectPreDraw(PipelineSet objectPipelineSet);
+void BasicObjectPreDraw(const PipelineSet& objectPipelineSet);
 
-void GeometryObjectPreDraw(PipelineSet geometryPipelineSet);
+void GeometryObjectPreDraw(const PipelineSet& geometryPipelineSet);
 
 void PostDraw();

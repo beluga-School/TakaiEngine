@@ -5,7 +5,7 @@ class Color
 {
 public:
 	Color();
-	Color(float r, float g, float b, float a);
+	Color(const float& r,const float& g,const float& b,const float& a);
 	Vector4 f4;
 };
 

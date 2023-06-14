@@ -19,10 +19,10 @@ struct ImportSettings
 class AssimpLoader
 {
 public:
-	bool Load(ImportSettings setting);	//モデルのロード
+	bool Load(const ImportSettings& setting);	//モデルのロード
 
 private:
-	void LoadMesh(Mesh& dst, const aiMesh* src, bool inverseU, bool inverseV);
+	void LoadMesh(Mesh& dst, const aiMesh* src, const bool& inverseU, const bool& inverseV);
 	void LoadTexture(const wchar_t* filename,Mesh& dst,const aiMaterial* src);
 
 };

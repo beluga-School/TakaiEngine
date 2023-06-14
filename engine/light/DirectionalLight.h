@@ -30,12 +30,12 @@ public://ä÷êî
 
 	void Initialize();
 	void Update();
-	void Draw(UINT rootParameterIndex);
+	void Draw(const UINT& rootParameterIndex);
 
 	void TransferBuffer();
 
-	void SetLightDirection(Vector3 lightdir);
-	void SetLightColor(Vector3 color);
+	void SetLightDirection(const Vector3& lightdir);
+	void SetLightColor(const Vector3& color);
 
 	bool active = false;
 

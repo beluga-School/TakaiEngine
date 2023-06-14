@@ -37,7 +37,8 @@ public:
 	static DirectX12* Get();
 
 private:
-	void yobidasi();
+	//‹N“®‚Ìˆê˜A‚Ì—¬‚ê‚ğÀs
+	void Execution();
 
 	void AdapterSort();
 
@@ -58,7 +59,7 @@ private:
 private:
 	DirectX12()
 	{
-		yobidasi();
+		Execution();
 	}
 	~DirectX12(){};
 

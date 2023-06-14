@@ -9,27 +9,6 @@ void SpriteCommon::Initialize()
 	spriteCommon = SpriteCommonCreate();
 }
 
-//void SpriteUpdate(Sprite& sprite, const SpriteCommon& spriteCommon)
-//{
-//	//ワールド行列の更新
-//	sprite.matWorld = XMMatrixIdentity();
-//	//Z軸回転
-//	sprite.matWorld *= XMMatrixRotationZ(XMConvertToRadians(sprite.rotation));
-//	//平行移動
-//	sprite.matWorld *= XMMatrixTranslation(sprite.position.x, sprite.position.y, sprite.position.z);
-//
-//	//定数バッファの転送
-//	result = sprite.constBuffer.buffer->Map(0, nullptr, (void**)&sprite.constBuffer.constBufferData);
-//	sprite.constBuffer.constBufferData->mat = sprite.matWorld * spriteCommon.matProjection;
-//	
-//	sprite.constBuffer.constBufferData->color.x = sprite.color.f4.vec.x;
-//	sprite.constBuffer.constBufferData->color.y = sprite.color.f4.vec.y;
-//	sprite.constBuffer.constBufferData->color.z = sprite.color.f4.vec.z;
-//	sprite.constBuffer.constBufferData->color.w = sprite.color.f4.w;
-//	
-//	sprite.constBuffer.buffer->Unmap(0, nullptr);
-//}
-
 void SpriteTransferVertexBuffer(const Sprite& sprite)
 {
 	result = S_FALSE;
@@ -110,31 +89,6 @@ void SpriteCommonBeginDraw(const SpriteCommon& spriteCommon)
 	dx12->commandList->SetDescriptorHeaps(1, texM->srvHeap.GetAddressOf());
 }
 
-//void SpriteDraw(const Sprite& sprite)
-//{
-//	DirectX12* dx12 = DirectX12::GetInstance();
-//	TextureManager* texM = TextureManager::GetInstance();
-//
-//	if (sprite.isInvisible)
-//	{
-//		return;
-//	}
-//
-//	dx12->commandList->IASetVertexBuffers(0, 1, &sprite.vbView);
-//
-//	dx12->commandList->SetGraphicsRootDescriptorTable(1, sprite.tex->gpuHandle);
-//
-//	dx12->commandList->SetGraphicsRootConstantBufferView(0, sprite.constBuffer.buffer->GetGPUVirtualAddress());
-//
-//	dx12->commandList->DrawInstanced(4, 1, 0, 0);
-//}
-
-void SpriteSetSize(Sprite& sprite, XMFLOAT2 size)
-{
-	sprite.size = size;
-	SpriteTransferVertexBuffer(sprite);
-}
-
 SpriteCommon SpriteCommonCreate()
 {
 	result = S_FALSE;
@@ -165,52 +119,58 @@ Sprite::Sprite()
 	Init();
 }
 
-Sprite::Sprite(Texture* tex, Vector2 anchorpoint)
+Sprite::Sprite(const Texture& tex, const Vector2& anchorpoint)
 {
-	this->tex = tex;
+	this->tex = &tex;
 
-	size = { (float)tex->getResDesc.Width,(float)tex->getResDesc.Height };
+	size = { (float)tex.getResDesc.Width,(float)tex.getResDesc.Height };
 
 	cutSize = size;
 
-	this->anchorpoint = { anchorpoint .x,anchorpoint .y};
+	this->anchorpoint = { anchorpoint.x,anchorpoint.y};
 
 	Init();
 }
 
-void Sprite::SetTexture(Texture* tex)
+void Sprite::SetTexture(const Texture& tex)
 {
-	this->tex = tex;
+	this->tex = &tex;
 
-	size = { (float)tex->getResDesc.Width,(float)tex->getResDesc.Height };
+	size = { (float)tex.getResDesc.Width,(float)tex.getResDesc.Height };
 
 	cutSize = size;
 
 	SpriteTransferVertexBuffer(*this);
 }
 
-void Sprite::SetAnchor(Vector2 anchorpoint)
+void Sprite::SetAnchor(const Vector2& anchorpoint)
 {
 	this->anchorpoint = { anchorpoint.x,anchorpoint.y };
 
 	SpriteTransferVertexBuffer(*this);
 }
 
-void Sprite::SetPos(Vector2 pos)
+void Sprite::SetPos(const Vector2& pos)
 {
 	position.x = pos.x;
 	position.y = pos.y;
 	position.z = 0;
 }
 
-void Sprite::SetRotation(float rotation)
+void Sprite::SetRotation(const float& rotation)
 {
 	this->rotation = rotation;
 }
 
-void Sprite::SetColor(Color color)
+void Sprite::SetColor(const Color& color)
 {
 	this->color = color;
+}
+
+void Sprite::SetSize(const Vector2& size_)
+{
+	size = size_;
+	SpriteTransferVertexBuffer(*this);
 }
 
 void Sprite::Update()

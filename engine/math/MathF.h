@@ -11,7 +11,7 @@ namespace MathF
 	/// </summary>
 	/// <param name="min">最小値</param>
 	/// <param name="max">最大値</param>
-	float GetRand(float min, float max);
+	float GetRand(const float& min,const float& max);
 
 	/// <summary>
 	/// 単振動をした値を返す
@@ -20,7 +20,7 @@ namespace MathF
 	/// <param name="amplitude">振幅</param>
 	/// <param name="period">周期</param>
 	/// <returns></returns>
-	float SimpleHarmonicMotion(float time, float amplitude = 10.0f, float period = 60.0f);
+	float SimpleHarmonicMotion(const float& time,const float& amplitude = 10.0f,const float& period = 60.0f);
 
 	/// <summary>
 	/// 円運動をした値を返す(複素数版)
@@ -29,7 +29,7 @@ namespace MathF
 	/// <param name="radius">中心点からの半径</param>
 	/// <param name="angle">角度</param>
 	/// <returns></returns>
-	Vector2 CircularMotion(Vector2 CenterPoint, float radius, float angle);
+	Vector2 CircularMotion(const Vector2& CenterPoint,const float& radius,const float& angle);
 
 	/// <summary>
 	/// 補完(等速)
@@ -38,20 +38,13 @@ namespace MathF
 	/// <param name="x2">移動したい距離</param>
 	/// <param name="flame">時間</param>
 	/// <returns>補完後の値</returns>
-	float Complement(float& x1, float& x2, float flame);
+	float Complement(const float& x1,const float& x2,const float& flame);
 
-	/// <summary>
-	/// イージング
-	/// </summary>
-	/// <param name="num">nowFlame/endFlame</param>
-	/// <returns></returns>
-	float EaseOutQuad(float num);
+	float GetAngleBetweenTwoLine(const Vector3& vec1,const Vector3& vec2);
 
-	float GetAngleBetweenTwoLine(Vector3 vec1,Vector3 vec2);
+	float AngleConvRad(const float& angle);
 
-	float AngleConvRad(float angle);
-
-	float RadConvAngle(float rad);
+	float RadConvAngle(const float& rad);
 
 	template <typename T>
 	T Abs(T a)

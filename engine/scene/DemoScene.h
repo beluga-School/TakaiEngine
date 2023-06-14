@@ -30,7 +30,7 @@ private:
 
 	std::list<Obj3d> obj3ds;
 
-	GUI gui = "position";
+	GUI gui = std::string("postion");
 
 	DebugCamera cameraObject;
 };

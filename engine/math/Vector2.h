@@ -7,7 +7,7 @@ public:
 	float x;
 	float y;
 
-	Vector2(float x, float y);
+	Vector2(const float& x,const float& y);
 	Vector2();
 
 	/// <summary>
@@ -49,11 +49,11 @@ public:
 	Vector2 operator *(const Vector2& other) const;
 	Vector2 operator /(const Vector2& other) const;
 
-	Vector2 operator *(int32_t& other) const;
-	Vector2 operator /(int32_t& other) const;
+	Vector2 operator *(const int32_t& other) const;
+	Vector2 operator /(const int32_t& other) const;
 
-	Vector2 operator *(float& other) const;
-	Vector2 operator /(float& other) const;
+	Vector2 operator *(const float& other) const;
+	Vector2 operator /(const float& other) const;
 
 	//é©êgÇèëÇ´ä∑Ç¶ÇÈÇ‚Ç¬ÇÁ
 	Vector2 operator +=(const Vector2& other);
@@ -61,13 +61,13 @@ public:
 	Vector2 operator *=(const Vector2& other);
 	Vector2 operator /=(const Vector2& other);
 
-	Vector2 operator +=(int32_t& scolor);
-	Vector2 operator -=(int32_t& scolor);
-	Vector2 operator *=(int32_t& scolor);
-	Vector2 operator /=(int32_t& scolor);
+	Vector2 operator +=(const int32_t& scolor);
+	Vector2 operator -=(const int32_t& scolor);
+	Vector2 operator *=(const int32_t& scolor);
+	Vector2 operator /=(const int32_t& scolor);
 
-	Vector2 operator +=(float& scolor);
-	Vector2 operator -=(float& scolor);
-	Vector2 operator *=(float& scolor);
-	Vector2 operator /=(float& scolor);
+	Vector2 operator +=(const float& scolor);
+	Vector2 operator -=(const float& scolor);
+	Vector2 operator *=(const float& scolor);
+	Vector2 operator /=(const float& scolor);
 };

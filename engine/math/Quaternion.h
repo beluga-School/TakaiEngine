@@ -14,7 +14,7 @@ public:
 		w = 1;
 	};
 
-	Quaternion(float x,float y,float z,float w) {
+	Quaternion(const float& x,const float& y,const float& z,const float& w) {
 		vector = { x,y,z };
 		this->w = w;
 	};
@@ -22,7 +22,7 @@ public:
 	//単位クォータニオン
 	static Quaternion IdentityQuaternion();
 
-	float Dot(Quaternion& r);
+	float Dot(const Quaternion& r);
 
 	/// <summary>
 	/// 共役クォータニオン
@@ -43,15 +43,15 @@ public:
 	Quaternion GetNormalize();
 
 	//クォータニオンとの掛け算
-	Quaternion operator*(Quaternion& r);
+	Quaternion operator*(const Quaternion& r);
 
 	Quaternion operator+();
 	Quaternion operator-();
 	
 	Quaternion& operator+=(const Quaternion& q);
 	Quaternion& operator-=(const Quaternion& q);
-	Quaternion& operator*=(float s);
-	Quaternion& operator/=(float s);
+	Quaternion& operator*=(const float& s);
+	Quaternion& operator/=(const float& s);
 
 	Quaternion GetInverse();
 
@@ -60,10 +60,10 @@ public:
 	Matrix4 MakeRotateMatrix();
 };
 
-Quaternion MakeAxisAngle(const Vector3& axis, float angle);
+Quaternion MakeAxisAngle(const Vector3& axis,const float& angle);
 
 //球面線形補間
-Quaternion Slerp(Quaternion& q,Quaternion& r, float t);
+Quaternion Slerp(const Quaternion& q,const Quaternion& r,const float& t);
 
 const Quaternion operator+(const Quaternion& q, const Quaternion& r);
 const Quaternion operator-(const Quaternion& q, const Quaternion& r);
@@ -71,4 +71,6 @@ const Quaternion operator*(const Quaternion& q, const float& f);
 const Quaternion operator*(const float& f, const Quaternion& q);
 const Quaternion operator/(const Quaternion& q, const float& f);
 
-Quaternion DirectionToDirection(const Vector3& u, const Vector3& v);;
+Quaternion DirectionToDirection(const Vector3& u, const Vector3& v);
+
+float Dot(const Quaternion& q,const Quaternion& r);

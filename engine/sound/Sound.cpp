@@ -77,7 +77,7 @@ SoundData SoundManager::SoundLoadWave(const char* filename)
 	return soundData;
 }
 
-void SoundManager::SoundPlayWave(const SoundData& soundData,bool loopFlag, float volume)
+void SoundManager::SoundPlayWave(const SoundData& soundData,const bool& loopFlag,const float& volume)
 {
 	//波形フォーマットからSourceVoiceの生成
 	IXAudio2SourceVoice* pSourceVoice = nullptr;

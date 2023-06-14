@@ -8,7 +8,7 @@ Color::Color()
 	f4.w = 1.f;
 }
 
-Color::Color(float r, float g, float b, float a)
+Color::Color(const float& r, const float& g, const float& b, const float& a)
 {
 	f4.vec.x = r;
 	f4.vec.y = g;

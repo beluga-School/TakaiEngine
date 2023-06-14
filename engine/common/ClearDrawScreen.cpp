@@ -91,7 +91,7 @@ void ClearDrawScreen()
 
 }
 
-void BasicObjectPreDraw(PipelineSet objectPipelineSet)
+void BasicObjectPreDraw(const PipelineSet& objectPipelineSet)
 {
 	DirectX12* dx12 = DirectX12::Get();
 	TextureManager* texM = TextureManager::Get();
@@ -128,7 +128,7 @@ void BasicObjectPreDraw(PipelineSet objectPipelineSet)
 	LightGroup::lightGroup->Draw(4);
 }
 
-void GeometryObjectPreDraw(PipelineSet geometryPipelineSet)
+void GeometryObjectPreDraw(const PipelineSet& geometryPipelineSet)
 {
 	DirectX12* dx12 = DirectX12::Get();
 	TextureManager* texM = TextureManager::Get();

@@ -45,7 +45,7 @@ public://関数
 	//更新
 	void Update();
 	//描画コマンド
-	void Draw(UINT index);
+	void Draw(const UINT& index);
 
 	//定数バッファを転送
 	void TransferBuffer();
@@ -55,20 +55,20 @@ public://関数
 	void SetAmbientColor(const Vector3& color);
 
 	//平行光源の有効フラグをセット
-	void SetDirLightActive(int32_t index, const bool& active);
+	void SetDirLightActive(const int32_t& index, const bool& active);
 
 	//平行光源のライト方向をセット
-	void SetDirLightDir(int32_t index, const Vector3& lightdir);
+	void SetDirLightDir(const int32_t& index, const Vector3& lightdir);
 	
 	//平行光源のライト方向をセット
-	void SetDirLightColor(int32_t index, const Vector3& lightcolor);
+	void SetDirLightColor(const int32_t& index, const Vector3& lightcolor);
 
 	//点光源
 	
-	void SetPointLightActive(int32_t index, const bool& active);
-	void SetPointLightPos(int32_t index, const Vector3& pos);
-	void SetPointLightColor(int32_t index, const Vector3& color);
-	void SetPointLightAtten(int32_t index, const Vector3& atten);
+	void SetPointLightActive(const int32_t& index, const bool& active);
+	void SetPointLightPos(const int32_t& index, const Vector3& pos);
+	void SetPointLightColor(const int32_t& index, const Vector3& color);
+	void SetPointLightAtten(const int32_t& index, const Vector3& atten);
 
 	//標準のライト設定
 	void DefaultLightSet();

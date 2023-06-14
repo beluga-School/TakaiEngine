@@ -35,7 +35,7 @@ std::wstring ToWideString(const std::string& str)
 	return wstr;
 }
 
-bool AssimpLoader::Load(ImportSettings settings)
+bool AssimpLoader::Load(const ImportSettings& settings)
 {
 	//書いてないならスキップ
 	if (settings.filename == nullptr)
@@ -85,7 +85,7 @@ bool AssimpLoader::Load(ImportSettings settings)
 	return true;
 }
 
-void AssimpLoader::LoadMesh(Mesh& dst, const aiMesh* src, bool inverseU, bool inverseV)
+void AssimpLoader::LoadMesh(Mesh& dst, const aiMesh* src, const bool& inverseU, const bool& inverseV)
 {
 	aiVector3D zero(0.f, 0.f, 0.f);
 	aiColor4D zeroColor(0.f, 0.f, 0.f,0.f);

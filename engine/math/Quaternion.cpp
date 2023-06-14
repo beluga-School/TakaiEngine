@@ -11,7 +11,7 @@ Quaternion Quaternion::IdentityQuaternion()
 	return temp;
 }
 
-float Quaternion::Dot(Quaternion& r)
+float Quaternion::Dot(const Quaternion& r)
 {
 	return (vector.x * r.vector.x) + (vector.y * r.vector.y) + (vector.z * r.vector.z) + (w * r.w);
 }
@@ -122,7 +122,7 @@ Matrix4 Quaternion::MakeRotateMatrix()
 	);
 }
 
-Quaternion Quaternion::operator*(Quaternion& r)
+Quaternion Quaternion::operator*(const Quaternion& r)
 {
 	Quaternion temp;
 	temp.vector = vector.GetCross(r.vector) + r.w * vector + w * r.vector;
@@ -159,7 +159,7 @@ Quaternion& Quaternion::operator-=(const Quaternion& q)
 	return *this;
 }
 
-Quaternion& Quaternion::operator*=(float s)
+Quaternion& Quaternion::operator*=(const float& s)
 {
 	vector.x *= s;
 	vector.y *= s;
@@ -168,7 +168,7 @@ Quaternion& Quaternion::operator*=(float s)
 	return *this;
 }
 
-Quaternion& Quaternion::operator/=(float s)
+Quaternion& Quaternion::operator/=(const float& s)
 {
 	vector.x /= s;
 	vector.y /= s;
@@ -177,7 +177,7 @@ Quaternion& Quaternion::operator/=(float s)
 	return *this;
 }
 
-Quaternion MakeAxisAngle(const Vector3& axis, float angle)
+Quaternion MakeAxisAngle(const Vector3& axis,const float& angle)
 {
 	Vector3 axis2 = axis;
 	axis2.normalize();
@@ -188,13 +188,15 @@ Quaternion MakeAxisAngle(const Vector3& axis, float angle)
 	return q;
 }
 
-Quaternion Slerp(Quaternion& q, Quaternion& r, float t)
+Quaternion Slerp(const Quaternion& q,const Quaternion& r,const float& t)
 {
-	float dot = q.Dot(r);
+	Quaternion temp = q;
+	float dot = Dot(temp,r);
+
 	if (dot < 0)
 	{
 		//Ç‡Ç§ï–ï˚ÇÃâÒì]ÇóòópÇ∑ÇÈ
-		q = -q;
+		temp = -temp;
 		dot = -dot;//ì‡êœÇ‡îΩì]
 	}
 
@@ -208,11 +210,11 @@ Quaternion Slerp(Quaternion& q, Quaternion& r, float t)
 	float EPSILON = 0.0005f;
 	if (dot > 1.0f - EPSILON)
 	{
-		return (1.0f - t) * q + t * r;
+		return (1.0f - t) * temp + t * r;
 	}
 
 	//ÇªÇÍÇºÇÍÇÃï‚ä‘åWêîÇóòópÇµÇƒï‚ä‘å„ÇÃQuaternionÇãÅÇﬂÇÈ
-	return scale0 * q + scale1 * r;
+	return scale0 * temp + scale1 * r;
 }
 
 const Quaternion operator+(const Quaternion& q, const Quaternion& r)
@@ -238,7 +240,7 @@ const Quaternion operator*(const float& f, const Quaternion& q)
 	return q * f;
 }
 
-const Quaternion operator/(const Quaternion& q, float s)
+const Quaternion operator/(const Quaternion& q,const float& s)
 {
 	Quaternion tmp(q);
 	return tmp /= s;
@@ -258,4 +260,9 @@ Quaternion DirectionToDirection(const Vector3& u, const Vector3& v)
 	float theta = std::acos(dot);
 
 	return MakeAxisAngle(axis,theta);
+}
+
+float Dot(const Quaternion& q, const Quaternion& r)
+{
+	return (q.vector.x * r.vector.x) + (q.vector.y * r.vector.y) + (q.vector.z * r.vector.z) + (q.w * r.w);
 }

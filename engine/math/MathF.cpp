@@ -4,7 +4,7 @@
 namespace MathF
 {
 	// ランダムな値を取得
-	float GetRand(float min, float max)
+	float GetRand(const float& min,const float& max)
 	{
 		// 乱数生成器
 		static std::random_device rd;
@@ -17,12 +17,12 @@ namespace MathF
 		return get_rand_uni_real(eng);
 	}
 
-	float SimpleHarmonicMotion(float time, float amplitude, float period)
+	float SimpleHarmonicMotion(const float& time,const float& amplitude,const float& period)
 	{
 		return amplitude * sinf(2 * PIf * time / period);
 	}
 
-	Vector2 CircularMotion(Vector2 CenterPoint, float radius, float angle)
+	Vector2 CircularMotion(const Vector2& CenterPoint,const float& radius,const float& angle)
 	{
 		Vector2 position;
 
@@ -32,32 +32,28 @@ namespace MathF
 		return position;
 	}
 
-	float Complement(float& x1, float& x2, float flame)
+	float Complement(const float& x1,const float& x2,const float& flame)
 	{
 		float distanceX = x2 - x1;//距離を出す
 		float dividedDistanceX = distanceX / flame;//距離をflameで割った値
 
-		x1 += dividedDistanceX;//距離をflameで割った値を足す
+		float temp = 0;
+		temp += dividedDistanceX;//距離をflameで割った値を足す
 
-		return x1;
+		return temp;
 	}
 
-	float EaseOutQuad(float num)
-	{
-		return 1 - (1 - num) * (1 - num);
-	}
-
-	float GetAngleBetweenTwoLine(Vector3 vec1, Vector3 vec2)
+	float GetAngleBetweenTwoLine(const Vector3& vec1,const Vector3& vec2)
 	{
 		return acosf(vec1.dot(vec2) / (vec1.length() * vec2.length()));
 	}
 
-	float AngleConvRad(float angle)
+	float AngleConvRad(const float& angle)
 	{
 		return PIf / 180 * angle;
 	}
 
-	float RadConvAngle(float rad) {
+	float RadConvAngle(const float& rad) {
 		return 180 / PIf * rad;
 	}
 }

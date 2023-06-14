@@ -11,8 +11,8 @@ public:
 	virtual void Draw() = 0;
 	virtual void End() = 0;
 
-	virtual void SetManager(SceneManager* SceneManager) {
-		sceneManager = SceneManager;
+	virtual void SetManager(SceneManager& SceneManager_) {
+		sceneManager = &SceneManager_;
 	}
 
 protected:

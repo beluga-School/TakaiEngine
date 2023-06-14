@@ -29,7 +29,7 @@ void DemoScene::Initialize()
 	ModelManager::LoadModel("boss","boss");
 	ModelManager::LoadModel("BlankCube","BlankCube");
 	
-	slime.SetTexture(TextureManager::GetTexture("slime"));
+	slime.SetTexture(*TextureManager::GetTexture("slime"));
 	slime.position = { 0,0,0 };
 
 	LevelData* data = LevelLoader::Get()->Load("Scene/worldTest_Children");
@@ -41,7 +41,7 @@ void DemoScene::Update()
 	if (input->TriggerKey(DIK_O))
 	{
 		Game* game = new Game();
-		sceneManager->SetScene(game);
+		sceneManager->SetScene(*game);
 		//sceneManager->ChangeScene("GAMEPLAY");
 	}
 
@@ -62,6 +62,9 @@ void DemoScene::Update()
 	slime.Update();
 
 	cameraObject.Update();
+
+	gui.Begin({ 100,100 }, { 1,1 });
+	gui.End();
 }
 
 void DemoScene::Draw()

@@ -2,7 +2,7 @@
 #include <math.h>
 
 //Vec2
-Vector2::Vector2(float x, float y) : x(x), y(y)
+Vector2::Vector2(const float& x, const float& y) : x(x), y(y)
 {
 }
 
@@ -76,7 +76,7 @@ Vector2 Vector2::operator /(const Vector2& other) const
 	return v;
 }
 
-Vector2 Vector2::operator *(int32_t& other) const
+Vector2 Vector2::operator *(const int32_t& other) const
 {
 	Vector2 v;
 	v.x = x * other;
@@ -84,7 +84,7 @@ Vector2 Vector2::operator *(int32_t& other) const
 	return v;
 }
 
-Vector2 Vector2::operator /(int32_t& other) const
+Vector2 Vector2::operator /(const int32_t& other) const
 {
 	Vector2 v;
 	v.x = x / other;
@@ -92,7 +92,7 @@ Vector2 Vector2::operator /(int32_t& other) const
 	return v;
 }
 
-Vector2 Vector2::operator *(float& other) const
+Vector2 Vector2::operator *(const float& other) const
 {
 	Vector2 v;
 	v.x = x * other;
@@ -100,7 +100,7 @@ Vector2 Vector2::operator *(float& other) const
 	return v;
 }
 
-Vector2 Vector2::operator /(float& other) const
+Vector2 Vector2::operator /(const float& other) const
 {
 	Vector2 v;
 	v.x = x / other;
@@ -141,7 +141,7 @@ Vector2 Vector2::operator /=(const Vector2& other)
 	return *this;
 }
 
-Vector2 Vector2::operator +=(int32_t& scolor)
+Vector2 Vector2::operator +=(const int32_t& scolor)
 {
 	x += scolor;
 	y += scolor;
@@ -149,7 +149,7 @@ Vector2 Vector2::operator +=(int32_t& scolor)
 	return *this;
 }
 
-Vector2 Vector2::operator -=(int32_t& scolor)
+Vector2 Vector2::operator -=(const int32_t& scolor)
 {
 	x -= scolor;
 	y -= scolor;
@@ -157,7 +157,7 @@ Vector2 Vector2::operator -=(int32_t& scolor)
 	return *this;
 }
 
-Vector2 Vector2::operator *=(int32_t& scolor)
+Vector2 Vector2::operator *=(const int32_t& scolor)
 {
 	x *= scolor;
 	y *= scolor;
@@ -165,7 +165,7 @@ Vector2 Vector2::operator *=(int32_t& scolor)
 	return *this;
 }
 
-Vector2 Vector2::operator /=(int32_t& scolor)
+Vector2 Vector2::operator /=(const int32_t& scolor)
 {
 	x /= scolor;
 	y /= scolor;
@@ -173,7 +173,7 @@ Vector2 Vector2::operator /=(int32_t& scolor)
 	return *this;
 }
 
-Vector2 Vector2::operator +=(float& scolor)
+Vector2 Vector2::operator +=(const float& scolor)
 {
 	x += scolor;
 	y += scolor;
@@ -181,7 +181,7 @@ Vector2 Vector2::operator +=(float& scolor)
 	return *this;
 }
 
-Vector2 Vector2::operator -=(float& scolor)
+Vector2 Vector2::operator -=(const float& scolor)
 {
 	x -= scolor;
 	y -= scolor;
@@ -189,7 +189,7 @@ Vector2 Vector2::operator -=(float& scolor)
 	return *this;
 }
 
-Vector2 Vector2::operator *=(float& scolor)
+Vector2 Vector2::operator *=(const float& scolor)
 {
 	x *= scolor;
 	y *= scolor;
@@ -197,7 +197,7 @@ Vector2 Vector2::operator *=(float& scolor)
 	return *this;
 }
 
-Vector2 Vector2::operator /=(float& scolor)
+Vector2 Vector2::operator /=(const float& scolor)
 {
 	x /= scolor;
 	y /= scolor;

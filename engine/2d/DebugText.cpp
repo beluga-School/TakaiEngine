@@ -1,15 +1,15 @@
-#include "DebugText.h"
+#include "DebugText.h"	
 
-void DebugText::Initialize(Texture* tex)
+void DebugText::Initialize(const Texture& tex)
 {
 	for (int32_t i = 0; i < _countof(sprites); i++)
 	{
 		sprites[i].SetTexture(tex);
-		//SpriteCreate(&sprites[i],tex,{0.5f,0.5f});
 	}
 }
 
-void DebugText::Print(const SpriteCommon& spritecommon, const std::string& text, float x, float y, float scale)
+void DebugText::Print(const SpriteCommon& spritecommon, const std::string& text,
+	const float& x,const float& y,const float& scale)
 {
 	//‘S‚Ä‚Ì•¶Žš‚É‚Â‚¢‚Ä
 	for (int32_t i = 0; i < text.size(); i++)

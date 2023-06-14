@@ -26,7 +26,7 @@ void LightGroup::Update()
 	}
 }
 
-void LightGroup::Draw(UINT index)
+void LightGroup::Draw(const UINT& index)
 {
 	DirectX12::Get()->commandList->SetGraphicsRootConstantBufferView(index,
 		constBuff.buffer->GetGPUVirtualAddress());
@@ -71,34 +71,34 @@ void LightGroup::SetAmbientColor(const Vector3& color)
 	dirty = true;
 }
 
-void LightGroup::SetDirLightActive(int32_t index, const bool& active)
+void LightGroup::SetDirLightActive(const int32_t& index, const bool& active)
 {
 	assert(0 <= index && index < DirLightNum);
 	dirLights[index].active = active;
 }
 
-void LightGroup::SetDirLightDir(int32_t index, const Vector3& lightdir)
+void LightGroup::SetDirLightDir(const int32_t& index, const Vector3& lightdir)
 {
 	assert(0 <= index && index < DirLightNum);
 	dirLights[index].direction = lightdir;
 	dirty = true;
 }
 
-void LightGroup::SetDirLightColor(int32_t index, const Vector3& lightcolor)
+void LightGroup::SetDirLightColor(const int32_t& index, const Vector3& lightcolor)
 {
 	assert(0 <= index && index < DirLightNum);
 	dirLights[index].color = lightcolor;
 	dirty = true;
 }
 
-void LightGroup::SetPointLightActive(int32_t index, const bool& active)
+void LightGroup::SetPointLightActive(const int32_t& index, const bool& active)
 {
 	assert(0 <= index && index < PointLightNum);
 
 	pointLights[index].active = active;
 }
 
-void LightGroup::SetPointLightPos(int32_t index, const Vector3& pos)
+void LightGroup::SetPointLightPos(const int32_t& index, const Vector3& pos)
 {
 	assert(0 <= index && index < PointLightNum);
 
@@ -106,7 +106,7 @@ void LightGroup::SetPointLightPos(int32_t index, const Vector3& pos)
 	dirty = true;
 }
 
-void LightGroup::SetPointLightColor(int32_t index, const Vector3& color)
+void LightGroup::SetPointLightColor(const int32_t& index, const Vector3& color)
 {
 	assert(0 <= index && index < PointLightNum);
 
@@ -114,7 +114,7 @@ void LightGroup::SetPointLightColor(int32_t index, const Vector3& color)
 	dirty = true;
 }
 
-void LightGroup::SetPointLightAtten(int32_t index, const Vector3& atten)
+void LightGroup::SetPointLightAtten(const int32_t& index, const Vector3& atten)
 {
 	assert(0 <= index && index < PointLightNum);
 

@@ -3,5 +3,5 @@
 
 std::string ConvertWCharToString(const wchar_t* t);
 
-std::wstring ConvertStringToWChar(std::string str);
+std::wstring ConvertStringToWChar(const std::string& str);
 

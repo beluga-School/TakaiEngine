@@ -104,7 +104,7 @@ int32_t WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_  HINSTANCE hPrevInstan
 	debugFont->Load(*L"Resources/debugfont.png");
 
 	DebugText debugText;
-	debugText.Initialize(debugFont.get());
+	debugText.Initialize(*debugFont);
 
 	//imgui‚Ì‰Šú‰»
 	ImguiManager *imguiManager = ImguiManager::GetInstance();
@@ -126,7 +126,7 @@ int32_t WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_  HINSTANCE hPrevInstan
 	DemoScene *demo = new DemoScene();
 	//FBXLoadDemoScene* loaddemo = new FBXLoadDemoScene();
 	//Game *game = new Game();
-	scenemanager->SetScene(demo);
+	scenemanager->SetScene(*demo);
 
 #pragma endregion •`‰æ‰Šú‰»ˆ—
 

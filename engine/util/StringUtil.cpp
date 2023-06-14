@@ -47,7 +47,7 @@ std::string ConvertWCharToString(const wchar_t* t)
     return (oRet);
 }
 
-wstring ConvertStringToWChar(std::string str)
+wstring ConvertStringToWChar(const std::string& str)
 {
     string wString(str);
 

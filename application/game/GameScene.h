@@ -13,6 +13,7 @@
 #include "Sound.h"
 #include "LightGroup.h"
 #include <IScene.h>
+#include "TEasing.h"
 
 //enum class Scene
 //{
@@ -92,6 +93,6 @@ private:
 	
 	bool colflag = false;
 
-	Util::lerpVariables sphereVal;
+	TEasing::easeTimer sphereVal;
 };
 

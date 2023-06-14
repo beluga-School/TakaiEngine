@@ -12,25 +12,25 @@ public:
 	Matrix4();	//単位行列を代入
 
 	Matrix4(
-		float x00,float x01,float x02,float x03,
-		float x10,float x11,float x12,float x13,
-		float x20,float x21,float x22,float x23,
-		float x30,float x31,float x32,float x33);
+		const float& x00,const float& x01,const float& x02,const float& x03,
+		const float& x10,const float& x11,const float& x12,const float& x13,
+		const float& x20,const float& x21,const float& x22,const float& x23,
+		const float& x30,const float& x31,const float& x32,const float& x33);
 
 	static Matrix4 Identity();
 	static Matrix4 scale(const Vector3& s);
 
-	static Matrix4 rotateX(float angle);
-	static Matrix4 rotateY(float angle);
-	static Matrix4 rotateZ(float angle);
+	static Matrix4 rotateX(const float& angle);
+	static Matrix4 rotateY(const float& angle);
+	static Matrix4 rotateZ(const float& angle);
 
 	static Matrix4 translate(const Vector3& t);
 	static Vector3 transform(const Vector3& v, const Matrix4& m);
 
 	//左手系のパースペクティブ射影変換行列を求める
-	static Matrix4 PerspectiveFovLH(float fovAngleY,float nearZ,float farZ);
+	static Matrix4 PerspectiveFovLH(const float& fovAngleY,const float& nearZ,const float& farZ);
 	//左手系のビュー変換行列を求める
-	static Matrix4 LookAtLH(Vector3 eye, Vector3 target, Vector3 up);
+	static Matrix4 LookAtLH(const Vector3& eye,const Vector3& target,const Vector3& up);
 
 	//横ベクトルを抽出する
 	Vector3 ExtractAxisX();
@@ -39,11 +39,11 @@ public:
 	//正面ベクトルを抽出する
 	Vector3 ExtractAxisZ();
 
-	static Matrix4 RotArbitrary(Vector3 axis,float rad);
+	static Matrix4 RotArbitrary(Vector3& axis,const float& rad);
 
-	float* operator[](int32_t i);
+	float* operator[](const int32_t& i);
 
-	float& operator()(int32_t i, int32_t j);
+	float& operator()(const int32_t& i,const int32_t& j);
 
 	Matrix4& operator=(const Matrix4& a);
 	//static Matrix4& operator*=(Matrix4& m1, Matrix4& m2);

@@ -2,41 +2,41 @@
 
 namespace TEasing
 {
-	float lerp(float start, float end, float timeRate);
+	float lerp(const float& start, const float& end, const float& timeRate);
 	
-	float InQuad(float timeRate);
-	float OutQuad(float timeRate);
-	float InQuad(float start, float end,float timeRate);
-	float OutQuad(float start, float end,float timeRate);
+	float InQuad(const float& timeRate);
+	float OutQuad(const float& timeRate);
+	float InQuad(const float& start, const float& end, const float& timeRate);
+	float OutQuad(const float& start, const float& end, const float& timeRate);
 
-	float InOutQuad(float timeRate);
-	float InOutQuad(float start,float end, float timeRate);
+	float InOutQuad(const float& timeRate);
+	float InOutQuad(const float& start, const float& end, const float& timeRate);
 
-	float OutBounce(float timeRate);
+	float OutBounce(const float& timeRate);
 
-	float OutBounce(float start, float end, float timeRate);
-	float InBounce(float start, float end, float timeRate);
-	float InOutBounce(float start, float end, float timeRate);
+	float OutBounce(const float& start, const float& end, const float& timeRate);
+	float InBounce(const float& start, const float& end, const float& timeRate);
+	float InOutBounce(const float& start, const float& end, const float& timeRate);
 
-	float InElastic(float timeRate);
-	float OutElastic(float timeRate);
+	float InElastic(const float& timeRate);
+	float OutElastic(const float& timeRate);
 
-	float InElastic(float start, float end, float timeRate);
-	float OutElastic(float start, float end, float timeRate);
+	float InElastic(const float& start, const float& end, const float& timeRate);
+	float OutElastic(const float& start, const float& end, const float& timeRate);
 
-	float InBack(float timeRate);
-	float InBack(float start, float end,float timeRate);
+	float InBack(const float& timeRate);
+	float InBack(const float& start, const float& end, const float& timeRate);
 
-	float OutBack(float timeRate);
-	float OutBack(float start, float end, float timeRate);
+	float OutBack(const float& timeRate);
+	float OutBack(const float& start, const float& end, const float& timeRate);
 
-	float InOutBack(float timeRate);
-	float InOutBack(float start, float end, float timeRate);
+	float InOutBack(const float& timeRate);
+	float InOutBack(const float& start, const float& end, const float& timeRate);
 
 	struct easeTimer
 	{
-		easeTimer(float maxTime = 1.0f) {
-			this->maxTime = maxTime;
+		easeTimer(const float& maxTime_ = 1.0f) {
+			maxTime = maxTime_;
 		}
 
 		float elapsedTime = 0.0f;	// 現在の経過時間
@@ -47,20 +47,21 @@ namespace TEasing
 		bool GetStarted() { return run || end; };
 
 		bool GetEnd() { return end; };
-		void SetEnd(bool end_) { end = end_; };
+		void SetEnd(const bool& end_) { end = end_; };
 
 		bool GetReverse() { return reverse; };
 		bool GetReverseEnd() { return reverseend; };
-		void SetReverseEnd(bool reverseend_) { reverseend = reverseend_; };
+		void SetReverseEnd(const bool& reverseend_) { reverseend = reverseend_; };
 
 		bool GetReverseStarted() { return reverse || reverseend; };
 
 		//イージングは起動しないが初期化する
 		void Reset();
 
-		// 呼び出したらイージングが起動
+		// 呼び出したらイージングが起動、タイマーを初期化する
 		void Start();
 
+		//イージングを逆方向に再生、現在の経過時間->0秒に向かって再生される
 		void ReverseStart();
 
 		// 経過時間を更新

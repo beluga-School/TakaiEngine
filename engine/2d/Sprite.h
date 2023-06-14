@@ -1,6 +1,7 @@
 #pragma once
 #include "Vector3.h"
 #include "Vector2.h"
+#include "Matrix4.h"
 #include "Color.h"
 
 #include "DirectXInit.h"
@@ -35,14 +36,16 @@ struct Sprite
 	//とりあえずテクスチャーを入れてスプライトを作る
 	//以前設定してたフリップとかは別で設定する
 	Sprite();
-	Sprite(Texture* tex,Vector2 anchorpoint = {0.5f,0.5f});
+	Sprite(const Texture& tex,const Vector2& anchorpoint = {0.5f,0.5f});
 
-	void SetTexture(Texture* tex);
-	void SetAnchor(Vector2 anchorpoint);
+	void SetTexture(const Texture& tex);
+	void SetAnchor(const Vector2& anchorpoint);
 
-	void SetPos(Vector2 pos);
-	void SetRotation(float rotation);
-	void SetColor(Color color);
+	void SetPos(const Vector2& pos);
+	void SetRotation(const float& rotation);
+	void SetColor(const Color& color);
+
+	void SetSize(const Vector2& size);
 
 	void Update();
 	void Draw();
@@ -57,23 +60,23 @@ struct Sprite
 	//Z軸回りの回転角
 	float rotation = 0.0f;
 	//座標
-	XMFLOAT3 position = { 0,0,0 };
+	Vector3 position = { 0,0,0 };
 	//ワールド行列
 	XMMATRIX matWorld;
 	//色
 	Color color = { 1,1,1,1 };
 
-	Texture *tex;
+	const Texture *tex;
 
-	XMFLOAT2 size;
+	Vector2 size;
 
-	XMFLOAT2 anchorpoint = { 0.5f,0.5f };
+	Vector2 anchorpoint = { 0.5f,0.5f };
 
 	bool isFlipX = false;
 	bool isFlipY = false;
 
-	XMFLOAT2 texLeftTop = {0,0};
-	XMFLOAT2 cutSize;
+	Vector2 texLeftTop = {0,0};
+	Vector2 cutSize;
 
 	bool isInvisible = false;
 
@@ -92,21 +95,9 @@ struct SpriteCommon
 	static SpriteCommon spriteCommon;
 };
 
-//スプライトの生成
-//void SpriteCreate(Sprite *sprite,Texture* tex, XMFLOAT2 anchorpoint,bool isFlipX = false, bool isFlipY = false);
-
-//スプライトの変数の初期化
-//void SpriteInit(Sprite& sprite, SpriteCommon& spriteCommon,XMFLOAT2 pos = {0,0}, float rotation = 0.0f, XMFLOAT4 color = {1,1,1,1});
-
 //スプライト共通グラフィックコマンドのセット
 void SpriteCommonBeginDraw(const SpriteCommon& spriteCommon);
 
-//void SpriteUpdate(Sprite& sprite,const SpriteCommon& spriteCommon);
-
 void SpriteTransferVertexBuffer(const Sprite& sprite);
-
-void SpriteSetSize(Sprite& sprite, XMFLOAT2 size);
-
-//void SpriteDraw(const Sprite& sprite);
 
 SpriteCommon SpriteCommonCreate();
