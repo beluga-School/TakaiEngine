@@ -32,8 +32,8 @@ void DemoScene::Initialize()
 	mSlime.SetTexture(*TextureManager::GetTexture("slime"));
 	mSlime.mPosition = { 0,0,0 };
 
-	LevelData* data = LevelLoader::Get()->Load("Scene/worldTest_Children");
-	SetObject(*data);
+	LevelLoader::Get()->Load("Scene/worldTest_Children", "children");
+	SetObject(*LevelLoader::Get()->GetData("children"));
 }
 
 void DemoScene::Update()
@@ -47,7 +47,9 @@ void DemoScene::Update()
 	if (Input::Keyboard::TriggerKey(DIK_R))
 	{
 		mObj3ds.clear();
-		SetObject(*LevelLoader::Get()->Load("Scene/worldTest_Children"));
+
+		LevelLoader::Get()->Load("Scene/worldTest_Children", "children");
+		SetObject(*LevelLoader::Get()->GetData("children"));
 	}
 
 	mCamera->UpdatematView();

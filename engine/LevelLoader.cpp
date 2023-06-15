@@ -2,7 +2,7 @@
 #include <fstream>
 #include <cassert>
 
-LevelData *LevelLoader::Load(const std::string& filename)
+void LevelLoader::Load(const std::string& filename, const std::string& handle)
 {
 	const std::string fullpath = "Resources/" + filename + ".json";
 
@@ -35,15 +35,20 @@ LevelData *LevelLoader::Load(const std::string& filename)
 	assert(name.compare("scene") == 0);
 	
 	//レベルデータ格納用インスタンスを生成
-	LevelData *levelData = new LevelData();
+	LevelData levelData;
 
 	//"objects"の全オブジェクトを走査
 	for (nlohmann::json& object : deserialized["objects"])
 	{
-		ObjectLoad(*levelData, object);
+		ObjectLoad(levelData, object);
 	}
 
-	return levelData;
+	LevelDatas[handle] = levelData;
+}
+
+LevelData* LevelLoader::GetData(const std::string& handle)
+{
+	return &LevelDatas[handle];
 }
 
 void LevelLoader::ObjectLoad(LevelData& levelData,nlohmann::json& object)

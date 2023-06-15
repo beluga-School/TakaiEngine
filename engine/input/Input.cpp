@@ -71,6 +71,11 @@ Pad::Pad()
 	sOldpState = {};
 }
 
+void Input::Pad::Initialize()
+{
+	Pad::CheckConnectPad();
+}
+
 bool Pad::CheckConnectPad(const int32_t& padIndex)
 {
 	sResult = XInputGetState(padIndex,&sPState);

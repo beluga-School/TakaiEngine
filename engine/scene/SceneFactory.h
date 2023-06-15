@@ -5,6 +5,6 @@ class SceneFactory : public AbstractSceneFactory
 {
 public:
 	//このゲーム用のシーンを生成
-	IScene* CreateScene(const std::string& sceneName)override;
+	//IScene* CreateScene(const std::string& sceneName)override;
 };
 

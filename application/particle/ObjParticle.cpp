@@ -15,7 +15,7 @@ void ParticleManager::CreatePool()
 	float maxPool = 200;
 	for (int32_t i = 0; i < maxPool; i++)
 	{
-		cubePool.emplace_back(new CubeParticle());
+		cubePool.emplace_back(std::make_unique<CubeParticle>());
 	}
 }
 
@@ -34,7 +34,9 @@ void ParticleManager::CreateCubeParticle(const Vector3& pos, const Vector3& scal
 			return;
 		}
 	}
-	cubePool.emplace_back(new CubeParticle(pos, scale, moveDistance, color));
+
+	
+	cubePool.emplace_back(std::make_unique<CubeParticle>(pos, scale, moveDistance, color));
 }
 
 void ParticleManager::Update()

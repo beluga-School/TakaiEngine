@@ -2,6 +2,7 @@
 #include <string>
 #include <Vector3.h>
 #include <vector>
+#include <unordered_map>
 
 //外部のライブラリで出た警告は無視
 #pragma warning (push)
@@ -32,7 +33,9 @@ struct LevelData
 class LevelLoader
 {
 public:
-	LevelData *Load(const std::string &filename);
+	void Load(const std::string &filename,const std::string& handle);
+
+	LevelData* GetData(const std::string& handle);
 
 	static LevelLoader* Get()
 	{
@@ -47,5 +50,7 @@ private:
 
 	LevelLoader(){};
 	~LevelLoader(){};
+
+	std::map<std::string, LevelData> LevelDatas;
 };
 

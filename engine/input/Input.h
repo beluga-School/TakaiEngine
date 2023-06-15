@@ -66,11 +66,13 @@ namespace Input
 	public:
 		Pad();
 
+		static void Initialize();
+
 		/// <summary>
-		/// キーボード、パッドの更新
+		/// パッドの更新
 		/// 一度だけ呼べば問題ない
-		/// </summary>
-		void Update();
+		/// 
+		static void Update();
 
 	public://コントローラー
 

@@ -19,14 +19,6 @@ public://変数
 	};
 
 public://関数
-	static DirectionalLight* Create() {
-		//3Dオブジェクトのインスタンスを生成
-		DirectionalLight* instance = new DirectionalLight();
-		//初期化
-		instance->Initialize();
-		//生成したインスタンスを返す
-		return instance;
-	};
 
 	void Initialize();
 	void Update();

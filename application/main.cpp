@@ -80,10 +80,9 @@ int32_t WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_  HINSTANCE hPrevInstan
 	}
 #endif  _DEBUG
 
-	Input::Keyboard* input_ = Input::Keyboard::Get();
-
-	input_->Initialize();
+	Input::Keyboard::Get()->Initialize();
 	Input::Mouse::Initialize();
+	Input::Pad::Initialize();
 
 	///---DirectX初期化処理　ここまで---///
 
@@ -152,8 +151,9 @@ int32_t WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_  HINSTANCE hPrevInstan
 		imguiManager->PreUpdate();
 
 		//更新処理
-		input_->Update();
+		Input::Keyboard::Get()->Update();
 		Input::Mouse::Update();
+		Input::Pad::Update();
 		
 		//gameScene_.Update();
 
@@ -191,7 +191,7 @@ int32_t WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_  HINSTANCE hPrevInstan
 
 		TimeManager::Update();
 
-		if (input_->PushKey(DIK_ESCAPE))
+		if (Input::Keyboard::Get()->PushKey(DIK_ESCAPE))
 		{
 			break;
 		}
@@ -203,7 +203,7 @@ int32_t WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_  HINSTANCE hPrevInstan
 
 	//入力デバイスの解放
 	Input::Mouse::Finalize();
-	input_->Finalize();
+	Input::Keyboard::Get()->Finalize();
 
 	//音声データは先にxAudio2を解放しなければならない
 	//xAudio2の解放
