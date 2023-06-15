@@ -65,33 +65,33 @@ void Game::Initialize()
 	firewispsmooth.Initialize();
 	firewispsmooth.position = { 60,-20,0 };
 	firewispsmooth.scale = { 10,10,10 };
-	firewispsmooth.model = ModelManager::Get()->GetModel("firewisp");
-	firewispsmooth.texture = TextureManager::Get()->GetTexture("white");
+	firewispsmooth.MODEL = ModelManager::Get()->GetModel("firewisp");
+	firewispsmooth.TEXTURE = TextureManager::Get()->GetTexture("white");
 	
 	firewispCheckTriangle.Initialize();
 	firewispCheckTriangle.position = { 30,-20,0 };
 	firewispCheckTriangle.scale = { 10,10,10 };
-	firewispCheckTriangle.model = ModelManager::Get()->GetModel("sphere");
-	firewispCheckTriangle.texture = TextureManager::Get()->GetTexture("white");
+	firewispCheckTriangle.MODEL = ModelManager::Get()->GetModel("sphere");
+	firewispCheckTriangle.TEXTURE = TextureManager::Get()->GetTexture("white");
 	
 	board.Initialize();
 	board.rotation = { 0,0,MathF::AngleConvRad(270) };
 	board.scale = { 10,10,10 };
-	board.model = ModelManager::Get()->ModelManager::Get()->GetModel("board");
-	board.texture = TextureManager::Get()->GetTexture("white");
+	board.MODEL = ModelManager::Get()->ModelManager::Get()->GetModel("board");
+	board.TEXTURE = TextureManager::Get()->GetTexture("white");
 	
 	triangle.Initialize();
 	triangle.position = { 40,-20,0 };
 	triangle.scale = { 10,10,10 };
-	triangle.model = ModelManager::Get()->GetModel("triangle");
-	triangle.texture = TextureManager::Get()->GetTexture("white");
+	triangle.MODEL = ModelManager::Get()->GetModel("triangle");
+	triangle.TEXTURE = TextureManager::Get()->GetTexture("white");
 
 	float a = -2.0f;
 	float b = 2.0f;
 
 	int32_t r = 0;
 
-	for (int32_t i = 0; i < max; i++)
+	for (int32_t i = 0; i < MAX_CUBE; i++)
 	{
 		cube[i].Initialize();
 		cube[i].SetModel(ModelManager::Get()->GetModel("Cube"));
@@ -178,14 +178,14 @@ void Game::Initialize()
 	//lightGroup->SetDirLightActive(1, false);
 	//lightGroup->SetDirLightActive(2, false);
 
-	LightGroup::mLightGroup->SetPointLightActive(0, true);
-	LightGroup::mLightGroup->SetPointLightPos(0, { 0.5f,1.0f,0.0f });
+	LightGroup::sLightGroup->SetPointLightActive(0, true);
+	LightGroup::sLightGroup->SetPointLightPos(0, { 0.5f,1.0f,0.0f });
 
 	lightObj.Initialize();
 	lightObj.position = { 0.5f,0,0 };
 	lightObj.scale = { 3,3,3 };
-	lightObj.model = ModelManager::Get()->GetModel("Cube");
-	lightObj.texture = TextureManager::Get()->GetTexture("white");
+	lightObj.MODEL = ModelManager::Get()->GetModel("Cube");
+	lightObj.TEXTURE = TextureManager::Get()->GetTexture("white");
 }
 
 //GUI gui2("Light");
@@ -323,7 +323,7 @@ void Game::Update()
 	//オブジェクトの更新
 	skydome.Update(*camera);
 
-	for (int32_t i = 0; i < max; i++)
+	for (int32_t i = 0; i < MAX_CUBE; i++)
 	{
 		cube[i].rotation += cuberotaVec[i] * TimeManager::deltaTime;
 		cube[i].Update(*camera);
@@ -407,17 +407,17 @@ void Game::Update()
 	planeCol.normal = { 0,1,0 };
 	planeCol.distance = board.position.y - 1.0f;
 
-	static float timer = 0.0f;
-	static float timechange = 1.0f;
-	if (timer > 1.0f)
+	static float sTimer = 0.0f;
+	static float sTimechange = 1.0f;
+	if (sTimer > 1.0f)
 	{
-		timechange = -1.0f;
+		sTimechange = -1.0f;
 	}
-	if (timer < -1.0f)
+	if (sTimer < -1.0f)
 	{
-		timechange = 1.0f;
+		sTimechange = 1.0f;
 	}
-	timer += timechange * TimeManager::deltaTime;
+	sTimer += sTimechange * TimeManager::deltaTime;
 
 	if (input->PushKey(DIK_7))sphereVal.Start();
 	sphereVal.Update();
@@ -448,27 +448,27 @@ void Game::Update()
 
 	Triangle triangleCol;
 	triangleCol.pos0 = {
-		triangle.position.x + (triangle.model->mMesh.vertices[0].pos.x * triangle.scale.x / 2),
-		triangle.position.y + (triangle.model->mMesh.vertices[0].pos.y * triangle.scale.y / 2),
-		triangle.position.z + (triangle.model->mMesh.vertices[0].pos.z * triangle.scale.z / 2)
+		triangle.position.x + (triangle.MODEL->mMesh.vertices[0].pos.x * triangle.scale.x / 2),
+		triangle.position.y + (triangle.MODEL->mMesh.vertices[0].pos.y * triangle.scale.y / 2),
+		triangle.position.z + (triangle.MODEL->mMesh.vertices[0].pos.z * triangle.scale.z / 2)
 	};
 
 	triangleCol.pos1 = {
-		triangle.position.x + (triangle.model->mMesh.vertices[1].pos.x * triangle.scale.x / 2),
-		triangle.position.y + (triangle.model->mMesh.vertices[1].pos.y * triangle.scale.y / 2),
-		triangle.position.z + (triangle.model->mMesh.vertices[1].pos.z * triangle.scale.z / 2)
+		triangle.position.x + (triangle.MODEL->mMesh.vertices[1].pos.x * triangle.scale.x / 2),
+		triangle.position.y + (triangle.MODEL->mMesh.vertices[1].pos.y * triangle.scale.y / 2),
+		triangle.position.z + (triangle.MODEL->mMesh.vertices[1].pos.z * triangle.scale.z / 2)
 	};
 
 	triangleCol.pos2 = {
-		triangle.position.x + (triangle.model->mMesh.vertices[2].pos.x * triangle.scale.x / 2),
-		triangle.position.y + (triangle.model->mMesh.vertices[2].pos.y * triangle.scale.y / 2),
-		triangle.position.z + (triangle.model->mMesh.vertices[2].pos.z * triangle.scale.z / 2)
+		triangle.position.x + (triangle.MODEL->mMesh.vertices[2].pos.x * triangle.scale.x / 2),
+		triangle.position.y + (triangle.MODEL->mMesh.vertices[2].pos.y * triangle.scale.y / 2),
+		triangle.position.z + (triangle.MODEL->mMesh.vertices[2].pos.z * triangle.scale.z / 2)
 	};
 
 	triangleCol.normal = {
-		triangle.model->mMesh.vertices[0].normal.x,
-		triangle.model->mMesh.vertices[0].normal.y,
-		triangle.model->mMesh.vertices[0].normal.z
+		triangle.MODEL->mMesh.vertices[0].normal.x,
+		triangle.MODEL->mMesh.vertices[0].normal.y,
+		triangle.MODEL->mMesh.vertices[0].normal.z
 	};
 
 	Sphere sphereColCheckTri;
@@ -495,7 +495,7 @@ void Game::Update()
 	
 	lightObj.Update(*camera);
 
-	LightGroup::mLightGroup->Update();
+	LightGroup::sLightGroup->Update();
 }
 
 void Game::Draw()
@@ -527,7 +527,7 @@ void Game::Draw()
 
 	skydome.Draw();
 
-	for (int32_t i = 0; i < max; i++)
+	for (int32_t i = 0; i < MAX_CUBE; i++)
 	{
 		cube[i].Draw();
 	}
@@ -537,7 +537,7 @@ void Game::Draw()
 	//GeometryObjectPreDraw(geometryObjectPipelineSet);
 
 	//スプライトの前描画(共通コマンド)
-	SpriteCommonBeginDraw(SpriteCommon::mSpriteCommon);
+	SpriteCommonBeginDraw(SpriteCommon::sSpriteCommon);
 
 	redScreenSprite.Draw();
 	slimeSprite.Draw();

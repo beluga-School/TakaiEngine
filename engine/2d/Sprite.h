@@ -23,7 +23,7 @@ using namespace DirectX;
 #include "Texture.h"
 
 //テクスチャの最大枚数(今は手作業でテクスチャの方と合わせてる)
-const int32_t spriteSRVCount = 2056;
+const int32_t SPRITE_SRV_COUNT = 2056;
 
 struct VertexPosUV
 {
@@ -66,7 +66,7 @@ struct Sprite
 	//色
 	Color mColor = { 1,1,1,1 };
 
-	const Texture *mTexture;
+	const Texture *mTEXTURE;
 
 	Vector2 mSize;
 
@@ -92,7 +92,7 @@ struct SpriteCommon
 
 	static void Initialize();
 
-	static SpriteCommon mSpriteCommon;
+	static SpriteCommon sSpriteCommon;
 };
 
 //スプライト共通グラフィックコマンドのセット

@@ -4,11 +4,11 @@
 using namespace Input;
 
 const float Pad::STICK_MAX = 32768.0f;
-XINPUT_STATE Pad::mPState{};
-XINPUT_STATE Pad::mOldpState{};
+XINPUT_STATE Pad::sPState{};
+XINPUT_STATE Pad::sOldpState{};
 
-uint8_t Keyboard::mKey[256]{};
-uint8_t Keyboard::mOldkey[256]{};
+uint8_t Keyboard::sKey[256]{};
+uint8_t Keyboard::sOldkey[256]{};
 
 Keyboard::Keyboard()
 {
@@ -29,74 +29,74 @@ Keyboard* Keyboard::Get()
 
 bool Keyboard::PushKey(const uint8_t& keys)
 {
-	return mKey[keys];
+	return sKey[keys];
 }
 
 bool Keyboard::TriggerKey(const uint8_t& keys)
 {
-	return mKey[keys] && !mOldkey[keys];
+	return sKey[keys] && !sOldkey[keys];
 }
 
 bool Keyboard::ReleaseKey(const uint8_t& keys)
 {
-	return !mKey[keys] && mOldkey[keys];;
+	return !sKey[keys] && sOldkey[keys];;
 }
 
 void Keyboard::DirectInputInit()
 {
 	//これはキーボードの入力を初期化してるんやね～～
-	result = DirectInput8Create(
+	sResult = DirectInput8Create(
 		WinAPI::Get()->w.hInstance, DIRECTINPUT_VERSION, IID_IDirectInput8, (void**)&mDirectInput, nullptr);
-	assert(SUCCEEDED(result));
+	assert(SUCCEEDED(sResult));
 }
 
 void Keyboard::DirectInputCreate()
 {
 	//キーボードデバイスの生成
-	result = mDirectInput->CreateDevice(GUID_SysKeyboard, &mKeyboard, NULL);
-	assert(SUCCEEDED(result));
+	sResult = mDirectInput->CreateDevice(GUID_SysKeyboard, &mKeyboard, NULL);
+	assert(SUCCEEDED(sResult));
 
-	result = mKeyboard->SetDataFormat(&c_dfDIKeyboard);	//標準形式
-	assert(SUCCEEDED(result));
+	sResult = mKeyboard->SetDataFormat(&c_dfDIKeyboard);	//標準形式
+	assert(SUCCEEDED(sResult));
 
 	
-	result = mKeyboard->SetCooperativeLevel(
+	sResult = mKeyboard->SetCooperativeLevel(
 		WinAPI::Get()->mHwnd, DISCL_FOREGROUND | DISCL_NONEXCLUSIVE | DISCL_NOWINKEY);
-	assert(SUCCEEDED(result));
+	assert(SUCCEEDED(sResult));
 }
 
 Pad::Pad()
 {
-	mPState = {};
-	mOldpState = {};
+	sPState = {};
+	sOldpState = {};
 }
 
 bool Pad::CheckConnectPad(const int32_t& padIndex)
 {
-	result = XInputGetState(padIndex,&mPState);
-	return result == ERROR_SUCCESS;
+	sResult = XInputGetState(padIndex,&sPState);
+	return sResult == ERROR_SUCCESS;
 }
 
 bool Pad::PushPadButton(const UINT& pad_num)
 {
-	return mPState.Gamepad.wButtons & pad_num;
+	return sPState.Gamepad.wButtons & pad_num;
 }
 
 bool Pad::TriggerPadButton(const UINT& pad_num)
 {
-	return (mPState.Gamepad.wButtons & pad_num) != 0 && (mOldpState.Gamepad.wButtons & pad_num) == 0;
+	return (sPState.Gamepad.wButtons & pad_num) != 0 && (sOldpState.Gamepad.wButtons & pad_num) == 0;
 }
 
 bool Pad::ReleasePadButton(const UINT& pad_num)
 {
-	return (mPState.Gamepad.wButtons & pad_num) == 0 && (mOldpState.Gamepad.wButtons & pad_num) != 0;
+	return (sPState.Gamepad.wButtons & pad_num) == 0 && (sOldpState.Gamepad.wButtons & pad_num) != 0;
 }
 
 Vector2 Pad::GetLStickMove()
 {
 	Vector2 temp = {
-		static_cast<float>(mPState.Gamepad.sThumbLX),
-		static_cast<float>(mPState.Gamepad.sThumbLY)
+		static_cast<float>(sPState.Gamepad.sThumbLX),
+		static_cast<float>(sPState.Gamepad.sThumbLY)
 	};
 	return { temp.x / STICK_MAX, temp.y / STICK_MAX };
 }
@@ -104,8 +104,8 @@ Vector2 Pad::GetLStickMove()
 Vector2 Pad::GetRStickMove()
 {
 	Vector2 temp = {
-		static_cast<float>(mPState.Gamepad.sThumbRX),
-		static_cast<float>(mPState.Gamepad.sThumbRY)
+		static_cast<float>(sPState.Gamepad.sThumbRX),
+		static_cast<float>(sPState.Gamepad.sThumbRY)
 	};
 	return { temp.x / STICK_MAX, temp.y / STICK_MAX };
 }
@@ -113,26 +113,26 @@ Vector2 Pad::GetRStickMove()
 bool Pad::LStickTilt(const STICK_VEC& vec)
 {
 	Vector2 temp = {
-		static_cast<float>(mPState.Gamepad.sThumbLX),
-		static_cast<float>(mPState.Gamepad.sThumbLY)
+		static_cast<float>(sPState.Gamepad.sThumbLX),
+		static_cast<float>(sPState.Gamepad.sThumbLY)
 	};
 
 	if (vec == UP)
 	{
-		return (mPState.Gamepad.sThumbLY > -XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE);
+		return (sPState.Gamepad.sThumbLY > -XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE);
 	}
 	if (vec == DOWN)
 	{
-		return (mPState.Gamepad.sThumbLY < XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE);
+		return (sPState.Gamepad.sThumbLY < XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE);
 	}
 	if (vec == RIGHT)
 	{
-		return (mPState.Gamepad.sThumbLX > -XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE);
+		return (sPState.Gamepad.sThumbLX > -XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE);
 	}
 	if (vec == LEFT)
 	{
 		
-		return (mPState.Gamepad.sThumbLX < XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE);
+		return (sPState.Gamepad.sThumbLX < XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE);
 	}
 
 	return false;
@@ -141,26 +141,26 @@ bool Pad::LStickTilt(const STICK_VEC& vec)
 bool Pad::RStickTilt(const STICK_VEC& vec)
 {
 	Vector2 temp = {
-		static_cast<float>(mPState.Gamepad.sThumbRX),
-		static_cast<float>(mPState.Gamepad.sThumbRY)
+		static_cast<float>(sPState.Gamepad.sThumbRX),
+		static_cast<float>(sPState.Gamepad.sThumbRY)
 	};
 
 	if (vec == UP)
 	{
-		return (mPState.Gamepad.sThumbRY > -XINPUT_GAMEPAD_RIGHT_THUMB_DEADZONE);
+		return (sPState.Gamepad.sThumbRY > -XINPUT_GAMEPAD_RIGHT_THUMB_DEADZONE);
 	}
 	if (vec == DOWN)
 	{
-		return (mPState.Gamepad.sThumbRY < XINPUT_GAMEPAD_RIGHT_THUMB_DEADZONE);
+		return (sPState.Gamepad.sThumbRY < XINPUT_GAMEPAD_RIGHT_THUMB_DEADZONE);
 	}
 	if (vec == RIGHT)
 	{
-		return (mPState.Gamepad.sThumbRX > -XINPUT_GAMEPAD_RIGHT_THUMB_DEADZONE);
+		return (sPState.Gamepad.sThumbRX > -XINPUT_GAMEPAD_RIGHT_THUMB_DEADZONE);
 	}
 	if (vec == LEFT)
 	{
 		
-		return (mPState.Gamepad.sThumbRX < XINPUT_GAMEPAD_RIGHT_THUMB_DEADZONE);
+		return (sPState.Gamepad.sThumbRX < XINPUT_GAMEPAD_RIGHT_THUMB_DEADZONE);
 	}
 
 	return false;
@@ -168,12 +168,12 @@ bool Pad::RStickTilt(const STICK_VEC& vec)
 
 BYTE Pad::PushLT()
 {
-	return mPState.Gamepad.bLeftTrigger > XINPUT_GAMEPAD_TRIGGER_THRESHOLD;
+	return sPState.Gamepad.bLeftTrigger > XINPUT_GAMEPAD_TRIGGER_THRESHOLD;
 }
 
 BYTE Pad::PushRT()
 {
-	return mPState.Gamepad.bRightTrigger > XINPUT_GAMEPAD_TRIGGER_THRESHOLD;
+	return sPState.Gamepad.bRightTrigger > XINPUT_GAMEPAD_TRIGGER_THRESHOLD;
 
 }
 
@@ -181,13 +181,13 @@ bool Pad::TriggerLT(const bool& hard)
 {
 	if (hard)
 	{
-		return (mPState.Gamepad.bLeftTrigger > 128) &&
-			(mOldpState.Gamepad.bLeftTrigger <= 128);
+		return (sPState.Gamepad.bLeftTrigger > 128) &&
+			(sOldpState.Gamepad.bLeftTrigger <= 128);
 	}
 	else
 	{
-		return (mPState.Gamepad.bLeftTrigger > XINPUT_GAMEPAD_TRIGGER_THRESHOLD) &&
-			(mOldpState.Gamepad.bLeftTrigger <= XINPUT_GAMEPAD_TRIGGER_THRESHOLD);
+		return (sPState.Gamepad.bLeftTrigger > XINPUT_GAMEPAD_TRIGGER_THRESHOLD) &&
+			(sOldpState.Gamepad.bLeftTrigger <= XINPUT_GAMEPAD_TRIGGER_THRESHOLD);
 
 	}
 }
@@ -196,13 +196,13 @@ bool Pad::TriggerRT(const bool& hard)
 {
 	if (hard)
 	{
-		return (mPState.Gamepad.bRightTrigger > 128) &&
-			(mOldpState.Gamepad.bRightTrigger <= 128);
+		return (sPState.Gamepad.bRightTrigger > 128) &&
+			(sOldpState.Gamepad.bRightTrigger <= 128);
 	}
 	else
 	{
-		return (mPState.Gamepad.bRightTrigger > XINPUT_GAMEPAD_TRIGGER_THRESHOLD) &&
-			(mOldpState.Gamepad.bRightTrigger <= XINPUT_GAMEPAD_TRIGGER_THRESHOLD);
+		return (sPState.Gamepad.bRightTrigger > XINPUT_GAMEPAD_TRIGGER_THRESHOLD) &&
+			(sOldpState.Gamepad.bRightTrigger <= XINPUT_GAMEPAD_TRIGGER_THRESHOLD);
 
 	}
 }
@@ -211,13 +211,13 @@ bool Pad::ReleaseLT(const bool& hard)
 {
 	if (hard)
 	{
-		return (mPState.Gamepad.bLeftTrigger <= 128) &&
-			(mOldpState.Gamepad.bLeftTrigger > 128);
+		return (sPState.Gamepad.bLeftTrigger <= 128) &&
+			(sOldpState.Gamepad.bLeftTrigger > 128);
 	}
 	else
 	{
-		return (mPState.Gamepad.bLeftTrigger <= XINPUT_GAMEPAD_TRIGGER_THRESHOLD) &&
-			(mOldpState.Gamepad.bLeftTrigger > XINPUT_GAMEPAD_TRIGGER_THRESHOLD);
+		return (sPState.Gamepad.bLeftTrigger <= XINPUT_GAMEPAD_TRIGGER_THRESHOLD) &&
+			(sOldpState.Gamepad.bLeftTrigger > XINPUT_GAMEPAD_TRIGGER_THRESHOLD);
 	}
 }
 
@@ -225,13 +225,13 @@ bool Pad::ReleaseRT(const bool& hard)
 {
 	if (hard)
 	{
-		return (mPState.Gamepad.bRightTrigger <= 128) &&
-			(mOldpState.Gamepad.bRightTrigger > 128);
+		return (sPState.Gamepad.bRightTrigger <= 128) &&
+			(sOldpState.Gamepad.bRightTrigger > 128);
 	}
 	else
 	{
-		return (mPState.Gamepad.bRightTrigger <= XINPUT_GAMEPAD_TRIGGER_THRESHOLD) &&
-			(mOldpState.Gamepad.bRightTrigger > XINPUT_GAMEPAD_TRIGGER_THRESHOLD);
+		return (sPState.Gamepad.bRightTrigger <= XINPUT_GAMEPAD_TRIGGER_THRESHOLD) &&
+			(sOldpState.Gamepad.bRightTrigger > XINPUT_GAMEPAD_TRIGGER_THRESHOLD);
 	}
 }
 
@@ -252,9 +252,9 @@ void Keyboard::Update()
 	//全キーの入力状態を取得する
 	for (int32_t i = 0; i < 256; i++)
 	{
-		mOldkey[i] = mKey[i];
+		sOldkey[i] = sKey[i];
 	}
-	mKeyboard->GetDeviceState(sizeof(mKey), mKey);
+	mKeyboard->GetDeviceState(sizeof(sKey), sKey);
 }
 
 void Keyboard::Finalize()
@@ -276,17 +276,17 @@ Vector2 Input::Mouse::GetVelocity()
 void Input::Mouse::Initialize()
 {
 	//キーボードデバイスの生成
-	result = Keyboard::Get()->mDirectInput->CreateDevice(GUID_SysMouse, &Mouse::Get()->mMouse, NULL);
-	assert(SUCCEEDED(result));
+	sResult = Keyboard::Get()->mDirectInput->CreateDevice(GUID_SysMouse, &Mouse::Get()->mMouse, NULL);
+	assert(SUCCEEDED(sResult));
 
 	//デバイスのフォーマットを設定
-	result = Mouse::Get()->mMouse->SetDataFormat(&c_dfDIMouse);
-	assert(SUCCEEDED(result));
+	sResult = Mouse::Get()->mMouse->SetDataFormat(&c_dfDIMouse);
+	assert(SUCCEEDED(sResult));
 
 	//ウィンドウ外ならマウスの取得をせず
 	//他のアプリケーションもそのデバイスを取得できるように
-	result = Mouse::Get()->mMouse->SetCooperativeLevel(WinAPI::Get()->mHwnd, DISCL_NONEXCLUSIVE | DISCL_FOREGROUND);
-	assert(SUCCEEDED(result));
+	sResult = Mouse::Get()->mMouse->SetCooperativeLevel(WinAPI::Get()->mHwnd, DISCL_NONEXCLUSIVE | DISCL_FOREGROUND);
+	assert(SUCCEEDED(sResult));
 }
 
 void Mouse::Update()
@@ -344,26 +344,26 @@ Mouse* Mouse::Get()
 
 void Input::Pad::Update()
 {
-	mOldpState = mPState;
+	sOldpState = sPState;
 
 	CheckConnectPad();
 
 	//デッドゾーン内の入力を0に抑える
-	if ((mPState.Gamepad.sThumbLX < XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE &&
-		mPState.Gamepad.sThumbLX > -XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE) &&
-		(mPState.Gamepad.sThumbLY < XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE &&
-			mPState.Gamepad.sThumbLY > -XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE))
+	if ((sPState.Gamepad.sThumbLX < XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE &&
+		sPState.Gamepad.sThumbLX > -XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE) &&
+		(sPState.Gamepad.sThumbLY < XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE &&
+			sPState.Gamepad.sThumbLY > -XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE))
 	{
-		mPState.Gamepad.sThumbLX = 0;
-		mPState.Gamepad.sThumbLY = 0;
+		sPState.Gamepad.sThumbLX = 0;
+		sPState.Gamepad.sThumbLY = 0;
 	}
 
-	if ((mPState.Gamepad.sThumbRX < XINPUT_GAMEPAD_RIGHT_THUMB_DEADZONE &&
-		mPState.Gamepad.sThumbRX > -XINPUT_GAMEPAD_RIGHT_THUMB_DEADZONE) &&
-		(mPState.Gamepad.sThumbRY < XINPUT_GAMEPAD_RIGHT_THUMB_DEADZONE &&
-			mPState.Gamepad.sThumbRY > -XINPUT_GAMEPAD_RIGHT_THUMB_DEADZONE))
+	if ((sPState.Gamepad.sThumbRX < XINPUT_GAMEPAD_RIGHT_THUMB_DEADZONE &&
+		sPState.Gamepad.sThumbRX > -XINPUT_GAMEPAD_RIGHT_THUMB_DEADZONE) &&
+		(sPState.Gamepad.sThumbRY < XINPUT_GAMEPAD_RIGHT_THUMB_DEADZONE &&
+			sPState.Gamepad.sThumbRY > -XINPUT_GAMEPAD_RIGHT_THUMB_DEADZONE))
 	{
-		mPState.Gamepad.sThumbRX = 0;
-		mPState.Gamepad.sThumbRY = 0;
+		sPState.Gamepad.sThumbRX = 0;
+		sPState.Gamepad.sThumbRY = 0;
 	}
 }

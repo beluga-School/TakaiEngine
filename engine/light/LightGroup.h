@@ -7,19 +7,19 @@
 #include <memory>
 
 //ライトの数
-static const int32_t sDirLightNum = 3;
+static const int32_t sDIRLIGHT_NUM = 3;
 
 //点光源の数
-static const int32_t sPointLightNum = 3;
+static const int32_t sPOINTLIGHT_NUM = 3;
 
 struct LightGroupData
 {
 	Vector3 mAmbienColor;
 	float mPad1;
 
-	DirectionalLight::ConstBufferData mDirLights[sDirLightNum];
+	DirectionalLight::ConstBufferData mDirLights[sDIRLIGHT_NUM];
 
-	PointLight::ConstBufferData mPointLights[sPointLightNum];
+	PointLight::ConstBufferData mPointLights[sPOINTLIGHT_NUM];
 };
 
 class LightGroup
@@ -28,7 +28,7 @@ public://変数
 	
 
 	//全てのオブジェクトで共通のライトデータ
-	static std::unique_ptr<LightGroup> mLightGroup;
+	static std::unique_ptr<LightGroup> sLightGroup;
 	/*static void SetLight(std::unique_ptr<LightGroup> light) {
 		lightGroup = light;
 	};*/
@@ -73,8 +73,8 @@ public://関数
 	//標準のライト設定
 	void DefaultLightSet();
 
-	DirectionalLight mDirLights[sDirLightNum];
-	PointLight mPointLights[sDirLightNum];
+	DirectionalLight mDirLights[sDIRLIGHT_NUM];
+	PointLight mPointLights[sDIRLIGHT_NUM];
 
 private:
 	//環境光の色

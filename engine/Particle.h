@@ -29,7 +29,7 @@ struct ParticleConstBufferData
 	XMMATRIX billboardMat;
 };
 
-const uint32_t vertexCount = 1000;
+const uint32_t VERTEX_COUNT = 1000;
 
 class Particle
 {

@@ -17,14 +17,14 @@ void DebugCamera::Update()
 	mSideVec = matWorld.ExtractAxisX();
 
 	int16_t inputCenter = (Keyboard::PushKey(DIK_DOWN) - Keyboard::PushKey(DIK_UP));
-	position.x += inputCenter * mCenterVec.x * mMoveSpeed;
-	position.y += inputCenter * mCenterVec.y * mMoveSpeed;
-	position.z += inputCenter * mCenterVec.z * mMoveSpeed;
+	position.x += inputCenter * mCenterVec.x * MOVE_SPEED;
+	position.y += inputCenter * mCenterVec.y * MOVE_SPEED;
+	position.z += inputCenter * mCenterVec.z * MOVE_SPEED;
 
 	int16_t inputSide = (Keyboard::PushKey(DIK_LEFT) - Keyboard::PushKey(DIK_RIGHT));
-	position.x += inputSide * mSideVec.x * mMoveSpeed;
-	position.y += inputSide * mSideVec.y * mMoveSpeed;
-	position.z += inputSide * mSideVec.z * mMoveSpeed;
+	position.x += inputSide * mSideVec.x * MOVE_SPEED;
+	position.y += inputSide * mSideVec.y * MOVE_SPEED;
+	position.z += inputSide * mSideVec.z * MOVE_SPEED;
 	
 	//À•W‚Ì’Ç]
 	Camera::sCamera->mEye = position + (mCenterVec * mRadius);

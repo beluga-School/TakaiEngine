@@ -165,8 +165,8 @@ namespace Input
 		/// <returns></returns>
 		static bool ReleaseRT(const bool& hard = false);
 	private://コントローラー
-		static XINPUT_STATE mPState;
-		static XINPUT_STATE mOldpState;
+		static XINPUT_STATE sPState;
+		static XINPUT_STATE sOldpState;
 	};
 
 	class Keyboard
@@ -198,8 +198,8 @@ namespace Input
 	private://キーボード
 		IDirectInputDevice8* mKeyboard;
 
-		static uint8_t mKey[256];
-		static uint8_t mOldkey[256];
+		static uint8_t sKey[256];
+		static uint8_t sOldkey[256];
 
 		void DirectInputInit();
 		void DirectInputCreate();

@@ -35,7 +35,7 @@ public:
 	void Initialize();
 	void UpdatematView();
 
-	static std::unique_ptr<Camera> mDefaultCam;
+	static std::unique_ptr<Camera> sDefaultCam;
 	static Camera *sCamera;
 
 private:

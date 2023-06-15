@@ -54,9 +54,9 @@ public:
 	bool notScaleFlag = false;
 
 	Obj3d* parent = nullptr;
-	const Texture *texture = nullptr;
+	const Texture *TEXTURE = nullptr;
 
-	const Model* model = nullptr;
+	const Model* MODEL = nullptr;
 
 public:
 

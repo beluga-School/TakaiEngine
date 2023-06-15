@@ -24,32 +24,32 @@ void DirectX12::AdapterSort()
 {
 	///---グラフィックボードのアダプタを列挙---///
 	//DXGIファクトリーの生成
-	result = CreateDXGIFactory(IID_PPV_ARGS(&mDxgifactory));
+	sResult = CreateDXGIFactory(IID_PPV_ARGS(&mDxgifactory));
 
 	//パフォーマンスが高いものから順に、すべてのアダプターを列挙する
 	for (UINT i = 0;
 		mDxgifactory->EnumAdapterByGpuPreference(i,
 			DXGI_GPU_PREFERENCE_HIGH_PERFORMANCE,
-			IID_PPV_ARGS(&tmpAdapter)) != DXGI_ERROR_NOT_FOUND;
+			IID_PPV_ARGS(&sTmpAdapter)) != DXGI_ERROR_NOT_FOUND;
 		i++)
 	{
 		//動的配列に追加する
-		adapters.push_back(tmpAdapter);
+		sAdapters.push_back(sTmpAdapter);
 	}
 	///------///
 
 	///---グラフィックスボードのアダプタを選別---///
-	for (size_t i = 0; i < adapters.size(); i++)
+	for (size_t i = 0; i < sAdapters.size(); i++)
 	{
 		DXGI_ADAPTER_DESC3 adapterDesc;
 
 		//アダプターの情報を取得する
-		adapters[i]->GetDesc3(&adapterDesc);
+		sAdapters[i]->GetDesc3(&adapterDesc);
 
 		//ソフトウェアデバイスを回避
 		if (!(adapterDesc.Flags & DXGI_ADAPTER_FLAG3_SOFTWARE)) {
 			//デバイスを採用してループを抜ける
-			tmpAdapter = adapters[i].Get();
+			sTmpAdapter = sAdapters[i].Get();
 			break;
 		}
 	}
@@ -72,9 +72,9 @@ void DirectX12::CreateDevice()
 	for (size_t i = 0; i < _countof(levels); i++)
 	{
 		//採用したアダプターでデバイスを生成
-		result = D3D12CreateDevice(tmpAdapter, levels[i],
+		sResult = D3D12CreateDevice(sTmpAdapter, levels[i],
 			IID_PPV_ARGS(&mDevice));
-		if (result == S_OK) {
+		if (sResult == S_OK) {
 			featureLevel = levels[i];
 			break;
 		}
@@ -86,23 +86,23 @@ void DirectX12::CreateDevice()
 void DirectX12::CreateCmdList()
 {
 	//コマンドアロケータを生成
-	result = mDevice->CreateCommandAllocator(
+	sResult = mDevice->CreateCommandAllocator(
 		D3D12_COMMAND_LIST_TYPE_DIRECT,
 		IID_PPV_ARGS(&mCommandAllocator));
-	assert(SUCCEEDED(result));
+	assert(SUCCEEDED(sResult));
 
 	//コマンドリストを生成
-	result = mDevice->CreateCommandList(0,
+	sResult = mDevice->CreateCommandList(0,
 		D3D12_COMMAND_LIST_TYPE_DIRECT,
 		mCommandAllocator.Get(), nullptr,
 		IID_PPV_ARGS(&mCmdList));
-	assert(SUCCEEDED(result));
+	assert(SUCCEEDED(sResult));
 
 	//コマンドキューの設定
 	D3D12_COMMAND_QUEUE_DESC commandQueueDesc{};
 	//コマンドキューを生成
-	result = mDevice->CreateCommandQueue(&commandQueueDesc, IID_PPV_ARGS(&mCmdQueue));
-	assert(SUCCEEDED(result));
+	sResult = mDevice->CreateCommandQueue(&commandQueueDesc, IID_PPV_ARGS(&mCmdQueue));
+	assert(SUCCEEDED(sResult));
 }
 
 void DirectX12::SetSwapChain()
@@ -121,14 +121,14 @@ void DirectX12::SetSwapChain()
 	ComPtr<IDXGISwapChain1> swapchain1;
 
 	//スワップチェーンの生成
-	result = mDxgifactory->CreateSwapChainForHwnd(
+	sResult = mDxgifactory->CreateSwapChainForHwnd(
 		mCmdQueue.Get(), 
 		WinAPI::Get()->mHwnd,
 		&mSwapChainDesc, 
 		nullptr, 
 		nullptr,
 		(IDXGISwapChain1**)&swapchain1);
-	assert(SUCCEEDED(result));
+	assert(SUCCEEDED(sResult));
 
 	swapchain1.As(&mSwapChain);
 }
@@ -180,7 +180,7 @@ void DirectX12::RenderTargetView()
 void DirectX12::CreateFence()
 {
 	//フェンスの生成
-	result = mDevice->CreateFence(mFenceVal, D3D12_FENCE_FLAG_NONE, IID_PPV_ARGS(&mFence));
+	sResult = mDevice->CreateFence(mFenceVal, D3D12_FENCE_FLAG_NONE, IID_PPV_ARGS(&mFence));
 }
 
 DirectX12* DirectX12::Get()

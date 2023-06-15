@@ -2,16 +2,16 @@
 #include "Result.h"
 #include "Util.h"
 
-SpriteCommon SpriteCommon::mSpriteCommon;
+SpriteCommon SpriteCommon::sSpriteCommon;
 
 void SpriteCommon::Initialize()
 {
-	mSpriteCommon = SpriteCommonCreate();
+	sSpriteCommon = SpriteCommonCreate();
 }
 
 void SpriteTransferVertexBuffer(const Sprite& sprite)
 {
-	result = S_FALSE;
+	sResult = S_FALSE;
 
 	VertexPosUV vertices[] = {
 		{{},{0.0f,1.0f}},
@@ -52,9 +52,9 @@ void SpriteTransferVertexBuffer(const Sprite& sprite)
 	vertices[RB].pos = { right,	bottom,	0.0f };
 	vertices[RT].pos = { right,	top,	0.0f };
 
-	if (sprite.mTexture->mTexBuff)
+	if (sprite.mTEXTURE->mTexBuff)
 	{
-		D3D12_RESOURCE_DESC resDesc = sprite.mTexture->mGetResDesc;
+		D3D12_RESOURCE_DESC resDesc = sprite.mTEXTURE->mGetResDesc;
 
 		float tex_left = sprite.mTexLeftTop.x / resDesc.Width;
 		float tex_right = (sprite.mTexLeftTop.x + sprite.mCutSize.x) / resDesc.Width;
@@ -69,7 +69,7 @@ void SpriteTransferVertexBuffer(const Sprite& sprite)
 
 	//頂点バッファへのデータ転送
 	VertexPosUV* vertMap = nullptr;
-	result = sprite.mVertBuff->Map(0, nullptr, (void**)&vertMap);
+	sResult = sprite.mVertBuff->Map(0, nullptr, (void**)&vertMap);
 	memcpy(vertMap, vertices, sizeof(vertices));
 	sprite.mVertBuff->Unmap(0, nullptr);
 }
@@ -91,7 +91,7 @@ void SpriteCommonBeginDraw(const SpriteCommon& spriteCommon)
 
 SpriteCommon SpriteCommonCreate()
 {
-	result = S_FALSE;
+	sResult = S_FALSE;
 
 	//スプライトの共通データを作成
 	SpriteCommon spriteCommon{};
@@ -108,7 +108,7 @@ SpriteCommon SpriteCommonCreate()
 
 Sprite::Sprite()
 {
-	this->mTexture = TextureManager::GetTexture("default");
+	this->mTEXTURE = TextureManager::GetTexture("default");
 
 	mPosition.x = 0;
 	mPosition.y = 0;
@@ -121,7 +121,7 @@ Sprite::Sprite()
 
 Sprite::Sprite(const Texture& tex, const Vector2& anchorpoint)
 {
-	this->mTexture = &tex;
+	this->mTEXTURE = &tex;
 
 	mSize = { (float)tex.mGetResDesc.Width,(float)tex.mGetResDesc.Height };
 
@@ -134,7 +134,7 @@ Sprite::Sprite(const Texture& tex, const Vector2& anchorpoint)
 
 void Sprite::SetTexture(const Texture& tex)
 {
-	this->mTexture = &tex;
+	this->mTEXTURE = &tex;
 
 	mSize = { (float)tex.mGetResDesc.Width,(float)tex.mGetResDesc.Height };
 
@@ -183,8 +183,8 @@ void Sprite::Update()
 	mMatWorld *= XMMatrixTranslation(mPosition.x, mPosition.y, mPosition.z);
 
 	//定数バッファの転送
-	result = mConstBuffer.mBuffer->Map(0, nullptr, (void**)&mConstBuffer.mConstBufferData);
-	mConstBuffer.mConstBufferData->mat = mMatWorld * SpriteCommon::mSpriteCommon.mMatProjection;
+	sResult = mConstBuffer.mBuffer->Map(0, nullptr, (void**)&mConstBuffer.mConstBufferData);
+	mConstBuffer.mConstBufferData->mat = mMatWorld * SpriteCommon::sSpriteCommon.mMatProjection;
 
 	mConstBuffer.mConstBufferData->color.x = mColor.f4.vec.x;
 	mConstBuffer.mConstBufferData->color.y = mColor.f4.vec.y;
@@ -206,7 +206,7 @@ void Sprite::Draw()
 
 	dx12->mCmdList->IASetVertexBuffers(0, 1, &mVbView);
 
-	dx12->mCmdList->SetGraphicsRootDescriptorTable(1, mTexture->mGpuHandle);
+	dx12->mCmdList->SetGraphicsRootDescriptorTable(1, mTEXTURE->mGpuHandle);
 
 	dx12->mCmdList->SetGraphicsRootConstantBufferView(0, mConstBuffer.mBuffer->GetGPUVirtualAddress());
 
@@ -217,7 +217,7 @@ void Sprite::Init()
 {
 	DirectX12* dx12 = DirectX12::Get();
 
-	result = S_FALSE;
+	sResult = S_FALSE;
 
 	//新規スプライトを生成
 	//Sprite sprite{};
@@ -246,7 +246,7 @@ void Sprite::Init()
 	resDesc.Layout = D3D12_TEXTURE_LAYOUT_ROW_MAJOR;
 
 	//頂点バッファ生成
-	result = dx12->mDevice->CreateCommittedResource(
+	sResult = dx12->mDevice->CreateCommittedResource(
 		&heapProp,
 		D3D12_HEAP_FLAG_NONE,
 		&resDesc,

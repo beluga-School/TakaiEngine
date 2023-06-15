@@ -10,10 +10,10 @@
 using namespace Microsoft::WRL;
 
 //アダプターの列挙用
-static std::vector<ComPtr<IDXGIAdapter4>> adapters;
+static std::vector<ComPtr<IDXGIAdapter4>> sAdapters;
 
 //ここに特定の名前をもつアダプターオブジェクトが入る
-static IDXGIAdapter4* tmpAdapter = nullptr;
+static IDXGIAdapter4* sTmpAdapter = nullptr;
 
 class DirectX12
 {

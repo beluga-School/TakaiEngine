@@ -3,18 +3,18 @@
 #include "DirectXInit.h"
 #include <memory>
 
-std::map<std::string, Texture> TextureManager::mTextures;
+std::map<std::string, Texture> TextureManager::sTextures;
 
 void Texture::CreateWhiteTexture()
 {
-	const size_t textureWidth = 256;
-	const size_t textureHeight = 256;
+	const size_t TEXTURE_WIDTH = 256;
+	const size_t TEXTURE_HEIGHT = 256;
 
-	const size_t imageDatacount = textureWidth * textureHeight;
+	const size_t IMAGE_DATA_COUNT = TEXTURE_WIDTH * TEXTURE_HEIGHT;
 	std::unique_ptr<XMFLOAT4[]> imageData;
-	imageData = std::make_unique<XMFLOAT4[]>(imageDatacount);
+	imageData = std::make_unique<XMFLOAT4[]>(IMAGE_DATA_COUNT);
 
-	for (size_t i = 0; i < imageDatacount; i++)
+	for (size_t i = 0; i < IMAGE_DATA_COUNT; i++)
 	{
 		imageData[i].x = 1.0f;
 		imageData[i].y = 1.0f;
@@ -39,14 +39,14 @@ void Texture::CreateWhiteTexture()
 	D3D12_RESOURCE_DESC textureResourceDesc{};
 	textureResourceDesc.Dimension = D3D12_RESOURCE_DIMENSION_TEXTURE2D;
 	textureResourceDesc.Format = DXGI_FORMAT_R32G32B32A32_FLOAT;
-	textureResourceDesc.Width = textureWidth;
-	textureResourceDesc.Height = textureHeight;
+	textureResourceDesc.Width = TEXTURE_WIDTH;
+	textureResourceDesc.Height = TEXTURE_HEIGHT;
 	textureResourceDesc.DepthOrArraySize = 1;
 	textureResourceDesc.MipLevels = 1;
 	textureResourceDesc.SampleDesc.Count = 1;
 
 	//テクスチャバッファの生成
-	result = DirectX12::Get()->mDevice->CreateCommittedResource(
+	sResult = DirectX12::Get()->mDevice->CreateCommittedResource(
 		&textureHeapProp,
 		D3D12_HEAP_FLAG_NONE,
 		&textureResourceDesc,
@@ -55,14 +55,14 @@ void Texture::CreateWhiteTexture()
 		IID_PPV_ARGS(&mTexBuff));
 
 	//テクスチャバッファにデータ転送
-	result = mTexBuff->WriteToSubresource(
+	sResult = mTexBuff->WriteToSubresource(
 		0,
 		nullptr,	//全領域へコピー
 		imageData.get(),	//元データアドレス
-		sizeof(XMFLOAT4) * textureWidth,	//1ラインサイズ
-		sizeof(XMFLOAT4) * imageDatacount	//全サイズ
+		sizeof(XMFLOAT4) * TEXTURE_WIDTH,	//1ラインサイズ
+		sizeof(XMFLOAT4) * IMAGE_DATA_COUNT	//全サイズ
 	);
-	assert(SUCCEEDED(result));
+	assert(SUCCEEDED(sResult));
 
 	TextureManager* tManager = TextureManager::Get();
 
@@ -103,17 +103,17 @@ void Texture::Load(const wchar_t& t)
 	mResDesc.SampleDesc.Count = 1;
 	mResDesc.Layout = D3D12_TEXTURE_LAYOUT_ROW_MAJOR;
 
-	result = LoadFromWICFile(
+	sResult = LoadFromWICFile(
 		&t,	//ここに読み込みたいファイルのパスを入れる
 		WIC_FLAGS_NONE,
 		&mMetadata, mScratchImg
 	);
 
 	//ミップマップ生成
-	result = GenerateMipMaps(
+	sResult = GenerateMipMaps(
 		mScratchImg.GetImages(), mScratchImg.GetImageCount(), mScratchImg.GetMetadata(),
 		TEX_FILTER_DEFAULT, 0, mMipChain);
-	if (SUCCEEDED(result)) {
+	if (SUCCEEDED(sResult)) {
 		mScratchImg = std::move(mMipChain);
 		mMetadata = mScratchImg.GetMetadata();
 	}
@@ -138,7 +138,7 @@ void Texture::Load(const wchar_t& t)
 	textureResourceDesc.SampleDesc.Count = 1;
 
 	//テクスチャバッファの生成
-	result = DirectX12::Get()->mDevice->CreateCommittedResource(
+	sResult = DirectX12::Get()->mDevice->CreateCommittedResource(
 		&textureHeapProp,
 		D3D12_HEAP_FLAG_NONE,
 		&textureResourceDesc,
@@ -151,14 +151,14 @@ void Texture::Load(const wchar_t& t)
 		//ミップマップレベルを指定してイメージを取得
 		const Image* img = mScratchImg.GetImage(j, 0, 0);
 		//テクスチャバッファにデータ転送
-		result = mTexBuff->WriteToSubresource(
+		sResult = mTexBuff->WriteToSubresource(
 			(UINT)j,
 			nullptr,	//全領域へコピー
 			img->pixels,	//元データアドレス
 			(UINT)img->rowPitch,	//1ラインサイズ
 			(UINT)img->slicePitch	//全サイズ
 		);
-		assert(SUCCEEDED(result));
+		assert(SUCCEEDED(sResult));
 	}
 
 	TextureManager *tManager = TextureManager::Get();
@@ -198,11 +198,11 @@ void TextureManager::Initialize()
 	//デスクリプタヒープの設定
 	mSrvHeapDesc.Type = D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV;
 	mSrvHeapDesc.Flags = D3D12_DESCRIPTOR_HEAP_FLAG_SHADER_VISIBLE;//シェーダーから見えるように
-	mSrvHeapDesc.NumDescriptors = kMaxSRVCount;
+	mSrvHeapDesc.NumDescriptors = K_MAX_SRV_COUNT;
 
 	//設定を元にSRV用デスクリプタヒープを生成
-	result = dx12->mDevice->CreateDescriptorHeap(&mSrvHeapDesc, IID_PPV_ARGS(&mSrvHeap));
-	assert(SUCCEEDED(result));
+	sResult = dx12->mDevice->CreateDescriptorHeap(&mSrvHeapDesc, IID_PPV_ARGS(&mSrvHeap));
+	assert(SUCCEEDED(sResult));
 }
 
 void TextureManager::PreLoad()
@@ -243,10 +243,10 @@ std::wstring convString(const std::string& input)
 
 void TextureManager::Load(const std::string &filepath, const std::string &handle)
 {
-	mTextures[handle].Load(*convString(filepath).c_str());
+	sTextures[handle].Load(*convString(filepath).c_str());
 }
 
 Texture* TextureManager::GetTexture(const std::string &handle)
 {
-	return &mTextures[handle];
+	return &sTextures[handle];
 }

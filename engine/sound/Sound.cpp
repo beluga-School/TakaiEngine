@@ -5,8 +5,8 @@
 void SoundManager::Initialize()
 {
 	//result = CoInitializeEx(nullptr, COINIT_MULTITHREADED);
-	result = XAudio2Create(&mXAudio2, 0, XAUDIO2_DEFAULT_PROCESSOR);
-	result = mXAudio2->CreateMasteringVoice(&mMasterVoice);
+	sResult = XAudio2Create(&mXAudio2, 0, XAUDIO2_DEFAULT_PROCESSOR);
+	sResult = mXAudio2->CreateMasteringVoice(&mMasterVoice);
 }
 
 SoundData SoundManager::SoundLoadWave(const char* filename)
@@ -81,8 +81,8 @@ void SoundManager::SoundPlayWave(const SoundData& soundData,const bool& loopFlag
 {
 	//波形フォーマットからSourceVoiceの生成
 	IXAudio2SourceVoice* pSourceVoice = nullptr;
-	result = mXAudio2->CreateSourceVoice(&pSourceVoice, &soundData.wfex);
-	assert(SUCCEEDED(result));
+	sResult = mXAudio2->CreateSourceVoice(&pSourceVoice, &soundData.wfex);
+	assert(SUCCEEDED(sResult));
 
 	//再生する波形データの設定
 	XAUDIO2_BUFFER buf{};
@@ -99,8 +99,8 @@ void SoundManager::SoundPlayWave(const SoundData& soundData,const bool& loopFlag
 	pSourceVoice->SetVolume(volume);
 
 	//波形データの再生
-	result = pSourceVoice->SubmitSourceBuffer(&buf);
-	result = pSourceVoice->Start();
+	sResult = pSourceVoice->SubmitSourceBuffer(&buf);
+	sResult = pSourceVoice->Start();
 
 }
 

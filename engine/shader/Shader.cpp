@@ -7,7 +7,7 @@ ID3DBlob* Shader::Compile(const wchar_t *shaderFilename,
 	const LPCSTR& entrypointname)
 {
 	//シェーダの読み込みとコンパイル
-	result = D3DCompileFromFile(
+	sResult = D3DCompileFromFile(
 		shaderFilename,	//シェーダファイル名
 		nullptr,
 		D3D_COMPILE_STANDARD_FILE_INCLUDE,	//デバッグ用設定
@@ -17,7 +17,7 @@ ID3DBlob* Shader::Compile(const wchar_t *shaderFilename,
 		&blob, &mErrorBlob);
 
 	//エラーなら
-	if (FAILED(result)) {
+	if (FAILED(sResult)) {
 		//errorBlobからエラー内容をstring型にコピー
 		std::string error;
 		error.resize(mErrorBlob->GetBufferSize());

@@ -5,8 +5,8 @@
 #include <MathF.h>
 #include <ImguiManager.h>
 
-std::unique_ptr<Camera> Camera::mDefaultCam = std::make_unique<Camera>();
-Camera* Camera::sCamera = mDefaultCam.get();
+std::unique_ptr<Camera> Camera::sDefaultCam = std::make_unique<Camera>();
+Camera* Camera::sCamera = sDefaultCam.get();
 
 void Camera::Initialize()
 {

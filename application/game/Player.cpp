@@ -18,8 +18,8 @@ void Player::Initialize()
 	gravity = -0.1f;
 	jumpPower = 0;
 
-	model = ModelManager::Get()->GetModel("Cube");
-	texture = TextureManager::Get()->GetTexture("white");
+	MODEL = ModelManager::Get()->GetModel("Cube");
+	TEXTURE = TextureManager::Get()->GetTexture("white");
 	scale = { 5,5,5 };
 	moveMag = 30;
 
@@ -188,14 +188,14 @@ void Player::Update(const Stage& stage)
 
 	GetCursorPos(&point);
 
-	static bool hoge = false;
+	static bool sHoge = false;
 
 	if (input->TriggerKey(DIK_N))
 	{
-		hoge = !hoge;
+		sHoge = !sHoge;
 	}
 
-	if (hoge)
+	if (sHoge)
 	{
 		SetCursorPos((int32_t)max.x, (int32_t)max.y);
 		ShowCursor(false);

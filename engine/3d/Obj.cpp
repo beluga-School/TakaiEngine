@@ -3,18 +3,18 @@
 
 void Obj3d::SetModel(const Model* model)
 {
-	this->model = model;
+	this->MODEL = model;
 }
 
 void Obj3d::SetTexture(const Texture* texture)
 {
-	this->texture = texture;
+	this->TEXTURE = texture;
 }
 
 void Obj3d::Initialize()
 {
-	model = ModelManager::GetModel("Cube");
-	texture = TextureManager::GetTexture("default");
+	MODEL = ModelManager::GetModel("Cube");
+	TEXTURE = TextureManager::GetTexture("default");
 }
 
 void Obj3d::Update(const Camera& camera)
@@ -77,10 +77,10 @@ void Obj3d::Update(const Camera& camera)
 
 	//ConstBufferDataB1* constMap1 = nullptr;
 	//result = constBufferMaterial.buffer->Map(0, nullptr, (void**)&constMap1);
-	constBufferMaterial.mConstBufferData->ambient = model->mMaterial.mAmbient;
-	constBufferMaterial.mConstBufferData->diffuse = model->mMaterial.mDiffuse;
-	constBufferMaterial.mConstBufferData->specular = model->mMaterial.mSpecular;
-	constBufferMaterial.mConstBufferData->alpha = model->mMaterial.mAlpha;
+	constBufferMaterial.mConstBufferData->ambient = MODEL->mMaterial.mAmbient;
+	constBufferMaterial.mConstBufferData->diffuse = MODEL->mMaterial.mDiffuse;
+	constBufferMaterial.mConstBufferData->specular = MODEL->mMaterial.mSpecular;
+	constBufferMaterial.mConstBufferData->alpha = MODEL->mMaterial.mAlpha;
 	constBufferB.mConstBufferData->brightness = color_;
 	//constBufferMaterial.buffer->Unmap(0, nullptr);
 }
@@ -101,14 +101,14 @@ void Obj3d::Draw() {
 	
 	//SRVヒープの先頭から順番にSRVをルートパラメータ1番に設定
 	//ルートパラメータ1番はテクスチャバッファ
-	dx12->mCmdList->SetGraphicsRootDescriptorTable(1, texture->mGpuHandle);
+	dx12->mCmdList->SetGraphicsRootDescriptorTable(1, TEXTURE->mGpuHandle);
 	//commandList->SetGraphicsRootConstantBufferView(0, constBufferT.buffer->GetGPUVirtualAddress());
 
 	//頂点バッファの設定
-	dx12->mCmdList->IASetVertexBuffers(0, 1, &model->mVbView);
+	dx12->mCmdList->IASetVertexBuffers(0, 1, &MODEL->mVbView);
 
 	//インデックスバッファの設定
-	dx12->mCmdList->IASetIndexBuffer(&model->mIbView);
+	dx12->mCmdList->IASetIndexBuffer(&MODEL->mIbView);
 	
 	//定数バッファビュー(CBV)の設定コマンド
 	dx12->mCmdList->SetGraphicsRootConstantBufferView(0, constBufferMaterial.mBuffer->GetGPUVirtualAddress());
@@ -119,7 +119,7 @@ void Obj3d::Draw() {
 	dx12->mCmdList->SetGraphicsRootConstantBufferView(3, constBufferB.mBuffer->GetGPUVirtualAddress());
 
 	//描画コマンド
-	dx12->mCmdList->DrawIndexedInstanced((UINT)model->mMesh.indices.size() , 1, 0, 0, 0);
+	dx12->mCmdList->DrawIndexedInstanced((UINT)MODEL->mMesh.indices.size() , 1, 0, 0, 0);
 }
 
 void Obj3d::DrawMaterial() {
@@ -128,14 +128,14 @@ void Obj3d::DrawMaterial() {
 
 	//SRVヒープの先頭から順番にSRVをルートパラメータ1番に設定
 	//ルートパラメータ1番はテクスチャバッファ
-	dx12->mCmdList->SetGraphicsRootDescriptorTable(1, model->mMaterial.mTextire->mGpuHandle);
+	dx12->mCmdList->SetGraphicsRootDescriptorTable(1, MODEL->mMaterial.mTextire->mGpuHandle);
 	//commandList->SetGraphicsRootConstantBufferView(0, constBufferT.buffer->GetGPUVirtualAddress());
 
 	//頂点バッファの設定
-	dx12->mCmdList->IASetVertexBuffers(0, 1, &model->mVbView);
+	dx12->mCmdList->IASetVertexBuffers(0, 1, &MODEL->mVbView);
 
 	//インデックスバッファの設定
-	dx12->mCmdList->IASetIndexBuffer(&model->mIbView);
+	dx12->mCmdList->IASetIndexBuffer(&MODEL->mIbView);
 
 	//定数バッファビュー(CBV)の設定コマンド
 	dx12->mCmdList->SetGraphicsRootConstantBufferView(0, constBufferMaterial.mBuffer->GetGPUVirtualAddress());
@@ -145,5 +145,5 @@ void Obj3d::DrawMaterial() {
 	dx12->mCmdList->SetGraphicsRootConstantBufferView(3, constBufferB.mBuffer->GetGPUVirtualAddress());
 
 	//描画コマンド
-	dx12->mCmdList->DrawIndexedInstanced((UINT)model->mMesh.indices.size(), 1, 0, 0, 0);
+	dx12->mCmdList->DrawIndexedInstanced((UINT)MODEL->mMesh.indices.size(), 1, 0, 0, 0);
 }

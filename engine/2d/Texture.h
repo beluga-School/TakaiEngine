@@ -17,7 +17,7 @@ using namespace DirectX;
 #include "DirectXInit.h"
 #include <map>
 
-const size_t kMaxSRVCount = 2056;
+const size_t K_MAX_SRV_COUNT = 2056;
 
 class Texture
 {
@@ -76,7 +76,7 @@ private:
 	//テクスチャの1枚目が、デバッグテキストの物になっちゃってるバグがあるのでそれを入れる用のテクスチャ
 	Texture bugfix_;
 
-	static std::map<std::string, Texture> mTextures;
+	static std::map<std::string, Texture> sTextures;
 
 	TextureManager(){};
 	~TextureManager(){};

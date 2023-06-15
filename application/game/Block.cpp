@@ -3,8 +3,8 @@
 
 void Block::Initialize()
 {
-	model = ModelManager::GetModel("Cube");
-	texture = TextureManager::GetTexture("default");
+	MODEL = ModelManager::GetModel("Cube");
+	TEXTURE = TextureManager::GetTexture("default");
 
 	ExtractVec();
 }

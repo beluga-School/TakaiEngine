@@ -16,7 +16,7 @@ void GParticleManager::Initialize()
 	DirectX12 *dx12 = DirectX12::Get();
 
 	//頂点データ全体のサイズ = 頂点データ一つ分のサイズ * 頂点データの要素数
-	UINT sizeVB = static_cast<UINT>(vertexCount * sizeof(VertexPos));
+	UINT sizeVB = static_cast<UINT>(VERTEX_COUNT * sizeof(VertexPos));
 
 	//頂点バッファの設定
 	D3D12_HEAP_PROPERTIES heapProp{};		//ヒープ設定
@@ -35,14 +35,14 @@ void GParticleManager::Initialize()
 	//頂点バッファの生成
 	//ComPtrにしたらダメだった マップ処理に使ってるから？
 	//ID3D12Resource* vertBuff;
-	result = dx12->mDevice->CreateCommittedResource(
+	sResult = dx12->mDevice->CreateCommittedResource(
 		&heapProp,	//ヒープ設定
 		D3D12_HEAP_FLAG_NONE,
 		&mResDesc,	//リソース設定
 		D3D12_RESOURCE_STATE_GENERIC_READ,
 		nullptr,
 		IID_PPV_ARGS(&mVertBuff));
-	assert(SUCCEEDED(result));
+	assert(SUCCEEDED(sResult));
 
 	//GPU仮想アドレス
 	mVbView.BufferLocation = mVertBuff->GetGPUVirtualAddress();
@@ -73,8 +73,8 @@ void GParticleManager::Update(XMMATRIX& matView, XMMATRIX& matProjection)
 	mConstBufferParticle.mConstBufferData->vpMat = matView * matProjection;
 
 	VertexPos* vertMap = nullptr;
-	result = mVertBuff->Map(0, nullptr, (void**)&vertMap);
-	assert(SUCCEEDED(result));
+	sResult = mVertBuff->Map(0, nullptr, (void**)&vertMap);
+	assert(SUCCEEDED(sResult));
 	//全頂点に対して
 	size_t index = 0;
 	for (Particle& particle : mParticles) {
@@ -82,7 +82,7 @@ void GParticleManager::Update(XMMATRIX& matView, XMMATRIX& matProjection)
 		vertMap[index].scale = particle.mScale;	//	スケールをコピー
 		vertMap[index].color = particle.mColor;	//	カラーをコピー
 		index++;
-		if (index > vertexCount)break;
+		if (index > VERTEX_COUNT)break;
 	}
 	//繋がりを解除
 	mVertBuff->Unmap(0, nullptr);
@@ -108,7 +108,7 @@ void GParticleManager::Draw(Texture* texture)
 	dx12->mCmdList->SetGraphicsRootConstantBufferView(0, mConstBufferParticle.mBuffer->GetGPUVirtualAddress());
 
 	//描画コマンド
-	dx12->mCmdList->DrawInstanced(min((UINT)mParticles.size(),vertexCount), 1, 0, 0);
+	dx12->mCmdList->DrawInstanced(min((UINT)mParticles.size(),VERTEX_COUNT), 1, 0, 0);
 }
 
 GParticleManager* GParticleManager::Getinstance()

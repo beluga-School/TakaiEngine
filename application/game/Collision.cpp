@@ -5,7 +5,7 @@
 
 bool RayPlaneCollision(const Ray& ray, const Plane& plane)
 {
-	const float epsilon = 1.0e-5f;
+	const float EPSILON = 1.0e-5f;
 
 	float d1 = plane.normal.dot(ray.direction);
 	//float d1 = ray.direction.dot(plane.normal);

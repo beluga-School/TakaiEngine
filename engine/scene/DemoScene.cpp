@@ -78,7 +78,7 @@ void DemoScene::Draw()
 	}
 
 	//スプライトの前描画(共通コマンド)
-	SpriteCommonBeginDraw(SpriteCommon::mSpriteCommon);
+	SpriteCommonBeginDraw(SpriteCommon::sSpriteCommon);
 
 	mSlime.Draw();
 }

@@ -49,17 +49,17 @@ inline ConstBuffer<Format>::ConstBuffer()
 	resdesc.Layout = D3D12_TEXTURE_LAYOUT_ROW_MAJOR;
 
 	//定数バッファの生成
-	result = DirectX12::Get()->mDevice->CreateCommittedResource(
+	sResult = DirectX12::Get()->mDevice->CreateCommittedResource(
 		&heapProp,
 		D3D12_HEAP_FLAG_NONE,
 		&resdesc,
 		D3D12_RESOURCE_STATE_GENERIC_READ,
 		nullptr,
 		IID_PPV_ARGS(&mBuffer));
-	assert(SUCCEEDED(result));
+	assert(SUCCEEDED(sResult));
 
-	result = mBuffer->Map(0, nullptr, (void**)&mConstBufferData);
-	assert(SUCCEEDED(result));
+	sResult = mBuffer->Map(0, nullptr, (void**)&mConstBufferData);
+	assert(SUCCEEDED(sResult));
 }
 
 template<class Format>

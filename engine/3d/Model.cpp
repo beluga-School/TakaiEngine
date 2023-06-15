@@ -7,7 +7,7 @@ using namespace std;
 #include <assimp/scene.h>
 #include <assimp/postprocess.h> 
 
-std::map<std::string, Model> ModelManager::mModels;
+std::map<std::string, Model> ModelManager::sModels;
 
 void Model::CreateDefaultModel()
 {
@@ -273,10 +273,10 @@ void ModelManager::PreLoad()
 
 void ModelManager::LoadModel(const std::string filepath, const std::string handle, bool smooth)
 {
-	mModels[handle].CreateModel(filepath, smooth);
+	sModels[handle].CreateModel(filepath, smooth);
 }
 
 Model* ModelManager::GetModel(const std::string handle)
 {
-	return &mModels[handle];
+	return &sModels[handle];
 }

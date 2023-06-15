@@ -85,7 +85,7 @@ PipelineSet CreateObject3DPipeline()
 	}
 
 	//頂点レイアウト
-	static D3D12_INPUT_ELEMENT_DESC inputLayout[] = {
+	static D3D12_INPUT_ELEMENT_DESC sInputLayout[] = {
 			{ //xyz座標
 				"POSITION",0,DXGI_FORMAT_R32G32B32_FLOAT,0,
 				D3D12_APPEND_ALIGNED_ELEMENT,
@@ -104,8 +104,8 @@ PipelineSet CreateObject3DPipeline()
 	};
 
 	//頂点レイアウトの設定
-	pipelineDesc.InputLayout.pInputElementDescs = inputLayout;
-	pipelineDesc.InputLayout.NumElements = _countof(inputLayout);
+	pipelineDesc.InputLayout.pInputElementDescs = sInputLayout;
+	pipelineDesc.InputLayout.NumElements = _countof(sInputLayout);
 
 	//図形の形状設定
 	pipelineDesc.PrimitiveTopologyType = D3D12_PRIMITIVE_TOPOLOGY_TYPE_TRIANGLE;
@@ -178,20 +178,20 @@ PipelineSet CreateObject3DPipeline()
 
 	//ルートシグネチャのシリアライズ
 	ComPtr<ID3DBlob> rootSigBlob;
-	result = D3D12SerializeRootSignature(&rootSignatureDesc, D3D_ROOT_SIGNATURE_VERSION_1_0,
+	sResult = D3D12SerializeRootSignature(&rootSignatureDesc, D3D_ROOT_SIGNATURE_VERSION_1_0,
 		&rootSigBlob, &shader_.mErrorBlob);
-	assert(SUCCEEDED(result));
-	result = dx12->mDevice->CreateRootSignature(0, rootSigBlob->GetBufferPointer(), rootSigBlob->GetBufferSize(),
+	assert(SUCCEEDED(sResult));
+	sResult = dx12->mDevice->CreateRootSignature(0, rootSigBlob->GetBufferPointer(), rootSigBlob->GetBufferSize(),
 		IID_PPV_ARGS(&pipelineSet.mRootsignature));
-	assert(SUCCEEDED(result));
+	assert(SUCCEEDED(sResult));
 
 	//パイプラインにルートシグネチャをセット
 	pipelineDesc.pRootSignature = pipelineSet.mRootsignature.Get();
 
 	//パイプラインステートの生成
 	//ComPtr<ID3D12PipelineState> pipelineState;
-	result = dx12->mDevice->CreateGraphicsPipelineState(&pipelineDesc, IID_PPV_ARGS(&pipelineSet.mPipelinestate));
-	assert(SUCCEEDED(result));
+	sResult = dx12->mDevice->CreateGraphicsPipelineState(&pipelineDesc, IID_PPV_ARGS(&pipelineSet.mPipelinestate));
+	assert(SUCCEEDED(sResult));
 
 	return pipelineSet;
 }
@@ -272,7 +272,7 @@ PipelineSet CreateLambertPipeline()
 	}
 
 	//頂点レイアウト
-	static D3D12_INPUT_ELEMENT_DESC inputLayout[] = {
+	static D3D12_INPUT_ELEMENT_DESC sInputLayout[] = {
 			{ //xyz座標
 				"POSITION",0,DXGI_FORMAT_R32G32B32_FLOAT,0,
 				D3D12_APPEND_ALIGNED_ELEMENT,
@@ -291,8 +291,8 @@ PipelineSet CreateLambertPipeline()
 	};
 
 	//頂点レイアウトの設定
-	pipelineDesc.InputLayout.pInputElementDescs = inputLayout;
-	pipelineDesc.InputLayout.NumElements = _countof(inputLayout);
+	pipelineDesc.InputLayout.pInputElementDescs = sInputLayout;
+	pipelineDesc.InputLayout.NumElements = _countof(sInputLayout);
 
 	//図形の形状設定
 	pipelineDesc.PrimitiveTopologyType = D3D12_PRIMITIVE_TOPOLOGY_TYPE_TRIANGLE;
@@ -359,20 +359,20 @@ PipelineSet CreateLambertPipeline()
 
 	//ルートシグネチャのシリアライズ
 	ComPtr<ID3DBlob> rootSigBlob;
-	result = D3D12SerializeRootSignature(&rootSignatureDesc, D3D_ROOT_SIGNATURE_VERSION_1_0,
+	sResult = D3D12SerializeRootSignature(&rootSignatureDesc, D3D_ROOT_SIGNATURE_VERSION_1_0,
 		&rootSigBlob, &shader_.mErrorBlob);
-	assert(SUCCEEDED(result));
-	result = dx12->mDevice->CreateRootSignature(0, rootSigBlob->GetBufferPointer(), rootSigBlob->GetBufferSize(),
+	assert(SUCCEEDED(sResult));
+	sResult = dx12->mDevice->CreateRootSignature(0, rootSigBlob->GetBufferPointer(), rootSigBlob->GetBufferSize(),
 		IID_PPV_ARGS(&pipelineSet.mRootsignature));
-	assert(SUCCEEDED(result));
+	assert(SUCCEEDED(sResult));
 
 	//パイプラインにルートシグネチャをセット
 	pipelineDesc.pRootSignature = pipelineSet.mRootsignature.Get();
 
 	//パイプラインステートの生成
 	//ComPtr<ID3D12PipelineState> pipelineState;
-	result = dx12->mDevice->CreateGraphicsPipelineState(&pipelineDesc, IID_PPV_ARGS(&pipelineSet.mPipelinestate));
-	assert(SUCCEEDED(result));
+	sResult = dx12->mDevice->CreateGraphicsPipelineState(&pipelineDesc, IID_PPV_ARGS(&pipelineSet.mPipelinestate));
+	assert(SUCCEEDED(sResult));
 
 	return pipelineSet;
 }
@@ -453,7 +453,7 @@ PipelineSet CreateSpritePipeline()
 	}
 
 	//頂点レイアウト
-	static D3D12_INPUT_ELEMENT_DESC inputLayout2[] = {
+	static D3D12_INPUT_ELEMENT_DESC sInputLayout2[] = {
 			{ //xyz座標
 				"POSITION",0,DXGI_FORMAT_R32G32B32_FLOAT,0,
 				D3D12_APPEND_ALIGNED_ELEMENT,
@@ -467,8 +467,8 @@ PipelineSet CreateSpritePipeline()
 	};
 
 	//頂点レイアウトの設定
-	pipelineDesc2.InputLayout.pInputElementDescs = inputLayout2;
-	pipelineDesc2.InputLayout.NumElements = _countof(inputLayout2);
+	pipelineDesc2.InputLayout.pInputElementDescs = sInputLayout2;
+	pipelineDesc2.InputLayout.NumElements = _countof(sInputLayout2);
 
 	//図形の形状設定
 	pipelineDesc2.PrimitiveTopologyType = D3D12_PRIMITIVE_TOPOLOGY_TYPE_TRIANGLE;
@@ -531,20 +531,20 @@ PipelineSet CreateSpritePipeline()
 
 	//ルートシグネチャのシリアライズ
 	ComPtr<ID3DBlob> rootSigBlob2;
-	result = D3D12SerializeRootSignature(&rootSignatureDesc2, D3D_ROOT_SIGNATURE_VERSION_1_0,
+	sResult = D3D12SerializeRootSignature(&rootSignatureDesc2, D3D_ROOT_SIGNATURE_VERSION_1_0,
 		&rootSigBlob2, &shader2_.mErrorBlob);
-	assert(SUCCEEDED(result));
-	result = dx12->mDevice->CreateRootSignature(0, rootSigBlob2->GetBufferPointer(), rootSigBlob2->GetBufferSize(),
+	assert(SUCCEEDED(sResult));
+	sResult = dx12->mDevice->CreateRootSignature(0, rootSigBlob2->GetBufferPointer(), rootSigBlob2->GetBufferSize(),
 		IID_PPV_ARGS(&spritePipelineSet.mRootsignature));
-	assert(SUCCEEDED(result));
+	assert(SUCCEEDED(sResult));
 
 	//パイプラインにルートシグネチャをセット
 	pipelineDesc2.pRootSignature = spritePipelineSet.mRootsignature.Get();
 
 	//パイプラインステートの生成
 	//ComPtr<ID3D12PipelineState> pipelineState;
-	result = dx12->mDevice->CreateGraphicsPipelineState(&pipelineDesc2, IID_PPV_ARGS(&spritePipelineSet.mPipelinestate));
-	assert(SUCCEEDED(result));
+	sResult = dx12->mDevice->CreateGraphicsPipelineState(&pipelineDesc2, IID_PPV_ARGS(&spritePipelineSet.mPipelinestate));
+	assert(SUCCEEDED(sResult));
 
 	return spritePipelineSet;
 }
@@ -628,7 +628,7 @@ PipelineSet CreateGeometryPipeline()
 	}
 
 	//頂点レイアウト
-	static D3D12_INPUT_ELEMENT_DESC inputLayout[] = {
+	static D3D12_INPUT_ELEMENT_DESC sInputLayout[] = {
 			{ //xyz座標
 				"POSITION",0,DXGI_FORMAT_R32G32B32_FLOAT,0,
 				D3D12_APPEND_ALIGNED_ELEMENT,
@@ -647,8 +647,8 @@ PipelineSet CreateGeometryPipeline()
 	};
 
 	//頂点レイアウトの設定
-	pipelineDesc.InputLayout.pInputElementDescs = inputLayout;
-	pipelineDesc.InputLayout.NumElements = _countof(inputLayout);
+	pipelineDesc.InputLayout.pInputElementDescs = sInputLayout;
+	pipelineDesc.InputLayout.NumElements = _countof(sInputLayout);
 
 	//図形の形状設定
 	pipelineDesc.PrimitiveTopologyType = D3D12_PRIMITIVE_TOPOLOGY_TYPE_POINT;
@@ -706,20 +706,20 @@ PipelineSet CreateGeometryPipeline()
 
 	//ルートシグネチャのシリアライズ
 	ComPtr<ID3DBlob> rootSigBlob;
-	result = D3D12SerializeRootSignature(&rootSignatureDesc, D3D_ROOT_SIGNATURE_VERSION_1_0,
+	sResult = D3D12SerializeRootSignature(&rootSignatureDesc, D3D_ROOT_SIGNATURE_VERSION_1_0,
 		&rootSigBlob, &shader_.mErrorBlob);
-	assert(SUCCEEDED(result));
-	result = dx12->mDevice->CreateRootSignature(0, rootSigBlob->GetBufferPointer(), rootSigBlob->GetBufferSize(),
+	assert(SUCCEEDED(sResult));
+	sResult = dx12->mDevice->CreateRootSignature(0, rootSigBlob->GetBufferPointer(), rootSigBlob->GetBufferSize(),
 		IID_PPV_ARGS(&pipelineSet.mRootsignature));
-	assert(SUCCEEDED(result));
+	assert(SUCCEEDED(sResult));
 
 	//パイプラインにルートシグネチャをセット
 	pipelineDesc.pRootSignature = pipelineSet.mRootsignature.Get();
 
 	//パイプラインステートの生成
 	//ComPtr<ID3D12PipelineState> pipelineState;
-	result = dx12->mDevice->CreateGraphicsPipelineState(&pipelineDesc, IID_PPV_ARGS(&pipelineSet.mPipelinestate));
-	assert(SUCCEEDED(result));
+	sResult = dx12->mDevice->CreateGraphicsPipelineState(&pipelineDesc, IID_PPV_ARGS(&pipelineSet.mPipelinestate));
+	assert(SUCCEEDED(sResult));
 
 	return pipelineSet;
 }

@@ -76,7 +76,7 @@ void Stage::SetBlock(const Vector3& pos,const Vector3& scale)
 	blockList.back().position = pos;
 	blockList.back().scale = scale;
 	blockList.back().rotation = {0,0,0};
-	blockList.back().texture = TextureManager::GetTexture("blockTexture");
+	blockList.back().TEXTURE = TextureManager::GetTexture("blockTexture");
 	blockList.back().color_ = { 0.8f ,0.8f ,0.8f ,1};
 	//blockList.back().cubeCol.upPlane.normal = { 0,1,0 };
 }

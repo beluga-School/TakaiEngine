@@ -21,19 +21,19 @@ void VertexData::CreateVertex(const std::vector<Vertex> &vertices,const std::vec
 
 	//頂点バッファの生成
 	//ComPtrにしたらダメだった マップ処理に使ってるから？
-	result = DirectX12::Get()->mDevice->CreateCommittedResource(
+	sResult = DirectX12::Get()->mDevice->CreateCommittedResource(
 		&heapProp,	//ヒープ設定
 		D3D12_HEAP_FLAG_NONE,
 		&mResDesc,	//リソース設定
 		D3D12_RESOURCE_STATE_GENERIC_READ,
 		nullptr,
 		IID_PPV_ARGS(mVertBuff.GetAddressOf()));
-	assert(SUCCEEDED(result));
+	assert(SUCCEEDED(sResult));
 
 	//GPU状のバッファに対応した仮想メモリ(メインメモリ上)を取得
 	Vertex* vertMap = nullptr;
-	result = mVertBuff->Map(0, nullptr, (void**)&vertMap);
-	assert(SUCCEEDED(result));
+	sResult = mVertBuff->Map(0, nullptr, (void**)&vertMap);
+	assert(SUCCEEDED(sResult));
 	//全頂点に対して
 	for (int32_t i = 0; i < vertices.size(); i++) {
 		vertMap[i] = vertices[i];	//	座標をコピー
@@ -62,7 +62,7 @@ void VertexData::CreateVertex(const std::vector<Vertex> &vertices,const std::vec
 	mResDesc.Layout = D3D12_TEXTURE_LAYOUT_ROW_MAJOR;
 
 	//インデックスバッファの生成
-	result = DirectX12::Get()->mDevice->CreateCommittedResource(
+	sResult = DirectX12::Get()->mDevice->CreateCommittedResource(
 		&heapProp,	//ヒープ設定
 		D3D12_HEAP_FLAG_NONE,
 		&mResDesc,	//リソース設定
@@ -72,7 +72,7 @@ void VertexData::CreateVertex(const std::vector<Vertex> &vertices,const std::vec
 
 	//インデックスバッファをマッピング
 	uint16_t* indexMap = nullptr;
-	result = mIndexBuff->Map(0, nullptr, (void**)&indexMap);
+	sResult = mIndexBuff->Map(0, nullptr, (void**)&indexMap);
 	//全インデックスに対して
 	for (int32_t i = 0; i < indices.size(); i++) {
 		indexMap[i] = indices[i];	//インデックスをコピー

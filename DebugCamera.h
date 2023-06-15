@@ -17,6 +17,6 @@ private:
 
 	float mRadius = 20.0f;
 
-	const float mMoveSpeed = 1.0f;
+	const float MOVE_SPEED = 1.0f;
 };
 

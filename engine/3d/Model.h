@@ -69,7 +69,7 @@ public:
 	};
 
 private:
-	static std::map<std::string, Model> mModels;
+	static std::map<std::string, Model> sModels;
 
 	ModelManager(){};
 	~ModelManager(){};

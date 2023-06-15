@@ -6,8 +6,8 @@
 void AirEnemy::Initialize(const Vector3& position_)
 {
 	Mob::Initialize();
-	model = ModelManager::GetModel("firewisp");
-	texture = TextureManager::GetTexture("firewisp");
+	MODEL = ModelManager::GetModel("firewisp");
+	TEXTURE = TextureManager::GetTexture("firewisp");
 	position = position_;
 	scale = { 8,8,8 };
 	rotation.y = -MathF::PIf / 2;

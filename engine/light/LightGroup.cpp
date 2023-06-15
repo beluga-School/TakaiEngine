@@ -1,12 +1,12 @@
 #include "LightGroup.h"
 #include "DirectXInit.h"
 
-std::unique_ptr<LightGroup> LightGroup::mLightGroup = nullptr;
+std::unique_ptr<LightGroup> LightGroup::sLightGroup = nullptr;
 
 void LightGroup::Create()
 {
-	mLightGroup = std::make_unique<LightGroup>();
-	mLightGroup->Initialize();
+	sLightGroup = std::make_unique<LightGroup>();
+	sLightGroup->Initialize();
 }
 
 void LightGroup::Initialize()
@@ -34,7 +34,7 @@ void LightGroup::Draw(const UINT& index)
 
 void LightGroup::TransferBuffer()
 {
-	for (int32_t i = 0; i < sDirLightNum; i++)
+	for (int32_t i = 0; i < sDIRLIGHT_NUM; i++)
 	{
 		//アクティブなら
 		if (mDirLights[i].mActive)
@@ -50,7 +50,7 @@ void LightGroup::TransferBuffer()
 			mConstBuff.mConstBufferData->mDirLights[i].active = false;
 		}
 	}
-	for (int32_t i = 0; i < sPointLightNum; i++)
+	for (int32_t i = 0; i < sPOINTLIGHT_NUM; i++)
 	{
 		if (mPointLights[i].mActive) {
 			mConstBuff.mConstBufferData->mPointLights[i].active = true;
@@ -73,34 +73,34 @@ void LightGroup::SetAmbientColor(const Vector3& color)
 
 void LightGroup::SetDirLightActive(const int32_t& index, const bool& active)
 {
-	assert(0 <= index && index < sDirLightNum);
+	assert(0 <= index && index < sDIRLIGHT_NUM);
 	mDirLights[index].mActive = active;
 }
 
 void LightGroup::SetDirLightDir(const int32_t& index, const Vector3& lightdir)
 {
-	assert(0 <= index && index < sDirLightNum);
+	assert(0 <= index && index < sDIRLIGHT_NUM);
 	mDirLights[index].mDirection = lightdir;
 	mDirty = true;
 }
 
 void LightGroup::SetDirLightColor(const int32_t& index, const Vector3& lightcolor)
 {
-	assert(0 <= index && index < sDirLightNum);
+	assert(0 <= index && index < sDIRLIGHT_NUM);
 	mDirLights[index].mColor = lightcolor;
 	mDirty = true;
 }
 
 void LightGroup::SetPointLightActive(const int32_t& index, const bool& active)
 {
-	assert(0 <= index && index < sPointLightNum);
+	assert(0 <= index && index < sPOINTLIGHT_NUM);
 
 	mPointLights[index].mActive = active;
 }
 
 void LightGroup::SetPointLightPos(const int32_t& index, const Vector3& pos)
 {
-	assert(0 <= index && index < sPointLightNum);
+	assert(0 <= index && index < sPOINTLIGHT_NUM);
 
 	mPointLights[index].mLightPos = pos;
 	mDirty = true;
@@ -108,7 +108,7 @@ void LightGroup::SetPointLightPos(const int32_t& index, const Vector3& pos)
 
 void LightGroup::SetPointLightColor(const int32_t& index, const Vector3& color)
 {
-	assert(0 <= index && index < sPointLightNum);
+	assert(0 <= index && index < sPOINTLIGHT_NUM);
 
 	mPointLights[index].mLightColor = color;
 	mDirty = true;
@@ -116,7 +116,7 @@ void LightGroup::SetPointLightColor(const int32_t& index, const Vector3& color)
 
 void LightGroup::SetPointLightAtten(const int32_t& index, const Vector3& atten)
 {
-	assert(0 <= index && index < sPointLightNum);
+	assert(0 <= index && index < sPOINTLIGHT_NUM);
 
 	mPointLights[index].mLightAtten = atten;
 	mDirty = true;

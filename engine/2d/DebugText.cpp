@@ -20,11 +20,11 @@ void DebugText::Print(const SpriteCommon& spritecommon, const std::string& text,
 		}
 
 		//1文字取り出す(*ASCIIコードでしか成り立たない)
-		const unsigned char& character = text[i];
+		const uint8_t& CHARACTER = text[i];
 
 		//ASCIIコードの2段分飛ばした番号を計算
-		int32_t fontIndex = character - 32;
-		if (character >= 0x7f) {
+		int32_t fontIndex = CHARACTER - 32;
+		if (CHARACTER >= 0x7f) {
 			fontIndex = 0;
 		}
 

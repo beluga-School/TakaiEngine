@@ -5,8 +5,8 @@
 void Bullet::Initialize(const Vector3& position_)
 {
 	position = position_;
-	model = ModelManager::Get()->GetModel("Cube");
-	texture = TextureManager::Get()->GetTexture("white");
+	MODEL = ModelManager::Get()->GetModel("Cube");
+	TEXTURE = TextureManager::Get()->GetTexture("white");
 	scale = { 5,5,5 };
 	color_ = { 1.0f,1.0f,0.0f,1.0f };
 }

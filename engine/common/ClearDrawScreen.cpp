@@ -35,7 +35,7 @@ void CreateDepthView()
 
 	//リソース生成
 	
-	result = dx12->mDevice->CreateCommittedResource(
+	sResult = dx12->mDevice->CreateCommittedResource(
 		&depthHeapProp,
 		D3D12_HEAP_FLAG_NONE,
 		&depthResourceDesc,
@@ -48,9 +48,9 @@ void CreateDepthView()
 	dsvHeapDesc.NumDescriptors = 1;	//深度ビューは1つ
 	dsvHeapDesc.Type = D3D12_DESCRIPTOR_HEAP_TYPE_DSV;	//デプスステンシルビュー
 	
-	result = dx12->mDevice->CreateDescriptorHeap(&dsvHeapDesc, IID_PPV_ARGS(&dsvHeap));
+	sResult = dx12->mDevice->CreateDescriptorHeap(&dsvHeapDesc, IID_PPV_ARGS(&dsvHeap));
 
-	assert(SUCCEEDED(result));
+	assert(SUCCEEDED(sResult));
 
 	//深度ビュー作成
 	D3D12_DEPTH_STENCIL_VIEW_DESC dsvDesc = {};
@@ -125,7 +125,7 @@ void BasicObjectPreDraw(const PipelineSet& objectPipelineSet)
 	//SRVヒープの設定コマンド
 	dx12->mCmdList->SetDescriptorHeaps(1, texM->mSrvHeap.GetAddressOf());
 
-	LightGroup::mLightGroup->Draw(4);
+	LightGroup::sLightGroup->Draw(4);
 }
 
 void GeometryObjectPreDraw(const PipelineSet& geometryPipelineSet)
@@ -172,16 +172,16 @@ void PostDraw()
 	dx12->mCmdList->ResourceBarrier(1, &barrierDesc);
 
 	//命令のクローズ
-	result = dx12->mCmdList->Close();
-	assert(SUCCEEDED(result));
+	sResult = dx12->mCmdList->Close();
+	assert(SUCCEEDED(sResult));
 
 	//コマンドリストの実行
 	ID3D12CommandList* commandLists[] = { dx12->mCmdList.Get() };
 	dx12->mCmdQueue->ExecuteCommandLists(1, commandLists);
 
 	//画面に表示するバッファをフリップ(裏表の入れ替え)
-	result = dx12->mSwapChain->Present(1, 0);
-	assert(SUCCEEDED(result));
+	sResult = dx12->mSwapChain->Present(1, 0);
+	assert(SUCCEEDED(sResult));
 
 	//コマンドの実行完了を待つ
 	dx12->mCmdQueue->Signal(dx12->mFence.Get(), ++dx12->mFenceVal);
@@ -193,10 +193,10 @@ void PostDraw()
 	}
 
 	//キューをクリア
-	result = dx12->mCommandAllocator->Reset();
-	assert(SUCCEEDED(result));
+	sResult = dx12->mCommandAllocator->Reset();
+	assert(SUCCEEDED(sResult));
 
 	//再びコマンドリストを貯める準備
-	result = dx12->mCmdList->Reset(dx12->mCommandAllocator.Get(), nullptr);
-	assert(SUCCEEDED(result));
+	sResult = dx12->mCmdList->Reset(dx12->mCommandAllocator.Get(), nullptr);
+	assert(SUCCEEDED(sResult));
 }

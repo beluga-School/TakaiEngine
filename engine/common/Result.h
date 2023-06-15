@@ -2,4 +2,4 @@
 #include <Windows.h>
 #include <cassert>
 
-static HRESULT result;
+static HRESULT sResult;

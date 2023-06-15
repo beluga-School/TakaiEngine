@@ -22,7 +22,7 @@
 //	Clear,
 //	GameOver,
 //};
-const uint32_t max = 500;
+const uint32_t MAX_CUBE = 500;
 
 class Game : public IScene
 {
@@ -77,8 +77,8 @@ private:
 	Sprite slimeSprite;
 	Sprite gameOverSprite;
 
-	Obj3d cube[max];
-	Vector3 cuberotaVec[max];
+	Obj3d cube[MAX_CUBE];
+	Vector3 cuberotaVec[MAX_CUBE];
 
 	SoundData push;
 	SoundData goalSound;
