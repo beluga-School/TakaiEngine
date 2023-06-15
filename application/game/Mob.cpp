@@ -15,7 +15,7 @@ void Mob::Initialize()
 
 void Mob::Update()
 {
-	Obj3d::Update(*Camera::mCamera);
+	Obj3d::Update(*Camera::sCamera);
 	cubeCol.position = position;
 	cubeCol.scale = scale;
 	rayCol.start = position;

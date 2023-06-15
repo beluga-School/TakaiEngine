@@ -36,7 +36,7 @@ public:
 	void UpdatematView();
 
 	static std::unique_ptr<Camera> mDefaultCam;
-	static Camera *mCamera;
+	static Camera *sCamera;
 
 private:
 	float mDebugAngleX = 0;

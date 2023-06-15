@@ -20,18 +20,17 @@ public:
 private:
 	void SetObject(LevelData& data);
 	
-	PipelineSet object3dPipelineSet;
-	Camera* camera = Camera::mCamera;
+	PipelineSet mObject3dPipelineSet;
+	Camera* mCamera = Camera::sCamera;
 
-	Obj3d skydome;
-	Input::Keyboard* input = Input::Keyboard::Get();
+	Obj3d mSkydome;
+	
+	Sprite mSlime;
 
-	Sprite slime;
+	std::list<Obj3d> mObj3ds;
 
-	std::list<Obj3d> obj3ds;
+	GUI mGui = std::string("postion");
 
-	GUI gui = std::string("postion");
-
-	DebugCamera cameraObject;
+	DebugCamera mDebugCamera;
 };
 

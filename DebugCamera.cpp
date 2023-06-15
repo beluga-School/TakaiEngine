@@ -8,7 +8,7 @@ using namespace Input;
 void DebugCamera::Initialize()
 {
 	Obj3d::Initialize();
-	Camera::mCamera->Initialize();
+	Camera::sCamera->Initialize();
 }
 
 void DebugCamera::Update()
@@ -27,8 +27,8 @@ void DebugCamera::Update()
 	position.z += inputSide * mSideVec.z * mMoveSpeed;
 	
 	//À•W‚Ì’Ç]
-	Camera::mCamera->mEye = position + (mCenterVec * mRadius);
-	Camera::mCamera->mTarget = position;
+	Camera::sCamera->mEye = position + (mCenterVec * mRadius);
+	Camera::sCamera->mTarget = position;
 
 	if (Mouse::Wheel() < 0)
 	{
@@ -55,6 +55,6 @@ void DebugCamera::Update()
 		rotation.y = mHorizontalRad;
 	}
 
-	Obj3d::Update(*Camera::mCamera);
-	Camera::mCamera->UpdatematView();
+	Obj3d::Update(*Camera::sCamera);
+	Camera::sCamera->UpdatematView();
 }

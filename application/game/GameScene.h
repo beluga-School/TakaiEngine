@@ -51,7 +51,7 @@ private:
 	PipelineSet object3dPipelineSet;
 	PipelineSet geometryObjectPipelineSet;
 	
-	Camera* camera = Camera::mCamera;
+	Camera* camera = Camera::sCamera;
 
 	Obj3d skydome;
 

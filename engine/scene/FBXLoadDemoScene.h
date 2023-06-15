@@ -15,23 +15,23 @@ public:
 	void End();
 
 private:
-	PipelineSet object3dPipelineSet;
-	Camera* camera = Camera::mCamera;
+	PipelineSet mObject3dPipelineSet;
+	Camera* mCamera = Camera::sCamera;
 
-	Obj3d sphere;
-	Obj3d skydome;
-	Input::Keyboard* input = Input::Keyboard::Get();
+	Obj3d mSphere;
+	Obj3d mSkydome;
+	//Input::Keyboard* input = Input::Keyboard::Get();
 
 	//const wchar_t* modelFile = L"Resources/Cube_gltf/cube.glb";
 	//const wchar_t* modelFile = L"Resources/Cube_two/Cube_two.glb";
-	const wchar_t* modelFile = L"Resources/sphere_fbx/sphere.fbx";
+	const wchar_t* mModelFile = L"Resources/sphere_fbx/sphere.fbx";
 	//const wchar_t* modelFile = L"Resources/Alicia/Alicia_solid_MMD.fbx";
 	
-	DebugCamera debugCamera;
+	DebugCamera mDebugCamera;
 
-	std::vector<Obj3d> spherefbx;
+	std::vector<Obj3d> mSpherefbx;
 
-	std::vector<Mesh> meshes;
-	std::vector<VertexData> vertexDatas;
+	std::vector<Mesh> mMeshes;
+	std::vector<VertexData> mVertexDatas;
 };
 

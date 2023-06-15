@@ -58,9 +58,9 @@ void LevelLoader::ObjectLoad(LevelData& levelData,nlohmann::json& object)
 	if (type.compare("MESH") == 0)
 	{
 		//óvëfí«â¡
-		levelData.objects.emplace_back(LevelData::ObjectData{});
+		levelData.mObjects.emplace_back(LevelData::ObjectData{});
 		//ç°í«â¡ÇµÇΩóvëfÇÃéQè∆ÇìæÇÈ
-		LevelData::ObjectData& objectData = levelData.objects.back();
+		LevelData::ObjectData& objectData = levelData.mObjects.back();
 
 		if (object.contains("file_name")) {
 			objectData.fileName = object["file_name"];

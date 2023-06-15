@@ -221,5 +221,5 @@ void ParticleEmitter::Update()
 				mColor);
 	}
 
-	mEmitter.Update(*Camera::mCamera);
+	mEmitter.Update(*Camera::sCamera);
 }

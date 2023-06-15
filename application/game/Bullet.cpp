@@ -25,7 +25,7 @@ void Bullet::Update()
 	//ç¿ïWÇÃçXêV
 	position += 150 * targetVec * TimeManager::deltaTime;
 
-	Obj3d::Update(*Camera::mCamera);
+	Obj3d::Update(*Camera::sCamera);
 	cubeCol.position = position;
 	cubeCol.scale = scale;
 }

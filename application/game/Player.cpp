@@ -311,7 +311,7 @@ void Player::Move()
 		dashTimer = 0;
 		dashCool = 2;
 
-		dashVec = Camera::mCamera->mTarget - Camera::mCamera->mEye;
+		dashVec = Camera::sCamera->mTarget - Camera::sCamera->mEye;
 		dashVec.normalize();
 		SoundManager::GetInstance()->SoundPlayWave(dash);
 	}

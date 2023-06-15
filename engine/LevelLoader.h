@@ -26,7 +26,7 @@ struct LevelData
 		ColliderData collider;
 	};
 
-	std::vector<ObjectData> objects;
+	std::vector<ObjectData> mObjects;
 };
 
 class LevelLoader
@@ -43,7 +43,7 @@ public:
 private:
 	void ObjectLoad(LevelData& levelData, nlohmann::json& object);
 
-	int32_t reservenum = 0;
+	int32_t mReservenum = 0;
 
 	LevelLoader(){};
 	~LevelLoader(){};

@@ -9,28 +9,28 @@
 void DemoScene::Initialize()
 {
 	//3dオブジェクト用のパイプライン生成
-	object3dPipelineSet = CreateObject3DPipeline();
+	mObject3dPipelineSet = CreateObject3DPipeline();
 
-	camera->Initialize();
+	mCamera->Initialize();
 
-	cameraObject.Initialize();
+	mDebugCamera.Initialize();
 
-	skydome.Initialize();
-	skydome.SetModel(ModelManager::Get()->GetModel("skydome"));
-	skydome.SetTexture(TextureManager::Get()->GetTexture("white"));
-	skydome.scale = { 10,10,10 };
-	skydome.color_ = { 1.f,1.f,1.f,1.0f };
+	mSkydome.Initialize();
+	mSkydome.SetModel(ModelManager::Get()->GetModel("skydome"));
+	mSkydome.SetTexture(TextureManager::Get()->GetTexture("white"));
+	mSkydome.scale = { 10,10,10 };
+	mSkydome.color_ = { 1.f,1.f,1.f,1.0f };
 
-	camera->mEye.y = 50;
-	camera->mEye.z = -150;
+	mCamera->mEye.y = 50;
+	mCamera->mEye.z = -150;
 
 	ModelManager::LoadModel("beetle","beetle");
 	ModelManager::LoadModel("firewisp","firewisp");
 	ModelManager::LoadModel("boss","boss");
 	ModelManager::LoadModel("BlankCube","BlankCube");
 	
-	slime.SetTexture(*TextureManager::GetTexture("slime"));
-	slime.mPosition = { 0,0,0 };
+	mSlime.SetTexture(*TextureManager::GetTexture("slime"));
+	mSlime.mPosition = { 0,0,0 };
 
 	LevelData* data = LevelLoader::Get()->Load("Scene/worldTest_Children");
 	SetObject(*data);
@@ -38,41 +38,41 @@ void DemoScene::Initialize()
 
 void DemoScene::Update()
 {
-	if (input->TriggerKey(DIK_O))
+	if (Input::Keyboard::TriggerKey(DIK_O))
 	{
 		mSceneManager->ChangeScene<Game>();
 		//sceneManager->ChangeScene("GAMEPLAY");
 	}
 
-	if (input->TriggerKey(DIK_R))
+	if (Input::Keyboard::TriggerKey(DIK_R))
 	{
-		obj3ds.clear();
+		mObj3ds.clear();
 		SetObject(*LevelLoader::Get()->Load("Scene/worldTest_Children"));
 	}
 
-	camera->UpdatematView();
+	mCamera->UpdatematView();
 
-	skydome.Update(*camera);
-	for (auto& obj : obj3ds)
+	mSkydome.Update(*mCamera);
+	for (auto& obj : mObj3ds)
 	{
-		obj.Update(*camera);
+		obj.Update(*mCamera);
 	}
 
-	slime.Update();
+	mSlime.Update();
 
-	cameraObject.Update();
+	mDebugCamera.Update();
 
-	gui.Begin({ 100,100 }, { 1,1 });
-	gui.End();
+	mGui.Begin({ 100,100 }, { 1,1 });
+	mGui.End();
 }
 
 void DemoScene::Draw()
 {
-	BasicObjectPreDraw(object3dPipelineSet);
+	BasicObjectPreDraw(mObject3dPipelineSet);
 
-	skydome.DrawMaterial();
+	mSkydome.DrawMaterial();
 
-	for (auto& obj : obj3ds)
+	for (auto& obj : mObj3ds)
 	{
 		obj.Draw();
 	}
@@ -80,55 +80,55 @@ void DemoScene::Draw()
 	//スプライトの前描画(共通コマンド)
 	SpriteCommonBeginDraw(SpriteCommon::mSpriteCommon);
 
-	slime.Draw();
+	mSlime.Draw();
 }
 
 void DemoScene::End()
 {
-	obj3ds.clear();
+	mObj3ds.clear();
 }
 
 void DemoScene::SetObject(LevelData& data)
 {
 	/*auto itr = particles.begin();
 	itr != particles.end(); itr++*/
-	for (auto objectData = data.objects.begin(); objectData != data.objects.end(); objectData++)
+	for (auto objectData = data.mObjects.begin(); objectData != data.mObjects.end(); objectData++)
 	{
 		//とりあえずキューブで配置
 		//TODO:file_nameから逆引きできるようにしたい
-		obj3ds.emplace_back();
-		obj3ds.back().Initialize();
+		mObj3ds.emplace_back();
+		mObj3ds.back().Initialize();
 		//モデル設定
 		//ファイルネームが設定されてるならそれで
 		if (objectData->fileName != "")
 		{
-			obj3ds.back().SetModel(ModelManager::GetModel(objectData->fileName));
+			mObj3ds.back().SetModel(ModelManager::GetModel(objectData->fileName));
 		}
 		//ないなら四角をデフォで設定
 		else
 		{
-			obj3ds.back().SetModel(ModelManager::GetModel("Cube"));
+			mObj3ds.back().SetModel(ModelManager::GetModel("Cube"));
 		}
-		obj3ds.back().SetTexture(TextureManager::Get()->GetTexture("white"));
+		mObj3ds.back().SetTexture(TextureManager::Get()->GetTexture("white"));
 		//座標
-		obj3ds.back().position = objectData->translation;
+		mObj3ds.back().position = objectData->translation;
 		//回転角
-		obj3ds.back().rotation = objectData->rotation;
+		mObj3ds.back().rotation = objectData->rotation;
 		//大きさ
-		obj3ds.back().scale = objectData->scaling;
+		mObj3ds.back().scale = objectData->scaling;
 
 		//当たり判定を作成
 		if (objectData->collider.have)
 		{
-			obj3ds.emplace_back();
-			obj3ds.back().Initialize();
+			mObj3ds.emplace_back();
+			mObj3ds.back().Initialize();
 
-			obj3ds.back().SetModel(ModelManager::GetModel("BlankCube"));
-			obj3ds.back().SetTexture(TextureManager::Get()->GetTexture("white"));
+			mObj3ds.back().SetModel(ModelManager::GetModel("BlankCube"));
+			mObj3ds.back().SetTexture(TextureManager::Get()->GetTexture("white"));
 
-			obj3ds.back().position = objectData->translation;
-			obj3ds.back().scale = objectData->collider.size;
-			obj3ds.back().rotation = { 0,0,0 };
+			mObj3ds.back().position = objectData->translation;
+			mObj3ds.back().scale = objectData->collider.size;
+			mObj3ds.back().rotation = { 0,0,0 };
 		}
 	}
 }

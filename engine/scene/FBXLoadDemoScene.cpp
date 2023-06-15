@@ -9,8 +9,8 @@ void FBXLoadDemoScene::Initialize()
 	//fbx読み込みの形跡
 	ImportSettings importSetting =
 	{
-		modelFile,
-		meshes,
+		mModelFile,
+		mMeshes,
 		false,
 		false,
 	};
@@ -22,16 +22,16 @@ void FBXLoadDemoScene::Initialize()
 	}
 
 	//spherefbx.reserve(meshes.size());
-	for (size_t i = 0; i < meshes.size(); i++)
+	for (size_t i = 0; i < mMeshes.size(); i++)
 	{
-		auto vertices = meshes[i].vertices;
-		auto indices = meshes[i].indices;
+		auto vertices = mMeshes[i].vertices;
+		auto indices = mMeshes[i].indices;
 
 		/*vertexDatas.emplace_back();
 		vertexDatas.back().CreateVertex(vertices, indices);*/
 
-		spherefbx.emplace_back();
-		spherefbx.back().Initialize();
+		mSpherefbx.emplace_back();
+		mSpherefbx.back().Initialize();
 
 		/*spherefbx.back().model->CreateVertex(vertices, indices);
 		spherefbx.back().model->mesh.vertices = vertices;
@@ -43,46 +43,46 @@ void FBXLoadDemoScene::Initialize()
 		model->mMesh.vertices = vertices;
 		model->mMesh.indices = indices;
 
-		spherefbx.back().SetModel(model);
+		mSpherefbx.back().SetModel(model);
 	}
 
 	//3dオブジェクト用のパイプライン生成
-	object3dPipelineSet = CreateObject3DPipeline();
+	mObject3dPipelineSet = CreateObject3DPipeline();
 
-	camera->Initialize();
+	mCamera->Initialize();
 
-	skydome.Initialize();
-	skydome.SetModel(ModelManager::Get()->GetModel("skydome"));
-	skydome.SetTexture(TextureManager::Get()->GetTexture("white"));
-	skydome.scale = { 10,10,10 };
-	skydome.color_ = { 1.f,1.f,1.f,1.0f };
+	mSkydome.Initialize();
+	mSkydome.SetModel(ModelManager::Get()->GetModel("skydome"));
+	mSkydome.SetTexture(TextureManager::Get()->GetTexture("white"));
+	mSkydome.scale = { 10,10,10 };
+	mSkydome.color_ = { 1.f,1.f,1.f,1.0f };
 
-	debugCamera.Initialize();
+	mDebugCamera.Initialize();
 }
 
 void FBXLoadDemoScene::Update()
 {
-	camera->UpdatematView();
+	mCamera->UpdatematView();
 
-	for (size_t i = 0; i < meshes.size(); i++)
+	for (size_t i = 0; i < mMeshes.size(); i++)
 	{
-		spherefbx[i].Update(*camera);
+		mSpherefbx[i].Update(*mCamera);
 	}
 
-	skydome.Update(*camera);
+	mSkydome.Update(*mCamera);
 
-	debugCamera.Update();
+	mDebugCamera.Update();
 }
 
 void FBXLoadDemoScene::Draw()
 {
-	BasicObjectPreDraw(object3dPipelineSet);
+	BasicObjectPreDraw(mObject3dPipelineSet);
 
-	skydome.DrawMaterial();
+	mSkydome.DrawMaterial();
 
-	for (size_t i = 0; i < meshes.size(); i++)
+	for (size_t i = 0; i < mMeshes.size(); i++)
 	{
-		spherefbx[i].Draw();
+		mSpherefbx[i].Draw();
 	}
 
 	//スプライトの前描画(共通コマンド)
