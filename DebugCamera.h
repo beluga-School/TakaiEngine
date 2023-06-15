@@ -9,14 +9,14 @@ public:
 	void Initialize();
 	void Update();
 private:
-	float verticalRad = 0;
-	float horizontalRad = 0;
+	float mVerticalRad = 0;
+	float mHorizontalRad = 0;
 
-	Vector3 centerVec;
-	Vector3 sideVec;
+	Vector3 mCenterVec;
+	Vector3 mSideVec;
 
-	float radius = 20.0f;
+	float mRadius = 20.0f;
 
-	const float moveSpeed = 1.0f;
+	const float mMoveSpeed = 1.0f;
 };
 

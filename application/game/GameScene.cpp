@@ -27,31 +27,31 @@ void Game::Initialize()
 	skydome.color_ = { 0.05f,0.05f,0.05f,1.0f };
 
 	goalSprite.SetTexture(*TextureManager::GetTexture("goal"));
-	goalSprite.SetPos({ Util::window_width / 2, Util::window_height / 2 });
+	goalSprite.SetPos({ Util::WIN_WIDTH / 2, Util::WIN_HEIGHT / 2 });
 	goalSprite.SetSize({ 1280, 720 });
 	
 	TitleSprite.SetTexture(*TextureManager::GetTexture("Title"));
-	TitleSprite.SetPos({ Util::window_width / 2,Util::window_height / 2 });
+	TitleSprite.SetPos({ Util::WIN_WIDTH / 2,Util::WIN_HEIGHT / 2 });
 	TitleSprite.SetSize({ 1280,720 });
 
 	startSprite.SetTexture(*TextureManager::GetTexture("Start"));
-	startSprite.SetPos({ Util::window_width / 2,Util::window_height / 2 + 100 });
+	startSprite.SetPos({ Util::WIN_WIDTH / 2,Util::WIN_HEIGHT / 2 + 100 });
 	startSprite.SetSize({ 600,150 });
 	
 	spaceSprite.SetTexture(*TextureManager::GetTexture("Space"));
-	spaceSprite.SetPos({ Util::window_width / 2,Util::window_height / 2 + 200 });
+	spaceSprite.SetPos({ Util::WIN_WIDTH / 2,Util::WIN_HEIGHT / 2 + 200 });
 	spaceSprite.SetColor({1,1,1,0});
 	spaceSprite.SetSize({ 600,150 });
 
 	redScreenSprite.SetTexture(*TextureManager::GetTexture("redScreen"));
-	redScreenSprite.SetPos({ Util::window_width / 2,Util::window_height / 2 });
-	redScreenSprite.SetSize({ Util::window_width,Util::window_height });
+	redScreenSprite.SetPos({ Util::WIN_WIDTH / 2,Util::WIN_HEIGHT / 2 });
+	redScreenSprite.SetSize({ Util::WIN_WIDTH,Util::WIN_HEIGHT });
 	
 	slimeSprite.SetTexture(*TextureManager::GetTexture("slime"));
-	slimeSprite.SetPos({ Util::window_width - 100,100 });
+	slimeSprite.SetPos({ Util::WIN_WIDTH - 100,100 });
 
 	gameOverSprite.SetTexture(*TextureManager::GetTexture("GameOver"));
-	gameOverSprite.SetPos({ Util::window_width / 2,Util::window_height / 2 });
+	gameOverSprite.SetPos({ Util::WIN_WIDTH / 2,Util::WIN_HEIGHT / 2 });
 	
 	//ƒrƒ…[•ÏŠ·s—ñ(“§Ž‹“Š‰e)‚ðŒvŽZ
 	camera->Initialize();
@@ -178,8 +178,8 @@ void Game::Initialize()
 	//lightGroup->SetDirLightActive(1, false);
 	//lightGroup->SetDirLightActive(2, false);
 
-	LightGroup::lightGroup->SetPointLightActive(0, true);
-	LightGroup::lightGroup->SetPointLightPos(0, { 0.5f,1.0f,0.0f });
+	LightGroup::mLightGroup->SetPointLightActive(0, true);
+	LightGroup::mLightGroup->SetPointLightPos(0, { 0.5f,1.0f,0.0f });
 
 	lightObj.Initialize();
 	lightObj.position = { 0.5f,0,0 };
@@ -495,7 +495,7 @@ void Game::Update()
 	
 	lightObj.Update(*camera);
 
-	LightGroup::lightGroup->Update();
+	LightGroup::mLightGroup->Update();
 }
 
 void Game::Draw()

@@ -72,7 +72,7 @@ int32_t WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_  HINSTANCE hPrevInstan
 
 #ifdef  _DEBUG
 	ID3D12InfoQueue* infoQueue;
-	if (SUCCEEDED(DX12->device->QueryInterface(IID_PPV_ARGS(&infoQueue)))) {
+	if (SUCCEEDED(DX12->mDevice->QueryInterface(IID_PPV_ARGS(&infoQueue)))) {
 		infoQueue->SetBreakOnSeverity(D3D12_MESSAGE_SEVERITY_CORRUPTION, true);	//ヤバイエラー時にとまと
 		infoQueue->SetBreakOnSeverity(D3D12_MESSAGE_SEVERITY_WARNING,true);		//ワーニング時もとまと
 		infoQueue->SetBreakOnSeverity(D3D12_MESSAGE_SEVERITY_ERROR,true);		//エラー時にとまと
@@ -134,12 +134,12 @@ int32_t WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_  HINSTANCE hPrevInstan
 	while (true){
 
 #pragma region ウィンドウメッセージ
-		if (PeekMessage(&winApi->msg, nullptr, 0, 0, PM_REMOVE)) {
-			TranslateMessage(&winApi->msg);		//キー入力メッセージの処理
-			DispatchMessage(&winApi->msg);		//プロシージャにメッセージを送る
+		if (PeekMessage(&winApi->mMsg, nullptr, 0, 0, PM_REMOVE)) {
+			TranslateMessage(&winApi->mMsg);		//キー入力メッセージの処理
+			DispatchMessage(&winApi->mMsg);		//プロシージャにメッセージを送る
 		}
 
-		if (winApi->msg.message == WM_QUIT) {
+		if (winApi->mMsg.message == WM_QUIT) {
 			break;
 		}
 #pragma endregion ウィンドウメッセージ

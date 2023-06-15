@@ -80,13 +80,13 @@ void SpriteCommonBeginDraw(const SpriteCommon& spriteCommon)
 	TextureManager* texM = TextureManager::Get();
 
 	//パイプラインステートの設定
-	dx12->commandList->SetPipelineState(spriteCommon.mPipelineSet.pipelinestate.Get());
+	dx12->mCmdList->SetPipelineState(spriteCommon.mPipelineSet.mPipelinestate.Get());
 	//ルートシグネチャの設定
-	dx12->commandList->SetGraphicsRootSignature(spriteCommon.mPipelineSet.rootsignature.Get());
+	dx12->mCmdList->SetGraphicsRootSignature(spriteCommon.mPipelineSet.mRootsignature.Get());
 	//プリミティブ形状を設定
-	dx12->commandList->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP);
+	dx12->mCmdList->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP);
 
-	dx12->commandList->SetDescriptorHeaps(1, texM->mSrvHeap.GetAddressOf());
+	dx12->mCmdList->SetDescriptorHeaps(1, texM->mSrvHeap.GetAddressOf());
 }
 
 SpriteCommon SpriteCommonCreate()
@@ -101,7 +101,7 @@ SpriteCommon SpriteCommonCreate()
 
 	//並行投影の射影行列生成
 	spriteCommon.mMatProjection = XMMatrixOrthographicOffCenterLH(
-		0.0f, (float)Util::window_width, (float)Util::window_height, 0.0f, 0.0f, 1.0f);
+		0.0f, (float)Util::WIN_WIDTH, (float)Util::WIN_HEIGHT, 0.0f, 0.0f, 1.0f);
 
 	return spriteCommon;
 }
@@ -183,15 +183,15 @@ void Sprite::Update()
 	mMatWorld *= XMMatrixTranslation(mPosition.x, mPosition.y, mPosition.z);
 
 	//定数バッファの転送
-	result = mConstBuffer.buffer->Map(0, nullptr, (void**)&mConstBuffer.constBufferData);
-	mConstBuffer.constBufferData->mat = mMatWorld * SpriteCommon::mSpriteCommon.mMatProjection;
+	result = mConstBuffer.mBuffer->Map(0, nullptr, (void**)&mConstBuffer.mConstBufferData);
+	mConstBuffer.mConstBufferData->mat = mMatWorld * SpriteCommon::mSpriteCommon.mMatProjection;
 
-	mConstBuffer.constBufferData->color.x = mColor.f4.vec.x;
-	mConstBuffer.constBufferData->color.y = mColor.f4.vec.y;
-	mConstBuffer.constBufferData->color.z = mColor.f4.vec.z;
-	mConstBuffer.constBufferData->color.w = mColor.f4.w;
+	mConstBuffer.mConstBufferData->color.x = mColor.f4.vec.x;
+	mConstBuffer.mConstBufferData->color.y = mColor.f4.vec.y;
+	mConstBuffer.mConstBufferData->color.z = mColor.f4.vec.z;
+	mConstBuffer.mConstBufferData->color.w = mColor.f4.w;
 
-	mConstBuffer.buffer->Unmap(0, nullptr);
+	mConstBuffer.mBuffer->Unmap(0, nullptr);
 }
 
 void Sprite::Draw()
@@ -204,13 +204,13 @@ void Sprite::Draw()
 		return;
 	}
 
-	dx12->commandList->IASetVertexBuffers(0, 1, &mVbView);
+	dx12->mCmdList->IASetVertexBuffers(0, 1, &mVbView);
 
-	dx12->commandList->SetGraphicsRootDescriptorTable(1, mTexture->mGpuHandle);
+	dx12->mCmdList->SetGraphicsRootDescriptorTable(1, mTexture->mGpuHandle);
 
-	dx12->commandList->SetGraphicsRootConstantBufferView(0, mConstBuffer.buffer->GetGPUVirtualAddress());
+	dx12->mCmdList->SetGraphicsRootConstantBufferView(0, mConstBuffer.mBuffer->GetGPUVirtualAddress());
 
-	dx12->commandList->DrawInstanced(4, 1, 0, 0);
+	dx12->mCmdList->DrawInstanced(4, 1, 0, 0);
 }
 
 void Sprite::Init()
@@ -246,7 +246,7 @@ void Sprite::Init()
 	resDesc.Layout = D3D12_TEXTURE_LAYOUT_ROW_MAJOR;
 
 	//頂点バッファ生成
-	result = dx12->device->CreateCommittedResource(
+	result = dx12->mDevice->CreateCommittedResource(
 		&heapProp,
 		D3D12_HEAP_FLAG_NONE,
 		&resDesc,
@@ -266,12 +266,12 @@ void Sprite::Init()
 
 	//定数バッファの設定
 	//平行投影行列
-	mConstBuffer.constBufferData->mat =
+	mConstBuffer.mConstBufferData->mat =
 		XMMatrixOrthographicOffCenterLH(
-			0.0f, Util::window_width, Util::window_height, 0.0f, 0.0f, 1.0f);
+			0.0f, Util::WIN_WIDTH, Util::WIN_HEIGHT, 0.0f, 0.0f, 1.0f);
 
 	//色指定
-	mConstBuffer.constBufferData->color = XMFLOAT4(1, 1, 1, 1.0f);
+	mConstBuffer.mConstBufferData->color = XMFLOAT4(1, 1, 1, 1.0f);
 
 	SpriteTransferVertexBuffer(*this);
 }

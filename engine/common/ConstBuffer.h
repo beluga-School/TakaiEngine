@@ -26,13 +26,11 @@ template <class Format>
 class ConstBuffer
 {
 public:
-	Microsoft::WRL::ComPtr<ID3D12Resource> buffer;
-	Format* constBufferData;
+	Microsoft::WRL::ComPtr<ID3D12Resource> mBuffer;
+	Format* mConstBufferData;
 
 	ConstBuffer();
 	~ConstBuffer();
-private:
-	DirectX12* dx12 = DirectX12::Get();
 };
 
 template<class Format>
@@ -51,21 +49,21 @@ inline ConstBuffer<Format>::ConstBuffer()
 	resdesc.Layout = D3D12_TEXTURE_LAYOUT_ROW_MAJOR;
 
 	//定数バッファの生成
-	result = dx12->device->CreateCommittedResource(
+	result = DirectX12::Get()->mDevice->CreateCommittedResource(
 		&heapProp,
 		D3D12_HEAP_FLAG_NONE,
 		&resdesc,
 		D3D12_RESOURCE_STATE_GENERIC_READ,
 		nullptr,
-		IID_PPV_ARGS(&buffer));
+		IID_PPV_ARGS(&mBuffer));
 	assert(SUCCEEDED(result));
 
-	result = buffer->Map(0, nullptr, (void**)&constBufferData);
+	result = mBuffer->Map(0, nullptr, (void**)&mConstBufferData);
 	assert(SUCCEEDED(result));
 }
 
 template<class Format>
 inline ConstBuffer<Format>::~ConstBuffer()
 {
-	buffer->Unmap(0, nullptr);
+	mBuffer->Unmap(0, nullptr);
 }

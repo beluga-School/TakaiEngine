@@ -13,46 +13,46 @@ void DebugCamera::Initialize()
 
 void DebugCamera::Update()
 {
-	centerVec = matWorld.ExtractAxisZ();
-	sideVec = matWorld.ExtractAxisX();
+	mCenterVec = matWorld.ExtractAxisZ();
+	mSideVec = matWorld.ExtractAxisX();
 
 	int16_t inputCenter = (Keyboard::PushKey(DIK_DOWN) - Keyboard::PushKey(DIK_UP));
-	position.x += inputCenter * centerVec.x * moveSpeed;
-	position.y += inputCenter * centerVec.y * moveSpeed;
-	position.z += inputCenter * centerVec.z * moveSpeed;
+	position.x += inputCenter * mCenterVec.x * mMoveSpeed;
+	position.y += inputCenter * mCenterVec.y * mMoveSpeed;
+	position.z += inputCenter * mCenterVec.z * mMoveSpeed;
 
 	int16_t inputSide = (Keyboard::PushKey(DIK_LEFT) - Keyboard::PushKey(DIK_RIGHT));
-	position.x += inputSide * sideVec.x * moveSpeed;
-	position.y += inputSide * sideVec.y * moveSpeed;
-	position.z += inputSide * sideVec.z * moveSpeed;
+	position.x += inputSide * mSideVec.x * mMoveSpeed;
+	position.y += inputSide * mSideVec.y * mMoveSpeed;
+	position.z += inputSide * mSideVec.z * mMoveSpeed;
 	
 	//À•W‚Ì’Ç]
-	Camera::mCamera->mEye = position + (centerVec * radius);
+	Camera::mCamera->mEye = position + (mCenterVec * mRadius);
 	Camera::mCamera->mTarget = position;
 
 	if (Mouse::Wheel() < 0)
 	{
-		radius += 2.0f;
+		mRadius += 2.0f;
 	}
 	if (Mouse::Wheel() > 0)
 	{
-		radius -= 2.0f;
+		mRadius -= 2.0f;
 	}
 
-	radius = Util::Clamp(radius, 1.0f, 100.f);
+	mRadius = Util::Clamp(mRadius, 1.0f, 100.f);
 
 	//‰ñ“]‚³‚¹‚éˆ—
 	if (Mouse::Down(Click::MIDDLE))
 	{
-		verticalRad += MathF::AngleConvRad(Mouse::GetVelocity().y);
-		horizontalRad += MathF::AngleConvRad(Mouse::GetVelocity().x);
+		mVerticalRad += MathF::AngleConvRad(Mouse::GetVelocity().y);
+		mHorizontalRad += MathF::AngleConvRad(Mouse::GetVelocity().x);
 
 		//ŒÀŠE’l‚ð’´‚¦‚È‚¢ˆ—
-		if (verticalRad > MathF::PIf / 2 - MathF::AngleConvRad(1.0f)) verticalRad = MathF::PIf / 2 - MathF::AngleConvRad(1.0f);
-		if (verticalRad < -MathF::PIf / 2 + MathF::AngleConvRad(1.0f)) verticalRad = -MathF::PIf / 2 + MathF::AngleConvRad(1.0f);
+		if (mVerticalRad > MathF::PIf / 2 - MathF::AngleConvRad(1.0f)) mVerticalRad = MathF::PIf / 2 - MathF::AngleConvRad(1.0f);
+		if (mVerticalRad < -MathF::PIf / 2 + MathF::AngleConvRad(1.0f)) mVerticalRad = -MathF::PIf / 2 + MathF::AngleConvRad(1.0f);
 
-		rotation.x = verticalRad;
-		rotation.y = horizontalRad;
+		rotation.x = mVerticalRad;
+		rotation.y = mHorizontalRad;
 	}
 
 	Obj3d::Update(*Camera::mCamera);

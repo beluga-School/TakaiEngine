@@ -45,20 +45,20 @@ void WinAPI::SetWindowClass()
 	RegisterClassEx(&w);
 
 	//ウィンドウサイズ { X座標 Y座標 横幅 縦幅 }
-	wrc = { 0,0,(long)Util::window_width,(long)Util::window_height };
+	mWrc = { 0,0,(long)Util::WIN_WIDTH,(long)Util::WIN_HEIGHT };
 
 	//自動でサイズを補正する
-	AdjustWindowRect(&wrc, WS_OVERLAPPEDWINDOW, false);
+	AdjustWindowRect(&mWrc, WS_OVERLAPPEDWINDOW, false);
 
 	//ウィンドウオブジェクトの生成
-	hwnd = CreateWindow(
+	mHwnd = CreateWindow(
 		w.lpszClassName,		//クラス名
 		L"TAKAIEngine",			//タイトルバーの文字
 		WS_OVERLAPPEDWINDOW,	//標準的なウィンドウスタイル
 		CW_USEDEFAULT,			//表示X座標(OSに任せる)
 		CW_USEDEFAULT,			//表示Y座標(OSに任せる)
-		wrc.right - wrc.left,	//ウィンドウ横幅
-		wrc.bottom - wrc.top,	//ウィンドウ縦幅
+		mWrc.right - mWrc.left,	//ウィンドウ横幅
+		mWrc.bottom - mWrc.top,	//ウィンドウ縦幅
 		nullptr,				//親ウィンドウハンドル
 		nullptr,				//メニューハンドル
 		w.hInstance,			//呼び出しアプリケーションハンドル
@@ -66,9 +66,9 @@ void WinAPI::SetWindowClass()
 		);
 
 	//ウィンドウを表示状態にする
-	ShowWindow(hwnd, SW_SHOW);
+	ShowWindow(mHwnd, SW_SHOW);
 
-	msg = {};
+	mMsg = {};
 }
 
 WinAPI* WinAPI::Get()

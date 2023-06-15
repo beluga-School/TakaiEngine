@@ -76,7 +76,7 @@ private:
 	//テクスチャの1枚目が、デバッグテキストの物になっちゃってるバグがあるのでそれを入れる用のテクスチャ
 	Texture bugfix_;
 
-	static std::map<std::string, Texture> textures_;
+	static std::map<std::string, Texture> mTextures;
 
 	TextureManager(){};
 	~TextureManager(){};

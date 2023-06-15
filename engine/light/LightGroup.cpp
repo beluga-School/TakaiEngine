@@ -1,12 +1,12 @@
 #include "LightGroup.h"
 #include "DirectXInit.h"
 
-std::unique_ptr<LightGroup> LightGroup::lightGroup = nullptr;
+std::unique_ptr<LightGroup> LightGroup::mLightGroup = nullptr;
 
 void LightGroup::Create()
 {
-	lightGroup = std::make_unique<LightGroup>();
-	lightGroup->Initialize();
+	mLightGroup = std::make_unique<LightGroup>();
+	mLightGroup->Initialize();
 }
 
 void LightGroup::Initialize()
@@ -19,120 +19,120 @@ void LightGroup::Initialize()
 
 void LightGroup::Update()
 {
-	if (dirty)
+	if (mDirty)
 	{
 		TransferBuffer();
-		dirty = false;
+		mDirty = false;
 	}
 }
 
 void LightGroup::Draw(const UINT& index)
 {
-	DirectX12::Get()->commandList->SetGraphicsRootConstantBufferView(index,
-		constBuff.buffer->GetGPUVirtualAddress());
+	DirectX12::Get()->mCmdList->SetGraphicsRootConstantBufferView(index,
+		mConstBuff.mBuffer->GetGPUVirtualAddress());
 }
 
 void LightGroup::TransferBuffer()
 {
-	for (int32_t i = 0; i < DirLightNum; i++)
+	for (int32_t i = 0; i < sDirLightNum; i++)
 	{
 		//アクティブなら
-		if (dirLights[i].active)
+		if (mDirLights[i].mActive)
 		{
 			//定数バッファの設定を転送
-			constBuff.constBufferData->dirLights[i].active = true;
-			constBuff.constBufferData->dirLights[i].direction = -dirLights[i].direction;
-			constBuff.constBufferData->dirLights[i].color = dirLights[i].color;
-			constBuff.constBufferData->ambienColor = ambienColor;
+			mConstBuff.mConstBufferData->mDirLights[i].active = true;
+			mConstBuff.mConstBufferData->mDirLights[i].direction = -mDirLights[i].mDirection;
+			mConstBuff.mConstBufferData->mDirLights[i].color = mDirLights[i].mColor;
+			mConstBuff.mConstBufferData->mAmbienColor = mAmbienColor;
 		}
 		else
 		{
-			constBuff.constBufferData->dirLights[i].active = false;
+			mConstBuff.mConstBufferData->mDirLights[i].active = false;
 		}
 	}
-	for (int32_t i = 0; i < PointLightNum; i++)
+	for (int32_t i = 0; i < sPointLightNum; i++)
 	{
-		if (pointLights[i].active) {
-			constBuff.constBufferData->pointLights[i].active = true;
-			constBuff.constBufferData->pointLights[i].lightPos = pointLights[i].lightPos;
-			constBuff.constBufferData->pointLights[i].lightColor = pointLights[i].lightColor;
-			constBuff.constBufferData->pointLights[i].lighttAtten = pointLights[i].lightAtten;
+		if (mPointLights[i].mActive) {
+			mConstBuff.mConstBufferData->mPointLights[i].active = true;
+			mConstBuff.mConstBufferData->mPointLights[i].lightPos = mPointLights[i].mLightPos;
+			mConstBuff.mConstBufferData->mPointLights[i].lightColor = mPointLights[i].mLightColor;
+			mConstBuff.mConstBufferData->mPointLights[i].lighttAtten = mPointLights[i].mLightAtten;
 		}
 		else
 		{
-			constBuff.constBufferData->pointLights[i].active = false;
+			mConstBuff.mConstBufferData->mPointLights[i].active = false;
 		}
 	}
 }
 
 void LightGroup::SetAmbientColor(const Vector3& color)
 {
-	ambienColor = color;
-	dirty = true;
+	mAmbienColor = color;
+	mDirty = true;
 }
 
 void LightGroup::SetDirLightActive(const int32_t& index, const bool& active)
 {
-	assert(0 <= index && index < DirLightNum);
-	dirLights[index].active = active;
+	assert(0 <= index && index < sDirLightNum);
+	mDirLights[index].mActive = active;
 }
 
 void LightGroup::SetDirLightDir(const int32_t& index, const Vector3& lightdir)
 {
-	assert(0 <= index && index < DirLightNum);
-	dirLights[index].direction = lightdir;
-	dirty = true;
+	assert(0 <= index && index < sDirLightNum);
+	mDirLights[index].mDirection = lightdir;
+	mDirty = true;
 }
 
 void LightGroup::SetDirLightColor(const int32_t& index, const Vector3& lightcolor)
 {
-	assert(0 <= index && index < DirLightNum);
-	dirLights[index].color = lightcolor;
-	dirty = true;
+	assert(0 <= index && index < sDirLightNum);
+	mDirLights[index].mColor = lightcolor;
+	mDirty = true;
 }
 
 void LightGroup::SetPointLightActive(const int32_t& index, const bool& active)
 {
-	assert(0 <= index && index < PointLightNum);
+	assert(0 <= index && index < sPointLightNum);
 
-	pointLights[index].active = active;
+	mPointLights[index].mActive = active;
 }
 
 void LightGroup::SetPointLightPos(const int32_t& index, const Vector3& pos)
 {
-	assert(0 <= index && index < PointLightNum);
+	assert(0 <= index && index < sPointLightNum);
 
-	pointLights[index].lightPos = pos;
-	dirty = true;
+	mPointLights[index].mLightPos = pos;
+	mDirty = true;
 }
 
 void LightGroup::SetPointLightColor(const int32_t& index, const Vector3& color)
 {
-	assert(0 <= index && index < PointLightNum);
+	assert(0 <= index && index < sPointLightNum);
 
-	pointLights[index].lightColor = color;
-	dirty = true;
+	mPointLights[index].mLightColor = color;
+	mDirty = true;
 }
 
 void LightGroup::SetPointLightAtten(const int32_t& index, const Vector3& atten)
 {
-	assert(0 <= index && index < PointLightNum);
+	assert(0 <= index && index < sPointLightNum);
 
-	pointLights[index].lightAtten = atten;
-	dirty = true;
+	mPointLights[index].mLightAtten = atten;
+	mDirty = true;
 }
 
 void LightGroup::DefaultLightSet()
 {
-	dirLights[0].active = true;
-	dirLights[0].color = { 1.0f,0.0f,0.0f };
-	dirLights[0].direction = { 0.0f,-1.0f,0.0f };
+	mDirLights[0].mActive = true;
+	mDirLights[0].mColor = { 1.0f,0.0f,0.0f };
+	mDirLights[0].mDirection = { 0.0f,-1.0f,0.0f };
 	
-	dirLights[1].active = true;
-	dirLights[1].color = { 0.0f,1.0f,0.0f };
-	dirLights[1].direction = { 0.5f,0.1f,0.2f };
+	mDirLights[1].mActive = true;
+	mDirLights[1].mColor = { 0.0f,1.0f,0.0f };
+	mDirLights[1].mDirection = { 0.5f,0.1f,0.2f };
 	
-	dirLights[2].active = true;
-	dirLights[2].color = { 0.0f,0.0f,1.0f };
-	dirLights[2].direction = { -0.5f,0.1f,-0.2f };
+	mDirLights[2].mActive = true;
+	mDirLights[2].mColor = { 0.0f,0.0f,1.0f };
+	mDirLights[2].mDirection = { -0.5f,0.1f,-0.2f };
 }

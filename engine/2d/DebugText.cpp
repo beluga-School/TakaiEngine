@@ -2,9 +2,9 @@
 
 void DebugText::Initialize(const Texture& tex)
 {
-	for (int32_t i = 0; i < _countof(sprites); i++)
+	for (int32_t i = 0; i < _countof(mSprites); i++)
 	{
-		sprites[i].SetTexture(tex);
+		mSprites[i].SetTexture(tex);
 	}
 }
 
@@ -15,7 +15,7 @@ void DebugText::Print(const SpriteCommon& spritecommon, const std::string& text,
 	for (int32_t i = 0; i < text.size(); i++)
 	{
 		//ç≈ëÂï∂éöêîí¥âﬂ
-		if (spriteIndex >= maxCharCount) {
+		if (mSpriteIndex >= sMAX_CHAR_COUNT) {
 			break;
 		}
 
@@ -28,38 +28,38 @@ void DebugText::Print(const SpriteCommon& spritecommon, const std::string& text,
 			fontIndex = 0;
 		}
 
-		int32_t fontIndexY = fontIndex / fontLineCount;
-		int32_t fontIndexX = fontIndex % fontLineCount;
+		int32_t fontIndexY = fontIndex / sFONT_LINE_COUNT;
+		int32_t fontIndexX = fontIndex % sFONT_LINE_COUNT;
 
 		//ç¿ïWåvéZ
-		sprites[spriteIndex].mPosition = { x + fontWidth * scale * i,y,0 };
-		sprites[spriteIndex].mTexLeftTop = 
-		{(float)fontIndexX * fontWidth,(float)fontIndexY * fontHeight};
-		sprites[spriteIndex].mCutSize = { fontWidth,fontHeight };
-		sprites[spriteIndex].mSize = { fontWidth * scale,fontHeight * scale };
+		mSprites[mSpriteIndex].mPosition = { x + sFONT_WIDTH * scale * i,y,0 };
+		mSprites[mSpriteIndex].mTexLeftTop = 
+		{(float)fontIndexX * sFONT_WIDTH,(float)fontIndexY * sFONT_HEIGHT};
+		mSprites[mSpriteIndex].mCutSize = { sFONT_WIDTH,sFONT_HEIGHT };
+		mSprites[mSpriteIndex].mSize = { sFONT_WIDTH * scale,sFONT_HEIGHT * scale };
 
-		SpriteTransferVertexBuffer(sprites[spriteIndex]);
+		SpriteTransferVertexBuffer(mSprites[mSpriteIndex]);
 
-		sprites[spriteIndex].Update();//SpriteUpdate(sprites[spriteIndex], spritecommon);
+		mSprites[mSpriteIndex].Update();//SpriteUpdate(sprites[spriteIndex], spritecommon);
 
-		spriteIndex++;
+		mSpriteIndex++;
 	}
 }
 
 void DebugText::DrawAll()
 {
-	for (int32_t i = 0; i < spriteIndex; i++)
+	for (int32_t i = 0; i < mSpriteIndex; i++)
 	{
-		sprites[i].Draw();
+		mSprites[i].Draw();
 	}
 }
 
 void DebugText::PostDraw()
 {
-	for (int32_t i = 0; i < spriteIndex; i++)
+	for (int32_t i = 0; i < mSpriteIndex; i++)
 	{
-		sprites[i].mPosition = { 0,0,0 };
-		sprites[i].mSize = { 0,0 };
+		mSprites[i].mPosition = { 0,0,0 };
+		mSprites[i].mSize = { 0,0 };
 	}
-	spriteIndex = 0;
+	mSpriteIndex = 0;
 }

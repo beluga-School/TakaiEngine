@@ -7,19 +7,19 @@
 #include <memory>
 
 //ライトの数
-static const int32_t DirLightNum = 3;
+static const int32_t sDirLightNum = 3;
 
 //点光源の数
-static const int32_t PointLightNum = 3;
+static const int32_t sPointLightNum = 3;
 
 struct LightGroupData
 {
-	Vector3 ambienColor;
-	float pad1;
+	Vector3 mAmbienColor;
+	float mPad1;
 
-	DirectionalLight::ConstBufferData dirLights[DirLightNum];
+	DirectionalLight::ConstBufferData mDirLights[sDirLightNum];
 
-	PointLight::ConstBufferData pointLights[PointLightNum];
+	PointLight::ConstBufferData mPointLights[sPointLightNum];
 };
 
 class LightGroup
@@ -28,13 +28,13 @@ public://変数
 	
 
 	//全てのオブジェクトで共通のライトデータ
-	static std::unique_ptr<LightGroup> lightGroup;
+	static std::unique_ptr<LightGroup> mLightGroup;
 	/*static void SetLight(std::unique_ptr<LightGroup> light) {
 		lightGroup = light;
 	};*/
 	   
 	//定数バッファ
-	ConstBuffer<LightGroupData> constBuff;
+	ConstBuffer<LightGroupData> mConstBuff;
 
 public://関数
 	//インスタンス生成
@@ -73,13 +73,13 @@ public://関数
 	//標準のライト設定
 	void DefaultLightSet();
 
-	DirectionalLight dirLights[DirLightNum];
-	PointLight pointLights[DirLightNum];
+	DirectionalLight mDirLights[sDirLightNum];
+	PointLight mPointLights[sDirLightNum];
 
 private:
 	//環境光の色
-	Vector3 ambienColor = { 1,1,1 };
+	Vector3 mAmbienColor = { 1,1,1 };
 
-	bool dirty = false;
+	bool mDirty = false;
 };
 

@@ -13,8 +13,8 @@ public:
 	void Begin(const Vector2& pos,const Vector2 &size);
 	void End();
 private:
-	std::string name;
-	bool setPosFlag = false;
+	std::string mName;
+	bool mSetPosFlag = false;
 };
 
 class ImguiManager

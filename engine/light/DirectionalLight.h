@@ -7,8 +7,8 @@
 class DirectionalLight
 {
 public://変数
-	Vector3 direction = { 1,0,0 };
-	Vector3 color = { 1,1,1 };
+	Vector3 mDirection = { 1,0,0 };
+	Vector3 mColor = { 1,1,1 };
 
 	struct ConstBufferData
 	{
@@ -37,11 +37,11 @@ public://関数
 	void SetLightDirection(const Vector3& lightdir);
 	void SetLightColor(const Vector3& color);
 
-	bool active = false;
+	bool mActive = false;
 
 private://変数
 	//定数バッファ
-	ConstBuffer<ConstBufferData> constBuff;
+	ConstBuffer<ConstBufferData> mConstBuff;
 
-	bool dirty = false;
+	bool mDirty = false;
 };

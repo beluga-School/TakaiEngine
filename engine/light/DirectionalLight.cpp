@@ -8,33 +8,33 @@ void DirectionalLight::Initialize()
 
 void DirectionalLight::Update()
 {
-	if (dirty) {
+	if (mDirty) {
 		TransferBuffer();
-		dirty = false;
+		mDirty = false;
 	}
 }
 
 void DirectionalLight::Draw(const UINT& rootParameterIndex)
 {
-	DirectX12::Get()->commandList->SetGraphicsRootConstantBufferView(
-		rootParameterIndex, constBuff.buffer->GetGPUVirtualAddress()
+	DirectX12::Get()->mCmdList->SetGraphicsRootConstantBufferView(
+		rootParameterIndex, mConstBuff.mBuffer->GetGPUVirtualAddress()
 	);
 }
 
 void DirectionalLight::TransferBuffer()
 {
-	constBuff.constBufferData->direction = -direction;
-	constBuff.constBufferData->color = color;
+	mConstBuff.mConstBufferData->direction = -mDirection;
+	mConstBuff.mConstBufferData->color = mColor;
 }
 
 void DirectionalLight::SetLightDirection(const Vector3& lightdir)
 {
-	direction = lightdir;
-	dirty = true;
+	mDirection = lightdir;
+	mDirty = true;
 }
 
 void DirectionalLight::SetLightColor(const Vector3& color)
 {
-	this->color = color;
-	dirty = true;
+	this->mColor = color;
+	mDirty = true;
 }

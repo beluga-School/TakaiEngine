@@ -38,14 +38,14 @@ std::wstring ToWideString(const std::string& str)
 bool AssimpLoader::Load(const ImportSettings& settings)
 {
 	//書いてないならスキップ
-	if (settings.filename == nullptr)
+	if (settings.mFilename == nullptr)
 	{
 		return false;
 	}
 
-	auto& meshs = settings.meshes;
+	auto& meshs = settings.mMeshes;
 
-	auto path = ToUTF8(settings.filename);
+	auto path = ToUTF8(settings.mFilename);
 
 	Assimp::Importer importer;
 
@@ -75,9 +75,9 @@ bool AssimpLoader::Load(const ImportSettings& settings)
 	for (size_t i = 0; i < meshs.size(); i++)
 	{
 		const auto pMesh = scene->mMeshes[i];
-		LoadMesh(meshs[i], pMesh, settings.inverseU, settings.inverseV);
+		LoadMesh(meshs[i], pMesh, settings.mInverseU, settings.mInverseV);
 		const auto pMaterial = scene->mMaterials[i];
-		LoadTexture(settings.filename, meshs[i],pMaterial);
+		LoadTexture(settings.mFilename, meshs[i],pMaterial);
 	}
 
 	scene = nullptr;

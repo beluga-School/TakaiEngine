@@ -35,27 +35,27 @@ class Particle
 {
 public:
 	//座標
-	Vector3 position;
+	Vector3 mPosition;
 	//方向
-	Vector3 velocity;
+	Vector3 mVelocity;
 	//速度
-	float speed;
+	float mSpeed;
 	//大きさ
-	float scale;
+	float mScale;
 	//色
-	Vector4 color;
+	Vector4 mColor;
 
-	Vector3 colorRand = { 0,0,0 };
+	Vector3 mColorRand = { 0,0,0 };
 
-	VertexPos vertPos{};
+	VertexPos mVertPos{};
 
-	bool isDead = false;
+	bool mIsDead = false;
 
 	//生存時間(秒単位)
-	float lifeTime = 0.0f;
-	float maxLifeTime = 0.0f;
+	float mLifeTime = 0.0f;
+	float mMaxLifeTime = 0.0f;
 
-	bool redChange = false;
+	bool mRedChange = false;
 
 	Particle(const Vector3& spawnPos,const Vector3& velocity,
 		const float& scale, const float& speed, const float& maxLifeTime, 
@@ -67,17 +67,17 @@ public:
 class GParticleManager
 {
 public:
-	ConstBuffer<ParticleConstBufferData> constBufferParticle;
+	ConstBuffer<ParticleConstBufferData> mConstBufferParticle;
 
-	D3D12_RESOURCE_DESC resDesc{};
+	D3D12_RESOURCE_DESC mResDesc{};
 
 	//頂点バッファビューの作成
-	D3D12_VERTEX_BUFFER_VIEW vbView{};
+	D3D12_VERTEX_BUFFER_VIEW mVbView{};
 
-	ComPtr<ID3D12Resource> vertBuff;
+	ComPtr<ID3D12Resource> mVertBuff;
 
 	//VertexPos verticesPoint[vertexCount];
-	std::list<Particle> particles;
+	std::list<Particle> mParticles;
 	void CreateParticle(const Vector3& spawnPos,const Vector3& velocity,
 		const float& scale, const float& speed, const bool& redChange,
 		const float& maxLifeTime = 1.0f,const Vector4& color = {1,1,1,1});
@@ -101,7 +101,7 @@ private:
 class ParticleEmitter
 {
 public:
-	Obj3d emitter;
+	Obj3d mEmitter;
 
 	void Initialize();
 
@@ -119,13 +119,13 @@ public:
 	void Update();
 
 private:
-	Model model;
-	float range = 10;
-	float initScale = 1;
-	Vector4 color = { 1,1,1,1 };
+	Model mModel;
+	float mRange = 10;
+	float mInitScale = 1;
+	Vector4 mColor = { 1,1,1,1 };
 	//一秒間に発生する数
-	int32_t spawnNum = 10;
+	int32_t mSpawnNum = 10;
 
-	bool redChange = false;
+	bool mRedChange = false;
 
 };

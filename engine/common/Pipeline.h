@@ -15,9 +15,9 @@ enum BLEND_MODE
 struct PipelineSet
 {
 	//パイプラインステート
-	ComPtr<ID3D12PipelineState> pipelinestate;
+	ComPtr<ID3D12PipelineState> mPipelinestate;
 	//ルートシグネチャ
-	ComPtr<ID3D12RootSignature> rootsignature;
+	ComPtr<ID3D12RootSignature> mRootsignature;
 };
 
 PipelineSet CreateObject3DPipeline();

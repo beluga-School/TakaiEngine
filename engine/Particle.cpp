@@ -8,7 +8,7 @@ void GParticleManager::CreateParticle(const Vector3& spawnPos, const Vector3& ve
 	const float& scale, const float& speed, const bool& redChange,
 	const float& maxLifeTime, const Vector4& color)
 {
-	particles.emplace_back(spawnPos, velocity, scale, speed,maxLifeTime,color,redChange);
+	mParticles.emplace_back(spawnPos, velocity, scale, speed,maxLifeTime,color,redChange);
 }
 
 void GParticleManager::Initialize()
@@ -23,43 +23,43 @@ void GParticleManager::Initialize()
 	heapProp.Type = D3D12_HEAP_TYPE_UPLOAD;	//GPUへの転送用
 
 	//リソース設定
-	resDesc.Dimension = D3D12_RESOURCE_DIMENSION_BUFFER;
+	mResDesc.Dimension = D3D12_RESOURCE_DIMENSION_BUFFER;
 	//頂点データ全体のサイズ
-	resDesc.Width = sizeVB;
-	resDesc.Height = 1;
-	resDesc.DepthOrArraySize = 1;
-	resDesc.MipLevels = 1;
-	resDesc.SampleDesc.Count = 1;
-	resDesc.Layout = D3D12_TEXTURE_LAYOUT_ROW_MAJOR;
+	mResDesc.Width = sizeVB;
+	mResDesc.Height = 1;
+	mResDesc.DepthOrArraySize = 1;
+	mResDesc.MipLevels = 1;
+	mResDesc.SampleDesc.Count = 1;
+	mResDesc.Layout = D3D12_TEXTURE_LAYOUT_ROW_MAJOR;
 
 	//頂点バッファの生成
 	//ComPtrにしたらダメだった マップ処理に使ってるから？
 	//ID3D12Resource* vertBuff;
-	result = dx12->device->CreateCommittedResource(
+	result = dx12->mDevice->CreateCommittedResource(
 		&heapProp,	//ヒープ設定
 		D3D12_HEAP_FLAG_NONE,
-		&resDesc,	//リソース設定
+		&mResDesc,	//リソース設定
 		D3D12_RESOURCE_STATE_GENERIC_READ,
 		nullptr,
-		IID_PPV_ARGS(&vertBuff));
+		IID_PPV_ARGS(&mVertBuff));
 	assert(SUCCEEDED(result));
 
 	//GPU仮想アドレス
-	vbView.BufferLocation = vertBuff->GetGPUVirtualAddress();
+	mVbView.BufferLocation = mVertBuff->GetGPUVirtualAddress();
 	//頂点バッファのサイズ
-	vbView.SizeInBytes = sizeVB;
+	mVbView.SizeInBytes = sizeVB;
 	//頂点1つ分のデータサイズ
-	vbView.StrideInBytes = sizeof(VertexPos);
+	mVbView.StrideInBytes = sizeof(VertexPos);
 }
 
 void GParticleManager::Update(XMMATRIX& matView, XMMATRIX& matProjection)
 {
-	particles.remove_if([](Particle& particle)
+	mParticles.remove_if([](Particle& particle)
 		{
-			return particle.isDead;
+			return particle.mIsDead;
 		});
 
-	for (Particle& particle : particles) {
+	for (Particle& particle : mParticles) {
 	
 		particle.Update();
 	}
@@ -68,24 +68,24 @@ void GParticleManager::Update(XMMATRIX& matView, XMMATRIX& matProjection)
 	reverseMatView = XMMatrixInverse(nullptr, matView);
 	reverseMatView.r[3] = XMVectorSet(0, 0, 0, 1);
 
-	constBufferParticle.constBufferData->billboardMat = reverseMatView;
+	mConstBufferParticle.mConstBufferData->billboardMat = reverseMatView;
 
-	constBufferParticle.constBufferData->vpMat = matView * matProjection;
+	mConstBufferParticle.mConstBufferData->vpMat = matView * matProjection;
 
 	VertexPos* vertMap = nullptr;
-	result = vertBuff->Map(0, nullptr, (void**)&vertMap);
+	result = mVertBuff->Map(0, nullptr, (void**)&vertMap);
 	assert(SUCCEEDED(result));
 	//全頂点に対して
 	size_t index = 0;
-	for (Particle& particle : particles) {
-		vertMap[index].pos = particle.position;	//	座標をコピー
-		vertMap[index].scale = particle.scale;	//	スケールをコピー
-		vertMap[index].color = particle.color;	//	カラーをコピー
+	for (Particle& particle : mParticles) {
+		vertMap[index].pos = particle.mPosition;	//	座標をコピー
+		vertMap[index].scale = particle.mScale;	//	スケールをコピー
+		vertMap[index].color = particle.mColor;	//	カラーをコピー
 		index++;
 		if (index > vertexCount)break;
 	}
 	//繋がりを解除
-	vertBuff->Unmap(0, nullptr);
+	mVertBuff->Unmap(0, nullptr);
 
 }
 
@@ -96,19 +96,19 @@ void GParticleManager::Draw(Texture* texture)
 
 	//SRVヒープの先頭から順番にSRVをルートパラメータ1番に設定
 	//ルートパラメータ1番はテクスチャバッファ
-	dx12->commandList->SetGraphicsRootDescriptorTable(1, texture->mGpuHandle);
+	dx12->mCmdList->SetGraphicsRootDescriptorTable(1, texture->mGpuHandle);
 
 	//頂点バッファの設定
-	dx12->commandList->IASetVertexBuffers(0, 1, &vbView);
+	dx12->mCmdList->IASetVertexBuffers(0, 1, &mVbView);
 
 	//定数バッファビュー(CBV)の設定コマンド
 	//dx12->commandList->SetGraphicsRootConstantBufferView(0, constBufferMaterial.buffer->GetGPUVirtualAddress());
 	//commandList->SetGraphicsRootConstantBufferView(0, constBufferM.buffer->GetGPUVirtualAddress());
 
-	dx12->commandList->SetGraphicsRootConstantBufferView(0, constBufferParticle.buffer->GetGPUVirtualAddress());
+	dx12->mCmdList->SetGraphicsRootConstantBufferView(0, mConstBufferParticle.mBuffer->GetGPUVirtualAddress());
 
 	//描画コマンド
-	dx12->commandList->DrawInstanced(min((UINT)particles.size(),vertexCount), 1, 0, 0);
+	dx12->mCmdList->DrawInstanced(min((UINT)mParticles.size(),vertexCount), 1, 0, 0);
 }
 
 GParticleManager* GParticleManager::Getinstance()
@@ -121,81 +121,81 @@ Particle::Particle(const Vector3& spawnPos_, const Vector3& velocity_,
 	const float& scale_, const float& speed_, const float& maxLifeTime_,
 	const Vector4& color_, const bool& redChange_)
 {
-	position = spawnPos_;
-	velocity = velocity_;
-	speed = speed_;
+	mPosition = spawnPos_;
+	mVelocity = velocity_;
+	mSpeed = speed_;
 
-	maxLifeTime = maxLifeTime_;
+	mMaxLifeTime = maxLifeTime_;
 
-	scale = scale_;
+	mScale = scale_;
 
-	color = color_;
+	mColor = color_;
 
-	colorRand.x = MathF::GetRand(0.1f, 1);
-	colorRand.y = MathF::GetRand(0.1f, 1);
-	colorRand.z = MathF::GetRand(0.1f, 1);
+	mColorRand.x = MathF::GetRand(0.1f, 1);
+	mColorRand.y = MathF::GetRand(0.1f, 1);
+	mColorRand.z = MathF::GetRand(0.1f, 1);
 
-	redChange = redChange_;
+	mRedChange = redChange_;
 
-	vertPos = {};
+	mVertPos = {};
 }
 
 void Particle::Update()
 {
-	lifeTime += TimeManager::deltaTime;
-	if (lifeTime >= maxLifeTime)
+	mLifeTime += TimeManager::deltaTime;
+	if (mLifeTime >= mMaxLifeTime)
 	{
-		isDead = true;
+		mIsDead = true;
 	}
-	if (scale < 0.1f)
+	if (mScale < 0.1f)
 	{
-		isDead = true;
+		mIsDead = true;
 	}
 
-	position.x += (velocity.x * speed) * TimeManager::deltaTime;
-	position.y += (velocity.y * speed) * TimeManager::deltaTime;
-	position.z += (velocity.z * speed) * TimeManager::deltaTime;
+	mPosition.x += (mVelocity.x * mSpeed) * TimeManager::deltaTime;
+	mPosition.y += (mVelocity.y * mSpeed) * TimeManager::deltaTime;
+	mPosition.z += (mVelocity.z * mSpeed) * TimeManager::deltaTime;
 
-	scale -= 1.0f * TimeManager::deltaTime;
+	mScale -= 1.0f * TimeManager::deltaTime;
 	
-	if (redChange)
+	if (mRedChange)
 	{
-		color = { 1 - lifeTime, lifeTime ,0.0f,1.0f };
+		mColor = { 1 - mLifeTime, mLifeTime ,0.0f,1.0f };
 	}
 
 
-	vertPos.pos = position;
+	mVertPos.pos = mPosition;
 }
 
 void ParticleEmitter::Initialize()
 {
-	emitter.Initialize();
-	emitter.position = { 0,0,0 };
-	emitter.SetModel(ModelManager::Get()->GetModel("Cube"));
-	emitter.SetTexture(TextureManager::Get()->GetTexture("white"));
+	mEmitter.Initialize();
+	mEmitter.position = { 0,0,0 };
+	mEmitter.SetModel(ModelManager::Get()->GetModel("Cube"));
+	mEmitter.SetTexture(TextureManager::Get()->GetTexture("white"));
 }
 
 void ParticleEmitter::SetInfo(const Vector3& pos, const float& range_, const float& scale_,
 	const Vector4& color_, const int32_t& spawnNum_, const bool& redChange_)
 {
-	emitter.position = {
+	mEmitter.position = {
 		pos.x,
 		pos.y,
 		pos.z
 	};
 
-	range = range_;
-	initScale = scale_;
+	mRange = range_;
+	mInitScale = scale_;
 
-	color = color_;
-	spawnNum = spawnNum_;
+	mColor = color_;
+	mSpawnNum = spawnNum_;
 
-	if (spawnNum <= 0)
+	if (mSpawnNum <= 0)
 	{
-		spawnNum = 1;
+		mSpawnNum = 1;
 	}
 
-	redChange = redChange_;
+	mRedChange = redChange_;
 
 }
 
@@ -203,23 +203,23 @@ void ParticleEmitter::Update()
 {
 	GParticleManager* pManager = GParticleManager::Getinstance();
 
-	for (int32_t i = 0; i < spawnNum; i++)
+	for (int32_t i = 0; i < mSpawnNum; i++)
 	{
 		pManager->CreateParticle({
-	emitter.position.x + MathF::GetRand(-range,range),
-	emitter.position.y + MathF::GetRand(-range,range),
-	emitter.position.z + MathF::GetRand(-range,range) },
+	mEmitter.position.x + MathF::GetRand(-mRange,mRange),
+	mEmitter.position.y + MathF::GetRand(-mRange,mRange),
+	mEmitter.position.z + MathF::GetRand(-mRange,mRange) },
 				{
 					MathF::GetRand(-10,10),
 					MathF::GetRand(-10,10),
 					MathF::GetRand(-10,10),
 				},
-				initScale,
+				mInitScale,
 				1,
-				redChange,
+				mRedChange,
 				1,
-				color);
+				mColor);
 	}
 
-	emitter.Update(*Camera::mCamera);
+	mEmitter.Update(*Camera::mCamera);
 }

@@ -4,8 +4,8 @@
 namespace Util
 {
 	//ウィンドウサイズ
-	const uint32_t window_width = 1280;
-	const uint32_t window_height = 720;
+	const uint32_t WIN_WIDTH = 1280;
+	const uint32_t WIN_HEIGHT = 720;
 
 	template <class T>
 	T Clamp(T t,T min, T max)
@@ -14,25 +14,5 @@ namespace Util
 		if (t > max) { return max; };
 		return t;
 	}
-
-    //struct lerpVariables
-    //{
-    //    //現在の経過時間
-    //    float elapsedTime = 0.0f;
-    //    //何秒かけて移動するか
-    //    float maxTime = 1.0f;
-
-    //    //呼び出したらイージングが起動
-    //    void Start();
-
-    //    //経過時間を更新
-    //    void Update();
-
-    //    //現在が最大秒数のうちどの割合かを(0.0f～1.0f)の値で返す
-    //    float GetTimeRate();
-
-    //private:
-    //    bool run = false;
-    //};
 };
 

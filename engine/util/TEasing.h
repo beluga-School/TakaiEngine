@@ -36,11 +36,11 @@ namespace TEasing
 	struct easeTimer
 	{
 		easeTimer(const float& maxTime_ = 1.0f) {
-			maxTime = maxTime_;
+			mMaxTime = maxTime_;
 		}
 
-		float elapsedTime = 0.0f;	// 現在の経過時間
-		float maxTime = 1.0f;		// 何秒かけて移動するか
+		float mElapsedTime = 0.0f;	// 現在の経過時間
+		float mMaxTime = 1.0f;		// 何秒かけて移動するか
 
 		bool GetRun() { return run; };
 		//一度でも起動されたらtrueになるフラグ

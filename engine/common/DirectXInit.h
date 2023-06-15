@@ -19,20 +19,20 @@ class DirectX12
 {
 public:
 
-	ComPtr<ID3D12Device> device;
-	ComPtr<IDXGIFactory7> dxgifactory;
-	ComPtr<IDXGISwapChain4> swapChain;
-	ComPtr<ID3D12CommandAllocator> commandAllocator;
-	ComPtr<ID3D12GraphicsCommandList> commandList;
-	ComPtr<ID3D12CommandQueue> commandQueue;
-	ComPtr<ID3D12DescriptorHeap> rtvHeap;
+	ComPtr<ID3D12Device> mDevice;
+	ComPtr<IDXGIFactory7> mDxgifactory;
+	ComPtr<IDXGISwapChain4> mSwapChain;
+	ComPtr<ID3D12CommandAllocator> mCommandAllocator;
+	ComPtr<ID3D12GraphicsCommandList> mCmdList;
+	ComPtr<ID3D12CommandQueue> mCmdQueue;
+	ComPtr<ID3D12DescriptorHeap> mRtvHeap;
 
-	DXGI_SWAP_CHAIN_DESC1 swapChainDesc{};
-	D3D12_DESCRIPTOR_HEAP_DESC rtvHeapDesc{};
-	std::vector<ComPtr<ID3D12Resource>> backBuffers;
+	DXGI_SWAP_CHAIN_DESC1 mSwapChainDesc{};
+	D3D12_DESCRIPTOR_HEAP_DESC mRtvHeapDesc{};
+	std::vector<ComPtr<ID3D12Resource>> mBackBuffers;
 
-	ComPtr<ID3D12Fence> fence;
-	UINT64 fenceVal = 0;
+	ComPtr<ID3D12Fence> mFence;
+	UINT64 mFenceVal = 0;
 
 	static DirectX12* Get();
 
@@ -65,6 +65,4 @@ private:
 
 	DirectX12(const DirectX12& a) = delete;
 	DirectX12& operator=(const DirectX12&) = delete;
-
-	WinAPI* winapi = WinAPI::Get();
 };

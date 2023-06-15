@@ -40,7 +40,7 @@ void DemoScene::Update()
 {
 	if (input->TriggerKey(DIK_O))
 	{
-		sceneManager->ChangeScene<Game>();
+		mSceneManager->ChangeScene<Game>();
 		//sceneManager->ChangeScene("GAMEPLAY");
 	}
 

@@ -5,10 +5,9 @@ class WinAPI
 {
 public:
 
-	RECT wrc;
-	HWND hwnd;
-	MSG msg;
-
+	RECT mWrc;
+	HWND mHwnd;
+	MSG mMsg;
 
 	//ウィンドウクラスの設定
 	WNDCLASSEX w{};

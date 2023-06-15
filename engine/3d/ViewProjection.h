@@ -19,7 +19,7 @@ public:
 	Vector3 mTarget;	//注視点座標
 	Vector3 mUp;		//上方向ベクトル
 
-	float mAspect = Util::window_width / Util::window_height;
+	float mAspect = Util::WIN_WIDTH / Util::WIN_HEIGHT;
 	float mNearClip = 0.1f;
 	float mFarZ = 10000.0f;
 	float mFovAngle = 90;

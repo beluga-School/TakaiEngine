@@ -5,31 +5,31 @@ void SceneManager::Update()
 {
 	//切り替え機構
 	//次のシーンの予約があるなら
-	if (nextscene)
+	if (mNextscene)
 	{
 		//旧シーンの終了
-		if (currentscene) {
-			currentscene->End();
+		if (mCurrentscene) {
+			mCurrentscene->End();
 		}
 
 		//切り替え
-		currentscene.swap(nextscene);
-		nextscene = nullptr;
+		mCurrentscene.swap(mNextscene);
+		mNextscene = nullptr;
 
 		//シーンマネージャを現在シーンにセット
-		currentscene->SetManager(*this);
+		mCurrentscene->SetManager(*this);
 		//次シーンを初期化
-		currentscene->Initialize();
+		mCurrentscene->Initialize();
 	}
 
 	//実行中シーンの更新
-	currentscene->Update();
+	mCurrentscene->Update();
 }
 
 void SceneManager::Draw()
 {
 	//実行中シーンの描画
-	currentscene->Draw();
+	mCurrentscene->Draw();
 }
 
 void SceneManager::End()

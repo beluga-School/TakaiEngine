@@ -54,10 +54,10 @@ namespace Input
 		static Mouse* Get();
 
 	private:
-		IDirectInputDevice8* mouse = nullptr;
-		Vector2 curser{};
-		DIMOUSESTATE state{};
-		DIMOUSESTATE oldState{};
+		IDirectInputDevice8* mMouse = nullptr;
+		Vector2 mCurser{};
+		DIMOUSESTATE mState{};
+		DIMOUSESTATE mOldState{};
 
 	};
 
@@ -165,8 +165,8 @@ namespace Input
 		/// <returns></returns>
 		static bool ReleaseRT(const bool& hard = false);
 	private://コントローラー
-		static XINPUT_STATE pState;
-		static XINPUT_STATE oldpState;
+		static XINPUT_STATE mPState;
+		static XINPUT_STATE mOldpState;
 	};
 
 	class Keyboard
@@ -194,12 +194,12 @@ namespace Input
 		static bool TriggerKey(const uint8_t& keys);
 		static bool ReleaseKey(const uint8_t& keys);
 
-		IDirectInput8* directInput;
+		IDirectInput8* mDirectInput;
 	private://キーボード
-		IDirectInputDevice8* keyboard;
+		IDirectInputDevice8* mKeyboard;
 
-		static uint8_t key[256];
-		static uint8_t oldkey[256];
+		static uint8_t mKey[256];
+		static uint8_t mOldkey[256];
 
 		void DirectInputInit();
 		void DirectInputCreate();
@@ -209,8 +209,6 @@ namespace Input
 		~Keyboard();
 		Keyboard(const Keyboard& a) = delete;
 		Keyboard& operator=(const Keyboard&) = delete;
-
-		WinAPI* winApi = WinAPI::Get();
 	};
 }
 

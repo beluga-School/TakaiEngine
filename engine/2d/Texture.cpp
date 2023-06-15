@@ -3,7 +3,7 @@
 #include "DirectXInit.h"
 #include <memory>
 
-std::map<std::string, Texture> TextureManager::textures_;
+std::map<std::string, Texture> TextureManager::mTextures;
 
 void Texture::CreateWhiteTexture()
 {
@@ -46,7 +46,7 @@ void Texture::CreateWhiteTexture()
 	textureResourceDesc.SampleDesc.Count = 1;
 
 	//テクスチャバッファの生成
-	result = DirectX12::Get()->device->CreateCommittedResource(
+	result = DirectX12::Get()->mDevice->CreateCommittedResource(
 		&textureHeapProp,
 		D3D12_HEAP_FLAG_NONE,
 		&textureResourceDesc,
@@ -79,7 +79,7 @@ void Texture::CreateWhiteTexture()
 	mGpuHandle.ptr += tManager->mSRVHandleSize;
 
 	//SRVヒープの大きさを取得
-	tManager->mSRVHandleSize += DirectX12::Get()->device->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV);
+	tManager->mSRVHandleSize += DirectX12::Get()->mDevice->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV);
 
 	//シェーダリソースビュー設定
 	mSrvDesc.Format = mResDesc.Format;//RGBA float
@@ -89,7 +89,7 @@ void Texture::CreateWhiteTexture()
 	mSrvDesc.Texture2D.MipLevels = mResDesc.MipLevels;
 
 	//ハンドルの指す位置にシェーダーリソースビュー作成
-	DirectX12::Get()->device->CreateShaderResourceView(mTexBuff.Get(), &mSrvDesc, mCpuHandle);
+	DirectX12::Get()->mDevice->CreateShaderResourceView(mTexBuff.Get(), &mSrvDesc, mCpuHandle);
 
 	mGetResDesc = textureResourceDesc;
 }
@@ -138,7 +138,7 @@ void Texture::Load(const wchar_t& t)
 	textureResourceDesc.SampleDesc.Count = 1;
 
 	//テクスチャバッファの生成
-	result = DirectX12::Get()->device->CreateCommittedResource(
+	result = DirectX12::Get()->mDevice->CreateCommittedResource(
 		&textureHeapProp,
 		D3D12_HEAP_FLAG_NONE,
 		&textureResourceDesc,
@@ -176,7 +176,7 @@ void Texture::Load(const wchar_t& t)
 	mGpuHandle.ptr += tManager->mSRVHandleSize;
 
 	//SRVヒープの大きさを取得
-	tManager->mSRVHandleSize += DirectX12::Get()->device->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV);
+	tManager->mSRVHandleSize += DirectX12::Get()->mDevice->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV);
 
 	//シェーダリソースビュー設定
 	mSrvDesc.Format = mResDesc.Format;//RGBA float
@@ -186,7 +186,7 @@ void Texture::Load(const wchar_t& t)
 	mSrvDesc.Texture2D.MipLevels = mResDesc.MipLevels;
 
 	//ハンドルの指す位置にシェーダーリソースビュー作成
-	DirectX12::Get()->device->CreateShaderResourceView(mTexBuff.Get(), &mSrvDesc, mCpuHandle);
+	DirectX12::Get()->mDevice->CreateShaderResourceView(mTexBuff.Get(), &mSrvDesc, mCpuHandle);
 
 	mGetResDesc = textureResourceDesc;
 }
@@ -201,7 +201,7 @@ void TextureManager::Initialize()
 	mSrvHeapDesc.NumDescriptors = kMaxSRVCount;
 
 	//設定を元にSRV用デスクリプタヒープを生成
-	result = dx12->device->CreateDescriptorHeap(&mSrvHeapDesc, IID_PPV_ARGS(&mSrvHeap));
+	result = dx12->mDevice->CreateDescriptorHeap(&mSrvHeapDesc, IID_PPV_ARGS(&mSrvHeap));
 	assert(SUCCEEDED(result));
 }
 
@@ -243,10 +243,10 @@ std::wstring convString(const std::string& input)
 
 void TextureManager::Load(const std::string &filepath, const std::string &handle)
 {
-	textures_[handle].Load(*convString(filepath).c_str());
+	mTextures[handle].Load(*convString(filepath).c_str());
 }
 
 Texture* TextureManager::GetTexture(const std::string &handle)
 {
-	return &textures_[handle];
+	return &mTextures[handle];
 }

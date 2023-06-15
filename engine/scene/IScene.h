@@ -12,11 +12,11 @@ public:
 	virtual void End() = 0;
 
 	virtual void SetManager(SceneManager& SceneManager_) {
-		sceneManager = &SceneManager_;
+		mSceneManager = &SceneManager_;
 	}
 
 protected:
 	//シーンマネージャ
-	SceneManager* sceneManager = nullptr;
+	SceneManager* mSceneManager = nullptr;
 };
 

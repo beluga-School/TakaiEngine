@@ -171,7 +171,7 @@ Matrix4 Matrix4::PerspectiveFovLH(const float& fovAngleY,const float& nearZ,cons
 
 	Matrix4 process1 = Matrix4::Identity();
 
-	process1.m[0][0] = (float)Util::window_height / (float)Util::window_width;
+	process1.m[0][0] = (float)Util::WIN_HEIGHT / (float)Util::WIN_WIDTH;
 
 	Matrix4 process2 = Matrix4::Identity();
 	process2.m[0][0] = 1 / tanf(fovAngleY / 2);

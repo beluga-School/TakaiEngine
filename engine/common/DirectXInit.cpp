@@ -24,11 +24,11 @@ void DirectX12::AdapterSort()
 {
 	///---グラフィックボードのアダプタを列挙---///
 	//DXGIファクトリーの生成
-	result = CreateDXGIFactory(IID_PPV_ARGS(&dxgifactory));
+	result = CreateDXGIFactory(IID_PPV_ARGS(&mDxgifactory));
 
 	//パフォーマンスが高いものから順に、すべてのアダプターを列挙する
 	for (UINT i = 0;
-		dxgifactory->EnumAdapterByGpuPreference(i,
+		mDxgifactory->EnumAdapterByGpuPreference(i,
 			DXGI_GPU_PREFERENCE_HIGH_PERFORMANCE,
 			IID_PPV_ARGS(&tmpAdapter)) != DXGI_ERROR_NOT_FOUND;
 		i++)
@@ -73,7 +73,7 @@ void DirectX12::CreateDevice()
 	{
 		//採用したアダプターでデバイスを生成
 		result = D3D12CreateDevice(tmpAdapter, levels[i],
-			IID_PPV_ARGS(&device));
+			IID_PPV_ARGS(&mDevice));
 		if (result == S_OK) {
 			featureLevel = levels[i];
 			break;
@@ -86,83 +86,83 @@ void DirectX12::CreateDevice()
 void DirectX12::CreateCmdList()
 {
 	//コマンドアロケータを生成
-	result = device->CreateCommandAllocator(
+	result = mDevice->CreateCommandAllocator(
 		D3D12_COMMAND_LIST_TYPE_DIRECT,
-		IID_PPV_ARGS(&commandAllocator));
+		IID_PPV_ARGS(&mCommandAllocator));
 	assert(SUCCEEDED(result));
 
 	//コマンドリストを生成
-	result = device->CreateCommandList(0,
+	result = mDevice->CreateCommandList(0,
 		D3D12_COMMAND_LIST_TYPE_DIRECT,
-		commandAllocator.Get(), nullptr,
-		IID_PPV_ARGS(&commandList));
+		mCommandAllocator.Get(), nullptr,
+		IID_PPV_ARGS(&mCmdList));
 	assert(SUCCEEDED(result));
 
 	//コマンドキューの設定
 	D3D12_COMMAND_QUEUE_DESC commandQueueDesc{};
 	//コマンドキューを生成
-	result = device->CreateCommandQueue(&commandQueueDesc, IID_PPV_ARGS(&commandQueue));
+	result = mDevice->CreateCommandQueue(&commandQueueDesc, IID_PPV_ARGS(&mCmdQueue));
 	assert(SUCCEEDED(result));
 }
 
 void DirectX12::SetSwapChain()
 {
 	//スワップチェーンの設定
-	swapChainDesc.Width = 1280;
-	swapChainDesc.Height = 720;
-	swapChainDesc.Format = DXGI_FORMAT_R8G8B8A8_UNORM;	//色情報の書式
-	swapChainDesc.SampleDesc.Count = 1;					//マルチサンプルしない
-	swapChainDesc.BufferUsage = DXGI_USAGE_BACK_BUFFER;	//バックバッファ用
-	swapChainDesc.BufferCount = 2;						//バッファ数を2つに設定
-	swapChainDesc.SwapEffect = DXGI_SWAP_EFFECT_FLIP_DISCARD;	//フリップ後は破棄
-	swapChainDesc.Flags = DXGI_SWAP_CHAIN_FLAG_ALLOW_MODE_SWITCH;
+	mSwapChainDesc.Width = 1280;
+	mSwapChainDesc.Height = 720;
+	mSwapChainDesc.Format = DXGI_FORMAT_R8G8B8A8_UNORM;	//色情報の書式
+	mSwapChainDesc.SampleDesc.Count = 1;					//マルチサンプルしない
+	mSwapChainDesc.BufferUsage = DXGI_USAGE_BACK_BUFFER;	//バックバッファ用
+	mSwapChainDesc.BufferCount = 2;						//バッファ数を2つに設定
+	mSwapChainDesc.SwapEffect = DXGI_SWAP_EFFECT_FLIP_DISCARD;	//フリップ後は破棄
+	mSwapChainDesc.Flags = DXGI_SWAP_CHAIN_FLAG_ALLOW_MODE_SWITCH;
 
 	//ComPtrに対応
 	ComPtr<IDXGISwapChain1> swapchain1;
 
 	//スワップチェーンの生成
-	result = dxgifactory->CreateSwapChainForHwnd(
-		commandQueue.Get(), 
-		winapi->hwnd,
-		&swapChainDesc, 
+	result = mDxgifactory->CreateSwapChainForHwnd(
+		mCmdQueue.Get(), 
+		WinAPI::Get()->mHwnd,
+		&mSwapChainDesc, 
 		nullptr, 
 		nullptr,
 		(IDXGISwapChain1**)&swapchain1);
 	assert(SUCCEEDED(result));
 
-	swapchain1.As(&swapChain);
+	swapchain1.As(&mSwapChain);
 }
 
 void DirectX12::SetDescHeap()
 {
 	//デスクリプタヒープの設定
-	rtvHeapDesc.Type = D3D12_DESCRIPTOR_HEAP_TYPE_RTV;		//レンダーターゲットビュー
-	rtvHeapDesc.NumDescriptors = swapChainDesc.BufferCount;	//裏表の2つ
+	mRtvHeapDesc.Type = D3D12_DESCRIPTOR_HEAP_TYPE_RTV;		//レンダーターゲットビュー
+	mRtvHeapDesc.NumDescriptors = mSwapChainDesc.BufferCount;	//裏表の2つ
 
 	//デスクリプタヒープの生成
-	device->CreateDescriptorHeap(&rtvHeapDesc, IID_PPV_ARGS(&rtvHeap));
+	mDevice->CreateDescriptorHeap(&mRtvHeapDesc, IID_PPV_ARGS(&mRtvHeap));
 
 }
 
 void DirectX12::SetBackBuffer()
 {
 	//バックバッファ
-	backBuffers.resize(swapChainDesc.BufferCount);
+	mBackBuffers.resize(mSwapChainDesc.BufferCount);
 }
 
 void DirectX12::RenderTargetView()
 {
 	//スワップチェーンのすべてのバッファについて処理する
-	for (size_t i = 0; i < backBuffers.size(); i++)
+	for (size_t i = 0; i < mBackBuffers.size(); i++)
 	{
 		//スワップチェーンからバッファを取得
-		swapChain->GetBuffer((UINT)i, IID_PPV_ARGS(&backBuffers[i]));
+		mSwapChain->GetBuffer((UINT)i, IID_PPV_ARGS(&mBackBuffers[i]));
 
 		//デスクリプタヒープのハンドルを取得
-		D3D12_CPU_DESCRIPTOR_HANDLE rtvHandle = rtvHeap->GetCPUDescriptorHandleForHeapStart();
+		D3D12_CPU_DESCRIPTOR_HANDLE rtvHandle = mRtvHeap->GetCPUDescriptorHandleForHeapStart();
 
 		//裏か表かでアドレスがずれる
-		rtvHandle.ptr += i * device->GetDescriptorHandleIncrementSize(rtvHeapDesc.Type);
+		rtvHandle.ptr += i * mDevice->GetDescriptorHandleIncrementSize(mRtvHeapDesc.Type);
 
 		//レンダーターゲットビューの設定
 		D3D12_RENDER_TARGET_VIEW_DESC rtvDesc{};
@@ -172,7 +172,7 @@ void DirectX12::RenderTargetView()
 		rtvDesc.ViewDimension = D3D12_RTV_DIMENSION_TEXTURE2D;
 
 		//レンダーターゲットビューの生成
-		device->CreateRenderTargetView(backBuffers[i].Get(), &rtvDesc, rtvHandle);
+		mDevice->CreateRenderTargetView(mBackBuffers[i].Get(), &rtvDesc, rtvHandle);
 
 	}
 }
@@ -180,7 +180,7 @@ void DirectX12::RenderTargetView()
 void DirectX12::CreateFence()
 {
 	//フェンスの生成
-	result = device->CreateFence(fenceVal, D3D12_FENCE_FLAG_NONE, IID_PPV_ARGS(&fence));
+	result = mDevice->CreateFence(mFenceVal, D3D12_FENCE_FLAG_NONE, IID_PPV_ARGS(&mFence));
 }
 
 DirectX12* DirectX12::Get()

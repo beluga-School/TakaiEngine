@@ -14,16 +14,16 @@ ID3DBlob* Shader::Compile(const wchar_t *shaderFilename,
 		entrypointname, shadermodelname,	//エントリーポイント名、シェーダーモデル指定
 		D3DCOMPILE_DEBUG | D3DCOMPILE_SKIP_OPTIMIZATION,	//デバッグ用設定
 		0,
-		&blob, &errorBlob);
+		&blob, &mErrorBlob);
 
 	//エラーなら
 	if (FAILED(result)) {
 		//errorBlobからエラー内容をstring型にコピー
 		std::string error;
-		error.resize(errorBlob->GetBufferSize());
+		error.resize(mErrorBlob->GetBufferSize());
 
-		std::copy_n((char*)errorBlob->GetBufferPointer(),
-			errorBlob->GetBufferSize(),
+		std::copy_n((char*)mErrorBlob->GetBufferPointer(),
+			mErrorBlob->GetBufferSize(),
 			error.begin());
 		error += "\n";
 		//エラー内容を出力ウィンドウに表示

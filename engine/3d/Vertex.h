@@ -26,16 +26,13 @@ class VertexData
 {
 public:
 	//UINT sizeVB;
-	D3D12_RESOURCE_DESC resDesc{};
-	D3D12_INDEX_BUFFER_VIEW ibView{};
+	D3D12_RESOURCE_DESC mResDesc{};
+	D3D12_INDEX_BUFFER_VIEW mIbView{};
 	//頂点バッファビューの作成
-	D3D12_VERTEX_BUFFER_VIEW vbView{};
+	D3D12_VERTEX_BUFFER_VIEW mVbView{};
 
 	void CreateVertex(const std::vector<Vertex> &vertices,const std::vector<uint16_t> &indices);
 	
-	ComPtr<ID3D12Resource> vertBuff = nullptr;
-	ComPtr<ID3D12Resource> indexBuff = nullptr;
-private:
-	DirectX12 *dx12 = DirectX12::Get();
-
+	ComPtr<ID3D12Resource> mVertBuff = nullptr;
+	ComPtr<ID3D12Resource> mIndexBuff = nullptr;
 };

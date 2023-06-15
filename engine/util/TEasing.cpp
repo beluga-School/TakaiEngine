@@ -179,7 +179,7 @@ float TEasing::InOutBack(const float& start, const float& end, const float& time
 
 void TEasing::easeTimer::Reset()
 {
-	elapsedTime = 0.0f;
+	mElapsedTime = 0.0f;
 	end = false;
 	reverseend = false;
 
@@ -189,7 +189,7 @@ void TEasing::easeTimer::Reset()
 
 void TEasing::easeTimer::Start()
 {
-	elapsedTime = 0.0f;
+	mElapsedTime = 0.0f;
 	end = false;
 	reverseend = false;
 
@@ -209,10 +209,10 @@ void TEasing::easeTimer::ReverseStart()
 void TEasing::easeTimer::Update()
 {
 	if (run) {
-		elapsedTime += TimeManager::deltaTime;
+		mElapsedTime += TimeManager::deltaTime;
 	}
 	if (reverse) {
-		elapsedTime -= TimeManager::deltaTime;
+		mElapsedTime -= TimeManager::deltaTime;
 	}
 	// 経過時間が経過しきったらフラグを折る
 	if (GetTimeRate() >= 1.0f && run) {
@@ -221,7 +221,7 @@ void TEasing::easeTimer::Update()
 	}
 	//中途半端なところで止まっちゃうけど、とりあえず0.1以下になったら止める
 	if (GetTimeRate() <= 0.001f && reverse) {
-		elapsedTime = 0.0f;
+		mElapsedTime = 0.0f;
 		reverse = false;
 		reverseend = true;
 	}
@@ -229,5 +229,5 @@ void TEasing::easeTimer::Update()
 
 float TEasing::easeTimer::GetTimeRate()
 {
-	return min(elapsedTime / maxTime, 1.0f);
+	return min(mElapsedTime / mMaxTime, 1.0f);
 }

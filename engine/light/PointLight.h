@@ -15,11 +15,11 @@ public://定数バッファに送るデータ
 	};
 public://メンバ変数
 	//ライト座標
-	Vector3 lightPos = {0,0,0};
+	Vector3 mLightPos = {0,0,0};
 	//ライトの色
-	Vector3 lightColor = { 1,1,1 };
+	Vector3 mLightColor = { 1,1,1 };
 	//ライト距離減衰係数
-	Vector3 lightAtten = { 1.0f,1.0f,1.0f };
+	Vector3 mLightAtten = { 1.0f,1.0f,1.0f };
 	
-	bool active = false;
+	bool mActive = false;
 };
