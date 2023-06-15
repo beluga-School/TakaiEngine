@@ -44,12 +44,15 @@ using namespace DirectX;
 #include "ImguiManager.h"
 #include <string>
 
-//構成がx64のみに確認したらなってなかったので削除
-//ソリューションプラットフォームがx64のみ
-//警告をエラーとして扱う様に設定
-//警告をすべて削除
-//リンカ警告をエラーとして扱うように設定
-//日本語のファイル名はもともと入っていないぜ
+//①文字列変換とサウンドデータを除き、使用していない
+//②自身のコード内ではint、shortはすべてint32_tなどに置き換えた charは一部でまだ使用している
+//③確認できる限りはconst& もしくは値渡しに置き換えた
+//④文字列変換とサウンドデータを除き、使用していない
+//⑤命名規則は以下の通り
+//メンバ変数->手前にm, mの次は大文字(例:mHoge)
+//スタティック変数->手前にs, sの次は大文字(例:sHoge)
+//定数->全部大文字、区分けしたいときは_を付ける(例:HOGE_HOGE_DANCE)
+//その他(namespace内など)->普通のキャメルケース
 
 //windowsアプリでのエントリーポイント(main関数)
 int32_t WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_  HINSTANCE hPrevInstance, _In_ LPSTR lpCmdLine, _In_ int32_t nShowCmd)
@@ -117,10 +120,7 @@ int32_t WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_  HINSTANCE hPrevInstan
 	LightGroup::Create();
 
 	SceneManager *scenemanager = SceneManager::Get();
-	
-	//シーンファクトリーを生成し、マネージャにセット
-	//SceneFactory *sceneFactory = new SceneFactory();
-	//scenemanager->SetSceneFactory(sceneFactory);
+
 
 	scenemanager->ChangeScene<DemoScene>();
 
@@ -198,8 +198,6 @@ int32_t WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_  HINSTANCE hPrevInstan
 	}
 
 	imguiManager->Finalize();
-
-	//delete sceneFactory;
 
 	//入力デバイスの解放
 	Input::Mouse::Finalize();
