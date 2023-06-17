@@ -32,8 +32,13 @@ void DemoScene::Initialize()
 	mSlime.SetTexture(*TextureManager::GetTexture("slime"));
 	mSlime.mPosition = { 0,0,0 };
 
+	testplayer.Initialize();
+	testplayer.SetModel(ModelManager::Get()->GetModel("firewisp"));
+	testplayer.SetTexture(TextureManager::Get()->GetTexture("white"));
+
 	LevelLoader::Get()->Load("Scene/worldTest_Children", "children");
-	SetObject(*LevelLoader::Get()->GetData("children"));
+	LevelLoader::Get()->Load("Scene/playerTest", "pTest");
+	SetObject(*LevelLoader::Get()->GetData("pTest"));
 }
 
 void DemoScene::Update()
@@ -48,8 +53,7 @@ void DemoScene::Update()
 	{
 		mObj3ds.clear();
 
-		LevelLoader::Get()->Load("Scene/worldTest_Children", "children");
-		SetObject(*LevelLoader::Get()->GetData("children"));
+		SetObject(*LevelLoader::Get()->GetData("pTest"));
 	}
 
 	mCamera->UpdatematView();
@@ -64,8 +68,7 @@ void DemoScene::Update()
 
 	mDebugCamera.Update();
 
-	mGui.Begin({ 100,100 }, { 1,1 });
-	mGui.End();
+	testplayer.Update(*mCamera);
 }
 
 void DemoScene::Draw()
@@ -78,6 +81,8 @@ void DemoScene::Draw()
 	{
 		obj.Draw();
 	}
+
+	testplayer.DrawMaterial();
 
 	//スプライトの前描画(共通コマンド)
 	SpriteCommonBeginDraw(SpriteCommon::sSpriteCommon);
@@ -96,29 +101,40 @@ void DemoScene::SetObject(LevelData& data)
 	itr != particles.end(); itr++*/
 	for (auto objectData = data.mObjects.begin(); objectData != data.mObjects.end(); objectData++)
 	{
-		//とりあえずキューブで配置
-		//TODO:file_nameから逆引きできるようにしたい
-		mObj3ds.emplace_back();
-		mObj3ds.back().Initialize();
-		//モデル設定
-		//ファイルネームが設定されてるならそれで
-		if (objectData->fileName != "")
+		//スポーンポイントを設定
+		//指定された名前が入ってるなら対応したやつを入れる
+		if (objectData->spawnpointName == "player")
 		{
-			mObj3ds.back().SetModel(ModelManager::GetModel(objectData->fileName));
+			testplayer.position = objectData->translation;
+			testplayer.rotation = objectData->rotation;
+			testplayer.scale = objectData->scaling;
 		}
-		//ないなら四角をデフォで設定
 		else
 		{
-			mObj3ds.back().SetModel(ModelManager::GetModel("Cube"));
+			//とりあえずキューブで配置
+			//TODO:file_nameから逆引きできるようにしたい
+			mObj3ds.emplace_back();
+			mObj3ds.back().Initialize();
+			//モデル設定
+			//ファイルネームが設定されてるならそれで
+			if (objectData->fileName != "")
+			{
+				mObj3ds.back().SetModel(ModelManager::GetModel(objectData->fileName));
+			}
+			//ないなら四角をデフォで設定
+			else
+			{
+				mObj3ds.back().SetModel(ModelManager::GetModel("Cube"));
+			}
+			mObj3ds.back().SetTexture(TextureManager::Get()->GetTexture("white"));
+			//座標
+			mObj3ds.back().position = objectData->translation;
+			//回転角
+			mObj3ds.back().rotation = objectData->rotation;
+			//大きさ
+			mObj3ds.back().scale = objectData->scaling;
 		}
-		mObj3ds.back().SetTexture(TextureManager::Get()->GetTexture("white"));
-		//座標
-		mObj3ds.back().position = objectData->translation;
-		//回転角
-		mObj3ds.back().rotation = objectData->rotation;
-		//大きさ
-		mObj3ds.back().scale = objectData->scaling;
-
+		
 		//当たり判定を作成
 		if (objectData->collider.have)
 		{

@@ -71,6 +71,10 @@ void LevelLoader::ObjectLoad(LevelData& levelData,nlohmann::json& object)
 			objectData.fileName = object["file_name"];
 		}
 
+		if (object.contains("spawnpoint")) {
+			objectData.spawnpointName = object["spawnpoint"];
+		}
+
 		//ƒpƒ‰ƒ[ƒ^“Ç‚İ‚İ
 		nlohmann::json& transform = object["transform"];
 

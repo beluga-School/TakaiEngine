@@ -19,6 +19,7 @@ struct LevelData
 	};
 	struct ObjectData {
 		std::string fileName;
+		std::string spawnpointName;
 	
 		Vector3 translation;
 		Vector3 rotation;

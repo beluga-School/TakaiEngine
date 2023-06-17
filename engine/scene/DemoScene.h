@@ -32,5 +32,7 @@ private:
 	GUI mGui = std::string("postion");
 
 	DebugCamera mDebugCamera;
+
+	Obj3d testplayer;
 };
 
