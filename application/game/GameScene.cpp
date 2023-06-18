@@ -537,7 +537,7 @@ void Game::Draw()
 	//GeometryObjectPreDraw(geometryObjectPipelineSet);
 
 	//スプライトの前描画(共通コマンド)
-	SpriteCommonBeginDraw(SpriteCommon::sSpriteCommon);
+	SpriteCommonBeginDraw();
 
 	redScreenSprite.Draw();
 	slimeSprite.Draw();

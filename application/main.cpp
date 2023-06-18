@@ -44,6 +44,8 @@ using namespace DirectX;
 #include "ImguiManager.h"
 #include <string>
 
+#include "PostEffectt.h"
+
 //①文字列変換とサウンドデータを除き、使用していない
 //②自身のコード内ではint、shortはすべてint32_tなどに置き換えた charは一部でまだ使用している
 //③確認できる限りはconst& もしくは値渡しに置き換えた
@@ -117,15 +119,20 @@ int32_t WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_  HINSTANCE hPrevInstan
 	//モデルの読み込み
 	ModelManager::Get()->PreLoad();
 
+	//ライティングの初期化
 	LightGroup::Create();
 
+	//ポストエフェクトの初期化
+	std::unique_ptr<PostEffect> postEffect;
+	postEffect = std::make_unique<PostEffect>();
+
+	//シーンの初期化
 	SceneManager *scenemanager = SceneManager::Get();
-
-
 	scenemanager->ChangeScene<DemoScene>();
 
 #pragma endregion 描画初期化処理
 
+	//音の初期化
 	SoundManager *soundManager = SoundManager::GetInstance();
 	soundManager->Initialize();
 
@@ -167,9 +174,9 @@ int32_t WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_  HINSTANCE hPrevInstan
 
 #pragma region グラフィックスコマンド
 		//--4.描画コマンドここから--//
-		//gameScene_.Draw();
 
 		scenemanager->Draw();
+		postEffect->Draw();
 
 		debugText.DrawAll();
 

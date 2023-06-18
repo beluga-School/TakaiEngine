@@ -38,7 +38,7 @@ void DemoScene::Initialize()
 
 	LevelLoader::Get()->Load("Scene/worldTest_Children", "children");
 	LevelLoader::Get()->Load("Scene/playerTest", "pTest");
-	SetObject(*LevelLoader::Get()->GetData("pTest"));
+	SetObject(*LevelLoader::Get()->GetData("children"));
 }
 
 void DemoScene::Update()
@@ -85,7 +85,7 @@ void DemoScene::Draw()
 	testplayer.DrawMaterial();
 
 	//スプライトの前描画(共通コマンド)
-	SpriteCommonBeginDraw(SpriteCommon::sSpriteCommon);
+	SpriteCommonBeginDraw();
 
 	mSlime.Draw();
 }

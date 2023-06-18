@@ -68,7 +68,7 @@ struct Sprite
 
 	const Texture *mTEXTURE;
 
-	Vector2 mSize;
+	Vector2 mSize = {0.f,0.f};
 
 	Vector2 mAnchorpoint = { 0.5f,0.5f };
 
@@ -80,7 +80,7 @@ struct Sprite
 
 	bool mIsInvisible = false;
 
-private:
+protected:
 	void Init();
 };
 
@@ -96,7 +96,7 @@ struct SpriteCommon
 };
 
 //スプライト共通グラフィックコマンドのセット
-void SpriteCommonBeginDraw(const SpriteCommon& spriteCommon);
+void SpriteCommonBeginDraw();
 
 void SpriteTransferVertexBuffer(const Sprite& sprite);
 

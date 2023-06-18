@@ -74,15 +74,15 @@ void SpriteTransferVertexBuffer(const Sprite& sprite)
 	sprite.mVertBuff->Unmap(0, nullptr);
 }
 
-void SpriteCommonBeginDraw(const SpriteCommon& spriteCommon)
+void SpriteCommonBeginDraw()
 {
 	DirectX12* dx12 = DirectX12::Get();
 	TextureManager* texM = TextureManager::Get();
 
 	//パイプラインステートの設定
-	dx12->mCmdList->SetPipelineState(spriteCommon.mPipelineSet.mPipelinestate.Get());
+	dx12->mCmdList->SetPipelineState(SpriteCommon::sSpriteCommon.mPipelineSet.mPipelinestate.Get());
 	//ルートシグネチャの設定
-	dx12->mCmdList->SetGraphicsRootSignature(spriteCommon.mPipelineSet.mRootsignature.Get());
+	dx12->mCmdList->SetGraphicsRootSignature(SpriteCommon::sSpriteCommon.mPipelineSet.mRootsignature.Get());
 	//プリミティブ形状を設定
 	dx12->mCmdList->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP);
 
