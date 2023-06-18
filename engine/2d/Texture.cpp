@@ -22,13 +22,6 @@ void Texture::CreateWhiteTexture()
 		imageData[i].w = 1.0f;
 	}
 
-	//リソース設定
-	mResDesc.Dimension = D3D12_RESOURCE_DIMENSION_BUFFER;
-	mResDesc.DepthOrArraySize = 1;
-	mResDesc.MipLevels = 1;
-	mResDesc.SampleDesc.Count = 1;
-	mResDesc.Layout = D3D12_TEXTURE_LAYOUT_ROW_MAJOR;
-
 	//ヒープ設定
 	D3D12_HEAP_PROPERTIES textureHeapProp{};
 	textureHeapProp.Type = D3D12_HEAP_TYPE_CUSTOM;
@@ -81,6 +74,13 @@ void Texture::CreateWhiteTexture()
 	//SRVヒープの大きさを取得
 	tManager->mSRVHandleSize += DirectX12::Get()->mDevice->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV);
 
+	//シェーダーリソース設定
+	mResDesc.Dimension = D3D12_RESOURCE_DIMENSION_BUFFER;
+	mResDesc.DepthOrArraySize = 1;
+	mResDesc.MipLevels = 1;
+	mResDesc.SampleDesc.Count = 1;
+	mResDesc.Layout = D3D12_TEXTURE_LAYOUT_ROW_MAJOR;
+
 	//シェーダリソースビュー設定
 	mSrvDesc.Format = mResDesc.Format;//RGBA float
 	mSrvDesc.Shader4ComponentMapping =
@@ -96,13 +96,6 @@ void Texture::CreateWhiteTexture()
 
 void Texture::Load(const wchar_t& t)
 {
-	//リソース設定
-	mResDesc.Dimension = D3D12_RESOURCE_DIMENSION_BUFFER;
-	mResDesc.DepthOrArraySize = 1;
-	mResDesc.MipLevels = 1;
-	mResDesc.SampleDesc.Count = 1;
-	mResDesc.Layout = D3D12_TEXTURE_LAYOUT_ROW_MAJOR;
-
 	sResult = LoadFromWICFile(
 		&t,	//ここに読み込みたいファイルのパスを入れる
 		WIC_FLAGS_NONE,
@@ -177,6 +170,13 @@ void Texture::Load(const wchar_t& t)
 
 	//SRVヒープの大きさを取得
 	tManager->mSRVHandleSize += DirectX12::Get()->mDevice->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV);
+
+	//リソース設定
+	mResDesc.Dimension = D3D12_RESOURCE_DIMENSION_BUFFER;
+	mResDesc.DepthOrArraySize = 1;
+	mResDesc.MipLevels = 1;
+	mResDesc.SampleDesc.Count = 1;
+	mResDesc.Layout = D3D12_TEXTURE_LAYOUT_ROW_MAJOR;
 
 	//シェーダリソースビュー設定
 	mSrvDesc.Format = mResDesc.Format;//RGBA float
