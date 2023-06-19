@@ -6,15 +6,10 @@
 #include "LightGroup.h"
 #include "Obj.h"
 
-ComPtr<ID3D12DescriptorHeap> dsvHeap = nullptr;
-
-ComPtr<ID3D12Resource> depthBuff;
-
-D3D12_RESOURCE_BARRIER barrierDesc{};
-
 void CreateDepthView()
 {
 	DirectX12* dx12 = DirectX12::Get();
+	Screen* screen = Screen::Get();
 
 	D3D12_RESOURCE_DESC depthResourceDesc{};
 	depthResourceDesc.Dimension = D3D12_RESOURCE_DIMENSION_TEXTURE2D;
@@ -34,21 +29,20 @@ void CreateDepthView()
 	depthClearValue.Format = DXGI_FORMAT_D32_FLOAT;	//深度値フォーマット
 
 	//リソース生成
-	
 	sResult = dx12->mDevice->CreateCommittedResource(
 		&depthHeapProp,
 		D3D12_HEAP_FLAG_NONE,
 		&depthResourceDesc,
 		D3D12_RESOURCE_STATE_DEPTH_WRITE,	//深度値書き込みに使用
 		&depthClearValue,
-		IID_PPV_ARGS(&depthBuff));
+		IID_PPV_ARGS(&screen->depthBuff));
 
 	//深度ビュー用デスクリプタヒープ作成
 	D3D12_DESCRIPTOR_HEAP_DESC dsvHeapDesc{};
 	dsvHeapDesc.NumDescriptors = 1;	//深度ビューは1つ
 	dsvHeapDesc.Type = D3D12_DESCRIPTOR_HEAP_TYPE_DSV;	//デプスステンシルビュー
 	
-	sResult = dx12->mDevice->CreateDescriptorHeap(&dsvHeapDesc, IID_PPV_ARGS(&dsvHeap));
+	sResult = dx12->mDevice->CreateDescriptorHeap(&dsvHeapDesc, IID_PPV_ARGS(&screen->dsvHeap));
 
 	assert(SUCCEEDED(sResult));
 
@@ -57,21 +51,22 @@ void CreateDepthView()
 	dsvDesc.Format = DXGI_FORMAT_D32_FLOAT;//深度値フォーマット
 	dsvDesc.ViewDimension = D3D12_DSV_DIMENSION_TEXTURE2D;
 	dx12->mDevice->CreateDepthStencilView(
-		depthBuff.Get(),
+		screen->depthBuff.Get(),
 		&dsvDesc,
-		dsvHeap->GetCPUDescriptorHandleForHeapStart());
+		screen->dsvHeap->GetCPUDescriptorHandleForHeapStart());
 }
 
 void ClearDrawScreen()
 {
 	DirectX12* dx12 = DirectX12::Get();
+	Screen* screen = Screen::Get();
 
 	FLOAT clearColor[] = { 0.1f,0.25f,0.5f,0.0f };
 
 	UINT bbIndex = dx12->mSwapChain->GetCurrentBackBufferIndex();
 
 	//1.リソースバリアで書き込み化に変更
-	//D3D12_RESOURCE_BARRIER barrierDesc{};
+	D3D12_RESOURCE_BARRIER barrierDesc{};
 	barrierDesc.Transition.pResource = dx12->mBackBuffers[bbIndex].Get();	//バックバッファを指定
 	barrierDesc.Transition.StateBefore = D3D12_RESOURCE_STATE_PRESENT;	//表示状態から
 	barrierDesc.Transition.StateAfter = D3D12_RESOURCE_STATE_RENDER_TARGET;		//描画状態へ
@@ -82,7 +77,7 @@ void ClearDrawScreen()
 	D3D12_CPU_DESCRIPTOR_HANDLE rtvHandle = dx12->mRtvHeap->GetCPUDescriptorHandleForHeapStart();
 	rtvHandle.ptr += bbIndex * dx12->mDevice->GetDescriptorHandleIncrementSize(dx12->mRtvHeapDesc.Type);
 
-	D3D12_CPU_DESCRIPTOR_HANDLE dsvHandle = dsvHeap->GetCPUDescriptorHandleForHeapStart();
+	D3D12_CPU_DESCRIPTOR_HANDLE dsvHandle = screen->dsvHeap->GetCPUDescriptorHandleForHeapStart();
 	dx12->mCmdList->OMSetRenderTargets(1, &rtvHandle, false, &dsvHandle);
 
 	//3.画面クリア
@@ -91,10 +86,9 @@ void ClearDrawScreen()
 
 }
 
-void BasicObjectPreDraw(const PipelineSet& objectPipelineSet)
+void PreDraw()
 {
 	DirectX12* dx12 = DirectX12::Get();
-	TextureManager* texM = TextureManager::Get();
 
 	D3D12_VIEWPORT viewport{};
 	viewport.Width = Util::WIN_WIDTH;
@@ -113,6 +107,14 @@ void BasicObjectPreDraw(const PipelineSet& objectPipelineSet)
 	scissorRect.bottom = scissorRect.top + Util::WIN_HEIGHT;	//切り抜き座標下
 	//シザー矩形設定コマンドを、コマンドリストに積む
 	dx12->mCmdList->RSSetScissorRects(1, &scissorRect);
+
+
+}
+
+void BasicObjectPreDraw(const PipelineSet& objectPipelineSet)
+{
+	DirectX12* dx12 = DirectX12::Get();
+	TextureManager* texM = TextureManager::Get();
 
 	//パイプラインステートとルートシグネチャの設定コマンド
 	//スプライトじゃない方
@@ -166,7 +168,11 @@ void PostDraw()
 {
 	DirectX12* dx12 = DirectX12::Get();
 
+	UINT bbIndex = dx12->mSwapChain->GetCurrentBackBufferIndex();
+
 	//5.リソースバリアを戻す
+	D3D12_RESOURCE_BARRIER barrierDesc{};
+	barrierDesc.Transition.pResource = dx12->mBackBuffers[bbIndex].Get();	//バックバッファを指定
 	barrierDesc.Transition.StateBefore = D3D12_RESOURCE_STATE_RENDER_TARGET;	//描画状態から
 	barrierDesc.Transition.StateAfter = D3D12_RESOURCE_STATE_PRESENT;	//表示状態へ
 	dx12->mCmdList->ResourceBarrier(1, &barrierDesc);

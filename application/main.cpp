@@ -151,9 +151,7 @@ int32_t WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_  HINSTANCE hPrevInstan
 		}
 #pragma endregion ウィンドウメッセージ
 
-#pragma region DirectX毎フレーム処理
 		///---DirectX毎フレーム処理 ここから---///
-		
 		ClearDrawScreen();
 
 		imguiManager->PreUpdate();
@@ -163,39 +161,46 @@ int32_t WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_  HINSTANCE hPrevInstan
 		Input::Mouse::Update();
 		Input::Pad::Update();
 		
-		//gameScene_.Update();
-
-
 		scenemanager->Update();
 
-		//pEmitter.Update();
-
 		///---DirectX毎フレーム処理 ここまで---///
-#pragma endregion DirectX毎フレーム処理
 
-#pragma region グラフィックスコマンド
 		//--4.描画コマンドここから--//
 
-		scenemanager->Draw();
-		postEffect->Draw();
+#pragma region ポストエフェクト対応の描画方式
 
-		debugText.DrawAll();
+		postEffect->PreDrawScene();
+		scenemanager->Draw();
+		postEffect->PostDrawScene();
+
+		PreDraw();
+
+		postEffect->Draw();
 
 		//--4.描画コマンドここまで--//
 
-#pragma endregion グラフィックスコマンド
-
-#pragma region 画面入れ替え
-
+		//--5.画面入れかえ--//
 		imguiManager->PreDraw();
 
 		imguiManager->Draw();
 
 		PostDraw();
 
-		debugText.PostDraw();
+#pragma endregion ポストエフェクト対応の描画方式
 
-#pragma endregion 画面入れ替え
+#pragma region 元々の描画方式
+		/*{
+			PreDraw();
+			scenemanager->Draw();
+
+			imguiManager->PreDraw();
+			imguiManager->Draw();
+
+			PostDraw();
+		}*/
+#pragma region 元々の描画方式
+
+		//--5.画面入れかえおわり--//
 
 		TimeManager::Update();
 
