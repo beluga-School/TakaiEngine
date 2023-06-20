@@ -16,11 +16,57 @@ PostEffect::PostEffect()
 	mColor = { 1,1,1,1 };
 	mAnchorpoint = { 0.f,0.f };
 
-	Init();
+	//Init();
 }
 
 void PostEffect::Initialize()
 {
+	DirectX12* dx12 = DirectX12::Get();
+
+	//頂点バッファの設定
+	D3D12_HEAP_PROPERTIES heapProp{};		//ヒープ設定
+	heapProp.Type = D3D12_HEAP_TYPE_UPLOAD;	//GPUへの転送用
+
+	VertexPosUV vertices[] = {
+		//x      y      z        u    v
+		{{ -0.5f, -0.5f,  0.0f},{0.0f,1.0f}},//左下
+		{{ -0.5f,  0.5f,  0.0f},{0.0f,0.0f}},//左上
+		{{  0.5f, -0.5f,  0.0f},{1.0f,1.0f}},//右下
+		{{  0.5f,  0.5f,  0.0f},{1.0f,0.0f}},//右上
+	};
+
+	D3D12_RESOURCE_DESC resDesc{};
+	resDesc.Dimension = D3D12_RESOURCE_DIMENSION_BUFFER;
+	//ここ悪いかもしれん
+	resDesc.Width = sizeof(vertices);	//頂点データ全体のサイズ
+	resDesc.Height = 1;
+	resDesc.DepthOrArraySize = 1;
+	resDesc.MipLevels = 1;
+	resDesc.SampleDesc.Count = 1;
+	resDesc.Layout = D3D12_TEXTURE_LAYOUT_ROW_MAJOR;
+
+	//頂点バッファ生成
+	sResult = dx12->mDevice->CreateCommittedResource(
+		&heapProp,
+		D3D12_HEAP_FLAG_NONE,
+		&resDesc,
+		D3D12_RESOURCE_STATE_GENERIC_READ,
+		nullptr,
+		IID_PPV_ARGS(mVertBuff.GetAddressOf()));
+
+	VertexPosUV* vertMap = nullptr;
+	sResult = mVertBuff->Map(0, nullptr, (void**)&vertMap);
+	memcpy(vertMap, vertices, sizeof(vertices));
+	mVertBuff->Unmap(0, nullptr);
+
+	mVbView.BufferLocation = mVertBuff->GetGPUVirtualAddress();
+	mVbView.SizeInBytes = sizeof(vertices);
+	mVbView.StrideInBytes = sizeof(vertices[0]);
+
+	//--定数バッファはConstBufferのコンストラクタで作成される
+
+
+
 	CreateTexture();
 	
 	CreateSRV();
@@ -42,7 +88,17 @@ void PostEffect::Draw()
 		return;
 	}
 
-	Sprite::Update();
+	//定数バッファの転送
+	sResult = mConstBuffer.mBuffer->Map(0, nullptr, (void**)&mConstBuffer.mConstBufferData);
+	mConstBuffer.mConstBufferData->mat = XMMatrixIdentity();
+
+	mConstBuffer.mConstBufferData->color.x = mColor.f4.vec.x;
+	mConstBuffer.mConstBufferData->color.y = mColor.f4.vec.y;
+	mConstBuffer.mConstBufferData->color.z = mColor.f4.vec.z;
+	mConstBuffer.mConstBufferData->color.w = mColor.f4.w;
+
+	mConstBuffer.mBuffer->Unmap(0, nullptr);
+
 
 	//スプライトのパイプラインステートを使いまわしてる
 	// CULLMODE=NONE、DepthFunc=ALWAYS で描画している

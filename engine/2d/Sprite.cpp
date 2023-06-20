@@ -253,6 +253,7 @@ void Sprite::Init()
 		D3D12_RESOURCE_STATE_GENERIC_READ,
 		nullptr,
 		IID_PPV_ARGS(mVertBuff.GetAddressOf()));
+	assert(SUCCEEDED(sResult));
 
 	//頂点バッファへのデータ転送
 	/*VertexPosUV* vertMap = nullptr;
