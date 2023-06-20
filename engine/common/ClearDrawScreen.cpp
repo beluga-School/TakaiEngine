@@ -61,7 +61,7 @@ void ClearDrawScreen()
 	DirectX12* dx12 = DirectX12::Get();
 	Screen* screen = Screen::Get();
 
-	FLOAT clearColor[] = { 0.1f,0.25f,0.5f,0.0f };
+	FLOAT clearColor[] = { 0.1f,0.25f,0.5f,1.0f };
 
 	UINT bbIndex = dx12->mSwapChain->GetCurrentBackBufferIndex();
 

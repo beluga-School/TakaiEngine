@@ -31,7 +31,8 @@ void Texture::CreateWhiteTexture()
 	//ÉäÉ\Å[ÉXê›íË
 	D3D12_RESOURCE_DESC textureResourceDesc{};
 	textureResourceDesc.Dimension = D3D12_RESOURCE_DIMENSION_TEXTURE2D;
-	textureResourceDesc.Format = DXGI_FORMAT_R32G32B32A32_FLOAT;
+	//textureResourceDesc.Format = DXGI_FORMAT_R32G32B32A32_FLOAT;
+	textureResourceDesc.Format = DXGI_FORMAT_R8G8B8A8_UNORM_SRGB;
 	textureResourceDesc.Width = TEXTURE_WIDTH;
 	textureResourceDesc.Height = TEXTURE_HEIGHT;
 	textureResourceDesc.DepthOrArraySize = 1;

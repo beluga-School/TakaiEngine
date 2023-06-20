@@ -4,7 +4,7 @@
 #include <memory>
 #include "ClearDrawScreen.h"
 
-const float PostEffect::sClearColor[4] = { 0.25f,0.5f,0.1f,0.0f };//緑っぽい色でクリア
+const float PostEffect::sClearColor[4] = { 0.25f,0.5f,0.1f,1.0f };//緑っぽい色でクリア
 
 PostEffect::PostEffect() 
 	: Sprite(
