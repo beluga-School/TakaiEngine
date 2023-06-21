@@ -89,6 +89,12 @@ private:
 	//3Dオブジェクト用パイプライン
 	void Object3DPipeLine();
 
+	//スプライト用パイプライン
+	void SpritePipeLine();
+
+	//ポストエフェクト掛けてないときのパイプライン
+	void NonePostEffectPipeLine();
+
 	//ガウシアンブラー用パイプライン
 	void GaussianBlurPipeLine();
 

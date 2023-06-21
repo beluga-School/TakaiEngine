@@ -8,8 +8,7 @@ void DebugText::Initialize(const Texture& tex)
 	}
 }
 
-void DebugText::Print(const SpriteCommon& spritecommon, const std::string& text,
-	const float& x,const float& y,const float& scale)
+void DebugText::Print(const SpriteCommon& spritecommon, const std::string& text,float x,float y,float scale)
 {
 	//‘S‚Ä‚Ì•¶Žš‚É‚Â‚¢‚Ä
 	for (int32_t i = 0; i < text.size(); i++)

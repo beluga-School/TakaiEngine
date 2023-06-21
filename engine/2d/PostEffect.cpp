@@ -21,11 +21,19 @@ void PostEffect::Initialize()
 
 	VertexPosUV vertices[] = {
 		//x      y      z        u    v
-		{{ -0.5f, -0.5f,  0.0f},{0.0f,1.0f}},//左下
-		{{ -0.5f,  0.5f,  0.0f},{0.0f,0.0f}},//左上
-		{{  0.5f, -0.5f,  0.0f},{1.0f,1.0f}},//右下
-		{{  0.5f,  0.5f,  0.0f},{1.0f,0.0f}},//右上
+		{{ -1.0f, -1.0f,  0.0f},{0.0f,1.0f}},//左下
+		{{ -1.0f,  1.0f,  0.0f},{0.0f,0.0f}},//左上
+		{{  1.0f, -1.0f,  0.0f},{1.0f,1.0f}},//右下
+		{{  1.0f,  1.0f,  0.0f},{1.0f,0.0f}},//右上
 	};
+
+	//VertexPosUV vertices[] = {
+	//	//x      y      z        u    v
+	//	{{ -0.5f, -0.5f,  0.0f},{0.0f,1.0f}},//左下
+	//	{{ -0.5f,  0.5f,  0.0f},{0.0f,0.0f}},//左上
+	//	{{  0.5f, -0.5f,  0.0f},{1.0f,1.0f}},//右下
+	//	{{  0.5f,  0.5f,  0.0f},{1.0f,0.0f}},//右上
+	//};
 
 	D3D12_RESOURCE_DESC resDesc{};
 	resDesc.Dimension = D3D12_RESOURCE_DIMENSION_BUFFER;
@@ -55,10 +63,6 @@ void PostEffect::Initialize()
 	mVbView.SizeInBytes = sizeof(vertices);
 	mVbView.StrideInBytes = sizeof(vertices[0]);
 
-	//--定数バッファはConstBufferのコンストラクタで作成される
-
-
-
 	CreateTexture();
 	
 	CreateSRV();
@@ -82,7 +86,8 @@ void PostEffect::Draw()
 	mConstBuffer.mBuffer->Unmap(0, nullptr);
 
 	//パイプラインを引っ張ってくる
-	PipelineSet pSet = PipelineManager::GetPipeLine("GaussianBlur");
+	//ポストエフェクトなにも掛けない
+	PipelineSet pSet = PipelineManager::GetPipeLine("None");
 	//パイプラインステートの設定
 	dx12->mCmdList->SetPipelineState(pSet.mPipelinestate.Get());
 	//ルートシグネチャの設定

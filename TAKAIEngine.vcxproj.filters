@@ -244,6 +244,9 @@
     <Filter Include="シェーダー\ShiftBlur">
       <UniqueIdentifier>{688b6ab3-a0d8-4fa6-85c7-ab43e78fa8de}</UniqueIdentifier>
     </Filter>
+    <Filter Include="シェーダー\NonePostEffect">
+      <UniqueIdentifier>{f34f8ebf-5a00-493c-8629-d12e9c69dc89}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="engine\input\Input.cpp">
@@ -653,6 +656,9 @@
     <None Include="Resources\Shader\ShiftBlur.hlsli">
       <Filter>シェーダー\ShiftBlur</Filter>
     </None>
+    <None Include="Resources\Shader\NonePostEffect.hlsli">
+      <Filter>シェーダー\NonePostEffect</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Resources\Shader\BasicPS.hlsl">
@@ -714,6 +720,12 @@
     </FxCompile>
     <FxCompile Include="Resources\Shader\ShiftBlurPS.hlsl">
       <Filter>シェーダー\ShiftBlur</Filter>
+    </FxCompile>
+    <FxCompile Include="Resources\Shader\NonePostEffectPS.hlsl">
+      <Filter>シェーダー\NonePostEffect</Filter>
+    </FxCompile>
+    <FxCompile Include="Resources\Shader\NonePostEffectVS.hlsl">
+      <Filter>シェーダー\NonePostEffect</Filter>
     </FxCompile>
   </ItemGroup>
 </Project>

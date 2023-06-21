@@ -114,8 +114,6 @@ int32_t WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_  HINSTANCE hPrevInstan
 	ImguiManager *imguiManager = ImguiManager::GetInstance();
 	imguiManager->Initialize();
 
-	SpriteCommon::sSpriteCommon.Initialize();
-
 	//モデルの読み込み
 	ModelManager::Get()->PreLoad();
 
@@ -139,6 +137,8 @@ int32_t WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_  HINSTANCE hPrevInstan
 
 	//パイプラインの初期化
 	PipelineManager::Get()->Initialize();
+
+	SpriteCommon::sSpriteCommon.Initialize();
 
 	//ゲームループ
 	while (true){

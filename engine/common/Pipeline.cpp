@@ -917,6 +917,10 @@ void PipelineManager::Initialize()
 {
 	Object3DPipeLine();
 
+	SpritePipeLine();
+
+	NonePostEffectPipeLine();
+
 	GaussianBlurPipeLine();
 
 	ShiftBlurPipeLine();
@@ -981,6 +985,182 @@ void PipelineManager::Object3DPipeLine()
 
 	std::string pipeLineName = "Object3D";
 	sPipelines[pipeLineName] = pipeLineSet;
+}
+
+void PipelineManager::SpritePipeLine()
+{
+	DirectX12* dx12 = DirectX12::Get();
+
+	PipelineSet pSet;
+
+	//シェーダー設定
+	pSet.vs.shaderName = "Resources\\Shader\\SpriteVS.hlsl";
+	pSet.ps.shaderName = "Resources\\Shader\\SpritePS.hlsl";
+
+	//インプットレイアウト
+	pSet.inputLayout =
+	{
+			{ //xyz座標
+				"POSITION",0,DXGI_FORMAT_R32G32B32_FLOAT,0,
+				D3D12_APPEND_ALIGNED_ELEMENT,
+				D3D12_INPUT_CLASSIFICATION_PER_VERTEX_DATA,0
+			},
+			{ //uv座標
+				"TEXCOORD",0,DXGI_FORMAT_R32G32_FLOAT,0,
+				D3D12_APPEND_ALIGNED_ELEMENT,
+				D3D12_INPUT_CLASSIFICATION_PER_VERTEX_DATA,0
+			},
+	};
+
+	//サンプルマスクの設定
+	pSet.pipelineDesc.SampleMask = D3D12_DEFAULT_SAMPLE_MASK;	//標準設定
+
+	//ラスタライザの設定
+	pSet.pipelineDesc.RasterizerState.CullMode = D3D12_CULL_MODE_NONE;	//背面カリングをしない
+	pSet.pipelineDesc.RasterizerState.FillMode = D3D12_FILL_MODE_SOLID;	//ポリゴン内塗りつぶし
+	pSet.pipelineDesc.RasterizerState.DepthClipEnable = true;			//深度クリッピングを有効に
+
+	//ブレンドステート
+	pSet.pipelineDesc.BlendState.RenderTarget[0].RenderTargetWriteMask =
+		D3D12_COLOR_WRITE_ENABLE_ALL;	//RGBA全てのチャンネルを描画
+
+	pSet.blenddesc.RenderTargetWriteMask = D3D12_COLOR_WRITE_ENABLE_ALL; //RGBAすべてのチャンネルを描画
+
+	pSet.blenddesc.BlendEnable = true;					//ブレンドを有効にする
+
+	//あるふぁ～～～～
+	pSet.blenddesc.BlendOpAlpha = D3D12_BLEND_OP_ADD;	//加算
+	pSet.blenddesc.SrcBlendAlpha = D3D12_BLEND_ONE;		//ソースの値を100%使う
+	pSet.blenddesc.DestBlendAlpha = D3D12_BLEND_ZERO;	//デストの値を  0%使う
+
+
+	//頂点レイアウト
+	pSet.inputLayout = {
+			{ //xyz座標
+				"POSITION",0,DXGI_FORMAT_R32G32B32_FLOAT,0,
+				D3D12_APPEND_ALIGNED_ELEMENT,
+				D3D12_INPUT_CLASSIFICATION_PER_VERTEX_DATA,0
+			},
+			{ //uv座標
+				"TEXCOORD",0,DXGI_FORMAT_R32G32_FLOAT,0,
+				D3D12_APPEND_ALIGNED_ELEMENT,
+				D3D12_INPUT_CLASSIFICATION_PER_VERTEX_DATA,0
+			},
+	};
+
+	//図形の形状設定
+	pSet.pipelineDesc.PrimitiveTopologyType = D3D12_PRIMITIVE_TOPOLOGY_TYPE_TRIANGLE;
+
+	//その他の設定
+	pSet.pipelineDesc.NumRenderTargets = 1;	//描画対象は1つ
+	pSet.pipelineDesc.RTVFormats[0] = DXGI_FORMAT_R8G8B8A8_UNORM_SRGB;	//0～255指定のRGBA
+	pSet.pipelineDesc.SampleDesc.Count = 1;	//1ピクセルにつき1回サンプリング
+
+	//深度ステートの設定
+	pSet.pipelineDesc.DepthStencilState.DepthEnable = false;	//深度テストを行わない
+	pSet.pipelineDesc.DepthStencilState.DepthFunc = D3D12_COMPARISON_FUNC_ALWAYS;	//常に上書き
+
+	//いらないかもしれんやつら
+	pSet.pipelineDesc.DepthStencilState.DepthWriteMask = D3D12_DEPTH_WRITE_MASK_ALL;	//書き込み許可
+	pSet.pipelineDesc.DSVFormat = DXGI_FORMAT_D32_FLOAT;	//深度値フォーマット
+
+
+	pSet.descriptorRange.NumDescriptors = 1;	//一度の描画に使うテクスチャが1枚なので1
+	pSet.descriptorRange.RangeType = D3D12_DESCRIPTOR_RANGE_TYPE_SRV;
+	pSet.descriptorRange.BaseShaderRegister = 0;	//テクスチャレジスタ0番
+	pSet.descriptorRange.OffsetInDescriptorsFromTableStart = D3D12_DESCRIPTOR_RANGE_OFFSET_APPEND;
+
+	//ルートパラメータの設定
+	pSet.paramSize = 3;
+	pSet.rootParams.resize(pSet.paramSize);
+	//定数バッファ0番 b0
+	pSet.rootParams[0].ParameterType = D3D12_ROOT_PARAMETER_TYPE_CBV;	//種類
+	pSet.rootParams[0].Descriptor.ShaderRegister = 0;					//定数バッファ番号
+	pSet.rootParams[0].Descriptor.RegisterSpace = 0;						//デフォルト値
+	pSet.rootParams[0].ShaderVisibility = D3D12_SHADER_VISIBILITY_ALL;	//全てのシェーダから見える
+	//テクスチャレジスタ0番 t0
+	pSet.rootParams[1].ParameterType = D3D12_ROOT_PARAMETER_TYPE_DESCRIPTOR_TABLE;	//種類
+	pSet.rootParams[1].DescriptorTable.pDescriptorRanges = &pSet.descriptorRange;					//デスクリプタレンジ
+	pSet.rootParams[1].DescriptorTable.NumDescriptorRanges = 1;						//デスクリプタレンジ数
+	pSet.rootParams[1].ShaderVisibility = D3D12_SHADER_VISIBILITY_ALL;	//全てのシェーダから見える
+
+	//テクスチャサンプラーの生成 s0
+
+	pSet.samplerDesc.AddressU = D3D12_TEXTURE_ADDRESS_MODE_WRAP;
+	pSet.samplerDesc.AddressV = D3D12_TEXTURE_ADDRESS_MODE_WRAP;
+	pSet.samplerDesc.AddressW = D3D12_TEXTURE_ADDRESS_MODE_WRAP;
+	pSet.samplerDesc.BorderColor = D3D12_STATIC_BORDER_COLOR_TRANSPARENT_BLACK;
+	pSet.samplerDesc.Filter = D3D12_FILTER_MIN_MAG_MIP_LINEAR;
+	pSet.samplerDesc.MaxLOD = D3D12_FLOAT32_MAX;
+	pSet.samplerDesc.MinLOD = 0.0f;
+	pSet.samplerDesc.ComparisonFunc = D3D12_COMPARISON_FUNC_NEVER;
+	pSet.samplerDesc.ShaderVisibility = D3D12_SHADER_VISIBILITY_PIXEL;
+
+
+	//ルートシグネチャの設定
+
+	pSet.rootSignatureDesc.Flags = D3D12_ROOT_SIGNATURE_FLAG_ALLOW_INPUT_ASSEMBLER_INPUT_LAYOUT;
+	pSet.rootSignatureDesc.NumStaticSamplers = 1;
+
+	pSet.Create();
+
+	std::string pipeLineName = "Sprite";
+	sPipelines[pipeLineName] = pSet;
+}
+
+void PipelineManager::NonePostEffectPipeLine()
+{
+	PipelineSet pSet;
+
+	//シェーダー設定
+	pSet.vs.shaderName = "Resources\\Shader\\NonePostEffectVS.hlsl";
+	pSet.ps.shaderName = "Resources\\Shader\\NonePostEffectPS.hlsl";
+
+	//インプットレイアウト
+	pSet.inputLayout =
+	{
+			{ //xyz座標
+				"POSITION",0,DXGI_FORMAT_R32G32B32_FLOAT,0,
+				D3D12_APPEND_ALIGNED_ELEMENT,
+				D3D12_INPUT_CLASSIFICATION_PER_VERTEX_DATA,0
+			},
+			{ //uv座標
+				"TEXCOORD",0,DXGI_FORMAT_R32G32_FLOAT,0,
+				D3D12_APPEND_ALIGNED_ELEMENT,
+				D3D12_INPUT_CLASSIFICATION_PER_VERTEX_DATA,0
+			},
+	};
+
+	pSet.pipelineDesc.RasterizerState.CullMode = D3D12_CULL_MODE_NONE;
+	pSet.pipelineDesc.DepthStencilState.DepthFunc = D3D12_COMPARISON_FUNC_ALWAYS;
+
+	pSet.blenddesc.BlendOpAlpha = D3D12_BLEND_OP_ADD;	//加算
+	pSet.blenddesc.SrcBlendAlpha = D3D12_BLEND_ONE;		//ソースの値を100%使う
+	pSet.blenddesc.DestBlendAlpha = D3D12_BLEND_ZERO;	//デストの値を  0%使う
+
+	pSet.blendMode = ALPHA;
+
+	pSet.pipelineDesc.DSVFormat = DXGI_FORMAT_D32_FLOAT;
+	pSet.pipelineDesc.PrimitiveTopologyType = D3D12_PRIMITIVE_TOPOLOGY_TYPE_TRIANGLE;
+
+	//UVずらし系のポストエフェクトを作った際に、逆側の色を拾ってこないための設定
+	pSet.samplerDesc.AddressU = D3D12_TEXTURE_ADDRESS_MODE_BORDER;
+	pSet.samplerDesc.AddressV = D3D12_TEXTURE_ADDRESS_MODE_BORDER;
+
+	pSet.rootParams[0].ParameterType = D3D12_ROOT_PARAMETER_TYPE_CBV;	//種類
+	pSet.rootParams[0].Descriptor.ShaderRegister = 0;					//定数バッファ番号
+	pSet.rootParams[0].Descriptor.RegisterSpace = 0;						//デフォルト値
+	pSet.rootParams[0].ShaderVisibility = D3D12_SHADER_VISIBILITY_ALL;	//全てのシェーダから見える
+	//テクスチャレジスタ0番 t0
+	pSet.rootParams[1].ParameterType = D3D12_ROOT_PARAMETER_TYPE_DESCRIPTOR_TABLE;	//種類
+	pSet.rootParams[1].DescriptorTable.pDescriptorRanges = &pSet.descriptorRange;					//デスクリプタレンジ
+	pSet.rootParams[1].DescriptorTable.NumDescriptorRanges = 1;						//デスクリプタレンジ数
+	pSet.rootParams[1].ShaderVisibility = D3D12_SHADER_VISIBILITY_ALL;	//全てのシェーダから見える
+
+	pSet.Create();
+
+	std::string pipeLineName = "None";
+	sPipelines[pipeLineName] = pSet;
 }
 
 void PipelineManager::GaussianBlurPipeLine()
