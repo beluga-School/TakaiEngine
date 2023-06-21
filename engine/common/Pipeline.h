@@ -95,6 +95,8 @@ private:
 	//ポストエフェクト掛けてないときのパイプライン
 	void NonePostEffectPipeLine();
 
+	void MultiRenderPipeLine();
+
 	//ガウシアンブラー用パイプライン
 	void GaussianBlurPipeLine();
 

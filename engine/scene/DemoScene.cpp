@@ -70,7 +70,7 @@ void DemoScene::Update()
 
 void DemoScene::Draw()
 {
-	BasicObjectPreDraw(PipelineManager::GetPipeLine("Object3D"));
+	BasicObjectPreDraw(PipelineManager::GetPipeLine("MultiRender"));
 
 	mSkydome.DrawMaterial();
 

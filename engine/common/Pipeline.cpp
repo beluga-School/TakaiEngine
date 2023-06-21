@@ -866,6 +866,11 @@ void PipelineSet::Create()
 		blenddesc.DestBlend = D3D12_BLEND_INV_SRC_ALPHA;//1.0f-ソースのアルファ値
 	}
 
+	//ブレンドステート
+	pipelineDesc.BlendState.RenderTarget[0] = blenddesc;
+	pipelineDesc.BlendState.RenderTarget[1] = blenddesc;
+
+
 	//頂点レイアウトの設定
 	if (inputLayout.size() > 0)
 	{
@@ -924,6 +929,8 @@ void PipelineManager::Initialize()
 	GaussianBlurPipeLine();
 
 	ShiftBlurPipeLine();
+
+	MultiRenderPipeLine();
 }
 
 void PipelineManager::Object3DPipeLine()
@@ -1161,6 +1168,75 @@ void PipelineManager::NonePostEffectPipeLine()
 
 	std::string pipeLineName = "None";
 	sPipelines[pipeLineName] = pSet;
+}
+
+void PipelineManager::MultiRenderPipeLine()
+{
+	PipelineSet pipeLineSet;
+
+	//シェーダー設定
+	pipeLineSet.vs.shaderName = "Resources\\Shader\\MultiRenderVS.hlsl";
+	pipeLineSet.ps.shaderName = "Resources\\Shader\\MultiRenderPS.hlsl";
+
+	pipeLineSet.pipelineDesc.NumRenderTargets = 2;	//描画対象は1つ
+	pipeLineSet.pipelineDesc.RTVFormats[0] = DXGI_FORMAT_R8G8B8A8_UNORM_SRGB;	//0～255指定のRGBA
+	pipeLineSet.pipelineDesc.RTVFormats[1] = DXGI_FORMAT_R8G8B8A8_UNORM_SRGB;	//0～255指定のRGBA
+
+	//3dオブジェクト用のパイプライン生成
+	//頂点レイアウト
+	pipeLineSet.inputLayout =
+	{
+			{ //xyz座標
+				"POSITION",0,DXGI_FORMAT_R32G32B32_FLOAT,0,
+				D3D12_APPEND_ALIGNED_ELEMENT,
+				D3D12_INPUT_CLASSIFICATION_PER_VERTEX_DATA,0
+			},
+			{//法線ベクトル
+				"NORMAL",0,DXGI_FORMAT_R32G32B32_FLOAT,0,
+				D3D12_APPEND_ALIGNED_ELEMENT,
+				D3D12_INPUT_CLASSIFICATION_PER_VERTEX_DATA,0
+			},
+			{ //uv座標
+				"TEXCOORD",0,DXGI_FORMAT_R32G32_FLOAT,0,
+				D3D12_APPEND_ALIGNED_ELEMENT,
+				D3D12_INPUT_CLASSIFICATION_PER_VERTEX_DATA,0
+			},
+	};
+
+	//ルートパラメータの設定
+	pipeLineSet.paramSize = 5;
+	pipeLineSet.rootParams.resize(pipeLineSet.paramSize);
+	//定数バッファ0番 b0
+	pipeLineSet.rootParams[0].ParameterType = D3D12_ROOT_PARAMETER_TYPE_CBV;	//種類
+	pipeLineSet.rootParams[0].Descriptor.ShaderRegister = 0;					//定数バッファ番号
+	pipeLineSet.rootParams[0].Descriptor.RegisterSpace = 0;						//デフォルト値
+	pipeLineSet.rootParams[0].ShaderVisibility = D3D12_SHADER_VISIBILITY_ALL;	//全てのシェーダから見える
+	//テクスチャレジスタ0番 t0
+	pipeLineSet.rootParams[1].ParameterType = D3D12_ROOT_PARAMETER_TYPE_DESCRIPTOR_TABLE;	//種類
+	pipeLineSet.rootParams[1].DescriptorTable.pDescriptorRanges = &pipeLineSet.descriptorRange;					//デスクリプタレンジ
+	pipeLineSet.rootParams[1].DescriptorTable.NumDescriptorRanges = 1;						//デスクリプタレンジ数
+	pipeLineSet.rootParams[1].ShaderVisibility = D3D12_SHADER_VISIBILITY_ALL;	//全てのシェーダから見える
+	//定数バッファ1番 b1
+	pipeLineSet.rootParams[2].ParameterType = D3D12_ROOT_PARAMETER_TYPE_CBV;	//種類
+	pipeLineSet.rootParams[2].Descriptor.ShaderRegister = 1;					//定数バッファ番号
+	pipeLineSet.rootParams[2].Descriptor.RegisterSpace = 0;						//デフォルト値
+	pipeLineSet.rootParams[2].ShaderVisibility = D3D12_SHADER_VISIBILITY_ALL;	//すべてのシェーダから見える
+	//定数バッファ2番 b2
+	pipeLineSet.rootParams[3].ParameterType = D3D12_ROOT_PARAMETER_TYPE_CBV;	//種類
+	pipeLineSet.rootParams[3].Descriptor.ShaderRegister = 2;					//定数バッファ番号
+	pipeLineSet.rootParams[3].Descriptor.RegisterSpace = 0;						//デフォルト値
+	pipeLineSet.rootParams[3].ShaderVisibility = D3D12_SHADER_VISIBILITY_ALL;	//すべてのシェーダから見える
+	//定数バッファ3番 b3
+	pipeLineSet.rootParams[4].ParameterType = D3D12_ROOT_PARAMETER_TYPE_CBV;	//種類
+	pipeLineSet.rootParams[4].Descriptor.ShaderRegister = 3;					//定数バッファ番号
+	pipeLineSet.rootParams[4].Descriptor.RegisterSpace = 0;						//デフォルト値
+	pipeLineSet.rootParams[4].ShaderVisibility = D3D12_SHADER_VISIBILITY_ALL;	//すべてのシェーダから見える
+
+	//パイプライン生成
+	pipeLineSet.Create();
+
+	std::string pipeLineName = "MultiRender";
+	sPipelines[pipeLineName] = pipeLineSet;
 }
 
 void PipelineManager::GaussianBlurPipeLine()

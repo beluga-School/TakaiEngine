@@ -19,7 +19,7 @@ private:
 	static const float sClearColor[4];
 
 	//テクスチャバッファ
-	ComPtr<ID3D12Resource> mTexBuff;
+	ComPtr<ID3D12Resource> mTexBuff[2];
 	//SRV用デスクリプタヒープ
 	ComPtr<ID3D12DescriptorHeap> mDescHeapSRV;
 	//深度バッファ
