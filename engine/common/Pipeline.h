@@ -89,7 +89,11 @@ private:
 	//3Dオブジェクト用パイプライン
 	void Object3DPipeLine();
 
+	//ガウシアンブラー用パイプライン
 	void PostEffectPipeLine();
+
+	//シフトブラー用パイプライン
+	void ShiftBlurPipeLine();
 
 	PipelineManager(){};
 	~PipelineManager(){};

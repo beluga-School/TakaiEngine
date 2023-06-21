@@ -6,7 +6,7 @@
 
 const float PostEffect::sClearColor[4] = { 0.25f,0.5f,0.1f,1.0f };//緑っぽい色でクリア
 
-PostEffect::PostEffect() : Sprite()
+PostEffect::PostEffect()
 {
 
 }
@@ -75,24 +75,14 @@ void PostEffect::Draw()
 	DirectX12* dx12 = DirectX12::Get();
 	TextureManager* texM = TextureManager::Get();
 
-	if (mIsInvisible)
-	{
-		return;
-	}
-
 	//定数バッファの転送
 	sResult = mConstBuffer.mBuffer->Map(0, nullptr, (void**)&mConstBuffer.mConstBufferData);
 	mConstBuffer.mConstBufferData->mat = XMMatrixIdentity();
 
-	mConstBuffer.mConstBufferData->color.x = mColor.f4.vec.x;
-	mConstBuffer.mConstBufferData->color.y = mColor.f4.vec.y;
-	mConstBuffer.mConstBufferData->color.z = mColor.f4.vec.z;
-	mConstBuffer.mConstBufferData->color.w = mColor.f4.w;
-
 	mConstBuffer.mBuffer->Unmap(0, nullptr);
 
 	//パイプラインを引っ張ってくる
-	PipelineSet pSet = PipelineManager::GetPipeLine("PostEffect");
+	PipelineSet pSet = PipelineManager::GetPipeLine("ShiftBlur");
 	//パイプラインステートの設定
 	dx12->mCmdList->SetPipelineState(pSet.mPipelinestate.Get());
 	//ルートシグネチャの設定

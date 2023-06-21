@@ -235,11 +235,14 @@
     <Filter Include="シェーダー\Phong">
       <UniqueIdentifier>{e0ac4646-dda3-4a65-bc15-6d04ca1c0dcf}</UniqueIdentifier>
     </Filter>
-    <Filter Include="シェーダー\PostEffectTest">
-      <UniqueIdentifier>{b2f6f71d-bfa5-493b-bd70-cfcf6cb45cf4}</UniqueIdentifier>
-    </Filter>
     <Filter Include="シェーダー\Sprite">
       <UniqueIdentifier>{16b132b3-547b-4ea2-86c5-cef826585988}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="シェーダー\GaussianBlur">
+      <UniqueIdentifier>{b2f6f71d-bfa5-493b-bd70-cfcf6cb45cf4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="シェーダー\ShiftBlur">
+      <UniqueIdentifier>{688b6ab3-a0d8-4fa6-85c7-ab43e78fa8de}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -641,11 +644,14 @@
     <None Include="Resources\Shader\Phong.hlsli">
       <Filter>シェーダー\Phong</Filter>
     </None>
-    <None Include="Resources\Shader\PostEffectTest.hlsli">
-      <Filter>シェーダー\PostEffectTest</Filter>
+    <None Include="Resources\Shader\GaussianBlur.hlsli">
+      <Filter>シェーダー\GaussianBlur</Filter>
     </None>
     <None Include="Resources\Shader\Sprite.hlsli">
       <Filter>シェーダー\Sprite</Filter>
+    </None>
+    <None Include="Resources\Shader\ShiftBlur.hlsli">
+      <Filter>シェーダー\ShiftBlur</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>
@@ -691,17 +697,23 @@
     <FxCompile Include="Resources\Shader\PhongVS.hlsl">
       <Filter>シェーダー\Phong</Filter>
     </FxCompile>
-    <FxCompile Include="Resources\Shader\PostEffectTestPS.hlsl">
-      <Filter>シェーダー\PostEffectTest</Filter>
+    <FxCompile Include="Resources\Shader\GaussianBlurPS.hlsl">
+      <Filter>シェーダー\GaussianBlur</Filter>
     </FxCompile>
-    <FxCompile Include="Resources\Shader\PostEffectTestVS.hlsl">
-      <Filter>シェーダー\PostEffectTest</Filter>
+    <FxCompile Include="Resources\Shader\GaussianBlurVS.hlsl">
+      <Filter>シェーダー\GaussianBlur</Filter>
     </FxCompile>
     <FxCompile Include="Resources\Shader\SpriteVS.hlsl">
       <Filter>シェーダー\Sprite</Filter>
     </FxCompile>
     <FxCompile Include="Resources\Shader\SpritePS.hlsl">
       <Filter>シェーダー\Sprite</Filter>
+    </FxCompile>
+    <FxCompile Include="Resources\Shader\ShiftBlurVS.hlsl">
+      <Filter>シェーダー\ShiftBlur</Filter>
+    </FxCompile>
+    <FxCompile Include="Resources\Shader\ShiftBlurPS.hlsl">
+      <Filter>シェーダー\ShiftBlur</Filter>
     </FxCompile>
   </ItemGroup>
 </Project>

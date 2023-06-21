@@ -1,7 +1,7 @@
 #pragma once
 #include "Sprite.h"
 
-class PostEffect : public Sprite
+class PostEffect 
 {
 public:
 	PostEffect();
@@ -28,6 +28,13 @@ private:
 	ComPtr<ID3D12DescriptorHeap> mDescHeapRTV;
 	//DSV用デスクリプタヒープ
 	ComPtr<ID3D12DescriptorHeap> mDescHeapDSV;
+
+	//頂点バッファ
+	Microsoft::WRL::ComPtr<ID3D12Resource> mVertBuff;
+	//頂点バッファビュー
+	D3D12_VERTEX_BUFFER_VIEW mVbView{};
+	//定数バッファ
+	ConstBuffer<ConstBufferDataSprite> mConstBuffer;
 
 	//まとめ関数
 	//テクスチャ生成(今の画面からテクスチャを生成？)
