@@ -137,6 +137,9 @@ int32_t WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_  HINSTANCE hPrevInstan
 	SoundManager *soundManager = SoundManager::GetInstance();
 	soundManager->Initialize();
 
+	//パイプラインの初期化
+	PipelineManager::Get()->Initialize();
+
 	//ゲームループ
 	while (true){
 

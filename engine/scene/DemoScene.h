@@ -20,7 +20,6 @@ public:
 private:
 	void SetObject(LevelData& data);
 	
-	PipelineSet mObject3dPipelineSet;
 	Camera* mCamera = Camera::sCamera;
 
 	Obj3d mSkydome;

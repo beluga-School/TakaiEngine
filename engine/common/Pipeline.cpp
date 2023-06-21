@@ -4,6 +4,9 @@
 #include <cassert>
 #include "StringUtil.h"
 
+std::map<std::string, PipelineSet> PipelineManager::sPipelines;
+
+//確認用にしばらく残しておく
 PipelineSet CreateObject3DPipeline()
 {
 	DirectX12* dx12 = DirectX12::Get();
@@ -725,12 +728,89 @@ PipelineSet CreateGeometryPipeline()
 	return pipelineSet;
 }
 
-PipelineSet PipelineSet::Create()
+PipelineSet::PipelineSet()
+{
+	//デフォルトのシェーダー
+	vs.shaderName = "Resources\\Shader\\PhongVS.hlsl";
+	ps.shaderName = "Resources\\Shader\\PhongPS.hlsl";
+	gs.shaderName = "";
+
+	//サンプルマスクの設定
+	pipelineDesc.SampleMask = D3D12_DEFAULT_SAMPLE_MASK;	//標準設定
+
+	//ラスタライザの設定
+	pipelineDesc.RasterizerState.CullMode = D3D12_CULL_MODE_BACK;	//カリングしない
+	pipelineDesc.RasterizerState.FillMode = D3D12_FILL_MODE_SOLID;	//ポリゴン内塗りつぶし
+	pipelineDesc.RasterizerState.DepthClipEnable = true;			//深度クリッピングを有効に
+
+	//ブレンドステート
+	pipelineDesc.BlendState.RenderTarget[0].RenderTargetWriteMask =
+		D3D12_COLOR_WRITE_ENABLE_ALL;	//RGBA全てのチャンネルを描画
+
+	//ブレンド設定
+	blenddesc = pipelineDesc.BlendState.RenderTarget[0];
+
+	blenddesc.RenderTargetWriteMask = D3D12_COLOR_WRITE_ENABLE_ALL; //RGBAすべてのチャンネルを描画
+	blenddesc.BlendEnable = true;					//ブレンドを有効にする
+
+	blenddesc.BlendOpAlpha = D3D12_BLEND_OP_ADD;	//加算
+	blenddesc.SrcBlendAlpha = D3D12_BLEND_ONE;		//ソースの値を100%使う
+	blenddesc.DestBlendAlpha = D3D12_BLEND_ZERO;	//デストの値を  0%使う
+
+	//図形の形状設定
+	pipelineDesc.PrimitiveTopologyType = D3D12_PRIMITIVE_TOPOLOGY_TYPE_TRIANGLE;
+
+	//その他の設定
+	pipelineDesc.NumRenderTargets = 1;	//描画対象は1つ
+	pipelineDesc.RTVFormats[0] = DXGI_FORMAT_R8G8B8A8_UNORM_SRGB;	//0～255指定のRGBA
+	pipelineDesc.SampleDesc.Count = 1;	//1ピクセルにつき1回サンプリング
+
+	pipelineDesc.DepthStencilState.DepthEnable = true;	//深度テストを行う
+	pipelineDesc.DepthStencilState.DepthWriteMask = D3D12_DEPTH_WRITE_MASK_ALL;	//書き込み許可
+	pipelineDesc.DepthStencilState.DepthFunc = D3D12_COMPARISON_FUNC_LESS;	//小さければ許可
+	pipelineDesc.DSVFormat = DXGI_FORMAT_D32_FLOAT;	//深度値フォーマット
+
+	//デスクリプタレンジの設定
+	descriptorRange.NumDescriptors = 1;	//一度の描画に使うテクスチャが1枚なので1
+	descriptorRange.RangeType = D3D12_DESCRIPTOR_RANGE_TYPE_SRV;
+	descriptorRange.BaseShaderRegister = 0;	//テクスチャレジスタ0番
+	descriptorRange.OffsetInDescriptorsFromTableStart = D3D12_DESCRIPTOR_RANGE_OFFSET_APPEND;
+
+	//ルートパラメータの設定
+	rootParams.resize(paramSize);
+	//定数バッファ0番 b0
+	rootParams[0].ParameterType = D3D12_ROOT_PARAMETER_TYPE_CBV;	//種類
+	rootParams[0].Descriptor.ShaderRegister = 0;					//定数バッファ番号
+	rootParams[0].Descriptor.RegisterSpace = 0;						//デフォルト値
+	rootParams[0].ShaderVisibility = D3D12_SHADER_VISIBILITY_ALL;	//全てのシェーダから見える
+	//テクスチャレジスタ0番 t0
+	rootParams[1].ParameterType = D3D12_ROOT_PARAMETER_TYPE_DESCRIPTOR_TABLE;	//種類
+	rootParams[1].DescriptorTable.pDescriptorRanges = &descriptorRange;					//デスクリプタレンジ
+	rootParams[1].DescriptorTable.NumDescriptorRanges = 1;						//デスクリプタレンジ数
+	rootParams[1].ShaderVisibility = D3D12_SHADER_VISIBILITY_ALL;	//全てのシェーダから見える
+	
+	//テクスチャサンプラーの生成 s0
+	samplerDesc.AddressU = D3D12_TEXTURE_ADDRESS_MODE_WRAP;
+	samplerDesc.AddressV = D3D12_TEXTURE_ADDRESS_MODE_WRAP;
+	samplerDesc.AddressW = D3D12_TEXTURE_ADDRESS_MODE_WRAP;
+	samplerDesc.BorderColor = D3D12_STATIC_BORDER_COLOR_TRANSPARENT_BLACK;
+	samplerDesc.Filter = D3D12_FILTER_MIN_MAG_MIP_LINEAR;
+	samplerDesc.MaxLOD = D3D12_FLOAT32_MAX;
+	samplerDesc.MinLOD = 0.0f;
+	samplerDesc.ComparisonFunc = D3D12_COMPARISON_FUNC_NEVER;
+	samplerDesc.ShaderVisibility = D3D12_SHADER_VISIBILITY_PIXEL;
+
+	//ルートシグネチャの設定
+	rootSignatureDesc.Flags = D3D12_ROOT_SIGNATURE_FLAG_ALLOW_INPUT_ASSEMBLER_INPUT_LAYOUT;
+	rootSignatureDesc.pParameters = &rootParams[0];				//ルートパラメータの先頭アドレス
+	rootSignatureDesc.NumParameters = (UINT)rootParams.size();	//ルートパラメータ数
+	rootSignatureDesc.pStaticSamplers = &samplerDesc;		//サンプラーの先頭アドレス	配列ならルートパラメータと同じような書き方ができる
+	rootSignatureDesc.NumStaticSamplers = 1;				//サンプラーの数			配列ならルートパラメータと同じような書き方ができる
+}
+
+void PipelineSet::Create()
 {
 	DirectX12* dx12 = DirectX12::Get();
-
-	//パイプライン構造体
-	PipelineSet pipelineSet;
 
 	//シェーダー
 	Shader shader_;
@@ -756,30 +836,6 @@ PipelineSet PipelineSet::Create()
 		pipelineDesc.GS.pShaderBytecode = shader_.mGsBlob->GetBufferPointer();
 		pipelineDesc.GS.BytecodeLength = shader_.mGsBlob->GetBufferSize();
 	}
-
-	//サンプルマスクの設定
-	pipelineDesc.SampleMask = D3D12_DEFAULT_SAMPLE_MASK;	//標準設定
-
-	//ラスタライザの設定
-	pipelineDesc.RasterizerState.CullMode = D3D12_CULL_MODE_BACK;	//カリングしない
-	pipelineDesc.RasterizerState.FillMode = D3D12_FILL_MODE_SOLID;	//ポリゴン内塗りつぶし
-	pipelineDesc.RasterizerState.DepthClipEnable = true;			//深度クリッピングを有効に
-
-	//ブレンドステート
-	pipelineDesc.BlendState.RenderTarget[0].RenderTargetWriteMask =
-		D3D12_COLOR_WRITE_ENABLE_ALL;	//RGBA全てのチャンネルを描画
-
-	D3D12_RENDER_TARGET_BLEND_DESC& blenddesc = pipelineDesc.BlendState.RenderTarget[0];
-	blenddesc.RenderTargetWriteMask = D3D12_COLOR_WRITE_ENABLE_ALL; //RGBAすべてのチャンネルを描画
-
-	blenddesc.BlendEnable = true;					//ブレンドを有効にする
-
-	//あるふぁ～～～～
-	blenddesc.BlendOpAlpha = D3D12_BLEND_OP_ADD;	//加算
-	blenddesc.SrcBlendAlpha = D3D12_BLEND_ONE;		//ソースの値を100%使う
-	blenddesc.DestBlendAlpha = D3D12_BLEND_ZERO;	//デストの値を  0%使う
-
-	//int32_t blendMode = ALPHA;
 
 	if (blendMode == ADD)
 	{
@@ -810,8 +866,69 @@ PipelineSet PipelineSet::Create()
 		blenddesc.DestBlend = D3D12_BLEND_INV_SRC_ALPHA;//1.0f-ソースのアルファ値
 	}
 
+	//頂点レイアウトの設定
+	if (inputLayout.size() > 0)
+	{
+		pipelineDesc.InputLayout.pInputElementDescs = &inputLayout[0];
+		pipelineDesc.InputLayout.NumElements = (UINT)inputLayout.size();
+	}
+	else
+	{
+		pipelineDesc.InputLayout.pInputElementDescs = nullptr;
+		pipelineDesc.InputLayout.NumElements = 0;
+	}
+
+	if (rootParams.size() > 0)
+	{
+		rootSignatureDesc.pParameters = &rootParams[0];				//ルートパラメータの先頭アドレス
+		rootSignatureDesc.NumParameters = (UINT)rootParams.size();	//ルートパラメータ数
+	}
+	else
+	{
+		rootSignatureDesc.pParameters = nullptr;
+		rootSignatureDesc.NumParameters = 0;
+	}
+
+	//ルートシグネチャのシリアライズ
+	ComPtr<ID3DBlob> rootSigBlob;
+	sResult = D3D12SerializeRootSignature(&rootSignatureDesc, D3D_ROOT_SIGNATURE_VERSION_1_0,
+		&rootSigBlob, &shader_.mErrorBlob);
+	assert(SUCCEEDED(sResult));
+
+	//ルートシグネチャ生成
+	sResult = dx12->mDevice->CreateRootSignature(0, rootSigBlob->GetBufferPointer(), rootSigBlob->GetBufferSize(),
+		IID_PPV_ARGS(&mRootsignature));
+	assert(SUCCEEDED(sResult));
+
+	//パイプラインにルートシグネチャをセット
+	pipelineDesc.pRootSignature = mRootsignature.Get();
+
+	//パイプラインステートの生成
+	sResult = dx12->mDevice->CreateGraphicsPipelineState(&pipelineDesc, IID_PPV_ARGS(&mPipelinestate));
+	assert(SUCCEEDED(sResult));
+}
+
+PipelineSet PipelineManager::GetPipeLine(const std::string& name)
+{
+	return sPipelines[name];
+}
+
+void PipelineManager::Initialize()
+{
+	Object3DPipeLine();
+
+
+}
+
+void PipelineManager::Object3DPipeLine()
+{
+	std::string pipeLineName = "Object3D";
+
+	PipelineSet pipeLineSet;
+
+	//3dオブジェクト用のパイプライン生成
 	//頂点レイアウト
-	//D3D12_INPUT_ELEMENT_DESC sInputLayout[] = 
+	pipeLineSet.inputLayout =
 	{
 			{ //xyz座標
 				"POSITION",0,DXGI_FORMAT_R32G32B32_FLOAT,0,
@@ -830,95 +947,36 @@ PipelineSet PipelineSet::Create()
 			},
 	};
 
-	//頂点レイアウトの設定
-	pipelineDesc.InputLayout.pInputElementDescs = sInputLayout;
-	pipelineDesc.InputLayout.NumElements = _countof(sInputLayout);
-
-	//図形の形状設定
-	pipelineDesc.PrimitiveTopologyType = D3D12_PRIMITIVE_TOPOLOGY_TYPE_TRIANGLE;
-
-	//その他の設定
-	pipelineDesc.NumRenderTargets = 1;	//描画対象は1つ
-	pipelineDesc.RTVFormats[0] = DXGI_FORMAT_R8G8B8A8_UNORM_SRGB;	//0～255指定のRGBA
-	pipelineDesc.SampleDesc.Count = 1;	//1ピクセルにつき1回サンプリング
-
-	pipelineDesc.DepthStencilState.DepthEnable = true;	//深度テストを行う
-	pipelineDesc.DepthStencilState.DepthWriteMask = D3D12_DEPTH_WRITE_MASK_ALL;	//書き込み許可
-	pipelineDesc.DepthStencilState.DepthFunc = D3D12_COMPARISON_FUNC_LESS;	//小さければ許可
-	pipelineDesc.DSVFormat = DXGI_FORMAT_D32_FLOAT;	//深度値フォーマット
-
-	//デスクリプタレンジの設定
-	D3D12_DESCRIPTOR_RANGE descriptorRange{};
-	descriptorRange.NumDescriptors = 1;	//一度の描画に使うテクスチャが1枚なので1
-	descriptorRange.RangeType = D3D12_DESCRIPTOR_RANGE_TYPE_SRV;
-	descriptorRange.BaseShaderRegister = 0;	//テクスチャレジスタ0番
-	descriptorRange.OffsetInDescriptorsFromTableStart = D3D12_DESCRIPTOR_RANGE_OFFSET_APPEND;
-
 	//ルートパラメータの設定
-	//D3D12_ROOT_PARAMETER rootParams[5] = {};
+	pipeLineSet.rootParams.resize(5);
 	//定数バッファ0番 b0
-	rootParams[0].ParameterType = D3D12_ROOT_PARAMETER_TYPE_CBV;	//種類
-	rootParams[0].Descriptor.ShaderRegister = 0;					//定数バッファ番号
-	rootParams[0].Descriptor.RegisterSpace = 0;						//デフォルト値
-	rootParams[0].ShaderVisibility = D3D12_SHADER_VISIBILITY_ALL;	//全てのシェーダから見える
+	pipeLineSet.rootParams[0].ParameterType = D3D12_ROOT_PARAMETER_TYPE_CBV;	//種類
+	pipeLineSet.rootParams[0].Descriptor.ShaderRegister = 0;					//定数バッファ番号
+	pipeLineSet.rootParams[0].Descriptor.RegisterSpace = 0;						//デフォルト値
+	pipeLineSet.rootParams[0].ShaderVisibility = D3D12_SHADER_VISIBILITY_ALL;	//全てのシェーダから見える
 	//テクスチャレジスタ0番 t0
-	rootParams[1].ParameterType = D3D12_ROOT_PARAMETER_TYPE_DESCRIPTOR_TABLE;	//種類
-	rootParams[1].DescriptorTable.pDescriptorRanges = &descriptorRange;					//デスクリプタレンジ
-	rootParams[1].DescriptorTable.NumDescriptorRanges = 1;						//デスクリプタレンジ数
-	rootParams[1].ShaderVisibility = D3D12_SHADER_VISIBILITY_ALL;	//全てのシェーダから見える
+	pipeLineSet.rootParams[1].ParameterType = D3D12_ROOT_PARAMETER_TYPE_DESCRIPTOR_TABLE;	//種類
+	pipeLineSet.rootParams[1].DescriptorTable.pDescriptorRanges = &pipeLineSet.descriptorRange;					//デスクリプタレンジ
+	pipeLineSet.rootParams[1].DescriptorTable.NumDescriptorRanges = 1;						//デスクリプタレンジ数
+	pipeLineSet.rootParams[1].ShaderVisibility = D3D12_SHADER_VISIBILITY_ALL;	//全てのシェーダから見える
 	//定数バッファ1番 b1
-	rootParams[2].ParameterType = D3D12_ROOT_PARAMETER_TYPE_CBV;	//種類
-	rootParams[2].Descriptor.ShaderRegister = 1;					//定数バッファ番号
-	rootParams[2].Descriptor.RegisterSpace = 0;						//デフォルト値
-	rootParams[2].ShaderVisibility = D3D12_SHADER_VISIBILITY_ALL;	//すべてのシェーダから見える
+	pipeLineSet.rootParams[2].ParameterType = D3D12_ROOT_PARAMETER_TYPE_CBV;	//種類
+	pipeLineSet.rootParams[2].Descriptor.ShaderRegister = 1;					//定数バッファ番号
+	pipeLineSet.rootParams[2].Descriptor.RegisterSpace = 0;						//デフォルト値
+	pipeLineSet.rootParams[2].ShaderVisibility = D3D12_SHADER_VISIBILITY_ALL;	//すべてのシェーダから見える
 	//定数バッファ2番 b2
-	rootParams[3].ParameterType = D3D12_ROOT_PARAMETER_TYPE_CBV;	//種類
-	rootParams[3].Descriptor.ShaderRegister = 2;					//定数バッファ番号
-	rootParams[3].Descriptor.RegisterSpace = 0;						//デフォルト値
-	rootParams[3].ShaderVisibility = D3D12_SHADER_VISIBILITY_ALL;	//すべてのシェーダから見える
+	pipeLineSet.rootParams[3].ParameterType = D3D12_ROOT_PARAMETER_TYPE_CBV;	//種類
+	pipeLineSet.rootParams[3].Descriptor.ShaderRegister = 2;					//定数バッファ番号
+	pipeLineSet.rootParams[3].Descriptor.RegisterSpace = 0;						//デフォルト値
+	pipeLineSet.rootParams[3].ShaderVisibility = D3D12_SHADER_VISIBILITY_ALL;	//すべてのシェーダから見える
 	//定数バッファ3番 b3
-	rootParams[4].ParameterType = D3D12_ROOT_PARAMETER_TYPE_CBV;	//種類
-	rootParams[4].Descriptor.ShaderRegister = 3;					//定数バッファ番号
-	rootParams[4].Descriptor.RegisterSpace = 0;						//デフォルト値
-	rootParams[4].ShaderVisibility = D3D12_SHADER_VISIBILITY_ALL;	//すべてのシェーダから見える
+	pipeLineSet.rootParams[4].ParameterType = D3D12_ROOT_PARAMETER_TYPE_CBV;	//種類
+	pipeLineSet.rootParams[4].Descriptor.ShaderRegister = 3;					//定数バッファ番号
+	pipeLineSet.rootParams[4].Descriptor.RegisterSpace = 0;						//デフォルト値
+	pipeLineSet.rootParams[4].ShaderVisibility = D3D12_SHADER_VISIBILITY_ALL;	//すべてのシェーダから見える
 
+	//パイプライン生成
+	pipeLineSet.Create();
 
-	//テクスチャサンプラーの生成 s0
-	D3D12_STATIC_SAMPLER_DESC samplerDesc{};
-	samplerDesc.AddressU = D3D12_TEXTURE_ADDRESS_MODE_WRAP;
-	samplerDesc.AddressV = D3D12_TEXTURE_ADDRESS_MODE_WRAP;
-	samplerDesc.AddressW = D3D12_TEXTURE_ADDRESS_MODE_WRAP;
-	samplerDesc.BorderColor = D3D12_STATIC_BORDER_COLOR_TRANSPARENT_BLACK;
-	samplerDesc.Filter = D3D12_FILTER_MIN_MAG_MIP_LINEAR;
-	samplerDesc.MaxLOD = D3D12_FLOAT32_MAX;
-	samplerDesc.MinLOD = 0.0f;
-	samplerDesc.ComparisonFunc = D3D12_COMPARISON_FUNC_NEVER;
-	samplerDesc.ShaderVisibility = D3D12_SHADER_VISIBILITY_PIXEL;
-
-	//ルートシグネチャの設定
-	D3D12_ROOT_SIGNATURE_DESC rootSignatureDesc{};
-	rootSignatureDesc.Flags = D3D12_ROOT_SIGNATURE_FLAG_ALLOW_INPUT_ASSEMBLER_INPUT_LAYOUT;
-	rootSignatureDesc.pParameters = rootParams;				//ルートパラメータの先頭アドレス
-	rootSignatureDesc.NumParameters = _countof(rootParams);	//ルートパラメータ数
-	rootSignatureDesc.pStaticSamplers = &samplerDesc;		//サンプラーの先頭アドレス	配列ならルートパラメータと同じような書き方ができる
-	rootSignatureDesc.NumStaticSamplers = 1;				//サンプラーの数			配列ならルートパラメータと同じような書き方ができる
-
-	//ルートシグネチャのシリアライズ
-	ComPtr<ID3DBlob> rootSigBlob;
-	sResult = D3D12SerializeRootSignature(&rootSignatureDesc, D3D_ROOT_SIGNATURE_VERSION_1_0,
-		&rootSigBlob, &shader_.mErrorBlob);
-	assert(SUCCEEDED(sResult));
-	sResult = dx12->mDevice->CreateRootSignature(0, rootSigBlob->GetBufferPointer(), rootSigBlob->GetBufferSize(),
-		IID_PPV_ARGS(&pipelineSet.mRootsignature));
-	assert(SUCCEEDED(sResult));
-
-	//パイプラインにルートシグネチャをセット
-	pipelineDesc.pRootSignature = pipelineSet.mRootsignature.Get();
-
-	//パイプラインステートの生成
-	//ComPtr<ID3D12PipelineState> pipelineState;
-	sResult = dx12->mDevice->CreateGraphicsPipelineState(&pipelineDesc, IID_PPV_ARGS(&pipelineSet.mPipelinestate));
-	assert(SUCCEEDED(sResult));
-
-	return pipelineSet;
+	sPipelines[pipeLineName] = pipeLineSet;
 }

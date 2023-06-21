@@ -46,9 +46,6 @@ void FBXLoadDemoScene::Initialize()
 		mSpherefbx.back().SetModel(model);
 	}
 
-	//3dオブジェクト用のパイプライン生成
-	mObject3dPipelineSet = CreateObject3DPipeline();
-
 	mCamera->Initialize();
 
 	mSkydome.Initialize();
@@ -76,7 +73,7 @@ void FBXLoadDemoScene::Update()
 
 void FBXLoadDemoScene::Draw()
 {
-	BasicObjectPreDraw(mObject3dPipelineSet);
+	BasicObjectPreDraw(PipelineManager::GetPipeLine("Object3D"));
 
 	mSkydome.DrawMaterial();
 

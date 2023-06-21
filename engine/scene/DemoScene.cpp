@@ -8,9 +8,6 @@
 
 void DemoScene::Initialize()
 {
-	//3dオブジェクト用のパイプライン生成
-	mObject3dPipelineSet = CreateObject3DPipeline();
-
 	mCamera->Initialize();
 
 	mDebugCamera.Initialize();
@@ -73,7 +70,7 @@ void DemoScene::Update()
 
 void DemoScene::Draw()
 {
-	BasicObjectPreDraw(mObject3dPipelineSet);
+	BasicObjectPreDraw(PipelineManager::GetPipeLine("Object3D"));
 
 	mSkydome.DrawMaterial();
 

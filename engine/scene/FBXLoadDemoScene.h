@@ -15,7 +15,7 @@ public:
 	void End();
 
 private:
-	PipelineSet mObject3dPipelineSet;
+	//PipelineSet mObject3dPipelineSet;
 	Camera* mCamera = Camera::sCamera;
 
 	Obj3d mSphere;

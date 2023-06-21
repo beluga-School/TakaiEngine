@@ -48,7 +48,6 @@ private:
 
 	Input::Keyboard* input = Input::Keyboard::Get();
 
-	PipelineSet object3dPipelineSet;
 	PipelineSet geometryObjectPipelineSet;
 	
 	Camera* camera = Camera::sCamera;

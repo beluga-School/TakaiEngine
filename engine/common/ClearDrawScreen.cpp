@@ -75,7 +75,7 @@ void ClearDrawScreen()
 	//2.描画先の変更
 	//レンダーターゲットビューのハンドルを取得
 	D3D12_CPU_DESCRIPTOR_HANDLE rtvHandle = dx12->mRtvHeap->GetCPUDescriptorHandleForHeapStart();
-	rtvHandle.ptr += bbIndex * dx12->mDevice->GetDescriptorHandleIncrementSize(dx12->mRtvHeapDesc.Type);
+	rtvHandle.ptr += bbIndex * static_cast<UINT>(dx12->mDevice->GetDescriptorHandleIncrementSize(dx12->mRtvHeapDesc.Type));
 
 	D3D12_CPU_DESCRIPTOR_HANDLE dsvHandle = screen->dsvHeap->GetCPUDescriptorHandleForHeapStart();
 	dx12->mCmdList->OMSetRenderTargets(1, &rtvHandle, false, &dsvHandle);

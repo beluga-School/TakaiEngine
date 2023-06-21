@@ -8,8 +8,6 @@
 
 void Game::Initialize()
 {
-	//3dオブジェクト用のパイプライン生成
-	object3dPipelineSet = CreateObject3DPipeline();
 
 	//ジオメトリオブジェクト用パイプライン生成
 	geometryObjectPipelineSet = CreateGeometryPipeline();
@@ -500,7 +498,7 @@ void Game::Update()
 
 void Game::Draw()
 {
-	BasicObjectPreDraw(object3dPipelineSet);
+	BasicObjectPreDraw(PipelineManager::GetPipeLine("Object3D"));
 
 	//描画処理
 	stage.Draw();
