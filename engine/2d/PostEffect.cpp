@@ -104,7 +104,7 @@ void PostEffect::Draw()
 
 	//パイプラインを引っ張ってくる
 	//ポストエフェクトなにも掛けない
-	PipelineSet pSet = PipelineManager::GetPipeLine("None");
+	PipelineSet pSet = PipelineManager::GetPipeLine("GaussianBlur");
 	//パイプラインステートの設定
 	dx12->mCmdList->SetPipelineState(pSet.mPipelinestate.Get());
 	//ルートシグネチャの設定
@@ -232,10 +232,10 @@ void PostEffect::CreateTexture()
 
 	//ヒープ設定
 	D3D12_HEAP_PROPERTIES textureHeapProp{};
-	textureHeapProp.Type = D3D12_HEAP_TYPE_CUSTOM;
-	textureHeapProp.CPUPageProperty =
+	textureHeapProp.Type = D3D12_HEAP_TYPE_DEFAULT;
+	/*textureHeapProp.CPUPageProperty =
 		D3D12_CPU_PAGE_PROPERTY_WRITE_BACK;
-	textureHeapProp.MemoryPoolPreference = D3D12_MEMORY_POOL_L0;
+	textureHeapProp.MemoryPoolPreference = D3D12_MEMORY_POOL_L0;*/
 
 	D3D12_CLEAR_VALUE texClearValue{};
 	for (int32_t i = 0; i < 4; i++)
@@ -255,30 +255,6 @@ void PostEffect::CreateTexture()
 			&texClearValue,
 			IID_PPV_ARGS(&mTexBuff[i]));
 		assert(SUCCEEDED(sResult));
-	
-		{//テクスチャを赤でクリア
-
-			//縦横のピクセル分の画素数
-			const UINT pixelCount = Util::WIN_WIDTH * Util::WIN_HEIGHT;
-
-			const UINT rowPitch = sizeof(UINT) * Util::WIN_WIDTH;
-
-			const UINT depthPitch = rowPitch * Util::WIN_HEIGHT;
-
-			UINT* img = new UINT[pixelCount];
-			for (int32_t j = 0; j < pixelCount; j++)
-			{
-				img[j] = 0xff0000ff;
-			}
-
-			//テクスチャバッファにデータ転送
-			sResult = mTexBuff[i]->WriteToSubresource(
-				0, nullptr,
-				img, rowPitch, depthPitch
-			);
-			assert(SUCCEEDED(sResult));
-			delete[] img;
-		}
 	}
 }
 
