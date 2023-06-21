@@ -90,7 +90,7 @@ private:
 	void Object3DPipeLine();
 
 	//ガウシアンブラー用パイプライン
-	void PostEffectPipeLine();
+	void GaussianBlurPipeLine();
 
 	//シフトブラー用パイプライン
 	void ShiftBlurPipeLine();

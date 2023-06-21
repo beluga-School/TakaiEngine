@@ -917,7 +917,7 @@ void PipelineManager::Initialize()
 {
 	Object3DPipeLine();
 
-	PostEffectPipeLine();
+	GaussianBlurPipeLine();
 
 	ShiftBlurPipeLine();
 }
@@ -983,7 +983,7 @@ void PipelineManager::Object3DPipeLine()
 	sPipelines[pipeLineName] = pipeLineSet;
 }
 
-void PipelineManager::PostEffectPipeLine()
+void PipelineManager::GaussianBlurPipeLine()
 {
 	PipelineSet pSet;
 
@@ -1034,7 +1034,7 @@ void PipelineManager::PostEffectPipeLine()
 
 	pSet.Create();
 
-	std::string pipeLineName = "PostEffect";
+	std::string pipeLineName = "GaussianBlur";
 	sPipelines[pipeLineName] = pSet;
 }
 

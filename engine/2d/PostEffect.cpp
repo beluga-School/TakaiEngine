@@ -82,7 +82,7 @@ void PostEffect::Draw()
 	mConstBuffer.mBuffer->Unmap(0, nullptr);
 
 	//パイプラインを引っ張ってくる
-	PipelineSet pSet = PipelineManager::GetPipeLine("ShiftBlur");
+	PipelineSet pSet = PipelineManager::GetPipeLine("GaussianBlur");
 	//パイプラインステートの設定
 	dx12->mCmdList->SetPipelineState(pSet.mPipelinestate.Get());
 	//ルートシグネチャの設定
