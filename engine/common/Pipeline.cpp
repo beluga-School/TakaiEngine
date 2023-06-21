@@ -1016,6 +1016,10 @@ void PipelineManager::PostEffectPipeLine()
 	pSet.pipelineDesc.DSVFormat = DXGI_FORMAT_D32_FLOAT;
 	pSet.pipelineDesc.PrimitiveTopologyType = D3D12_PRIMITIVE_TOPOLOGY_TYPE_TRIANGLE;
 
+	//UVずらし系のポストエフェクトを作った際に、逆側の色を拾ってこないための設定
+	pSet.samplerDesc.AddressU = D3D12_TEXTURE_ADDRESS_MODE_BORDER;
+	pSet.samplerDesc.AddressV = D3D12_TEXTURE_ADDRESS_MODE_BORDER;
+
 	pSet.rootParams[0].ParameterType = D3D12_ROOT_PARAMETER_TYPE_CBV;	//種類
 	pSet.rootParams[0].Descriptor.ShaderRegister = 0;					//定数バッファ番号
 	pSet.rootParams[0].Descriptor.RegisterSpace = 0;						//デフォルト値

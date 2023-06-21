@@ -72,7 +72,7 @@ void DemoScene::Draw()
 {
 	BasicObjectPreDraw(PipelineManager::GetPipeLine("Object3D"));
 
-	mSkydome.DrawMaterial();
+	//mSkydome.DrawMaterial();
 
 	for (auto& obj : mObj3ds)
 	{
