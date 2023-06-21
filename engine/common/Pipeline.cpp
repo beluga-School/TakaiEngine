@@ -739,7 +739,7 @@ PipelineSet::PipelineSet()
 	pipelineDesc.SampleMask = D3D12_DEFAULT_SAMPLE_MASK;	//標準設定
 
 	//ラスタライザの設定
-	pipelineDesc.RasterizerState.CullMode = D3D12_CULL_MODE_BACK;	//カリングしない
+	pipelineDesc.RasterizerState.CullMode = D3D12_CULL_MODE_BACK;	//背面カリング
 	pipelineDesc.RasterizerState.FillMode = D3D12_FILL_MODE_SOLID;	//ポリゴン内塗りつぶし
 	pipelineDesc.RasterizerState.DepthClipEnable = true;			//深度クリッピングを有効に
 
@@ -917,13 +917,11 @@ void PipelineManager::Initialize()
 {
 	Object3DPipeLine();
 
-
+	PostEffectPipeLine();
 }
 
 void PipelineManager::Object3DPipeLine()
 {
-	std::string pipeLineName = "Object3D";
-
 	PipelineSet pipeLineSet;
 
 	//3dオブジェクト用のパイプライン生成
@@ -948,7 +946,8 @@ void PipelineManager::Object3DPipeLine()
 	};
 
 	//ルートパラメータの設定
-	pipeLineSet.rootParams.resize(5);
+	pipeLineSet.paramSize = 5;
+	pipeLineSet.rootParams.resize(pipeLineSet.paramSize);
 	//定数バッファ0番 b0
 	pipeLineSet.rootParams[0].ParameterType = D3D12_ROOT_PARAMETER_TYPE_CBV;	//種類
 	pipeLineSet.rootParams[0].Descriptor.ShaderRegister = 0;					//定数バッファ番号
@@ -978,5 +977,57 @@ void PipelineManager::Object3DPipeLine()
 	//パイプライン生成
 	pipeLineSet.Create();
 
+	std::string pipeLineName = "Object3D";
 	sPipelines[pipeLineName] = pipeLineSet;
+}
+
+void PipelineManager::PostEffectPipeLine()
+{
+	PipelineSet pSet;
+
+	//シェーダー設定
+	pSet.vs.shaderName = "Resources\\Shader\\PostEffectTestVS.hlsl";
+	pSet.ps.shaderName = "Resources\\Shader\\PostEffectTestPS.hlsl";
+
+	//インプットレイアウト
+	pSet.inputLayout =
+	{
+			{ //xyz座標
+				"POSITION",0,DXGI_FORMAT_R32G32B32_FLOAT,0,
+				D3D12_APPEND_ALIGNED_ELEMENT,
+				D3D12_INPUT_CLASSIFICATION_PER_VERTEX_DATA,0
+			},
+			{ //uv座標
+				"TEXCOORD",0,DXGI_FORMAT_R32G32_FLOAT,0,
+				D3D12_APPEND_ALIGNED_ELEMENT,
+				D3D12_INPUT_CLASSIFICATION_PER_VERTEX_DATA,0
+			},
+	};
+
+	pSet.pipelineDesc.RasterizerState.CullMode = D3D12_CULL_MODE_NONE;
+	pSet.pipelineDesc.DepthStencilState.DepthFunc = D3D12_COMPARISON_FUNC_ALWAYS;
+
+	pSet.blenddesc.BlendOpAlpha = D3D12_BLEND_OP_ADD;	//加算
+	pSet.blenddesc.SrcBlendAlpha = D3D12_BLEND_ONE;		//ソースの値を100%使う
+	pSet.blenddesc.DestBlendAlpha = D3D12_BLEND_ZERO;	//デストの値を  0%使う
+
+	pSet.blendMode = ALPHA;
+
+	pSet.pipelineDesc.DSVFormat = DXGI_FORMAT_D32_FLOAT;
+	pSet.pipelineDesc.PrimitiveTopologyType = D3D12_PRIMITIVE_TOPOLOGY_TYPE_TRIANGLE;
+
+	pSet.rootParams[0].ParameterType = D3D12_ROOT_PARAMETER_TYPE_CBV;	//種類
+	pSet.rootParams[0].Descriptor.ShaderRegister = 0;					//定数バッファ番号
+	pSet.rootParams[0].Descriptor.RegisterSpace = 0;						//デフォルト値
+	pSet.rootParams[0].ShaderVisibility = D3D12_SHADER_VISIBILITY_ALL;	//全てのシェーダから見える
+	//テクスチャレジスタ0番 t0
+	pSet.rootParams[1].ParameterType = D3D12_ROOT_PARAMETER_TYPE_DESCRIPTOR_TABLE;	//種類
+	pSet.rootParams[1].DescriptorTable.pDescriptorRanges = &pSet.descriptorRange;					//デスクリプタレンジ
+	pSet.rootParams[1].DescriptorTable.NumDescriptorRanges = 1;						//デスクリプタレンジ数
+	pSet.rootParams[1].ShaderVisibility = D3D12_SHADER_VISIBILITY_ALL;	//全てのシェーダから見える
+
+	pSet.Create();
+
+	std::string pipeLineName = "PostEffect";
+	sPipelines[pipeLineName] = pSet;
 }

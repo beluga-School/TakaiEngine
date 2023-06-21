@@ -44,7 +44,7 @@ using namespace DirectX;
 #include "ImguiManager.h"
 #include <string>
 
-#include "PostEffectt.h"
+#include "PostEffect.h"
 
 //①文字列変換とサウンドデータを除き、使用していない
 //②自身のコード内ではint、shortはすべてint32_tなどに置き換えた charは一部でまだ使用している

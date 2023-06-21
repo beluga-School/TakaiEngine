@@ -1,4 +1,4 @@
-#include "PostEffectt.h"
+#include "PostEffect.h"
 #include "util.h"
 #include "Result.h"
 #include <memory>
@@ -6,17 +6,9 @@
 
 const float PostEffect::sClearColor[4] = { 0.25f,0.5f,0.1f,1.0f };//緑っぽい色でクリア
 
-PostEffect::PostEffect() 
-	: Sprite(
-	)
+PostEffect::PostEffect() : Sprite()
 {
-	mTEXTURE = TextureManager::GetTexture("white");
-	mPosition = { 0,0,0};
-	mSize = { 500.f,500.f };
-	mColor = { 1,1,1,1 };
-	mAnchorpoint = { 0.f,0.f };
 
-	//Init();
 }
 
 void PostEffect::Initialize()
@@ -99,13 +91,12 @@ void PostEffect::Draw()
 
 	mConstBuffer.mBuffer->Unmap(0, nullptr);
 
-
-	//スプライトのパイプラインステートを使いまわしてる
-	// CULLMODE=NONE、DepthFunc=ALWAYS で描画している
+	//パイプラインを引っ張ってくる
+	PipelineSet pSet = PipelineManager::GetPipeLine("PostEffect");
 	//パイプラインステートの設定
-	dx12->mCmdList->SetPipelineState(SpriteCommon::sSpriteCommon.mPipelineSet.mPipelinestate.Get());
+	dx12->mCmdList->SetPipelineState(pSet.mPipelinestate.Get());
 	//ルートシグネチャの設定
-	dx12->mCmdList->SetGraphicsRootSignature(SpriteCommon::sSpriteCommon.mPipelineSet.mRootsignature.Get());
+	dx12->mCmdList->SetGraphicsRootSignature(pSet.mRootsignature.Get());
 	
 	
 	//プリミティブ形状を設定

@@ -217,6 +217,30 @@
       <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
       <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
     </Filter>
+    <Filter Include="シェーダー\Basic">
+      <UniqueIdentifier>{e3b12698-ea04-4a1e-96fe-5c9d2a4d011b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="シェーダー\Geometry">
+      <UniqueIdentifier>{02357090-f8ac-40b6-9efd-06a537879ff4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="シェーダー\Lambert">
+      <UniqueIdentifier>{4af89d3a-d73a-4c70-a595-63d4af0ebcb2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="シェーダー\OBJ">
+      <UniqueIdentifier>{4fed94b5-7d84-411b-a45d-e09950363344}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="シェーダー\Particle">
+      <UniqueIdentifier>{e75a3643-cb42-476e-9edf-0269960c3edc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="シェーダー\Phong">
+      <UniqueIdentifier>{e0ac4646-dda3-4a65-bc15-6d04ca1c0dcf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="シェーダー\PostEffectTest">
+      <UniqueIdentifier>{b2f6f71d-bfa5-493b-bd70-cfcf6cb45cf4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="シェーダー\Sprite">
+      <UniqueIdentifier>{16b132b3-547b-4ea2-86c5-cef826585988}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="engine\input\Input.cpp">
@@ -399,7 +423,7 @@
     <ClCompile Include="DebugCamera.cpp">
       <Filter>Engine\3D\Camera</Filter>
     </ClCompile>
-    <ClCompile Include="engine\2d\PostEffectt.cpp">
+    <ClCompile Include="engine\2d\PostEffect.cpp">
       <Filter>Engine\2D\PostEffect</Filter>
     </ClCompile>
   </ItemGroup>
@@ -593,82 +617,91 @@
     <ClInclude Include="DebugCamera.h">
       <Filter>Engine\3D\Camera</Filter>
     </ClInclude>
-    <ClInclude Include="engine\2d\PostEffectt.h">
+    <ClInclude Include="engine\2d\PostEffect.h">
       <Filter>Engine\2D\PostEffect</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
+    <None Include="External\imgui\imgui.ini" />
     <None Include="Resources\Shader\Basic.hlsli">
-      <Filter>シェーダー</Filter>
-    </None>
-    <None Include="Resources\Shader\Sprite.hlsli">
-      <Filter>シェーダー</Filter>
-    </None>
-    <None Include="Resources\Shader\OBJShaderHeader.hlsli">
-      <Filter>シェーダー</Filter>
+      <Filter>シェーダー\Basic</Filter>
     </None>
     <None Include="Resources\Shader\GeometryHeader.hlsli">
-      <Filter>シェーダー</Filter>
-    </None>
-    <None Include="Resources\Shader\Particle.hlsli">
-      <Filter>シェーダー</Filter>
-    </None>
-    <None Include="Resources\Shader\Phong.hlsli">
-      <Filter>シェーダー</Filter>
+      <Filter>シェーダー\Geometry</Filter>
     </None>
     <None Include="Resources\Shader\Lambert.hlsli">
-      <Filter>シェーダー</Filter>
+      <Filter>シェーダー\Lambert</Filter>
     </None>
-    <None Include="External\imgui\imgui.ini" />
+    <None Include="Resources\Shader\OBJShaderHeader.hlsli">
+      <Filter>シェーダー\OBJ</Filter>
+    </None>
+    <None Include="Resources\Shader\Particle.hlsli">
+      <Filter>シェーダー\Particle</Filter>
+    </None>
+    <None Include="Resources\Shader\Phong.hlsli">
+      <Filter>シェーダー\Phong</Filter>
+    </None>
+    <None Include="Resources\Shader\PostEffectTest.hlsli">
+      <Filter>シェーダー\PostEffectTest</Filter>
+    </None>
+    <None Include="Resources\Shader\Sprite.hlsli">
+      <Filter>シェーダー\Sprite</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Resources\Shader\BasicPS.hlsl">
-      <Filter>シェーダー</Filter>
+      <Filter>シェーダー\Basic</Filter>
     </FxCompile>
     <FxCompile Include="Resources\Shader\BasicVS.hlsl">
-      <Filter>シェーダー</Filter>
-    </FxCompile>
-    <FxCompile Include="Resources\Shader\SpritePS.hlsl">
-      <Filter>シェーダー</Filter>
-    </FxCompile>
-    <FxCompile Include="Resources\Shader\SpriteVS.hlsl">
-      <Filter>シェーダー</Filter>
-    </FxCompile>
-    <FxCompile Include="Resources\Shader\OBJPS.hlsl">
-      <Filter>シェーダー</Filter>
-    </FxCompile>
-    <FxCompile Include="Resources\Shader\OBJVS.hlsl">
-      <Filter>シェーダー</Filter>
+      <Filter>シェーダー\Basic</Filter>
     </FxCompile>
     <FxCompile Include="Resources\Shader\GeometryGS.hlsl">
-      <Filter>シェーダー</Filter>
+      <Filter>シェーダー\Geometry</Filter>
     </FxCompile>
     <FxCompile Include="Resources\Shader\GeometryPS.hlsl">
-      <Filter>シェーダー</Filter>
+      <Filter>シェーダー\Geometry</Filter>
     </FxCompile>
     <FxCompile Include="Resources\Shader\GeometryVS.hlsl">
-      <Filter>シェーダー</Filter>
-    </FxCompile>
-    <FxCompile Include="Resources\Shader\ParticleGS.hlsl">
-      <Filter>シェーダー</Filter>
-    </FxCompile>
-    <FxCompile Include="Resources\Shader\ParticlePS.hlsl">
-      <Filter>シェーダー</Filter>
-    </FxCompile>
-    <FxCompile Include="Resources\Shader\ParticleVS.hlsl">
-      <Filter>シェーダー</Filter>
-    </FxCompile>
-    <FxCompile Include="Resources\Shader\PhongVS.hlsl">
-      <Filter>シェーダー</Filter>
-    </FxCompile>
-    <FxCompile Include="Resources\Shader\PhongPS.hlsl">
-      <Filter>シェーダー</Filter>
+      <Filter>シェーダー\Geometry</Filter>
     </FxCompile>
     <FxCompile Include="Resources\Shader\LambertPS.hlsl">
-      <Filter>シェーダー</Filter>
+      <Filter>シェーダー\Lambert</Filter>
     </FxCompile>
     <FxCompile Include="Resources\Shader\LambertVS.hlsl">
-      <Filter>シェーダー</Filter>
+      <Filter>シェーダー\Lambert</Filter>
+    </FxCompile>
+    <FxCompile Include="Resources\Shader\OBJPS.hlsl">
+      <Filter>シェーダー\OBJ</Filter>
+    </FxCompile>
+    <FxCompile Include="Resources\Shader\OBJVS.hlsl">
+      <Filter>シェーダー\OBJ</Filter>
+    </FxCompile>
+    <FxCompile Include="Resources\Shader\ParticleGS.hlsl">
+      <Filter>シェーダー\Particle</Filter>
+    </FxCompile>
+    <FxCompile Include="Resources\Shader\ParticlePS.hlsl">
+      <Filter>シェーダー\Particle</Filter>
+    </FxCompile>
+    <FxCompile Include="Resources\Shader\ParticleVS.hlsl">
+      <Filter>シェーダー\Particle</Filter>
+    </FxCompile>
+    <FxCompile Include="Resources\Shader\PhongPS.hlsl">
+      <Filter>シェーダー\Phong</Filter>
+    </FxCompile>
+    <FxCompile Include="Resources\Shader\PhongVS.hlsl">
+      <Filter>シェーダー\Phong</Filter>
+    </FxCompile>
+    <FxCompile Include="Resources\Shader\PostEffectTestPS.hlsl">
+      <Filter>シェーダー\PostEffectTest</Filter>
+    </FxCompile>
+    <FxCompile Include="Resources\Shader\PostEffectTestVS.hlsl">
+      <Filter>シェーダー\PostEffectTest</Filter>
+    </FxCompile>
+    <FxCompile Include="Resources\Shader\SpriteVS.hlsl">
+      <Filter>シェーダー\Sprite</Filter>
+    </FxCompile>
+    <FxCompile Include="Resources\Shader\SpritePS.hlsl">
+      <Filter>シェーダー\Sprite</Filter>
     </FxCompile>
   </ItemGroup>
 </Project>

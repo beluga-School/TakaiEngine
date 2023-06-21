@@ -32,8 +32,7 @@ struct PipelineSet
 	//ルートシグネチャ
 	ComPtr<ID3D12RootSignature> mRootsignature{};
 
-	//設定用変数群(この変数を事前に書き換えてからCreate()を呼び出す)
-	
+	//--設定用変数群(この変数を事前に書き換えてからCreate()を呼び出す)
 	//シェーダー名
 	ShaderName vs = { "",ShaderName::ShaderType::VS };
 	ShaderName ps = { "",ShaderName::ShaderType::PS };
@@ -89,6 +88,8 @@ private:
 
 	//3Dオブジェクト用パイプライン
 	void Object3DPipeLine();
+
+	void PostEffectPipeLine();
 
 	PipelineManager(){};
 	~PipelineManager(){};
