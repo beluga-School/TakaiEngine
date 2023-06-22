@@ -246,19 +246,6 @@ void Model::CreateModel(const std::string t, bool smoothing)
 
 void ModelManager::PreLoad()
 {
-	/*cubeM.CreateModel("Cube",true);
-	skyDomeM.CreateModel("skydome");
-	boardM.CreateModel("board");
-	darumaM.CreateModel("boss");
-	firewispM.CreateModel("firewisp");
-	firewispSmoothingM.CreateModel("firewisp",true);
-	playerM.CreateModel("player");
-	subDevM.CreateModel("subDev");
-	sphereM.CreateModel("Sphere",true);
-	triangleM.CreateModel("triangle");
-	beetleM.CreateModel("beetle");*/
-	//beetleAss.AssimpLoader("beetle");
-
 	LoadModel("Cube","Cube");
 	LoadModel("skydome","skydome");
 	LoadModel("board","board");
@@ -269,6 +256,9 @@ void ModelManager::PreLoad()
 	LoadModel("Sphere","Sphere");
 	LoadModel("triangle","triangle");
 	LoadModel("beetle","beetle");
+
+	LoadModel("board_green", "board_green");
+	LoadModel("TestField", "TestField");
 }
 
 void ModelManager::LoadModel(const std::string filepath, const std::string handle, bool smooth)

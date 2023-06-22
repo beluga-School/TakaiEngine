@@ -124,7 +124,7 @@ void LightGroup::SetPointLightAtten(const int32_t& index, const Vector3& atten)
 
 void LightGroup::DefaultLightSet()
 {
-	mDirLights[0].mActive = true;
+	/*mDirLights[0].mActive = true;
 	mDirLights[0].mColor = { 1.0f,0.0f,0.0f };
 	mDirLights[0].mDirection = { 0.0f,-1.0f,0.0f };
 	
@@ -134,5 +134,17 @@ void LightGroup::DefaultLightSet()
 	
 	mDirLights[2].mActive = true;
 	mDirLights[2].mColor = { 0.0f,0.0f,1.0f };
+	mDirLights[2].mDirection = { -0.5f,0.1f,-0.2f };*/
+
+	mDirLights[0].mActive = true;
+	mDirLights[0].mColor = { 1.0f,1.0f,1.0f };
+	mDirLights[0].mDirection = { 0.0f,-1.0f,0.0f };
+
+	mDirLights[1].mActive = false;
+	mDirLights[1].mColor = { 1.0f,1.0f,1.0f };
+	mDirLights[1].mDirection = { 0.5f,0.1f,0.2f };
+
+	mDirLights[2].mActive = false;
+	mDirLights[2].mColor = { 1.0f,1.0f,1.0f };
 	mDirLights[2].mDirection = { -0.5f,0.1f,-0.2f };
 }

@@ -35,7 +35,11 @@ void DemoScene::Initialize()
 
 	LevelLoader::Get()->Load("Scene/worldTest_Children", "children");
 	LevelLoader::Get()->Load("Scene/playerTest", "pTest");
-	SetObject(*LevelLoader::Get()->GetData("children"));
+	LevelLoader::Get()->Load("Scene/teisyutu", "teisyutu");
+
+	currentLevel = "teisyutu";
+
+	SetObject(*LevelLoader::Get()->GetData(currentLevel));
 }
 
 void DemoScene::Update()
@@ -49,16 +53,28 @@ void DemoScene::Update()
 	if (Input::Keyboard::TriggerKey(DIK_R))
 	{
 		mObj3ds.clear();
-
-		SetObject(*LevelLoader::Get()->GetData("pTest"));
+		std::string hoge = "Scene/";
+		hoge += currentLevel;
+		LevelLoader::Get()->Load(hoge, currentLevel);
+		SetObject(*LevelLoader::Get()->GetData(currentLevel));
 	}
 
 	mCamera->UpdatematView();
 
 	mSkydome.Update(*mCamera);
+
+	static bool change = true;
+	if (Input::Keyboard::TriggerKey(DIK_T)) change = !change;
+
 	for (auto& obj : mObj3ds)
 	{
 		obj.Update(*mCamera);
+	
+		if (obj.MODEL->mSaveModelname != "BlankCube")
+		{
+			obj.mIsVisiable = change;
+		}
+
 	}
 
 	mSlime.Update();
@@ -129,21 +145,25 @@ void DemoScene::SetObject(LevelData& data)
 			//‰ñ“]Šp
 			mObj3ds.back().rotation = objectData->rotation;
 			//‘å‚«‚³
-			mObj3ds.back().scale = objectData->scaling;
-		}
+			mObj3ds.back().scale = objectData->scaling * 2;
 		
-		//“–‚½‚è”»’è‚ðì¬
-		if (objectData->collider.have)
-		{
-			mObj3ds.emplace_back();
-			mObj3ds.back().Initialize();
+			//“–‚½‚è”»’è‚ðì¬
+			if (objectData->collider.have)
+			{
+				mObj3ds.emplace_back();
+				mObj3ds.back().Initialize();
 
-			mObj3ds.back().SetModel(ModelManager::GetModel("BlankCube"));
-			mObj3ds.back().SetTexture(TextureManager::Get()->GetTexture("white"));
+				mObj3ds.back().SetModel(ModelManager::GetModel("BlankCube"));
+				mObj3ds.back().SetTexture(TextureManager::Get()->GetTexture("white"));
 
-			mObj3ds.back().position = objectData->translation;
-			mObj3ds.back().scale = objectData->collider.size;
-			mObj3ds.back().rotation = { 0,0,0 };
+				mObj3ds.back().position = objectData->translation + objectData->collider.center;
+				mObj3ds.back().scale = {
+					objectData->scaling.x * objectData->collider.size.x,
+					objectData->scaling.y * objectData->collider.size.y,
+					objectData->scaling.z * objectData->collider.size.z
+				};
+				mObj3ds.back().rotation = objectData->rotation;
+			}
 		}
 	}
 }

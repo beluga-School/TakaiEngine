@@ -58,6 +58,8 @@ public:
 
 	const Model* MODEL = nullptr;
 
+	bool mIsVisiable = true;
+
 public:
 
 	void Initialize();

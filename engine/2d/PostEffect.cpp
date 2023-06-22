@@ -104,7 +104,7 @@ void PostEffect::Draw()
 
 	//パイプラインを引っ張ってくる
 	//ポストエフェクトなにも掛けない
-	PipelineSet pSet = PipelineManager::GetPipeLine("GaussianBlur");
+	PipelineSet pSet = PipelineManager::GetPipeLine("None");
 	//パイプラインステートの設定
 	dx12->mCmdList->SetPipelineState(pSet.mPipelinestate.Get());
 	//ルートシグネチャの設定

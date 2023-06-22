@@ -3,7 +3,7 @@
 
 void Obj3d::SetModel(const Model* model)
 {
-	this->MODEL = model;
+	MODEL = model;
 }
 
 void Obj3d::SetTexture(const Texture* texture)
@@ -96,6 +96,13 @@ Vector3 Obj3d::GetWorldTrans()
 }
 
 void Obj3d::Draw() {
+
+	//Œ©‚¦‚È‚¢ƒtƒ‰ƒO‚ª—§‚Á‚Ä‚é‚È‚ç•`‰æ‚ğs‚í‚È‚¢
+	if (mIsVisiable == false)
+	{
+		return;
+	}
+
 	DirectX12* dx12 = DirectX12::Get();
 	TextureManager* texM = TextureManager::Get();
 	

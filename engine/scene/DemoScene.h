@@ -33,5 +33,7 @@ private:
 	DebugCamera mDebugCamera;
 
 	Obj3d testplayer;
+
+	std::string currentLevel = "";
 };
 
