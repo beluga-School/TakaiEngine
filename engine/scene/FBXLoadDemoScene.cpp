@@ -3,48 +3,12 @@
 #include <ClearDrawScreen.h>
 #include <AssimpLoader.h>
 #include "DirectXInit.h"
+#include <StringUtil.h>
 
 void FBXLoadDemoScene::Initialize()
 {
-	//fbx読み込みの形跡
-	ImportSettings importSetting =
-	{
-		mModelFile,
-		mMeshes,
-		false,
-		false,
-	};
-	AssimpLoader loader;
-
-	if (!loader.Load(importSetting))
-	{
-		assert(0);
-	}
-
-	//spherefbx.reserve(meshes.size());
-	for (size_t i = 0; i < mMeshes.size(); i++)
-	{
-		auto vertices = mMeshes[i].vertices;
-		auto indices = mMeshes[i].indices;
-
-		/*vertexDatas.emplace_back();
-		vertexDatas.back().CreateVertex(vertices, indices);*/
-
-		mSpherefbx.emplace_back();
-		mSpherefbx.back().Initialize();
-
-		/*spherefbx.back().model->CreateVertex(vertices, indices);
-		spherefbx.back().model->mesh.vertices = vertices;
-		spherefbx.back().model->mesh.indices = indices;*/
-
-		Model *model;
-		model = ModelManager::GetModel("Cube");
-		model->CreateVertex(vertices, indices);
-		model->mMesh.vertices = vertices;
-		model->mMesh.indices = indices;
-
-		mSpherefbx.back().SetModel(model);
-	}
+	//mSphereFBX.Load(L"Resources/Cube_two/Cube_two.glb");
+	mSphereFBX.SetModel(ModelManager::GetModel("Cube_two"));
 
 	mCamera->Initialize();
 
@@ -61,10 +25,7 @@ void FBXLoadDemoScene::Update()
 {
 	mCamera->UpdatematView();
 
-	for (size_t i = 0; i < mMeshes.size(); i++)
-	{
-		mSpherefbx[i].Update(*mCamera);
-	}
+	mSphereFBX.Update();
 
 	mSkydome.Update(*mCamera);
 
@@ -77,10 +38,7 @@ void FBXLoadDemoScene::Draw()
 
 	mSkydome.DrawMaterial();
 
-	for (size_t i = 0; i < mMeshes.size(); i++)
-	{
-		mSpherefbx[i].Draw();
-	}
+	mSphereFBX.Draw();
 
 	//スプライトの前描画(共通コマンド)
 	SpriteCommonBeginDraw();
@@ -89,4 +47,43 @@ void FBXLoadDemoScene::Draw()
 
 void FBXLoadDemoScene::End()
 {
+}
+
+void Obj3dFBX::Update()
+{
+	for (int32_t i = 0; i < mMeshesSize; i++)
+	{
+		mSpherefbx[i].Update(*Camera::sCamera);
+	}
+}
+
+void Obj3dFBX::Draw()
+{
+	for (int32_t i = 0; i < mMeshesSize; i++)
+	{
+		mSpherefbx[i].Draw();
+	}
+}
+
+void Obj3dFBX::DrawMaterial()
+{
+	for (int32_t i = 0; i < mMeshesSize; i++)
+	{
+		mSpherefbx[i].DrawMaterial();
+	}
+}
+
+void Obj3dFBX::SetModel(const Model* model)
+{
+	mMeshesSize = (int32_t)model->mMeshes.size();
+
+	for (int32_t i = 0; i < mMeshesSize; i++)
+	{
+		mSpherefbx.emplace_back();
+		mSpherefbx.back().Initialize();
+		mSpherefbx.back().SetTexture(TextureManager::GetTexture("white"));
+
+		mSpherefbx.back().SetModel(model);
+
+	}
 }

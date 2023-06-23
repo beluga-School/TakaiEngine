@@ -5,6 +5,7 @@
 #include "GameScene.h"
 #include "AssimpLoader.h"
 #include <TimeManager.h>
+#include <MathF.h>
 
 void DemoScene::Initialize()
 {
@@ -36,8 +37,9 @@ void DemoScene::Initialize()
 	LevelLoader::Get()->Load("Scene/worldTest_Children", "children");
 	LevelLoader::Get()->Load("Scene/playerTest", "pTest");
 	LevelLoader::Get()->Load("Scene/teisyutu", "teisyutu");
+	LevelLoader::Get()->Load("Scene/woods", "woods");
 
-	currentLevel = "teisyutu";
+	currentLevel = "woods";
 
 	SetObject(*LevelLoader::Get()->GetData(currentLevel));
 }
@@ -92,7 +94,14 @@ void DemoScene::Draw()
 
 	for (auto& obj : mObj3ds)
 	{
-		obj.Draw();
+		if (obj.MODEL->mSaveModelname == "BlankCube")
+		{
+			obj.Draw();
+		}
+		else
+		{
+			obj.DrawMaterial();
+		}
 	}
 
 	testplayer.DrawMaterial();
@@ -132,6 +141,11 @@ void DemoScene::SetObject(LevelData& data)
 			//ファイルネームが設定されてるならそれで
 			if (objectData->fileName != "")
 			{
+				//読み込みしてないなら読み込みも行う
+				if (ModelManager::GetModel(objectData->fileName) == nullptr)
+				{
+					ModelManager::LoadModel(objectData->fileName, objectData->fileName);
+				}
 				mObj3ds.back().SetModel(ModelManager::GetModel(objectData->fileName));
 			}
 			//ないなら四角をデフォで設定
@@ -143,7 +157,11 @@ void DemoScene::SetObject(LevelData& data)
 			//座標
 			mObj3ds.back().position = objectData->translation;
 			//回転角
-			mObj3ds.back().rotation = objectData->rotation;
+			mObj3ds.back().rotation = {
+					MathF::AngleConvRad(objectData->rotation.x),
+					MathF::AngleConvRad(objectData->rotation.y),
+					MathF::AngleConvRad(objectData->rotation.z)
+			};
 			//大きさ
 			mObj3ds.back().scale = objectData->scaling * 2;
 		
@@ -162,7 +180,11 @@ void DemoScene::SetObject(LevelData& data)
 					objectData->scaling.y * objectData->collider.size.y,
 					objectData->scaling.z * objectData->collider.size.z
 				};
-				mObj3ds.back().rotation = objectData->rotation;
+				mObj3ds.back().rotation = {
+					MathF::AngleConvRad(objectData->rotation.x),
+					MathF::AngleConvRad(objectData->rotation.y),
+					MathF::AngleConvRad(objectData->rotation.z)
+				};
 			}
 		}
 	}

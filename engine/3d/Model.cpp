@@ -7,6 +7,8 @@ using namespace std;
 #include <assimp/scene.h>
 #include <assimp/postprocess.h> 
 
+#include <AssimpLoader.h>
+
 std::map<std::string, Model> ModelManager::sModels;
 
 void Model::CreateDefaultModel()
@@ -76,16 +78,16 @@ void Model::LoadMaterial(const std::string& directoryPath, const std::string& fi
 	file.close();
 }
 
-void Model::CreateModel(const std::string t, bool smoothing)
+void Model::CreateModel(const std::string modelname, bool smoothing)
 {
 	//objファイルを開く
 	std::ifstream file;
-	const string modelname = t;
-	const string filename = modelname + ".obj";
-	const string directoryPath = "Resources/" + modelname + "/";
+	const string modelname_ = modelname;
+	const string filename = modelname_ + ".obj";
+	const string directoryPath = "Resources/" + modelname_ + "/";
 	file.open(directoryPath + filename);
 
-	mSaveModelname = modelname;
+	mSaveModelname = modelname_;
 
 	//ファイルオープン失敗をチェック
 	if (file.fail())
@@ -242,6 +244,38 @@ void Model::CreateModel(const std::string t, bool smoothing)
 	}
 
 	CreateVertex(mMesh.vertices, mMesh.indices);
+
+	mCreated = true;
+}
+
+void Model::CreateModelAssimp(const std::wstring& filename)
+{
+	//fbx読み込みの形跡
+	ImportSettings importSetting =
+	{
+		filename.c_str(),
+		mMeshes,
+		false,
+		false,
+	};
+	AssimpLoader loader;
+
+	if (!loader.Load(importSetting))
+	{
+		assert(0);
+	}
+
+	for (size_t i = 0; i < mMeshes.size(); i++)
+	{
+		auto vertices = mMeshes[i].vertices;
+		auto indices = mMeshes[i].indices;
+
+		CreateVertex(vertices, indices);
+		mMesh.vertices = vertices;
+		mMesh.indices = indices;
+	}
+
+	mCreated = true;
 }
 
 void ModelManager::PreLoad()
@@ -259,6 +293,8 @@ void ModelManager::PreLoad()
 
 	LoadModel("board_green", "board_green");
 	LoadModel("TestField", "TestField");
+
+	LoadModelAssimp(L"Resources/Cube_two/Cube_two.glb", "Cube_two");
 }
 
 void ModelManager::LoadModel(const std::string filepath, const std::string handle, bool smooth)
@@ -266,7 +302,16 @@ void ModelManager::LoadModel(const std::string filepath, const std::string handl
 	sModels[handle].CreateModel(filepath, smooth);
 }
 
+void ModelManager::LoadModelAssimp(const std::wstring filepath, const std::string handle)
+{
+	sModels[handle].CreateModelAssimp(filepath);
+}
+
 Model* ModelManager::GetModel(const std::string handle)
 {
+	if (sModels[handle].mCreated == false)
+	{
+		return nullptr;
+	}
 	return &sModels[handle];
 }
