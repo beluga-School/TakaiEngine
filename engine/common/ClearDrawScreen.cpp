@@ -107,8 +107,6 @@ void PreDraw()
 	scissorRect.bottom = scissorRect.top + Util::WIN_HEIGHT;	//切り抜き座標下
 	//シザー矩形設定コマンドを、コマンドリストに積む
 	dx12->mCmdList->RSSetScissorRects(1, &scissorRect);
-
-
 }
 
 void BasicObjectPreDraw(const PipelineSet& objectPipelineSet)

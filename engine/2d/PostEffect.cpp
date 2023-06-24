@@ -80,21 +80,20 @@ void PostEffect::Draw()
 	DirectX12* dx12 = DirectX12::Get();
 	TextureManager* texM = TextureManager::Get();
 
-	static int tex = 0;
-	if (Input::Keyboard::TriggerKey(DIK_0))
-	{
-		tex = (tex + 1) % 2;
+	//static int tex = 0;
+	//if (Input::Keyboard::TriggerKey(DIK_0))
+	//{
+	//	tex = (tex + 1) % 2;
 
-		D3D12_SHADER_RESOURCE_VIEW_DESC srvDesc{};
-		srvDesc.Format = DXGI_FORMAT_R8G8B8A8_UNORM_SRGB;
-		srvDesc.Shader4ComponentMapping = D3D12_DEFAULT_SHADER_4_COMPONENT_MAPPING;
-		srvDesc.ViewDimension = D3D12_SRV_DIMENSION_TEXTURE2D;//2Dテクスチャ
-		srvDesc.Texture2D.MipLevels = 1;
+	//	D3D12_SHADER_RESOURCE_VIEW_DESC srvDesc{};
+	//	srvDesc.Format = DXGI_FORMAT_R8G8B8A8_UNORM_SRGB;
+	//	srvDesc.Shader4ComponentMapping = D3D12_DEFAULT_SHADER_4_COMPONENT_MAPPING;
+	//	srvDesc.ViewDimension = D3D12_SRV_DIMENSION_TEXTURE2D;//2Dテクスチャ
+	//	srvDesc.Texture2D.MipLevels = 1;
 
-		//ハンドルの指す位置にシェーダーリソースビュー作成
-		DirectX12::Get()->mDevice->CreateShaderResourceView(mTexBuff[tex].Get(), &srvDesc, mDescHeapSRV->GetCPUDescriptorHandleForHeapStart());
-
-	}
+	//	//ハンドルの指す位置にシェーダーリソースビュー作成
+	//	DirectX12::Get()->mDevice->CreateShaderResourceView(mTexBuff[tex].Get(), &srvDesc, mDescHeapSRV->GetCPUDescriptorHandleForHeapStart());
+	//}
 
 	//定数バッファの転送
 	sResult = mConstBuffer.mBuffer->Map(0, nullptr, (void**)&mConstBuffer.mConstBufferData);
@@ -119,7 +118,11 @@ void PostEffect::Draw()
 
 	dx12->mCmdList->IASetVertexBuffers(0, 1, &mVbView);
 
-	dx12->mCmdList->SetGraphicsRootDescriptorTable(1, mDescHeapSRV->GetGPUDescriptorHandleForHeapStart());
+	D3D12_GPU_DESCRIPTOR_HANDLE hoge = mDescHeapSRV->GetGPUDescriptorHandleForHeapStart();
+	dx12->mCmdList->SetGraphicsRootDescriptorTable(1, hoge);
+
+	hoge.ptr += dx12->mDevice->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV);
+	dx12->mCmdList->SetGraphicsRootDescriptorTable(2, hoge);
 
 	dx12->mCmdList->SetGraphicsRootConstantBufferView(0, mConstBuffer.mBuffer->GetGPUVirtualAddress());
 
@@ -269,10 +272,11 @@ void PostEffect::CreateSRV()
 	//デスクリプタヒープの設定
 	srvDescHeaoDesc.Type = D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV;
 	srvDescHeaoDesc.Flags = D3D12_DESCRIPTOR_HEAP_FLAG_SHADER_VISIBLE;//シェーダーから見えるように
-	srvDescHeaoDesc.NumDescriptors = 1; //レンダーテクスチャ専用のヒープなため、サイズは1でいい
+	srvDescHeaoDesc.NumDescriptors = 2; //レンダーテクスチャ専用のヒープなため、サイズは1でいい
 
 	//設定を元にSRV用デスクリプタヒープを生成
-	sResult = DirectX12::Get()->mDevice->CreateDescriptorHeap(&srvDescHeaoDesc, IID_PPV_ARGS(&mDescHeapSRV));
+	sResult = DirectX12::Get()->mDevice->CreateDescriptorHeap(&srvDescHeaoDesc,
+		IID_PPV_ARGS(&mDescHeapSRV));
 	assert(SUCCEEDED(sResult));
 
 	//シェーダリソースビュー設定
@@ -282,9 +286,18 @@ void PostEffect::CreateSRV()
 	mSrvDesc.ViewDimension = D3D12_SRV_DIMENSION_TEXTURE2D;//2Dテクスチャ
 	mSrvDesc.Texture2D.MipLevels = 1;
 
-	//ハンドルの指す位置にシェーダーリソースビュー作成
-	DirectX12::Get()->mDevice->CreateShaderResourceView(mTexBuff[0].Get(), &mSrvDesc, mDescHeapSRV->GetCPUDescriptorHandleForHeapStart());
+	D3D12_CPU_DESCRIPTOR_HANDLE hoge =
+		mDescHeapSRV->GetCPUDescriptorHandleForHeapStart();
+	for (int32_t i = 0; i < 2; i++)
+	{
+		//ハンドルの指す位置にシェーダーリソースビュー作成
+		dx12->mDevice->CreateShaderResourceView(mTexBuff[i].Get(),
+			&mSrvDesc,
+			hoge);
 
+		hoge.ptr += dx12->mDevice->GetDescriptorHandleIncrementSize(
+			D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV);
+	}
 }
 
 void PostEffect::CreateRTV()

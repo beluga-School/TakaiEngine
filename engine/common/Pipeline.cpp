@@ -909,7 +909,8 @@ void PipelineSet::Create()
 	pipelineDesc.pRootSignature = mRootsignature.Get();
 
 	//パイプラインステートの生成
-	sResult = dx12->mDevice->CreateGraphicsPipelineState(&pipelineDesc, IID_PPV_ARGS(&mPipelinestate));
+	sResult = dx12->mDevice->CreateGraphicsPipelineState(&pipelineDesc,
+		IID_PPV_ARGS(&mPipelinestate));
 	assert(SUCCEEDED(sResult));
 }
 
@@ -1071,7 +1072,6 @@ void PipelineManager::SpritePipeLine()
 	pSet.pipelineDesc.DepthStencilState.DepthWriteMask = D3D12_DEPTH_WRITE_MASK_ALL;	//書き込み許可
 	pSet.pipelineDesc.DSVFormat = DXGI_FORMAT_D32_FLOAT;	//深度値フォーマット
 
-
 	pSet.descriptorRange.NumDescriptors = 1;	//一度の描画に使うテクスチャが1枚なので1
 	pSet.descriptorRange.RangeType = D3D12_DESCRIPTOR_RANGE_TYPE_SRV;
 	pSet.descriptorRange.BaseShaderRegister = 0;	//テクスチャレジスタ0番
@@ -1154,15 +1154,39 @@ void PipelineManager::NonePostEffectPipeLine()
 	pSet.samplerDesc.AddressU = D3D12_TEXTURE_ADDRESS_MODE_BORDER;
 	pSet.samplerDesc.AddressV = D3D12_TEXTURE_ADDRESS_MODE_BORDER;
 
+	D3D12_DESCRIPTOR_RANGE descRangeSRV0;
+	descRangeSRV0.NumDescriptors = 1;
+	descRangeSRV0.RangeType = D3D12_DESCRIPTOR_RANGE_TYPE_SRV;
+	descRangeSRV0.BaseShaderRegister = 0;	//テクスチャレジスタ0番
+	descRangeSRV0.RegisterSpace = 0;
+	descRangeSRV0.OffsetInDescriptorsFromTableStart = D3D12_DESCRIPTOR_RANGE_OFFSET_APPEND;
+
+	D3D12_DESCRIPTOR_RANGE descRangeSRV1;
+	descRangeSRV1.NumDescriptors = 1;
+	descRangeSRV1.RangeType = D3D12_DESCRIPTOR_RANGE_TYPE_SRV;
+	descRangeSRV1.BaseShaderRegister = 1;	//テクスチャレジスタ1番
+	descRangeSRV1.RegisterSpace = 0;
+	descRangeSRV1.OffsetInDescriptorsFromTableStart = D3D12_DESCRIPTOR_RANGE_OFFSET_APPEND;
+
+
+	//ルートパラメータの設定
+	pSet.paramSize = 3;
+	pSet.rootParams.resize(pSet.paramSize);
+
 	pSet.rootParams[0].ParameterType = D3D12_ROOT_PARAMETER_TYPE_CBV;	//種類
 	pSet.rootParams[0].Descriptor.ShaderRegister = 0;					//定数バッファ番号
 	pSet.rootParams[0].Descriptor.RegisterSpace = 0;						//デフォルト値
 	pSet.rootParams[0].ShaderVisibility = D3D12_SHADER_VISIBILITY_ALL;	//全てのシェーダから見える
 	//テクスチャレジスタ0番 t0
 	pSet.rootParams[1].ParameterType = D3D12_ROOT_PARAMETER_TYPE_DESCRIPTOR_TABLE;	//種類
-	pSet.rootParams[1].DescriptorTable.pDescriptorRanges = &pSet.descriptorRange;					//デスクリプタレンジ
+	pSet.rootParams[1].DescriptorTable.pDescriptorRanges = &descRangeSRV0;					//デスクリプタレンジ
 	pSet.rootParams[1].DescriptorTable.NumDescriptorRanges = 1;						//デスクリプタレンジ数
 	pSet.rootParams[1].ShaderVisibility = D3D12_SHADER_VISIBILITY_ALL;	//全てのシェーダから見える
+	//テクスチャレジスタ1番 t1
+	pSet.rootParams[2].ParameterType = D3D12_ROOT_PARAMETER_TYPE_DESCRIPTOR_TABLE;	//種類
+	pSet.rootParams[2].DescriptorTable.pDescriptorRanges = &descRangeSRV1;					//デスクリプタレンジ
+	pSet.rootParams[2].DescriptorTable.NumDescriptorRanges = 1;						//デスクリプタレンジ数
+	pSet.rootParams[2].ShaderVisibility = D3D12_SHADER_VISIBILITY_ALL;	//全てのシェーダから見える
 
 	pSet.Create();
 
@@ -1278,6 +1302,15 @@ void PipelineManager::GaussianBlurPipeLine()
 	pSet.samplerDesc.AddressU = D3D12_TEXTURE_ADDRESS_MODE_BORDER;
 	pSet.samplerDesc.AddressV = D3D12_TEXTURE_ADDRESS_MODE_BORDER;
 
+	D3D12_DESCRIPTOR_RANGE descRangeSRV1;
+	descRangeSRV1.NumDescriptors = 1;
+	descRangeSRV1.RangeType = D3D12_DESCRIPTOR_RANGE_TYPE_SRV;
+	descRangeSRV1.BaseShaderRegister = 1;	//テクスチャレジスタ1番
+
+	//ルートパラメータの設定
+	pSet.paramSize = 3;
+	pSet.rootParams.resize(pSet.paramSize);
+
 	pSet.rootParams[0].ParameterType = D3D12_ROOT_PARAMETER_TYPE_CBV;	//種類
 	pSet.rootParams[0].Descriptor.ShaderRegister = 0;					//定数バッファ番号
 	pSet.rootParams[0].Descriptor.RegisterSpace = 0;						//デフォルト値
@@ -1287,6 +1320,11 @@ void PipelineManager::GaussianBlurPipeLine()
 	pSet.rootParams[1].DescriptorTable.pDescriptorRanges = &pSet.descriptorRange;					//デスクリプタレンジ
 	pSet.rootParams[1].DescriptorTable.NumDescriptorRanges = 1;						//デスクリプタレンジ数
 	pSet.rootParams[1].ShaderVisibility = D3D12_SHADER_VISIBILITY_ALL;	//全てのシェーダから見える
+	//テクスチャレジスタ1番 t1
+	pSet.rootParams[2].ParameterType = D3D12_ROOT_PARAMETER_TYPE_DESCRIPTOR_TABLE;	//種類
+	pSet.rootParams[2].DescriptorTable.pDescriptorRanges = &descRangeSRV1;					//デスクリプタレンジ
+	pSet.rootParams[2].DescriptorTable.NumDescriptorRanges = 1;						//デスクリプタレンジ数
+	pSet.rootParams[2].ShaderVisibility = D3D12_SHADER_VISIBILITY_ALL;	//全てのシェーダから見える
 
 	pSet.Create();
 
