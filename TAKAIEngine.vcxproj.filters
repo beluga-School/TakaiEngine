@@ -435,6 +435,9 @@
     <ClCompile Include="engine\2d\PostEffect.cpp">
       <Filter>Engine\2D\PostEffect</Filter>
     </ClCompile>
+    <ClCompile Include="Obj3dFBX.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="engine\shader\Shader.h">
@@ -628,6 +631,9 @@
     </ClInclude>
     <ClInclude Include="engine\2d\PostEffect.h">
       <Filter>Engine\2D\PostEffect</Filter>
+    </ClInclude>
+    <ClInclude Include="Obj3dFBX.h">
+      <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

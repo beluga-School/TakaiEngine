@@ -5,20 +5,7 @@
 #include <Obj.h>
 #include <Input.h>
 #include <DebugCamera.h>
-
-class Obj3dFBX
-{
-public:
-
-	void Update();
-	void Draw();
-	void DrawMaterial();
-	void SetModel(const Model* model);
-
-	std::vector<Obj3d> mSpherefbx;
-
-	int32_t mMeshesSize;
-};
+#include "Obj3dFBX.h"
 
 class FBXLoadDemoScene : public IScene
 {

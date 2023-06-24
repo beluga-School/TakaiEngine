@@ -7,7 +7,6 @@
 
 void FBXLoadDemoScene::Initialize()
 {
-	//mSphereFBX.Load(L"Resources/Cube_two/Cube_two.glb");
 	mSphereFBX.SetModel(ModelManager::GetModel("Cube_two"));
 
 	mCamera->Initialize();
@@ -47,43 +46,4 @@ void FBXLoadDemoScene::Draw()
 
 void FBXLoadDemoScene::End()
 {
-}
-
-void Obj3dFBX::Update()
-{
-	for (int32_t i = 0; i < mMeshesSize; i++)
-	{
-		mSpherefbx[i].Update(*Camera::sCamera);
-	}
-}
-
-void Obj3dFBX::Draw()
-{
-	for (int32_t i = 0; i < mMeshesSize; i++)
-	{
-		mSpherefbx[i].Draw();
-	}
-}
-
-void Obj3dFBX::DrawMaterial()
-{
-	for (int32_t i = 0; i < mMeshesSize; i++)
-	{
-		mSpherefbx[i].DrawMaterial();
-	}
-}
-
-void Obj3dFBX::SetModel(const Model* model)
-{
-	mMeshesSize = (int32_t)model->mMeshes.size();
-
-	for (int32_t i = 0; i < mMeshesSize; i++)
-	{
-		mSpherefbx.emplace_back();
-		mSpherefbx.back().Initialize();
-		mSpherefbx.back().SetTexture(TextureManager::GetTexture("white"));
-
-		mSpherefbx.back().SetModel(model);
-
-	}
 }

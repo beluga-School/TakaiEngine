@@ -60,7 +60,6 @@ bool AssimpLoader::Load(const ImportSettings& settings)
 
 	auto scene = importer.ReadFile(path, flag);
 			
-
 	if (scene == nullptr)
 	{
 		//ƒGƒ‰[‚ª‚Å‚½‚ç•\¦

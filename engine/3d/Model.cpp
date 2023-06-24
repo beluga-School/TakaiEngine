@@ -273,6 +273,8 @@ void Model::CreateModelAssimp(const std::wstring& filename)
 		CreateVertex(vertices, indices);
 		mMesh.vertices = vertices;
 		mMesh.indices = indices;
+
+		//mMaterial.mTextire->Load(*mMeshes[i].diffuseMap.c_str());
 	}
 
 	mCreated = true;

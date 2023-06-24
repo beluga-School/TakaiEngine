@@ -163,7 +163,7 @@ void DemoScene::SetObject(LevelData& data)
 					MathF::AngleConvRad(objectData->rotation.z)
 			};
 			//‘å‚«‚³
-			mObj3ds.back().scale = objectData->scaling * 2;
+			mObj3ds.back().scale = objectData->scaling;
 		
 			//“–‚½‚è”»’è‚ğì¬
 			if (objectData->collider.have)

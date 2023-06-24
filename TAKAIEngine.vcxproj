@@ -154,6 +154,7 @@
     <ClCompile Include="External\imgui\imgui_impl_win32.cpp" />
     <ClCompile Include="External\imgui\imgui_tables.cpp" />
     <ClCompile Include="External\imgui\imgui_widgets.cpp" />
+    <ClCompile Include="Obj3dFBX.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="application\game\AirEnemy.h" />
@@ -220,6 +221,7 @@
     <ClInclude Include="External\imgui\imstb_textedit.h" />
     <ClInclude Include="External\imgui\imstb_truetype.h" />
     <ClInclude Include="External\json.hpp" />
+    <ClInclude Include="Obj3dFBX.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="External\imgui\imgui.ini" />
