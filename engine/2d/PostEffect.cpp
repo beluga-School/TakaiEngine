@@ -4,6 +4,8 @@
 #include <memory>
 #include "ClearDrawScreen.h"
 #include "Input.h"
+#include "ImguiManager.h"
+#include "SceneManager.h"
 
 const float PostEffect::sClearColor[4] = { 0.25f,0.5f,0.1f,1.0f };//緑っぽい色でクリア
 
@@ -75,6 +77,40 @@ void PostEffect::Initialize()
 	CreateDSV();	
 }
 
+GUI gui2("PostEffect");
+void PostEffect::Update()
+{
+	if (SceneManager::Get()->mCurrentscene->sceneID == "MultiRender")
+	{
+		pipeLineName = "CG4";
+	}
+	if (SceneManager::Get()->mCurrentscene->sceneID == "FBXDemo")
+	{
+		pipeLineName = "None";
+	}
+	if (SceneManager::Get()->mCurrentscene->sceneID == "Demo")
+	{
+		if (pipeLineName == "CG4")
+		{
+			pipeLineName = "None";
+		}
+
+		gui2.Begin({ 100,100 }, { 10,10 });
+		ImGui::Text("Change_PipeLine");
+		if (ImGui::Button("None"))
+		{
+			pipeLineName = "None";
+		}
+		if (ImGui::Button("GaussianBlur"))
+		{
+			pipeLineName = "GaussianBlur";
+		}
+
+		ImGui::Text(pipeLineName.c_str());
+		gui2.End();
+	}
+}
+
 void PostEffect::Draw()
 {
 	DirectX12* dx12 = DirectX12::Get();
@@ -101,9 +137,11 @@ void PostEffect::Draw()
 
 	mConstBuffer.mBuffer->Unmap(0, nullptr);
 
+	
+
 	//パイプラインを引っ張ってくる
 	//ポストエフェクトなにも掛けない
-	PipelineSet pSet = PipelineManager::GetPipeLine("CG4");
+	PipelineSet pSet = PipelineManager::GetPipeLine(pipeLineName);
 	//パイプラインステートの設定
 	dx12->mCmdList->SetPipelineState(pSet.mPipelinestate.Get());
 	//ルートシグネチャの設定

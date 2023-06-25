@@ -95,6 +95,7 @@ private:
 	//ポストエフェクト掛けてないときのパイプライン
 	void NonePostEffectPipeLine();
 
+	//マルチレンダーパイプライン
 	void MultiRenderPipeLine();
 
 	//ガウシアンブラー用パイプライン
@@ -105,6 +106,10 @@ private:
 
 	//CG4評価課題用パイプライン
 	void CG4PipeLine();
+
+	void PhongPipeLine();
+
+	void SingleColorPipeLine();
 
 	PipelineManager(){};
 	~PipelineManager(){};

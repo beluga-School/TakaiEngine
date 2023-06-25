@@ -1,4 +1,5 @@
 #pragma once
+#include <string>
 
 class SceneManager;
 class IScene
@@ -15,8 +16,10 @@ public:
 		mSceneManager = &SceneManager_;
 	}
 
+	std::string sceneID = "";
 protected:
 	//シーンマネージャ
 	SceneManager* mSceneManager = nullptr;
+
 };
 

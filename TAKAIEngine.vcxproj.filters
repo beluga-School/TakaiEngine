@@ -253,6 +253,15 @@
     <Filter Include="シェーダー\CG4">
       <UniqueIdentifier>{ec07b430-b98f-4da9-8171-f30c4e2a31ec}</UniqueIdentifier>
     </Filter>
+    <Filter Include="シェーダー\SingleColor">
+      <UniqueIdentifier>{32494c00-417c-4834-9490-a728395bbab6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Application\Scene\MultiRenderScene">
+      <UniqueIdentifier>{a297af3a-d2b1-40ba-933e-3d3a894aecf1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\3D\Obj3dFBX">
+      <UniqueIdentifier>{3beaf677-60c8-43db-b4be-8f7e6d98be11}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="engine\input\Input.cpp">
@@ -438,8 +447,11 @@
     <ClCompile Include="engine\2d\PostEffect.cpp">
       <Filter>Engine\2D\PostEffect</Filter>
     </ClCompile>
+    <ClCompile Include="MultiRenderScene.cpp">
+      <Filter>Application\Scene\MultiRenderScene</Filter>
+    </ClCompile>
     <ClCompile Include="Obj3dFBX.cpp">
-      <Filter>ソース ファイル</Filter>
+      <Filter>Engine\3D\Obj3dFBX</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -635,8 +647,11 @@
     <ClInclude Include="engine\2d\PostEffect.h">
       <Filter>Engine\2D\PostEffect</Filter>
     </ClInclude>
+    <ClInclude Include="MultiRenderScene.h">
+      <Filter>Application\Scene\MultiRenderScene</Filter>
+    </ClInclude>
     <ClInclude Include="Obj3dFBX.h">
-      <Filter>ヘッダー ファイル</Filter>
+      <Filter>Engine\3D\Obj3dFBX</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -676,6 +691,9 @@
     </None>
     <None Include="Resources\Shader\CG4.hlsli">
       <Filter>シェーダー\CG4</Filter>
+    </None>
+    <None Include="Resources\Shader\SingleColor.hlsli">
+      <Filter>シェーダー\SingleColor</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>
@@ -756,6 +774,12 @@
     </FxCompile>
     <FxCompile Include="Resources\Shader\CG4PS.hlsl">
       <Filter>シェーダー\CG4</Filter>
+    </FxCompile>
+    <FxCompile Include="Resources\Shader\SingleColorPS.hlsl">
+      <Filter>シェーダー\SingleColor</Filter>
+    </FxCompile>
+    <FxCompile Include="Resources\Shader\SingleColorVS.hlsl">
+      <Filter>シェーダー\SingleColor</Filter>
     </FxCompile>
   </ItemGroup>
 </Project>

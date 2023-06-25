@@ -6,14 +6,7 @@ SamplerState smp : register(s0);
 
 float4 main(VSOutput input) : SV_TARGET
 {
-    float4 colortex0 = tex0.Sample(smp, input.uv);
-    float4 colortex1 = tex1.Sample(smp, input.uv);
-    
-    float4 color = colortex0;
-    if(fmod(input.uv.y,0.1f) < 0.05f)
-    {
-        color = colortex1;
-    }
+    float4 color = tex0.Sample(smp, input.uv);
     
     return float4(color.rgb, 1);
 }

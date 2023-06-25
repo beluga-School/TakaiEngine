@@ -6,7 +6,6 @@
 #include "Input.h"
 #include <LevelLoader.h>
 #include <Sprite.h>
-#include <ImguiManager.h>
 #include <DebugCamera.h>
 
 class DemoScene : public IScene
@@ -28,12 +27,12 @@ private:
 
 	std::list<Obj3d> mObj3ds;
 
-	GUI mGui = std::string("postion");
-
 	DebugCamera mDebugCamera;
 
 	Obj3d testplayer;
 
 	std::string currentLevel = "";
+
+	std::string pipeline = "Phong";
 };
 

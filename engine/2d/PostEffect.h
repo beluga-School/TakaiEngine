@@ -8,11 +8,16 @@ public:
 
 	void Initialize();
 
+	void Update();
+
 	void Draw();
 
 	void PreDrawScene();
 
 	void PostDrawScene();
+
+	//パイプライン切り替え用にとりあえず置いておく
+	std::string pipeLineName = "None";
 
 private:
 	//画面クリア用の色

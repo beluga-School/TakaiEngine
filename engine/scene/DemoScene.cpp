@@ -6,9 +6,14 @@
 #include "AssimpLoader.h"
 #include <TimeManager.h>
 #include <MathF.h>
+#include <ImguiManager.h>
+#include <FBXLoadDemoScene.h>
+#include <MultiRenderScene.h>
 
 void DemoScene::Initialize()
 {
+	sceneID = "Demo";
+
 	mCamera->Initialize();
 
 	mDebugCamera.Initialize();
@@ -44,14 +49,10 @@ void DemoScene::Initialize()
 	SetObject(*LevelLoader::Get()->GetData(currentLevel));
 }
 
+GUI gui("PipeLine");
+
 void DemoScene::Update()
 {
-	if (Input::Keyboard::TriggerKey(DIK_O))
-	{
-		mSceneManager->ChangeScene<Game>();
-		//sceneManager->ChangeScene("GAMEPLAY");
-	}
-
 	if (Input::Keyboard::TriggerKey(DIK_R))
 	{
 		mObj3ds.clear();
@@ -84,11 +85,35 @@ void DemoScene::Update()
 	mDebugCamera.Update();
 
 	testplayer.Update(*mCamera);
+
+	gui.Begin({ 500,100 }, { 10,10 });
+	ImGui::Text("Change_PipeLine");
+	if (ImGui::Button("Phong"))
+	{
+		pipeline = "Phong";
+	}
+	if (ImGui::Button("SingleColor"))
+	{
+		pipeline = "SingleColor";
+	}
+	ImGui::Text(pipeline.c_str());
+
+	if (ImGui::Button("FBXScene_Change"))
+	{
+		mSceneManager->ChangeScene<FBXLoadDemoScene>();
+	}
+	if (ImGui::Button("MultiRenderScene_Change"))
+	{
+		mSceneManager->ChangeScene<MultiRenderScene>();
+	}
+
+	gui.End();
 }
 
 void DemoScene::Draw()
 {
-	BasicObjectPreDraw(PipelineManager::GetPipeLine("MultiRender"));
+	//BasicObjectPreDraw(PipelineManager::GetPipeLine("MultiRender"));
+	BasicObjectPreDraw(PipelineManager::GetPipeLine(pipeline));
 
 	mSkydome.DrawMaterial();
 
