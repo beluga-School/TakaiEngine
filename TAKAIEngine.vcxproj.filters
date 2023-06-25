@@ -250,6 +250,9 @@
     <Filter Include="シェーダー\MultiRender">
       <UniqueIdentifier>{df47222e-efa5-4986-923e-47f226f36531}</UniqueIdentifier>
     </Filter>
+    <Filter Include="シェーダー\CG4">
+      <UniqueIdentifier>{ec07b430-b98f-4da9-8171-f30c4e2a31ec}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="engine\input\Input.cpp">
@@ -671,6 +674,9 @@
     <None Include="Resources\Shader\MultiRender.hlsli">
       <Filter>シェーダー\MultiRender</Filter>
     </None>
+    <None Include="Resources\Shader\CG4.hlsli">
+      <Filter>シェーダー\CG4</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Resources\Shader\BasicPS.hlsl">
@@ -744,6 +750,12 @@
     </FxCompile>
     <FxCompile Include="Resources\Shader\MultiRenderPS.hlsl">
       <Filter>シェーダー\MultiRender</Filter>
+    </FxCompile>
+    <FxCompile Include="Resources\Shader\CG4VS.hlsl">
+      <Filter>シェーダー\CG4</Filter>
+    </FxCompile>
+    <FxCompile Include="Resources\Shader\CG4PS.hlsl">
+      <Filter>シェーダー\CG4</Filter>
     </FxCompile>
   </ItemGroup>
 </Project>

@@ -103,6 +103,9 @@ private:
 	//シフトブラー用パイプライン
 	void ShiftBlurPipeLine();
 
+	//CG4評価課題用パイプライン
+	void CG4PipeLine();
+
 	PipelineManager(){};
 	~PipelineManager(){};
 };

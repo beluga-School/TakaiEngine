@@ -103,7 +103,7 @@ void PostEffect::Draw()
 
 	//パイプラインを引っ張ってくる
 	//ポストエフェクトなにも掛けない
-	PipelineSet pSet = PipelineManager::GetPipeLine("None");
+	PipelineSet pSet = PipelineManager::GetPipeLine("CG4");
 	//パイプラインステートの設定
 	dx12->mCmdList->SetPipelineState(pSet.mPipelinestate.Get());
 	//ルートシグネチャの設定
