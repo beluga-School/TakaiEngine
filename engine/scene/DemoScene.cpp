@@ -117,6 +117,16 @@ void DemoScene::Update()
 	{
 		SceneManager::Get()->ChangeScene<FBXLoadDemoScene>();
 	}
+	
+	if (ImGui::Button("Phong"))
+	{
+		pipeline = "Phong";
+	}
+	if (ImGui::Button("SingleColor"))
+	{
+		pipeline = "SingleColor";
+	}
+
 	gui.End();
 
 	if (oldcurrentLevel == currentLevel)
