@@ -38,7 +38,7 @@ void FBXLoadDemoScene::Update()
 
 	mDebugCamera.Update();
 
-	gui4.Begin({ 500,100 }, { 10,10 });
+	gui4.Begin({ 100,100 }, { 200,100 });
 	if (ImGui::Button("DemoScene_Change"))
 	{
 		mSceneManager->ChangeScene<DemoScene>();

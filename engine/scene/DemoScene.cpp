@@ -66,7 +66,7 @@ void DemoScene::Update()
 
 	oldcurrentLevel = currentLevel;
 
-	gui.Begin({ 100,100 }, { 300,300 });
+	/*gui.Begin({ 100,100 }, { 300,300 });
 	if (ImGui::Button("default"))
 	{
 		currentLevel = "default";
@@ -106,6 +106,17 @@ void DemoScene::Update()
 	ImGui::Text("showSpawn %d", showSpawn);
 	ImGui::Text("showEvent %d", showEvent);
 
+	gui.End();*/
+
+	gui.Begin({ 100,100 }, { 200,100 });
+	if (ImGui::Button("MultiRenderScene"))
+	{
+		SceneManager::Get()->ChangeScene<MultiRenderScene>();
+	}
+	if (ImGui::Button("FBXLoadDemoScene"))
+	{
+		SceneManager::Get()->ChangeScene<FBXLoadDemoScene>();
+	}
 	gui.End();
 
 	if (oldcurrentLevel == currentLevel)

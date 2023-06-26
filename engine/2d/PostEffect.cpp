@@ -77,10 +77,10 @@ void PostEffect::Initialize()
 	CreateDSV();	
 }
 
-GUI gui2("PostEffect");
+GUI gui2("Change_PipeLine");
 void PostEffect::Update()
 {
-	/*if (SceneManager::Get()->mCurrentscene->sceneID == "MultiRender")
+	if (SceneManager::Get()->mCurrentscene->sceneID == "MultiRender")
 	{
 		pipeLineName = "CG4";
 	}
@@ -95,7 +95,7 @@ void PostEffect::Update()
 			pipeLineName = "None";
 		}
 
-		gui2.Begin({ 100,100 }, { 10,10 });
+		gui2.Begin({ 500,100 }, { 100,200 });
 		ImGui::Text("Change_PipeLine");
 		if (ImGui::Button("None"))
 		{
@@ -108,7 +108,7 @@ void PostEffect::Update()
 
 		ImGui::Text(pipeLineName.c_str());
 		gui2.End();
-	}*/
+	}
 }
 
 void PostEffect::Draw()

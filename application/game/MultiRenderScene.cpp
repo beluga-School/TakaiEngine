@@ -16,6 +16,11 @@ void MultiRenderScene::Initialize()
 	mSkydome.color_ = { 1.f,1.f,1.f,1.0f };
 
 	mDebugCamera.Initialize();
+
+	cube.Initialize();
+	cube.SetModel(ModelManager::Get()->GetModel("Cube"));
+	cube.SetTexture(TextureManager::Get()->GetTexture("white"));
+
 }
 
 GUI gui3("ChangeScene");
@@ -26,7 +31,9 @@ void MultiRenderScene::Update()
 
 	mSkydome.Update(*Camera::sCamera);
 
-	gui3.Begin({ 500,100 }, { 10,10 });
+	cube.Update(*Camera::sCamera);
+
+	gui3.Begin({ 100,100 }, { 200,100 });
 	if (ImGui::Button("DemoScene_Change"))
 	{
 		mSceneManager->ChangeScene<DemoScene>();
@@ -44,6 +51,7 @@ void MultiRenderScene::Draw()
 	BasicObjectPreDraw(PipelineManager::GetPipeLine(pipeline));
 
 	mSkydome.DrawMaterial();
+	cube.Draw();
 }
 
 void MultiRenderScene::End()

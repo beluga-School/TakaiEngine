@@ -16,6 +16,8 @@ private:
 
 	Obj3d mSkydome;
 
+	Obj3d cube;
+
 	std::string pipeline = "MultiRender";
 };
 
