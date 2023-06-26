@@ -45,6 +45,7 @@ using namespace DirectX;
 #include <string>
 
 #include "PostEffect.h"
+#include "MultiRenderScene.h"
 
 //①文字列変換とサウンドデータを除き、使用していない
 //②自身のコード内ではint、shortはすべてint32_tなどに置き換えた charは一部でまだ使用している
@@ -127,8 +128,8 @@ int32_t WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_  HINSTANCE hPrevInstan
 
 	//シーンの初期化
 	SceneManager *scenemanager = SceneManager::Get();
-	scenemanager->ChangeScene<DemoScene>();
-	//scenemanager->ChangeScene<FBXLoadDemoScene>();
+	//scenemanager->ChangeScene<DemoScene>();
+	scenemanager->ChangeScene<MultiRenderScene>();
 
 #pragma endregion 描画初期化処理
 
