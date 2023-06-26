@@ -94,16 +94,18 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="application\game\AirEnemy.cpp" />
-    <ClCompile Include="DebugCamera.cpp" />
+    <ClCompile Include="application\game\MultiRenderScene.cpp" />
     <ClCompile Include="engine\2d\PostEffect.cpp" />
     <ClCompile Include="engine\3d\Billboard.cpp" />
     <ClCompile Include="application\game\Block.cpp" />
     <ClCompile Include="application\game\Bullet.cpp" />
+    <ClCompile Include="engine\3d\Obj3dFBX.cpp" />
     <ClCompile Include="engine\AssimpLoader.cpp" />
     <ClCompile Include="engine\Color.cpp" />
     <ClCompile Include="engine\common\ClearDrawScreen.cpp" />
     <ClCompile Include="engine\common\ConstBuffer.cpp" />
     <ClCompile Include="engine\2d\DebugText.cpp" />
+    <ClCompile Include="engine\common\DebugCamera.cpp" />
     <ClCompile Include="engine\common\DirectXInit.cpp" />
     <ClCompile Include="application\game\GameScene.cpp" />
     <ClCompile Include="application\game\GoalObject.cpp" />
@@ -154,21 +156,21 @@
     <ClCompile Include="External\imgui\imgui_impl_win32.cpp" />
     <ClCompile Include="External\imgui\imgui_tables.cpp" />
     <ClCompile Include="External\imgui\imgui_widgets.cpp" />
-    <ClCompile Include="MultiRenderScene.cpp" />
-    <ClCompile Include="Obj3dFBX.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="application\game\AirEnemy.h" />
-    <ClInclude Include="DebugCamera.h" />
+    <ClInclude Include="application\game\MultiRenderScene.h" />
     <ClInclude Include="engine\2d\PostEffect.h" />
     <ClInclude Include="engine\3d\Billboard.h" />
     <ClInclude Include="application\game\Block.h" />
     <ClInclude Include="application\game\Bullet.h" />
+    <ClInclude Include="engine\3d\Obj3dFBX.h" />
     <ClInclude Include="engine\AssimpLoader.h" />
     <ClInclude Include="engine\Color.h" />
     <ClInclude Include="engine\common\ClearDrawScreen.h" />
     <ClInclude Include="engine\common\ConstBuffer.h" />
     <ClInclude Include="engine\2d\DebugText.h" />
+    <ClInclude Include="engine\common\DebugCamera.h" />
     <ClInclude Include="engine\common\DirectXInit.h" />
     <ClInclude Include="application\game\GameScene.h" />
     <ClInclude Include="application\game\GoalObject.h" />
@@ -222,8 +224,6 @@
     <ClInclude Include="External\imgui\imstb_textedit.h" />
     <ClInclude Include="External\imgui\imstb_truetype.h" />
     <ClInclude Include="External\json.hpp" />
-    <ClInclude Include="MultiRenderScene.h" />
-    <ClInclude Include="Obj3dFBX.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="External\imgui\imgui.ini" />

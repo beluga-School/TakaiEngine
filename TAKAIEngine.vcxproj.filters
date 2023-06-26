@@ -262,6 +262,9 @@
     <Filter Include="Engine\3D\Obj3dFBX">
       <UniqueIdentifier>{3beaf677-60c8-43db-b4be-8f7e6d98be11}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Engine\Common\DebugCamera">
+      <UniqueIdentifier>{70ef922a-4056-48e4-82e5-51b904fd5cd2}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="engine\input\Input.cpp">
@@ -441,17 +444,17 @@
     <ClCompile Include="engine\util\TEasing.cpp">
       <Filter>Engine\Util\TEasing</Filter>
     </ClCompile>
-    <ClCompile Include="DebugCamera.cpp">
-      <Filter>Engine\3D\Camera</Filter>
-    </ClCompile>
     <ClCompile Include="engine\2d\PostEffect.cpp">
       <Filter>Engine\2D\PostEffect</Filter>
     </ClCompile>
-    <ClCompile Include="MultiRenderScene.cpp">
-      <Filter>Application\Scene\MultiRenderScene</Filter>
+    <ClCompile Include="engine\common\DebugCamera.cpp">
+      <Filter>Engine\Common\DebugCamera</Filter>
     </ClCompile>
-    <ClCompile Include="Obj3dFBX.cpp">
+    <ClCompile Include="engine\3d\Obj3dFBX.cpp">
       <Filter>Engine\3D\Obj3dFBX</Filter>
+    </ClCompile>
+    <ClCompile Include="application\game\MultiRenderScene.cpp">
+      <Filter>Application\Scene\MultiRenderScene</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -641,17 +644,17 @@
     <ClInclude Include="engine\util\TEasing.h">
       <Filter>Engine\Util\TEasing</Filter>
     </ClInclude>
-    <ClInclude Include="DebugCamera.h">
-      <Filter>Engine\3D\Camera</Filter>
-    </ClInclude>
     <ClInclude Include="engine\2d\PostEffect.h">
       <Filter>Engine\2D\PostEffect</Filter>
     </ClInclude>
-    <ClInclude Include="MultiRenderScene.h">
-      <Filter>Application\Scene\MultiRenderScene</Filter>
+    <ClInclude Include="engine\common\DebugCamera.h">
+      <Filter>Engine\Common\DebugCamera</Filter>
     </ClInclude>
-    <ClInclude Include="Obj3dFBX.h">
+    <ClInclude Include="engine\3d\Obj3dFBX.h">
       <Filter>Engine\3D\Obj3dFBX</Filter>
+    </ClInclude>
+    <ClInclude Include="application\game\MultiRenderScene.h">
+      <Filter>Application\Scene\MultiRenderScene</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
