@@ -44,12 +44,12 @@ void DemoScene::Initialize()
 	LevelLoader::Get()->Load("Scene/teisyutu", "teisyutu");
 	LevelLoader::Get()->Load("Scene/woods", "woods");
 
-	currentLevel = "woods";
+	currentLevel = "teisyutu";
 
 	SetObject(*LevelLoader::Get()->GetData(currentLevel));
 }
 
-GUI gui("PipeLine");
+GUI gui("sousa");
 
 void DemoScene::Update()
 {
@@ -66,8 +66,29 @@ void DemoScene::Update()
 
 	mSkydome.Update(*mCamera);
 
-	static bool change = true;
-	if (Input::Keyboard::TriggerKey(DIK_T)) change = !change;
+	gui.Begin({ 100,100 }, { 100,100 });
+	if (ImGui::Button("Change_Show_Object"))
+	{
+		showObject = !showObject;
+	}
+	if (ImGui::Button("Change_Show_Collider"))
+	{
+		showCollider = !showCollider;
+	}
+	if (ImGui::Button("Change_Show_SpawnPoint"))
+	{
+		showSpawn = !showSpawn;
+	}
+	if (ImGui::Button("Change_Show_EventTriger"))
+	{
+		showEvent = !showEvent;
+	}
+	ImGui::Text("showObject %d", showObject);
+	ImGui::Text("showCollider %d", showCollider);
+	ImGui::Text("showSpawn %d", showSpawn);
+	ImGui::Text("showEvent %d", showEvent);
+
+	gui.End();
 
 	for (auto& obj : mObj3ds)
 	{
@@ -75,9 +96,20 @@ void DemoScene::Update()
 	
 		if (obj.MODEL->mSaveModelname != "BlankCube")
 		{
-			obj.mIsVisiable = change;
+			obj.mIsVisiable = showObject;
 		}
-
+		if (obj.MODEL->mSaveModelname == "BlankCube")
+		{
+			obj.mIsVisiable = showCollider;
+		}
+		if (obj.MODEL->mSaveModelname == "spawnpoint")
+		{
+			obj.mIsVisiable = showSpawn;
+		}
+		if (obj.MODEL->mSaveModelname == "eventtriger")
+		{
+			obj.mIsVisiable = showEvent;
+		}
 	}
 
 	mSlime.Update();
@@ -85,29 +117,6 @@ void DemoScene::Update()
 	mDebugCamera.Update();
 
 	testplayer.Update(*mCamera);
-
-	gui.Begin({ 500,100 }, { 10,10 });
-	ImGui::Text("Change_PipeLine");
-	if (ImGui::Button("Phong"))
-	{
-		pipeline = "Phong";
-	}
-	if (ImGui::Button("SingleColor"))
-	{
-		pipeline = "SingleColor";
-	}
-	ImGui::Text(pipeline.c_str());
-
-	if (ImGui::Button("FBXScene_Change"))
-	{
-		mSceneManager->ChangeScene<FBXLoadDemoScene>();
-	}
-	if (ImGui::Button("MultiRenderScene_Change"))
-	{
-		mSceneManager->ChangeScene<MultiRenderScene>();
-	}
-
-	gui.End();
 }
 
 void DemoScene::Draw()
@@ -155,6 +164,24 @@ void DemoScene::SetObject(LevelData& data)
 			testplayer.position = objectData->translation;
 			testplayer.rotation = objectData->rotation;
 			testplayer.scale = objectData->scaling;
+		}
+		else if (objectData->spawnpointName == "enemy")
+		{
+			//とりあえずキューブで配置
+			mObj3ds.emplace_back();
+			mObj3ds.back().Initialize();
+
+			mObj3ds.back().SetModel(ModelManager::GetModel("spawnpoint"));
+			//座標
+			mObj3ds.back().position = objectData->translation;
+			//回転角
+			mObj3ds.back().rotation = {
+					MathF::AngleConvRad(objectData->rotation.x),
+					MathF::AngleConvRad(objectData->rotation.y),
+					MathF::AngleConvRad(objectData->rotation.z)
+			};
+			//大きさ
+			mObj3ds.back().scale = objectData->scaling;
 		}
 		else
 		{

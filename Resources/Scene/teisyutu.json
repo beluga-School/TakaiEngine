@@ -2,13 +2,116 @@
     "name": "scene",
     "objects": [
         {
+            "type": "MESH",
+            "name": "立方体.001",
+            "transform": {
+                "translation": [
+                    -2.685554027557373,
+                    -2.8039472103118896,
+                    -0.08871746063232422
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "wood",
+            "collider": {
+                "type": "BOX",
+                "center": [
+                    0.0,
+                    0.0,
+                    1.8899999856948853
+                ],
+                "size": [
+                    2.0,
+                    2.0,
+                    2.0
+                ]
+            }
+        },
+        {
+            "type": "MESH",
+            "name": "立方体",
+            "transform": {
+                "translation": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "ground"
+        },
+        {
+            "type": "MESH",
+            "name": "Cube.002",
+            "transform": {
+                "translation": [
+                    3.298672914505005,
+                    2.6893393993377686,
+                    0.5970847010612488
+                ],
+                "rotation": [
+                    180.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "firewisp",
+            "spawnpoint": "player"
+        },
+        {
+            "type": "MESH",
+            "name": "Cube",
+            "transform": {
+                "translation": [
+                    -3.0175421237945557,
+                    3.021634340286255,
+                    0.9798054695129395
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "eventtriger",
+            "event_trigger": "boss_effect"
+        },
+        {
             "type": "LIGHT",
             "name": "Light",
             "transform": {
                 "translation": [
                     4.076245307922363,
                     1.0054539442062378,
-                    5.903861999511719
+                    7.440284729003906
                 ],
                 "rotation": [
                     37.261043548583984,
@@ -45,12 +148,12 @@
         },
         {
             "type": "MESH",
-            "name": "立方体",
+            "name": "立方体.002",
             "transform": {
                 "translation": [
-                    0.0,
-                    -4.504532337188721,
-                    3.4243698120117188
+                    0.46989840269088745,
+                    3.2698395252227783,
+                    -0.08871746063232422
                 ],
                 "rotation": [
                     0.0,
@@ -63,42 +166,33 @@
                     1.0
                 ]
             },
-            "file_name": "",
-            "spawnpoint": "player"
-        },
-        {
-            "type": "MESH",
-            "name": "立方体.001",
-            "transform": {
-                "translation": [
-                    -6.718584060668945,
-                    1.565704345703125,
-                    2.9570116996765137
-                ],
-                "rotation": [
+            "file_name": "wood",
+            "collider": {
+                "type": "BOX",
+                "center": [
                     0.0,
-                    -0.0,
-                    0.0
+                    0.0,
+                    1.690000057220459
                 ],
-                "scaling": [
-                    1.0,
-                    1.0,
-                    1.0
+                "size": [
+                    2.0,
+                    2.0,
+                    2.0
                 ]
             }
         },
         {
             "type": "MESH",
-            "name": "立方体.002",
+            "name": "立方体.003",
             "transform": {
                 "translation": [
-                    0.0,
-                    0.0,
-                    5.951506614685059
+                    2.417543888092041,
+                    -0.728651762008667,
+                    -0.08871746063232422
                 ],
                 "rotation": [
-                    -90.00000762939453,
                     0.0,
+                    -0.0,
                     0.0
                 ],
                 "scaling": [
@@ -107,7 +201,43 @@
                     1.0
                 ]
             },
-            "file_name": "TestField"
+            "file_name": "wood",
+            "collider": {
+                "type": "BOX",
+                "center": [
+                    0.0,
+                    0.0,
+                    1.9499999284744263
+                ],
+                "size": [
+                    2.0,
+                    2.0,
+                    2.0
+                ]
+            }
+        },
+        {
+            "type": "MESH",
+            "name": "立方体.004",
+            "transform": {
+                "translation": [
+                    -4.5404052734375,
+                    -0.45597556233406067,
+                    4.086121559143066
+                ],
+                "rotation": [
+                    90.00000762939453,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "spawnpoint",
+            "spawnpoint": "enemy"
         }
     ]
 }

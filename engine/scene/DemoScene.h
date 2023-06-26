@@ -34,5 +34,10 @@ private:
 	std::string currentLevel = "";
 
 	std::string pipeline = "Phong";
+
+	bool showObject = true;
+	bool showCollider = false;
+	bool showSpawn = true;
+	bool showEvent = true;
 };
 

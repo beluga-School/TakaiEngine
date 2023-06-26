@@ -226,8 +226,6 @@ void TextureManager::PreLoad()
 	Load("Resources\\dashCool.png", "dashCool");
 	Load("Resources\\hpbar.png", "hpbar");
 	Load("Resources\\redScreen.png", "redScreen");
-	Load("Resources\\setumei.png", "setumei");
-	Load("Resources\\setumei2.png", "setumei2");
 	Load("Resources\\GameOver.png", "GameOver");
 }
 

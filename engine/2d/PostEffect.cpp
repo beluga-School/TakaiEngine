@@ -80,7 +80,7 @@ void PostEffect::Initialize()
 GUI gui2("PostEffect");
 void PostEffect::Update()
 {
-	if (SceneManager::Get()->mCurrentscene->sceneID == "MultiRender")
+	/*if (SceneManager::Get()->mCurrentscene->sceneID == "MultiRender")
 	{
 		pipeLineName = "CG4";
 	}
@@ -108,7 +108,7 @@ void PostEffect::Update()
 
 		ImGui::Text(pipeLineName.c_str());
 		gui2.End();
-	}
+	}*/
 }
 
 void PostEffect::Draw()

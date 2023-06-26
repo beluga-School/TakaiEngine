@@ -295,6 +295,8 @@ void ModelManager::PreLoad()
 
 	LoadModel("board_green", "board_green");
 	LoadModel("TestField", "TestField");
+	LoadModel("spawnpoint", "spawnpoint");
+	LoadModel("eventtriger", "eventtriger");
 
 	LoadModelAssimp(L"Resources/Cube_two/Cube_two.glb", "Cube_two");
 }
