@@ -32,6 +32,7 @@ private:
 	Obj3d testplayer;
 
 	std::string currentLevel = "";
+	std::string oldcurrentLevel = "";
 
 	std::string pipeline = "Phong";
 

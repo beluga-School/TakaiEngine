@@ -30,6 +30,8 @@ struct LevelData
 	};
 
 	std::vector<ObjectData> mObjects;
+
+	bool isCreate = false;
 };
 
 class LevelLoader

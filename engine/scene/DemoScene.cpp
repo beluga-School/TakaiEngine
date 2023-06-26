@@ -39,17 +39,15 @@ void DemoScene::Initialize()
 	testplayer.SetModel(ModelManager::Get()->GetModel("firewisp"));
 	testplayer.SetTexture(TextureManager::Get()->GetTexture("white"));
 
-	LevelLoader::Get()->Load("Scene/worldTest_Children", "children");
-	LevelLoader::Get()->Load("Scene/playerTest", "pTest");
-	LevelLoader::Get()->Load("Scene/teisyutu", "teisyutu");
+	LevelLoader::Get()->Load("Scene/default", "default");
 	LevelLoader::Get()->Load("Scene/woods", "woods");
 
-	currentLevel = "teisyutu";
+	currentLevel = "default";
 
 	SetObject(*LevelLoader::Get()->GetData(currentLevel));
 }
 
-GUI gui("sousa");
+GUI gui("operater");
 
 void DemoScene::Update()
 {
@@ -66,7 +64,26 @@ void DemoScene::Update()
 
 	mSkydome.Update(*mCamera);
 
-	gui.Begin({ 100,100 }, { 100,100 });
+	oldcurrentLevel = currentLevel;
+
+	gui.Begin({ 100,100 }, { 300,300 });
+	if (ImGui::Button("default"))
+	{
+		currentLevel = "default";
+	}
+	if (ImGui::Button("woods"))
+	{
+		currentLevel = "woods";
+	}
+	if (oldcurrentLevel != currentLevel)
+	{
+		mObj3ds.clear();
+		std::string hoge = "Scene/";
+		hoge += currentLevel;
+		LevelLoader::Get()->Load(hoge, currentLevel);
+		SetObject(*LevelLoader::Get()->GetData(currentLevel));
+	}
+
 	if (ImGui::Button("Change_Show_Object"))
 	{
 		showObject = !showObject;
@@ -83,6 +100,7 @@ void DemoScene::Update()
 	{
 		showEvent = !showEvent;
 	}
+	ImGui::Text("currentLevel %s", currentLevel);
 	ImGui::Text("showObject %d", showObject);
 	ImGui::Text("showCollider %d", showCollider);
 	ImGui::Text("showSpawn %d", showSpawn);
@@ -90,25 +108,28 @@ void DemoScene::Update()
 
 	gui.End();
 
-	for (auto& obj : mObj3ds)
+	if (oldcurrentLevel == currentLevel)
 	{
-		obj.Update(*mCamera);
-	
-		if (obj.MODEL->mSaveModelname != "BlankCube")
+		for (auto& obj : mObj3ds)
 		{
-			obj.mIsVisiable = showObject;
-		}
-		if (obj.MODEL->mSaveModelname == "BlankCube")
-		{
-			obj.mIsVisiable = showCollider;
-		}
-		if (obj.MODEL->mSaveModelname == "spawnpoint")
-		{
-			obj.mIsVisiable = showSpawn;
-		}
-		if (obj.MODEL->mSaveModelname == "eventtriger")
-		{
-			obj.mIsVisiable = showEvent;
+			obj.Update(*mCamera);
+
+			if (obj.MODEL->mSaveModelname != "BlankCube")
+			{
+				obj.mIsVisiable = showObject;
+			}
+			if (obj.MODEL->mSaveModelname == "BlankCube")
+			{
+				obj.mIsVisiable = showCollider;
+			}
+			if (obj.MODEL->mSaveModelname == "spawnpoint")
+			{
+				obj.mIsVisiable = showSpawn;
+			}
+			if (obj.MODEL->mSaveModelname == "eventtriger")
+			{
+				obj.mIsVisiable = showEvent;
+			}
 		}
 	}
 
