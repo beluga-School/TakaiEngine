@@ -63,9 +63,6 @@
     <Filter Include="Application\Scene\DemoScene">
       <UniqueIdentifier>{3dd87bb2-25f3-4e33-bd37-68681c1108df}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Application\Scene\GameScene">
-      <UniqueIdentifier>{8e46dd71-6d8e-4d20-b769-7ce98ccfa71c}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Application\Scene\FBXLoadDemoScene">
       <UniqueIdentifier>{75730180-a73e-4437-9ca6-81d1c495a48e}</UniqueIdentifier>
     </Filter>
@@ -81,41 +78,8 @@
     <Filter Include="Engine\Scene\SceneManager">
       <UniqueIdentifier>{a0d938bd-6efb-4178-aa8d-d4fd4474e8c2}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Application\Game">
-      <UniqueIdentifier>{4021a4b7-e2d0-4e83-b627-6b2d6fbe2339}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Application\Game\Charactor">
-      <UniqueIdentifier>{3dc3946a-e343-4223-9cad-c16ebeddf8c8}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Engine\libManage">
       <UniqueIdentifier>{5826963a-4c4d-48a3-a88c-99e8edf39bd9}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Application\Game\Charactor\AirEnemy">
-      <UniqueIdentifier>{bfaf0ae6-f7ed-447c-829a-077ce2387195}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Application\Game\Charactor\GroundEnemy">
-      <UniqueIdentifier>{f008b12f-1913-4080-8b8d-049803dcc8e2}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Application\Game\Charactor\Player">
-      <UniqueIdentifier>{d1fb1bf1-7d0a-4bc0-bc3a-9bdb8eb76bd5}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Application\Game\Block">
-      <UniqueIdentifier>{c5366758-a9f6-46c8-9bb7-46a065253e21}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Application\Game\Bullet">
-      <UniqueIdentifier>{c993b990-21ae-434e-afd2-22110ec71de7}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Application\Game\Collision">
-      <UniqueIdentifier>{921fc882-a1c8-46bd-a451-bd0c04bdebcf}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Application\Game\GoalObject">
-      <UniqueIdentifier>{6f265d21-d643-4b9c-8a37-95be52b26157}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Application\Game\Mob">
-      <UniqueIdentifier>{302d9139-7d01-43bd-a83a-73a487d23e1a}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Application\Game\Stage">
-      <UniqueIdentifier>{9a7794bb-2ad6-4812-bae9-0798881825e7}</UniqueIdentifier>
     </Filter>
     <Filter Include="Engine\libManage\ImguiManager">
       <UniqueIdentifier>{e2fb7fff-be8e-4957-b2de-4c14b6a6f5ae}</UniqueIdentifier>
@@ -176,9 +140,6 @@
     </Filter>
     <Filter Include="Engine\Particle">
       <UniqueIdentifier>{d642889e-bca8-45d5-baa5-92fd2d3be3bb}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Application\ObjParticle">
-      <UniqueIdentifier>{460b4cdc-d13a-4f0a-9bbe-019b405a216e}</UniqueIdentifier>
     </Filter>
     <Filter Include="Engine\Shader">
       <UniqueIdentifier>{50eb1d78-ff15-44ab-9049-1e691ba58985}</UniqueIdentifier>
@@ -265,6 +226,36 @@
     <Filter Include="Engine\Common\DebugCamera">
       <UniqueIdentifier>{70ef922a-4056-48e4-82e5-51b904fd5cd2}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Application\Scene\GameScene">
+      <UniqueIdentifier>{ce4cfff0-1968-40c3-ba1f-e331b0cf73d7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Application\Old">
+      <UniqueIdentifier>{8f0d3db2-c9b8-4e55-b126-9cd4ddde39f1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Application\Old\ObjParticle">
+      <UniqueIdentifier>{460b4cdc-d13a-4f0a-9bbe-019b405a216e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Application\Charactor">
+      <UniqueIdentifier>{3dc3946a-e343-4223-9cad-c16ebeddf8c8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Application\Charactor\Player">
+      <UniqueIdentifier>{d1fb1bf1-7d0a-4bc0-bc3a-9bdb8eb76bd5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Application\Collision">
+      <UniqueIdentifier>{921fc882-a1c8-46bd-a451-bd0c04bdebcf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Application\Mob">
+      <UniqueIdentifier>{302d9139-7d01-43bd-a83a-73a487d23e1a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Application\Block">
+      <UniqueIdentifier>{2d478356-55b8-45eb-999d-43fb364a2fe2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Application\Skydome">
+      <UniqueIdentifier>{b0687ccb-5436-42b5-8034-0c8022f3fea5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Application\Stage">
+      <UniqueIdentifier>{6349d7e7-a1d1-4114-aa41-235be1768fa3}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="engine\input\Input.cpp">
@@ -274,10 +265,7 @@
       <Filter>Engine\Sound</Filter>
     </ClCompile>
     <ClCompile Include="application\particle\ObjParticle.cpp">
-      <Filter>Application\ObjParticle</Filter>
-    </ClCompile>
-    <ClCompile Include="application\game\GameScene.cpp">
-      <Filter>Application\Scene\GameScene</Filter>
+      <Filter>Application\Old\ObjParticle</Filter>
     </ClCompile>
     <ClCompile Include="External\imgui\imgui.cpp">
       <Filter>Engine\External\ImGui</Filter>
@@ -339,32 +327,11 @@
     <ClCompile Include="engine\3d\ViewProjection.cpp">
       <Filter>Engine\3D\Camera</Filter>
     </ClCompile>
-    <ClCompile Include="application\game\AirEnemy.cpp">
-      <Filter>Application\Game\Charactor\AirEnemy</Filter>
-    </ClCompile>
-    <ClCompile Include="application\game\GroundEnemy.cpp">
-      <Filter>Application\Game\Charactor\GroundEnemy</Filter>
-    </ClCompile>
-    <ClCompile Include="application\game\Player.cpp">
-      <Filter>Application\Game\Charactor\Player</Filter>
-    </ClCompile>
-    <ClCompile Include="application\game\Block.cpp">
-      <Filter>Application\Game\Block</Filter>
-    </ClCompile>
-    <ClCompile Include="application\game\Bullet.cpp">
-      <Filter>Application\Game\Bullet</Filter>
-    </ClCompile>
     <ClCompile Include="application\game\Collision.cpp">
-      <Filter>Application\Game\Collision</Filter>
-    </ClCompile>
-    <ClCompile Include="application\game\GoalObject.cpp">
-      <Filter>Application\Game\GoalObject</Filter>
+      <Filter>Application\Collision</Filter>
     </ClCompile>
     <ClCompile Include="application\game\Mob.cpp">
-      <Filter>Application\Game\Mob</Filter>
-    </ClCompile>
-    <ClCompile Include="application\game\Stage.cpp">
-      <Filter>Application\Game\Stage</Filter>
+      <Filter>Application\Mob</Filter>
     </ClCompile>
     <ClCompile Include="engine\libManage\ImguiManager.cpp">
       <Filter>Engine\libManage\ImguiManager</Filter>
@@ -456,6 +423,21 @@
     <ClCompile Include="application\game\MultiRenderScene.cpp">
       <Filter>Application\Scene\MultiRenderScene</Filter>
     </ClCompile>
+    <ClCompile Include="GameScene.cpp">
+      <Filter>Application\Scene\GameScene</Filter>
+    </ClCompile>
+    <ClCompile Include="Player.cpp">
+      <Filter>Application\Charactor\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="application\game\Block.cpp">
+      <Filter>Application\Block</Filter>
+    </ClCompile>
+    <ClCompile Include="Skydome.cpp">
+      <Filter>Application\Skydome</Filter>
+    </ClCompile>
+    <ClCompile Include="Stage.cpp">
+      <Filter>Application\Stage</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="engine\shader\Shader.h">
@@ -484,9 +466,6 @@
     </ClInclude>
     <ClInclude Include="External\imgui\imstb_truetype.h">
       <Filter>Engine\External\ImGui</Filter>
-    </ClInclude>
-    <ClInclude Include="application\game\GameScene.h">
-      <Filter>Application\Scene\GameScene</Filter>
     </ClInclude>
     <ClInclude Include="engine\scene\IScene.h">
       <Filter>Engine\Scene\IScene</Filter>
@@ -533,32 +512,11 @@
     <ClInclude Include="engine\scene\AbstractSceneFactory.h">
       <Filter>Engine\Scene</Filter>
     </ClInclude>
-    <ClInclude Include="application\game\AirEnemy.h">
-      <Filter>Application\Game\Charactor\AirEnemy</Filter>
-    </ClInclude>
-    <ClInclude Include="application\game\GroundEnemy.h">
-      <Filter>Application\Game\Charactor\GroundEnemy</Filter>
-    </ClInclude>
-    <ClInclude Include="application\game\Player.h">
-      <Filter>Application\Game\Charactor\Player</Filter>
-    </ClInclude>
-    <ClInclude Include="application\game\Block.h">
-      <Filter>Application\Game\Block</Filter>
-    </ClInclude>
-    <ClInclude Include="application\game\Bullet.h">
-      <Filter>Application\Game\Bullet</Filter>
-    </ClInclude>
     <ClInclude Include="application\game\Collision.h">
-      <Filter>Application\Game\Collision</Filter>
-    </ClInclude>
-    <ClInclude Include="application\game\GoalObject.h">
-      <Filter>Application\Game\GoalObject</Filter>
+      <Filter>Application\Collision</Filter>
     </ClInclude>
     <ClInclude Include="application\game\Mob.h">
-      <Filter>Application\Game\Mob</Filter>
-    </ClInclude>
-    <ClInclude Include="application\game\Stage.h">
-      <Filter>Application\Game\Stage</Filter>
+      <Filter>Application\Mob</Filter>
     </ClInclude>
     <ClInclude Include="engine\libManage\ImguiManager.h">
       <Filter>Engine\libManage\ImguiManager</Filter>
@@ -609,7 +567,7 @@
       <Filter>Engine\Math\Vector4</Filter>
     </ClInclude>
     <ClInclude Include="application\particle\ObjParticle.h">
-      <Filter>Application\ObjParticle</Filter>
+      <Filter>Application\Old\ObjParticle</Filter>
     </ClInclude>
     <ClInclude Include="engine\sound\Sound.h">
       <Filter>Engine\Sound</Filter>
@@ -655,6 +613,21 @@
     </ClInclude>
     <ClInclude Include="application\game\MultiRenderScene.h">
       <Filter>Application\Scene\MultiRenderScene</Filter>
+    </ClInclude>
+    <ClInclude Include="GameScene.h">
+      <Filter>Application\Scene\GameScene</Filter>
+    </ClInclude>
+    <ClInclude Include="Player.h">
+      <Filter>Application\Charactor\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="application\game\Block.h">
+      <Filter>Application\Block</Filter>
+    </ClInclude>
+    <ClInclude Include="Skydome.h">
+      <Filter>Application\Skydome</Filter>
+    </ClInclude>
+    <ClInclude Include="Stage.h">
+      <Filter>Application\Stage</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

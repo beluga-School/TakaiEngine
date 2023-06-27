@@ -77,11 +77,14 @@ void Obj3d::Update(const Camera& camera)
 
 	//ConstBufferDataB1* constMap1 = nullptr;
 	//result = constBufferMaterial.buffer->Map(0, nullptr, (void**)&constMap1);
-	constBufferMaterial.mConstBufferData->ambient = MODEL->mMaterial.mAmbient;
-	constBufferMaterial.mConstBufferData->diffuse = MODEL->mMaterial.mDiffuse;
-	constBufferMaterial.mConstBufferData->specular = MODEL->mMaterial.mSpecular;
-	constBufferMaterial.mConstBufferData->alpha = MODEL->mMaterial.mAlpha;
-	constBufferB.mConstBufferData->brightness = color_;
+	if (MODEL != nullptr)
+	{
+		constBufferMaterial.mConstBufferData->ambient = MODEL->mMaterial.mAmbient;
+		constBufferMaterial.mConstBufferData->diffuse = MODEL->mMaterial.mDiffuse;
+		constBufferMaterial.mConstBufferData->specular = MODEL->mMaterial.mSpecular;
+		constBufferMaterial.mConstBufferData->alpha = MODEL->mMaterial.mAlpha;
+		constBufferB.mConstBufferData->brightness = color_;
+	}
 	//constBufferMaterial.buffer->Unmap(0, nullptr);
 }
 

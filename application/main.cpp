@@ -29,7 +29,6 @@ using namespace DirectX;
 #include "Billboard.h"
 
 #include "DemoScene.h"
-#include "GameScene.h"
 #include <FBXLoadDemoScene.h>
 #include "SceneFactory.h"
 
@@ -46,6 +45,7 @@ using namespace DirectX;
 
 #include "PostEffect.h"
 #include "MultiRenderScene.h"
+#include "GameScene.h"
 
 //①文字列変換とサウンドデータを除き、使用していない
 //②自身のコード内ではint、shortはすべてint32_tなどに置き換えた charは一部でまだ使用している
@@ -128,8 +128,9 @@ int32_t WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_  HINSTANCE hPrevInstan
 
 	//シーンの初期化
 	SceneManager *scenemanager = SceneManager::Get();
+	scenemanager->ChangeScene<GameScene>();
 	//scenemanager->ChangeScene<DemoScene>();
-	scenemanager->ChangeScene<MultiRenderScene>();
+	//scenemanager->ChangeScene<MultiRenderScene>();
 
 #pragma endregion 描画初期化処理
 

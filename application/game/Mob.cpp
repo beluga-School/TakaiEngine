@@ -33,56 +33,56 @@ void Mob::AddGravity()
 	moveValue.y += jumpPower;
 }
 
-void Mob::CheckHitColStage(Stage& stage)
-{
-	Cube tempCol = cubeCol;
-
-	//仮移動
-	//ここで移動値を足すのだから、移動値を先に決めておかなければならない
-	tempCol.position += moveValue;
-
-	for (Block& block : stage.blockList)
-	{
-		bool up = block.CheckDirections(tempCol, CheckDirection::CD_UP);
-		bool center = block.CheckDirections(tempCol, CheckDirection::CD_CENTER);
-		bool back = block.CheckDirections(tempCol, CheckDirection::CD_BACK);
-		bool left = block.CheckDirections(tempCol, CheckDirection::CD_LEFT);
-		bool right = block.CheckDirections(tempCol, CheckDirection::CD_RIGHT);
-
-		//上面の当たり判定
-		if (up)
-		{
-			while (CubeCollision(tempCol, block.cubeCol))
-			{
-				tempCol.position.y += 0.1f;
-				moveValue.y += 0.1f;
-				jumpPower = 0;
-				onGround = true;
-			}
-		}
-
-		if (up == false && CubeCollision(tempCol, block.cubeCol))
-		{
-			if (right)
-			{
-				moveValue.x = 0;
-			}
-			if (left)
-			{
-				moveValue.x = 0;
-			}
-			if (back)
-			{
-				moveValue.z = 0;
-			}
-			if (center)
-			{
-				moveValue.z = 0;
-			}
-		}
-	}
-
-}
+//void Mob::CheckHitColStage(Stage& stage)
+//{
+//	Cube tempCol = cubeCol;
+//
+//	//仮移動
+//	//ここで移動値を足すのだから、移動値を先に決めておかなければならない
+//	tempCol.position += moveValue;
+//
+//	for (Block& block : stage.blockList)
+//	{
+//		bool up = block.CheckDirections(tempCol, CheckDirection::CD_UP);
+//		bool center = block.CheckDirections(tempCol, CheckDirection::CD_CENTER);
+//		bool back = block.CheckDirections(tempCol, CheckDirection::CD_BACK);
+//		bool left = block.CheckDirections(tempCol, CheckDirection::CD_LEFT);
+//		bool right = block.CheckDirections(tempCol, CheckDirection::CD_RIGHT);
+//
+//		//上面の当たり判定
+//		if (up)
+//		{
+//			while (CubeCollision(tempCol, block.cubeCol))
+//			{
+//				tempCol.position.y += 0.1f;
+//				moveValue.y += 0.1f;
+//				jumpPower = 0;
+//				onGround = true;
+//			}
+//		}
+//
+//		if (up == false && CubeCollision(tempCol, block.cubeCol))
+//		{
+//			if (right)
+//			{
+//				moveValue.x = 0;
+//			}
+//			if (left)
+//			{
+//				moveValue.x = 0;
+//			}
+//			if (back)
+//			{
+//				moveValue.z = 0;
+//			}
+//			if (center)
+//			{
+//				moveValue.z = 0;
+//			}
+//		}
+//	}
+//
+//}
 
 void Mob::PreMove()
 {

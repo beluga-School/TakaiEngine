@@ -3,7 +3,7 @@
 #include "MathF.h"
 #include <math.h>
 
-bool RayPlaneCollision(const Ray& ray, const Plane& plane)
+bool Collsions::RayPlaneCollision(const Ray& ray, const Plane& plane)
 {
 	const float EPSILON = 1.0e-5f;
 
@@ -30,7 +30,7 @@ bool RayPlaneCollision(const Ray& ray, const Plane& plane)
 	return true;
 }
 
-bool RectangleXZCollision(const Cube& cube1, const Cube& cube2)
+bool Collsions::RectangleXZCollision(const Cube& cube1, const Cube& cube2)
 {
 	float DistanceX = cube1.position.x - cube2.position.x;
 	float DistanceZ = cube1.position.z - cube2.position.z;
@@ -74,7 +74,7 @@ Vector3 RayPlaneInter(const Ray& ray, const Plane& plane)
 	return inter;
 }
 
-bool CubeCollision(const Cube& cube1, const Cube& cube2)
+bool Collsions::CubeCollision(const Cube& cube1, const Cube& cube2)
 {
 	float DistanceX = cube1.position.x - cube2.position.x;
 	float DistanceY = cube1.position.y - cube2.position.y;
@@ -93,7 +93,7 @@ bool CubeCollision(const Cube& cube1, const Cube& cube2)
 	return false;
 }
 
-bool BoxColAABB(const Obj3d& colA, const Obj3d& colB)
+bool Collsions::BoxColAABB(const Obj3d& colA, const Obj3d& colB)
 {
 	int32_t DistanceX = static_cast<int32_t>(colA.matWorld.m[3][0] - colB.matWorld.m[3][0]);
 	int32_t DistanceY = static_cast<int32_t>(colA.matWorld.m[3][1] - colB.matWorld.m[3][1]);
@@ -112,7 +112,7 @@ bool BoxColAABB(const Obj3d& colA, const Obj3d& colB)
 	return false;
 }
 
-bool SpherePlaneCollision(const Sphere& sphere, const Plane& plane)
+bool Collsions::SpherePlaneCollision(const Sphere& sphere, const Plane& plane)
 {
 	float distV = sphere.center.dot(plane.normal);
 	float dist = distV - plane.distance;
@@ -122,7 +122,7 @@ bool SpherePlaneCollision(const Sphere& sphere, const Plane& plane)
 	return true;
 }
 
-Vector3 ClosestPtPoint2Triangle(const Vector3& point, const Triangle& triangle)
+Vector3 Collsions::ClosestPtPoint2Triangle(const Vector3& point, const Triangle& triangle)
 {
 	//pointがp0の外側にあるかをチェック
 	Vector3 p0_p1 = triangle.pos1 - triangle.pos0;
@@ -188,9 +188,9 @@ Vector3 ClosestPtPoint2Triangle(const Vector3& point, const Triangle& triangle)
 	return triangle.pos0 + p0_p1 * v + p0_p2 * w;
 }
 
-bool CheckSphere2Triangle(const Sphere& sphere, const Triangle& triangle)
+bool Collsions::CheckSphere2Triangle(const Sphere& sphere, const Triangle& triangle)
 {
-	Vector3 p = ClosestPtPoint2Triangle(sphere.center, triangle);
+	Vector3 p = Collsions::ClosestPtPoint2Triangle(sphere.center, triangle);
 	//点pと級の中心の差分ベクトル
 	Vector3 v = p - sphere.center;
 	//距離の二乗を求める

@@ -2,7 +2,6 @@
 #include <ClearDrawScreen.h>
 #include <Sprite.h>
 #include <SceneManager.h>
-#include "GameScene.h"
 #include "AssimpLoader.h"
 #include <TimeManager.h>
 #include <MathF.h>
@@ -28,9 +27,8 @@ void DemoScene::Initialize()
 	mCamera->mEye.z = -150;
 
 	ModelManager::LoadModel("beetle","beetle");
-	ModelManager::LoadModel("firewisp","firewisp");
+	//ModelManager::LoadModel("firewisp","firewisp");
 	ModelManager::LoadModel("boss","boss");
-	ModelManager::LoadModel("BlankCube","BlankCube");
 	
 	mSlime.SetTexture(*TextureManager::GetTexture("slime"));
 	mSlime.mPosition = { 0,0,0 };

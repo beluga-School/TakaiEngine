@@ -93,12 +93,10 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="application\game\AirEnemy.cpp" />
+    <ClCompile Include="application\game\Block.cpp" />
     <ClCompile Include="application\game\MultiRenderScene.cpp" />
     <ClCompile Include="engine\2d\PostEffect.cpp" />
     <ClCompile Include="engine\3d\Billboard.cpp" />
-    <ClCompile Include="application\game\Block.cpp" />
-    <ClCompile Include="application\game\Bullet.cpp" />
     <ClCompile Include="engine\3d\Obj3dFBX.cpp" />
     <ClCompile Include="engine\AssimpLoader.cpp" />
     <ClCompile Include="engine\Color.cpp" />
@@ -107,9 +105,6 @@
     <ClCompile Include="engine\2d\DebugText.cpp" />
     <ClCompile Include="engine\common\DebugCamera.cpp" />
     <ClCompile Include="engine\common\DirectXInit.cpp" />
-    <ClCompile Include="application\game\GameScene.cpp" />
-    <ClCompile Include="application\game\GoalObject.cpp" />
-    <ClCompile Include="application\game\GroundEnemy.cpp" />
     <ClCompile Include="engine\LevelLoader.cpp" />
     <ClCompile Include="engine\libManage\ImguiManager.cpp" />
     <ClCompile Include="engine\light\DirectionalLight.cpp" />
@@ -126,7 +121,6 @@
     <ClCompile Include="engine\3d\Obj.cpp" />
     <ClCompile Include="engine\common\Pipeline.cpp" />
     <ClCompile Include="application\game\Collision.cpp" />
-    <ClCompile Include="application\game\Player.cpp" />
     <ClCompile Include="engine\light\PointLight.cpp" />
     <ClCompile Include="engine\math\Quaternion.cpp" />
     <ClCompile Include="engine\scene\DemoScene.cpp" />
@@ -137,7 +131,6 @@
     <ClCompile Include="engine\shader\Shader.cpp" />
     <ClCompile Include="engine\sound\Sound.cpp" />
     <ClCompile Include="engine\2d\Sprite.cpp" />
-    <ClCompile Include="application\game\Stage.cpp" />
     <ClCompile Include="engine\util\StringUtil.cpp" />
     <ClCompile Include="engine\2d\Texture.cpp" />
     <ClCompile Include="engine\util\TEasing.cpp" />
@@ -156,14 +149,16 @@
     <ClCompile Include="External\imgui\imgui_impl_win32.cpp" />
     <ClCompile Include="External\imgui\imgui_tables.cpp" />
     <ClCompile Include="External\imgui\imgui_widgets.cpp" />
+    <ClCompile Include="GameScene.cpp" />
+    <ClCompile Include="Player.cpp" />
+    <ClCompile Include="Skydome.cpp" />
+    <ClCompile Include="Stage.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="application\game\AirEnemy.h" />
+    <ClInclude Include="application\game\Block.h" />
     <ClInclude Include="application\game\MultiRenderScene.h" />
     <ClInclude Include="engine\2d\PostEffect.h" />
     <ClInclude Include="engine\3d\Billboard.h" />
-    <ClInclude Include="application\game\Block.h" />
-    <ClInclude Include="application\game\Bullet.h" />
     <ClInclude Include="engine\3d\Obj3dFBX.h" />
     <ClInclude Include="engine\AssimpLoader.h" />
     <ClInclude Include="engine\Color.h" />
@@ -172,9 +167,6 @@
     <ClInclude Include="engine\2d\DebugText.h" />
     <ClInclude Include="engine\common\DebugCamera.h" />
     <ClInclude Include="engine\common\DirectXInit.h" />
-    <ClInclude Include="application\game\GameScene.h" />
-    <ClInclude Include="application\game\GoalObject.h" />
-    <ClInclude Include="application\game\GroundEnemy.h" />
     <ClInclude Include="engine\LevelLoader.h" />
     <ClInclude Include="engine\libManage\ImguiManager.h" />
     <ClInclude Include="engine\light\DirectionalLight.h" />
@@ -190,7 +182,6 @@
     <ClInclude Include="engine\3d\Obj.h" />
     <ClInclude Include="engine\common\Pipeline.h" />
     <ClInclude Include="application\game\Collision.h" />
-    <ClInclude Include="application\game\Player.h" />
     <ClInclude Include="engine\light\PointLight.h" />
     <ClInclude Include="engine\math\Quaternion.h" />
     <ClInclude Include="engine\common\Result.h" />
@@ -203,7 +194,6 @@
     <ClInclude Include="engine\shader\Shader.h" />
     <ClInclude Include="engine\sound\Sound.h" />
     <ClInclude Include="engine\2d\Sprite.h" />
-    <ClInclude Include="application\game\Stage.h" />
     <ClInclude Include="engine\util\StringUtil.h" />
     <ClInclude Include="engine\2d\Texture.h" />
     <ClInclude Include="engine\util\TEasing.h" />
@@ -224,6 +214,10 @@
     <ClInclude Include="External\imgui\imstb_textedit.h" />
     <ClInclude Include="External\imgui\imstb_truetype.h" />
     <ClInclude Include="External\json.hpp" />
+    <ClInclude Include="GameScene.h" />
+    <ClInclude Include="Player.h" />
+    <ClInclude Include="Skydome.h" />
+    <ClInclude Include="Stage.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="External\imgui\imgui.ini" />

@@ -48,18 +48,21 @@ struct Triangle
 	Vector3 normal;
 };
 
-//レイと平面の当たり判定
-bool RayPlaneCollision(const Ray& ray,const Plane& plane);
+namespace Collsions
+{
+	//レイと平面の当たり判定
+	bool RayPlaneCollision(const Ray& ray, const Plane& plane);
 
-//y軸を0として、xとzの2軸で四角同士で判定する当たり判定
-bool RectangleXZCollision(const Cube& cube1,const Cube& cube2);
+	//y軸を0として、xとzの2軸で四角同士で判定する当たり判定
+	bool RectangleXZCollision(const Cube& cube1, const Cube& cube2);
 
-bool CubeCollision(const Cube& cube1,const Cube& cube2);
+	bool CubeCollision(const Cube& cube1, const Cube& cube2);
 
-bool BoxColAABB(const Obj3d& colA, const Obj3d& colB);
+	bool BoxColAABB(const Obj3d& colA, const Obj3d& colB);
 
-bool SpherePlaneCollision(const Sphere& sphere, const Plane &plane);
+	bool SpherePlaneCollision(const Sphere& sphere, const Plane& plane);
 
-Vector3 ClosestPtPoint2Triangle(const Vector3& point, const Triangle& triangle);
+	Vector3 ClosestPtPoint2Triangle(const Vector3& point, const Triangle& triangle);
 
-bool CheckSphere2Triangle(const Sphere& sphere, const Triangle& triangle);
+	bool CheckSphere2Triangle(const Sphere& sphere, const Triangle& triangle);
+}
