@@ -53,13 +53,10 @@ GUI checkHitGUI("checkHit");
 void Player::Update()
 {
 	//移動地を初期化
-	moveValue = { 0,0,0 };
+	moveValue = {0,0,0};
 
 	mCenterVec = matWorld.ExtractAxisZ();
 	mSideVec = matWorld.ExtractAxisX();
-
-	//重力追加
-	moveValue.y -= gravity;
 
 	//移動量を取得、加算
 	if (Input::Keyboard::PushKey(DIK_W))
@@ -79,9 +76,98 @@ void Player::Update()
 		moveValue -= mSideVec * mSpeed * TimeManager::deltaTime;
 	}
 
-	if (Input::Keyboard::TriggerKey(DIK_SPACE))
+	jumpManageTimer.Update();
+	stayManageTimer.Update();
+	
+	switch (jumpState)
 	{
-		moveValue += matWorld.ExtractAxisY() * mSpeed;
+	case Player::JumpState::None:
+		//ジャンプしていない状態で入力があったらジャンプ
+		if (Input::Keyboard::TriggerKey(DIK_SPACE))
+		{
+			//値を指定
+			upJumpS = position.y;
+			upJumpE = position.y + jumpPower;
+			
+			jumpManageTimer.Start();
+			jumpState = JumpState::Up;
+
+			//重力を無効化
+			gravity = 0;
+		}
+
+		//今の位置と下降判定位置が異なるなら落下
+		if (downJumpE < position.y)
+		{
+			jumpState = JumpState::Down;
+			jumpManageTimer.Start();
+			stayManageTimer.Reset();
+
+			//現在位置を始点に
+			downJumpS = position.y;
+		}
+
+		break;
+	case Player::JumpState::Up:
+		//イージングで上昇
+		preMove.y = TEasing::OutQuad(upJumpS, upJumpE, jumpManageTimer.GetTimeRate());
+		
+		//時間が終わったらステートを次の状態に遷移
+		if (jumpManageTimer.GetEnd())
+		{
+			jumpState = JumpState::Staying;
+			jumpManageTimer.Reset();
+			stayManageTimer.Start();
+		}
+
+		break;
+	case Player::JumpState::Staying:
+		if (stayManageTimer.GetEnd())
+		{
+			jumpState = JumpState::Down;
+			jumpManageTimer.Start();
+			stayManageTimer.Reset();
+
+			//現在位置を始点に
+			downJumpS = position.y;
+		}
+
+		break;
+	case Player::JumpState::Down:
+		//イージングで上昇
+		preMove.y = TEasing::InQuad(downJumpS, downJumpE, jumpManageTimer.GetTimeRate());
+
+		//時間が終わったらステートを次の状態に遷移
+		if (jumpManageTimer.GetEnd())
+		{
+			jumpState = JumpState::End;
+			jumpManageTimer.Reset();
+		}
+
+		break;
+	case Player::JumpState::End:
+		//何もしていない状態に戻す(クールタイムとか付けるならここで付ける)
+		jumpState = JumpState::None;
+
+		break;
+	}
+	//else
+	//{
+	//	//重力を加算
+	//	gravity += gravityAdd;
+	//	
+	//	//重力を適用
+	//	preMove.y -= gravity;
+	//}
+
+	//デバッグ重力加算
+	if (Input::Keyboard::PushKey(DIK_LSHIFT))
+	{
+		preMove.y -= gravityAdd;
+	}
+	if (Input::Keyboard::PushKey(DIK_LCONTROL))
+	{
+		preMove.y += gravityAdd;
 	}
 
 	//当たり判定
@@ -89,50 +175,67 @@ void Player::Update()
 	pCol.position = position;
 	pCol.scale = scale;
 	
+	pCol.position.y = preMove.y;
+
 	pCol.position += moveValue;
 
-	checkHitGUI.Begin({ 100,100 }, { 100,100 });
+	for (auto& bColTemp : Stage::Get()->mObj3ds)
+	{	
+		Cube bCol;
+		bCol.position = bColTemp.position;
+		bCol.scale = bColTemp.scale;
 
-	for (auto& bCol : Stage::Get()->mObj3ds)
-	{
-		Cube bColTemp;
-		bColTemp.position = bCol.position;
-		bColTemp.scale = bCol.scale;
-	
-		bool up = CheckDirections(pCol, bColTemp, CheckDirection::CD_UP);
-		bool down = CheckDirections(pCol, bColTemp, CheckDirection::CD_DOWN);
-
-		bool center = CheckDirections(pCol, bColTemp, CheckDirection::CD_CENTER);
-		bool back = CheckDirections(pCol, bColTemp, CheckDirection::CD_BACK);
-		bool left = CheckDirections(pCol, bColTemp, CheckDirection::CD_LEFT);
-		bool right = CheckDirections(pCol, bColTemp, CheckDirection::CD_RIGHT);
+		//そのオブジェクトより
+		//上にいるか
+		bool up = CheckDirections(pCol, bCol, CheckDirection::CD_UP);
+		//下にいるか
+		bool down = CheckDirections(pCol, bCol, CheckDirection::CD_DOWN);
+		//前にいるか
+		bool center = CheckDirections(pCol, bCol, CheckDirection::CD_CENTER);
+		//後ろにいるか
+		bool back = CheckDirections(pCol, bCol, CheckDirection::CD_BACK);
+		//左にいるか
+		bool left = CheckDirections(pCol, bCol, CheckDirection::CD_LEFT);
+		//右にいるか
+		bool right = CheckDirections(pCol, bCol, CheckDirection::CD_RIGHT);
 
 		//上面の当たり判定
 		if (up)
 		{
-			while (Collsions::CubeCollision(pCol, bColTemp))
+			//直線状で見たときに下にあるオブジェクトがあれば
+			Cube rayCube;
+			rayCube.position = pCol.position;
+			rayCube.scale = pCol.scale;
+			//スケールをめっちゃ引き延ばす
+			rayCube.scale.y = 1000;
+
+			//当たったなら
+			if (Collsions::CubeCollision(rayCube, bCol))
 			{
-				pCol.position.y += 0.1f;
-				moveValue.y += 0.1f;
-				//jumpPower = 0;
-				//onGround = true;
+				//リストに入れる
+				hitList.push_back(bCol);
 			}
-		}
-		//下面の当たり判定
-		if (down)
-		{
-			while (Collsions::CubeCollision(pCol, bColTemp))
+
+			/*if(Collsions::CubeCollision(pCol, bColTemp))
 			{
-				pCol.position.y -= 0.1f;
-				moveValue.y -= 0.1f;
-				//jumpPower = 0;
-			}
+				preMove.y = bColTemp.position.y;
+			}*/
 		}
+
+		////下面の当たり判定
+		//if (down)
+		//{
+		//	while (Collsions::CubeCollision(pCol, bColTemp))
+		//	{
+		//		pCol.position.y -= 0.1f;
+		//		moveValue.y -= 0.1f;
+		//	}
+		//}
 
 		//左右の当たり判定
 		if (up == false)
 		{
-			if (Collsions::CubeCollision(pCol, bColTemp))
+			if (Collsions::CubeCollision(pCol, bCol))
 			{
 				if (right)
 				{
@@ -152,19 +255,34 @@ void Player::Update()
 				}
 			}
 		}
-
-		ImGui::Text("up %d", up);
-		ImGui::Text("down %d", down);
-		ImGui::Text("right %d", right);
-		ImGui::Text("left %d", left);
-		ImGui::Text("center %d", center);
-		ImGui::Text("back %d", back);
 	}
 
+	float preY = -114514.f;
+	float maxY = 0;
+	downJumpE = -3.f;
+	for (auto &hit : hitList)
+	{
+		maxY = hit.position.y;
+		//初期値でなく、前の値より高い位置にあるなら
+		if (maxY >= preY)
+		{
+			//終点位置を更新
+			//TODO:終点位置が下降中にも更新されるので、なんかバグりそう
+			downJumpE = hit.position.y + hit.scale.y;
+		}
+		preY = hit.position.y;
+	}
 
+	//使い終わったので初期化
+	hitList.clear();
+
+	checkHitGUI.Begin({ 100,100 }, { 100,100 });
+	ImGui::Text("downJumpE %f", downJumpE);
+	ImGui::Text("state %d", jumpState);
 	checkHitGUI.End();
 
 	//本加算
+	position.y = preMove.y;
 	position += moveValue;
 
 	//更新

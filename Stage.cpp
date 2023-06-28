@@ -119,7 +119,7 @@ void Stage::Draw()
 	{
 		if (obj.MODEL->mSaveModelname == "BlankCube")
 		{
+			obj.DrawMaterial();
 		}
-		obj.DrawMaterial();
 	}
 }
