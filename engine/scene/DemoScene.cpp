@@ -6,8 +6,6 @@
 #include <TimeManager.h>
 #include <MathF.h>
 #include <ImguiManager.h>
-#include <FBXLoadDemoScene.h>
-#include <MultiRenderScene.h>
 
 void DemoScene::Initialize()
 {
@@ -107,14 +105,6 @@ void DemoScene::Update()
 	gui.End();*/
 
 	gui.Begin({ 100,100 }, { 200,100 });
-	if (ImGui::Button("MultiRenderScene"))
-	{
-		SceneManager::Get()->ChangeScene<MultiRenderScene>();
-	}
-	if (ImGui::Button("FBXLoadDemoScene"))
-	{
-		SceneManager::Get()->ChangeScene<FBXLoadDemoScene>();
-	}
 	
 	if (ImGui::Button("Phong"))
 	{

@@ -63,9 +63,6 @@
     <Filter Include="Application\Scene\DemoScene">
       <UniqueIdentifier>{3dd87bb2-25f3-4e33-bd37-68681c1108df}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Application\Scene\FBXLoadDemoScene">
-      <UniqueIdentifier>{75730180-a73e-4437-9ca6-81d1c495a48e}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Engine\Scene">
       <UniqueIdentifier>{a0bad2f0-43a5-48c4-b1c9-91412c61f0a7}</UniqueIdentifier>
     </Filter>
@@ -217,9 +214,6 @@
     <Filter Include="シェーダー\SingleColor">
       <UniqueIdentifier>{32494c00-417c-4834-9490-a728395bbab6}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Application\Scene\MultiRenderScene">
-      <UniqueIdentifier>{a297af3a-d2b1-40ba-933e-3d3a894aecf1}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Engine\3D\Obj3dFBX">
       <UniqueIdentifier>{3beaf677-60c8-43db-b4be-8f7e6d98be11}</UniqueIdentifier>
     </Filter>
@@ -305,9 +299,6 @@
     </ClCompile>
     <ClCompile Include="engine\scene\DemoScene.cpp">
       <Filter>Application\Scene\DemoScene</Filter>
-    </ClCompile>
-    <ClCompile Include="engine\scene\FBXLoadDemoScene.cpp">
-      <Filter>Application\Scene\FBXLoadDemoScene</Filter>
     </ClCompile>
     <ClCompile Include="engine\scene\IScene.cpp">
       <Filter>Engine\Scene\IScene</Filter>
@@ -435,9 +426,6 @@
     <ClCompile Include="engine\3d\Obj3dFBX.cpp">
       <Filter>Engine\3D\Obj3dFBX</Filter>
     </ClCompile>
-    <ClCompile Include="application\game\MultiRenderScene.cpp">
-      <Filter>Application\Scene\MultiRenderScene</Filter>
-    </ClCompile>
     <ClCompile Include="GameScene.cpp">
       <Filter>Application\Scene\GameScene</Filter>
     </ClCompile>
@@ -502,9 +490,6 @@
     </ClInclude>
     <ClInclude Include="engine\scene\DemoScene.h">
       <Filter>Application\Scene\DemoScene</Filter>
-    </ClInclude>
-    <ClInclude Include="engine\scene\FBXLoadDemoScene.h">
-      <Filter>Application\Scene\FBXLoadDemoScene</Filter>
     </ClInclude>
     <ClInclude Include="engine\LevelLoader.h">
       <Filter>Application\LevelLoader</Filter>
@@ -640,9 +625,6 @@
     </ClInclude>
     <ClInclude Include="engine\3d\Obj3dFBX.h">
       <Filter>Engine\3D\Obj3dFBX</Filter>
-    </ClInclude>
-    <ClInclude Include="application\game\MultiRenderScene.h">
-      <Filter>Application\Scene\MultiRenderScene</Filter>
     </ClInclude>
     <ClInclude Include="GameScene.h">
       <Filter>Application\Scene\GameScene</Filter>

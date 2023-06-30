@@ -8,7 +8,6 @@
 void GameScene::Initialize()
 {
 	//ƒ[ƒh(•ª‚¯‚½‚Ù‚¤‚ª‚¢‚¢)
-	LevelLoader::Get()->Load("Scene/checkCollider", "checkCollider");
 	LevelLoader::Get()->Load("Scene/woods", "woods");
 	LevelLoader::Get()->Load("Scene/stageSelect", "stageSelect");
 

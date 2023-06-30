@@ -213,20 +213,9 @@ void TextureManager::PreLoad()
 	Load("Resources\\white.png", "white");
 	Load("Resources\\slime.png", "slime");
 	Load("Resources\\default.png", "default");
-	Load("Resources\\pizza.png", "pizza");
 	Load("Resources\\particle.png", "particle");
-	Load("Resources\\goal.png", "goal");
-	Load("Resources\\blockTexture.png", "blockTexture");
 	Load("Resources\\firewisp\\tex.png", "firewisp");
-	Load("Resources\\Title.png", "Title");
-	Load("Resources\\Start.png", "Start");
-	Load("Resources\\Space.png", "Space");
-	Load("Resources\\goalBlock.png", "goalBlock");
-	Load("Resources\\dashIcon.png", "dashIcon");
-	Load("Resources\\dashCool.png", "dashCool");
-	Load("Resources\\hpbar.png", "hpbar");
 	Load("Resources\\redScreen.png", "redScreen");
-	Load("Resources\\GameOver.png", "GameOver");
 }
 
 //ƒlƒbƒg‚ÅE‚Á‚Ä‚«‚½string->wstring•ÏŠ·

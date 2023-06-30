@@ -29,7 +29,6 @@ using namespace DirectX;
 #include "Billboard.h"
 
 #include "DemoScene.h"
-#include <FBXLoadDemoScene.h>
 #include "SceneFactory.h"
 
 #include "SceneManager.h"
@@ -44,7 +43,6 @@ using namespace DirectX;
 #include <string>
 
 #include "PostEffect.h"
-#include "MultiRenderScene.h"
 #include "GameScene.h"
 
 //①文字列変換とサウンドデータを除き、使用していない
@@ -103,13 +101,6 @@ int32_t WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_  HINSTANCE hPrevInstan
 	TextureManager* tManager = TextureManager::Get();
 	tManager->Initialize();
 	tManager->PreLoad();
-
-	//デバッグテキスト生成
-	std::unique_ptr<Texture> debugFont = std::make_unique<Texture>();
-	debugFont->Load(*L"Resources/debugfont.png");
-
-	DebugText debugText;
-	debugText.Initialize(*debugFont);
 
 	//imguiの初期化
 	ImguiManager *imguiManager = ImguiManager::GetInstance();

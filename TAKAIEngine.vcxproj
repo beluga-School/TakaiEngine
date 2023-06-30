@@ -94,7 +94,6 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="application\game\Block.cpp" />
-    <ClCompile Include="application\game\MultiRenderScene.cpp" />
     <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="EnemyManager.cpp" />
     <ClCompile Include="GEnemy.cpp" />
@@ -127,7 +126,6 @@
     <ClCompile Include="engine\light\PointLight.cpp" />
     <ClCompile Include="engine\math\Quaternion.cpp" />
     <ClCompile Include="engine\scene\DemoScene.cpp" />
-    <ClCompile Include="engine\scene\FBXLoadDemoScene.cpp" />
     <ClCompile Include="engine\scene\IScene.cpp" />
     <ClCompile Include="engine\scene\SceneFactory.cpp" />
     <ClCompile Include="engine\scene\SceneManager.cpp" />
@@ -161,7 +159,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="application\game\Block.h" />
-    <ClInclude Include="application\game\MultiRenderScene.h" />
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="EnemyManager.h" />
     <ClInclude Include="GEnemy.h" />
@@ -195,7 +192,6 @@
     <ClInclude Include="engine\common\Result.h" />
     <ClInclude Include="engine\scene\AbstractSceneFactory.h" />
     <ClInclude Include="engine\scene\DemoScene.h" />
-    <ClInclude Include="engine\scene\FBXLoadDemoScene.h" />
     <ClInclude Include="engine\scene\IScene.h" />
     <ClInclude Include="engine\scene\SceneFactory.h" />
     <ClInclude Include="engine\scene\SceneManager.h" />

@@ -284,24 +284,12 @@ void ModelManager::PreLoad()
 {
 	LoadModel("Cube","Cube");
 	LoadModel("skydome","skydome");
-	LoadModel("board","board");
-	LoadModel("boss","boss");
 	LoadModel("firewisp","firewisp");
-	LoadModel("player","player");
-	LoadModel("subDev","subDev");
-	LoadModel("Sphere","Sphere");
-	LoadModel("triangle","triangle");
 	LoadModel("beetle","beetle");
-
-	LoadModel("board_green", "board_green");
-	LoadModel("TestField", "TestField");
 	LoadModel("spawnpoint", "spawnpoint");
 	LoadModel("eventtriger", "eventtriger");
-	LoadModel("CheckCollider", "CheckCollider");
 	LoadModel("groundCube", "groundCube");
 	LoadModel("BlankCube", "BlankCube");
-
-	LoadModelAssimp(L"Resources/Cube_two/Cube_two.glb", "Cube_two");
 }
 
 void ModelManager::LoadModel(const std::string filepath, const std::string handle, bool smooth)
