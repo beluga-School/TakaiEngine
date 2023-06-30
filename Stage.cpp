@@ -75,23 +75,20 @@ void Stage::Update()
 	{
 		obj.Update();
 	}
+
+	for (auto& obj : mColObj3ds)
+	{
+		obj.Update(*Camera::sCamera);
+	}
 }
 
 void Stage::Draw()
 {
 	//物によってマテリアル描画とテクスチャ描画が混在してるのに
 	//分ける方法を作ってないので作る
-	for (auto& obj : mObj3ds)
-	{
-		if (obj.MODEL->mSaveModelname == "BlankCube")
-		{
-		}
-		obj.DrawMaterial();
-	}
-	for (auto& obj : mEventObjects)
-	{
-		obj.Draw();
-	}
+	DrawCollider();
+
+	DrawModel();
 }
 
 void Stage::NormalObjectSet(const LevelData::ObjectData& data)
@@ -125,19 +122,19 @@ void Stage::NormalObjectSet(const LevelData::ObjectData& data)
 void Stage::CollisionSet(const LevelData::ObjectData& data)
 {
 	//当たり判定を表示するオブジェクト
-	mObj3ds.emplace_back();
-	mObj3ds.back().Initialize();
+	mColObj3ds.emplace_back();
+	mColObj3ds.back().Initialize();
 
-	mObj3ds.back().SetModel(ModelManager::GetModel("BlankCube"));
-	mObj3ds.back().SetTexture(TextureManager::Get()->GetTexture("white"));
+	mColObj3ds.back().SetModel(ModelManager::GetModel("BlankCube"));
+	mColObj3ds.back().SetTexture(TextureManager::Get()->GetTexture("white"));
 
-	mObj3ds.back().position = data.translation + data.collider.center;
-	mObj3ds.back().scale = {
+	mColObj3ds.back().position = data.translation + data.collider.center;
+	mColObj3ds.back().scale = {
 		data.scaling.x * data.collider.size.x,
 		data.scaling.y * data.collider.size.y,
 		data.scaling.z * data.collider.size.z
 	};
-	mObj3ds.back().rotation = {
+	mColObj3ds.back().rotation = {
 		MathF::AngleConvRad(data.rotation.x),
 		MathF::AngleConvRad(data.rotation.y),
 		MathF::AngleConvRad(data.rotation.z)
@@ -165,4 +162,26 @@ void Stage::EvenyObjectSet(const LevelData::ObjectData& data)
 	//オブジェクトの配置
 	LevelDataExchanger::SetObjectData(mEventObjects.back(), data);
 
+}
+
+void Stage::DrawModel()
+{
+	if (mShowModel == false) return;
+	for (auto& obj : mObj3ds)
+	{
+		obj.DrawMaterial();
+	}
+	for (auto& obj : mEventObjects)
+	{
+		obj.Draw();
+	}
+}
+
+void Stage::DrawCollider()
+{
+	if (mShowCollider == false) return;
+	for (auto& obj : mColObj3ds)
+	{
+		obj.DrawMaterial();
+	}
 }

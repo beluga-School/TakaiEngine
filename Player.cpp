@@ -190,7 +190,7 @@ void Player::ColUpdate()
 
 	pCol.position += moveValue;
 
-	for (auto& bColTemp : Stage::Get()->mObj3ds)
+	for (auto& bColTemp : Stage::Get()->mColObj3ds)
 	{
 		Cube bCol;
 		bCol.position = bColTemp.position;
@@ -299,7 +299,7 @@ void Player::ColUpdate()
 		}
 	}
 
-	checkHitGUI.Begin({ 100,100 }, { 100,100 });
+	checkHitGUI.Begin({ 300,100 }, { 100,100 });
 	ImGui::Text("downJumpE %f", downJumpE);
 	ImGui::Text("state %d", jumpState);
 

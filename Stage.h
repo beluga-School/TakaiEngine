@@ -21,11 +21,20 @@ public:
 	//モデルの配列
 	std::list<Obj3d> mObj3ds;
 
+	//当たり判定モデル配列
+	std::list<Obj3d> mColObj3ds;
+
 	//当たり判定配列
 	std::list<Cube> mColCubes;
 
 	//イベントオブジェクト配列
 	std::list<EventBlock> mEventObjects;
+
+	//コライダーを描画するか
+	bool mShowCollider = true;
+
+	//モデルを描画するか(コライダー描画時に邪魔になるので)
+	bool mShowModel = false;
 
 private:
 	Stage(){};
@@ -39,5 +48,8 @@ private:
 
 	//イベントオブジェクト(ブロック置き直し)
 	void EvenyObjectSet(const LevelData::ObjectData& data);
+
+	void DrawModel();
+	void DrawCollider();
 };
 

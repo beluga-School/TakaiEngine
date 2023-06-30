@@ -15,7 +15,19 @@ void PlayerCamera::Initialize()
 void PlayerCamera::Update()
 {
 	//É}ÉEÉXå≈íË
-	Mouse::CurserLock(CurserLockState::LOCK);
+	static bool mouseLockChange = true;
+	if (Input::Keyboard::TriggerKey(DIK_N))
+	{
+		mouseLockChange = !mouseLockChange;
+	}
+	if (mouseLockChange)
+	{
+		Mouse::CurserLock(CurserLockState::LOCK);
+	}
+	else
+	{
+		Mouse::CurserLock(CurserLockState::UNLOCK);
+	}
 
 	Player* player = Player::Get();
 

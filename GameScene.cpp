@@ -15,8 +15,9 @@ void GameScene::Initialize()
 	LevelLoader::Get()->Load("Scene/stage_2", "stage_2");
 	LevelLoader::Get()->Load("Scene/stage_3", "stage_3");
 	LevelLoader::Get()->Load("Scene/stage_4", "stage_4");
+	LevelLoader::Get()->Load("Scene/castle", "castle");
 
-	Stage::Get()->ChangeLevel(*LevelLoader::Get()->GetData("stage_4"));
+	Stage::Get()->ChangeLevel(*LevelLoader::Get()->GetData("castle"));
 
 	//‰Šú‰»
 	mSkydome.Initialize();
@@ -36,13 +37,13 @@ void GameScene::Update()
 	Stage::Get()->Update();
 
 	sceneChangeGUI.Begin({ 100,100 }, { 100,100 });
-	if (ImGui::Button("woods"))
+	if (ImGui::Button("mShowModel"))
 	{
-		Stage::Get()->ChangeLevel(*LevelLoader::Get()->GetData("woods"));
+		Stage::Get()->mShowModel = !Stage::Get()->mShowModel;
 	}
-	if (ImGui::Button("stageSelect"))
+	if (ImGui::Button("mShowCollider"))
 	{
-		Stage::Get()->ChangeLevel(*LevelLoader::Get()->GetData("stageSelect"));
+		Stage::Get()->mShowCollider = !Stage::Get()->mShowCollider;
 	}
 	sceneChangeGUI.End();
 
