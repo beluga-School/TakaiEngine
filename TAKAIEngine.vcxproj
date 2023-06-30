@@ -95,6 +95,9 @@
   <ItemGroup>
     <ClCompile Include="application\game\Block.cpp" />
     <ClCompile Include="application\game\MultiRenderScene.cpp" />
+    <ClCompile Include="Enemy.cpp" />
+    <ClCompile Include="EnemyManager.cpp" />
+    <ClCompile Include="GEnemy.cpp" />
     <ClCompile Include="engine\2d\PostEffect.cpp" />
     <ClCompile Include="engine\3d\Billboard.cpp" />
     <ClCompile Include="engine\3d\Obj3dFBX.cpp" />
@@ -142,6 +145,7 @@
     <ClCompile Include="engine\3d\Vertex.cpp" />
     <ClCompile Include="engine\3d\ViewProjection.cpp" />
     <ClCompile Include="engine\3d\WinAPI.cpp" />
+    <ClCompile Include="EventBlock.cpp" />
     <ClCompile Include="External\imgui\imgui.cpp" />
     <ClCompile Include="External\imgui\imgui_demo.cpp" />
     <ClCompile Include="External\imgui\imgui_draw.cpp" />
@@ -151,12 +155,16 @@
     <ClCompile Include="External\imgui\imgui_widgets.cpp" />
     <ClCompile Include="GameScene.cpp" />
     <ClCompile Include="Player.cpp" />
+    <ClCompile Include="PlayerCamera.cpp" />
     <ClCompile Include="Skydome.cpp" />
     <ClCompile Include="Stage.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="application\game\Block.h" />
     <ClInclude Include="application\game\MultiRenderScene.h" />
+    <ClInclude Include="Enemy.h" />
+    <ClInclude Include="EnemyManager.h" />
+    <ClInclude Include="GEnemy.h" />
     <ClInclude Include="engine\2d\PostEffect.h" />
     <ClInclude Include="engine\3d\Billboard.h" />
     <ClInclude Include="engine\3d\Obj3dFBX.h" />
@@ -205,6 +213,7 @@
     <ClInclude Include="engine\3d\Vertex.h" />
     <ClInclude Include="engine\3d\ViewProjection.h" />
     <ClInclude Include="engine\common\WinAPI.h" />
+    <ClInclude Include="EventBlock.h" />
     <ClInclude Include="External\imgui\imconfig.h" />
     <ClInclude Include="External\imgui\imgui.h" />
     <ClInclude Include="External\imgui\imgui_impl_dx12.h" />
@@ -216,6 +225,7 @@
     <ClInclude Include="External\json.hpp" />
     <ClInclude Include="GameScene.h" />
     <ClInclude Include="Player.h" />
+    <ClInclude Include="PlayerCamera.h" />
     <ClInclude Include="Skydome.h" />
     <ClInclude Include="Stage.h" />
   </ItemGroup>

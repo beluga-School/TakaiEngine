@@ -1,5 +1,6 @@
 #include "Input.h"
 #include "Result.h"
+#include "Util.h"
 
 using namespace Input;
 
@@ -292,6 +293,8 @@ void Input::Mouse::Initialize()
 	//他のアプリケーションもそのデバイスを取得できるように
 	sResult = Mouse::Get()->mMouse->SetCooperativeLevel(WinAPI::Get()->mHwnd, DISCL_NONEXCLUSIVE | DISCL_FOREGROUND);
 	assert(SUCCEEDED(sResult));
+
+	CurserLock(CurserLockState::UNLOCK);
 }
 
 void Mouse::Update()
@@ -319,6 +322,22 @@ void Mouse::Finalize()
 {
 	Mouse::Get()->mMouse->Unacquire();
 	Mouse::Get()->mMouse->Release();
+}
+
+void Input::Mouse::CurserLock(const CurserLockState& state)
+{
+	switch (state)
+	{
+	case CurserLockState::LOCK:
+		ShowCursor(false);
+		SetCursorPos(Util::WIN_WIDTH / 2, Util::WIN_HEIGHT / 2);
+
+		break;
+	case CurserLockState::UNLOCK:
+		ShowCursor(true);
+		
+		break;
+	}
 }
 
 bool Input::Mouse::Down(const Click& c)

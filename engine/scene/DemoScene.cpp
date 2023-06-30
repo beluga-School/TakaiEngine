@@ -124,6 +124,10 @@ void DemoScene::Update()
 	{
 		pipeline = "SingleColor";
 	}
+	if (ImGui::Button("showSkydome"))
+	{
+		showSkydome = !showSkydome;
+	}
 
 	gui.End();
 
@@ -164,7 +168,10 @@ void DemoScene::Draw()
 	//BasicObjectPreDraw(PipelineManager::GetPipeLine("MultiRender"));
 	BasicObjectPreDraw(PipelineManager::GetPipeLine(pipeline));
 
-	mSkydome.DrawMaterial();
+	if (showSkydome)
+	{
+		mSkydome.DrawMaterial();
+	}
 
 	for (auto& obj : mObj3ds)
 	{

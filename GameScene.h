@@ -4,6 +4,7 @@
 #include "DebugCamera.h"
 #include "Stage.h"
 #include "Player.h"
+#include "PlayerCamera.h"
 
 class GameScene : public IScene
 {
@@ -17,6 +18,7 @@ private:
 	Skydome mSkydome;
 	DebugCamera mDebugCamera;
 	
-	Player player;
+	Player *player = Player::Get();
+	PlayerCamera* pCamera = PlayerCamera::Get();
 };
 

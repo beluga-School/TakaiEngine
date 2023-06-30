@@ -3,6 +3,10 @@
 #include "TimeManager.h"
 #include "Stage.h"
 #include "ImguiManager.h"
+#include "MathF.h"
+#include "PlayerCamera.h"
+
+using namespace Input;
 
 enum class CheckDirection
 {
@@ -75,10 +79,32 @@ void Player::Update()
 	{
 		moveValue -= mSideVec * mSpeed * TimeManager::deltaTime;
 	}
+	
+	JumpUpdate();
 
+	ColUpdate();
+
+	//本加算
+	position.y = preMove.y;
+	position += moveValue;
+
+	//回転更新
+	RotaUpdate();
+
+	//更新
+	Obj3d::Update(*Camera::sCamera);
+}
+
+void Player::Draw()
+{
+	Obj3d::DrawMaterial();
+}
+
+void Player::JumpUpdate()
+{
 	jumpManageTimer.Update();
 	stayManageTimer.Update();
-	
+
 	switch (jumpState)
 	{
 	case Player::JumpState::None:
@@ -88,7 +114,7 @@ void Player::Update()
 			//値を指定
 			upJumpS = position.y;
 			upJumpE = position.y + jumpPower;
-			
+
 			jumpManageTimer.Start();
 			jumpState = JumpState::Up;
 
@@ -111,7 +137,7 @@ void Player::Update()
 	case Player::JumpState::Up:
 		//イージングで上昇
 		preMove.y = TEasing::OutQuad(upJumpS, upJumpE, jumpManageTimer.GetTimeRate());
-		
+
 		//時間が終わったらステートを次の状態に遷移
 		if (jumpManageTimer.GetEnd())
 		{
@@ -151,36 +177,21 @@ void Player::Update()
 
 		break;
 	}
-	//else
-	//{
-	//	//重力を加算
-	//	gravity += gravityAdd;
-	//	
-	//	//重力を適用
-	//	preMove.y -= gravity;
-	//}
+}
 
-	//デバッグ重力加算
-	if (Input::Keyboard::PushKey(DIK_LSHIFT))
-	{
-		preMove.y -= gravityAdd;
-	}
-	if (Input::Keyboard::PushKey(DIK_LCONTROL))
-	{
-		preMove.y += gravityAdd;
-	}
-
+void Player::ColUpdate()
+{
 	//当たり判定
 	Cube pCol;
 	pCol.position = position;
 	pCol.scale = scale;
-	
+
 	pCol.position.y = preMove.y;
 
 	pCol.position += moveValue;
 
 	for (auto& bColTemp : Stage::Get()->mObj3ds)
-	{	
+	{
 		Cube bCol;
 		bCol.position = bColTemp.position;
 		bCol.scale = bColTemp.scale;
@@ -260,7 +271,7 @@ void Player::Update()
 	float preY = -114514.f;
 	float maxY = 0;
 	downJumpE = -3.f;
-	for (auto &hit : hitList)
+	for (auto& hit : hitList)
 	{
 		maxY = hit.position.y;
 		//初期値でなく、前の値より高い位置にあるなら
@@ -276,20 +287,27 @@ void Player::Update()
 	//使い終わったので初期化
 	hitList.clear();
 
+	for (auto& bColevent : Stage::Get()->mEventObjects)
+	{
+		Cube eCol;
+		eCol.position = bColevent.position;
+		eCol.scale = bColevent.scale;
+		if (Collsions::CubeCollision(eCol, pCol))
+		{
+			bColevent.HitEffect();
+			break;
+		}
+	}
+
 	checkHitGUI.Begin({ 100,100 }, { 100,100 });
 	ImGui::Text("downJumpE %f", downJumpE);
 	ImGui::Text("state %d", jumpState);
+
 	checkHitGUI.End();
-
-	//本加算
-	position.y = preMove.y;
-	position += moveValue;
-
-	//更新
-	Obj3d::Update(*Camera::sCamera);
 }
 
-void Player::Draw()
+void Player::RotaUpdate()
 {
-	Obj3d::DrawMaterial();
+	//回転させる処理
+	rotation.y = PlayerCamera::Get()->mHorizontalRad;
 }

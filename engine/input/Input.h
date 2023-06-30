@@ -27,6 +27,12 @@ enum class Click
 	MB4 = 3,
 };
 
+enum class CurserLockState
+{
+	LOCK = 0,
+	UNLOCK = 1,
+};
+
 namespace Input
 {
 	class Mouse
@@ -36,6 +42,9 @@ namespace Input
 		static void Initialize();
 		static void Update();
 		static void Finalize();
+
+		//カーソルの表示/非表示とカーソルが動かせるかの切り替え
+		static void CurserLock(const CurserLockState& state);
 
 		//座標を取得
 		static Vector2 GetPos();

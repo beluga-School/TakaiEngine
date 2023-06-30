@@ -256,6 +256,21 @@
     <Filter Include="Application\Stage">
       <UniqueIdentifier>{6349d7e7-a1d1-4114-aa41-235be1768fa3}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Application\EventBlock">
+      <UniqueIdentifier>{6095ec17-b870-4246-9122-9b4a2b397af5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Application\PlayerCamera">
+      <UniqueIdentifier>{5b388bcc-558d-41e8-80d7-ab24a44fe4fe}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Application\Charactor\GEnemy">
+      <UniqueIdentifier>{2b0e9669-3383-42af-834c-1079df58a241}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Application\Charactor\EnemyManager">
+      <UniqueIdentifier>{4a1c0f97-a5fe-4cce-a633-5de90a38ede8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Application\Charactor\Enemy">
+      <UniqueIdentifier>{e46da77e-f434-44e8-a38d-981d3fdb64f9}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="engine\input\Input.cpp">
@@ -437,6 +452,21 @@
     </ClCompile>
     <ClCompile Include="Stage.cpp">
       <Filter>Application\Stage</Filter>
+    </ClCompile>
+    <ClCompile Include="EventBlock.cpp">
+      <Filter>Application\EventBlock</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerCamera.cpp">
+      <Filter>Application\PlayerCamera</Filter>
+    </ClCompile>
+    <ClCompile Include="GEnemy.cpp">
+      <Filter>Application\Charactor\GEnemy</Filter>
+    </ClCompile>
+    <ClCompile Include="EnemyManager.cpp">
+      <Filter>Application\Charactor\EnemyManager</Filter>
+    </ClCompile>
+    <ClCompile Include="Enemy.cpp">
+      <Filter>Application\Charactor\Enemy</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -628,6 +658,21 @@
     </ClInclude>
     <ClInclude Include="Stage.h">
       <Filter>Application\Stage</Filter>
+    </ClInclude>
+    <ClInclude Include="EventBlock.h">
+      <Filter>Application\EventBlock</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerCamera.h">
+      <Filter>Application\PlayerCamera</Filter>
+    </ClInclude>
+    <ClInclude Include="GEnemy.h">
+      <Filter>Application\Charactor\GEnemy</Filter>
+    </ClInclude>
+    <ClInclude Include="EnemyManager.h">
+      <Filter>Application\Charactor\EnemyManager</Filter>
+    </ClInclude>
+    <ClInclude Include="Enemy.h">
+      <Filter>Application\Charactor\Enemy</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

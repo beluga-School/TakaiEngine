@@ -2,6 +2,17 @@
 #include "Mob.h"
 #include "TEasing.h"
 
+//プレイヤーが個別で持つ機能
+//入力
+//カメラ
+
+//汎化だけど作りが違う機能
+//ジャンプ
+//移動
+//回転
+//汎化で作りも同じ機能
+//当たり判定
+
 class Player : public Obj3d
 {
 public:
@@ -9,7 +20,23 @@ public:
 	void Update();
 	void Draw();
 
+	static Player* Get()
+	{
+		static Player instance;
+		return &instance;
+	}
+
+	float mVerticalRad = 0;
+	float mHorizontalRad = 0;
+
 private:
+	Player(){};
+	~Player(){};
+
+	void JumpUpdate();
+	void ColUpdate();
+	void RotaUpdate();
+
 	///---横移動
 	//移動速度
 	float mSpeed = 7.5f;

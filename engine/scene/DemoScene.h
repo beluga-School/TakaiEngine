@@ -40,5 +40,7 @@ private:
 	bool showCollider = false;
 	bool showSpawn = true;
 	bool showEvent = true;
+
+	bool showSkydome = true;
 };
 

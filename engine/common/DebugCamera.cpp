@@ -13,6 +13,9 @@ void DebugCamera::Initialize()
 
 void DebugCamera::Update()
 {
+	//ƒ}ƒEƒXŒÅ’è‚ğ‰ğœ
+	Mouse::CurserLock(CurserLockState::UNLOCK);
+
 	mCenterVec = matWorld.ExtractAxisZ();
 	mSideVec = matWorld.ExtractAxisX();
 

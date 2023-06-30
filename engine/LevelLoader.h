@@ -3,6 +3,7 @@
 #include <Vector3.h>
 #include <vector>
 #include <unordered_map>
+#include "Obj.h"
 
 //外部のライブラリで出た警告は無視
 #pragma warning (push)
@@ -58,3 +59,9 @@ private:
 	std::map<std::string, LevelData> LevelDatas;
 };
 
+class LevelDataExchanger
+{
+public:
+	//オブジェクトデータからObj3dに変換する関数
+	static void SetObjectData(Obj3d& exportData, const LevelData::ObjectData& inportData);
+};

@@ -298,6 +298,7 @@ void ModelManager::PreLoad()
 	LoadModel("spawnpoint", "spawnpoint");
 	LoadModel("eventtriger", "eventtriger");
 	LoadModel("CheckCollider", "CheckCollider");
+	LoadModel("groundCube", "groundCube");
 	LoadModel("BlankCube", "BlankCube");
 
 	LoadModelAssimp(L"Resources/Cube_two/Cube_two.glb", "Cube_two");

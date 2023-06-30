@@ -1,6 +1,7 @@
 #include "LevelLoader.h"
 #include <fstream>
 #include <cassert>
+#include "MathF.h"
 
 void LevelLoader::Load(const std::string& filename, const std::string& handle)
 {
@@ -81,6 +82,10 @@ void LevelLoader::ObjectLoad(LevelData& levelData,nlohmann::json& object)
 			objectData.spawnpointName = object["spawnpoint"];
 		}
 
+		if (object.contains("event_trigger")) {
+			objectData.eventtrigerName = object["event_trigger"];
+		}
+
 		//パラメータ読み込み
 		nlohmann::json& transform = object["transform"];
 
@@ -128,3 +133,18 @@ void LevelLoader::ObjectLoad(LevelData& levelData,nlohmann::json& object)
 		}
 	}
 }
+
+void LevelDataExchanger::SetObjectData(Obj3d& exportData, const LevelData::ObjectData& inportData)
+{
+	//座標
+	exportData.position = inportData.translation;
+	//回転角
+	exportData.rotation = {
+			MathF::AngleConvRad(inportData.rotation.x),
+			MathF::AngleConvRad(inportData.rotation.y),
+			MathF::AngleConvRad(inportData.rotation.z)
+	};
+	//大きさ
+	exportData.scale = inportData.scaling;
+}
+
