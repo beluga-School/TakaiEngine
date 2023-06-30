@@ -30,12 +30,12 @@ void Stage::ChangeLevel(LevelData& data)
 		}
 
 		//イベントオブジェクトなら
-		if (objectData->eventtrigerName != "")
-		{
-			//設置して残りをスキップ
-			EvenyObjectSet(*objectData);
-			continue;
-		}
+		//if (objectData->eventtrigerName != "")
+		//{
+		//	//設置して残りをスキップ
+		//	EvenyObjectSet(*objectData);
+		//	continue;
+		//}
 
 		if (objectData->spawnpointName == "enemy")
 		{
@@ -93,6 +93,12 @@ void Stage::Draw()
 
 void Stage::NormalObjectSet(const LevelData::ObjectData& data)
 {
+	//コリジョン目的で配置したならオブジェクト配置を行わない
+	if (data.fileName == "collision")
+	{
+		return;
+	}
+
 	//とりあえずキューブで配置
 	mObj3ds.emplace_back();
 	mObj3ds.back().Initialize();

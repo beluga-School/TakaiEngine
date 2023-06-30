@@ -31,10 +31,10 @@ public:
 	std::list<EventBlock> mEventObjects;
 
 	//コライダーを描画するか
-	bool mShowCollider = true;
+	bool mShowCollider = false;
 
 	//モデルを描画するか(コライダー描画時に邪魔になるので)
-	bool mShowModel = false;
+	bool mShowModel = true;
 
 private:
 	Stage(){};
