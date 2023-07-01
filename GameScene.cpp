@@ -21,17 +21,23 @@ void GameScene::Initialize()
 
 	//‰Šú‰»
 	mSkydome.Initialize();
-	//mDebugCamera.Initialize();
+	mDebugCamera.Initialize();
 	pCamera->Initialize();
 
 	player->Initialize();
 	EnemyManager::Get()->Initialize();
+
+	testSphere.Initialize();
+	testSphere.SetModel(ModelManager::GetModel("Sphere"));
+	testSphere.SetTexture(TextureManager::GetTexture("white"));
 }
 
 GUI sceneChangeGUI("change");
 
 void GameScene::Update()
 {
+	static bool debugCam = false;
+
 	mSkydome.Update();
 
 	Stage::Get()->Update();
@@ -45,20 +51,33 @@ void GameScene::Update()
 	{
 		Stage::Get()->mShowCollider = !Stage::Get()->mShowCollider;
 	}
+	if (ImGui::Button("debugCam"))
+	{
+		debugCam = !debugCam;
+	}
 	sceneChangeGUI.End();
 
 	player->Update();
 
 	//ƒJƒƒ‰XV
-	//mDebugCamera.Update();
-	pCamera->Update();
+
+	if (debugCam)
+	{
+		mDebugCamera.Update();
+	}
+	else
+	{
+		pCamera->Update();
+	}
 
 	EnemyManager::Get()->Update();
+
+	testSphere.Update(*Camera::sCamera);
 }
 
 void GameScene::Draw()
 {
-	BasicObjectPreDraw(PipelineManager::GetPipeLine("Phong"));
+	BasicObjectPreDraw(PipelineManager::GetPipeLine("Toon"));
 
 	mSkydome.Draw();
 	Stage::Get()->Draw();
@@ -66,6 +85,8 @@ void GameScene::Draw()
 	//pCamera.Draw();
 
 	EnemyManager::Get()->Draw();
+
+	testSphere.Draw();
 }
 
 void GameScene::End()

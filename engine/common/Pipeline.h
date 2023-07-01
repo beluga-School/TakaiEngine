@@ -107,9 +107,14 @@ private:
 	//CG4評価課題用パイプライン
 	void CG4PipeLine();
 
+	//phongシェーダー(ライティングを切ってるためそれっぽくない)
 	void PhongPipeLine();
 
+	//単色シェーダー
 	void SingleColorPipeLine();
+
+	//トゥーンシェーダー
+	void ToonPipeLine();
 
 	PipelineManager(){};
 	~PipelineManager(){};

@@ -43,7 +43,6 @@ void LightGroup::TransferBuffer()
 			mConstBuff.mConstBufferData->mDirLights[i].active = true;
 			mConstBuff.mConstBufferData->mDirLights[i].direction = -mDirLights[i].mDirection;
 			mConstBuff.mConstBufferData->mDirLights[i].color = mDirLights[i].mColor;
-			mConstBuff.mConstBufferData->mAmbienColor = mAmbienColor;
 		}
 		else
 		{
@@ -67,7 +66,6 @@ void LightGroup::TransferBuffer()
 
 void LightGroup::SetAmbientColor(const Vector3& color)
 {
-	mAmbienColor = color;
 	mDirty = true;
 }
 
@@ -138,10 +136,10 @@ void LightGroup::DefaultLightSet()
 
 	mDirLights[0].mActive = true;
 	mDirLights[0].mColor = { 1.0f,1.0f,1.0f };
-	mDirLights[0].mDirection = { 0.0f,-1.0f,0.0f };
+	mDirLights[0].mDirection = { 0.0f,-0.8f,0.0f };
 
 	mDirLights[1].mActive = false;
-	mDirLights[1].mColor = { 1.0f,1.0f,1.0f };
+	mDirLights[1].mColor = { 0.0f,1.0f,0.0f };
 	mDirLights[1].mDirection = { 0.5f,0.1f,0.2f };
 
 	mDirLights[2].mActive = false;

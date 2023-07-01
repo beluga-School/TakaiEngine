@@ -7,8 +7,6 @@
 
 using namespace Input;
 
-GUI inputGUI("check");
-
 void PlayerCamera::Initialize()
 {
 	Camera::sCamera->Initialize();
@@ -61,7 +59,9 @@ void PlayerCamera::Update()
 		//‰¡‰ñ“]
 		mHorizontalRad += MathF::AngleConvRad(Pad::GetRStickMove().x) * mPadSensitivity;
 	}
-	else
+
+	//ƒ}ƒEƒXŒÅ’è‚³‚ê‚Ä‚é‚È‚ç
+	if (mouseLockChange)
 	{
 		//c‰ñ“]
 		mVerticalRad += MathF::AngleConvRad(Mouse::GetVelocity().y) * mMouseSensitivity;
@@ -70,10 +70,7 @@ void PlayerCamera::Update()
 		mHorizontalRad += MathF::AngleConvRad(Mouse::GetVelocity().x) * mMouseSensitivity;
 	}
 
-	inputGUI.Begin({ 400,100 }, { 300,300 });
-	ImGui::Text("Pad::GetRStickMove() %f %f", Pad::GetRStickMove().x, Pad::GetRStickMove().y);
-	ImGui::Text("mRad %f %f", mVerticalRad, mHorizontalRad);
-	inputGUI.End();
+	//Œã‚Å—¼•û“¯Žž‚É“®‚©‚µ‚½‚Æ‚«‚É‰Á‘¬‚µ‚È‚¢‚æ‚¤‚Éclamp‚·‚é
 
 	//ŒÀŠE’l‚ð’´‚¦‚È‚¢ˆ—
 	if (mVerticalRad > MathF::PIf / 2 - MathF::AngleConvRad(1.0f)) mVerticalRad = MathF::PIf / 2 - MathF::AngleConvRad(1.0f);

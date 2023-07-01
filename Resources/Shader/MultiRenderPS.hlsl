@@ -22,6 +22,7 @@ PSOutput main(VSOutput input)
     float3 ambient = m_ambient;
     
     //シェーディングによる色
+    float3 ambientColor = { 1.0f, 1.0f, 1.0f };
     float4 shadecolor = float4(ambientColor * ambient,m_alpha);
     
     for (int i = 0; i < DIRLIGHT_NUM; i++)

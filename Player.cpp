@@ -68,24 +68,22 @@ void Player::Update()
 		moveValue += mCenterVec * Pad::GetLStickMove().y * mSpeed * TimeManager::deltaTime;
 		moveValue += mSideVec * Pad::GetLStickMove().x * mSpeed * TimeManager::deltaTime;
 	}
-	else
+
+	if (Input::Keyboard::PushKey(DIK_W))
 	{
-		if (Input::Keyboard::PushKey(DIK_W))
-		{
-			moveValue += mCenterVec * mSpeed * TimeManager::deltaTime;
-		}
-		if (Input::Keyboard::PushKey(DIK_S))
-		{
-			moveValue -= mCenterVec * mSpeed * TimeManager::deltaTime;
-		}
-		if (Input::Keyboard::PushKey(DIK_D))
-		{
-			moveValue += mSideVec * mSpeed * TimeManager::deltaTime;
-		}
-		if (Input::Keyboard::PushKey(DIK_A))
-		{
-			moveValue -= mSideVec * mSpeed * TimeManager::deltaTime;
-		}
+		moveValue += mCenterVec * mSpeed * TimeManager::deltaTime;
+	}
+	if (Input::Keyboard::PushKey(DIK_S))
+	{
+		moveValue -= mCenterVec * mSpeed * TimeManager::deltaTime;
+	}
+	if (Input::Keyboard::PushKey(DIK_D))
+	{
+		moveValue += mSideVec * mSpeed * TimeManager::deltaTime;
+	}
+	if (Input::Keyboard::PushKey(DIK_A))
+	{
+		moveValue -= mSideVec * mSpeed * TimeManager::deltaTime;
 	}
 	
 	JumpUpdate();
@@ -110,7 +108,6 @@ void Player::Draw()
 
 void Player::JumpUpdate()
 {
-
 	jumpManageTimer.Update();
 	stayManageTimer.Update();
 

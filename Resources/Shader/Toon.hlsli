@@ -8,10 +8,9 @@ cbuffer cbuff0 : register(b0)
 
 cbuffer cbuff1 : register(b1)
 {
-    //matrix mat; //3D変換行列
-    matrix viewproj;    //ビュープロ行列
-    matrix world;       //ワールド行列
-    float3 cameraPos;   //カメラ座標(ワールド座標)
+    matrix viewproj; //ビュープロ行列
+    matrix world; //ワールド行列
+    float3 cameraPos; //カメラ座標(ワールド座標)
 };
 
 cbuffer cbuff2 : register(b2)
@@ -45,10 +44,11 @@ cbuffer cbuff3 : register(b3)
     PointLight pointLights[POINTLIGHT_NUM];
 };
 
+
 struct VSOutput
 {
     float4 svpos : SV_POSITION;
     float4 worldPos : POSITION; //ワールド座標
-    float3 normal : NORMAL;     //法線
+    float3 normal : NORMAL; //法線
     float2 uv : TEXCOORD;
 };

@@ -265,6 +265,9 @@
     <Filter Include="Application\Charactor\Enemy">
       <UniqueIdentifier>{e46da77e-f434-44e8-a38d-981d3fdb64f9}</UniqueIdentifier>
     </Filter>
+    <Filter Include="シェーダー\Toon">
+      <UniqueIdentifier>{fc37acf7-e514-49f2-94bb-842ba4c4fe9d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="engine\input\Input.cpp">
@@ -698,6 +701,9 @@
     <None Include="Resources\Shader\SingleColor.hlsli">
       <Filter>シェーダー\SingleColor</Filter>
     </None>
+    <None Include="Resources\Shader\Toon.hlsli">
+      <Filter>シェーダー\Toon</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Resources\Shader\BasicPS.hlsl">
@@ -783,6 +789,12 @@
     </FxCompile>
     <FxCompile Include="Resources\Shader\SingleColorVS.hlsl">
       <Filter>シェーダー\SingleColor</Filter>
+    </FxCompile>
+    <FxCompile Include="Resources\Shader\ToonPS.hlsl">
+      <Filter>シェーダー\Toon</Filter>
+    </FxCompile>
+    <FxCompile Include="Resources\Shader\ToonVS.hlsl">
+      <Filter>シェーダー\Toon</Filter>
     </FxCompile>
   </ItemGroup>
 </Project>

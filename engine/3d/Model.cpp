@@ -283,6 +283,7 @@ void Model::CreateModelAssimp(const std::wstring& filename)
 void ModelManager::PreLoad()
 {
 	LoadModel("Cube","Cube");
+	LoadModel("Sphere","Sphere");
 	LoadModel("skydome","skydome");
 	LoadModel("firewisp","firewisp");
 	LoadModel("beetle","beetle");

@@ -20,5 +20,7 @@ private:
 	
 	Player *player = Player::Get();
 	PlayerCamera* pCamera = PlayerCamera::Get();
+
+	Obj3d testSphere;
 };
 

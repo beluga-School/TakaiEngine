@@ -40,7 +40,7 @@ struct PointLight
 
 cbuffer cbuff3 : register(b3)
 {
-    float3 ambientColor;
+    float3 pad;
     DirLight dirLights[DIRLIGHT_NUM];
     PointLight pointLights[POINTLIGHT_NUM];
 };

@@ -13,8 +13,10 @@ float4 main(VSOutput input) : SV_TARGET
     float3 eyedir = normalize(cameraPos - input.worldPos.xyz);
     float3 ambient = m_ambient;
     
+    float3 ambientColor = { 1.0f, 1.0f, 1.0f };
+    
     //シェーディングによる色
-    float4 shadecolor = float4(ambientColor * ambient,m_alpha);
+    float4 shadecolor = float4(ambientColor * ambient, m_alpha);
     
     for (int i = 0; i < DIRLIGHT_NUM; i++)
     {

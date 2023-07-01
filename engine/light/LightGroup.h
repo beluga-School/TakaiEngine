@@ -14,8 +14,8 @@ static const int32_t sPOINTLIGHT_NUM = 3;
 
 struct LightGroupData
 {
-	Vector3 mAmbienColor;
-	float mPad1;
+	Vector3 pad3;
+	float pad;
 
 	DirectionalLight::ConstBufferData mDirLights[sDIRLIGHT_NUM];
 
@@ -77,8 +77,6 @@ public://ŠÖ”
 	PointLight mPointLights[sDIRLIGHT_NUM];
 
 private:
-	//ŠÂ‹«Œõ‚ÌF
-	Vector3 mAmbienColor = { 1,1,1 };
 
 	bool mDirty = false;
 };
