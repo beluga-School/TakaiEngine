@@ -31,6 +31,7 @@ struct ConstBufferDataTransform {
 	Matrix4 viewproj;	//ビュープロ行列
 	Matrix4 world;		//ワールド行列
 	Vector3 cameraPos;	//カメラ座標(ワールド行列)
+	Vector3 cameraDir;  //カメラの視線ベクトル
 };
 
 class Obj3d

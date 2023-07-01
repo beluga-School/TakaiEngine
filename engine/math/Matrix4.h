@@ -33,11 +33,11 @@ public:
 	static Matrix4 LookAtLH(const Vector3& eye,const Vector3& target,const Vector3& up);
 
 	//横ベクトルを抽出する
-	Vector3 ExtractAxisX();
+	Vector3 ExtractAxisX()const;
 	//上方向ベクトルを抽出する
-	Vector3 ExtractAxisY();
+	Vector3 ExtractAxisY()const;
 	//正面ベクトルを抽出する
-	Vector3 ExtractAxisZ();
+	Vector3 ExtractAxisZ()const;
 
 	static Matrix4 RotArbitrary(Vector3& axis,const float& rad);
 

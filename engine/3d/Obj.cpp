@@ -72,6 +72,7 @@ void Obj3d::Update(const Camera& camera)
 	constBufferT.mConstBufferData->viewproj = camera.mMatView * camera.mMatProjection;
 	constBufferT.mConstBufferData->world = matWorld;
 	constBufferT.mConstBufferData->cameraPos = camera.mEye;
+	constBufferT.mConstBufferData->cameraDir = camera.mMatView.ExtractAxisZ();
 
 	//constBufferM.constBufferData->color = XMFLOAT4(1, 1, 1, 1.0f);
 

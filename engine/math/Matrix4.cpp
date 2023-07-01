@@ -53,17 +53,17 @@ Matrix4 Matrix4::scale(const Vector3& s)
 	return result;
 }
 
-Vector3 Matrix4::ExtractAxisX()
+Vector3 Matrix4::ExtractAxisX() const
 {
 	return Vector3(m[0][0], m[0][1], m[0][2]);
 }
 
-Vector3 Matrix4::ExtractAxisY()
+Vector3 Matrix4::ExtractAxisY() const
 {
 	return Vector3(m[1][0], m[1][1], m[1][2]);
 }
 
-Vector3 Matrix4::ExtractAxisZ()
+Vector3 Matrix4::ExtractAxisZ() const
 {
 	return Vector3(m[2][0], m[2][1], m[2][2]);
 }

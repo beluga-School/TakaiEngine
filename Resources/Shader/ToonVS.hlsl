@@ -11,6 +11,7 @@ VSOutput main(float4 pos : POSITION, float3 normal : NORMAL, float2 uv : TEXCOOR
     output.worldPos = wpos;
     output.normal = wnormal.xyz;
     output.uv = uv;
+    output.viewDir = normalize(cameraPos - mul(world, output.svpos).xyz);
     
     return output;
 }
