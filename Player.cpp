@@ -63,21 +63,29 @@ void Player::Update()
 	mSideVec = matWorld.ExtractAxisX();
 
 	//移動量を取得、加算
-	if (Input::Keyboard::PushKey(DIK_W))
+	if (Input::Pad::CheckConnectPad())
 	{
-		moveValue += mCenterVec * mSpeed * TimeManager::deltaTime;
+		moveValue += mCenterVec * Pad::GetLStickMove().y * mSpeed * TimeManager::deltaTime;
+		moveValue += mSideVec * Pad::GetLStickMove().x * mSpeed * TimeManager::deltaTime;
 	}
-	if (Input::Keyboard::PushKey(DIK_S))
+	else
 	{
-		moveValue -= mCenterVec * mSpeed * TimeManager::deltaTime;
-	}
-	if (Input::Keyboard::PushKey(DIK_D))
-	{
-		moveValue += mSideVec * mSpeed * TimeManager::deltaTime;
-	}
-	if (Input::Keyboard::PushKey(DIK_A))
-	{
-		moveValue -= mSideVec * mSpeed * TimeManager::deltaTime;
+		if (Input::Keyboard::PushKey(DIK_W))
+		{
+			moveValue += mCenterVec * mSpeed * TimeManager::deltaTime;
+		}
+		if (Input::Keyboard::PushKey(DIK_S))
+		{
+			moveValue -= mCenterVec * mSpeed * TimeManager::deltaTime;
+		}
+		if (Input::Keyboard::PushKey(DIK_D))
+		{
+			moveValue += mSideVec * mSpeed * TimeManager::deltaTime;
+		}
+		if (Input::Keyboard::PushKey(DIK_A))
+		{
+			moveValue -= mSideVec * mSpeed * TimeManager::deltaTime;
+		}
 	}
 	
 	JumpUpdate();
@@ -102,6 +110,7 @@ void Player::Draw()
 
 void Player::JumpUpdate()
 {
+
 	jumpManageTimer.Update();
 	stayManageTimer.Update();
 
@@ -109,7 +118,8 @@ void Player::JumpUpdate()
 	{
 	case Player::JumpState::None:
 		//ジャンプしていない状態で入力があったらジャンプ
-		if (Input::Keyboard::TriggerKey(DIK_SPACE))
+		if (Input::Keyboard::TriggerKey(DIK_SPACE) ||
+			Pad::TriggerPadButton(PadButton::A))
 		{
 			//値を指定
 			upJumpS = position.y;

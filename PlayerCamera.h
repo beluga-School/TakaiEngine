@@ -21,8 +21,12 @@ public:
 	//横回転
 	float mHorizontalRad = 0;
 
-	//カメラ回転の感度
-	float mSensitivity = 0.15f;
+	//カメラ回転の感度(マウス)
+	float mMouseSensitivity = 0.15f;
+
+	//カメラ回転の感度(パッド)
+	float mPadSensitivity = 1.0f;
+
 
 	//カメラベクトル
 	Vector3 mCenterVec = { 0,0,0 };

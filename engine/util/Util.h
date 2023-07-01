@@ -17,5 +17,12 @@ namespace Util
 		if (t > max) { return max; };
 		return t;
 	}
+
+	template <class T>
+	T Abs(T value)
+	{
+		if (value < 0)value *= -1;
+		return value;
+	}
 };
 

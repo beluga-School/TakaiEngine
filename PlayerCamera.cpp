@@ -3,8 +3,11 @@
 #include "MathF.h"
 #include "Input.h"
 #include "Util.h"
+#include "ImguiManager.h"
 
 using namespace Input;
+
+GUI inputGUI("check");
 
 void PlayerCamera::Initialize()
 {
@@ -50,15 +53,33 @@ void PlayerCamera::Update()
 	mRadius = Util::Clamp(mRadius, 1.0f, 30.f);
 
 	//‰ñ“]‚³‚¹‚éˆ—
-	//c‰ñ“]
-	mVerticalRad += MathF::AngleConvRad(Mouse::GetVelocity().y) * mSensitivity;
+	if (Input::Pad::CheckConnectPad())
+	{
+		//c‰ñ“]
+		mVerticalRad += MathF::AngleConvRad(Pad::GetRStickMove().y) * mPadSensitivity;
+
+		//‰¡‰ñ“]
+		mHorizontalRad += MathF::AngleConvRad(Pad::GetRStickMove().x) * mPadSensitivity;
+	}
+	else
+	{
+		//c‰ñ“]
+		mVerticalRad += MathF::AngleConvRad(Mouse::GetVelocity().y) * mMouseSensitivity;
+
+		//‰¡‰ñ“]
+		mHorizontalRad += MathF::AngleConvRad(Mouse::GetVelocity().x) * mMouseSensitivity;
+	}
+
+	inputGUI.Begin({ 400,100 }, { 300,300 });
+	ImGui::Text("Pad::GetRStickMove() %f %f", Pad::GetRStickMove().x, Pad::GetRStickMove().y);
+	ImGui::Text("mRad %f %f", mVerticalRad, mHorizontalRad);
+	inputGUI.End();
+
 	//ŒÀŠE’l‚ð’´‚¦‚È‚¢ˆ—
 	if (mVerticalRad > MathF::PIf / 2 - MathF::AngleConvRad(1.0f)) mVerticalRad = MathF::PIf / 2 - MathF::AngleConvRad(1.0f);
 	if (mVerticalRad < -MathF::PIf / 2 + MathF::AngleConvRad(1.0f)) mVerticalRad = -MathF::PIf / 2 + MathF::AngleConvRad(1.0f);
-	rotation.x = mVerticalRad;
 
-	//‰¡‰ñ“]
-	mHorizontalRad += MathF::AngleConvRad(Mouse::GetVelocity().x) * mSensitivity;
+	rotation.x = mVerticalRad;
 	rotation.y = mHorizontalRad;
 
 	Camera::sCamera->UpdatematView();

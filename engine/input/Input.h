@@ -33,6 +33,20 @@ enum class CurserLockState
 	UNLOCK = 1,
 };
 
+enum class PadButton
+{
+	A = XINPUT_GAMEPAD_A,
+	B = XINPUT_GAMEPAD_B,
+	X = XINPUT_GAMEPAD_X,
+	Y = XINPUT_GAMEPAD_Y,
+	BACK = XINPUT_GAMEPAD_BACK,
+	START = XINPUT_GAMEPAD_START,
+	UP = XINPUT_GAMEPAD_DPAD_UP,
+	DOWN = XINPUT_GAMEPAD_DPAD_DOWN,
+	RIGHT = XINPUT_GAMEPAD_DPAD_RIGHT,
+	LEFT = XINPUT_GAMEPAD_DPAD_LEFT,
+};
+
 namespace Input
 {
 	class Mouse
@@ -87,6 +101,8 @@ namespace Input
 
 		static const float STICK_MAX;
 
+		static float DEAD_ZONE;
+
 		static bool CheckConnectPad(const int32_t& padIndex = 0);
 
 		/// <summary>
@@ -94,21 +110,21 @@ namespace Input
 		/// </summary>
 		/// <param name="pad_num">XINPUT_GAMEPAD_Aなど、XINPUTのマクロを入れる</param>
 		/// <returns></returns>
-		static bool PushPadButton(const UINT& pad_num);
+		static bool PushPadButton(const PadButton& padButton);
 
 		/// <summary>
 		/// ゲームパッドのボタンが押された瞬間か
 		/// </summary>
 		/// <param name="pad_num">XINPUT_GAMEPAD_Aなど、XINPUTのマクロを入れる</param>
 		/// <returns></returns>
-		static bool TriggerPadButton(const UINT& pad_num);
+		static bool TriggerPadButton(const PadButton& padButton);
 
 		/// <summary>
 		/// ゲームパッドのボタンが離された瞬間か
 		/// </summary>
 		/// <param name="pad_num">XINPUT_GAMEPAD_Aなど、XINPUTのマクロを入れる</param>
 		/// <returns></returns>
-		static bool ReleasePadButton(const UINT& pad_num);
+		static bool ReleasePadButton(const PadButton& padButton);
 
 		/// <summary>
 		/// Lスティックの傾きを取得する

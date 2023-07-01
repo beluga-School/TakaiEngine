@@ -5,6 +5,8 @@
 using namespace Input;
 
 const float Pad::STICK_MAX = 32768.0f;
+static float DEAD_ZONE = 0;
+
 XINPUT_STATE Pad::sPState{};
 XINPUT_STATE Pad::sOldpState{};
 
@@ -83,19 +85,19 @@ bool Pad::CheckConnectPad(const int32_t& padIndex)
 	return sResult == ERROR_SUCCESS;
 }
 
-bool Pad::PushPadButton(const UINT& pad_num)
+bool Pad::PushPadButton(const PadButton& padButton)
 {
-	return sPState.Gamepad.wButtons & pad_num;
+	return sPState.Gamepad.wButtons & (UINT)padButton;
 }
 
-bool Pad::TriggerPadButton(const UINT& pad_num)
+bool Pad::TriggerPadButton(const PadButton& padButton)
 {
-	return (sPState.Gamepad.wButtons & pad_num) != 0 && (sOldpState.Gamepad.wButtons & pad_num) == 0;
+	return (sPState.Gamepad.wButtons & (UINT)padButton) != 0 && (sOldpState.Gamepad.wButtons & (UINT)padButton) == 0;
 }
 
-bool Pad::ReleasePadButton(const UINT& pad_num)
+bool Pad::ReleasePadButton(const PadButton& padButton)
 {
-	return (sPState.Gamepad.wButtons & pad_num) == 0 && (sOldpState.Gamepad.wButtons & pad_num) != 0;
+	return (sPState.Gamepad.wButtons & (UINT)padButton) == 0 && (sOldpState.Gamepad.wButtons & (UINT)padButton) != 0;
 }
 
 Vector2 Pad::GetLStickMove()
@@ -104,7 +106,23 @@ Vector2 Pad::GetLStickMove()
 		static_cast<float>(sPState.Gamepad.sThumbLX),
 		static_cast<float>(sPState.Gamepad.sThumbLY)
 	};
-	return { temp.x / STICK_MAX, temp.y / STICK_MAX };
+
+	if (Util::Abs(temp.x) < XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE) {
+		temp.x = 0;
+	}
+	else
+	{
+		temp.x /= STICK_MAX;
+	}
+	if (Util::Abs(temp.y) < XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE) {
+		temp.y = 0;
+	}
+	else
+	{
+		temp.y /= STICK_MAX;
+	}
+
+	return { temp.x , temp.y};
 }
 
 Vector2 Pad::GetRStickMove()
@@ -113,7 +131,22 @@ Vector2 Pad::GetRStickMove()
 		static_cast<float>(sPState.Gamepad.sThumbRX),
 		static_cast<float>(sPState.Gamepad.sThumbRY)
 	};
-	return { temp.x / STICK_MAX, temp.y / STICK_MAX };
+	if (Util::Abs(temp.x) < XINPUT_GAMEPAD_RIGHT_THUMB_DEADZONE){
+		temp.x = 0;
+	}
+	else
+	{
+		temp.x /= STICK_MAX;
+	}
+	if (Util::Abs(temp.y) < XINPUT_GAMEPAD_RIGHT_THUMB_DEADZONE) {
+		temp.y = 0;
+	}
+	else
+	{
+		temp.y /= STICK_MAX;
+	}
+
+	return { temp.x, temp.y};
 }
 
 bool Pad::LStickTilt(const STICK_VEC& vec)
@@ -137,7 +170,6 @@ bool Pad::LStickTilt(const STICK_VEC& vec)
 	}
 	if (vec == LEFT)
 	{
-		
 		return (sPState.Gamepad.sThumbLX < XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE);
 	}
 
