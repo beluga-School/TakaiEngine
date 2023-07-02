@@ -3,13 +3,19 @@
 #include "MathF.h"
 #include "EnemyManager.h"
 #include "Player.h"
+#include "WarpBlock.h"
+#include "GoalBlock.h"
 
 void Stage::ChangeLevel(LevelData& data)
 {
+	//ハンドルをステージに保存
+	currentHandle = data.mHandle;
+
 	//入ってたものを削除
 	mObj3ds.clear();
 	mColCubes.clear();
 	mEventObjects.clear();
+	mColObj3ds.clear();
 
 	for (auto objectData = data.mObjects.begin(); objectData != data.mObjects.end(); objectData++)
 	{
@@ -22,7 +28,7 @@ void Stage::ChangeLevel(LevelData& data)
 			//なんかセットオブジェクトの時だけ逆っぽいんだよね
 			//pythonの方を見直した方がいいかも
 			Vector3 tempPos = objectData->translation;
-			tempPos.z *= -1;
+			//tempPos.z *= -1;
 			Player::Get()->position = tempPos;
 			Player::Get()->rotation = objectData->rotation;
 			Player::Get()->scale = objectData->scaling;
@@ -37,10 +43,11 @@ void Stage::ChangeLevel(LevelData& data)
 			continue;
 		}
 
-		//イベントオブジェクトなら
+		//イベントオブジェクトなら設置
 		if (objectData->eventtrigerName != "")
 		{
-			//設置して残りをスキップ
+			//中でさらに分類わけして配置している
+			//EventBlock を基底クラスに、HitEffectの中身を変えたクラスで実装している
 			EvenyObjectSet(*objectData);
 			continue;
 		}
@@ -85,7 +92,7 @@ void Stage::Update()
 
 	for (auto& obj : mEventObjects)
 	{
-		obj.Update();
+		obj->Update();
 	}
 
 	for (auto& obj : mColObj3ds)
@@ -101,6 +108,11 @@ void Stage::Draw()
 	DrawCollider();
 
 	DrawModel();
+}
+
+std::string Stage::GetNowStageHandle()
+{
+	return currentHandle;
 }
 
 void Stage::NormalObjectSet(const LevelData::ObjectData& data)
@@ -170,16 +182,32 @@ void Stage::CollisionSet(const LevelData::ObjectData& data)
 
 void Stage::EvenyObjectSet(const LevelData::ObjectData& data)
 {
-	mEventObjects.emplace_back();
-	mEventObjects.back().Initialize();
-	mEventObjects.back().trigerName = data.eventtrigerName;
+	//stage の文字列が含まれてるなら
+	if (data.eventtrigerName.find("stage") != std::string::npos)
+	{
+		mEventObjects.emplace_back();
+		mEventObjects.back() = std::make_unique<WarpBlock>();
+		mEventObjects.back()->Initialize();
+		mEventObjects.back()->trigerName = data.eventtrigerName;
+		//バグらないように白テクスチャを入れる
+		mEventObjects.back()->SetTexture(TextureManager::Get()->GetTexture("white"));
 
-	//バグらないように白テクスチャを入れる
-	mEventObjects.back().SetTexture(TextureManager::Get()->GetTexture("white"));
-	
-	//オブジェクトの配置
-	LevelDataExchanger::SetObjectData(mEventObjects.back(), data);
+		//オブジェクトの配置
+		LevelDataExchanger::SetObjectData(*mEventObjects.back(), data);
+	}
+	//goal の文字列が含まれてるなら
+	if (data.eventtrigerName.find("goal") != std::string::npos)
+	{
+		mEventObjects.emplace_back();
+		mEventObjects.back() = std::make_unique<GoalBlock>();
+		mEventObjects.back()->Initialize();
+		mEventObjects.back()->trigerName = data.eventtrigerName;
+		//バグらないように白テクスチャを入れる
+		mEventObjects.back()->SetTexture(TextureManager::Get()->GetTexture("white"));
 
+		//オブジェクトの配置
+		LevelDataExchanger::SetObjectData(*mEventObjects.back(), data);
+	}
 }
 
 void Stage::DrawModel()
@@ -191,7 +219,7 @@ void Stage::DrawModel()
 	}
 	for (auto& obj : mEventObjects)
 	{
-		obj.Draw();
+		obj->Draw();
 	}
 }
 

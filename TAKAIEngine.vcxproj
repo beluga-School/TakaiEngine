@@ -152,10 +152,13 @@
     <ClCompile Include="External\imgui\imgui_tables.cpp" />
     <ClCompile Include="External\imgui\imgui_widgets.cpp" />
     <ClCompile Include="GameScene.cpp" />
+    <ClCompile Include="GoalBlock.cpp" />
+    <ClCompile Include="GoalSystem.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="PlayerCamera.cpp" />
     <ClCompile Include="Skydome.cpp" />
     <ClCompile Include="Stage.cpp" />
+    <ClCompile Include="WarpBlock.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="application\game\Block.h" />
@@ -220,10 +223,13 @@
     <ClInclude Include="External\imgui\imstb_truetype.h" />
     <ClInclude Include="External\json.hpp" />
     <ClInclude Include="GameScene.h" />
+    <ClInclude Include="GoalBlock.h" />
+    <ClInclude Include="GoalSystem.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="PlayerCamera.h" />
     <ClInclude Include="Skydome.h" />
     <ClInclude Include="Stage.h" />
+    <ClInclude Include="WarpBlock.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="External\imgui\imgui.ini" />

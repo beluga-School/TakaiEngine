@@ -204,6 +204,9 @@ void Player::ColUpdate()
 		bCol.position = bColTemp.position;
 		bCol.scale = bColTemp.scale;
 
+		//なぜか高さが2倍で計算されてるので高さだけ半分に
+		bCol.scale.y /= 2;
+
 		//そのオブジェクトより
 		//上にいるか
 		bool up = CheckDirections(pCol, bCol, CheckDirection::CD_UP);
@@ -298,20 +301,22 @@ void Player::ColUpdate()
 	for (auto& bColevent : Stage::Get()->mEventObjects)
 	{
 		Cube eCol;
-		eCol.position = bColevent.position;
-		eCol.scale = bColevent.scale;
+		eCol.position = bColevent->position;
+		
+		//なんか判定が小さかったので2倍に そしたらぴったりだったので、どっかで半分に
+		//する処理が挟まってる
+		eCol.scale = bColevent->scale * 2;
+		
 		if (Collsions::CubeCollision(eCol, pCol))
 		{
-			bColevent.HitEffect();
+			bColevent->HitEffect();
+
 			break;
 		}
 	}
 
 	for (auto& enemy : EnemyManager::Get()->enemyList)
 	{
-		//死んでるならスキップ(unique_ptrの場合、死んだら中身ごと消す、がなんかうまくいかないので一旦こうする
-		if (enemy->IsDead())continue;
-
 		Cube enemyCol;
 		enemyCol.position = enemy->position;
 		enemyCol.scale = enemy->scale;

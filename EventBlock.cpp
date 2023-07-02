@@ -16,11 +16,3 @@ void EventBlock::Draw()
 {
 	Obj3d::DrawMaterial();
 }
-
-void EventBlock::HitEffect()
-{
-	if (LevelLoader::Get()->GetData(trigerName) != nullptr)
-	{
-		Stage::Get()->ChangeLevel(*LevelLoader::Get()->GetData(trigerName));
-	}
-}

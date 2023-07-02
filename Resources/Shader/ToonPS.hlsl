@@ -42,7 +42,7 @@ float4 main(VSOutput input) : SV_TARGET
             float3 diffuse = smoothstep(t, t + 0.05f, dotlightnormal) * float3(0.1f, 0.1f, 0.1f);
             
             //太陽光でスペキュラーが動かないように(なんか間違ってない？)
-            float3 specular = smoothstep(0.15f, 0.2f, pow(saturate(dot(reflect, solDir)), shininess)) * m_specular;
+            float3 specular = smoothstep(0.15f, 0.2f, pow(saturate(dot(reflect, eyeDir)), shininess)) * m_specular;
             
            
             //shadecolor.rgb += diffuse * dirLights[i].lightcolor;

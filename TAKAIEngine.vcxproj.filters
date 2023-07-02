@@ -54,9 +54,6 @@
     <Filter Include="Engine\3D\Camera">
       <UniqueIdentifier>{86e85785-ec94-4f7e-a2e0-3ebb2544837c}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Application\LevelLoader">
-      <UniqueIdentifier>{79740857-baa7-4cfd-8300-7973b9ea94c2}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Application\Scene">
       <UniqueIdentifier>{2c6ff3ad-9765-446e-9ab0-ff9007a90aba}</UniqueIdentifier>
     </Filter>
@@ -238,9 +235,6 @@
     <Filter Include="Application\Collision">
       <UniqueIdentifier>{921fc882-a1c8-46bd-a451-bd0c04bdebcf}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Application\Mob">
-      <UniqueIdentifier>{302d9139-7d01-43bd-a83a-73a487d23e1a}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Application\Block">
       <UniqueIdentifier>{2d478356-55b8-45eb-999d-43fb364a2fe2}</UniqueIdentifier>
     </Filter>
@@ -256,17 +250,38 @@
     <Filter Include="Application\PlayerCamera">
       <UniqueIdentifier>{5b388bcc-558d-41e8-80d7-ab24a44fe4fe}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Application\Charactor\GEnemy">
-      <UniqueIdentifier>{2b0e9669-3383-42af-834c-1079df58a241}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Application\Charactor\EnemyManager">
-      <UniqueIdentifier>{4a1c0f97-a5fe-4cce-a633-5de90a38ede8}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Application\Charactor\Enemy">
       <UniqueIdentifier>{e46da77e-f434-44e8-a38d-981d3fdb64f9}</UniqueIdentifier>
     </Filter>
     <Filter Include="シェーダー\Toon">
       <UniqueIdentifier>{fc37acf7-e514-49f2-94bb-842ba4c4fe9d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Application\EventBlock\GoalBlock">
+      <UniqueIdentifier>{a52e176c-a13d-4d73-92ab-eb92512e6e93}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Application\EventBlock\EventBlock">
+      <UniqueIdentifier>{b571a83b-7bd6-423f-9e0b-9870427ee5b1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Application\EventBlock\WarpBlock">
+      <UniqueIdentifier>{db5f74d3-d1ec-493a-b286-b3edd3031475}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Application\Charactor\Enemy\EnemyManager">
+      <UniqueIdentifier>{4a1c0f97-a5fe-4cce-a633-5de90a38ede8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Application\Charactor\Enemy\GEnemy">
+      <UniqueIdentifier>{2b0e9669-3383-42af-834c-1079df58a241}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Application\System">
+      <UniqueIdentifier>{6886546f-0922-478c-90cd-17a63328ee64}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Application\System\Goal">
+      <UniqueIdentifier>{b4113e9c-284b-49c0-9ff0-26ccaa642dc4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Application\Charactor\Mob">
+      <UniqueIdentifier>{302d9139-7d01-43bd-a83a-73a487d23e1a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Application\LevelLoader">
+      <UniqueIdentifier>{79740857-baa7-4cfd-8300-7973b9ea94c2}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -340,7 +355,7 @@
       <Filter>Application\Collision</Filter>
     </ClCompile>
     <ClCompile Include="application\game\Mob.cpp">
-      <Filter>Application\Mob</Filter>
+      <Filter>Application\Charactor\Mob</Filter>
     </ClCompile>
     <ClCompile Include="engine\libManage\ImguiManager.cpp">
       <Filter>Engine\libManage\ImguiManager</Filter>
@@ -444,20 +459,29 @@
     <ClCompile Include="Stage.cpp">
       <Filter>Application\Stage</Filter>
     </ClCompile>
-    <ClCompile Include="EventBlock.cpp">
-      <Filter>Application\EventBlock</Filter>
-    </ClCompile>
     <ClCompile Include="PlayerCamera.cpp">
       <Filter>Application\PlayerCamera</Filter>
     </ClCompile>
     <ClCompile Include="GEnemy.cpp">
-      <Filter>Application\Charactor\GEnemy</Filter>
+      <Filter>Application\Charactor\Enemy\GEnemy</Filter>
     </ClCompile>
     <ClCompile Include="EnemyManager.cpp">
-      <Filter>Application\Charactor\EnemyManager</Filter>
+      <Filter>Application\Charactor\Enemy\EnemyManager</Filter>
     </ClCompile>
     <ClCompile Include="Enemy.cpp">
       <Filter>Application\Charactor\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="GoalBlock.cpp">
+      <Filter>Application\EventBlock\GoalBlock</Filter>
+    </ClCompile>
+    <ClCompile Include="EventBlock.cpp">
+      <Filter>Application\EventBlock\EventBlock</Filter>
+    </ClCompile>
+    <ClCompile Include="WarpBlock.cpp">
+      <Filter>Application\EventBlock\WarpBlock</Filter>
+    </ClCompile>
+    <ClCompile Include="GoalSystem.cpp">
+      <Filter>Application\System\Goal</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -534,7 +558,7 @@
       <Filter>Application\Collision</Filter>
     </ClInclude>
     <ClInclude Include="application\game\Mob.h">
-      <Filter>Application\Mob</Filter>
+      <Filter>Application\Charactor\Mob</Filter>
     </ClInclude>
     <ClInclude Include="engine\libManage\ImguiManager.h">
       <Filter>Engine\libManage\ImguiManager</Filter>
@@ -644,20 +668,29 @@
     <ClInclude Include="Stage.h">
       <Filter>Application\Stage</Filter>
     </ClInclude>
-    <ClInclude Include="EventBlock.h">
-      <Filter>Application\EventBlock</Filter>
-    </ClInclude>
     <ClInclude Include="PlayerCamera.h">
       <Filter>Application\PlayerCamera</Filter>
     </ClInclude>
     <ClInclude Include="GEnemy.h">
-      <Filter>Application\Charactor\GEnemy</Filter>
+      <Filter>Application\Charactor\Enemy\GEnemy</Filter>
     </ClInclude>
     <ClInclude Include="EnemyManager.h">
-      <Filter>Application\Charactor\EnemyManager</Filter>
+      <Filter>Application\Charactor\Enemy\EnemyManager</Filter>
     </ClInclude>
     <ClInclude Include="Enemy.h">
       <Filter>Application\Charactor\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="GoalBlock.h">
+      <Filter>Application\EventBlock\GoalBlock</Filter>
+    </ClInclude>
+    <ClInclude Include="EventBlock.h">
+      <Filter>Application\EventBlock\EventBlock</Filter>
+    </ClInclude>
+    <ClInclude Include="WarpBlock.h">
+      <Filter>Application\EventBlock\WarpBlock</Filter>
+    </ClInclude>
+    <ClInclude Include="GoalSystem.h">
+      <Filter>Application\System\Goal</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

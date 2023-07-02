@@ -12,6 +12,8 @@ public:
 	void Update();
 	void Draw();
 
+	std::string GetNowStageHandle();
+
 	static Stage* Get()
 	{
 		static Stage instance;
@@ -28,7 +30,7 @@ public:
 	std::list<Cube> mColCubes;
 
 	//イベントオブジェクト配列
-	std::list<EventBlock> mEventObjects;
+	std::list<std::unique_ptr<EventBlock>> mEventObjects;
 
 	//コライダーを描画するか
 	bool mShowCollider = false;
@@ -51,5 +53,7 @@ private:
 
 	void DrawModel();
 	void DrawCollider();
+
+	std::string currentHandle = "";
 };
 

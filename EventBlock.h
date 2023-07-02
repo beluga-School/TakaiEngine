@@ -11,7 +11,7 @@ public:
 	
 	void Draw();
 
-	void HitEffect();
+	virtual void HitEffect() = 0;
 
 	std::string trigerName = "";
 

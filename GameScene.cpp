@@ -4,6 +4,7 @@
 #include "Stage.h"
 #include "ImguiManager.h"
 #include "EnemyManager.h"
+#include "Input.h"
 
 void GameScene::Initialize()
 {
@@ -34,6 +35,12 @@ void GameScene::Update()
 {
 	static bool debugCam = false;
 
+	if (Input::Keyboard::TriggerKey(DIK_R))
+	{
+		Stage::Get()->ChangeLevel(*LevelLoader::Get()->
+			GetData(Stage::Get()->GetNowStageHandle()));
+	}
+
 	mSkydome.Update();
 
 	Stage::Get()->Update();
@@ -51,6 +58,8 @@ void GameScene::Update()
 	{
 		debugCam = !debugCam;
 	}
+	ImGui::Text("enemyNum %d", EnemyManager::Get()->enemyList.size());
+
 	sceneChangeGUI.End();
 
 	player->Update();
@@ -79,6 +88,7 @@ void GameScene::Draw()
 	//pCamera.Draw();
 
 	EnemyManager::Get()->Draw();
+
 }
 
 void GameScene::End()

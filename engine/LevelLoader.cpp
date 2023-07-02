@@ -46,6 +46,8 @@ void LevelLoader::Load(const std::string& filename, const std::string& handle)
 
 	//¶¬‚ªI‚í‚Á‚½‚çƒtƒ‰ƒO‚ğ—§‚Ä‚é
 	levelData.isCreate = true;
+	levelData.mHandle = handle;
+
 	LevelDatas[handle] = levelData;
 }
 
@@ -55,6 +57,7 @@ LevelData* LevelLoader::GetData(const std::string& handle)
 	{
 		return nullptr;
 	}
+
 	return &LevelDatas[handle];
 }
 

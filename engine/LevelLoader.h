@@ -34,6 +34,8 @@ struct LevelData
 	std::vector<ObjectData> mObjects;
 
 	bool isCreate = false;
+
+	std::string mHandle = "";
 };
 
 class LevelLoader
@@ -58,6 +60,7 @@ private:
 	~LevelLoader(){};
 
 	std::map<std::string, LevelData> LevelDatas;
+
 };
 
 class LevelDataExchanger
