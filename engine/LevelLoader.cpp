@@ -86,6 +86,10 @@ void LevelLoader::ObjectLoad(LevelData& levelData,nlohmann::json& object)
 			objectData.eventtrigerName = object["event_trigger"];
 		}
 
+		if (object.contains("setObject")) {
+			objectData.setObjectName = object["setObject"];
+		}
+
 		//ƒpƒ‰ƒ[ƒ^“Ç‚İ‚İ
 		nlohmann::json& transform = object["transform"];
 

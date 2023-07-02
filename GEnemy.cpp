@@ -16,3 +16,8 @@ void GEnemy::Draw()
 {
 	Obj3d::DrawMaterial();
 }
+
+void GEnemy::HitEffect()
+{
+	isDead = true;
+}

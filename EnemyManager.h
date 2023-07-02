@@ -19,8 +19,9 @@ public:
 	void Initialize();
 	void Update();
 	void Draw();
-private:
 
 	std::list<std::unique_ptr<Enemy>> enemyList;
+private:
+
 };
 

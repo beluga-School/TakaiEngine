@@ -2,6 +2,7 @@
 #include "Model.h"
 #include "MathF.h"
 #include "EnemyManager.h"
+#include "Player.h"
 
 void Stage::ChangeLevel(LevelData& data)
 {
@@ -12,30 +13,37 @@ void Stage::ChangeLevel(LevelData& data)
 
 	for (auto objectData = data.mObjects.begin(); objectData != data.mObjects.end(); objectData++)
 	{
-		////スポーンポイントを設定
-		////指定された名前が入ってるなら対応したやつを入れる
-		//if (objectData->spawnpointName == "player")
-		//{
-		//	testplayer.position = objectData->translation;
-		//	testplayer.rotation = objectData->rotation;
-		//	testplayer.scale = objectData->scaling;
-		//}
+		//プレイヤーの配置なら
+		if (objectData->setObjectName == "player")
+		{
+			//TODO:ここの原因追求
+			//Z軸が反転してたので、こっちで合わせてる
+			//いっかい読み込むときに反転させてるから、反転してるのが正しいはずなんだけど
+			//なんかセットオブジェクトの時だけ逆っぽいんだよね
+			//pythonの方を見直した方がいいかも
+			Vector3 tempPos = objectData->translation;
+			tempPos.z *= -1;
+			Player::Get()->position = tempPos;
+			Player::Get()->rotation = objectData->rotation;
+			Player::Get()->scale = objectData->scaling;
+
+			continue;
+		}
 		
-		//エネミーなら
-		//TODO:応急的にeventtrigerを使っているが、今後のことを考えると敵の配置専用の項目を作った方がいい
-		if (objectData->eventtrigerName == "enemy")
+		//エネミーの配置なら
+		if (objectData->setObjectName == "enemy")
 		{
 			EnemyManager::Get()->Load(*objectData);
 			continue;
 		}
 
 		//イベントオブジェクトなら
-		//if (objectData->eventtrigerName != "")
-		//{
-		//	//設置して残りをスキップ
-		//	EvenyObjectSet(*objectData);
-		//	continue;
-		//}
+		if (objectData->eventtrigerName != "")
+		{
+			//設置して残りをスキップ
+			EvenyObjectSet(*objectData);
+			continue;
+		}
 
 		if (objectData->spawnpointName == "enemy")
 		{
@@ -49,8 +57,12 @@ void Stage::ChangeLevel(LevelData& data)
 			
 			continue;
 		}
-		else
+
+		//---ここより前でcontinue忘れると、モデルを読み込んじゃってバグる可能性大
+
+		//なにも無かったら
 		{
+			//そのままモデルの配置
 			NormalObjectSet(*objectData);
 
 			//当たり判定を作成

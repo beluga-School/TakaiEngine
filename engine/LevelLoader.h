@@ -22,6 +22,7 @@ struct LevelData
 		std::string fileName;
 		std::string spawnpointName;
 		std::string eventtrigerName;
+		std::string setObjectName;
 	
 		Vector3 translation;
 		Vector3 rotation;

@@ -9,15 +9,15 @@ void GameScene::Initialize()
 {
 	//ƒ[ƒh(•ª‚¯‚½‚Ù‚¤‚ª‚¢‚¢)
 	LevelLoader::Get()->Load("Scene/woods", "woods");
-	LevelLoader::Get()->Load("Scene/stageSelect", "stageSelect");
 
 	LevelLoader::Get()->Load("Scene/stage_1", "stage_1");
 	LevelLoader::Get()->Load("Scene/stage_2", "stage_2");
 	LevelLoader::Get()->Load("Scene/stage_3", "stage_3");
-	LevelLoader::Get()->Load("Scene/stage_4", "stage_4");
-	LevelLoader::Get()->Load("Scene/castle", "castle");
+	LevelLoader::Get()->Load("Scene/stage_grasslands", "stage_grasslands");
+	LevelLoader::Get()->Load("Scene/stage_castle_outside", "stage_castle_outside");
+	LevelLoader::Get()->Load("Scene/stage_castle_inside", "stage_castle_inside");
 
-	Stage::Get()->ChangeLevel(*LevelLoader::Get()->GetData("castle"));
+	Stage::Get()->ChangeLevel(*LevelLoader::Get()->GetData("stage_castle_outside"));
 
 	//‰Šú‰»
 	mSkydome.Initialize();
@@ -26,10 +26,6 @@ void GameScene::Initialize()
 
 	player->Initialize();
 	EnemyManager::Get()->Initialize();
-
-	testSphere.Initialize();
-	testSphere.SetModel(ModelManager::GetModel("Sphere"));
-	testSphere.SetTexture(TextureManager::GetTexture("white"));
 }
 
 GUI sceneChangeGUI("change");
@@ -71,8 +67,6 @@ void GameScene::Update()
 	}
 
 	EnemyManager::Get()->Update();
-
-	testSphere.Update(*Camera::sCamera);
 }
 
 void GameScene::Draw()
@@ -85,8 +79,6 @@ void GameScene::Draw()
 	//pCamera.Draw();
 
 	EnemyManager::Get()->Draw();
-
-	testSphere.Draw();
 }
 
 void GameScene::End()

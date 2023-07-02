@@ -5,6 +5,7 @@
 #include "ImguiManager.h"
 #include "MathF.h"
 #include "PlayerCamera.h"
+#include "EnemyManager.h"
 
 using namespace Input;
 
@@ -302,6 +303,21 @@ void Player::ColUpdate()
 		if (Collsions::CubeCollision(eCol, pCol))
 		{
 			bColevent.HitEffect();
+			break;
+		}
+	}
+
+	for (auto& enemy : EnemyManager::Get()->enemyList)
+	{
+		//死んでるならスキップ(unique_ptrの場合、死んだら中身ごと消す、がなんかうまくいかないので一旦こうする
+		if (enemy->IsDead())continue;
+
+		Cube enemyCol;
+		enemyCol.position = enemy->position;
+		enemyCol.scale = enemy->scale;
+		if (Collsions::CubeCollision(enemyCol, pCol))
+		{
+			enemy->HitEffect();
 			break;
 		}
 	}
