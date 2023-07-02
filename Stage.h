@@ -3,6 +3,7 @@
 #include "Obj.h"
 #include "Collision.h"
 #include "EventBlock.h"
+#include "GoalSystem.h"
 
 class Stage
 {
@@ -11,6 +12,8 @@ public:
 
 	void Update();
 	void Draw();
+
+	void DrawSprite();
 
 	std::string GetNowStageHandle();
 
@@ -37,6 +40,8 @@ public:
 
 	//モデルを描画するか(コライダー描画時に邪魔になるので)
 	bool mShowModel = true;
+
+	GoalSystem goalSystem;
 
 private:
 	Stage(){};

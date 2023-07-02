@@ -99,6 +99,8 @@ void Stage::Update()
 	{
 		obj.Update(*Camera::sCamera);
 	}
+
+	goalSystem.Update();
 }
 
 void Stage::Draw()
@@ -108,6 +110,11 @@ void Stage::Draw()
 	DrawCollider();
 
 	DrawModel();
+}
+
+void Stage::DrawSprite()
+{
+	goalSystem.Draw();
 }
 
 std::string Stage::GetNowStageHandle()

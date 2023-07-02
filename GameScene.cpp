@@ -8,6 +8,8 @@
 
 void GameScene::Initialize()
 {
+	Stage::Get()->goalSystem.LoadResource();
+
 	//ƒ[ƒh(•ª‚¯‚½‚Ù‚¤‚ª‚¢‚¢)
 	LevelLoader::Get()->Load("Scene/woods", "woods");
 
@@ -27,6 +29,8 @@ void GameScene::Initialize()
 
 	player->Initialize();
 	EnemyManager::Get()->Initialize();
+
+	Stage::Get()->goalSystem.Initialize();
 }
 
 GUI sceneChangeGUI("change");
@@ -58,7 +62,6 @@ void GameScene::Update()
 	{
 		debugCam = !debugCam;
 	}
-	ImGui::Text("enemyNum %d", EnemyManager::Get()->enemyList.size());
 
 	sceneChangeGUI.End();
 
@@ -89,6 +92,9 @@ void GameScene::Draw()
 
 	EnemyManager::Get()->Draw();
 
+	SpriteCommonBeginDraw();
+
+	Stage::Get()->DrawSprite();
 }
 
 void GameScene::End()

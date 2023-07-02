@@ -3,8 +3,5 @@
 
 void GoalBlock::HitEffect()
 {
-	if (LevelLoader::Get()->GetData(trigerName) != nullptr)
-	{
-		//mGoalSyetem.mIsClear = true;
-	}
+	Stage::Get()->goalSystem.AnimetionStart();
 }

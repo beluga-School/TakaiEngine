@@ -1,5 +1,6 @@
 #pragma once
 #include "Sprite.h"
+#include "TEasing.h"
 
 //ゴール後の処理を進めるクラス
 //今はスプライト出すだけ
@@ -8,6 +9,9 @@ class GoalSystem
 {
 public:
 	void LoadResource();
+
+	void AnimetionStart();
+	void GoalAnimetion();
 
 	void Initialize();
 	void Update();
@@ -18,6 +22,18 @@ public:
 
 private:
 	Sprite mClearSprite;
+
+	enum class AnimetionState
+	{
+		None,
+		First,
+		Second,
+		Third,
+	} animetionState = AnimetionState::None;
+
+	TEasing::easeTimer firstTimer = 1.0f;
+	TEasing::easeTimer secondTimer = 0.5f;
+	TEasing::easeTimer thirdTimer = 1.0f;
 
 };
 
