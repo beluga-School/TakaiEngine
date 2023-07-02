@@ -31,6 +31,8 @@ public:
 	//カメラベクトル
 	Vector3 mCenterVec = { 0,0,0 };
 
+	bool mouseLockChange = true;
+
 private:
 	PlayerCamera(){};
 	~PlayerCamera(){};

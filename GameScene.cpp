@@ -33,7 +33,7 @@ void GameScene::Initialize()
 	Stage::Get()->goalSystem.Initialize();
 }
 
-GUI sceneChangeGUI("change");
+GUI sceneChangeGUI("operator");
 
 void GameScene::Update()
 {
@@ -49,7 +49,7 @@ void GameScene::Update()
 
 	Stage::Get()->Update();
 
-	sceneChangeGUI.Begin({ 100,100 }, { 100,100 });
+	sceneChangeGUI.Begin({ 100,100 }, { 300,350 });
 	if (ImGui::Button("mShowModel"))
 	{
 		Stage::Get()->mShowModel = !Stage::Get()->mShowModel;
@@ -62,6 +62,29 @@ void GameScene::Update()
 	{
 		debugCam = !debugCam;
 	}
+
+	ImGui::Text("keyboard");
+	ImGui::Text("move:w a s d");
+	ImGui::Text("cameraMove:mouse");
+	ImGui::Text("space:jump");
+	ImGui::Text("n:mouseLock Lock/UnLock change");
+	std::string mouseLockStates = "nowMouseLock:";
+	if (pCamera->mouseLockChange)
+	{
+		mouseLockStates += "true";
+	}
+	else
+	{
+		mouseLockStates += "false";
+	}
+	ImGui::Text(mouseLockStates.c_str());
+	ImGui::Text("ESC:App Close");
+	
+	ImGui::Text("");
+	ImGui::Text("pad");
+	ImGui::Text("move:LStick");
+	ImGui::Text("cameraMove:RStick");
+	ImGui::Text("A:jump");
 
 	sceneChangeGUI.End();
 

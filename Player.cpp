@@ -53,8 +53,6 @@ void Player::Initialize()
 	position.y = 10.0f;
 }
 
-GUI checkHitGUI("checkHit");
-
 void Player::Update()
 {
 	//ˆÚ“®’n‚ğ‰Šú‰»
@@ -327,11 +325,6 @@ void Player::ColUpdate()
 		}
 	}
 
-	checkHitGUI.Begin({ 300,100 }, { 100,100 });
-	ImGui::Text("downJumpE %f", downJumpE);
-	ImGui::Text("state %d", jumpState);
-
-	checkHitGUI.End();
 }
 
 void Player::RotaUpdate()
