@@ -6,6 +6,8 @@
 #include "EnemyManager.h"
 #include "Input.h"
 
+//提出を分かりやすくするために、コメントつけてプッシュ
+
 void GameScene::Initialize()
 {
 	Stage::Get()->goalSystem.LoadResource();

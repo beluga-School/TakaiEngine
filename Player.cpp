@@ -48,9 +48,8 @@ bool CheckDirections(const Cube& cubeCol, const Cube& blockCol,const CheckDirect
 void Player::Initialize()
 {
 	Obj3d::Initialize();
-	SetModel(ModelManager::GetModel("firewisp"));
+	SetModel(ModelManager::GetModel("beetle"));
 
-	position.y = 10.0f;
 }
 
 void Player::Update()
