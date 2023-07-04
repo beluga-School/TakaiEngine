@@ -266,9 +266,7 @@ void Player::ColUpdate()
 	float preY = -114514.f;
 	float maxY = 0;
 
-	//downJumpE = preY;
-
-	
+	downJumpE = preY;
 
 	for (auto& hit : hitList)
 	{
