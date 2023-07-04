@@ -22,14 +22,9 @@ void Stage::ChangeLevel(LevelData& data)
 		//プレイヤーの配置なら
 		if (objectData->setObjectName == "player")
 		{
-			//TODO:ここの原因追求
-			//Z軸が反転してたので、こっちで合わせてる
-			//いっかい読み込むときに反転させてるから、反転してるのが正しいはずなんだけど
-			//なんかセットオブジェクトの時だけ逆っぽいんだよね
-			//pythonの方を見直した方がいいかも
-			Vector3 tempPos = objectData->translation;
-			//tempPos.z *= -1;
-			Player::Get()->position = tempPos;
+			Player::Get()->Reset();
+			Player::Get()->preMove = objectData->translation;
+			Player::Get()->position = objectData->translation;
 			Player::Get()->rotation = objectData->rotation;
 			Player::Get()->scale = objectData->scaling;
 
@@ -235,6 +230,6 @@ void Stage::DrawCollider()
 	if (mShowCollider == false) return;
 	for (auto& obj : mColObj3ds)
 	{
-		obj.DrawMaterial();
+		obj.Draw();
 	}
 }

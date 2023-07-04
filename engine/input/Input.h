@@ -57,7 +57,7 @@ namespace Input
 		static void Update();
 		static void Finalize();
 
-		//カーソルの表示/非表示とカーソルが動かせるかの切り替え
+		//カーソルの表示/非表示とカーソルが動かせるかの切り替え(デフォのshowCurserは、毎フレーム呼ぶには問題があるので、ゲーム内で表示する用のカーソルを用意したい)
 		static void CurserLock(const CurserLockState& state);
 
 		//座標を取得
@@ -81,7 +81,6 @@ namespace Input
 		Vector2 mCurser{};
 		DIMOUSESTATE mState{};
 		DIMOUSESTATE mOldState{};
-
 	};
 
 	class Pad

@@ -23,14 +23,8 @@ struct Cube
 {
 	Vector3 position;
 	Vector3 scale;
-
-	//上面(上向きの法線ベクトル)
-	Plane upPlane;
-
-	Cube() {
-		upPlane.normal = { 0, 1, 0 };
-		upPlane.distance = 1.0f;
-	};
+	
+	bool operator==(const Cube& cube)const;
 };
 
 struct Sphere

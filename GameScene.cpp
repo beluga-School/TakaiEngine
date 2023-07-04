@@ -22,7 +22,7 @@ void GameScene::Initialize()
 	LevelLoader::Get()->Load("Scene/stage_castle_outside", "stage_castle_outside");
 	LevelLoader::Get()->Load("Scene/stage_castle_inside", "stage_castle_inside");
 
-	Stage::Get()->ChangeLevel(*LevelLoader::Get()->GetData("stage_castle_outside"));
+	Stage::Get()->ChangeLevel(*LevelLoader::Get()->GetData("stage_grasslands"));
 
 	//‰Šú‰»
 	mSkydome.Initialize();

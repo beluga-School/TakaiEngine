@@ -203,3 +203,13 @@ bool Collsions::CheckSphere2Triangle(const Sphere& sphere, const Triangle& trian
 
 	return true;
 }
+
+bool Cube::operator==(const Cube& cube)const
+{
+	return (cube.position.x == position.x &&
+		cube.position.y == position.y &&
+		cube.position.z == position.z &&
+		cube.scale.x == scale.x &&
+		cube.scale.y == scale.y &&
+		cube.scale.z == scale.z);
+}

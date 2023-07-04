@@ -13,12 +13,45 @@
 //汎化で作りも同じ機能
 //当たり判定
 
+template <class T>
+void UniqueObjectPushBack(std::list<T>& list, const T& col)
+{
+	for (auto itr = list.begin(); itr != list.end(); itr++)
+	{
+		//同じ要素が見つかったら止める
+		if (*itr == col)
+		{
+			return;
+		}
+		//回しきれたら同じ要素がない
+	}
+	//から入れる
+	list.push_back(col);
+}
+
+template <class T>
+void UniqueObjectErase(std::list<T>& list, const T& col)
+{
+	for (auto itr = list.begin(); itr != list.end(); itr++)
+	{
+		//同じ要素が見つかったら
+		if (*itr == col)
+		{
+			//消す
+			list.erase(itr);
+			return;
+		}
+	}
+}
+
 class Player : public Obj3d
 {
 public:
 	void Initialize();
 	void Update();
 	void Draw();
+
+	void Reset();
 
 	static Player* Get()
 	{
@@ -28,6 +61,9 @@ public:
 
 	float mVerticalRad = 0;
 	float mHorizontalRad = 0;
+
+	//前移動(上移動)
+	Vector3 preMove = { 0,0,0 };
 
 private:
 	Player(){};
@@ -48,17 +84,12 @@ private:
 	//移動値(横移動)
 	Vector3 moveValue = {0,0,0};
 
-	//前移動(上移動)
-	Vector3 preMove = {0,0,0};
-
 	///---縦移動
 	enum class JumpState
 	{
 		None,	//ジャンプしていない
 		Up,		//上昇中
 		Staying,//滞空時間
-		Down,	//下降中
-		End,	//終了を明示的に
 	};
 	JumpState jumpState = JumpState::None;
 
@@ -68,8 +99,6 @@ private:
 	float upJumpS = 0;
 	float upJumpE = 0;
 
-	//下降イージングの始点と終点
-	float downJumpS = 0;
 	float downJumpE = 0;
 
 	//ジャンプ力

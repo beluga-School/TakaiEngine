@@ -49,7 +49,6 @@ void Player::Initialize()
 {
 	Obj3d::Initialize();
 	SetModel(ModelManager::GetModel("beetle"));
-
 }
 
 void Player::Update()
@@ -104,6 +103,11 @@ void Player::Draw()
 	Obj3d::DrawMaterial();
 }
 
+void Player::Reset()
+{
+	gravity = 0;
+}
+
 void Player::JumpUpdate()
 {
 	jumpManageTimer.Update();
@@ -128,14 +132,15 @@ void Player::JumpUpdate()
 		}
 
 		//今の位置と下降判定位置が異なるなら落下
-		if (downJumpE < position.y)
+		if (position.y > downJumpE)
 		{
-			jumpState = JumpState::Down;
-			jumpManageTimer.Start();
-			stayManageTimer.Reset();
-
-			//現在位置を始点に
-			downJumpS = position.y;
+			gravity += gravityAdd;
+			preMove.y -= gravity;
+		}
+		else
+		{
+			gravity = 0;
+			preMove.y = downJumpE;
 		}
 
 		break;
@@ -155,34 +160,15 @@ void Player::JumpUpdate()
 	case Player::JumpState::Staying:
 		if (stayManageTimer.GetEnd())
 		{
-			jumpState = JumpState::Down;
-			jumpManageTimer.Start();
+			jumpState = JumpState::None;
 			stayManageTimer.Reset();
-
-			//現在位置を始点に
-			downJumpS = position.y;
 		}
-
-		break;
-	case Player::JumpState::Down:
-		//イージングで上昇
-		preMove.y = TEasing::InQuad(downJumpS, downJumpE, jumpManageTimer.GetTimeRate());
-
-		//時間が終わったらステートを次の状態に遷移
-		if (jumpManageTimer.GetEnd())
-		{
-			jumpState = JumpState::End;
-			jumpManageTimer.Reset();
-		}
-
-		break;
-	case Player::JumpState::End:
-		//何もしていない状態に戻す(クールタイムとか付けるならここで付ける)
-		jumpState = JumpState::None;
 
 		break;
 	}
 }
+
+GUI checkGUI("hitCheck");
 
 void Player::ColUpdate()
 {
@@ -195,14 +181,14 @@ void Player::ColUpdate()
 
 	pCol.position += moveValue;
 
-	for (auto& bColTemp : Stage::Get()->mColObj3ds)
+	for (auto& bCol : Stage::Get()->mColCubes)
 	{
-		Cube bCol;
-		bCol.position = bColTemp.position;
-		bCol.scale = bColTemp.scale;
+		//Cube bCol;
+		//bCol.position = bColTemp.position;
+		//bCol.scale = bColTemp.scale;
 
 		//なぜか高さが2倍で計算されてるので高さだけ半分に
-		bCol.scale.y /= 2;
+		//bCol.scale.y /= 2;
 
 		//そのオブジェクトより
 		//上にいるか
@@ -226,30 +212,31 @@ void Player::ColUpdate()
 			rayCube.position = pCol.position;
 			rayCube.scale = pCol.scale;
 			//スケールをめっちゃ引き延ばす
-			rayCube.scale.y = 1000;
+			rayCube.scale.y = 100;
 
 			//当たったなら
-			if (Collsions::CubeCollision(rayCube, bCol))
+			bool cubeCol = Collsions::CubeCollision(rayCube, bCol);
+
+			if (cubeCol)
 			{
 				//リストに入れる
-				hitList.push_back(bCol);
+				
+				//このリストをいちいち消すのではなく、
+				//当たり判定をとり、同じ要素が入っていないなら入れて
+				//当たり判定が外れたときに、その要素を消す
+				UniqueObjectPushBack(hitList,bCol);
 			}
-
-			/*if(Collsions::CubeCollision(pCol, bColTemp))
+			else
 			{
-				preMove.y = bColTemp.position.y;
-			}*/
+				UniqueObjectErase(hitList,bCol);
+			}
 		}
 
-		////下面の当たり判定
-		//if (down)
-		//{
-		//	while (Collsions::CubeCollision(pCol, bColTemp))
-		//	{
-		//		pCol.position.y -= 0.1f;
-		//		moveValue.y -= 0.1f;
-		//	}
-		//}
+		//下面の当たり判定
+		if (down)
+		{
+			
+		}
 
 		//左右の当たり判定
 		if (up == false)
@@ -278,7 +265,11 @@ void Player::ColUpdate()
 
 	float preY = -114514.f;
 	float maxY = 0;
-	downJumpE = -3.f;
+
+	//downJumpE = preY;
+
+	
+
 	for (auto& hit : hitList)
 	{
 		maxY = hit.position.y;
@@ -286,14 +277,23 @@ void Player::ColUpdate()
 		if (maxY >= preY)
 		{
 			//終点位置を更新
-			//TODO:終点位置が下降中にも更新されるので、なんかバグりそう
-			downJumpE = hit.position.y + hit.scale.y;
+			downJumpE = hit.position.y + hit.scale.y / 2 + 0.01f;
 		}
 		preY = hit.position.y;
 	}
 
+	checkGUI.Begin({ 500,100 }, { 400,500 });
+	ImGui::Text("position x:%f y:%f z:%f", position.x, position.y, position.z);
+	ImGui::Text("downJumpE %f", downJumpE);
+	for (auto& hit : hitList)
+	{
+		ImGui::Text("hitlist.position %f %f %f", hit.position.x, hit.position.y, hit.position.z);
+		ImGui::Text("hitlist.scale %f %f %f", hit.scale.x, hit.scale.y, hit.scale.z);
+	}
+	checkGUI.End();
+
 	//使い終わったので初期化
-	hitList.clear();
+	//hitList.clear();
 
 	for (auto& bColevent : Stage::Get()->mEventObjects)
 	{

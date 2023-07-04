@@ -16,7 +16,6 @@ void PlayerCamera::Initialize()
 void PlayerCamera::Update()
 {
 	//É}ÉEÉXå≈íË
-	
 	if (Input::Keyboard::TriggerKey(DIK_N))
 	{
 		mouseLockChange = !mouseLockChange;
