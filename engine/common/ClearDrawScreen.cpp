@@ -109,7 +109,7 @@ void PreDraw()
 	dx12->mCmdList->RSSetScissorRects(1, &scissorRect);
 }
 
-void BasicObjectPreDraw(const PipelineSet& objectPipelineSet)
+void BasicObjectPreDraw(const PipelineSet& objectPipelineSet, bool useLight)
 {
 	DirectX12* dx12 = DirectX12::Get();
 	TextureManager* texM = TextureManager::Get();
@@ -125,7 +125,10 @@ void BasicObjectPreDraw(const PipelineSet& objectPipelineSet)
 	//SRVヒープの設定コマンド
 	dx12->mCmdList->SetDescriptorHeaps(1, texM->mSrvHeap.GetAddressOf());
 
-	LightGroup::sLightGroup->Draw(4);
+	if (useLight)
+	{
+		LightGroup::sLightGroup->Draw(4);
+	}
 }
 
 void GeometryObjectPreDraw(const PipelineSet& geometryPipelineSet)

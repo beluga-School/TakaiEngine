@@ -746,6 +746,8 @@ void PipelineManager::Initialize()
 	SingleColorPipeLine();
 
 	ToonPipeLine();
+
+	OutLinePipeLine();
 }
 
 void PipelineManager::Object3DPipeLine()
@@ -1424,6 +1426,8 @@ void PipelineManager::ToonPipeLine()
 	pSet.pipelineDesc.RTVFormats[0] = DXGI_FORMAT_R8G8B8A8_UNORM_SRGB;	//0～255指定のRGBA
 	pSet.pipelineDesc.RTVFormats[1] = DXGI_FORMAT_R8G8B8A8_UNORM_SRGB;	//0～255指定のRGBA
 
+	pSet.pipelineDesc.RasterizerState.CullMode = D3D12_CULL_MODE_NONE;
+
 	//3dオブジェクト用のパイプライン生成
 	//頂点レイアウト
 	pSet.inputLayout =
@@ -1477,5 +1481,60 @@ void PipelineManager::ToonPipeLine()
 	pSet.Create();
 
 	std::string pipeLineName = "Toon";
+	sPipelines[pipeLineName] = pSet;
+}
+
+void PipelineManager::OutLinePipeLine()
+{
+	PipelineSet pSet;
+
+	//シェーダー設定
+	pSet.vs.shaderName = "Resources\\Shader\\OutLineVS.hlsl";
+	pSet.ps.shaderName = "Resources\\Shader\\OutLinePS.hlsl";
+
+	pSet.pipelineDesc.NumRenderTargets = 2;	//描画対象は1つ
+	pSet.pipelineDesc.RTVFormats[0] = DXGI_FORMAT_R8G8B8A8_UNORM_SRGB;	//0～255指定のRGBA
+	pSet.pipelineDesc.RTVFormats[1] = DXGI_FORMAT_R8G8B8A8_UNORM_SRGB;	//0～255指定のRGBA
+
+	pSet.pipelineDesc.RasterizerState.CullMode = D3D12_CULL_MODE_FRONT;
+
+	//3dオブジェクト用のパイプライン生成
+	//頂点レイアウト
+	pSet.inputLayout =
+	{
+			{ //xyz座標
+				"POSITION",0,DXGI_FORMAT_R32G32B32_FLOAT,0,
+				D3D12_APPEND_ALIGNED_ELEMENT,
+				D3D12_INPUT_CLASSIFICATION_PER_VERTEX_DATA,0
+			},
+			{//法線ベクトル
+				"NORMAL",0,DXGI_FORMAT_R32G32B32_FLOAT,0,
+				D3D12_APPEND_ALIGNED_ELEMENT,
+				D3D12_INPUT_CLASSIFICATION_PER_VERTEX_DATA,0
+			},
+			{ //uv座標
+				"TEXCOORD",0,DXGI_FORMAT_R32G32_FLOAT,0,
+				D3D12_APPEND_ALIGNED_ELEMENT,
+				D3D12_INPUT_CLASSIFICATION_PER_VERTEX_DATA,0
+			},
+	};
+
+	//ルートパラメータの設定
+	pSet.paramSize = 2;
+	pSet.rootParams.resize(pSet.paramSize);
+	//定数バッファ0番 b0
+	pSet.rootParams[0].ParameterType = D3D12_ROOT_PARAMETER_TYPE_CBV;	//種類
+	pSet.rootParams[0].Descriptor.ShaderRegister = 0;					//定数バッファ番号
+	pSet.rootParams[0].Descriptor.RegisterSpace = 0;						//デフォルト値
+	pSet.rootParams[0].ShaderVisibility = D3D12_SHADER_VISIBILITY_ALL;	//全てのシェーダから見える
+	//定数バッファ1番 b1
+	pSet.rootParams[1].ParameterType = D3D12_ROOT_PARAMETER_TYPE_CBV;	//種類
+	pSet.rootParams[1].Descriptor.ShaderRegister = 1;					//定数バッファ番号
+	pSet.rootParams[1].Descriptor.RegisterSpace = 0;					//デフォルト値
+	pSet.rootParams[1].ShaderVisibility = D3D12_SHADER_VISIBILITY_ALL;	//すべてのシェーダから見える
+
+	pSet.Create();
+
+	std::string pipeLineName = "OutLine";
 	sPipelines[pipeLineName] = pSet;
 }

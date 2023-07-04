@@ -116,6 +116,9 @@ private:
 	//トゥーンシェーダー
 	void ToonPipeLine();
 
+	//アウトラインシェーダー
+	void OutLinePipeLine();
+
 	PipelineManager(){};
 	~PipelineManager(){};
 };

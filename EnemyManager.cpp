@@ -1,6 +1,7 @@
 #include "EnemyManager.h"
 #include "MathF.h"
 #include "GEnemy.h"
+#include "ClearDrawScreen.h"
 
 void EnemyManager::Load(const LevelData::ObjectData& data)
 {
@@ -38,6 +39,10 @@ void EnemyManager::Draw()
 {
 	for (auto& enemy : enemyList)
 	{
+		BasicObjectPreDraw(PipelineManager::GetPipeLine("OutLine"), false);
+		enemy->DrawOutLine();
+
+		BasicObjectPreDraw(PipelineManager::GetPipeLine("Toon"));
 		enemy->Draw();
 	}
 }

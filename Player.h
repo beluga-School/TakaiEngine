@@ -113,7 +113,7 @@ private:
 	//重力
 	float gravity = 0.0f;
 	//重力加速度
-	const float gravityAdd = 0.1f;
+	const float gravityAdd = 1.5f;
 
 	///---当たり判定
 	//多分自分が当たり判定を取るオブジェクトを管理するリストがここにあった方がいい気がする

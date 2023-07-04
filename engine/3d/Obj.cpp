@@ -23,7 +23,6 @@ void Obj3d::Update(const Camera& camera)
 	Matrix4 matRot;	//回転行列
 	Matrix4 matTrans;	//平行移動行列
 
-	//matScale = XMMatrixScaling(scale.x, scale.y, scale.z);
 	//スケールを設定
 	matScale = Matrix4::Identity();
 	matScale = Matrix4::scale(scale);
@@ -32,14 +31,8 @@ void Obj3d::Update(const Camera& camera)
 	matRot = Matrix4::Identity();
 	matRot = Matrix4::rotateZ(rotation.z) * Matrix4::rotateX(rotation.x) * Matrix4::rotateY(rotation.y);
 
-	//matRot = XMMatrixIdentity();
-	//matRot *= XMMatrixRotationZ(rotation.z);
-	//matRot *= XMMatrixRotationX(rotation.x);
-	//matRot *= XMMatrixRotationY(rotation.y);
-
 	matTrans = Matrix4::Identity();
 	matTrans = Matrix4::translate(position);
-	//matTrans = XMMatrixTranslation(position.x, position.y, position.z);
 
 	matWorld = Matrix4::Identity();
 	matWorld = matScale * matRot * matTrans;
@@ -68,25 +61,22 @@ void Obj3d::Update(const Camera& camera)
 
 	}
 
-	//constBufferT.constBufferData->mat = matWorld * matView * matProjection;
 	constBufferT.mConstBufferData->viewproj = camera.mMatView * camera.mMatProjection;
 	constBufferT.mConstBufferData->world = matWorld;
 	constBufferT.mConstBufferData->cameraPos = camera.mEye;
 	constBufferT.mConstBufferData->cameraDir = camera.mMatView.ExtractAxisZ();
 
-	//constBufferM.constBufferData->color = XMFLOAT4(1, 1, 1, 1.0f);
-
-	//ConstBufferDataB1* constMap1 = nullptr;
-	//result = constBufferMaterial.buffer->Map(0, nullptr, (void**)&constMap1);
 	if (MODEL != nullptr)
 	{
-		constBufferMaterial.mConstBufferData->ambient = MODEL->mMaterial.mAmbient;
-		constBufferMaterial.mConstBufferData->diffuse = MODEL->mMaterial.mDiffuse;
-		constBufferMaterial.mConstBufferData->specular = MODEL->mMaterial.mSpecular;
-		constBufferMaterial.mConstBufferData->alpha = MODEL->mMaterial.mAlpha;
+		constBufferB1.mConstBufferData->ambient = MODEL->mMaterial.mAmbient;
+		constBufferB1.mConstBufferData->diffuse = MODEL->mMaterial.mDiffuse;
+		constBufferB1.mConstBufferData->specular = MODEL->mMaterial.mSpecular;
+		constBufferB1.mConstBufferData->alpha = MODEL->mMaterial.mAlpha;
 		constBufferB.mConstBufferData->brightness = color_;
 	}
-	//constBufferMaterial.buffer->Unmap(0, nullptr);
+
+	constBufferOutLine.mConstBufferData->color = mOutLineColor;
+	constBufferOutLine.mConstBufferData->thickness = mOutLineThickness;
 }
 
 Vector3 Obj3d::GetWorldTrans()
@@ -122,7 +112,7 @@ void Obj3d::Draw() {
 	dx12->mCmdList->IASetIndexBuffer(&MODEL->mIbView);
 	
 	//定数バッファビュー(CBV)の設定コマンド
-	dx12->mCmdList->SetGraphicsRootConstantBufferView(0, constBufferMaterial.mBuffer->GetGPUVirtualAddress());
+	dx12->mCmdList->SetGraphicsRootConstantBufferView(0, constBufferB1.mBuffer->GetGPUVirtualAddress());
 	//commandList->SetGraphicsRootConstantBufferView(0, constBufferM.buffer->GetGPUVirtualAddress());
 
 	dx12->mCmdList->SetGraphicsRootConstantBufferView(2, constBufferT.mBuffer->GetGPUVirtualAddress());
@@ -155,7 +145,7 @@ void Obj3d::DrawMaterial() {
 	dx12->mCmdList->IASetIndexBuffer(&MODEL->mIbView);
 
 	//定数バッファビュー(CBV)の設定コマンド
-	dx12->mCmdList->SetGraphicsRootConstantBufferView(0, constBufferMaterial.mBuffer->GetGPUVirtualAddress());
+	dx12->mCmdList->SetGraphicsRootConstantBufferView(0, constBufferB1.mBuffer->GetGPUVirtualAddress());
 
 	dx12->mCmdList->SetGraphicsRootConstantBufferView(2, constBufferT.mBuffer->GetGPUVirtualAddress());
 
@@ -163,4 +153,41 @@ void Obj3d::DrawMaterial() {
 
 	//描画コマンド
 	dx12->mCmdList->DrawIndexedInstanced((UINT)MODEL->mMesh.indices.size(), 1, 0, 0, 0);
+}
+
+void Obj3d::DrawOutLine()
+{
+	//見えないフラグが立ってるなら描画を行わない
+	if (mIsVisiable == false)
+	{
+		return;
+	}
+
+	DirectX12* dx12 = DirectX12::Get();
+	//TextureManager* texM = TextureManager::Get();
+
+	//SRVヒープの先頭から順番にSRVをルートパラメータ1番に設定
+	//ルートパラメータ1番はテクスチャバッファ
+	//dx12->mCmdList->SetGraphicsRootDescriptorTable(1, MODEL->mMaterial.mTextire->mGpuHandle);
+	
+	//頂点バッファの設定
+	dx12->mCmdList->IASetVertexBuffers(0, 1, &MODEL->mVbView);
+
+	//インデックスバッファの設定
+	dx12->mCmdList->IASetIndexBuffer(&MODEL->mIbView);
+
+	//定数バッファビュー(CBV)の設定コマンド
+	dx12->mCmdList->SetGraphicsRootConstantBufferView(0, constBufferOutLine.mBuffer->GetGPUVirtualAddress());
+
+	dx12->mCmdList->SetGraphicsRootConstantBufferView(1, constBufferT.mBuffer->GetGPUVirtualAddress());
+
+	//描画コマンド
+	dx12->mCmdList->DrawIndexedInstanced((UINT)MODEL->mMesh.indices.size(), 1, 0, 0, 0);
+
+}
+
+void Obj3d::SetOutLineState(const Vector3& color, float thickness)
+{
+	mOutLineColor = color;
+	mOutLineThickness = thickness;
 }

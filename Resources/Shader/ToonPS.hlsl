@@ -3,7 +3,6 @@
 Texture2D<float4> tex : register(t0); //0番スロットに設定されたテクスチャ
 SamplerState smp : register(s0); //0番スロットに設定されたサンプラー
 
-
 float4 main(VSOutput input) : SV_TARGET
 {
     float4 texcolor = tex.Sample(smp, input.uv);
@@ -44,11 +43,6 @@ float4 main(VSOutput input) : SV_TARGET
             //太陽光でスペキュラーが動かないように(なんか間違ってない？)
             float3 specular = smoothstep(0.15f, 0.2f, pow(saturate(dot(reflect, eyeDir)), shininess)) * m_specular;
             
-           
-            //shadecolor.rgb += diffuse * dirLights[i].lightcolor;
-           
-            
-            
             //加算
             shadecolor.rgb += (diffuse + specular) * dirLights[i].lightcolor;
           
@@ -73,8 +67,6 @@ float4 main(VSOutput input) : SV_TARGET
             //ポイントライトは使ってないのでいったん消す
         }
     }
-    
-    
 
     return shadecolor * texcolor * color;
 }

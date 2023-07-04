@@ -6,6 +6,7 @@
 #include "MathF.h"
 #include "PlayerCamera.h"
 #include "EnemyManager.h"
+#include "ClearDrawScreen.h"
 
 using namespace Input;
 
@@ -49,6 +50,8 @@ void Player::Initialize()
 {
 	Obj3d::Initialize();
 	SetModel(ModelManager::GetModel("beetle"));
+
+	SetOutLineState({ 0.1f,0.1f,0.1f }, 0.05f);
 }
 
 void Player::Update()
@@ -100,6 +103,10 @@ void Player::Update()
 
 void Player::Draw()
 {
+	BasicObjectPreDraw(PipelineManager::GetPipeLine("OutLine"), false);
+	Obj3d::DrawOutLine();
+
+	BasicObjectPreDraw(PipelineManager::GetPipeLine("Toon"));
 	Obj3d::DrawMaterial();
 }
 
@@ -135,7 +142,7 @@ void Player::JumpUpdate()
 		if (position.y > downJumpE)
 		{
 			gravity += gravityAdd;
-			preMove.y -= gravity;
+			preMove.y -= gravity * TimeManager::deltaTime;
 		}
 		else
 		{
@@ -279,16 +286,6 @@ void Player::ColUpdate()
 		}
 		preY = hit.position.y;
 	}
-
-	checkGUI.Begin({ 500,100 }, { 400,500 });
-	ImGui::Text("position x:%f y:%f z:%f", position.x, position.y, position.z);
-	ImGui::Text("downJumpE %f", downJumpE);
-	for (auto& hit : hitList)
-	{
-		ImGui::Text("hitlist.position %f %f %f", hit.position.x, hit.position.y, hit.position.z);
-		ImGui::Text("hitlist.scale %f %f %f", hit.scale.x, hit.scale.y, hit.scale.z);
-	}
-	checkGUI.End();
 
 	//égÇ¢èIÇÌÇ¡ÇΩÇÃÇ≈èâä˙âª
 	//hitList.clear();

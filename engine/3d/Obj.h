@@ -34,15 +34,20 @@ struct ConstBufferDataTransform {
 	Vector3 cameraDir;  //カメラの視線ベクトル
 };
 
+struct ConstBufferDataOutLine {
+	Vector3 color;
+	float thickness;
+};
+
 class Obj3d
 {
 public:
 
 	ConstBuffer<ConstBufferDataTransform> constBufferT;
-	ConstBuffer<ConstBufferDataMaterial> constBufferM;
 	ConstBuffer<ConstBufferBrightness> constBufferB;
 
-	ConstBuffer<ConstBufferDataB1> constBufferMaterial;
+	ConstBuffer<ConstBufferDataB1> constBufferB1;
+	ConstBuffer<ConstBufferDataOutLine> constBufferOutLine;
 
 	Vector3 scale = { 1.0f,1.0f,1.0f };
 	Vector3 rotation = { 0,0,0 };
@@ -62,7 +67,6 @@ public:
 	bool mIsVisiable = true;
 
 public:
-
 	void Initialize();
 	void SetModel(const Model *model);
 	void SetTexture(const Texture *texture);
@@ -72,5 +76,14 @@ public:
 
 	void Draw();
 	void DrawMaterial();
+
+	void DrawOutLine();
+
+	void SetOutLineState(const Vector3& color,float thickness);
+
+protected:
+	//アウトライン周りの設定
+	Vector3 mOutLineColor = {0,0,0};
+	float mOutLineThickness = 0.02f;
 
 };

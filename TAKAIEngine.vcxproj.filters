@@ -283,6 +283,9 @@
     <Filter Include="Application\LevelLoader">
       <UniqueIdentifier>{79740857-baa7-4cfd-8300-7973b9ea94c2}</UniqueIdentifier>
     </Filter>
+    <Filter Include="シェーダー\OutLine">
+      <UniqueIdentifier>{3a999208-4231-44d7-a413-3bbd4485369e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="engine\input\Input.cpp">
@@ -737,6 +740,9 @@
     <None Include="Resources\Shader\Toon.hlsli">
       <Filter>シェーダー\Toon</Filter>
     </None>
+    <None Include="Resources\Shader\OutLine.hlsli">
+      <Filter>シェーダー\OutLine</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Resources\Shader\BasicPS.hlsl">
@@ -828,6 +834,12 @@
     </FxCompile>
     <FxCompile Include="Resources\Shader\ToonVS.hlsl">
       <Filter>シェーダー\Toon</Filter>
+    </FxCompile>
+    <FxCompile Include="Resources\Shader\OutLinePS.hlsl">
+      <Filter>シェーダー\OutLine</Filter>
+    </FxCompile>
+    <FxCompile Include="Resources\Shader\OutLineVS.hlsl">
+      <Filter>シェーダー\OutLine</Filter>
     </FxCompile>
   </ItemGroup>
 </Project>

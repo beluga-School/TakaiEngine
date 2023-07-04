@@ -5,6 +5,7 @@
 #include "Player.h"
 #include "WarpBlock.h"
 #include "GoalBlock.h"
+#include "ClearDrawScreen.h"
 
 void Stage::ChangeLevel(LevelData& data)
 {
@@ -128,6 +129,10 @@ void Stage::NormalObjectSet(const LevelData::ObjectData& data)
 	//とりあえずキューブで配置
 	mObj3ds.emplace_back();
 	mObj3ds.back().Initialize();
+
+	//アウトライン設定
+	mObj3ds.back().SetOutLineState({ 1,0,0 }, 0.05f);
+
 	//モデル設定
 	//ファイルネームが設定されてるならそれで
 	if (data.fileName != "")
@@ -135,7 +140,7 @@ void Stage::NormalObjectSet(const LevelData::ObjectData& data)
 		//読み込みしてないなら読み込みも行う
 		if (ModelManager::GetModel(data.fileName) == nullptr)
 		{
-			ModelManager::LoadModel(data.fileName, data.fileName);
+			ModelManager::LoadModel(data.fileName, data.fileName,true);
 		}
 		mObj3ds.back().SetModel(ModelManager::GetModel(data.fileName));
 	}
@@ -190,6 +195,9 @@ void Stage::EvenyObjectSet(const LevelData::ObjectData& data)
 		mEventObjects.emplace_back();
 		mEventObjects.back() = std::make_unique<WarpBlock>();
 		mEventObjects.back()->Initialize();
+
+		mEventObjects.back()->SetOutLineState({ 1,0,0 }, 0.05f);
+
 		mEventObjects.back()->trigerName = data.eventtrigerName;
 		//バグらないように白テクスチャを入れる
 		mEventObjects.back()->SetTexture(TextureManager::Get()->GetTexture("white"));
@@ -217,10 +225,16 @@ void Stage::DrawModel()
 	if (mShowModel == false) return;
 	for (auto& obj : mObj3ds)
 	{
+		BasicObjectPreDraw(PipelineManager::GetPipeLine("OutLine"), false);
+		obj.DrawOutLine();
+		BasicObjectPreDraw(PipelineManager::GetPipeLine("Toon"));
 		obj.DrawMaterial();
 	}
 	for (auto& obj : mEventObjects)
 	{
+		BasicObjectPreDraw(PipelineManager::GetPipeLine("OutLine"),false);
+		obj->DrawOutLine();
+		BasicObjectPreDraw(PipelineManager::GetPipeLine("Toon"));
 		obj->Draw();
 	}
 }

@@ -15,7 +15,7 @@ class Camera
 {
 public:
 	Matrix4 mMatView;
-	Vector3 mEye;	//視点座標
+	Vector3 mEye;		//視点座標
 	Vector3 mTarget;	//注視点座標
 	Vector3 mUp;		//上方向ベクトル
 
