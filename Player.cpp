@@ -312,40 +312,44 @@ void Player::ColUpdate()
 		//左右の当たり判定
 		if (up == false)
 		{
-			////左右も別の当たり判定リスト作って、同じ手法で取れそう？
-			//if (Collsions::CubeCollision(pCol, bCol))
-			//{
-			//	//横方向を少し大きくして、当たり判定を取ったオブジェクトと当たっているなら
-			//	if (right)
-			//	{
-			//		moveValue.x = 0;
-			//	}
-			//	if (left)
-			//	{
-			//		moveValue.x = 0;
-			//	}
-			//	if (back)
-			//	{
-			//		moveValue.z = 0;
-			//	}
-			//}
-			if (center)
+			//左右も別の当たり判定リスト作って、同じ手法で取れそう？
+			if (Collsions::CubeCollision(pCol, bCol))
 			{
-				Cube sideCube;
-				sideCube.position = pCol.position;
-				//横方向の大きさを2倍に
-				sideCube.scale.z = pCol.scale.z * 2.f;
-				if (Collsions::CubeCollision(sideCube, bCol))
+				//横方向を少し大きくして、当たり判定を取ったオブジェクトと当たっているなら
+				if (right)
 				{
-					UniqueObjectPushBack(hitListX, bCol);
+					moveValue.x = 0;
 				}
-				else
+				if (left)
 				{
-					UniqueObjectErase(hitListX, bCol);
-
+					moveValue.x = 0;
 				}
-				moveValue.z = 0;
+				if (back)
+				{
+					moveValue.z = 0;
+				}
+				if (center)
+				{
+					moveValue.z = 0;
+				}
 			}
+			//if (center)
+			//{
+			//	Cube sideCube;
+			//	sideCube.position = pCol.position;
+			//	//横方向の大きさを2倍に
+			//	sideCube.scale.z = pCol.scale.z * 2.f;
+			//	if (Collsions::CubeCollision(sideCube, bCol))
+			//	{
+			//		UniqueObjectPushBack(hitListX, bCol);
+			//	}
+			//	else
+			//	{
+			//		UniqueObjectErase(hitListX, bCol);
+
+			//	}
+			//	moveValue.z = 0;
+			//}
 		}
 	}
 

@@ -6,13 +6,7 @@
 #include "EnemyManager.h"
 #include "Input.h"
 
-//提出を分かりやすくするために、コメントつけてプッシュ
-
 void GameScene::LoadResource()
-{
-}
-
-void GameScene::Initialize()
 {
 	Stage::Get()->goalSystem.LoadResource();
 
@@ -27,7 +21,10 @@ void GameScene::Initialize()
 	LevelLoader::Get()->Load("Scene/stage_castle_inside", "stage_castle_inside");
 
 	Stage::Get()->ChangeLevel(*LevelLoader::Get()->GetData("stage_grasslands"));
+}
 
+void GameScene::Initialize()
+{
 	//初期化
 	mSkydome.Initialize();
 	mDebugCamera.Initialize();
