@@ -291,6 +291,7 @@ void ModelManager::PreLoad()
 	LoadModel("eventtriger", "eventtriger");
 	LoadModel("groundCube", "groundCube", true);
 	LoadModel("BlankCube", "BlankCube");
+	LoadModel("Sphere", "smSphere", true);
 }
 
 void ModelManager::LoadModel(const std::string filepath, const std::string handle, bool smooth)

@@ -7,64 +7,38 @@ float4 main(VSOutput input) : SV_TARGET
 {
     float4 texcolor = tex.Sample(smp, input.uv);
     
-    //光沢度
-    const float shininess = 4.0f;
-    
-    //前の処理　多分入れる値をちゃんと理解したらこっちが正しい
-    //float3 eyedir = normalize(cameraPos - input.worldPos.xyz);
-    
-    //cameraPos参照だと、やりたいことと噛み合ってなかったので勝手に太陽の位置を決定
-    float3 solPos = { 0, 100, 0 };
-    float3 solDir = normalize(solPos - input.worldPos.xyz);
-    float3 ambient = m_ambient;
-    //float3 ambient = float3(0.0f,0.0f,1.0f);
-    
-    //視点ベクトル
-    float3 eyeDir = normalize(input.worldPos.xyz - cameraPos);
-    
-    float t = 0.01f;
-    
-    //シェーディングによる色
-    float3 ambientColor = float3(0.8f, 0.8f, 0.8f);
-    
-    float4 shadecolor = float4(ambientColor * ambient, m_alpha);
+    float4 shadecolor = {0,0,0,1};
     
     for (int i = 0; i < DIRLIGHT_NUM; i++)
     {
         if (dirLights[i].active)
-        {
-            float3 dotlightnormal = dot(dirLights[i].lightv, input.normal);
+        {   
+            //アンビエント = オブジェクトの元の色 * 暗くする率 * 光の色
+            float3 ambient = texcolor.rgb * m_ambient * dirLights[i].lightcolor;
             
-            float3 reflect = normalize(-dirLights[i].lightv + 2 * dotlightnormal * input.normal);
+            //ディフューズ
+            //光との内積値
+            float intensity = saturate(dot(normalize(input.normal), dirLights[i].lightv));
+            //オブジェクトの色
+            float3 difColor = texcolor.rgb;
             
-            //トゥーンはここをいじらないといけない
-            float3 diffuse = smoothstep(t, t + 0.05f, dotlightnormal) * float3(0.1f, 0.1f, 0.1f);
+            //ディフューズ = オブジェクトの元の色 * 光との内積値 * 光の色
+            float3 diffuse = difColor * intensity * dirLights[i].lightcolor;
             
-            //太陽光でスペキュラーが動かないように(なんか間違ってない？)
-            float3 specular = smoothstep(0.15f, 0.2f, pow(saturate(dot(reflect, eyeDir)), shininess)) * m_specular;
+            //スペキュラー
+            //視線ベクトル
+            float3 eyeDir = normalize(cameraPos - input.worldPos.xyz);
+            //入射光
+            float3 lightDir = normalize(dirLights[i].lightv);
             
-            //加算
-            shadecolor.rgb += (diffuse + specular) * dirLights[i].lightcolor;
-          
+            float3 normalizeVec = normalize(input.normal);
+            //反射光
+            float3 reflectDir = -lightDir + 2 * normalizeVec * dot(normalizeVec, lightDir);
             
-            ////リムライト
-            //float rimPower = 2.0f;
-                    
-            //float3 eye_vector = normalize(-abs(cameraDir));
-            //float3 light_vector = normalize(dirLights[i].lightv);
-            //float3 normal = normalize(input.normal);
+            float3 specular = pow(saturate(dot(reflectDir, eyeDir)), 20) * dirLights[i].lightcolor;
             
-            //float rim = 1.0f - dot(normal, eye_vector);
-            
-            //rim = pow(abs(rim), rimPower);
-            
-            //float light_rim = max(dot(-light_vector, eye_vector), 0.0f);
-            
-            //float3 rimcolor = rim * light_rim;
-            ////リムライトはわけて加算してみる
-            //shadecolor.rgb += rimcolor;
-            
-            //ポイントライトは使ってないのでいったん消す
+            shadecolor.rgb += (ambient + diffuse + specular);
+            shadecolor.a += 1;
         }
     }
 

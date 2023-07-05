@@ -107,7 +107,7 @@ private:
 	//CG4評価課題用パイプライン
 	void CG4PipeLine();
 
-	//phongシェーダー(ライティングを切ってるためそれっぽくない)
+	//phongシェーダー
 	void PhongPipeLine();
 
 	//単色シェーダー
@@ -118,6 +118,9 @@ private:
 
 	//アウトラインシェーダー
 	void OutLinePipeLine();
+
+	//スカイドーム用(なんの影響も受けない)シェーダー
+	void SkydomePipeLine();
 
 	PipelineManager(){};
 	~PipelineManager(){};

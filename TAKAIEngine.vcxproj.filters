@@ -289,6 +289,9 @@
     <Filter Include="Application\Scene\ShaderTestScene">
       <UniqueIdentifier>{9c532383-23be-4611-a497-7bc868e0295a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="シェーダー\Skydome">
+      <UniqueIdentifier>{3375785c-d162-4aba-9511-095e8576d516}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="engine\input\Input.cpp">
@@ -490,7 +493,7 @@
       <Filter>Application\System\Goal</Filter>
     </ClCompile>
     <ClCompile Include="ShaderTestScene.cpp">
-      <Filter>ソース ファイル</Filter>
+      <Filter>Application\Scene\ShaderTestScene</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -702,7 +705,7 @@
       <Filter>Application\System\Goal</Filter>
     </ClInclude>
     <ClInclude Include="ShaderTestScene.h">
-      <Filter>ヘッダー ファイル</Filter>
+      <Filter>Application\Scene\ShaderTestScene</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -751,6 +754,9 @@
     </None>
     <None Include="Resources\Shader\OutLine.hlsli">
       <Filter>シェーダー\OutLine</Filter>
+    </None>
+    <None Include="Resources\Shader\Skydome.hlsli">
+      <Filter>シェーダー\Skydome</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>
@@ -849,6 +855,12 @@
     </FxCompile>
     <FxCompile Include="Resources\Shader\OutLineVS.hlsl">
       <Filter>シェーダー\OutLine</Filter>
+    </FxCompile>
+    <FxCompile Include="Resources\Shader\SkydomePS.hlsl">
+      <Filter>シェーダー\Skydome</Filter>
+    </FxCompile>
+    <FxCompile Include="Resources\Shader\SkydomeVS.hlsl">
+      <Filter>シェーダー\Skydome</Filter>
     </FxCompile>
   </ItemGroup>
 </Project>
