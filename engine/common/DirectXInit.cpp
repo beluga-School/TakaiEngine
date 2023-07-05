@@ -118,7 +118,7 @@ void DirectX12::SetSwapChain()
 	mSwapChainDesc.Flags = DXGI_SWAP_CHAIN_FLAG_ALLOW_MODE_SWITCH;
 
 	//ComPtrに対応
-	ComPtr<IDXGISwapChain1> swapchain1;
+	Microsoft::WRL::ComPtr<IDXGISwapChain1> swapchain1;
 
 	//スワップチェーンの生成
 	sResult = mDxgifactory->CreateSwapChainForHwnd(

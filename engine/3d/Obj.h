@@ -1,8 +1,6 @@
 #pragma once
 #include <DirectXMath.h>
-using namespace DirectX;
 #include <d3dcompiler.h>
-#pragma comment(lib,"d3dcompiler.lib")
 #include "DirectXInit.h"
 #include "Model.h"
 #include "Texture.h"
@@ -23,7 +21,7 @@ struct ConstBufferDataB1
 
 struct ConstBufferBrightness
 {
-	XMFLOAT4 brightness;		//カラー
+	DirectX::XMFLOAT4 brightness;		//カラー
 };
 
 struct ConstBufferDataTransform {
@@ -53,7 +51,7 @@ public:
 	Vector3 rotation = { 0,0,0 };
 	Vector3 position = { 0,0,0 };
 
-	XMFLOAT4 color_ = { 1.0f,1.0f,1.0f,1.0f };
+	DirectX::XMFLOAT4 color_ = { 1.0f,1.0f,1.0f,1.0f };
 
 	Matrix4 matWorld;
 

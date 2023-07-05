@@ -3,6 +3,8 @@
 #include "DirectXInit.h"
 #include <memory>
 
+using namespace DirectX;
+
 std::map<std::string, Texture> TextureManager::sTextures;
 
 void Texture::CreateWhiteTexture()

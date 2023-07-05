@@ -16,11 +16,11 @@ void GameScene::LoadResource()
 	LevelLoader::Get()->Load("Scene/stage_1", "stage_1");
 	LevelLoader::Get()->Load("Scene/stage_2", "stage_2");
 	LevelLoader::Get()->Load("Scene/stage_3", "stage_3");
-	LevelLoader::Get()->Load("Scene/stage_grasslands", "stage_grasslands");
 	LevelLoader::Get()->Load("Scene/stage_castle_outside", "stage_castle_outside");
 	LevelLoader::Get()->Load("Scene/stage_castle_inside", "stage_castle_inside");
+	LevelLoader::Get()->Load("Scene/stage_grasslands", "stage_grasslands");
 
-	Stage::Get()->ChangeLevel(*LevelLoader::Get()->GetData("stage_grasslands"));
+	Stage::Get()->ChangeLevel(*LevelLoader::Get()->GetData("stage_castle_outside"));
 }
 
 void GameScene::Initialize()
@@ -46,6 +46,10 @@ void GameScene::Update()
 	{
 		Stage::Get()->ChangeLevel(*LevelLoader::Get()->
 			GetData(Stage::Get()->GetNowStageHandle()));
+	}
+	if (Input::Keyboard::TriggerKey(DIK_F))
+	{
+		Stage::Get()->ChangeLevel(*LevelLoader::Get()->GetData("stage_castle_inside"));
 	}
 
 	mSkydome.Update();

@@ -1,13 +1,13 @@
 #include "Model.h"
-using namespace std;
 #include "StringUtil.h"
 #include <Vector2.h>
-
 #include <assimp/Importer.hpp>
 #include <assimp/scene.h>
 #include <assimp/postprocess.h> 
-
 #include <AssimpLoader.h>
+
+using namespace std;
+using namespace DirectX;
 
 std::map<std::string, Model> ModelManager::sModels;
 

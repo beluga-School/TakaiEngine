@@ -168,7 +168,7 @@ PipelineSet CreateLambertPipeline()
 	rootSignatureDesc.NumStaticSamplers = 1;				//サンプラーの数			配列ならルートパラメータと同じような書き方ができる
 
 	//ルートシグネチャのシリアライズ
-	ComPtr<ID3DBlob> rootSigBlob;
+	Microsoft::WRL::ComPtr<ID3DBlob> rootSigBlob;
 	sResult = D3D12SerializeRootSignature(&rootSignatureDesc, D3D_ROOT_SIGNATURE_VERSION_1_0,
 		&rootSigBlob, &shader_.mErrorBlob);
 	assert(SUCCEEDED(sResult));
@@ -340,7 +340,7 @@ PipelineSet CreateSpritePipeline()
 	rootSignatureDesc2.NumStaticSamplers = 1;				//サンプラーの数			配列ならルートパラメータと同じような書き方ができる
 
 	//ルートシグネチャのシリアライズ
-	ComPtr<ID3DBlob> rootSigBlob2;
+	Microsoft::WRL::ComPtr<ID3DBlob> rootSigBlob2;
 	sResult = D3D12SerializeRootSignature(&rootSignatureDesc2, D3D_ROOT_SIGNATURE_VERSION_1_0,
 		&rootSigBlob2, &shader2_.mErrorBlob);
 	assert(SUCCEEDED(sResult));
@@ -515,7 +515,7 @@ PipelineSet CreateGeometryPipeline()
 	rootSignatureDesc.NumStaticSamplers = 1;				//サンプラーの数			配列ならルートパラメータと同じような書き方ができる
 
 	//ルートシグネチャのシリアライズ
-	ComPtr<ID3DBlob> rootSigBlob;
+	Microsoft::WRL::ComPtr<ID3DBlob> rootSigBlob;
 	sResult = D3D12SerializeRootSignature(&rootSignatureDesc, D3D_ROOT_SIGNATURE_VERSION_1_0,
 		&rootSigBlob, &shader_.mErrorBlob);
 	assert(SUCCEEDED(sResult));
@@ -701,7 +701,7 @@ void PipelineSet::Create()
 	}
 
 	//ルートシグネチャのシリアライズ
-	ComPtr<ID3DBlob> rootSigBlob;
+	Microsoft::WRL::ComPtr<ID3DBlob> rootSigBlob;
 	sResult = D3D12SerializeRootSignature(&rootSignatureDesc, D3D_ROOT_SIGNATURE_VERSION_1_0,
 		&rootSigBlob, &shader_.mErrorBlob);
 	assert(SUCCEEDED(sResult));

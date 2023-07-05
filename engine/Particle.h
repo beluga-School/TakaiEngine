@@ -1,11 +1,5 @@
 #pragma once
-#pragma comment(lib,"d3d12.lib")
-#pragma comment(lib,"dxgi.lib")
 #include <DirectXMath.h>
-using namespace DirectX;
-#include <d3dcompiler.h>
-#pragma comment(lib,"d3dcompiler.lib")
-
 #include "DirectXInit.h"
 #include <vector>
 #include "Texture.h"
@@ -25,8 +19,8 @@ struct VertexPos
 
 struct ParticleConstBufferData
 {
-	XMMATRIX vpMat;
-	XMMATRIX billboardMat;
+	DirectX::XMMATRIX vpMat;
+	DirectX::XMMATRIX billboardMat;
 };
 
 const uint32_t VERTEX_COUNT = 1000;
@@ -74,7 +68,7 @@ public:
 	//頂点バッファビューの作成
 	D3D12_VERTEX_BUFFER_VIEW mVbView{};
 
-	ComPtr<ID3D12Resource> mVertBuff;
+	Microsoft::WRL::ComPtr<ID3D12Resource> mVertBuff;
 
 	//VertexPos verticesPoint[vertexCount];
 	std::list<Particle> mParticles;
@@ -84,7 +78,7 @@ public:
 
 	void Initialize();
 	
-	void Update(XMMATRIX& matView, XMMATRIX& matProjection);
+	void Update(DirectX::XMMATRIX& matView, DirectX::XMMATRIX& matProjection);
 
 	void Draw(Texture* texture);
 

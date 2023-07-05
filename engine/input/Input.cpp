@@ -348,6 +348,32 @@ void Mouse::Update()
 
 	ScreenToClient(WinAPI::Get()->mHwnd, &p);
 	instance->mCurser = {(float)p.x,(float)p.y};
+
+	switch (Mouse::Get()->state)
+	{
+	case CurserLockState::LOCK:
+		
+		//位置固定
+		SetCursorPos(Util::WIN_WIDTH / 2, Util::WIN_HEIGHT / 2);
+		
+		//マウス表示切り替え
+		if (Mouse::Get()->showincriment <= -1)
+		{
+			break;
+		}
+		Mouse::Get()->showincriment = ShowCursor(false);
+
+		break;
+	case CurserLockState::UNLOCK:
+		//マウス表示切り替え
+		if (Mouse::Get()->showincriment >= 1)
+		{
+			break;
+		}
+		Mouse::Get()->showincriment = ShowCursor(true);
+
+		break;
+	}
 }
 
 void Mouse::Finalize()
@@ -358,18 +384,7 @@ void Mouse::Finalize()
 
 void Input::Mouse::CurserLock(const CurserLockState& state)
 {
-	switch (state)
-	{
-	case CurserLockState::LOCK:
-		ShowCursor(false);
-		SetCursorPos(Util::WIN_WIDTH / 2, Util::WIN_HEIGHT / 2);
-
-		break;
-	case CurserLockState::UNLOCK:
-		ShowCursor(true);
-		
-		break;
-	}
+	Mouse::Get()->state = state;
 }
 
 bool Input::Mouse::Down(const Click& c)

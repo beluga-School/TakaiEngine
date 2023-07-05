@@ -24,15 +24,15 @@ private:
 	static const float sClearColor[4];
 
 	//テクスチャバッファ
-	ComPtr<ID3D12Resource> mTexBuff[2];
+	Microsoft::WRL::ComPtr<ID3D12Resource> mTexBuff[2];
 	//SRV用デスクリプタヒープ
-	ComPtr<ID3D12DescriptorHeap> mDescHeapSRV;
+	Microsoft::WRL::ComPtr<ID3D12DescriptorHeap> mDescHeapSRV;
 	//深度バッファ
-	ComPtr<ID3D12Resource> mDepthBuff;
+	Microsoft::WRL::ComPtr<ID3D12Resource> mDepthBuff;
 	//RTV用デスクリプタヒープ
-	ComPtr<ID3D12DescriptorHeap> mDescHeapRTV;
+	Microsoft::WRL::ComPtr<ID3D12DescriptorHeap> mDescHeapRTV;
 	//DSV用デスクリプタヒープ
-	ComPtr<ID3D12DescriptorHeap> mDescHeapDSV;
+	Microsoft::WRL::ComPtr<ID3D12DescriptorHeap> mDescHeapDSV;
 
 	//頂点バッファ
 	Microsoft::WRL::ComPtr<ID3D12Resource> mVertBuff;

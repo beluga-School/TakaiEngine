@@ -133,7 +133,7 @@ void PostEffect::Draw()
 
 	//定数バッファの転送
 	sResult = mConstBuffer.mBuffer->Map(0, nullptr, (void**)&mConstBuffer.mConstBufferData);
-	mConstBuffer.mConstBufferData->mat = XMMatrixIdentity();
+	mConstBuffer.mConstBufferData->mat = DirectX::XMMatrixIdentity();
 
 	mConstBuffer.mBuffer->Unmap(0, nullptr);
 

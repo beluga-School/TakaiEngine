@@ -28,9 +28,9 @@ struct ShaderName
 struct PipelineSet
 {
 	//パイプラインステート
-	ComPtr<ID3D12PipelineState> mPipelinestate{};
+	Microsoft::WRL::ComPtr<ID3D12PipelineState> mPipelinestate{};
 	//ルートシグネチャ
-	ComPtr<ID3D12RootSignature> mRootsignature{};
+	Microsoft::WRL::ComPtr<ID3D12RootSignature> mRootsignature{};
 
 	//--設定用変数群(この変数を事前に書き換えてからCreate()を呼び出す)
 	//シェーダー名

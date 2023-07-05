@@ -4,6 +4,7 @@
 #include <TimeManager.h>
 #include <MathF.h>
 #include <ImguiManager.h>
+#include <DirectXMath.h>
 
 std::unique_ptr<Camera> Camera::sDefaultCam = std::make_unique<Camera>();
 Camera* Camera::sCamera = sDefaultCam.get();
@@ -15,14 +16,14 @@ void Camera::Initialize()
 	mUp = { 0, 1, 0 };		//è„ï˚å¸ÉxÉNÉgÉã
 	UpdatematView();
 
-	mMatProjection = Matrix4::PerspectiveFovLH(XMConvertToRadians(mFovAngle), mNearClip, mFarZ);
+	mMatProjection = Matrix4::PerspectiveFovLH(DirectX::XMConvertToRadians(mFovAngle), mNearClip, mFarZ);
 }
 
 void Camera::UpdatematView()
 {
 	mMatView = Matrix4::LookAtLH(mEye, mTarget, mUp);
 
-	mMatProjection = Matrix4::PerspectiveFovLH(XMConvertToRadians(mFovAngle), mNearClip, mFarZ);
+	mMatProjection = Matrix4::PerspectiveFovLH(DirectX::XMConvertToRadians(mFovAngle), mNearClip, mFarZ);
 }
 
 //void Camera::SetEye(Vector3 eye)

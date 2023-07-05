@@ -52,7 +52,7 @@ void GParticleManager::Initialize()
 	mVbView.StrideInBytes = sizeof(VertexPos);
 }
 
-void GParticleManager::Update(XMMATRIX& matView, XMMATRIX& matProjection)
+void GParticleManager::Update(DirectX::XMMATRIX& matView, DirectX::XMMATRIX& matProjection)
 {
 	mParticles.remove_if([](Particle& particle)
 		{
@@ -64,9 +64,9 @@ void GParticleManager::Update(XMMATRIX& matView, XMMATRIX& matProjection)
 		particle.Update();
 	}
 
-	XMMATRIX reverseMatView;
+	DirectX::XMMATRIX reverseMatView;
 	reverseMatView = XMMatrixInverse(nullptr, matView);
-	reverseMatView.r[3] = XMVectorSet(0, 0, 0, 1);
+	reverseMatView.r[3] = DirectX::XMVectorSet(0, 0, 0, 1);
 
 	mConstBufferParticle.mConstBufferData->billboardMat = reverseMatView;
 

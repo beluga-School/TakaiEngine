@@ -1,11 +1,6 @@
 ﻿#pragma once
 #define DIRECTINPUT_VERSION 0x0800	//DirectInputのバージョン指定
 #include <dinput.h>
-
-#pragma comment(lib,"dinput8.lib")
-#pragma comment(lib,"dxguid.lib")
-
-#pragma comment(lib,"xinput.lib")
 #include <Xinput.h>
 #include "Vector2.h"
 #include "WinAPI.h"
@@ -77,6 +72,9 @@ namespace Input
 		static Mouse* Get();
 
 	private:
+		CurserLockState state = CurserLockState::LOCK;
+		int32_t showincriment = 0;
+
 		IDirectInputDevice8* mMouse = nullptr;
 		Vector2 mCurser{};
 		DIMOUSESTATE mState{};
@@ -93,7 +91,7 @@ namespace Input
 		/// <summary>
 		/// パッドの更新
 		/// 一度だけ呼べば問題ない
-		/// 
+		
 		static void Update();
 
 	public://コントローラー

@@ -9,9 +9,9 @@ public:
 
 	Camera* mView = nullptr;
 
-	void Update(XMMATRIX& matProjection);
+	void Update(DirectX::XMMATRIX& matProjection);
 	void Draw();
 public:
 	bool mYbillboardMode = false;
-	XMMATRIX mMatBillboardY;
+	DirectX::XMMATRIX mMatBillboardY;
 };

@@ -2,6 +2,8 @@
 #include "Result.h"
 #include "Util.h"
 
+using namespace DirectX;
+
 SpriteCommon SpriteCommon::sSpriteCommon;
 
 void SpriteCommon::Initialize()

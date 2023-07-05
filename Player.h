@@ -96,6 +96,7 @@ private:
 		None,	//ジャンプしていない
 		Up,		//上昇中
 		Staying,//滞空時間
+		Down,
 	}jumpState = JumpState::None;
 
 	//上昇イージングの始点と終点

@@ -2,23 +2,17 @@
 #include <d3d12.h>
 #include "DirectXInit.h"
 #include "Result.h"
-
-#pragma comment(lib,"d3d12.lib")
-#pragma comment(lib,"dxgi.lib")
 #include <DirectXMath.h>
-using namespace DirectX;
 #include <d3dcompiler.h>
-#pragma comment(lib,"d3dcompiler.lib")
-
 #include "Matrix4.h"
 
 struct ConstBufferDataMaterial {
-	XMFLOAT4 color;	//色(RGBA)
+	DirectX::XMFLOAT4 color;	//色(RGBA)
 };
 
 struct ConstBufferDataSprite {
-	XMFLOAT4 color;	//色(RGBA)
-	XMMATRIX mat;	//3D変換行列
+	DirectX::XMFLOAT4 color;	//色(RGBA)
+	DirectX::XMMATRIX mat;	//3D変換行列
 };
 
 template <class Format>

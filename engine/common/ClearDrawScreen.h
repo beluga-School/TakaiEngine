@@ -17,9 +17,9 @@ void PostDraw();
 class Screen
 {
 public:
-	ComPtr<ID3D12DescriptorHeap> dsvHeap = nullptr;
+	Microsoft::WRL::ComPtr<ID3D12DescriptorHeap> dsvHeap = nullptr;
 
-	ComPtr<ID3D12Resource> depthBuff;
+	Microsoft::WRL::ComPtr<ID3D12Resource> depthBuff;
 
 	//D3D12_RESOURCE_BARRIER barrierDesc{};
 

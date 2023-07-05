@@ -1,7 +1,6 @@
 #pragma once
 #include "DirectXInit.h"
 #include <xaudio2.h>
-#pragma comment(lib,"xaudio2.lib")
 #include <fstream>
 
 struct ChunkHeader
@@ -47,6 +46,6 @@ public:
 		return &instance;
 	};
 private:
-	ComPtr<IXAudio2> mXAudio2;
+	Microsoft::WRL::ComPtr<IXAudio2> mXAudio2;
 	IXAudio2MasteringVoice* mMasterVoice = nullptr;
 };

@@ -155,6 +155,8 @@ void Player::Draw()
 void Player::Reset()
 {
 	gravity = 0;
+	hitListX.clear();
+	hitListY.clear();
 }
 
 void Player::SideMoveUpdate()
@@ -192,6 +194,7 @@ void Player::JumpUpdate()
 	switch (jumpState)
 	{
 	case Player::JumpState::None:
+		
 		//ジャンプしていない状態で入力があったらジャンプ
 		if (Input::Keyboard::TriggerKey(DIK_SPACE) ||
 			Pad::TriggerPadButton(PadButton::A))
@@ -206,17 +209,14 @@ void Player::JumpUpdate()
 			//重力を無効化
 			gravity = 0;
 		}
-
-		//hitListの中で、最も高い位置にあるオブジェクトより自身の座標が高かったら
+		
 		if (position.y > hitCubeMaxY)
 		{
-			//重力落下させる
-			gravity += gravityAdd;
-			preMove.y -= gravity * TimeManager::deltaTime;
+			jumpState = JumpState::Down;
 		}
-		//hitListオブジェクトの中で、最も高い位置にあるオブジェクトに自身が当たっているなら
 		else
 		{
+			//地面に立っている状態にする
 			gravity = 0;
 			preMove.y = hitCubeMaxY;
 		}
@@ -242,6 +242,21 @@ void Player::JumpUpdate()
 			stayManageTimer.Reset();
 		}
 
+		break;
+	case Player::JumpState::Down:
+		//hitListの中で、最も高い位置にあるオブジェクトより自身の座標が高かったら
+		if (position.y > hitCubeMaxY)
+		{
+			//重力落下させる
+			gravity += gravityAdd;
+			preMove.y -= gravity * TimeManager::deltaTime;
+		}
+		//hitListオブジェクトの中で、最も高い位置にあるオブジェクトに自身が当たっているなら
+		else
+		{
+			jumpState = JumpState::None;
+		}
+		
 		break;
 	}
 }
@@ -371,6 +386,12 @@ void Player::ColUpdate()
 		}
 		preY = hit.position.y;
 	}
+
+	checkGUI.Begin({ 700,100 }, { 400,400 });
+	ImGui::Text("hitCubeMaxY %f", hitCubeMaxY);
+	ImGui::Text("hitListY %d", hitListY.size());
+	ImGui::Text("position x:%f y:%f z:%f", position.x, position.y, position.z);
+	checkGUI.End();
 
 	////X軸の判定
 	//for (auto &hit : hitListX)

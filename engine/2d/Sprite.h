@@ -3,22 +3,11 @@
 #include "Vector2.h"
 #include "Matrix4.h"
 #include "Color.h"
-
 #include "DirectXInit.h"
 #include <vector>
 #include "ConstBuffer.h"
-
 #include <Windows.h>
-#include <d3d12.h>
-#include <dxgi1_6.h>
-
-#pragma comment(lib,"d3d12.lib")
-#pragma comment(lib,"dxgi.lib")
 #include <DirectXMath.h>
-using namespace DirectX;
-#include <d3dcompiler.h>
-#pragma comment(lib,"d3dcompiler.lib")
-
 #include "Pipeline.h"
 #include "Texture.h"
 
@@ -27,8 +16,8 @@ const int32_t SPRITE_SRV_COUNT = 2056;
 
 struct VertexPosUV
 {
-	XMFLOAT3 pos;
-	XMFLOAT2 uv;
+	DirectX::XMFLOAT3 pos;
+	DirectX::XMFLOAT2 uv;
 };
 
 struct Sprite
@@ -62,7 +51,7 @@ struct Sprite
 	//座標
 	Vector3 mPosition = { 0,0,0 };
 	//ワールド行列
-	XMMATRIX mMatWorld;
+	DirectX::XMMATRIX mMatWorld;
 	//色
 	Color mColor = { 1,1,1,1 };
 
@@ -88,7 +77,7 @@ struct SpriteCommon
 {
 	PipelineSet mPipelineSet;
 	//射影行列
-	XMMATRIX mMatProjection{};
+	DirectX::XMMATRIX mMatProjection{};
 
 	static void Initialize();
 

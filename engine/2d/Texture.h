@@ -1,14 +1,5 @@
 #pragma once
-#include <d3d12.h>
-#include <dxgi1_6.h>
-
-#pragma comment(lib,"d3d12.lib")
-#pragma comment(lib,"dxgi.lib")
 #include <DirectXMath.h>
-using namespace DirectX;
-#include <d3dcompiler.h>
-#pragma comment(lib,"d3dcompiler.lib")
-
 #pragma warning (push)
 #pragma warning( disable : 26813 )
 #include <DirectXTex.h>
@@ -37,9 +28,9 @@ public:
 	D3D12_CPU_DESCRIPTOR_HANDLE mCpuHandle = { 0 };
 
 private:
-	TexMetadata mMetadata{};
-	ScratchImage mScratchImg{};
-	ScratchImage mMipChain{};
+	DirectX::TexMetadata mMetadata{};
+	DirectX::ScratchImage mScratchImg{};
+	DirectX::ScratchImage mMipChain{};
 
 	//シェーダリソースビュー設定
 	D3D12_SHADER_RESOURCE_VIEW_DESC mSrvDesc{};//設定構造体
@@ -59,7 +50,7 @@ public:
 	//デスクリプタヒープの設定
 	D3D12_DESCRIPTOR_HEAP_DESC mSrvHeapDesc = {};
 
-	ComPtr<ID3D12DescriptorHeap> mSrvHeap;
+	Microsoft::WRL::ComPtr<ID3D12DescriptorHeap> mSrvHeap;
 
 	//SRVヒープの大きさ
 	UINT mSRVHandleSize = 0;

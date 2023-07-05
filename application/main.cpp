@@ -1,15 +1,27 @@
 #include <Windows.h>
 #include <d3d12.h>
 #include <dxgi1_6.h>
-
-#pragma comment(lib,"d3d12.lib")
-#pragma comment(lib,"dxgi.lib")
 #include <DirectXMath.h>
-using namespace DirectX;
 #include <d3dcompiler.h>
-#pragma comment(lib,"d3dcompiler.lib")
 #include <iostream>
 #include <memory>
+
+//libのリンク（いったんmainに）
+//directx12
+#pragma comment(lib,"d3d12.lib")
+#pragma comment(lib,"dxgi.lib")
+#pragma comment(lib,"d3dcompiler.lib")
+
+//sound
+#pragma comment(lib,"xaudio2.lib")
+
+//timemanager
+#pragma comment(lib,"winmm.lib")
+
+//input
+#pragma comment(lib,"dinput8.lib")
+#pragma comment(lib,"dxguid.lib")
+#pragma comment(lib,"xinput.lib")
 
 //自分でクラス化したやつ
 #include "WinAPI.h"
@@ -63,7 +75,7 @@ int32_t WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_  HINSTANCE hPrevInstan
 	
 #ifdef  _DEBUG
 //デバッグレイヤーをオンに
-	ComPtr<ID3D12Debug1> debugController;
+	Microsoft::WRL::ComPtr<ID3D12Debug1> debugController;
 	if (SUCCEEDED(D3D12GetDebugInterface(IID_PPV_ARGS(&debugController)))) {
 		debugController->EnableDebugLayer();
 		//これより前にデバイスを生成するとデバイスが消されるらしい
