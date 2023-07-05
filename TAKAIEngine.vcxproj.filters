@@ -292,6 +292,9 @@
     <Filter Include="シェーダー\Skydome">
       <UniqueIdentifier>{3375785c-d162-4aba-9511-095e8576d516}</UniqueIdentifier>
     </Filter>
+    <Filter Include="シェーダー\Ground">
+      <UniqueIdentifier>{589bb706-5388-4d5f-8d84-1fd2766905d8}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="engine\input\Input.cpp">
@@ -758,6 +761,9 @@
     <None Include="Resources\Shader\Skydome.hlsli">
       <Filter>シェーダー\Skydome</Filter>
     </None>
+    <None Include="Resources\Shader\Ground\Ground.hlsli">
+      <Filter>シェーダー\Ground</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Resources\Shader\BasicPS.hlsl">
@@ -861,6 +867,12 @@
     </FxCompile>
     <FxCompile Include="Resources\Shader\SkydomeVS.hlsl">
       <Filter>シェーダー\Skydome</Filter>
+    </FxCompile>
+    <FxCompile Include="Resources\Shader\Ground\GroundPS.hlsl">
+      <Filter>シェーダー\Ground</Filter>
+    </FxCompile>
+    <FxCompile Include="Resources\Shader\Ground\GroundVS.hlsl">
+      <Filter>シェーダー\Ground</Filter>
     </FxCompile>
   </ItemGroup>
 </Project>

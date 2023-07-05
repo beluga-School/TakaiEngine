@@ -122,6 +122,9 @@ private:
 	//スカイドーム用(なんの影響も受けない)シェーダー
 	void SkydomePipeLine();
 
+	//地面用トゥーンシェーダー
+	void GroundToonPipeLine();
+
 	PipelineManager(){};
 	~PipelineManager(){};
 };

@@ -227,14 +227,14 @@ void Stage::DrawModel()
 	{
 		BasicObjectPreDraw(PipelineManager::GetPipeLine("OutLine"), false);
 		obj.DrawOutLine();
-		BasicObjectPreDraw(PipelineManager::GetPipeLine("Toon"));
+		BasicObjectPreDraw(PipelineManager::GetPipeLine("GroundToon"));
 		obj.DrawMaterial();
 	}
 	for (auto& obj : mEventObjects)
 	{
 		BasicObjectPreDraw(PipelineManager::GetPipeLine("OutLine"),false);
 		obj->DrawOutLine();
-		BasicObjectPreDraw(PipelineManager::GetPipeLine("Toon"));
+		BasicObjectPreDraw(PipelineManager::GetPipeLine("GroundToon"));
 		obj->Draw();
 	}
 }

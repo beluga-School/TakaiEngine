@@ -116,11 +116,11 @@ void GameScene::Draw()
 	BasicObjectPreDraw(PipelineManager::GetPipeLine("Skydome"));
 	mSkydome.Draw();
 	
-	BasicObjectPreDraw(PipelineManager::GetPipeLine("Toon"));
-
+	//地面用シェーダーを中で呼んでる
 	Stage::Get()->Draw();
+
+	BasicObjectPreDraw(PipelineManager::GetPipeLine("Toon"));
 	player->Draw();
-	//pCamera.Draw();
 
 	EnemyManager::Get()->Draw();
 
