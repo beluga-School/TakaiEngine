@@ -286,6 +286,9 @@
     <Filter Include="シェーダー\OutLine">
       <UniqueIdentifier>{3a999208-4231-44d7-a413-3bbd4485369e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Application\Scene\ShaderTestScene">
+      <UniqueIdentifier>{9c532383-23be-4611-a497-7bc868e0295a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="engine\input\Input.cpp">
@@ -485,6 +488,9 @@
     </ClCompile>
     <ClCompile Include="GoalSystem.cpp">
       <Filter>Application\System\Goal</Filter>
+    </ClCompile>
+    <ClCompile Include="ShaderTestScene.cpp">
+      <Filter>ソース ファイル</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -694,6 +700,9 @@
     </ClInclude>
     <ClInclude Include="GoalSystem.h">
       <Filter>Application\System\Goal</Filter>
+    </ClInclude>
+    <ClInclude Include="ShaderTestScene.h">
+      <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

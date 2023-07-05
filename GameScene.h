@@ -9,10 +9,11 @@
 class GameScene : public IScene
 {
 public:
-	void Initialize();
-	void Update();
-	void Draw();
-	void End();
+	void LoadResource()override;
+	void Initialize()override;
+	void Update()override;
+	void Draw()override;
+	void End()override;
 
 private:
 	Skydome mSkydome;

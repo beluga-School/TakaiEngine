@@ -7,6 +7,7 @@ class IScene
 public:
 	virtual ~IScene() = default;
 
+	virtual void LoadResource() = 0;
 	virtual void Initialize() = 0;
 	virtual void Update() = 0;
 	virtual void Draw() = 0;

@@ -13,6 +13,7 @@
 //汎化で作りも同じ機能
 //当たり判定
 
+//リストの中に同じオブジェクトがあれば、そのオブジェクトを入れないプッシュバック
 template <class T>
 void UniqueObjectPushBack(std::list<T>& list, const T& col)
 {
@@ -29,6 +30,7 @@ void UniqueObjectPushBack(std::list<T>& list, const T& col)
 	list.push_back(col);
 }
 
+//リストの中に同じオブジェクトがあれば、そのオブジェクトを削除する
 template <class T>
 void UniqueObjectErase(std::list<T>& list, const T& col)
 {
@@ -59,6 +61,7 @@ public:
 		return &instance;
 	}
 
+	//プレイヤーの回転を管理する変数
 	float mVerticalRad = 0;
 	float mHorizontalRad = 0;
 
@@ -69,6 +72,9 @@ private:
 	Player(){};
 	~Player(){};
 
+	void Attack();
+
+	void SideMoveUpdate();
 	void JumpUpdate();
 	void ColUpdate();
 	void RotaUpdate();
@@ -90,16 +96,11 @@ private:
 		None,	//ジャンプしていない
 		Up,		//上昇中
 		Staying,//滞空時間
-	};
-	JumpState jumpState = JumpState::None;
-
-	std::list<Cube> hitList;
+	}jumpState = JumpState::None;
 
 	//上昇イージングの始点と終点
 	float upJumpS = 0;
 	float upJumpE = 0;
-
-	float downJumpE = 0;
 
 	//ジャンプ力
 	const float jumpPower = 10.0f;
@@ -117,5 +118,31 @@ private:
 
 	///---当たり判定
 	//多分自分が当たり判定を取るオブジェクトを管理するリストがここにあった方がいい気がする
+	std::list<Cube> hitListX;
+	std::list<Cube> hitListY;
+	
+	float hitCubeMaxY = 0;
+
+	///---攻撃
+	enum class AttackState
+	{
+		None,		//攻撃していない
+		Attacking,	//攻撃中
+		CoolTime,	//クールタイム
+	}attackState = AttackState::None;
+
+	//ローリング時間の管理
+	TEasing::easeTimer attackingTimer = 1.0f;
+	//ローリングの回転モーションの管理
+	TEasing::easeTimer attackingMotionTimer = 0.5f;
+	//ローリングのクールタイムの管理
+	TEasing::easeTimer attackCoolTimer = 0.75f;
+
+	//ローリングの回転数の管理
+	int32_t mRolingNum = 3;
+
+	Vector3 mRolingVec = {0,0,0};
+
+	float mRolingSpeed = 15.0f;
 };
 

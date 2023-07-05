@@ -57,11 +57,108 @@ void Player::Initialize()
 void Player::Update()
 {
 	//移動地を初期化
-	moveValue = {0,0,0};
+	moveValue = { 0,0,0 };
 
+	//ベクトルを保存
 	mCenterVec = matWorld.ExtractAxisZ();
 	mSideVec = matWorld.ExtractAxisX();
 
+
+	//攻撃更新
+	attackingTimer.Update();
+	attackCoolTimer.Update();
+	attackingMotionTimer.Update();
+
+	//入力
+	switch (attackState)
+	{
+	case Player::AttackState::None:
+		//攻撃していない状態で入力があったら
+		if (Mouse::Triggered(Click::LEFT))
+		{
+			//攻撃状態に遷移
+			attackState = AttackState::Attacking;
+			attackingTimer.Start();
+		
+			//ここで正面ベクトルを保存
+			mRolingVec = mCenterVec;
+
+			//ローリング数が適用されるように最大時間を割る
+			attackingMotionTimer.mMaxTime = attackingTimer.mMaxTime;
+			//attackingMotionTimer.mMaxTime = attackingTimer.mMaxTime;
+		}
+		break;
+	case Player::AttackState::Attacking:
+		
+		if (attackingMotionTimer.GetRun() == false)
+		{
+			attackingMotionTimer.Start();
+		}
+
+		//正面ベクトルの方向に進める
+		moveValue += mRolingVec * mRolingSpeed * TimeManager::deltaTime;
+		rotation.x = TEasing::InQuad(-MathF::PIf * 2.f,MathF::PIf * 2.f, attackingMotionTimer.GetTimeRate());
+
+		if (attackingTimer.GetEnd())
+		{
+			attackState = AttackState::CoolTime;
+			attackingTimer.Reset();
+			attackCoolTimer.Start();
+			
+			rotation.x = 0;
+		}
+		break;
+	case Player::AttackState::CoolTime:
+		if (attackCoolTimer.GetEnd())
+		{
+			attackState = AttackState::None;
+			attackCoolTimer.Reset();
+		}
+		break;
+	}
+
+	//横移動更新
+	if (attackState != AttackState::Attacking)
+	{
+		SideMoveUpdate();
+	}
+	
+	//縦移動更新(重力落下含む)
+	JumpUpdate();
+
+	//当たり判定更新
+	ColUpdate();
+
+	//本加算
+	position.y = preMove.y;
+	position += moveValue;
+
+	//回転更新
+	if (attackState != AttackState::Attacking)
+	{
+		RotaUpdate();
+	}
+
+	//更新
+	Obj3d::Update(*Camera::sCamera);
+}
+
+void Player::Draw()
+{
+	BasicObjectPreDraw(PipelineManager::GetPipeLine("OutLine"), false);
+	Obj3d::DrawOutLine();
+
+	BasicObjectPreDraw(PipelineManager::GetPipeLine("Toon"));
+	Obj3d::DrawMaterial();
+}
+
+void Player::Reset()
+{
+	gravity = 0;
+}
+
+void Player::SideMoveUpdate()
+{
 	//移動量を取得、加算
 	if (Input::Pad::CheckConnectPad())
 	{
@@ -85,34 +182,6 @@ void Player::Update()
 	{
 		moveValue -= mSideVec * mSpeed * TimeManager::deltaTime;
 	}
-	
-	JumpUpdate();
-
-	ColUpdate();
-
-	//本加算
-	position.y = preMove.y;
-	position += moveValue;
-
-	//回転更新
-	RotaUpdate();
-
-	//更新
-	Obj3d::Update(*Camera::sCamera);
-}
-
-void Player::Draw()
-{
-	BasicObjectPreDraw(PipelineManager::GetPipeLine("OutLine"), false);
-	Obj3d::DrawOutLine();
-
-	BasicObjectPreDraw(PipelineManager::GetPipeLine("Toon"));
-	Obj3d::DrawMaterial();
-}
-
-void Player::Reset()
-{
-	gravity = 0;
 }
 
 void Player::JumpUpdate()
@@ -138,16 +207,18 @@ void Player::JumpUpdate()
 			gravity = 0;
 		}
 
-		//今の位置と下降判定位置が異なるなら落下
-		if (position.y > downJumpE)
+		//hitListの中で、最も高い位置にあるオブジェクトより自身の座標が高かったら
+		if (position.y > hitCubeMaxY)
 		{
+			//重力落下させる
 			gravity += gravityAdd;
 			preMove.y -= gravity * TimeManager::deltaTime;
 		}
+		//hitListオブジェクトの中で、最も高い位置にあるオブジェクトに自身が当たっているなら
 		else
 		{
 			gravity = 0;
-			preMove.y = downJumpE;
+			preMove.y = hitCubeMaxY;
 		}
 
 		break;
@@ -190,13 +261,6 @@ void Player::ColUpdate()
 
 	for (auto& bCol : Stage::Get()->mColCubes)
 	{
-		//Cube bCol;
-		//bCol.position = bColTemp.position;
-		//bCol.scale = bColTemp.scale;
-
-		//なぜか高さが2倍で計算されてるので高さだけ半分に
-		//bCol.scale.y /= 2;
-
 		//そのオブジェクトより
 		//上にいるか
 		bool up = CheckDirections(pCol, bCol, CheckDirection::CD_UP);
@@ -231,11 +295,11 @@ void Player::ColUpdate()
 				//このリストをいちいち消すのではなく、
 				//当たり判定をとり、同じ要素が入っていないなら入れて
 				//当たり判定が外れたときに、その要素を消す
-				UniqueObjectPushBack(hitList,bCol);
+				UniqueObjectPushBack(hitListY,bCol);
 			}
 			else
 			{
-				UniqueObjectErase(hitList,bCol);
+				UniqueObjectErase(hitListY,bCol);
 			}
 		}
 
@@ -248,47 +312,75 @@ void Player::ColUpdate()
 		//左右の当たり判定
 		if (up == false)
 		{
-			if (Collsions::CubeCollision(pCol, bCol))
+			////左右も別の当たり判定リスト作って、同じ手法で取れそう？
+			//if (Collsions::CubeCollision(pCol, bCol))
+			//{
+			//	//横方向を少し大きくして、当たり判定を取ったオブジェクトと当たっているなら
+			//	if (right)
+			//	{
+			//		moveValue.x = 0;
+			//	}
+			//	if (left)
+			//	{
+			//		moveValue.x = 0;
+			//	}
+			//	if (back)
+			//	{
+			//		moveValue.z = 0;
+			//	}
+			//}
+			if (center)
 			{
-				if (right)
+				Cube sideCube;
+				sideCube.position = pCol.position;
+				//横方向の大きさを2倍に
+				sideCube.scale.z = pCol.scale.z * 2.f;
+				if (Collsions::CubeCollision(sideCube, bCol))
 				{
-					moveValue.x = 0;
+					UniqueObjectPushBack(hitListX, bCol);
 				}
-				if (left)
+				else
 				{
-					moveValue.x = 0;
+					UniqueObjectErase(hitListX, bCol);
+
 				}
-				if (back)
-				{
-					moveValue.z = 0;
-				}
-				if (center)
-				{
-					moveValue.z = 0;
-				}
+				moveValue.z = 0;
 			}
 		}
 	}
 
+	//Y軸の判定
 	float preY = -114514.f;
 	float maxY = 0;
 
-	downJumpE = preY;
+	hitCubeMaxY = preY;
 
-	for (auto& hit : hitList)
+	for (auto& hit : hitListY)
 	{
 		maxY = hit.position.y;
 		//初期値でなく、前の値より高い位置にあるなら
 		if (maxY >= preY)
 		{
 			//終点位置を更新
-			downJumpE = hit.position.y + hit.scale.y / 2 + 0.01f;
+			//少しだけ浮かせて、ブロックの切れ目に引っかからないように
+			hitCubeMaxY = hit.position.y + hit.scale.y / 2 + pCol.scale.y / 2 + 0.01f;
 		}
 		preY = hit.position.y;
 	}
 
-	//使い終わったので初期化
-	//hitList.clear();
+	////X軸の判定
+	//for (auto &hit : hitListX)
+	//{
+	//	maxY = hit.position.y;
+	//	//初期値でなく、前の値より高い位置にあるなら
+	//	if (maxY >= preY)
+	//	{
+	//		//終点位置を更新
+	//		//少しだけ浮かせて、ブロックの切れ目に引っかからないように
+	//		hitCubeMaxY = hit.position.y + hit.scale.y / 2 + pCol.scale.y / 2 + 0.01f;
+	//	}
+	//	preY = hit.position.y;
+	//}
 
 	for (auto& bColevent : Stage::Get()->mEventObjects)
 	{

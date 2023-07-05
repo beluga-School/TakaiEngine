@@ -18,6 +18,10 @@ void SceneManager::Update()
 
 		//シーンマネージャを現在シーンにセット
 		mCurrentscene->SetManager(*this);
+		
+		//リソース読み込み
+		mCurrentscene->LoadResource();
+
 		//次シーンを初期化
 		mCurrentscene->Initialize();
 	}
