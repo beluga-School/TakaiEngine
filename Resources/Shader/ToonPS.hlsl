@@ -9,6 +9,12 @@ float4 main(VSOutput input) : SV_TARGET
     
     float4 shadecolor = {0,0,0,1};
     
+    //しきい値
+    float threshold = 0.01f;
+    
+    //スペキュラーしきい値
+    float speThreshold = 0.2f;
+    
     for (int i = 0; i < DIRLIGHT_NUM; i++)
     {
         if (dirLights[i].active)
@@ -18,7 +24,7 @@ float4 main(VSOutput input) : SV_TARGET
             
             //ディフューズ
             //光との内積値
-            float intensity = saturate(dot(normalize(input.normal), dirLights[i].lightv));
+            float intensity = step(threshold,saturate(dot(normalize(input.normal), dirLights[i].lightv)));
             //オブジェクトの色
             float3 difColor = texcolor.rgb;
             
@@ -35,7 +41,7 @@ float4 main(VSOutput input) : SV_TARGET
             //反射光
             float3 reflectDir = -lightDir + 2 * normalizeVec * dot(normalizeVec, lightDir);
             
-            float3 specular = pow(saturate(dot(reflectDir, eyeDir)), 20) * dirLights[i].lightcolor;
+            float3 specular = step(speThreshold, pow(saturate(dot(reflectDir, eyeDir)), 20) * dirLights[i].lightcolor);
             
             shadecolor.rgb += (ambient + diffuse + specular);
             shadecolor.a += 1;

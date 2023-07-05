@@ -109,9 +109,11 @@ void GameScene::Update()
 
 void GameScene::Draw()
 {
+	BasicObjectPreDraw(PipelineManager::GetPipeLine("Skydome"));
+	mSkydome.Draw();
+	
 	BasicObjectPreDraw(PipelineManager::GetPipeLine("Toon"));
 
-	mSkydome.Draw();
 	Stage::Get()->Draw();
 	player->Draw();
 	//pCamera.Draw();
