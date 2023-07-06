@@ -14,8 +14,6 @@ public:
 	/// 長さを求める関数
 	/// </summary>
 	/// <returns>長さ</returns>
-	/// このconstは、関数の内部で数値を書き換えないという意味を表す
-	/// constがあることで、機能的にも書き換えることはできなくなる
 	float GetLength() const;
 
 	/// <summary>

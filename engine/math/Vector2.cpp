@@ -12,8 +12,6 @@ Vector2::Vector2() : x(0), y(0)
 
 float Vector2::GetLength() const
 {
-	//const‚ª‚ ‚é‚Æ‚±‚¤‚¢‚¤‚±‚Æ«‚ª‚Å‚«‚È‚­‚È‚é ‚Â‚Ü‚è±İ¾Şİ!!
-	//                       x = 10; 
 	return sqrtf(x * x + y * y);
 }
 

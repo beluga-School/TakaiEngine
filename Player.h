@@ -91,6 +91,23 @@ private:
 	//移動速度
 	float mSpeed = 7.5f;
 
+	//最大値になるまでの加速時間
+	TEasing::easeTimer accelerationTimer = 0.5f;
+
+	//最大値から減るまでの減速時間(加速の1/10くらい)
+	TEasing::easeTimer decelerationTimer = 0.25f;
+
+	//移動終わった時の速度
+	float mSaveSpeed = 0.0f;
+
+	//最大速度
+	const float MAX_SPEED = 7.5f;
+
+	//ダッシュ時の最大速度
+	const float MAX_DASH_SPEED = 15.0f;
+
+	Vector3 oldMoveVec = {0,0,0};
+
 	//方向ベクトル保存
 	Vector3 mCenterVec = {0,0,0};
 	Vector3 mSideVec = {0,0,0};

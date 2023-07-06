@@ -182,13 +182,73 @@ void Player::Attack()
 	}
 }
 
+
+GUI checkGUI("speedCheck");
+
+
 void Player::SideMoveUpdate()
 {
+	accelerationTimer.Update();
+	decelerationTimer.Update();
+
+	//入力があったら、タイマーが増えていき、
+	//入力がなかったら、タイマーが減っていく
+
 	//移動量を取得、加算
+	if ((Pad::GetLStickMove().GetLength() != 0 || 
+		Pad::GetRStickMove().GetLength() != 0) ||
+		(Input::Keyboard::PushKey(DIK_W) || 
+		Input::Keyboard::PushKey(DIK_S) || 
+		Input::Keyboard::PushKey(DIK_A) || 
+		Input::Keyboard::PushKey(DIK_D)))
+	{
+		if (accelerationTimer.GetStarted() == false)
+		{
+			accelerationTimer.Start();
+		}
+		decelerationTimer.Reset();
+	
+		//加速を速度に反映
+		mSpeed = TEasing::InQuad(0.0f, MAX_SPEED, accelerationTimer.GetTimeRate());
+	
+		//前回の移動方向を記録(キーボードのみ)
+		oldMoveVec += mCenterVec * static_cast<float>((Input::Keyboard::PushKey(DIK_W) - Input::Keyboard::PushKey(DIK_S)));
+		oldMoveVec += mSideVec * static_cast<float>((Input::Keyboard::PushKey(DIK_D) - Input::Keyboard::PushKey(DIK_A)));
+
+		oldMoveVec.normalize();
+	}
+	else if(oldMoveVec.length() != 0)//前フレームでキーボード入力があったら(パッドなら減速なし)
+	{
+		if (decelerationTimer.GetStarted() == false)
+		{
+			decelerationTimer.Start();
+			//速度を保存
+			mSaveSpeed = mSpeed;
+		}
+		accelerationTimer.Reset();
+
+		//加速を速度に反映
+		mSpeed = TEasing::InQuad(mSaveSpeed,0.0f, decelerationTimer.GetTimeRate());
+	}
+
+	//減速中の移動
+	if (decelerationTimer.GetRun())
+	{
+		moveValue += oldMoveVec * mSpeed * TimeManager::deltaTime;
+	}
+
+	checkGUI.Begin({ 500,100 }, { 200,200 });
+	ImGui::Text("moveValue %f %f %f", moveValue.x, moveValue.y, moveValue.z);
+	ImGui::Text("accelerationTimer %f", accelerationTimer.GetTimeRate());
+	ImGui::Text("decelerationTimer %f", decelerationTimer.GetTimeRate());
+	ImGui::Text("mSpeed %f", mSpeed);
+	ImGui::Text("mSaveSpeed %f", mSaveSpeed);
+	checkGUI.End();
+
 	if (Input::Pad::CheckConnectPad())
 	{
-		moveValue += mCenterVec * Pad::GetLStickMove().y * mSpeed * TimeManager::deltaTime;
-		moveValue += mSideVec * Pad::GetLStickMove().x * mSpeed * TimeManager::deltaTime;
+		moveValue += mCenterVec * Input::Pad::GetLStickMove().y * mSpeed * TimeManager::deltaTime;
+		moveValue += mSideVec * Input::Pad::GetLStickMove().x * mSpeed * TimeManager::deltaTime;
 	}
 
 	if (Input::Keyboard::PushKey(DIK_W))
@@ -207,6 +267,8 @@ void Player::SideMoveUpdate()
 	{
 		moveValue -= mSideVec * mSpeed * TimeManager::deltaTime;
 	}
+
+	//あとで移動速度の加算に上限付ける
 }
 
 void Player::JumpUpdate()
@@ -283,8 +345,6 @@ void Player::JumpUpdate()
 		break;
 	}
 }
-
-GUI checkGUI("hitCheck");
 
 void Player::ColUpdate()
 {
@@ -441,7 +501,6 @@ void Player::ColUpdate()
 			break;
 		}
 	}
-	//checkGUI.Begin({ 700,100 }, { 400,400 });
 
 	for (auto& enemy : EnemyManager::Get()->enemyList)
 	{
@@ -459,7 +518,6 @@ void Player::ColUpdate()
 			enemy->Encount();
 		}
 	}
-	//checkGUI.End();
 }
 
 void Player::RotaUpdate()
