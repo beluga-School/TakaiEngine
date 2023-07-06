@@ -405,7 +405,8 @@ void Player::ColUpdate()
 		{
 			//終点位置を更新
 			//少しだけ浮かせて、ブロックの切れ目に引っかからないように
-			hitCubeMaxY = hit.position.y + hit.scale.y / 2 + pCol.scale.y / 2 + 0.01f;
+			feet = hit.position.y + hit.scale.y / 2;
+			hitCubeMaxY = feet + pCol.scale.y / 2 + 0.01f;
 		}
 		preY = hit.position.y;
 	}

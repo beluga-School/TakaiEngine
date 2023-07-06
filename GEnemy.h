@@ -24,8 +24,7 @@ private:
 	{
 		None,		//立ち止まってる状態
 		Encount,	//プレイヤーを発見した状態
-		Traking,	//追いかけてくる状態
-		Attacking,	//攻撃中の状態(この状態の終わりに攻撃判定がでる)
+		Attacking,	//突進状態
 		Staying,	//攻撃後の後隙 状態終わりで当たり判定をとり、NoneかEncountに遷移
 	}state = State::None;
 
@@ -37,12 +36,28 @@ private:
 	float encountJumpE = 0;
 
 	//追跡時間管理タイマー(終わったら再度当たり判定をとり、当たってないなら追跡を終了する)
-	TEasing::easeTimer trackingTimer = 2.0f;
+	TEasing::easeTimer attakingTimer = 3.0f;
+	Vector3 attackPosS = {0,0,0};
+	Vector3 attackPosE = {0,0,0};
+	float attackDistance = 2.0f;
+
+	//プレイヤーへのベクトル
+	Vector3 pVec{};
+
+	//攻撃の加速度
+	float acceleration = 0.1f;
+
+	//加速の最大値
+	const float MAX_ACCELERATION = 30.0f;
 
 	//追跡時の横揺れ管理タイマー
 	TEasing::easeTimer metronomeTimer = 0.5f;
-	//攻撃までの時間
-	TEasing::easeTimer attackTimer = 1.0f;
 	//攻撃後の後隙時間
 	TEasing::easeTimer stayTimer = 1.0f;
+
+	//ターゲットマークの1回転の時間
+	TEasing::easeTimer markRotaTimer = 0.5f;
+
+	//攻撃前の警告マークモデル
+	Obj3d targetMark;
 };

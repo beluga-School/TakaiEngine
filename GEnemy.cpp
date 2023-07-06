@@ -13,17 +13,20 @@ void GEnemy::Initialize()
 	hitSphere.Initialize();
 	hitSphere.SetModel(ModelManager::GetModel("ICOSphere"));
 	hitSphere.SetTexture(TextureManager::GetTexture("white"));
+
+	targetMark.Initialize();
+	targetMark.SetModel(ModelManager::GetModel("targetMark"));
+	targetMark.SetTexture(TextureManager::GetTexture("white"));
 }
 
 void GEnemy::Update()
 {
-	attackTimer.Update();
 	stayTimer.Update();
 	metronomeTimer.Update();
 	encountJumpTimer.Update();
-	trackingTimer.Update();
+	attakingTimer.Update();
+	markRotaTimer.Update();
 
-	Vector3 pVec{};
 	Vector3 standardRotaVec = {MathF::PIf / 2,0,0};
 
 	switch (state)
@@ -41,26 +44,53 @@ void GEnemy::Update()
 		}
 		if (encountJumpTimer.GetReverseEnd())
 		{
-			state = State::Traking;
+			state = State::Attacking;
 			metronomeTimer.Start();
-			trackingTimer.Reset();
+			attakingTimer.Start();
+
+			{
+				///---見た目処理
+				//追いかける方向へ向きを変える
+				pVec = Player::Get()->position - position;
+				pVec.normalize();
+				pVec.y = 0;
+
+				rotation.y = standardRotaVec.Radian(pVec);
+				if (pVec.z > 0) {
+					//無理やり向きを反対に
+					rotation.y *= -1;
+				}
+			}
+
+			//次の位置決定
+			attackPosS = position;
+			//プレイヤーの位置 + その少し奥(移動方向 * 移動させたい距離) = 終点を出す
+			attackPosE = Player::Get()->position + pVec * attackDistance;
+
+			//最終位置にターゲットマークを出す
+			targetMark.position = attackPosE;
+			targetMark.position.y = Player::Get()->GetFeet();
+
+			//加速を元に戻す
+			mSpeed = 5.0f;
 		}
 
 		break;
-	case GEnemy::State::Traking:
+	case GEnemy::State::Attacking:
 		
-		///---見た目処理
-		//追いかける方向へ向きを変える
-		pVec = Player::Get()->position - position;
-		pVec.normalize();
-		pVec.y = 0;	
-
-		position += pVec * mSpeed * TimeManager::deltaTime;
-		rotation.y = standardRotaVec.Radian(pVec);
-		if (pVec.z > 0) {
-			//無理やり向きを反対に
-			rotation.y *= -1;
-		}
+		//{
+		//	///---見た目処理
+		//	//追いかける方向へ向きを変える
+		//	pVec = Player::Get()->position - position;
+		//	pVec.normalize();
+		//	pVec.y = 0;
+	
+		//	rotation.y = standardRotaVec.Radian(pVec);
+		//	if (pVec.z > 0) {
+		//		//無理やり向きを反対に
+		//		rotation.y *= -1;
+		//	}
+		//}
 
 		//横揺れする
 		if (metronomeTimer.GetEnd())
@@ -73,43 +103,27 @@ void GEnemy::Update()
 		}
 		rotation.x = TEasing::lerp(-MathF::PIf / 4, MathF::PIf / 4, metronomeTimer.GetTimeRate());
 
+		//マークを回転
+		targetMark.rotation.y = TEasing::lerp(0, MathF::PIf * 2, markRotaTimer.GetTimeRate());
+
+		///---移動処理
+		//段々加速したい
+		mSpeed += acceleration;
+		mSpeed = Util::Clamp(mSpeed, 0.0f, MAX_ACCELERATION);
+
+		position += pVec * mSpeed * TimeManager::deltaTime;
+
+		//position.x = TEasing::InQuad(attackPosS.x,attackPosE.x,attakingTimer.GetTimeRate());
+		//position.z = TEasing::InQuad(attackPosS.z,attackPosE.z,attakingTimer.GetTimeRate());
+
 		///---遷移処理
-		//外れてるなら追跡解除タイマーを開始
-		if (!Collsions::SphereCollsion(Player::Get()->playerCol, sphereCol))
-		{
-			if (trackingTimer.GetStarted() == false)
-			{
-				trackingTimer.Start();
-			}
-		}
-		//タイマー終了時に再度判定を行い、外れてるなら追跡解除
-		if (trackingTimer.GetEnd())
-		{
-			if (!Collsions::SphereCollsion(Player::Get()->playerCol, sphereCol))
-			{
-				state = State::None;
-			}
-			else
-			{
-				trackingTimer.Reset();
-			}
-		}
-
-		//内側の攻撃モード遷移の当たり判定に達したら攻撃に遷移
-		if (Collsions::SphereCollsion(Player::Get()->playerCol, attackSphereCol))
-		{
-			state = State::Attacking;
-			attackTimer.Start();
-		}
-
-		break;
-	case GEnemy::State::Attacking:
-
-		//飛び上がって、タイマーの経過時間が終わったら攻撃判定がでる
-		if (attackTimer.GetEnd())
+		//突進が終わったら終わり
+		//目標の地点に到達するか、壁にぶつかったら終わり
+		//いったん目標地点だけで作る
+		if (attakingTimer.GetEnd())
 		{
 			state = State::Staying;
-			attackTimer.Reset();
+			attakingTimer.Reset();
 			stayTimer.Start();
 		}
 
@@ -129,17 +143,24 @@ void GEnemy::Update()
 
 	Obj3d::Update(*Camera::sCamera);
 	hitSphere.Update(*Camera::sCamera);
+	targetMark.Update(*Camera::sCamera);
 }
 
 void GEnemy::Draw()
 {
 	BasicObjectPreDraw(PipelineManager::GetPipeLine("Toon"));
 	Obj3d::DrawMaterial();
+	
+	if (state == State::Attacking)
+	{
+		targetMark.DrawMaterial();
+	}
 
 	BasicObjectPreDraw(PipelineManager::GetPipeLine("WireFrame"));
 	hitSphere.Draw();
 
 	BasicObjectPreDraw(PipelineManager::GetPipeLine("Toon"));
+
 }
 
 void GEnemy::HitEffect()
@@ -160,10 +181,8 @@ void GEnemy::Encount()
 void GEnemy::ColUpdate()
 {
 	sphereCol.center = position;
+	//追跡範囲の球の半径
 	sphereCol.radius = 8;
-
-	attackSphereCol.center = position;
-	attackSphereCol.radius = 3;
 
 	hitSphere.position = sphereCol.center;
 	hitSphere.scale = { sphereCol.radius,sphereCol.radius,sphereCol.radius };

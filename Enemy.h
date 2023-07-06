@@ -18,7 +18,6 @@ public:
 	}
 
 	Sphere sphereCol{};
-	Sphere attackSphereCol{};
 
 protected:
 	bool isDead = false;

@@ -71,6 +71,11 @@ public:
 	//敵との当たり判定用スフィア
 	Sphere playerCol;
 
+	//プレイヤーの足元のオブジェクトの座標
+	float GetFeet() {
+		return feet;
+	};
+
 private:
 	Player(){};
 	~Player(){};
@@ -125,8 +130,12 @@ private:
 	//当たった地面の情報を保存するリスト
 	std::list<Cube> hitListX;
 	std::list<Cube> hitListY;
-	
+
+	//当たってる地面のなかで一番高い座標(今プレイヤーが立っている平面オブジェクトの座標)
+	//この取り方だと、斜め床との判定で困りそう
 	float hitCubeMaxY = 0;
+	
+	float feet = 0;
 
 	//敵との当たり判定用スフィアの描画
 	Obj3d colDrawer;
