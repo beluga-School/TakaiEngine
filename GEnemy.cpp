@@ -13,10 +13,6 @@ void GEnemy::Initialize()
 	hitSphere.Initialize();
 	hitSphere.SetModel(ModelManager::GetModel("ICOSphere"));
 	hitSphere.SetTexture(TextureManager::GetTexture("white"));
-
-	targetMark.Initialize();
-	targetMark.SetModel(ModelManager::GetModel("targetMark"));
-	targetMark.SetTexture(TextureManager::GetTexture("white"));
 }
 
 void GEnemy::Update()
@@ -24,8 +20,7 @@ void GEnemy::Update()
 	stayTimer.Update();
 	metronomeTimer.Update();
 	encountJumpTimer.Update();
-	attakingTimer.Update();
-	markRotaTimer.Update();
+	accelerationTimer.Update();
 
 	Vector3 standardRotaVec = {MathF::PIf / 2,0,0};
 
@@ -46,51 +41,23 @@ void GEnemy::Update()
 		{
 			state = State::Attacking;
 			metronomeTimer.Start();
-			attakingTimer.Start();
-
-			{
-				///---見た目処理
-				//追いかける方向へ向きを変える
-				pVec = Player::Get()->position - position;
-				pVec.normalize();
-				pVec.y = 0;
-
-				rotation.y = standardRotaVec.Radian(pVec);
-				if (pVec.z > 0) {
-					//無理やり向きを反対に
-					rotation.y *= -1;
-				}
-			}
-
-			//次の位置決定
-			attackPosS = position;
-			//プレイヤーの位置 + その少し奥(移動方向 * 移動させたい距離) = 終点を出す
-			attackPosE = Player::Get()->position + pVec * attackDistance;
-
-			//最終位置にターゲットマークを出す
-			targetMark.position = attackPosE;
-			targetMark.position.y = Player::Get()->GetFeet();
-
-			//加速を元に戻す
-			mSpeed = 5.0f;
+			accelerationTimer.Start();
 		}
 
 		break;
 	case GEnemy::State::Attacking:
 		
-		//{
-		//	///---見た目処理
-		//	//追いかける方向へ向きを変える
-		//	pVec = Player::Get()->position - position;
-		//	pVec.normalize();
-		//	pVec.y = 0;
-	
-		//	rotation.y = standardRotaVec.Radian(pVec);
-		//	if (pVec.z > 0) {
-		//		//無理やり向きを反対に
-		//		rotation.y *= -1;
-		//	}
-		//}
+		///---見た目処理
+		//追いかける方向へ向きを変える
+		pVec = Player::Get()->position - position;
+		pVec.normalize();
+		pVec.y = 0;
+
+		rotation.y = standardRotaVec.Radian(pVec);
+		if (pVec.z > 0) {
+			//無理やり向きを反対に
+			rotation.y *= -1;
+		}
 
 		//横揺れする
 		if (metronomeTimer.GetEnd())
@@ -103,27 +70,17 @@ void GEnemy::Update()
 		}
 		rotation.x = TEasing::lerp(-MathF::PIf / 4, MathF::PIf / 4, metronomeTimer.GetTimeRate());
 
-		//マークを回転
-		targetMark.rotation.y = TEasing::lerp(0, MathF::PIf * 2, markRotaTimer.GetTimeRate());
-
 		///---移動処理
 		//段々加速したい
-		mSpeed += acceleration;
-		mSpeed = Util::Clamp(mSpeed, 0.0f, MAX_ACCELERATION);
+		mSpeed = TEasing::InQuad(0.0f, MAX_ACCELERATION, accelerationTimer.GetTimeRate());
 
 		position += pVec * mSpeed * TimeManager::deltaTime;
 
-		//position.x = TEasing::InQuad(attackPosS.x,attackPosE.x,attakingTimer.GetTimeRate());
-		//position.z = TEasing::InQuad(attackPosS.z,attackPosE.z,attakingTimer.GetTimeRate());
-
 		///---遷移処理
-		//突進が終わったら終わり
-		//目標の地点に到達するか、壁にぶつかったら終わり
-		//いったん目標地点だけで作る
-		if (attakingTimer.GetEnd())
+		//攻撃範囲から外れたら終わり
+		if (!Collsions::SphereCollsion(Player::Get()->playerCol, sphereCol))
 		{
 			state = State::Staying;
-			attakingTimer.Reset();
 			stayTimer.Start();
 		}
 
@@ -143,18 +100,12 @@ void GEnemy::Update()
 
 	Obj3d::Update(*Camera::sCamera);
 	hitSphere.Update(*Camera::sCamera);
-	targetMark.Update(*Camera::sCamera);
 }
 
 void GEnemy::Draw()
 {
 	BasicObjectPreDraw(PipelineManager::GetPipeLine("Toon"));
 	Obj3d::DrawMaterial();
-	
-	if (state == State::Attacking)
-	{
-		targetMark.DrawMaterial();
-	}
 
 	BasicObjectPreDraw(PipelineManager::GetPipeLine("WireFrame"));
 	hitSphere.Draw();
