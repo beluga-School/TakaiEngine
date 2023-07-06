@@ -204,6 +204,14 @@ bool Collsions::CheckSphere2Triangle(const Sphere& sphere, const Triangle& trian
 	return true;
 }
 
+bool Collsions::SphereCollsion(const Sphere& sphere1, const Sphere& sphere2)
+{
+	return	(sphere2.center.x - sphere1.center.x) * (sphere2.center.x - sphere1.center.x) +
+			(sphere2.center.y - sphere1.center.y) * (sphere2.center.y - sphere1.center.y) +
+			(sphere2.center.z - sphere1.center.z) * (sphere2.center.z - sphere1.center.z) <=
+			(sphere1.radius + sphere2.radius) * (sphere1.radius + sphere2.radius);
+}
+
 bool Cube::operator==(const Cube& cube)const
 {
 	return (cube.position.x == position.x &&

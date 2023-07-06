@@ -51,6 +51,10 @@ void Player::Initialize()
 	Obj3d::Initialize();
 	SetModel(ModelManager::GetModel("beetle"));
 
+	colDrawer.Initialize();
+	colDrawer.SetModel(ModelManager::GetModel("BlankSphere"));
+	colDrawer.SetTexture(TextureManager::GetTexture("white"));
+
 	SetOutLineState({ 0.1f,0.1f,0.1f }, 0.05f);
 }
 
@@ -63,59 +67,7 @@ void Player::Update()
 	mCenterVec = matWorld.ExtractAxisZ();
 	mSideVec = matWorld.ExtractAxisX();
 
-
-	//攻撃更新
-	attackingTimer.Update();
-	attackCoolTimer.Update();
-	attackingMotionTimer.Update();
-
-	//入力
-	switch (attackState)
-	{
-	case Player::AttackState::None:
-		//攻撃していない状態で入力があったら
-		if (Mouse::Triggered(Click::LEFT))
-		{
-			//攻撃状態に遷移
-			attackState = AttackState::Attacking;
-			attackingTimer.Start();
-		
-			//ここで正面ベクトルを保存
-			mRolingVec = mCenterVec;
-
-			//ローリング数が適用されるように最大時間を割る
-			attackingMotionTimer.mMaxTime = attackingTimer.mMaxTime;
-			//attackingMotionTimer.mMaxTime = attackingTimer.mMaxTime;
-		}
-		break;
-	case Player::AttackState::Attacking:
-		
-		if (attackingMotionTimer.GetRun() == false)
-		{
-			attackingMotionTimer.Start();
-		}
-
-		//正面ベクトルの方向に進める
-		moveValue += mRolingVec * mRolingSpeed * TimeManager::deltaTime;
-		rotation.x = TEasing::InQuad(-MathF::PIf * 2.f,MathF::PIf * 2.f, attackingMotionTimer.GetTimeRate());
-
-		if (attackingTimer.GetEnd())
-		{
-			attackState = AttackState::CoolTime;
-			attackingTimer.Reset();
-			attackCoolTimer.Start();
-			
-			rotation.x = 0;
-		}
-		break;
-	case Player::AttackState::CoolTime:
-		if (attackCoolTimer.GetEnd())
-		{
-			attackState = AttackState::None;
-			attackCoolTimer.Reset();
-		}
-		break;
-	}
+	Attack();
 
 	//横移動更新
 	if (attackState != AttackState::Attacking)
@@ -133,6 +85,15 @@ void Player::Update()
 	position.y = preMove.y;
 	position += moveValue;
 
+	//当たり判定
+	///--敵当たり判定
+	playerCol.center = position;
+	playerCol.radius = (scale.x + scale.y + scale.z) / 3.f;
+
+	colDrawer.position = position;
+	colDrawer.scale = scale;
+
+
 	//回転更新
 	if (attackState != AttackState::Attacking)
 	{
@@ -141,6 +102,8 @@ void Player::Update()
 
 	//更新
 	Obj3d::Update(*Camera::sCamera);
+
+	colDrawer.Update(*Camera::sCamera);
 }
 
 void Player::Draw()
@@ -150,6 +113,8 @@ void Player::Draw()
 
 	BasicObjectPreDraw(PipelineManager::GetPipeLine("Toon"));
 	Obj3d::DrawMaterial();
+
+	colDrawer.Draw();
 }
 
 void Player::Reset()
@@ -157,6 +122,62 @@ void Player::Reset()
 	gravity = 0;
 	hitListX.clear();
 	hitListY.clear();
+}
+
+void Player::Attack()
+{
+	//攻撃更新
+	attackingTimer.Update();
+	attackCoolTimer.Update();
+	attackingMotionTimer.Update();
+
+	//入力
+	switch (attackState)
+	{
+	case Player::AttackState::None:
+		//攻撃していない状態で入力があったら
+		if (Mouse::Triggered(Click::LEFT))
+		{
+			//攻撃状態に遷移
+			attackState = AttackState::Attacking;
+			attackingTimer.Start();
+
+			//ここで正面ベクトルを保存
+			mRolingVec = mCenterVec;
+
+			//ローリング数が適用されるように最大時間を割る
+			attackingMotionTimer.mMaxTime = attackingTimer.mMaxTime;
+			//attackingMotionTimer.mMaxTime = attackingTimer.mMaxTime;
+		}
+		break;
+	case Player::AttackState::Attacking:
+
+		if (attackingMotionTimer.GetRun() == false)
+		{
+			attackingMotionTimer.Start();
+		}
+
+		//正面ベクトルの方向に進める
+		moveValue += mRolingVec * mRolingSpeed * TimeManager::deltaTime;
+		rotation.x = TEasing::InQuad(-MathF::PIf * 2.f, MathF::PIf * 2.f, attackingMotionTimer.GetTimeRate());
+
+		if (attackingTimer.GetEnd())
+		{
+			attackState = AttackState::CoolTime;
+			attackingTimer.Reset();
+			attackCoolTimer.Start();
+
+			rotation.x = 0;
+		}
+		break;
+	case Player::AttackState::CoolTime:
+		if (attackCoolTimer.GetEnd())
+		{
+			attackState = AttackState::None;
+			attackCoolTimer.Reset();
+		}
+		break;
+	}
 }
 
 void Player::SideMoveUpdate()
@@ -265,7 +286,7 @@ GUI checkGUI("hitCheck");
 
 void Player::ColUpdate()
 {
-	//当たり判定
+	///--地面当たり判定
 	Cube pCol;
 	pCol.position = position;
 	pCol.scale = scale;
@@ -387,12 +408,6 @@ void Player::ColUpdate()
 		preY = hit.position.y;
 	}
 
-	checkGUI.Begin({ 700,100 }, { 400,400 });
-	ImGui::Text("hitCubeMaxY %f", hitCubeMaxY);
-	ImGui::Text("hitListY %d", hitListY.size());
-	ImGui::Text("position x:%f y:%f z:%f", position.x, position.y, position.z);
-	checkGUI.End();
-
 	////X軸の判定
 	//for (auto &hit : hitListX)
 	//{
@@ -423,9 +438,17 @@ void Player::ColUpdate()
 			break;
 		}
 	}
+	checkGUI.Begin({ 700,100 }, { 400,400 });
+	ImGui::Text("position %f %f %f", position.x, position.y, position.z);
+	ImGui::Text("playerCol.center %f %f %f", playerCol.center.x, playerCol.center.y, playerCol.center.z);
+	ImGui::Text("playerCol.radius %f %f %f", playerCol.radius);
+
+	int num = 0;
 
 	for (auto& enemy : EnemyManager::Get()->enemyList)
 	{
+		num++;
+
 		Cube enemyCol;
 		enemyCol.position = enemy->position;
 		enemyCol.scale = enemy->scale;
@@ -434,8 +457,19 @@ void Player::ColUpdate()
 			enemy->HitEffect();
 			break;
 		}
-	}
+		if (Collsions::SphereCollsion(playerCol, enemy->sphereCol))
+		{
+			enemy->color_ = { 1,0,0,1 };
+		}
+		else
+		{
+			enemy->color_ = { 1,1,1,1 };
+		}
 
+		ImGui::Text("enemyCenter[%d] %f %f %f", num, enemy->sphereCol.center.x, enemy->sphereCol.center.y, enemy->sphereCol.center.z);
+		ImGui::Text("enemy[%d].radius %f %f %f", num, enemy->sphereCol.radius);
+	}
+	checkGUI.End();
 }
 
 void Player::RotaUpdate()

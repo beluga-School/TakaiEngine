@@ -59,4 +59,6 @@ namespace Collsions
 	Vector3 ClosestPtPoint2Triangle(const Vector3& point, const Triangle& triangle);
 
 	bool CheckSphere2Triangle(const Sphere& sphere, const Triangle& triangle);
+
+	bool SphereCollsion(const Sphere& sphere1, const Sphere& sphere2);
 }

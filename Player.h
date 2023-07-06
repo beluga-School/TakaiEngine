@@ -118,11 +118,16 @@ private:
 	const float gravityAdd = 1.5f;
 
 	///---当たり判定
-	//多分自分が当たり判定を取るオブジェクトを管理するリストがここにあった方がいい気がする
+	
+	//当たった地面の情報を保存するリスト
 	std::list<Cube> hitListX;
 	std::list<Cube> hitListY;
 	
 	float hitCubeMaxY = 0;
+
+	//敵との当たり判定用スフィア
+	Sphere playerCol;
+	Obj3d colDrawer;
 
 	///---攻撃
 	enum class AttackState

@@ -292,6 +292,7 @@ void ModelManager::PreLoad()
 	LoadModel("groundCube", "groundCube", true);
 	LoadModel("BlankCube", "BlankCube");
 	LoadModel("Sphere", "smSphere", true);
+	LoadModel("BlankSphere", "BlankSphere", true);
 }
 
 void ModelManager::LoadModel(const std::string filepath, const std::string handle, bool smooth)

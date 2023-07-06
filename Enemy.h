@@ -1,5 +1,6 @@
 #pragma once
 #include "Obj.h"
+#include "Collision.h"
 
 class Enemy : public Obj3d
 {
@@ -13,6 +14,9 @@ public:
 	bool IsDead() {
 		return isDead;
 	}
+
+	Sphere sphereCol{};
+
 protected:
 	bool isDead = false;
 };
