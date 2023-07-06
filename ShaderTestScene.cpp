@@ -12,29 +12,22 @@ void ShaderTestScene::Initialize()
 {
 	debugCamera.Initialize();
 
-	testSphere.Initialize();
-	testSphere.SetModel(ModelManager::GetModel("smSphere"));
-	testSphere.SetTexture(TextureManager::GetTexture("slime"));
 	skydome.Initialize();
+
+	lineObject.Initialize();
+	lineObject.SetModel(ModelManager::GetModel("ICOSphere"));
+	lineObject.SetTexture(TextureManager::GetTexture("white"));
 }
 
 GUI lightGUI("lightOperator");
 
 void ShaderTestScene::Update()
 {
-	lightGUI.Begin({ 100,100 }, { 500,100 });
-	ImGui::Text("lightdir");
-	ImGui::SliderFloat(":x",&lightdir.x,-10.0f,10.0f);
-	ImGui::SliderFloat(":y",&lightdir.y,-10.0f,10.0f);
-	ImGui::SliderFloat(":z",&lightdir.z,-10.0f,10.0f);
-	lightGUI.End();
-
-	LightGroup::sLightGroup->SetDirLightDir(0, lightdir);
-
 	debugCamera.Update();
 
 	skydome.Update();
-	testSphere.Update(*Camera::sCamera);
+
+	lineObject.Update(*Camera::sCamera);
 }
 
 void ShaderTestScene::Draw()
@@ -42,9 +35,8 @@ void ShaderTestScene::Draw()
 	BasicObjectPreDraw(PipelineManager::GetPipeLine("Skydome"));
 	skydome.Draw();
 
-	BasicObjectPreDraw(PipelineManager::GetPipeLine("Toon"));
-	testSphere.Draw();
-
+	BasicObjectPreDraw(PipelineManager::GetPipeLine("WireFrame"));
+	lineObject.Draw();
 }
 
 void ShaderTestScene::End()

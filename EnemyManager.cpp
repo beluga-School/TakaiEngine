@@ -2,6 +2,7 @@
 #include "MathF.h"
 #include "GEnemy.h"
 #include "ClearDrawScreen.h"
+#include "Player.h"
 
 void EnemyManager::Load(const LevelData::ObjectData& data)
 {
@@ -26,6 +27,8 @@ void EnemyManager::Initialize()
 
 void EnemyManager::Update()
 {
+	gui3.Begin({ 100,100 }, { 200,200 });
+
 	enemyList.remove_if([](std::unique_ptr<Enemy>& enemy) {
 		return enemy->IsDead();
 		});
@@ -33,6 +36,8 @@ void EnemyManager::Update()
 	{
 		enemy->Update();
 	}
+
+	gui3.End();
 }
 
 void EnemyManager::Draw()

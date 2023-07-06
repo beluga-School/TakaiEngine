@@ -52,7 +52,7 @@ void Player::Initialize()
 	SetModel(ModelManager::GetModel("beetle"));
 
 	colDrawer.Initialize();
-	colDrawer.SetModel(ModelManager::GetModel("BlankSphere"));
+	colDrawer.SetModel(ModelManager::GetModel("ICOSphere"));
 	colDrawer.SetTexture(TextureManager::GetTexture("white"));
 
 	SetOutLineState({ 0.1f,0.1f,0.1f }, 0.05f);
@@ -110,11 +110,13 @@ void Player::Draw()
 {
 	BasicObjectPreDraw(PipelineManager::GetPipeLine("OutLine"), false);
 	Obj3d::DrawOutLine();
+	
+	BasicObjectPreDraw(PipelineManager::GetPipeLine("WireFrame"));
+	colDrawer.Draw();
 
 	BasicObjectPreDraw(PipelineManager::GetPipeLine("Toon"));
 	Obj3d::DrawMaterial();
 
-	colDrawer.Draw();
 }
 
 void Player::Reset()
@@ -438,38 +440,25 @@ void Player::ColUpdate()
 			break;
 		}
 	}
-	checkGUI.Begin({ 700,100 }, { 400,400 });
-	ImGui::Text("position %f %f %f", position.x, position.y, position.z);
-	ImGui::Text("playerCol.center %f %f %f", playerCol.center.x, playerCol.center.y, playerCol.center.z);
-	ImGui::Text("playerCol.radius %f %f %f", playerCol.radius);
-
-	int num = 0;
+	//checkGUI.Begin({ 700,100 }, { 400,400 });
 
 	for (auto& enemy : EnemyManager::Get()->enemyList)
 	{
-		num++;
-
 		Cube enemyCol;
 		enemyCol.position = enemy->position;
 		enemyCol.scale = enemy->scale;
+		
 		if (Collsions::CubeCollision(enemyCol, pCol))
 		{
 			enemy->HitEffect();
-			break;
 		}
+		
 		if (Collsions::SphereCollsion(playerCol, enemy->sphereCol))
 		{
-			enemy->color_ = { 1,0,0,1 };
+			enemy->Encount();
 		}
-		else
-		{
-			enemy->color_ = { 1,1,1,1 };
-		}
-
-		ImGui::Text("enemyCenter[%d] %f %f %f", num, enemy->sphereCol.center.x, enemy->sphereCol.center.y, enemy->sphereCol.center.z);
-		ImGui::Text("enemy[%d].radius %f %f %f", num, enemy->sphereCol.radius);
 	}
-	checkGUI.End();
+	//checkGUI.End();
 }
 
 void Player::RotaUpdate()

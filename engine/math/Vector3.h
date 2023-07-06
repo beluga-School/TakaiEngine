@@ -60,9 +60,11 @@ public:
 	/// <returns></returns>
 	static Vector3 lerp(const Vector3& start, const Vector3& end, const float t);
 
-	static Vector3 easeInQuad(const Vector3& start, const Vector3& end, const float t);
-	static Vector3 easeOutQuad(const Vector3& start, const Vector3& end, const float t);
-	static Vector3 easeInOutQuad(const Vector3& start, const Vector3& end, const float t);
+	/// <summary>
+	/// 2つのベクトルのなす角(Radian)を取得
+	/// 激おもらしいので多様厳禁
+	/// </summary>
+	float Radian(const Vector3& a) const;
 
 	Vector3 operator+()const;
 	Vector3 operator-()const;

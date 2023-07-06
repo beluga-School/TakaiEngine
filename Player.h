@@ -68,6 +68,9 @@ public:
 	//前移動(上移動)
 	Vector3 preMove = { 0,0,0 };
 
+	//敵との当たり判定用スフィア
+	Sphere playerCol;
+
 private:
 	Player(){};
 	~Player(){};
@@ -125,8 +128,7 @@ private:
 	
 	float hitCubeMaxY = 0;
 
-	//敵との当たり判定用スフィア
-	Sphere playerCol;
+	//敵との当たり判定用スフィアの描画
 	Obj3d colDrawer;
 
 	///---攻撃

@@ -11,11 +11,14 @@ public:
 
 	virtual void HitEffect() = 0;
 
+	virtual void Encount() = 0;
+
 	bool IsDead() {
 		return isDead;
 	}
 
 	Sphere sphereCol{};
+	Sphere attackSphereCol{};
 
 protected:
 	bool isDead = false;

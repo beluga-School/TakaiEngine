@@ -295,6 +295,9 @@
     <Filter Include="シェーダー\Ground">
       <UniqueIdentifier>{589bb706-5388-4d5f-8d84-1fd2766905d8}</UniqueIdentifier>
     </Filter>
+    <Filter Include="シェーダー\Line">
+      <UniqueIdentifier>{a3b46ff8-379c-4975-8a18-d34c0defa5d1}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="engine\input\Input.cpp">
@@ -497,6 +500,9 @@
     </ClCompile>
     <ClCompile Include="ShaderTestScene.cpp">
       <Filter>Application\Scene\ShaderTestScene</Filter>
+    </ClCompile>
+    <ClCompile Include="LineObject.cpp">
+      <Filter>ソース ファイル</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -710,6 +716,9 @@
     <ClInclude Include="ShaderTestScene.h">
       <Filter>Application\Scene\ShaderTestScene</Filter>
     </ClInclude>
+    <ClInclude Include="LineObject.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="External\imgui\imgui.ini" />
@@ -763,6 +772,9 @@
     </None>
     <None Include="Resources\Shader\Ground\Ground.hlsli">
       <Filter>シェーダー\Ground</Filter>
+    </None>
+    <None Include="Resources\Shader\Line\Line.hlsli">
+      <Filter>シェーダー\Line</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>
@@ -873,6 +885,12 @@
     </FxCompile>
     <FxCompile Include="Resources\Shader\Ground\GroundVS.hlsl">
       <Filter>シェーダー\Ground</Filter>
+    </FxCompile>
+    <FxCompile Include="Resources\Shader\Line\LineVS.hlsl">
+      <Filter>シェーダー\Line</Filter>
+    </FxCompile>
+    <FxCompile Include="Resources\Shader\Line\LinePS.hlsl">
+      <Filter>シェーダー\Line</Filter>
     </FxCompile>
   </ItemGroup>
 </Project>

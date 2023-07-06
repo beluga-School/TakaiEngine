@@ -125,6 +125,9 @@ private:
 	//地面用トゥーンシェーダー
 	void GroundToonPipeLine();
 
+	//ワイヤーフレーム用パイプライン
+	void WireFramePipeLine();
+
 	PipelineManager(){};
 	~PipelineManager(){};
 };

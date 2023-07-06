@@ -29,7 +29,8 @@ struct ConstBufferDataTransform {
 	Matrix4 viewproj;	//ビュープロ行列
 	Matrix4 world;		//ワールド行列
 	Vector3 cameraPos;	//カメラ座標(ワールド行列)
-	Vector3 cameraDir;  //カメラの視線ベクトル
+	float pad1;
+	Vector3 cameraDir;  //カメラの視線ベクトル <-これ怪しすぎないか？？？？
 };
 
 struct ConstBufferDataOutLine {

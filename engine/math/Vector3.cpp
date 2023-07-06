@@ -65,22 +65,13 @@ Vector3 Vector3::lerp(const Vector3& start, const Vector3& end, const float t)
 	return start * (1.0f - easeVal) + end * t;
 }
 
-Vector3 Vector3::easeInQuad(const Vector3& start, const Vector3& end, const float t)
+float Vector3::Radian(const Vector3& a) const
 {
-	float easeVal = pow(t,2.f);
-	return start * (1.0f - easeVal) + end * t;
-}
-
-Vector3 Vector3::easeOutQuad(const Vector3& start, const Vector3& end, const float t)
-{
-	float easeVal = t * (2.f - t);
-	return start * (1.0f - easeVal) + end * t;
-}
-
-Vector3 Vector3::easeInOutQuad(const Vector3& start, const Vector3& end, const float t)
-{
-	float easeVal = (t * t) * (3.f - (2.f * t));
-	return start * (1.0f - easeVal) + end * t;
+	//りくりくまんのコピペ
+	Vector3 na = this->GetNormalize();
+	Vector3 nb = a.GetNormalize();
+	float dot = na.dot(nb); //長さ1同士のベクトルの内積はcosθとなる...
+	return acosf(dot); //sqrtより重いまであるから気を付けた方が良い
 }
 
 float Vector3::dot(const Vector3& v) const

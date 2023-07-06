@@ -2,6 +2,7 @@
 #include "IScene.h"
 #include "DebugCamera.h"
 #include "Skydome.h"
+#include "LineObject.h"
 
 class ShaderTestScene :
     public IScene
@@ -15,9 +16,8 @@ public:
 
 private:
     DebugCamera debugCamera;
-    Obj3d testSphere;
     Skydome skydome;
 
-    Vector3 lightdir = { 0.0f,-0.8f,0.0f };
+    Obj3d lineObject;
 };
 
