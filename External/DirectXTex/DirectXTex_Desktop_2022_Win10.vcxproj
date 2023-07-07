@@ -40,15 +40,15 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|X64'">
-    <OutDir>$(SolutionDir)..\TAKAIEngineGenerated\Outputs\$(Configuration)\</OutDir>
-    <IntDir>$(SolutionDir)..\TAKAIEngineGenerated\Obj\$(ProjectName)\$(Configuration)\</IntDir>
+    <OutDir>$(SolutionDir)\TAKAIEngineGenerated\Outputs\$(Configuration)\</OutDir>
+    <IntDir>$(SolutionDir)\TAKAIEngineGenerated\Obj\$(ProjectName)\$(Configuration)\</IntDir>
     <TargetName>DirectXTex</TargetName>
     <GenerateManifest>true</GenerateManifest>
     <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);$(SolutionDir)DirectXTex</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|X64'">
-    <OutDir>$(SolutionDir)..\TAKAIEngineGenerated\Outputs\$(Configuration)\</OutDir>
-    <IntDir>$(SolutionDir)..\TAKAIEngineGenerated\Obj\$(ProjectName)\$(Configuration)\</IntDir>
+    <OutDir>$(SolutionDir)\TAKAIEngineGenerated\Outputs\$(Configuration)\</OutDir>
+    <IntDir>$(SolutionDir)\TAKAIEngineGenerated\Obj\$(ProjectName)\$(Configuration)\</IntDir>
     <TargetName>DirectXTex</TargetName>
     <GenerateManifest>true</GenerateManifest>
     <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);$(SolutionDir)DirectXTex</IncludePath>

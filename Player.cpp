@@ -111,8 +111,8 @@ void Player::Draw()
 	BasicObjectPreDraw(PipelineManager::GetPipeLine("OutLine"), false);
 	Obj3d::DrawOutLine();
 	
-	BasicObjectPreDraw(PipelineManager::GetPipeLine("WireFrame"));
-	colDrawer.Draw();
+	/*BasicObjectPreDraw(PipelineManager::GetPipeLine("WireFrame"));
+	colDrawer.Draw();*/
 
 	BasicObjectPreDraw(PipelineManager::GetPipeLine("Toon"));
 	Obj3d::DrawMaterial();
