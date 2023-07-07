@@ -6,6 +6,8 @@
 #include <iostream>
 #include <memory>
 
+//assimpの組み込みに成功
+
 //libのリンク（いったんmainに）
 //directx12
 #pragma comment(lib,"d3d12.lib")
