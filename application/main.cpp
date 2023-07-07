@@ -6,7 +6,7 @@
 #include <iostream>
 #include <memory>
 
-//assimpの組み込みに成功
+//プロパティの変更を適用
 
 //libのリンク（いったんmainに）
 //directx12
