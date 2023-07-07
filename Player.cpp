@@ -122,7 +122,6 @@ void Player::Draw()
 void Player::Reset()
 {
 	gravity = 0;
-	hitListX.clear();
 	hitListY.clear();
 }
 
@@ -138,7 +137,8 @@ void Player::Attack()
 	{
 	case Player::AttackState::None:
 		//攻撃していない状態で入力があったら
-		if (Mouse::Triggered(Click::LEFT))
+		//if (Mouse::Triggered(Click::LEFT))
+		if(0)
 		{
 			//攻撃状態に遷移
 			attackState = AttackState::Attacking;
@@ -181,10 +181,6 @@ void Player::Attack()
 		break;
 	}
 }
-
-
-GUI checkGUI("speedCheck");
-
 
 void Player::SideMoveUpdate()
 {
@@ -236,14 +232,6 @@ void Player::SideMoveUpdate()
 	{
 		moveValue += oldMoveVec * mSpeed * TimeManager::deltaTime;
 	}
-
-	checkGUI.Begin({ 500,100 }, { 200,200 });
-	ImGui::Text("moveValue %f %f %f", moveValue.x, moveValue.y, moveValue.z);
-	ImGui::Text("accelerationTimer %f", accelerationTimer.GetTimeRate());
-	ImGui::Text("decelerationTimer %f", decelerationTimer.GetTimeRate());
-	ImGui::Text("mSpeed %f", mSpeed);
-	ImGui::Text("mSaveSpeed %f", mSaveSpeed);
-	checkGUI.End();
 
 	if (Input::Pad::CheckConnectPad())
 	{
@@ -346,6 +334,8 @@ void Player::JumpUpdate()
 	}
 }
 
+GUI checkGUI("speedCheck");
+
 void Player::ColUpdate()
 {
 	///--地面当たり判定
@@ -357,8 +347,13 @@ void Player::ColUpdate()
 
 	pCol.position += moveValue;
 
-	for (auto& bCol : Stage::Get()->mColCubes)
+	//for (auto& bColTemp : Stage::Get()->mColCubes)
+	for (auto& bColTemp : Stage::Get()->mColObj3ds)
 	{
+		Cube bCol;
+		bCol.position = bColTemp.position;
+		bCol.scale = bColTemp.scale;
+
 		//そのオブジェクトより
 		//上にいるか
 		bool up = CheckDirections(pCol, bCol, CheckDirection::CD_UP);
@@ -394,10 +389,12 @@ void Player::ColUpdate()
 				//当たり判定をとり、同じ要素が入っていないなら入れて
 				//当たり判定が外れたときに、その要素を消す
 				UniqueObjectPushBack(hitListY,bCol);
+				bColTemp.SetTexture(TextureManager::GetTexture("default"));
 			}
 			else
 			{
 				UniqueObjectErase(hitListY,bCol);
+				bColTemp.SetTexture(TextureManager::GetTexture("white"));
 			}
 		}
 
@@ -431,27 +428,10 @@ void Player::ColUpdate()
 					moveValue.z = 0;
 				}
 			}
-			//if (center)
-			//{
-			//	Cube sideCube;
-			//	sideCube.position = pCol.position;
-			//	//横方向の大きさを2倍に
-			//	sideCube.scale.z = pCol.scale.z * 2.f;
-			//	if (Collsions::CubeCollision(sideCube, bCol))
-			//	{
-			//		UniqueObjectPushBack(hitListX, bCol);
-			//	}
-			//	else
-			//	{
-			//		UniqueObjectErase(hitListX, bCol);
-
-			//	}
-			//	moveValue.z = 0;
-			//}
 		}
 	}
 
-	//Y軸の判定
+	//上方向の判定
 	float preY = -114514.f;
 	float maxY = 0;
 
@@ -463,27 +443,13 @@ void Player::ColUpdate()
 		//初期値でなく、前の値より高い位置にあるなら
 		if (maxY >= preY)
 		{
-			//終点位置を更新
+			//一番高い座標を算出
 			//少しだけ浮かせて、ブロックの切れ目に引っかからないように
 			feet = hit.position.y + hit.scale.y / 2;
 			hitCubeMaxY = feet + pCol.scale.y / 2 + 0.01f;
 		}
 		preY = hit.position.y;
 	}
-
-	////X軸の判定
-	//for (auto &hit : hitListX)
-	//{
-	//	maxY = hit.position.y;
-	//	//初期値でなく、前の値より高い位置にあるなら
-	//	if (maxY >= preY)
-	//	{
-	//		//終点位置を更新
-	//		//少しだけ浮かせて、ブロックの切れ目に引っかからないように
-	//		hitCubeMaxY = hit.position.y + hit.scale.y / 2 + pCol.scale.y / 2 + 0.01f;
-	//	}
-	//	preY = hit.position.y;
-	//}
 
 	for (auto& bColevent : Stage::Get()->mEventObjects)
 	{

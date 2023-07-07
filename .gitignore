@@ -361,3 +361,11 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+/External/Assimp/code/assimp.dir
+/External/Assimp/code/CMakeFiles
+/External/Assimp/contrib/android-cmake
+/External/Assimp/contrib/draco/cmake
+/External/Assimp/contrib/zlib/zlibstatic.dir
+/External/Assimp/lib
+/External/Assimp/contrib/zlib/Debug
+/External/Assimp/contrib/zlib/Release

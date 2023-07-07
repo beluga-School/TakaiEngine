@@ -13,14 +13,13 @@ void GameScene::LoadResource()
 	//ƒ[ƒh(•ª‚¯‚½‚Ù‚¤‚ª‚¢‚¢)
 	LevelLoader::Get()->Load("Scene/woods", "woods");
 
-	LevelLoader::Get()->Load("Scene/stage_1", "stage_1");
-	LevelLoader::Get()->Load("Scene/stage_2", "stage_2");
-	LevelLoader::Get()->Load("Scene/stage_3", "stage_3");
+	LevelLoader::Get()->Load("Scene/colliderTest", "colliderTest");
+
 	LevelLoader::Get()->Load("Scene/stage_castle_outside", "stage_castle_outside");
 	LevelLoader::Get()->Load("Scene/stage_castle_inside", "stage_castle_inside");
 	LevelLoader::Get()->Load("Scene/stage_grasslands", "stage_grasslands");
 
-	Stage::Get()->ChangeLevel(*LevelLoader::Get()->GetData("stage_grasslands"));
+	Stage::Get()->ChangeLevel(*LevelLoader::Get()->GetData("colliderTest"));
 }
 
 void GameScene::Initialize()

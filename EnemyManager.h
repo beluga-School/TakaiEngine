@@ -24,6 +24,5 @@ public:
 
 	std::list<std::unique_ptr<Enemy>> enemyList;
 private:
-	GUI gui3 = {"check"};
 };
 

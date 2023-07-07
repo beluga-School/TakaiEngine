@@ -92,9 +92,9 @@ private:
 	float mSpeed = 7.5f;
 
 	//最大値になるまでの加速時間
-	TEasing::easeTimer accelerationTimer = 0.5f;
+	TEasing::easeTimer accelerationTimer = 0.25f;
 
-	//最大値から減るまでの減速時間(加速の1/10くらい)
+	//最大値から減るまでの減速時間
 	TEasing::easeTimer decelerationTimer = 0.25f;
 
 	//移動終わった時の速度
@@ -145,7 +145,6 @@ private:
 	///---当たり判定
 	
 	//当たった地面の情報を保存するリスト
-	std::list<Cube> hitListX;
 	std::list<Cube> hitListY;
 
 	//当たってる地面のなかで一番高い座標(今プレイヤーが立っている平面オブジェクトの座標)
