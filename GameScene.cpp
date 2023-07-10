@@ -33,6 +33,10 @@ void GameScene::Initialize()
 	EnemyManager::Get()->Initialize();
 
 	Stage::Get()->goalSystem.Initialize();
+
+	cameraColDrawer.Initialize();
+	cameraColDrawer.SetModel(ModelManager::GetModel("BlankCube"));
+	cameraColDrawer.SetTexture(TextureManager::GetTexture("white"));
 }
 
 GUI sceneChangeGUI("operator");
@@ -108,6 +112,18 @@ void GameScene::Update()
 	}
 
 	EnemyManager::Get()->Update();
+
+	for (auto &obj : Stage::Get()->mColObj3ds)
+	{
+		Cube cube;
+		cube.position = obj.position;
+		cube.scale = obj.scale;
+		obj.mIsVisiable = !Collsions::CubeCollision(PlayerCamera::Get()->cameraCol, cube);
+	} 
+
+	cameraColDrawer.position = PlayerCamera::Get()->cameraCol.position;
+	cameraColDrawer.scale = PlayerCamera::Get()->cameraCol.scale;
+	cameraColDrawer.Update(*Camera::sCamera);
 }
 
 void GameScene::Draw()
@@ -120,6 +136,8 @@ void GameScene::Draw()
 
 	BasicObjectPreDraw(PipelineManager::GetPipeLine("Toon"));
 	player->Draw();
+
+	cameraColDrawer.Draw();
 
 	EnemyManager::Get()->Draw();
 

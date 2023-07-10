@@ -84,6 +84,22 @@ void PlayerCamera::Update()
 	//xはキャラクターの回転と一緒に動かす
 	//yはカメラオブジェクトで動かす
 	//shift押しながらならxもカメラオブジェクトで動かす
+
+	//カメラ座標を当たり判定用に保存
+	//カメラ位置とプレイヤー位置の中心を取る
+	cameraCol.position = {
+		(Camera::sCamera->mEye.x + player->position.x)/2,
+		(Camera::sCamera->mEye.y + player->position.y)/2,
+		(Camera::sCamera->mEye.z + player->position.z)/2,
+	};
+	
+	//中心位置から元座標へ引き算して間の長さを出す
+	//XとZの幅の出し方がわかんないので適当な大きさを入れておく
+	cameraCol.scale = {player->scale.x,
+		Util::Abs(cameraCol.position.y - Camera::sCamera->mEye.y),
+		player->scale.z};
+
+	cameraCol.scale.y = Util::Clamp(cameraCol.scale.y, player->scale.y, 9999.f);
 }
 
 void PlayerCamera::Draw()

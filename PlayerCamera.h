@@ -2,6 +2,7 @@
 #include "ViewProjection.h"
 #include "TEasing.h"
 #include "Obj.h"
+#include "Collision.h"
 
 //プレイヤーのポインタを取得し、それにsCameraを追従させる
 class PlayerCamera : public Obj3d
@@ -15,6 +16,9 @@ public:
 		static PlayerCamera instance;
 		return &instance;
 	}
+
+	//カメラの座標を保存
+	Cube cameraCol;
 
 	//縦回転
 	float mVerticalRad = 0;

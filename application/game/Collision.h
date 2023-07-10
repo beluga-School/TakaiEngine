@@ -47,6 +47,8 @@ namespace Collsions
 	//ƒŒƒC‚Æ•½–Ê‚Ì“–‚½‚è”»’è
 	bool RayPlaneCollision(const Ray& ray, const Plane& plane);
 
+	bool RayCubeCollision(const Ray& ray, const Cube& cube);
+
 	//y²‚ğ0‚Æ‚µ‚ÄAx‚Æz‚Ì2²‚ÅlŠp“¯m‚Å”»’è‚·‚é“–‚½‚è”»’è
 	bool RectangleXZCollision(const Cube& cube1, const Cube& cube2);
 

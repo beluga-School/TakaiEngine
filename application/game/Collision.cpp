@@ -30,6 +30,151 @@ bool Collsions::RayPlaneCollision(const Ray& ray, const Plane& plane)
 	return true;
 }
 
+Plane CreatePlane(Vector3 leftUp, Vector3 rightDown, Vector3 planeNormal)
+{
+	//平面の中心点(bベクトル)
+	Vector3 planeCenterPoint = {
+		(rightDown.x + leftUp.x) / 2,
+		(rightDown.y + leftUp.y) / 2,
+		leftUp.z
+	};
+
+	//答え
+	float c = abs(planeNormal.dot(planeCenterPoint));
+
+	Plane plane;
+	plane.distance = c;
+	plane.normal = planeNormal;
+
+	return plane;
+}
+//やろうと思ったけど一回諦めようかな....
+bool Collsions::RayCubeCollision(const Ray& ray, const Cube& cube)
+{
+	//XY平面のZ座標手前の平面との当たり判定
+	Vector3 leftUp = {
+		cube.position.x - cube.scale.x / 2,
+		cube.position.y + cube.scale.y / 2,
+		cube.position.z - cube.scale.z / 2,
+	};
+
+	Vector3 rightDown = {
+		cube.position.x + cube.scale.x / 2,
+		cube.position.y - cube.scale.y / 2,
+		cube.position.z - cube.scale.z / 2,
+	};
+
+	Plane frontXY = CreatePlane(leftUp, rightDown, { 0,0,-1 });
+
+	
+	if (Collsions::RayPlaneCollision(ray, frontXY))
+	{
+		return true;
+	}
+
+	//XY平面のZ座標奥の平面との当たり判定
+	leftUp = {
+		cube.position.x - cube.scale.x / 2,
+		cube.position.y + cube.scale.y / 2,
+		cube.position.z + cube.scale.z / 2,
+	};
+
+	rightDown = {
+		cube.position.x + cube.scale.x / 2,
+		cube.position.y - cube.scale.y / 2,
+		cube.position.z + cube.scale.z / 2,
+	};
+
+	Plane backXY = CreatePlane(leftUp, rightDown,{0,0,1});
+
+	if (Collsions::RayPlaneCollision(ray, backXY))
+	{
+		return true;
+	}
+
+	//XZ平面のY座標上の平面との当たり判定
+	leftUp = {
+		cube.position.x - cube.scale.x / 2,
+		cube.position.y + cube.scale.y / 2,
+		cube.position.z - cube.scale.z / 2,
+	};
+
+	rightDown = {
+		cube.position.x + cube.scale.x / 2,
+		cube.position.y + cube.scale.y / 2,
+		cube.position.z + cube.scale.z / 2,
+	};
+
+	Plane upXZ = CreatePlane(leftUp, rightDown, { 0,1,0 });
+
+	if (Collsions::RayPlaneCollision(ray, upXZ))
+	{
+		return true;
+	}
+
+	//YZ平面のX座標右の平面との当たり判定
+	leftUp = {
+		cube.position.x - cube.scale.x / 2,
+		cube.position.y - cube.scale.y / 2,
+		cube.position.z - cube.scale.z / 2,
+	};
+
+	rightDown = {
+		cube.position.x + cube.scale.x / 2,
+		cube.position.y - cube.scale.y / 2,
+		cube.position.z + cube.scale.z / 2,
+	};
+
+	Plane downXZ = CreatePlane(leftUp, rightDown, { 0,-1,0 });
+
+	if (Collsions::RayPlaneCollision(ray, downXZ))
+	{
+		return true;
+	}
+
+	//XZ平面のY座標下の平面との当たり判定
+	leftUp = {
+		cube.position.x - cube.scale.x / 2,
+		cube.position.y - cube.scale.y / 2,
+		cube.position.z + cube.scale.z / 2,
+	};
+
+	rightDown = {
+		cube.position.x - cube.scale.x / 2,
+		cube.position.y + cube.scale.y / 2,
+		cube.position.z - cube.scale.z / 2,
+	};
+
+	Plane leftYZ = CreatePlane(leftUp, rightDown, { 1,0,0 });
+
+	if (Collsions::RayPlaneCollision(ray, leftYZ))
+	{
+		return true;
+	}
+
+	//XZ平面のY座標下の平面との当たり判定
+	leftUp = {
+		cube.position.x + cube.scale.x / 2,
+		cube.position.y - cube.scale.y / 2,
+		cube.position.z + cube.scale.z / 2,
+	};
+
+	rightDown = {
+		cube.position.x + cube.scale.x / 2,
+		cube.position.y + cube.scale.y / 2,
+		cube.position.z - cube.scale.z / 2,
+	};
+
+	Plane rightYZ = CreatePlane(leftUp, rightDown, { -1,0,0 });
+
+	if (Collsions::RayPlaneCollision(ray, rightYZ))
+	{
+		return true;
+	}
+
+	return false;
+}
+
 bool Collsions::RectangleXZCollision(const Cube& cube1, const Cube& cube2)
 {
 	float DistanceX = cube1.position.x - cube2.position.x;
