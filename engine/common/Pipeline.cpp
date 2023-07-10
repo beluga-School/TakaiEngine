@@ -900,7 +900,7 @@ void PipelineManager::SpritePipeLine()
 	pSet.descriptorRange.OffsetInDescriptorsFromTableStart = D3D12_DESCRIPTOR_RANGE_OFFSET_APPEND;
 
 	//ルートパラメータの設定
-	pSet.paramSize = 3;
+	pSet.paramSize = 2;
 	pSet.rootParams.resize(pSet.paramSize);
 	//定数バッファ0番 b0
 	pSet.rootParams[0].ParameterType = D3D12_ROOT_PARAMETER_TYPE_CBV;	//種類

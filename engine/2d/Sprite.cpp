@@ -99,7 +99,7 @@ SpriteCommon SpriteCommonCreate()
 	SpriteCommon spriteCommon{};
 
 	//スプライト用のパイプラインを生成
-	spriteCommon.mPipelineSet = CreateSpritePipeline();
+	spriteCommon.mPipelineSet = PipelineManager::GetPipeLine("Sprite");
 
 	//並行投影の射影行列生成
 	spriteCommon.mMatProjection = XMMatrixOrthographicOffCenterLH(
