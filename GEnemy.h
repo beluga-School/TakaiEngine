@@ -3,6 +3,7 @@
 #include "Enemy.h"
 #include "Collision.h"
 #include "TEasing.h"
+#include "MathF.h"
 
 class GEnemy : public Enemy
 {
@@ -20,13 +21,14 @@ public:
 private:
 	Obj3d hitSphere;
 
-	enum class State
+	enum class AttackState
 	{
 		None,		//立ち止まってる状態
 		Encount,	//プレイヤーを発見した状態
 		Attacking,	//突進状態
 		Staying,	//攻撃後の後隙 状態終わりで当たり判定をとり、NoneかEncountに遷移
-	}state = State::None;
+		Dead,
+	}attackState = AttackState::None;
 
 	float mSpeed = 2.5f;	//1秒間の移動速度
 
@@ -52,4 +54,17 @@ private:
 	TEasing::easeTimer metronomeTimer = 0.5f;
 	//攻撃後の後隙時間
 	TEasing::easeTimer stayTimer = 1.0f;
+
+	//死亡後の吹っ飛ばされ演出で使うやつ
+	//吹っ飛ばされイージングの始点と終点
+	Vector3 deadEasingS{};
+	Vector3 deadEasingE{};
+
+	TEasing::easeTimer deadTimer = 0.5f;
+
+	//吹っ飛ばされた時の方向
+	Vector3 deadDirection;
+
+	//死亡後の吹っ飛ばされ中の回転量(1秒間)(ラジアン)
+	float deadRoring = MathF::PIf * 10;
 };

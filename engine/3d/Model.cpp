@@ -295,6 +295,7 @@ void ModelManager::PreLoad()
 	LoadModel("BlankSphere", "BlankSphere", true);
 	LoadModel("ICOSphere", "ICOSphere");
 	LoadModel("targetMark", "targetMark");
+	LoadModel("plate", "plate",true);
 }
 
 void ModelManager::LoadModel(const std::string filepath, const std::string handle, bool smooth)

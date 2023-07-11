@@ -22,14 +22,16 @@ void GEnemy::Update()
 	encountJumpTimer.Update();
 	accelerationTimer.Update();
 
+	deadTimer.Update();
+
 	Vector3 standardRotaVec = {MathF::PIf / 2,0,0};
 
-	switch (state)
+	switch (attackState)
 	{
-	case GEnemy::State::None:
+	case GEnemy::AttackState::None:
 		rotation.y = 0;
 		break;
-	case GEnemy::State::Encount:
+	case GEnemy::AttackState::Encount:
 		//ジャンプする
 		position.y = TEasing::OutQuad(encountJumpS, encountJumpE, encountJumpTimer.GetTimeRate());
 
@@ -39,13 +41,13 @@ void GEnemy::Update()
 		}
 		if (encountJumpTimer.GetReverseEnd())
 		{
-			state = State::Attacking;
+			attackState = AttackState::Attacking;
 			metronomeTimer.Start();
 			accelerationTimer.Start();
 		}
 
 		break;
-	case GEnemy::State::Attacking:
+	case GEnemy::AttackState::Attacking:
 		
 		///---見た目処理
 		//追いかける方向へ向きを変える
@@ -80,17 +82,36 @@ void GEnemy::Update()
 		//攻撃範囲から外れたら終わり
 		if (!Collsions::SphereCollsion(Player::Get()->playerCol, sphereCol))
 		{
-			state = State::Staying;
+			attackState = AttackState::Staying;
 			stayTimer.Start();
 		}
 
 		break;
-	case GEnemy::State::Staying:
+	case GEnemy::AttackState::Staying:
 		
 		if (stayTimer.GetEnd())
 		{
-			state = State::None;
+			attackState = AttackState::None;
 			stayTimer.Reset();
+		}
+
+		break;
+	case GEnemy::AttackState::Dead:
+		position.x = TEasing::InQuad(deadEasingS.x, deadEasingE.x, deadTimer.GetTimeRate());
+		position.y = TEasing::InQuad(deadEasingS.y, deadEasingE.y, deadTimer.GetTimeRate());
+		position.z = TEasing::InQuad(deadEasingS.z, deadEasingE.z, deadTimer.GetTimeRate());
+
+		//yを0に
+		rotation.x = 0;
+		rotation.y = 0;
+
+		//回転を加算
+		rotation.z += deadRoring * TimeManager::deltaTime;
+
+		if (deadTimer.GetEnd())
+		{
+			isDead = true;
+			//パーティクル出したい
 		}
 
 		break;
@@ -116,14 +137,30 @@ void GEnemy::Draw()
 
 void GEnemy::HitEffect()
 {
-	isDead = true;
+	//すでに死亡済みならスキップ
+	if (attackState == AttackState::Dead)return;
+	attackState = AttackState::Dead;
+	
+	//死亡時のプレイヤーが向いていた方向を保存
+	deadDirection = Player::Get()->matWorld.ExtractAxisZ();
+	
+	//斜め上に吹っ飛んでいくように
+	float rand = MathF::GetRand(6.0f, 8.0f);
+	deadDirection.y = MathF::PIf / rand;
+
+	deadEasingS = position;
+
+	//正面に向かって吹っ飛ばされるように終点を設定
+	deadEasingE = position + deadDirection * 7.0f;
+
+	deadTimer.Start();
 }
 
 void GEnemy::Encount()
 {
 	//ステートがNoneならエンカウントに以降
-	if (state != State::None)return;
-	state = State::Encount;
+	if (attackState != AttackState::None)return;
+	attackState = AttackState::Encount;
 	encountJumpTimer.Start();
 	encountJumpS = position.y;
 	encountJumpE = position.y + 2.0f;

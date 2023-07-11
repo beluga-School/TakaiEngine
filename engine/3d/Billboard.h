@@ -1,17 +1,22 @@
 #pragma once
 #include "Obj.h"
 #include "ViewProjection.h"
+#include "Matrix4.h"
 
 class Billboard : public Obj3d
 {
 public:
-	Billboard(Camera* view,bool yBillboardMode);
+	Billboard();
+	void Initialize();
 
-	Camera* mView = nullptr;
+	void Update(const Camera &camera);
+};
 
-	void Update(DirectX::XMMATRIX& matProjection);
-	void Draw();
+class BillboardY : public Obj3d
+{
 public:
-	bool mYbillboardMode = false;
-	DirectX::XMMATRIX mMatBillboardY;
+	BillboardY();
+	void Initialize();
+
+	void Update(const Camera& camera);
 };

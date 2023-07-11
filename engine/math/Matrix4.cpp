@@ -318,3 +318,9 @@ Matrix4 Matrix4::operator*(const Matrix4& a) const
 		m[3][0] * a.m[0][3] + m[3][1] * a.m[1][3] + m[3][2] * a.m[2][3] + m[3][3] * a.m[3][3]
 	);
 }
+
+Matrix4& Matrix4::operator*=(const Matrix4& a)
+{
+	*this = *this * a;
+	return *this;
+}

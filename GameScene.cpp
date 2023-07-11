@@ -35,6 +35,14 @@ void GameScene::Initialize()
 	EnemyManager::Get()->Initialize();
 
 	Stage::Get()->goalSystem.Initialize();
+
+	billboard.Initialize();
+	billboard.SetTexture(TextureManager::GetTexture("slime"));
+	billboard.position = { 0,5,0 };
+
+	billboardY.Initialize();
+	billboardY.SetTexture(TextureManager::GetTexture("slime"));
+	billboardY.position = { 5,5,0 };
 }
 
 GUI sceneChangeGUI("operator");
@@ -98,6 +106,9 @@ void GameScene::Update()
 
 	EnemyManager::Get()->Update();
 
+	billboard.Update(*Camera::sCamera);
+	billboardY.Update(*Camera::sCamera);
+
 	pCamera->BackTransparent();
 }
 
@@ -113,6 +124,9 @@ void GameScene::Draw()
 	player->Draw();
 
 	EnemyManager::Get()->Draw();
+
+	billboard.Draw();
+	billboardY.Draw();
 
 	SpriteCommonBeginDraw();
 

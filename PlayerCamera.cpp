@@ -139,20 +139,6 @@ void PlayerCamera::BackTransparent()
 				continue;
 			}
 
-			/*Cube pCol;
-			pCol.position = player->position;
-			pCol.scale = player->scale;
-
-			Cube bCol;
-			bCol.position = obj.position;
-			bCol.scale = obj.scale;
-
-			bool back = player->CheckDirections(pCol, bCol, CheckDirection::CD_BACK);
-			if (!back)
-			{
-				continue;
-			}*/
-
 			if (obj.collideObj->transparentTimer.GetStarted() == false)
 			{
 				obj.collideObj->transparentTimer.Start();

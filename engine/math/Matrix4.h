@@ -56,5 +56,5 @@ public:
 
 	//Matrix4& operator += (const Matrix4& a);
 	//Matrix4& operator -= (const Matrix4& a);
-	//Matrix4& operator *= (const Matrix4& a);
+	Matrix4& operator *= (const Matrix4& a);
 };

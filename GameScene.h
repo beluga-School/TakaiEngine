@@ -5,6 +5,7 @@
 #include "Stage.h"
 #include "Player.h"
 #include "PlayerCamera.h"
+#include "Billboard.h"
 
 class GameScene : public IScene
 {
@@ -21,5 +22,8 @@ private:
 	
 	Player *player = Player::Get();
 	PlayerCamera* pCamera = PlayerCamera::Get();
+
+	Billboard billboard;
+	BillboardY billboardY;
 };
 
