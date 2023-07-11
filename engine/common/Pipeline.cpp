@@ -747,11 +747,15 @@ void PipelineManager::Initialize()
 
 	ToonPipeLine();
 
+	ToonNoDepthWritePipeLine();
+
 	OutLinePipeLine();
 
 	SkydomePipeLine();
 
 	GroundToonPipeLine();
+
+	GroundToonNoDepthWritePipeLine();
 
 	WireFramePipeLine();
 }
@@ -1490,6 +1494,78 @@ void PipelineManager::ToonPipeLine()
 	sPipelines[pipeLineName] = pSet;
 }
 
+void PipelineManager::ToonNoDepthWritePipeLine()
+{
+	PipelineSet pSet;
+
+	//シェーダー設定
+	pSet.vs.shaderName = "Resources\\Shader\\ToonVS.hlsl";
+	pSet.ps.shaderName = "Resources\\Shader\\ToonPS.hlsl";
+
+	pSet.pipelineDesc.NumRenderTargets = 2;	//描画対象は1つ
+	pSet.pipelineDesc.RTVFormats[0] = DXGI_FORMAT_R8G8B8A8_UNORM_SRGB;	//0～255指定のRGBA
+	pSet.pipelineDesc.RTVFormats[1] = DXGI_FORMAT_R8G8B8A8_UNORM_SRGB;	//0～255指定のRGBA
+
+	pSet.pipelineDesc.RasterizerState.CullMode = D3D12_CULL_MODE_NONE;
+
+	pSet.pipelineDesc.DepthStencilState.DepthWriteMask = D3D12_DEPTH_WRITE_MASK_ZERO;	//書き込み禁止
+
+	//3dオブジェクト用のパイプライン生成
+	//頂点レイアウト
+	pSet.inputLayout =
+	{
+			{ //xyz座標
+				"POSITION",0,DXGI_FORMAT_R32G32B32_FLOAT,0,
+				D3D12_APPEND_ALIGNED_ELEMENT,
+				D3D12_INPUT_CLASSIFICATION_PER_VERTEX_DATA,0
+			},
+			{//法線ベクトル
+				"NORMAL",0,DXGI_FORMAT_R32G32B32_FLOAT,0,
+				D3D12_APPEND_ALIGNED_ELEMENT,
+				D3D12_INPUT_CLASSIFICATION_PER_VERTEX_DATA,0
+			},
+			{ //uv座標
+				"TEXCOORD",0,DXGI_FORMAT_R32G32_FLOAT,0,
+				D3D12_APPEND_ALIGNED_ELEMENT,
+				D3D12_INPUT_CLASSIFICATION_PER_VERTEX_DATA,0
+			},
+	};
+
+	//ルートパラメータの設定
+	pSet.paramSize = 5;
+	pSet.rootParams.resize(pSet.paramSize);
+	//定数バッファ0番 b0
+	pSet.rootParams[0].ParameterType = D3D12_ROOT_PARAMETER_TYPE_CBV;	//種類
+	pSet.rootParams[0].Descriptor.ShaderRegister = 0;					//定数バッファ番号
+	pSet.rootParams[0].Descriptor.RegisterSpace = 0;						//デフォルト値
+	pSet.rootParams[0].ShaderVisibility = D3D12_SHADER_VISIBILITY_ALL;	//全てのシェーダから見える
+	//テクスチャレジスタ0番 t0
+	pSet.rootParams[1].ParameterType = D3D12_ROOT_PARAMETER_TYPE_DESCRIPTOR_TABLE;	//種類
+	pSet.rootParams[1].DescriptorTable.pDescriptorRanges = &pSet.descriptorRange;					//デスクリプタレンジ
+	pSet.rootParams[1].DescriptorTable.NumDescriptorRanges = 1;						//デスクリプタレンジ数
+	pSet.rootParams[1].ShaderVisibility = D3D12_SHADER_VISIBILITY_ALL;	//全てのシェーダから見える
+	//定数バッファ1番 b1
+	pSet.rootParams[2].ParameterType = D3D12_ROOT_PARAMETER_TYPE_CBV;	//種類
+	pSet.rootParams[2].Descriptor.ShaderRegister = 1;					//定数バッファ番号
+	pSet.rootParams[2].Descriptor.RegisterSpace = 0;						//デフォルト値
+	pSet.rootParams[2].ShaderVisibility = D3D12_SHADER_VISIBILITY_ALL;	//すべてのシェーダから見える
+	//定数バッファ2番 b2
+	pSet.rootParams[3].ParameterType = D3D12_ROOT_PARAMETER_TYPE_CBV;	//種類
+	pSet.rootParams[3].Descriptor.ShaderRegister = 2;					//定数バッファ番号
+	pSet.rootParams[3].Descriptor.RegisterSpace = 0;						//デフォルト値
+	pSet.rootParams[3].ShaderVisibility = D3D12_SHADER_VISIBILITY_ALL;	//すべてのシェーダから見える
+	//定数バッファ3番 b3
+	pSet.rootParams[4].ParameterType = D3D12_ROOT_PARAMETER_TYPE_CBV;	//種類
+	pSet.rootParams[4].Descriptor.ShaderRegister = 3;					//定数バッファ番号
+	pSet.rootParams[4].Descriptor.RegisterSpace = 0;						//デフォルト値
+	pSet.rootParams[4].ShaderVisibility = D3D12_SHADER_VISIBILITY_ALL;	//すべてのシェーダから見える
+
+	pSet.Create();
+
+	std::string pipeLineName = "ToonNDW";
+	sPipelines[pipeLineName] = pSet;
+}
+
 void PipelineManager::OutLinePipeLine()
 {
 	PipelineSet pSet;
@@ -1503,6 +1579,9 @@ void PipelineManager::OutLinePipeLine()
 	pSet.pipelineDesc.RTVFormats[1] = DXGI_FORMAT_R8G8B8A8_UNORM_SRGB;	//0～255指定のRGBA
 
 	pSet.pipelineDesc.RasterizerState.CullMode = D3D12_CULL_MODE_FRONT;
+
+	pSet.pipelineDesc.DepthStencilState.DepthEnable = true;	//深度テストを行う
+	pSet.pipelineDesc.DepthStencilState.DepthWriteMask = D3D12_DEPTH_WRITE_MASK_ZERO;	//書き込み禁止
 
 	//3dオブジェクト用のパイプライン生成
 	//頂点レイアウト
@@ -1677,6 +1756,78 @@ void PipelineManager::GroundToonPipeLine()
 	pSet.Create();
 
 	std::string pipeLineName = "GroundToon";
+	sPipelines[pipeLineName] = pSet;
+}
+
+void PipelineManager::GroundToonNoDepthWritePipeLine()
+{
+	PipelineSet pSet;
+
+	//シェーダー設定
+	pSet.vs.shaderName = "Resources\\Shader\\Ground\\GroundVS.hlsl";
+	pSet.ps.shaderName = "Resources\\Shader\\Ground\\GroundPS.hlsl";
+
+	pSet.pipelineDesc.NumRenderTargets = 2;	//描画対象は1つ
+	pSet.pipelineDesc.RTVFormats[0] = DXGI_FORMAT_R8G8B8A8_UNORM_SRGB;	//0～255指定のRGBA
+	pSet.pipelineDesc.RTVFormats[1] = DXGI_FORMAT_R8G8B8A8_UNORM_SRGB;	//0～255指定のRGBA
+
+	pSet.pipelineDesc.RasterizerState.CullMode = D3D12_CULL_MODE_BACK;
+
+	pSet.pipelineDesc.DepthStencilState.DepthWriteMask = D3D12_DEPTH_WRITE_MASK_ZERO;	//書き込み禁止
+
+	//3dオブジェクト用のパイプライン生成
+	//頂点レイアウト
+	pSet.inputLayout =
+	{
+			{ //xyz座標
+				"POSITION",0,DXGI_FORMAT_R32G32B32_FLOAT,0,
+				D3D12_APPEND_ALIGNED_ELEMENT,
+				D3D12_INPUT_CLASSIFICATION_PER_VERTEX_DATA,0
+			},
+			{//法線ベクトル
+				"NORMAL",0,DXGI_FORMAT_R32G32B32_FLOAT,0,
+				D3D12_APPEND_ALIGNED_ELEMENT,
+				D3D12_INPUT_CLASSIFICATION_PER_VERTEX_DATA,0
+			},
+			{ //uv座標
+				"TEXCOORD",0,DXGI_FORMAT_R32G32_FLOAT,0,
+				D3D12_APPEND_ALIGNED_ELEMENT,
+				D3D12_INPUT_CLASSIFICATION_PER_VERTEX_DATA,0
+			},
+	};
+
+	//ルートパラメータの設定
+	pSet.paramSize = 5;
+	pSet.rootParams.resize(pSet.paramSize);
+	//定数バッファ0番 b0
+	pSet.rootParams[0].ParameterType = D3D12_ROOT_PARAMETER_TYPE_CBV;	//種類
+	pSet.rootParams[0].Descriptor.ShaderRegister = 0;					//定数バッファ番号
+	pSet.rootParams[0].Descriptor.RegisterSpace = 0;						//デフォルト値
+	pSet.rootParams[0].ShaderVisibility = D3D12_SHADER_VISIBILITY_ALL;	//全てのシェーダから見える
+	//テクスチャレジスタ0番 t0
+	pSet.rootParams[1].ParameterType = D3D12_ROOT_PARAMETER_TYPE_DESCRIPTOR_TABLE;	//種類
+	pSet.rootParams[1].DescriptorTable.pDescriptorRanges = &pSet.descriptorRange;					//デスクリプタレンジ
+	pSet.rootParams[1].DescriptorTable.NumDescriptorRanges = 1;						//デスクリプタレンジ数
+	pSet.rootParams[1].ShaderVisibility = D3D12_SHADER_VISIBILITY_ALL;	//全てのシェーダから見える
+	//定数バッファ1番 b1
+	pSet.rootParams[2].ParameterType = D3D12_ROOT_PARAMETER_TYPE_CBV;	//種類
+	pSet.rootParams[2].Descriptor.ShaderRegister = 1;					//定数バッファ番号
+	pSet.rootParams[2].Descriptor.RegisterSpace = 0;						//デフォルト値
+	pSet.rootParams[2].ShaderVisibility = D3D12_SHADER_VISIBILITY_ALL;	//すべてのシェーダから見える
+	//定数バッファ2番 b2
+	pSet.rootParams[3].ParameterType = D3D12_ROOT_PARAMETER_TYPE_CBV;	//種類
+	pSet.rootParams[3].Descriptor.ShaderRegister = 2;					//定数バッファ番号
+	pSet.rootParams[3].Descriptor.RegisterSpace = 0;						//デフォルト値
+	pSet.rootParams[3].ShaderVisibility = D3D12_SHADER_VISIBILITY_ALL;	//すべてのシェーダから見える
+	//定数バッファ3番 b3
+	pSet.rootParams[4].ParameterType = D3D12_ROOT_PARAMETER_TYPE_CBV;	//種類
+	pSet.rootParams[4].Descriptor.ShaderRegister = 3;					//定数バッファ番号
+	pSet.rootParams[4].Descriptor.RegisterSpace = 0;						//デフォルト値
+	pSet.rootParams[4].ShaderVisibility = D3D12_SHADER_VISIBILITY_ALL;	//すべてのシェーダから見える
+
+	pSet.Create();
+
+	std::string pipeLineName = "GroundToonNDW";
 	sPipelines[pipeLineName] = pSet;
 }
 

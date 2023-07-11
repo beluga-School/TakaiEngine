@@ -9,6 +9,7 @@
 #include "LightGroup.h"
 #include "ViewProjection.h"
 #include "Pipeline.h"
+#include "TEasing.h"
 
 struct ConstBufferDataB1
 {
@@ -81,6 +82,7 @@ public:
 
 	void SetOutLineState(const Float4& color,float thickness);
 
+	TEasing::easeTimer transparentTimer = 0.5f;
 protected:
 	//アウトライン周りの設定
 	Float4 mOutLineColor = {0,0,0,1.0f};

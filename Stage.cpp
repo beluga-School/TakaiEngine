@@ -230,14 +230,30 @@ void Stage::DrawModel()
 	{
 		BasicObjectPreDraw(PipelineManager::GetPipeLine("OutLine"), false);
 		obj.DrawOutLine();
-		BasicObjectPreDraw(PipelineManager::GetPipeLine("GroundToon"));
+		//アルファが1未満になるなら透明用描画パイプラインに切り替える
+		if (obj.color_.w < 1.0f)
+		{
+			BasicObjectPreDraw(PipelineManager::GetPipeLine("GroundToonNDW"));
+		}
+		else
+		{
+			BasicObjectPreDraw(PipelineManager::GetPipeLine("GroundToon"));
+		}
 		obj.DrawMaterial();
 	}
 	for (auto& obj : mEventObjects)
 	{
 		BasicObjectPreDraw(PipelineManager::GetPipeLine("OutLine"),false);
 		obj->DrawOutLine();
-		BasicObjectPreDraw(PipelineManager::GetPipeLine("GroundToon"));
+		//アルファが1未満になるなら透明用描画パイプラインに切り替える
+		if (obj->color_.w < 1.0f)
+		{
+			BasicObjectPreDraw(PipelineManager::GetPipeLine("GroundToonNDW"));
+		}
+		else
+		{
+			BasicObjectPreDraw(PipelineManager::GetPipeLine("GroundToon"));
+		}
 		obj->Draw();
 	}
 }

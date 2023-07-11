@@ -10,17 +10,7 @@
 
 using namespace Input;
 
-enum class CheckDirection
-{
-	CD_UP,
-	CD_DOWN,
-	CD_CENTER,
-	CD_BACK,
-	CD_LEFT,
-	CD_RIGHT,
-};
-
-bool CheckDirections(const Cube& cubeCol, const Cube& blockCol,const CheckDirection& CD)
+bool Player::CheckDirections(const Cube& cubeCol, const Cube& blockCol,const CheckDirection& CD)
 {
 	switch (CD)
 	{

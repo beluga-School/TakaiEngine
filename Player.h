@@ -46,6 +46,17 @@ void UniqueObjectErase(std::list<T>& list, const T& col)
 	}
 }
 
+//ブロックの方向を確認するためのenum
+enum class CheckDirection
+{
+	CD_UP,
+	CD_DOWN,
+	CD_CENTER,
+	CD_BACK,
+	CD_LEFT,
+	CD_RIGHT,
+};
+
 class Player : public Obj3d
 {
 public:
@@ -75,6 +86,8 @@ public:
 	float GetFeet() {
 		return feet;
 	};
+
+	bool CheckDirections(const Cube& cubeCol, const Cube& blockCol, const CheckDirection& CD);
 
 private:
 	Player(){};

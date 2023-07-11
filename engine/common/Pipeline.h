@@ -115,6 +115,9 @@ private:
 
 	//トゥーンシェーダー
 	void ToonPipeLine();
+	
+	//壁が透けるときに切り替える用のパイプライン/
+	void ToonNoDepthWritePipeLine();
 
 	//アウトラインシェーダー
 	void OutLinePipeLine();
@@ -124,6 +127,9 @@ private:
 
 	//地面用トゥーンシェーダー
 	void GroundToonPipeLine();
+	
+	//壁が透けるときに切り替える用のパイプライン
+	void GroundToonNoDepthWritePipeLine();
 
 	//ワイヤーフレーム用パイプライン
 	void WireFramePipeLine();

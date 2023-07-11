@@ -77,6 +77,8 @@ void Obj3d::Update(const Camera& camera)
 
 	constBufferOutLine.mConstBufferData->color = mOutLineColor;
 	constBufferOutLine.mConstBufferData->thickness = mOutLineThickness;
+
+	transparentTimer.Update();
 }
 
 Vector3 Obj3d::GetWorldTrans()

@@ -129,9 +129,6 @@ void PlayerCamera::BackTransparent()
 	//当たったオブジェクトの描画フラグを折る
 	for (auto& obj : Stage::Get()->mColObj3ds)
 	{
-		obj.collideObj->color_.w = 1.0f;
-		obj.collideObj->SetOutLineState({ 1.0f,0,0,1.0f }, 0.05f);
-		
 		//当たってたら消える
 		if (Collsions::BoxColAABB(obj, transparentObj))
 		{
@@ -141,9 +138,41 @@ void PlayerCamera::BackTransparent()
 			{
 				continue;
 			}
-			//obj.collideObj->mIsVisiable = false;
-			obj.collideObj->color_.w = 0.0f;
-			obj.collideObj->SetOutLineState({ 1.0f,0,0,0 }, 0.05f);
+
+			/*Cube pCol;
+			pCol.position = player->position;
+			pCol.scale = player->scale;
+
+			Cube bCol;
+			bCol.position = obj.position;
+			bCol.scale = obj.scale;
+
+			bool back = player->CheckDirections(pCol, bCol, CheckDirection::CD_BACK);
+			if (!back)
+			{
+				continue;
+			}*/
+
+			if (obj.collideObj->transparentTimer.GetStarted() == false)
+			{
+				obj.collideObj->transparentTimer.Start();
+			}
+			else if (obj.collideObj->transparentTimer.GetReverseStarted())
+			{
+				obj.collideObj->transparentTimer.Reset();
+			}
+			//アウトラインはすぐに消す
+			obj.collideObj->SetOutLineState({ 1.0f,0,0,0.0f }, 0.05f);
 		}
+		//当たってないなら段々濃くする
+		else
+		{
+			//タイマーのTimeRateが0.0~1.0の範囲で動くので、その値を反転させたものをAlphaとして扱う
+			obj.collideObj->transparentTimer.ReverseStart();
+			//アウトラインはすぐに戻す
+			obj.collideObj->SetOutLineState({ 1.0f,0,0,1.0f }, 0.05f);
+		}
+		//段々薄くしたり濃くしたりする
+		obj.collideObj->color_.w = 1.0f - obj.collideObj->transparentTimer.GetTimeRate();
 	}
 }
