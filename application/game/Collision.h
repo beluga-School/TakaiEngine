@@ -42,12 +42,24 @@ struct Triangle
 	Vector3 normal;
 };
 
+struct RayCubeColOutput
+{
+	bool XYCenter = false;
+	bool XYback = false;
+	bool XZUp = false;
+	bool XZDown = false;
+	bool YZRight = false;
+	bool YZLeft = false;
+	//‚Ç‚ê‚Æ‚à“–‚½‚Á‚Ä‚È‚¢
+	bool none = true;
+};
+
 namespace Collsions
 {
 	//ƒŒƒC‚Æ•½–Ê‚Ì“–‚½‚è”»’è
 	bool RayPlaneCollision(const Ray& ray, const Plane& plane);
 
-	bool RayCubeCollision(const Ray& ray, const Cube& cube);
+	RayCubeColOutput RayCubeCollision(const Ray& ray, const Cube& cube);
 
 	//y²‚ğ0‚Æ‚µ‚ÄAx‚Æz‚Ì2²‚ÅlŠp“¯m‚Å”»’è‚·‚é“–‚½‚è”»’è
 	bool RectangleXZCollision(const Cube& cube1, const Cube& cube2);

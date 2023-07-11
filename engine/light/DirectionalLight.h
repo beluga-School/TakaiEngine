@@ -1,7 +1,7 @@
 #pragma once
 #include "Vector2.h"
 #include "Vector3.h"
-#include "Vector4.h"
+#include "Float4.h"
 #include "ConstBuffer.h"
 
 class DirectionalLight

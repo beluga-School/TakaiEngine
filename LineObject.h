@@ -5,7 +5,7 @@ struct ConstBufferLine
 {
 	Matrix4 viewproj;	//ビュープロ行列
 	Matrix4 world;		//ワールド行列
-	Vector4 color;		//色
+	Float4 color;		//色
 };
 
 class LineObject : public Obj3d

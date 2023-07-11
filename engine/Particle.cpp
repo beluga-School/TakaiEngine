@@ -6,7 +6,7 @@
 
 void GParticleManager::CreateParticle(const Vector3& spawnPos, const Vector3& velocity,
 	const float& scale, const float& speed, const bool& redChange,
-	const float& maxLifeTime, const Vector4& color)
+	const float& maxLifeTime, const Float4& color)
 {
 	mParticles.emplace_back(spawnPos, velocity, scale, speed,maxLifeTime,color,redChange);
 }
@@ -119,7 +119,7 @@ GParticleManager* GParticleManager::Getinstance()
 
 Particle::Particle(const Vector3& spawnPos_, const Vector3& velocity_,
 	const float& scale_, const float& speed_, const float& maxLifeTime_,
-	const Vector4& color_, const bool& redChange_)
+	const Float4& color_, const bool& redChange_)
 {
 	mPosition = spawnPos_;
 	mVelocity = velocity_;
@@ -176,7 +176,7 @@ void ParticleEmitter::Initialize()
 }
 
 void ParticleEmitter::SetInfo(const Vector3& pos, const float& range_, const float& scale_,
-	const Vector4& color_, const int32_t& spawnNum_, const bool& redChange_)
+	const Float4& color_, const int32_t& spawnNum_, const bool& redChange_)
 {
 	mEmitter.position = {
 		pos.x,

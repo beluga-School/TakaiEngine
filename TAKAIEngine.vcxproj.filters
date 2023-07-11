@@ -129,9 +129,6 @@
     <Filter Include="Engine\Math\Vector3">
       <UniqueIdentifier>{35d44464-e06b-462e-a880-6e0837e38fe5}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Engine\Math\Vector4">
-      <UniqueIdentifier>{e6292a6d-63e0-4803-acb0-af67dadbb7c8}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Engine\Particle">
       <UniqueIdentifier>{d642889e-bca8-45d5-baa5-92fd2d3be3bb}</UniqueIdentifier>
     </Filter>
@@ -298,6 +295,9 @@
     <Filter Include="シェーダー\Line">
       <UniqueIdentifier>{a3b46ff8-379c-4975-8a18-d34c0defa5d1}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Engine\Math\Float4">
+      <UniqueIdentifier>{e6292a6d-63e0-4803-acb0-af67dadbb7c8}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="engine\input\Input.cpp">
@@ -414,8 +414,8 @@
     <ClCompile Include="engine\math\Vector3.cpp">
       <Filter>Engine\Math\Vector3</Filter>
     </ClCompile>
-    <ClCompile Include="engine\math\Vector4.cpp">
-      <Filter>Engine\Math\Vector4</Filter>
+    <ClCompile Include="engine\math\Float4.cpp">
+      <Filter>Engine\Math\Float4</Filter>
     </ClCompile>
     <ClCompile Include="engine\shader\Shader.cpp">
       <Filter>Engine\Shader</Filter>
@@ -626,8 +626,8 @@
     <ClInclude Include="engine\math\Vector3.h">
       <Filter>Engine\Math\Vector3</Filter>
     </ClInclude>
-    <ClInclude Include="engine\math\Vector4.h">
-      <Filter>Engine\Math\Vector4</Filter>
+    <ClInclude Include="engine\math\Float4.h">
+      <Filter>Engine\Math\Float4</Filter>
     </ClInclude>
     <ClInclude Include="application\particle\ObjParticle.h">
       <Filter>Application\Old\ObjParticle</Filter>

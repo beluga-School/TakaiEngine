@@ -164,11 +164,6 @@ void Obj3d::DrawOutLine()
 	}
 
 	DirectX12* dx12 = DirectX12::Get();
-	//TextureManager* texM = TextureManager::Get();
-
-	//SRVヒープの先頭から順番にSRVをルートパラメータ1番に設定
-	//ルートパラメータ1番はテクスチャバッファ
-	//dx12->mCmdList->SetGraphicsRootDescriptorTable(1, MODEL->mMaterial.mTextire->mGpuHandle);
 	
 	//頂点バッファの設定
 	dx12->mCmdList->IASetVertexBuffers(0, 1, &MODEL->mVbView);
@@ -186,7 +181,7 @@ void Obj3d::DrawOutLine()
 
 }
 
-void Obj3d::SetOutLineState(const Vector3& color, float thickness)
+void Obj3d::SetOutLineState(const Float4& color, float thickness)
 {
 	mOutLineColor = color;
 	mOutLineThickness = thickness;

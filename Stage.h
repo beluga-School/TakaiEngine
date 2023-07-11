@@ -5,6 +5,13 @@
 #include "EventBlock.h"
 #include "GoalSystem.h"
 
+
+class ColObj3d : public Obj3d
+{
+public:
+	Obj3d* collideObj = nullptr;
+};
+
 class Stage
 {
 public:
@@ -27,7 +34,7 @@ public:
 	std::list<Obj3d> mObj3ds;
 
 	//“–‚½‚è”»’èƒ‚ƒfƒ‹”z—ñ
-	std::list<Obj3d> mColObj3ds;
+	std::list<ColObj3d> mColObj3ds;
 
 	//“–‚½‚è”»’è”z—ñ
 	std::list<Cube> mColCubes;

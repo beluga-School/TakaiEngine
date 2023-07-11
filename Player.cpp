@@ -55,7 +55,7 @@ void Player::Initialize()
 	colDrawer.SetModel(ModelManager::GetModel("ICOSphere"));
 	colDrawer.SetTexture(TextureManager::GetTexture("white"));
 
-	SetOutLineState({ 0.1f,0.1f,0.1f }, 0.05f);
+	SetOutLineState({ 0.1f,0.1f,0.1f,1.0f }, 0.05f);
 }
 
 void Player::Update()

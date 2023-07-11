@@ -4,6 +4,7 @@
 #include "Input.h"
 #include "Util.h"
 #include "ImguiManager.h"
+#include "Stage.h"
 
 using namespace Input;
 
@@ -11,6 +12,10 @@ void PlayerCamera::Initialize()
 {
 	Camera::sCamera->Initialize();
 	Obj3d::Initialize();
+
+	transparentObj.Initialize();
+	transparentObj.SetModel(ModelManager::GetModel("BlankCube"));
+	transparentObj.scale = { 5,5,5 };
 }
 
 void PlayerCamera::Update()
@@ -105,4 +110,40 @@ void PlayerCamera::Update()
 void PlayerCamera::Draw()
 {
 	Obj3d::Draw();
+}
+
+void PlayerCamera::BackTransparent()
+{
+	Player* player = Player::Get();
+
+	//XとZをプレイヤーの後ろを円運動でいい感じに追従する
+	Vector2 invObjNonY = MathF::CircularMotion({ player->position.x,player->position.z },
+		(transparentObj.scale.x + transparentObj.scale.z) / 2 * 0.8f,
+		-player->rotation.y - MathF::PIf / 2);
+
+	//Yはカメラ位置と同じにする
+	transparentObj.position = { invObjNonY.x,Camera::sCamera->mEye.y,invObjNonY.y };
+
+	transparentObj.Update(*Camera::sCamera);
+
+	//当たったオブジェクトの描画フラグを折る
+	for (auto& obj : Stage::Get()->mColObj3ds)
+	{
+		obj.collideObj->color_.w = 1.0f;
+		obj.collideObj->SetOutLineState({ 1.0f,0,0,1.0f }, 0.05f);
+		
+		//当たってたら消える
+		if (Collsions::BoxColAABB(obj, transparentObj))
+		{
+			//地面が透けてほしくないので、地面の座標がプレイヤーの足元より下なら
+			//当たってても透ける処理をスキップする
+			if (obj.position.y + obj.scale.y / 2 <= player->GetFeet())
+			{
+				continue;
+			}
+			//obj.collideObj->mIsVisiable = false;
+			obj.collideObj->color_.w = 0.0f;
+			obj.collideObj->SetOutLineState({ 1.0f,0,0,0 }, 0.05f);
+		}
+	}
 }

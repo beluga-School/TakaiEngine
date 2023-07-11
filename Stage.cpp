@@ -131,7 +131,7 @@ void Stage::NormalObjectSet(const LevelData::ObjectData& data)
 	mObj3ds.back().Initialize();
 
 	//アウトライン設定
-	mObj3ds.back().SetOutLineState({ 1,0,0 }, 0.05f);
+	mObj3ds.back().SetOutLineState({ 1,0,0,1.0f }, 0.05f);
 
 	//モデル設定
 	//ファイルネームが設定されてるならそれで
@@ -177,6 +177,9 @@ void Stage::CollisionSet(const LevelData::ObjectData& data)
 		MathF::AngleConvRad(data.rotation.z)
 	};
 
+	//コリジョンを取るオブジェクトへのポインタを保持
+	mColObj3ds.back().collideObj = &mObj3ds.back();
+
 	//当たり判定自体の情報を作成
 	mColCubes.emplace_back();
 	mColCubes.back().position = data.translation + data.collider.center;
@@ -196,7 +199,7 @@ void Stage::EvenyObjectSet(const LevelData::ObjectData& data)
 		mEventObjects.back() = std::make_unique<WarpBlock>();
 		mEventObjects.back()->Initialize();
 
-		mEventObjects.back()->SetOutLineState({ 1,0,0 }, 0.05f);
+		mEventObjects.back()->SetOutLineState({ 1,0,0,1.0f }, 0.05f);
 
 		mEventObjects.back()->trigerName = data.eventtrigerName;
 		//バグらないように白テクスチャを入れる

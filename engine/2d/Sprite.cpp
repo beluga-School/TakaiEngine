@@ -188,9 +188,9 @@ void Sprite::Update()
 	sResult = mConstBuffer.mBuffer->Map(0, nullptr, (void**)&mConstBuffer.mConstBufferData);
 	mConstBuffer.mConstBufferData->mat = mMatWorld * SpriteCommon::sSpriteCommon.mMatProjection;
 
-	mConstBuffer.mConstBufferData->color.x = mColor.f4.vec.x;
-	mConstBuffer.mConstBufferData->color.y = mColor.f4.vec.y;
-	mConstBuffer.mConstBufferData->color.z = mColor.f4.vec.z;
+	mConstBuffer.mConstBufferData->color.x = mColor.f4.x;
+	mConstBuffer.mConstBufferData->color.y = mColor.f4.y;
+	mConstBuffer.mConstBufferData->color.z = mColor.f4.z;
 	mConstBuffer.mConstBufferData->color.w = mColor.f4.w;
 
 	mConstBuffer.mBuffer->Unmap(0, nullptr);

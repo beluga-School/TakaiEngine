@@ -8,6 +8,7 @@
 #include "Matrix4.h"
 #include "LightGroup.h"
 #include "ViewProjection.h"
+#include "Pipeline.h"
 
 struct ConstBufferDataB1
 {
@@ -21,7 +22,7 @@ struct ConstBufferDataB1
 
 struct ConstBufferBrightness
 {
-	DirectX::XMFLOAT4 brightness;		//カラー
+	Float4 brightness;		//カラー
 };
 
 struct ConstBufferDataTransform {
@@ -34,7 +35,7 @@ struct ConstBufferDataTransform {
 };
 
 struct ConstBufferDataOutLine {
-	Vector3 color;
+	Float4 color;
 	float thickness;
 };
 
@@ -52,7 +53,7 @@ public:
 	Vector3 rotation = { 0,0,0 };
 	Vector3 position = { 0,0,0 };
 
-	DirectX::XMFLOAT4 color_ = { 1.0f,1.0f,1.0f,1.0f };
+	Float4 color_ = { 1.0f,1.0f,1.0f,1.0f };
 
 	Matrix4 matWorld;
 
@@ -78,11 +79,10 @@ public:
 
 	void DrawOutLine();
 
-	void SetOutLineState(const Vector3& color,float thickness);
+	void SetOutLineState(const Float4& color,float thickness);
 
 protected:
 	//アウトライン周りの設定
-	Vector3 mOutLineColor = {0,0,0};
+	Float4 mOutLineColor = {0,0,0,1.0f};
 	float mOutLineThickness = 0.02f;
-
 };

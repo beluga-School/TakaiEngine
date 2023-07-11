@@ -8,13 +8,13 @@
 #include "Obj.h"
 
 #include <Vector3.h>
-#include <Vector4.h>
+#include <Float4.h>
 
 struct VertexPos
 {
 	Vector3 pos;
 	float scale;
-	Vector4 color;
+	Float4 color;
 };
 
 struct ParticleConstBufferData
@@ -37,7 +37,7 @@ public:
 	//大きさ
 	float mScale;
 	//色
-	Vector4 mColor;
+	Float4 mColor;
 
 	Vector3 mColorRand = { 0,0,0 };
 
@@ -53,7 +53,7 @@ public:
 
 	Particle(const Vector3& spawnPos,const Vector3& velocity,
 		const float& scale, const float& speed, const float& maxLifeTime, 
-		const Vector4& color,const bool& redChange);
+		const Float4& color,const bool& redChange);
 
 	void Update();
 };
@@ -74,7 +74,7 @@ public:
 	std::list<Particle> mParticles;
 	void CreateParticle(const Vector3& spawnPos,const Vector3& velocity,
 		const float& scale, const float& speed, const bool& redChange,
-		const float& maxLifeTime = 1.0f,const Vector4& color = {1,1,1,1});
+		const float& maxLifeTime = 1.0f,const Float4& color = {1,1,1,1});
 
 	void Initialize();
 	
@@ -108,7 +108,7 @@ public:
 	/// <param name="color">パーティクルの色</param>
 	/// <param name="spawnNum">1秒間に発生するパーティクルの数 最低値は1</param>
 	void SetInfo(const Vector3& pos,const float& range, const float& scale,
-		const Vector4& color,const int32_t& spawnNum = 1,const bool& redChange = false);
+		const Float4& color,const int32_t& spawnNum = 1,const bool& redChange = false);
 
 	void Update();
 
@@ -116,7 +116,7 @@ private:
 	Model mModel;
 	float mRange = 10;
 	float mInitScale = 1;
-	Vector4 mColor = { 1,1,1,1 };
+	Float4 mColor = { 1,1,1,1 };
 	//一秒間に発生する数
 	int32_t mSpawnNum = 10;
 

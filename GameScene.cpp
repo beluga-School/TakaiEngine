@@ -5,6 +5,7 @@
 #include "ImguiManager.h"
 #include "EnemyManager.h"
 #include "Input.h"
+#include "MathF.h"
 
 void GameScene::LoadResource()
 {
@@ -14,12 +15,13 @@ void GameScene::LoadResource()
 	LevelLoader::Get()->Load("Scene/woods", "woods");
 
 	LevelLoader::Get()->Load("Scene/colliderTest", "colliderTest");
+	LevelLoader::Get()->Load("Scene/test", "test");
 
 	LevelLoader::Get()->Load("Scene/stage_castle_outside", "stage_castle_outside");
 	LevelLoader::Get()->Load("Scene/stage_castle_inside", "stage_castle_inside");
 	LevelLoader::Get()->Load("Scene/stage_grasslands", "stage_grasslands");
 
-	Stage::Get()->ChangeLevel(*LevelLoader::Get()->GetData("stage_castle_outside"));
+	Stage::Get()->ChangeLevel(*LevelLoader::Get()->GetData("stage_grasslands"));
 }
 
 void GameScene::Initialize()
@@ -33,10 +35,6 @@ void GameScene::Initialize()
 	EnemyManager::Get()->Initialize();
 
 	Stage::Get()->goalSystem.Initialize();
-
-	cameraColDrawer.Initialize();
-	cameraColDrawer.SetModel(ModelManager::GetModel("BlankCube"));
-	cameraColDrawer.SetTexture(TextureManager::GetTexture("white"));
 }
 
 GUI sceneChangeGUI("operator");
@@ -73,10 +71,6 @@ void GameScene::Update()
 		debugCam = !debugCam;
 	}
 
-	ImGui::Text("keyboard");
-	ImGui::Text("move:w a s d");
-	ImGui::Text("cameraMove:mouse");
-	ImGui::Text("space:jump");
 	ImGui::Text("n:mouseLock Lock/UnLock change");
 	std::string mouseLockStates = "nowMouseLock:";
 	if (pCamera->mouseLockChange)
@@ -88,20 +82,11 @@ void GameScene::Update()
 		mouseLockStates += "false";
 	}
 	ImGui::Text(mouseLockStates.c_str());
-	ImGui::Text("ESC:App Close");
-	
-	ImGui::Text("");
-	ImGui::Text("pad");
-	ImGui::Text("move:LStick");
-	ImGui::Text("cameraMove:RStick");
-	ImGui::Text("A:jump");
-
 	sceneChangeGUI.End();
 
 	player->Update();
 
 	//ƒJƒƒ‰XV
-
 	if (debugCam)
 	{
 		mDebugCamera.Update();
@@ -113,17 +98,7 @@ void GameScene::Update()
 
 	EnemyManager::Get()->Update();
 
-	for (auto &obj : Stage::Get()->mColObj3ds)
-	{
-		Cube cube;
-		cube.position = obj.position;
-		cube.scale = obj.scale;
-		obj.mIsVisiable = !Collsions::CubeCollision(PlayerCamera::Get()->cameraCol, cube);
-	} 
-
-	cameraColDrawer.position = PlayerCamera::Get()->cameraCol.position;
-	cameraColDrawer.scale = PlayerCamera::Get()->cameraCol.scale;
-	cameraColDrawer.Update(*Camera::sCamera);
+	pCamera->BackTransparent();
 }
 
 void GameScene::Draw()
@@ -136,8 +111,6 @@ void GameScene::Draw()
 
 	BasicObjectPreDraw(PipelineManager::GetPipeLine("Toon"));
 	player->Draw();
-
-	cameraColDrawer.Draw();
 
 	EnemyManager::Get()->Draw();
 

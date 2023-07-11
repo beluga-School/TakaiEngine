@@ -12,6 +12,9 @@ public:
 	void Update();
 	void Draw();
 
+	//カメラの後ろにあるオブジェクトを透けさせる処理
+	void BackTransparent();
+
 	static PlayerCamera* Get() {
 		static PlayerCamera instance;
 		return &instance;
@@ -43,5 +46,7 @@ private:
 
 	float mRadius = 5.0f;
 
+	//このオブジェクトと当たったオブジェクトを透けさせる
+	Obj3d transparentObj;
 };
 

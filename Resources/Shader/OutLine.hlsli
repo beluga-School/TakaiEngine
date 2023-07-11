@@ -1,6 +1,7 @@
 cbuffer cbuff0 : register(b0)
 {
-    float4 colorAndThickness;
+    float4 color;
+    float thickness;
 }
 
 cbuffer cbuff1 : register(b1)
