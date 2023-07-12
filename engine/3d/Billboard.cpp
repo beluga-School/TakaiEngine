@@ -132,5 +132,39 @@ void BillboardY::Update(const Camera& camera)
 	constBufferOutLine.mConstBufferData->color = mOutLineColor;
 	constBufferOutLine.mConstBufferData->thickness = mOutLineThickness;
 
+	//実は頂点シェーダーとかは共通化した方がいいんじゃないか
+	cBufferNoise.mConstBufferData->viewproj = camera.mMatView * camera.mMatProjection;
+	cBufferNoise.mConstBufferData->matWorld = matWorld;
+
 	transparentTimer.Update();
+}
+
+void BillboardY::DrawNoise()
+{
+	//見えないフラグが立ってるなら描画を行わない
+	if (mIsVisiable == false)
+	{
+		return;
+	}
+
+	DirectX12* dx12 = DirectX12::Get();
+	TextureManager* texM = TextureManager::Get();
+
+	//SRVヒープの先頭から順番にSRVをルートパラメータ1番に設定
+	//ルートパラメータ1番はテクスチャバッファ
+	//dx12->mCmdList->SetGraphicsRootDescriptorTable(1, TEXTURE->mGpuHandle);
+	//commandList->SetGraphicsRootConstantBufferView(0, constBufferT.buffer->GetGPUVirtualAddress());
+
+	//頂点バッファの設定
+	dx12->mCmdList->IASetVertexBuffers(0, 1, &MODEL->mVbView);
+
+	//インデックスバッファの設定
+	dx12->mCmdList->IASetIndexBuffer(&MODEL->mIbView);
+
+	//定数バッファビュー(CBV)の設定コマンド
+	dx12->mCmdList->SetGraphicsRootConstantBufferView(0, constBufferB1.mBuffer->GetGPUVirtualAddress());
+	
+	//描画コマンド
+	dx12->mCmdList->DrawIndexedInstanced((UINT)MODEL->mMesh.indices.size(), 1, 0, 0, 0);
+
 }

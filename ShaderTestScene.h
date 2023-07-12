@@ -2,7 +2,7 @@
 #include "IScene.h"
 #include "DebugCamera.h"
 #include "Skydome.h"
-#include "LineObject.h"
+#include "Billboard.h"
 
 class ShaderTestScene :
     public IScene
@@ -18,6 +18,6 @@ private:
     DebugCamera debugCamera;
     Skydome skydome;
 
-    Obj3d lineObject;
+    BillboardY billboard;
 };
 

@@ -162,7 +162,6 @@
     <ClCompile Include="GameScene.cpp" />
     <ClCompile Include="GoalBlock.cpp" />
     <ClCompile Include="GoalSystem.cpp" />
-    <ClCompile Include="LineObject.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="PlayerCamera.cpp" />
     <ClCompile Include="ShaderTestScene.cpp" />
@@ -235,7 +234,6 @@
     <ClInclude Include="GameScene.h" />
     <ClInclude Include="GoalBlock.h" />
     <ClInclude Include="GoalSystem.h" />
-    <ClInclude Include="LineObject.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="PlayerCamera.h" />
     <ClInclude Include="ShaderTestScene.h" />
@@ -256,6 +254,7 @@
     <None Include="Resources\Shader\OBJShaderHeader.hlsli" />
     <None Include="Resources\Shader\OutLine.hlsli" />
     <None Include="Resources\Shader\Particle.hlsli" />
+    <None Include="Resources\Shader\PerlinNoise\PerlinNoise.hlsli" />
     <None Include="Resources\Shader\Phong.hlsli" />
     <None Include="Resources\Shader\GaussianBlur.hlsli" />
     <None Include="Resources\Shader\ShiftBlur.hlsli" />
@@ -408,6 +407,18 @@
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">5.0</ShaderModel>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">5.0</ShaderModel>
+    </FxCompile>
+    <FxCompile Include="Resources\Shader\PerlinNoise\PerlinNoiseVS.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">5.0</ShaderModel>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">5.0</ShaderModel>
+    </FxCompile>
+    <FxCompile Include="Resources\Shader\PerlinNoise\PerlinNoisePS.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">5.0</ShaderModel>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">5.0</ShaderModel>
     </FxCompile>
     <FxCompile Include="Resources\Shader\PhongPS.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>

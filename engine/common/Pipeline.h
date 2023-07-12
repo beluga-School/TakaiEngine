@@ -134,6 +134,8 @@ private:
 	//ワイヤーフレーム用パイプライン
 	void WireFramePipeLine();
 
+	void PerlinNoisePipeLine();
+
 	PipelineManager(){};
 	~PipelineManager(){};
 };

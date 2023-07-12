@@ -298,6 +298,9 @@
     <Filter Include="Engine\Math\Float4">
       <UniqueIdentifier>{e6292a6d-63e0-4803-acb0-af67dadbb7c8}</UniqueIdentifier>
     </Filter>
+    <Filter Include="シェーダー\PerlinNoise">
+      <UniqueIdentifier>{3930595b-e030-492e-9060-c73041f3772b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="engine\input\Input.cpp">
@@ -500,9 +503,6 @@
     </ClCompile>
     <ClCompile Include="ShaderTestScene.cpp">
       <Filter>Application\Scene\ShaderTestScene</Filter>
-    </ClCompile>
-    <ClCompile Include="LineObject.cpp">
-      <Filter>ソース ファイル</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -716,9 +716,6 @@
     <ClInclude Include="ShaderTestScene.h">
       <Filter>Application\Scene\ShaderTestScene</Filter>
     </ClInclude>
-    <ClInclude Include="LineObject.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="External\imgui\imgui.ini" />
@@ -775,6 +772,9 @@
     </None>
     <None Include="Resources\Shader\Line\Line.hlsli">
       <Filter>シェーダー\Line</Filter>
+    </None>
+    <None Include="Resources\Shader\PerlinNoise\PerlinNoise.hlsli">
+      <Filter>シェーダー\PerlinNoise</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>
@@ -891,6 +891,12 @@
     </FxCompile>
     <FxCompile Include="Resources\Shader\Line\LinePS.hlsl">
       <Filter>シェーダー\Line</Filter>
+    </FxCompile>
+    <FxCompile Include="Resources\Shader\PerlinNoise\PerlinNoiseVS.hlsl">
+      <Filter>シェーダー\PerlinNoise</Filter>
+    </FxCompile>
+    <FxCompile Include="Resources\Shader\PerlinNoise\PerlinNoisePS.hlsl">
+      <Filter>シェーダー\PerlinNoise</Filter>
     </FxCompile>
   </ItemGroup>
 </Project>

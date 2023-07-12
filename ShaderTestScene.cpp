@@ -14,9 +14,9 @@ void ShaderTestScene::Initialize()
 
 	skydome.Initialize();
 
-	lineObject.Initialize();
-	lineObject.SetModel(ModelManager::GetModel("ICOSphere"));
-	lineObject.SetTexture(TextureManager::GetTexture("white"));
+	billboard.Initialize();
+	billboard.position = {0,0,0};
+	billboard.scale = {3,3,3};
 }
 
 GUI lightGUI("lightOperator");
@@ -27,7 +27,7 @@ void ShaderTestScene::Update()
 
 	skydome.Update();
 
-	lineObject.Update(*Camera::sCamera);
+	billboard.Update(*Camera::sCamera);
 }
 
 void ShaderTestScene::Draw()
@@ -35,8 +35,10 @@ void ShaderTestScene::Draw()
 	BasicObjectPreDraw(PipelineManager::GetPipeLine("Skydome"));
 	skydome.Draw();
 
-	BasicObjectPreDraw(PipelineManager::GetPipeLine("WireFrame"));
-	lineObject.Draw();
+	//BasicObjectPreDraw(PipelineManager::GetPipeLine("Phong"));
+	//billboard.Draw();
+	BasicObjectPreDraw(PipelineManager::GetPipeLine("PerlinNoise"),false);
+	billboard.Draw();
 }
 
 void ShaderTestScene::End()

@@ -3,6 +3,12 @@
 #include "ViewProjection.h"
 #include "Matrix4.h"
 
+struct ConstBufferPerlinNoise
+{
+	Matrix4 viewproj;
+	Matrix4 matWorld;
+};
+
 class Billboard : public Obj3d
 {
 public:
@@ -19,4 +25,8 @@ public:
 	void Initialize();
 
 	void Update(const Camera& camera);
+
+	void DrawNoise();
+
+	ConstBuffer<ConstBufferPerlinNoise> cBufferNoise;
 };
