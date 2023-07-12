@@ -15,13 +15,13 @@ void GameScene::LoadResource()
 	LevelLoader::Get()->Load("Scene/woods", "woods");
 
 	LevelLoader::Get()->Load("Scene/colliderTest", "colliderTest");
-	LevelLoader::Get()->Load("Scene/test", "test");
+	LevelLoader::Get()->Load("Scene/buriburi", "buriburi");
 
 	LevelLoader::Get()->Load("Scene/stage_castle_outside", "stage_castle_outside");
 	LevelLoader::Get()->Load("Scene/stage_castle_inside", "stage_castle_inside");
 	LevelLoader::Get()->Load("Scene/stage_grasslands", "stage_grasslands");
 
-	Stage::Get()->ChangeLevel(*LevelLoader::Get()->GetData("stage_grasslands"));
+	Stage::Get()->ChangeLevel(*LevelLoader::Get()->GetData("buriburi"));
 }
 
 void GameScene::Initialize()
@@ -36,13 +36,13 @@ void GameScene::Initialize()
 
 	Stage::Get()->goalSystem.Initialize();
 
-	billboard.Initialize();
-	billboard.SetTexture(TextureManager::GetTexture("slime"));
-	billboard.position = { 0,5,0 };
-
-	billboardY.Initialize();
-	billboardY.SetTexture(TextureManager::GetTexture("slime"));
-	billboardY.position = { 5,5,0 };
+	sea.Initialize();
+	sea.SetModel(ModelManager::GetModel("plate"));
+	sea.SetTexture(TextureManager::GetTexture("white"));
+	sea.color_ = { 0,0,1,1 };
+	sea.position = { 0,-5,0 };
+	sea.rotation = { 1.57f,0,0};
+	sea.scale = { 100,100,100};
 }
 
 GUI sceneChangeGUI("operator");
@@ -55,10 +55,6 @@ void GameScene::Update()
 	{
 		Stage::Get()->ChangeLevel(*LevelLoader::Get()->
 			GetData(Stage::Get()->GetNowStageHandle()));
-	}
-	if (Input::Keyboard::TriggerKey(DIK_F))
-	{
-		Stage::Get()->ChangeLevel(*LevelLoader::Get()->GetData("stage_castle_inside"));
 	}
 
 	mSkydome.Update();
@@ -77,6 +73,15 @@ void GameScene::Update()
 	if (ImGui::Button("debugCam"))
 	{
 		debugCam = !debugCam;
+	}
+	
+	ImGui::InputText("scene_name", output, sizeof(output));
+
+	if (ImGui::Button("changeScene"))
+	{
+		Stage::Get()->ChangeLevel(*LevelLoader::Get()->
+			GetData(output));
+		savename = "";
 	}
 
 	ImGui::Text("n:mouseLock Lock/UnLock change");
@@ -106,10 +111,9 @@ void GameScene::Update()
 
 	EnemyManager::Get()->Update();
 
-	billboard.Update(*Camera::sCamera);
-	billboardY.Update(*Camera::sCamera);
-
 	pCamera->BackTransparent();
+
+	sea.Update(*Camera::sCamera);
 }
 
 void GameScene::Draw()
@@ -125,8 +129,8 @@ void GameScene::Draw()
 
 	EnemyManager::Get()->Draw();
 
-	billboard.Draw();
-	billboardY.Draw();
+	BasicObjectPreDraw(PipelineManager::GetPipeLine("PerlinNoise"));
+	sea.Draw();
 
 	SpriteCommonBeginDraw();
 

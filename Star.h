@@ -1,12 +1,12 @@
 #pragma once
 #include "EventBlock.h"
 
-class WarpBlock : public EventBlock
+class Star : public EventBlock
 {
+public:
 	void Initialize()override;
 	void Update()override;
 	void Draw()override;
-
 	void HitEffect()override;
 };
 

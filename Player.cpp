@@ -458,6 +458,23 @@ void Player::ColUpdate()
 		}
 	}
 
+	for (auto& goal : Stage::Get()->mGoals)
+	{
+		Cube goalCol;
+		goalCol.position = goal->position + goal->goalBlock.position;
+
+		//‚È‚ñ‚©”»’è‚ª¬‚³‚©‚Á‚½‚Ì‚Å2”{‚É ‚»‚µ‚½‚ç‚Ò‚Á‚½‚è‚¾‚Á‚½‚Ì‚ÅA‚Ç‚Á‚©‚Å”¼•ª‚É
+		//‚·‚éˆ—‚ª‹²‚Ü‚Á‚Ä‚é
+		goalCol.scale = goal->goalBlock.scale * 2;
+
+		if (Collsions::CubeCollision(goalCol, pCol))
+		{
+			goal->HitEffect();
+
+			break;
+		}
+	}
+
 	for (auto& enemy : EnemyManager::Get()->enemyList)
 	{
 		Cube enemyCol;

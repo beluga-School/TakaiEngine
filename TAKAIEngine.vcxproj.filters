@@ -301,6 +301,9 @@
     <Filter Include="シェーダー\PerlinNoise">
       <UniqueIdentifier>{3930595b-e030-492e-9060-c73041f3772b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Application\EventBlock\Star">
+      <UniqueIdentifier>{e234e327-a9e5-4832-8606-eb3701863442}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="engine\input\Input.cpp">
@@ -503,6 +506,12 @@
     </ClCompile>
     <ClCompile Include="ShaderTestScene.cpp">
       <Filter>Application\Scene\ShaderTestScene</Filter>
+    </ClCompile>
+    <ClCompile Include="Goal.cpp">
+      <Filter>Application\EventBlock\GoalBlock</Filter>
+    </ClCompile>
+    <ClCompile Include="Star.cpp">
+      <Filter>Application\EventBlock\Star</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -715,6 +724,12 @@
     </ClInclude>
     <ClInclude Include="ShaderTestScene.h">
       <Filter>Application\Scene\ShaderTestScene</Filter>
+    </ClInclude>
+    <ClInclude Include="Goal.h">
+      <Filter>Application\EventBlock\GoalBlock</Filter>
+    </ClInclude>
+    <ClInclude Include="Star.h">
+      <Filter>Application\EventBlock\Star</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -5,13 +5,15 @@
 class EventBlock : public Obj3d
 {
 public:
-	void Initialize();
+	virtual void Initialize() = 0;
 
-	void Update();
+	virtual void Update() = 0;
 	
-	void Draw();
+	virtual void Draw() = 0;
 
 	virtual void HitEffect() = 0;
+
+	virtual ~EventBlock(){};
 
 	std::string trigerName = "";
 

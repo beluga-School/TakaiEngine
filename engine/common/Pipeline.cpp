@@ -1931,7 +1931,7 @@ void PipelineManager::PerlinNoisePipeLine()
 	};
 
 	//ルートパラメータの設定
-	pipeLineSet.paramSize = 4;
+	pipeLineSet.paramSize = 5;
 	pipeLineSet.rootParams.resize(pipeLineSet.paramSize);
 	//定数バッファ0番 b0
 	pipeLineSet.rootParams[0].ParameterType = D3D12_ROOT_PARAMETER_TYPE_CBV;	//種類
@@ -1953,6 +1953,12 @@ void PipelineManager::PerlinNoisePipeLine()
 	pipeLineSet.rootParams[3].Descriptor.ShaderRegister = 2;					//定数バッファ番号
 	pipeLineSet.rootParams[3].Descriptor.RegisterSpace = 0;						//デフォルト値
 	pipeLineSet.rootParams[3].ShaderVisibility = D3D12_SHADER_VISIBILITY_ALL;	//すべてのシェーダから見える
+	//定数バッファ3番 b3
+	pipeLineSet.rootParams[4].ParameterType = D3D12_ROOT_PARAMETER_TYPE_CBV;	//種類
+	pipeLineSet.rootParams[4].Descriptor.ShaderRegister = 3;					//定数バッファ番号
+	pipeLineSet.rootParams[4].Descriptor.RegisterSpace = 0;						//デフォルト値
+	pipeLineSet.rootParams[4].ShaderVisibility = D3D12_SHADER_VISIBILITY_ALL;	//すべてのシェーダから見える
+
 
 	//パイプライン生成
 	pipeLineSet.Create();

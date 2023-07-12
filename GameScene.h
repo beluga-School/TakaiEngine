@@ -23,7 +23,10 @@ private:
 	Player *player = Player::Get();
 	PlayerCamera* pCamera = PlayerCamera::Get();
 
-	Billboard billboard;
-	BillboardY billboardY;
+	Obj3d sea;
+
+	//ƒV[ƒ“Ø‚è‘Ö‚¦—p
+	char output[50] = "";
+	std::string savename = "";
 };
 

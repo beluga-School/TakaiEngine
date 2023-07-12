@@ -160,6 +160,7 @@
     <ClCompile Include="External\imgui\imgui_tables.cpp" />
     <ClCompile Include="External\imgui\imgui_widgets.cpp" />
     <ClCompile Include="GameScene.cpp" />
+    <ClCompile Include="Goal.cpp" />
     <ClCompile Include="GoalBlock.cpp" />
     <ClCompile Include="GoalSystem.cpp" />
     <ClCompile Include="Player.cpp" />
@@ -167,6 +168,7 @@
     <ClCompile Include="ShaderTestScene.cpp" />
     <ClCompile Include="Skydome.cpp" />
     <ClCompile Include="Stage.cpp" />
+    <ClCompile Include="Star.cpp" />
     <ClCompile Include="WarpBlock.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -232,6 +234,7 @@
     <ClInclude Include="External\imgui\imstb_truetype.h" />
     <ClInclude Include="External\json.hpp" />
     <ClInclude Include="GameScene.h" />
+    <ClInclude Include="Goal.h" />
     <ClInclude Include="GoalBlock.h" />
     <ClInclude Include="GoalSystem.h" />
     <ClInclude Include="Player.h" />
@@ -239,6 +242,7 @@
     <ClInclude Include="ShaderTestScene.h" />
     <ClInclude Include="Skydome.h" />
     <ClInclude Include="Stage.h" />
+    <ClInclude Include="Star.h" />
     <ClInclude Include="WarpBlock.h" />
   </ItemGroup>
   <ItemGroup>

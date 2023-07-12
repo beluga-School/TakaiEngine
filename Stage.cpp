@@ -4,8 +4,8 @@
 #include "EnemyManager.h"
 #include "Player.h"
 #include "WarpBlock.h"
-#include "GoalBlock.h"
 #include "ClearDrawScreen.h"
+#include "Star.h"
 
 void Stage::ChangeLevel(LevelData& data)
 {
@@ -17,6 +17,7 @@ void Stage::ChangeLevel(LevelData& data)
 	mColCubes.clear();
 	mEventObjects.clear();
 	mColObj3ds.clear();
+	mGoals.clear();
 
 	for (auto objectData = data.mObjects.begin(); objectData != data.mObjects.end(); objectData++)
 	{
@@ -94,6 +95,10 @@ void Stage::Update()
 	for (auto& obj : mColObj3ds)
 	{
 		obj.Update(*Camera::sCamera);
+	}
+	for (auto& obj : mGoals)
+	{
+		obj->Update();
 	}
 
 	goalSystem.Update();
@@ -211,13 +216,27 @@ void Stage::EvenyObjectSet(const LevelData::ObjectData& data)
 	//goal の文字列が含まれてるなら
 	if (data.eventtrigerName.find("goal") != std::string::npos)
 	{
-		mEventObjects.emplace_back();
-		mEventObjects.back() = std::make_unique<GoalBlock>();
-		mEventObjects.back()->Initialize();
-		mEventObjects.back()->trigerName = data.eventtrigerName;
-		//バグらないように白テクスチャを入れる
-		mEventObjects.back()->SetTexture(TextureManager::Get()->GetTexture("white"));
+		mGoals.emplace_back();
+		mGoals.back() = std::make_unique<Goal>();
+		mGoals.back()->Initialize();
+		mGoals.back()->trigerName = data.eventtrigerName;
 
+		mGoals.back()->SetOutLineState({ 1,0,0,1.0f }, 0.05f);
+
+		//オブジェクトの配置
+		LevelDataExchanger::SetObjectData(*mGoals.back(), data);
+	}
+	//star の文字列が含まれてるなら
+	if (data.eventtrigerName.find("star") != std::string::npos)
+	{
+		mEventObjects.emplace_back();
+		mEventObjects.back() = std::make_unique<Star>();
+		mEventObjects.back()->Initialize();
+
+		mEventObjects.back()->SetOutLineState({ 0,0,0,1.0f }, 0.1f);
+
+		mEventObjects.back()->trigerName = data.eventtrigerName;
+		
 		//オブジェクトの配置
 		LevelDataExchanger::SetObjectData(*mEventObjects.back(), data);
 	}
@@ -253,6 +272,22 @@ void Stage::DrawModel()
 		else
 		{
 			BasicObjectPreDraw(PipelineManager::GetPipeLine("GroundToon"));
+		}
+		obj->Draw();
+	}
+
+	for (auto& obj : mGoals)
+	{
+		BasicObjectPreDraw(PipelineManager::GetPipeLine("OutLine"), false);
+		obj->DrawOutLine();
+		//アルファが1未満になるなら透明用描画パイプラインに切り替える
+		if (obj->color_.w < 1.0f)
+		{
+			BasicObjectPreDraw(PipelineManager::GetPipeLine("ToonNDW"));
+		}
+		else
+		{
+			BasicObjectPreDraw(PipelineManager::GetPipeLine("Toon"));
 		}
 		obj->Draw();
 	}

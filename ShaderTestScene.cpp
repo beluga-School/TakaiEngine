@@ -3,6 +3,7 @@
 #include "LightGroup.h"
 #include "Input.h"
 #include "ImguiManager.h"
+#include "TimeManager.h"
 
 void ShaderTestScene::LoadResource()
 {
@@ -17,6 +18,7 @@ void ShaderTestScene::Initialize()
 	billboard.Initialize();
 	billboard.position = {0,0,0};
 	billboard.scale = {3,3,3};
+
 }
 
 GUI lightGUI("lightOperator");

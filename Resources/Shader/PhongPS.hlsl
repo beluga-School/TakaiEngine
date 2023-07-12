@@ -13,6 +13,8 @@ float4 main(VSOutput input) : SV_TARGET
     {
         if (dirLights[i].active)
         {
+            
+            
             //アンビエント = オブジェクトの元の色 * 暗くする率 * 光の色
             float3 ambient = texcolor.rgb * m_ambient * dirLights[i].lightcolor;
             

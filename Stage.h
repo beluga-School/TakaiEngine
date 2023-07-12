@@ -4,7 +4,7 @@
 #include "Collision.h"
 #include "EventBlock.h"
 #include "GoalSystem.h"
-
+#include "Goal.h"
 
 class ColObj3d : public Obj3d
 {
@@ -41,6 +41,9 @@ public:
 
 	//イベントオブジェクト配列
 	std::list<std::unique_ptr<EventBlock>> mEventObjects;
+
+	//ゴールオブジェクト配列
+	std::list<std::unique_ptr<Goal>> mGoals;
 
 	//コライダーを描画するか
 	bool mShowCollider = false;

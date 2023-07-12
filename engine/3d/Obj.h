@@ -86,5 +86,5 @@ public:
 protected:
 	//アウトライン周りの設定
 	Float4 mOutLineColor = {0,0,0,1.0f};
-	float mOutLineThickness = 0.02f;
+	float mOutLineThickness = 0.0f;
 };
