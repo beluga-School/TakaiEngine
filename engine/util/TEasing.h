@@ -1,4 +1,5 @@
 #pragma once
+#include "Vector3.h"
 
 namespace TEasing
 {
@@ -8,6 +9,8 @@ namespace TEasing
 	float OutQuad(const float& timeRate);
 	float InQuad(const float& start, const float& end, const float& timeRate);
 	float OutQuad(const float& start, const float& end, const float& timeRate);
+	Vector3 InQuad(const Vector3& start, const Vector3& end, const float& timeRate);
+	Vector3 OutQuad(const Vector3& start, const Vector3& end, const float& timeRate);
 
 	float InOutQuad(const float& timeRate);
 	float InOutQuad(const float& start, const float& end, const float& timeRate);

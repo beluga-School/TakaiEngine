@@ -12,6 +12,12 @@ public:
 	Obj3d* collideObj = nullptr;
 };
 
+class ColEventObj : public Obj3d
+{
+public:
+	EventBlock* collideObj = nullptr;
+};
+
 class Stage
 {
 public:
@@ -41,6 +47,8 @@ public:
 
 	//イベントオブジェクト配列
 	std::list<std::unique_ptr<EventBlock>> mEventObjects;
+
+	std::list<ColEventObj> mColEventObjs;
 
 	//ゴールオブジェクト配列
 	std::list<std::unique_ptr<Goal>> mGoals;

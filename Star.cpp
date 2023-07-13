@@ -1,4 +1,5 @@
 #include "Star.h"
+#include "PlayerCamera.h"
 
 void Star::Initialize()
 {
@@ -18,5 +19,9 @@ void Star::Draw()
 
 void Star::HitEffect()
 {
-
+	//すでにカメラモードが変わっていればスキップ
+	if (PlayerCamera::Get()->GetCamMode() == PlayerCamera::CamMode::StarGet)return;
+	
+	//カメラをスター入手時のカメラに変更
+	PlayerCamera::Get()->ChangeStarGetMode();
 }

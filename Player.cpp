@@ -85,8 +85,10 @@ void Player::Update()
 
 
 	//‰ñ“]XV
+	//Œ´_‚Ý‚½‚¢‚ÈŽ~‚Ü‚Á‚Ä‚é‚Æ‚«‚Í‘OŒü‚¯‚éÝŒv‚É‚µ‚½‚¢‚È``
 	if (attackState != AttackState::Attacking)
 	{
+		//ƒXƒ^[Žæ“¾’†‚Í³–Ê‚ðŒü‚¯‚é‚½‚ß‰ñ“]‚ÌXV‚ðƒXƒgƒbƒv(’†‚É‘‚¢‚Ä‚ ‚é)
 		RotaUpdate();
 	}
 
@@ -441,18 +443,18 @@ void Player::ColUpdate()
 		preY = hit.position.y;
 	}
 
-	for (auto& bColevent : Stage::Get()->mEventObjects)
+	for (auto& bColevent : Stage::Get()->mColEventObjs)
 	{
 		Cube eCol;
-		eCol.position = bColevent->position;
+		eCol.position = bColevent.collideObj->position;
 		
 		//‚È‚ñ‚©”»’è‚ª¬‚³‚©‚Á‚½‚Ì‚Å2”{‚É ‚»‚µ‚½‚ç‚Ò‚Á‚½‚è‚¾‚Á‚½‚Ì‚ÅA‚Ç‚Á‚©‚Å”¼•ª‚É
 		//‚·‚éˆ—‚ª‹²‚Ü‚Á‚Ä‚é
-		eCol.scale = bColevent->scale * 2;
+		eCol.scale = bColevent.collideObj->scale * 2;
 		
 		if (Collsions::CubeCollision(eCol, pCol))
 		{
-			bColevent->HitEffect();
+			bColevent.collideObj->HitEffect();
 
 			break;
 		}
@@ -495,6 +497,8 @@ void Player::ColUpdate()
 
 void Player::RotaUpdate()
 {
+	if (PlayerCamera::Get()->GetCamMode() == PlayerCamera::CamMode::StarGet)return;
+
 	//‰ñ“]‚³‚¹‚éˆ—
 	rotation.y = PlayerCamera::Get()->mHorizontalRad;
 }

@@ -28,9 +28,6 @@ void Stage::Update()
 		//切り替え開始(同期処理)
 		ChangeUpdate();
 
-		//データの参照を持たないように
-		currentData = nullptr;
-
 		//切り替えが終わったら暗転を解除
 		SceneChange::Get()->Open();
 	}
@@ -135,9 +132,6 @@ void Stage::CollisionSet(const LevelData::ObjectData& data)
 		MathF::AngleConvRad(data.rotation.z)
 	};
 
-	//コリジョンを取るオブジェクトへのポインタを保持
-	mColObj3ds.back().collideObj = &mObj3ds.back();
-
 	//当たり判定自体の情報を作成
 	mColCubes.emplace_back();
 	mColCubes.back().position = data.translation + data.collider.center;
@@ -234,6 +228,13 @@ void Stage::ChangeUpdate()
 			//中でさらに分類わけして配置している
 			//EventBlock を基底クラスに、HitEffectの中身を変えたクラスで実装している
 			EvenyObjectSet(*objectData);
+
+			////当たり判定を作成
+			//if (objectData->collider.have)
+			//{
+			//	CollisionSet(*objectData);
+			//}
+
 			continue;
 		}
 
@@ -261,6 +262,9 @@ void Stage::ChangeUpdate()
 			if (objectData->collider.have)
 			{
 				CollisionSet(*objectData);
+			
+				//コリジョンを取るオブジェクトへのポインタを保持
+				mColObj3ds.back().collideObj = &mObj3ds.back();
 			}
 
 			continue;

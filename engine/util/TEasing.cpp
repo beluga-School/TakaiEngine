@@ -32,6 +32,26 @@ float TEasing::OutQuad(const float& start, const float& end, const float& timeRa
 	return start + dif;
 }
 
+Vector3 TEasing::InQuad(const Vector3& start, const Vector3& end, const float& timeRate)
+{
+	Vector3 temp;
+	temp.x = InQuad(start.x, end.x, timeRate);
+	temp.y = InQuad(start.y, end.y, timeRate);
+	temp.z = InQuad(start.z, end.z, timeRate);
+
+	return temp;
+}
+
+Vector3 TEasing::OutQuad(const Vector3& start, const Vector3& end, const float& timeRate)
+{
+	Vector3 temp;
+	temp.x = OutQuad(start.x, end.x, timeRate);
+	temp.y = OutQuad(start.y, end.y, timeRate);
+	temp.z = OutQuad(start.z, end.z, timeRate);
+
+	return temp;
+}
+
 float TEasing::InOutQuad(const float& timeRate)
 {
 	return (float)(timeRate < 0.5f ? 2 * timeRate * timeRate : 1 - pow(-2 * timeRate + 2, 2) / 2);

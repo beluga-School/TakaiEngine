@@ -23,7 +23,7 @@ void PlayerCamera::Update()
 	//マウス固定
 	if (Input::Keyboard::TriggerKey(DIK_N))
 	{
-		mouseLockChange = !mouseLockChange;	
+		mouseLockChange = !mouseLockChange;
 	}
 	if (mouseLockChange)
 	{
@@ -34,77 +34,39 @@ void PlayerCamera::Update()
 		Mouse::CurserLock(CurserLockState::UNLOCK);
 	}
 
-	Player* player = Player::Get();
-
-	mCenterVec = matWorld.ExtractAxisZ();
-	position = player->position;
-
-	Camera::sCamera->mEye = position - (mCenterVec * mRadius);
-	Camera::sCamera->mTarget = position;
-
-	//ラディウス変更(消してもいいかも)
-	if (Mouse::Wheel() < 0)
+	if (Input::Keyboard::TriggerKey(DIK_G))
 	{
-		mRadius += 2.0f;
-	}
-	if (Mouse::Wheel() > 0)
-	{
-		mRadius -= 2.0f;
-	}
+		switch (camMode)
+		{
+		case PlayerCamera::CamMode::Normal:
+			ChangeStarGetMode();
+			break;
+		case PlayerCamera::CamMode::StarGet:
+			if (camMoveTimer.GetEnd())
+			{
+				camMoveTimer.Reset();
+				mRadius = saveRadius;
 
-	mRadius = Util::Clamp(mRadius, 1.0f, 30.f);
-
-	//回転させる処理
-	if (Input::Pad::CheckConnectPad())
-	{
-		//縦回転
-		mVerticalRad += MathF::AngleConvRad(Pad::GetRStickMove().y) * mPadSensitivity;
-
-		//横回転
-		mHorizontalRad += MathF::AngleConvRad(Pad::GetRStickMove().x) * mPadSensitivity;
+				camMode = CamMode::Normal;
+			}
+			break;
+		}
 	}
 
-	//マウス固定されてるなら
-	if (mouseLockChange)
+	switch (camMode)
 	{
-		//縦回転
-		mVerticalRad += MathF::AngleConvRad(Mouse::GetVelocity().y) * mMouseSensitivity;
-
-		//横回転
-		mHorizontalRad += MathF::AngleConvRad(Mouse::GetVelocity().x) * mMouseSensitivity;
+	case PlayerCamera::CamMode::Normal:
+		NormalUpdate();
+		break;
+	case PlayerCamera::CamMode::StarGet:
+		StarGetUpdate();
+		break;
 	}
-
-	//後で両方同時に動かしたときに加速しないようにclampする
-
-	//限界値を超えない処理
-	if (mVerticalRad > MathF::PIf / 2 - MathF::AngleConvRad(1.0f)) mVerticalRad = MathF::PIf / 2 - MathF::AngleConvRad(1.0f);
-	if (mVerticalRad < -MathF::PIf / 2 + MathF::AngleConvRad(1.0f)) mVerticalRad = -MathF::PIf / 2 + MathF::AngleConvRad(1.0f);
-
-	rotation.x = mVerticalRad;
-	rotation.y = mHorizontalRad;
 
 	Camera::sCamera->UpdatematView();
 	Obj3d::Update(*Camera::sCamera);
 
-	//xはキャラクターの回転と一緒に動かす
-	//yはカメラオブジェクトで動かす
-	//shift押しながらならxもカメラオブジェクトで動かす
-
-	//カメラ座標を当たり判定用に保存
-	//カメラ位置とプレイヤー位置の中心を取る
-	cameraCol.position = {
-		(Camera::sCamera->mEye.x + player->position.x)/2,
-		(Camera::sCamera->mEye.y + player->position.y)/2,
-		(Camera::sCamera->mEye.z + player->position.z)/2,
-	};
-	
-	//中心位置から元座標へ引き算して間の長さを出す
-	//XとZの幅の出し方がわかんないので適当な大きさを入れておく
-	cameraCol.scale = {player->scale.x,
-		Util::Abs(cameraCol.position.y - Camera::sCamera->mEye.y),
-		player->scale.z};
-
-	cameraCol.scale.y = Util::Clamp(cameraCol.scale.y, player->scale.y, 9999.f);
+	CreateCamCol();
 }
 
 void PlayerCamera::Draw()
@@ -161,4 +123,123 @@ void PlayerCamera::BackTransparent()
 		//段々薄くしたり濃くしたりする
 		obj.collideObj->color_.w = 1.0f - obj.collideObj->transparentTimer.GetTimeRate();
 	}
+}
+
+void PlayerCamera::ChangeStarGetMode()
+{
+	Player* player = Player::Get();
+
+	camMode = CamMode::StarGet;
+	camMoveTimer.Start();
+	radiusMoveTimer.Reset();
+
+	//現在位置を始点に
+	starGetCamPosS = Camera::sCamera->mEye;
+
+	//プレイヤーの正面座標を算出
+	mCenterVec = Player::Get()->matWorld.ExtractAxisZ();
+	//y方向を反対にして上に行くように
+	mCenterVec.y = 0.25f;
+
+	position = player->position;
+
+	//プレイヤーの正面座標を終点に
+	starGetCamPosE = position + (mCenterVec * mRadius);
+
+	saveRadius = mRadius;
+};
+
+void PlayerCamera::StarGetUpdate()
+{
+	Player* player = Player::Get();
+
+	camMoveTimer.Update();
+	radiusMoveTimer.Update();
+
+	Camera::sCamera->mTarget = position;
+
+	Camera::sCamera->mEye = TEasing::InQuad(starGetCamPosS, starGetCamPosE, camMoveTimer.GetTimeRate());
+
+	if (camMoveTimer.GetEnd())
+	{
+		if(radiusMoveTimer.GetStarted() == false)radiusMoveTimer.Start();
+		mRadius = TEasing::InQuad(saveRadius,4.0f, radiusMoveTimer.GetTimeRate());
+
+		position = player->position;
+
+		Camera::sCamera->mEye = position + (mCenterVec * mRadius);
+	}
+}
+
+void PlayerCamera::NormalUpdate()
+{
+	Player* player = Player::Get();
+
+	mCenterVec = matWorld.ExtractAxisZ();
+	position = player->position;
+
+	Camera::sCamera->mEye = position - (mCenterVec * mRadius);
+	Camera::sCamera->mTarget = position;
+
+	//ラディウス変更(消してもいいかも)
+	if (Mouse::Wheel() < 0)
+	{
+		mRadius += 2.0f;
+	}
+	if (Mouse::Wheel() > 0)
+	{
+		mRadius -= 2.0f;
+	}
+
+	mRadius = Util::Clamp(mRadius, 1.0f, 30.f);
+
+	//回転させる処理
+	if (Input::Pad::CheckConnectPad())
+	{
+		//縦回転
+		mVerticalRad += MathF::AngleConvRad(Pad::GetRStickMove().y) * mPadSensitivity;
+
+		//横回転
+		mHorizontalRad += MathF::AngleConvRad(Pad::GetRStickMove().x) * mPadSensitivity;
+	}
+
+	//マウス固定されてるなら
+	if (mouseLockChange)
+	{
+		//縦回転
+		mVerticalRad += MathF::AngleConvRad(Mouse::GetVelocity().y) * mMouseSensitivity;
+
+		//横回転
+		mHorizontalRad += MathF::AngleConvRad(Mouse::GetVelocity().x) * mMouseSensitivity;
+	}
+
+	//後で両方同時に動かしたときに加速しないようにclampする
+
+	//限界値を超えない処理
+	if (mVerticalRad > MathF::PIf / 2 - MathF::AngleConvRad(1.0f)) mVerticalRad = MathF::PIf / 2 - MathF::AngleConvRad(1.0f);
+	if (mVerticalRad < -MathF::PIf / 2 + MathF::AngleConvRad(1.0f)) mVerticalRad = -MathF::PIf / 2 + MathF::AngleConvRad(1.0f);
+
+	rotation.x = mVerticalRad;
+	rotation.y = mHorizontalRad;
+}
+
+void PlayerCamera::CreateCamCol()
+{
+	Player* player = Player::Get();
+
+	//カメラ座標を当たり判定用に保存
+	//カメラ位置とプレイヤー位置の中心を取る
+	cameraCol.position = {
+		(Camera::sCamera->mEye.x + player->position.x) / 2,
+		(Camera::sCamera->mEye.y + player->position.y) / 2,
+		(Camera::sCamera->mEye.z + player->position.z) / 2,
+	};
+
+	//中心位置から元座標へ引き算して間の長さを出す
+	//XとZの幅の出し方がわかんないので適当な大きさを入れておく
+	cameraCol.scale = { player->scale.x,
+		Util::Abs(cameraCol.position.y - Camera::sCamera->mEye.y),
+		player->scale.z };
+
+	cameraCol.scale.y = Util::Clamp(cameraCol.scale.y, player->scale.y, 9999.f);
 }

@@ -89,6 +89,9 @@ void GameScene::Update()
 		mouseLockStates += "false";
 	}
 	ImGui::Text(mouseLockStates.c_str());
+
+	ImGui::Text("mouseR %f", PlayerCamera::Get()->GetRadius());
+
 	sceneChangeGUI.End();
 
 	player->Update();
@@ -127,6 +130,8 @@ void GameScene::Draw()
 	player->Draw();
 
 	EnemyManager::Get()->Draw();
+
+	//pCamera->Draw();
 
 	BasicObjectPreDraw(PipelineManager::GetPipeLine("PerlinNoise"));
 
