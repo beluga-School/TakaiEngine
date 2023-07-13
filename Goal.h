@@ -19,6 +19,5 @@ private:
 	//初期位置を配置しなおすフラグ
 	bool mInitFragPos = false;
 
-	GUI goalGUI = {"goalCheck"};
 };
 

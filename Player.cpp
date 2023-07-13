@@ -331,8 +331,6 @@ void Player::JumpUpdate()
 	}
 }
 
-GUI checkGUI("speedCheck");
-
 void Player::ColUpdate()
 {
 	///--’n–Ê“–‚½‚è”»’è
@@ -448,7 +446,6 @@ void Player::ColUpdate()
 		preY = hit.position.y;
 	}
 
-	checkGUI.Begin({ 500,100 }, { 200,200 });
 	for (auto& bColevent : Stage::Get()->mEventObjects)
 	{
 		Cube eCol;
@@ -482,8 +479,6 @@ void Player::ColUpdate()
 			break;
 		}
 	}
-
-	checkGUI.End();
 
 	for (auto& goal : Stage::Get()->mGoals)
 	{
