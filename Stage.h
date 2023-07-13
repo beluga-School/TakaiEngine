@@ -5,6 +5,7 @@
 #include "EventBlock.h"
 #include "GoalSystem.h"
 #include "Goal.h"
+#include "Star.h"
 
 class ColObj3d : public Obj3d
 {
@@ -47,8 +48,6 @@ public:
 
 	//イベントオブジェクト配列
 	std::list<std::unique_ptr<EventBlock>> mEventObjects;
-
-	std::list<ColEventObj> mColEventObjs;
 
 	//ゴールオブジェクト配列
 	std::list<std::unique_ptr<Goal>> mGoals;

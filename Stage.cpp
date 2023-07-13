@@ -42,6 +42,12 @@ void Stage::Update()
 		obj->Update();
 	}
 
+	for (auto& obj : StarManager::Get()->mStars)
+	{
+		obj->Update();
+	}
+	StarManager::Get()->Update();
+
 	for (auto& obj : mColObj3ds)
 	{
 		obj.Update(*Camera::sCamera);
@@ -176,16 +182,16 @@ void Stage::EvenyObjectSet(const LevelData::ObjectData& data)
 	//star の文字列が含まれてるなら
 	if (data.eventtrigerName.find("star") != std::string::npos)
 	{
-		mEventObjects.emplace_back();
-		mEventObjects.back() = std::make_unique<Star>();
-		mEventObjects.back()->Initialize();
+		StarManager::Get()->mStars.emplace_back();
+		StarManager::Get()->mStars.back() = std::make_unique<Star>();
+		StarManager::Get()->mStars.back()->Initialize();
 
-		mEventObjects.back()->SetOutLineState({ 0,0,0,1.0f }, 0.1f);
+		StarManager::Get()->mStars.back()->SetOutLineState({ 0,0,0,1.0f }, 0.1f);
 
-		mEventObjects.back()->trigerName = data.eventtrigerName;
+		StarManager::Get()->mStars.back()->trigerName = data.eventtrigerName;
 		
 		//オブジェクトの配置
-		LevelDataExchanger::SetObjectData(*mEventObjects.back(), data);
+		LevelDataExchanger::SetObjectData(*StarManager::Get()->mStars.back(), data);
 	}
 }
 
@@ -200,6 +206,7 @@ void Stage::ChangeUpdate()
 	mEventObjects.clear();
 	mColObj3ds.clear();
 	mGoals.clear();
+	StarManager::Get()->mStars.clear();
 
 	for (auto objectData = currentData->mObjects.begin(); objectData != currentData->mObjects.end(); objectData++)
 	{
@@ -293,6 +300,21 @@ void Stage::DrawModel()
 	for (auto& obj : mEventObjects)
 	{
 		BasicObjectPreDraw(PipelineManager::GetPipeLine("OutLine"),false);
+		obj->DrawOutLine();
+		//アルファが1未満になるなら透明用描画パイプラインに切り替える
+		if (obj->color_.w < 1.0f)
+		{
+			BasicObjectPreDraw(PipelineManager::GetPipeLine("GroundToonNDW"));
+		}
+		else
+		{
+			BasicObjectPreDraw(PipelineManager::GetPipeLine("GroundToon"));
+		}
+		obj->Draw();
+	}
+	for (auto& obj : StarManager::Get()->mStars)
+	{
+		BasicObjectPreDraw(PipelineManager::GetPipeLine("OutLine"), false);
 		obj->DrawOutLine();
 		//アルファが1未満になるなら透明用描画パイプラインに切り替える
 		if (obj->color_.w < 1.0f)

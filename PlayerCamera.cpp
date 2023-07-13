@@ -5,6 +5,7 @@
 #include "Util.h"
 #include "ImguiManager.h"
 #include "Stage.h"
+#include "Star.h"
 
 using namespace Input;
 
@@ -32,25 +33,6 @@ void PlayerCamera::Update()
 	else
 	{
 		Mouse::CurserLock(CurserLockState::UNLOCK);
-	}
-
-	if (Input::Keyboard::TriggerKey(DIK_G))
-	{
-		switch (camMode)
-		{
-		case PlayerCamera::CamMode::Normal:
-			ChangeStarGetMode();
-			break;
-		case PlayerCamera::CamMode::StarGet:
-			if (camMoveTimer.GetEnd())
-			{
-				camMoveTimer.Reset();
-				mRadius = saveRadius;
-
-				camMode = CamMode::Normal;
-			}
-			break;
-		}
 	}
 
 	switch (camMode)
@@ -125,8 +107,19 @@ void PlayerCamera::BackTransparent()
 	}
 }
 
+void PlayerCamera::ChangeNormalMode()
+{
+	camMode = CamMode::Normal;
+
+	camMoveTimer.Reset();
+	mRadius = saveRadius;
+}
+
 void PlayerCamera::ChangeStarGetMode()
 {
+	//すでに開始されてるならスキップ
+	if (camMode == CamMode::StarGet)return;
+
 	Player* player = Player::Get();
 
 	camMode = CamMode::StarGet;

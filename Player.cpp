@@ -50,6 +50,16 @@ void Player::Initialize()
 
 void Player::Update()
 {
+	if (PlayerCamera::Get()->GetCamMode() == PlayerCamera::CamMode::Normal)
+	{
+		starState = StarState::None;
+	}
+	if (PlayerCamera::Get()->GetCamMode() == PlayerCamera::CamMode::StarGet)
+	{
+		starState = StarState::Get;
+	}
+
+
 	//移動地を初期化
 	moveValue = { 0,0,0 };
 
@@ -176,6 +186,9 @@ void Player::Attack()
 
 void Player::SideMoveUpdate()
 {
+	//星取得中なら移動できなくする
+	if (starState != StarState::None)return;
+
 	accelerationTimer.Update();
 	decelerationTimer.Update();
 
@@ -264,15 +277,7 @@ void Player::JumpUpdate()
 		if (Input::Keyboard::TriggerKey(DIK_SPACE) ||
 			Pad::TriggerPadButton(PadButton::A))
 		{
-			//値を指定
-			upJumpS = position.y;
-			upJumpE = position.y + jumpPower;
-
-			jumpManageTimer.Start();
-			jumpState = JumpState::Up;
-
-			//重力を無効化
-			gravity = 0;
+			Jump();
 		}
 		
 		if (position.y > hitCubeMaxY)
@@ -443,22 +448,42 @@ void Player::ColUpdate()
 		preY = hit.position.y;
 	}
 
-	for (auto& bColevent : Stage::Get()->mColEventObjs)
+	checkGUI.Begin({ 500,100 }, { 200,200 });
+	for (auto& bColevent : Stage::Get()->mEventObjects)
 	{
 		Cube eCol;
-		eCol.position = bColevent.collideObj->position;
+		eCol.position = bColevent->position;
 		
 		//なんか判定が小さかったので2倍に そしたらぴったりだったので、どっかで半分に
 		//する処理が挟まってる
-		eCol.scale = bColevent.collideObj->scale * 2;
+		eCol.scale = bColevent->scale * 2;
 		
 		if (Collsions::CubeCollision(eCol, pCol))
 		{
-			bColevent.collideObj->HitEffect();
+			bColevent->HitEffect();
 
 			break;
 		}
 	}
+
+	for (auto& star : StarManager::Get()->mStars)
+	{
+		Cube eCol;
+		eCol.position = star->position;
+
+		//なんか判定が小さかったので2倍に そしたらぴったりだったので、どっかで半分に
+		//する処理が挟まってる
+		eCol.scale = star->scale * 2;
+
+		if (Collsions::CubeCollision(eCol, pCol))
+		{
+			star->HitEffect();
+
+			break;
+		}
+	}
+
+	checkGUI.End();
 
 	for (auto& goal : Stage::Get()->mGoals)
 	{
@@ -497,8 +522,22 @@ void Player::ColUpdate()
 
 void Player::RotaUpdate()
 {
-	if (PlayerCamera::Get()->GetCamMode() == PlayerCamera::CamMode::StarGet)return;
+	//星取得中なら移動できなくする
+	if (starState != StarState::None)return;
 
 	//回転させる処理
 	rotation.y = PlayerCamera::Get()->mHorizontalRad;
+}
+
+void Player::Jump()
+{
+	//値を指定
+	upJumpS = position.y;
+	upJumpE = position.y + jumpPower;
+
+	jumpManageTimer.Start();
+	jumpState = JumpState::Up;
+
+	//重力を無効化
+	gravity = 0;
 }

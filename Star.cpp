@@ -1,5 +1,8 @@
 #include "Star.h"
 #include "PlayerCamera.h"
+#include "Player.h"
+#include "TimeManager.h"
+#include "MathF.h"
 
 void Star::Initialize()
 {
@@ -9,6 +12,41 @@ void Star::Initialize()
 
 void Star::Update()
 {
+	timer.Update();
+
+	switch (starState)
+	{
+	case Star::StarState::None:
+		//1秒間に0.25回転してる
+		rotaSpeed = 0.25f;
+		break;
+	case Star::StarState::Inhole:
+		if (timer.GetStarted() == false)
+		{
+			timer.Start();
+		}
+
+		//1秒間に2回転する
+		rotaSpeed = 2;
+
+		scale = TEasing::OutQuad(saveScale, { 0,0,0 }, timer.GetTimeRate());
+		position = TEasing::OutQuad(saveStartPos, Player::Get()->position, timer.GetTimeRate());
+
+		if (timer.GetEnd())
+		{
+			starState = StarState::End;
+			//ステート移行の際に、全体の進行を一つ先に進める
+			StarManager::Get()->JumpMove();
+		}
+
+		break;
+	case Star::StarState::End:
+	
+		break;
+	}
+
+	rotation.y += (MathF::PIf * 2) * rotaSpeed * TimeManager::deltaTime;
+
 	Obj3d::Update(*Camera::sCamera);
 }
 
@@ -19,9 +57,79 @@ void Star::Draw()
 
 void Star::HitEffect()
 {
-	//すでにカメラモードが変わっていればスキップ
-	if (PlayerCamera::Get()->GetCamMode() == PlayerCamera::CamMode::StarGet)return;
+	//2回目は入らないように
+	if (hit)return;
+
+	saveScale = scale;
+
+	saveStartPos = position;
+	savePlayerPos = Player::Get()->position;
+
+	hit = true;
+
+	StarManager::Get()->Start();
+}
+
+void StarManager::JumpMove()
+{
+	progress = StarGetState::Jumping;
+	jumpingTimer.Start();
 	
-	//カメラをスター入手時のカメラに変更
-	PlayerCamera::Get()->ChangeStarGetMode();
+	Player::Get()->Jump();
+	jumpingCount++;
+}
+void StarManager::Update()
+{
+	jumpingTimer.Update();
+
+	switch (progress)
+	{
+	case StarManager::StarGetState::None:
+		break;
+	case StarManager::StarGetState::MoveCam:
+		PlayerCamera::Get()->ChangeStarGetMode();
+		if (PlayerCamera::Get()->CamChangeEnd())
+		{
+			progress = StarGetState::Inhole;
+		}
+		break;
+	case StarManager::StarGetState::Inhole:
+		//当たったオブジェクトを吸い込む
+		for (auto &star : mStars)
+		{
+			if (star->starState == Star::StarState::None)
+			{
+				if (star->hit)
+				{
+					star->starState = Star::StarState::Inhole;
+				}
+			}
+		}
+
+		break;
+	case StarManager::StarGetState::Jumping:
+
+		if (jumpingTimer.GetEnd())
+		{
+			jumpingCount++;
+			if (jumpingCount > 1)
+			{
+				progress = StarGetState::BackCam;
+			}
+			else
+			{
+				jumpingTimer.Start();
+				Player::Get()->Jump();
+			}
+		}
+
+		break;
+	case StarManager::StarGetState::BackCam:
+
+		//演出が終わったらカメラを元に戻す
+		//イージングつけてないので付ける
+		PlayerCamera::Get()->ChangeNormalMode();
+		progress = StarGetState::None;
+		break;
+	}
 }

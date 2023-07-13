@@ -89,6 +89,9 @@ public:
 
 	bool CheckDirections(const Cube& cubeCol, const Cube& blockCol, const CheckDirection& CD);
 
+	//呼ぶと1回ジャンプする
+	void Jump();
+
 private:
 	Player(){};
 	~Player(){};
@@ -190,5 +193,12 @@ private:
 	Vector3 mRolingVec = {0,0,0};
 
 	float mRolingSpeed = 15.0f;
+
+	//---スター取得
+	enum class StarState
+	{
+		None,	//未取得
+		Get,	//入手モーション中
+	}starState = StarState::None;
 };
 

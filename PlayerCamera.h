@@ -55,8 +55,10 @@ public:
 	};
 
 	bool CamChangeEnd() {
-
+		return radiusMoveTimer.GetEnd();
 	};
+
+	void ChangeNormalMode();
 
 	void ChangeStarGetMode();
 
