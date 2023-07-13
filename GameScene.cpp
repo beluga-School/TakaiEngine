@@ -36,13 +36,7 @@ void GameScene::Initialize()
 
 	Stage::Get()->goalSystem.Initialize();
 
-	sea.Initialize();
-	sea.SetModel(ModelManager::GetModel("plate"));
-	sea.SetTexture(TextureManager::GetTexture("white"));
-	sea.color_ = { 0,0,1,1 };
-	sea.position = { 0,-5,0 };
-	sea.rotation = { 1.57f,0,0};
-	sea.scale = { 100,100,100};
+	SceneChange::Get()->Initialize();
 }
 
 GUI sceneChangeGUI("operator");
@@ -113,7 +107,12 @@ void GameScene::Update()
 
 	pCamera->BackTransparent();
 
-	sea.Update(*Camera::sCamera);
+	if (Input::Keyboard::TriggerKey(DIK_T))
+	{
+		SceneChange::Get()->Start();
+	}
+
+	SceneChange::Get()->Update();
 }
 
 void GameScene::Draw()
@@ -130,11 +129,12 @@ void GameScene::Draw()
 	EnemyManager::Get()->Draw();
 
 	BasicObjectPreDraw(PipelineManager::GetPipeLine("PerlinNoise"));
-	sea.Draw();
 
 	SpriteCommonBeginDraw();
 
 	Stage::Get()->DrawSprite();
+
+	SceneChange::Get()->Draw();
 }
 
 void GameScene::End()

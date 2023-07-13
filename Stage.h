@@ -66,9 +66,14 @@ private:
 	//イベントオブジェクト(ブロック置き直し)
 	void EvenyObjectSet(const LevelData::ObjectData& data);
 
+	//ステージ切り替えの更新
+	void ChangeUpdate();
+
 	void DrawModel();
 	void DrawCollider();
 
 	std::string currentHandle = "";
+
+	LevelData* currentData = nullptr;
 };
 

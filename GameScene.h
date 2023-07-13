@@ -6,6 +6,7 @@
 #include "Player.h"
 #include "PlayerCamera.h"
 #include "Billboard.h"
+#include "SceneChange.h"
 
 class GameScene : public IScene
 {
@@ -22,8 +23,6 @@ private:
 	
 	Player *player = Player::Get();
 	PlayerCamera* pCamera = PlayerCamera::Get();
-
-	Obj3d sea;
 
 	//ƒV[ƒ“Ø‚è‘Ö‚¦—p
 	char output[50] = "";

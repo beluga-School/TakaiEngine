@@ -6,82 +6,35 @@
 #include "WarpBlock.h"
 #include "ClearDrawScreen.h"
 #include "Star.h"
+#include "SceneChange.h"
 
 void Stage::ChangeLevel(LevelData& data)
 {
-	//ハンドルをステージに保存
-	currentHandle = data.mHandle;
-
-	//入ってたものを削除
-	mObj3ds.clear();
-	mColCubes.clear();
-	mEventObjects.clear();
-	mColObj3ds.clear();
-	mGoals.clear();
-
-	for (auto objectData = data.mObjects.begin(); objectData != data.mObjects.end(); objectData++)
+	if (SceneChange::GetRun() == false)
 	{
-		//プレイヤーの配置なら
-		if (objectData->setObjectName == "player")
-		{
-			Player::Get()->Reset();
-			Player::Get()->preMove = objectData->translation;
-			Player::Get()->position = objectData->translation;
-			Player::Get()->rotation = objectData->rotation;
-			Player::Get()->scale = objectData->scaling;
+		//シーン切り替えを開始
+		SceneChange::Get()->Start();
 
-			continue;
-		}
-		
-		//エネミーの配置なら
-		if (objectData->setObjectName == "enemy")
-		{
-			EnemyManager::Get()->Load(*objectData);
-			continue;
-		}
-
-		//イベントオブジェクトなら設置
-		if (objectData->eventtrigerName != "")
-		{
-			//中でさらに分類わけして配置している
-			//EventBlock を基底クラスに、HitEffectの中身を変えたクラスで実装している
-			EvenyObjectSet(*objectData);
-			continue;
-		}
-
-		if (objectData->spawnpointName == "enemy")
-		{
-			//とりあえずキューブで配置
-			mObj3ds.emplace_back();
-			mObj3ds.back().Initialize();
-
-			mObj3ds.back().SetModel(ModelManager::GetModel("spawnpoint"));
-
-			LevelDataExchanger::SetObjectData(mObj3ds.back(), *objectData);
-			
-			continue;
-		}
-
-		//---ここより前でcontinue忘れると、モデルを読み込んじゃってバグる可能性大
-
-		//なにも無かったら
-		{
-			//そのままモデルの配置
-			NormalObjectSet(*objectData);
-
-			//当たり判定を作成
-			if (objectData->collider.have)
-			{
-				CollisionSet(*objectData);
-			}
-
-			continue;
-		}
+		//ステージデータを保存
+		currentData = &data;
 	}
 }
 
 void Stage::Update()
 {
+	//シーン切り替えが暗転まで到達したら
+	if (SceneChange::Get()->IsBlackOut())
+	{
+		//切り替え開始(同期処理)
+		ChangeUpdate();
+
+		//データの参照を持たないように
+		currentData = nullptr;
+
+		//切り替えが終わったら暗転を解除
+		SceneChange::Get()->Open();
+	}
+
 	for (auto &obj: mObj3ds)
 	{
 		obj.Update(*Camera::sCamera);
@@ -239,6 +192,79 @@ void Stage::EvenyObjectSet(const LevelData::ObjectData& data)
 		
 		//オブジェクトの配置
 		LevelDataExchanger::SetObjectData(*mEventObjects.back(), data);
+	}
+}
+
+void Stage::ChangeUpdate()
+{
+	//ハンドルをステージに保存
+	currentHandle = currentData->mHandle;
+
+	//入ってたものを削除
+	mObj3ds.clear();
+	mColCubes.clear();
+	mEventObjects.clear();
+	mColObj3ds.clear();
+	mGoals.clear();
+
+	for (auto objectData = currentData->mObjects.begin(); objectData != currentData->mObjects.end(); objectData++)
+	{
+		//プレイヤーの配置なら
+		if (objectData->setObjectName == "player")
+		{
+			Player::Get()->Reset();
+			Player::Get()->preMove = objectData->translation;
+			Player::Get()->position = objectData->translation;
+			Player::Get()->rotation = objectData->rotation;
+			Player::Get()->scale = objectData->scaling;
+
+			continue;
+		}
+
+		//エネミーの配置なら
+		if (objectData->setObjectName == "enemy")
+		{
+			EnemyManager::Get()->Load(*objectData);
+			continue;
+		}
+
+		//イベントオブジェクトなら設置
+		if (objectData->eventtrigerName != "")
+		{
+			//中でさらに分類わけして配置している
+			//EventBlock を基底クラスに、HitEffectの中身を変えたクラスで実装している
+			EvenyObjectSet(*objectData);
+			continue;
+		}
+
+		if (objectData->spawnpointName == "enemy")
+		{
+			//とりあえずキューブで配置
+			mObj3ds.emplace_back();
+			mObj3ds.back().Initialize();
+
+			mObj3ds.back().SetModel(ModelManager::GetModel("spawnpoint"));
+
+			LevelDataExchanger::SetObjectData(mObj3ds.back(), *objectData);
+
+			continue;
+		}
+
+		//---ここより前でcontinue忘れると、モデルを読み込んじゃってバグる可能性大
+
+		//なにも無かったら
+		{
+			//そのままモデルの配置
+			NormalObjectSet(*objectData);
+
+			//当たり判定を作成
+			if (objectData->collider.have)
+			{
+				CollisionSet(*objectData);
+			}
+
+			continue;
+		}
 	}
 }
 

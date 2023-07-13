@@ -165,6 +165,7 @@
     <ClCompile Include="GoalSystem.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="PlayerCamera.cpp" />
+    <ClCompile Include="SceneChange.cpp" />
     <ClCompile Include="ShaderTestScene.cpp" />
     <ClCompile Include="Skydome.cpp" />
     <ClCompile Include="Stage.cpp" />
@@ -239,6 +240,7 @@
     <ClInclude Include="GoalSystem.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="PlayerCamera.h" />
+    <ClInclude Include="SceneChange.h" />
     <ClInclude Include="ShaderTestScene.h" />
     <ClInclude Include="Skydome.h" />
     <ClInclude Include="Stage.h" />

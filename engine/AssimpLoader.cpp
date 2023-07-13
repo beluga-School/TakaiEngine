@@ -58,9 +58,9 @@ bool AssimpLoader::Load(const ImportSettings& settings)
 	flag |= aiProcess_RemoveRedundantMaterials;
 	flag |= aiProcess_OptimizeMeshes;
 
-	auto scene = importer.ReadFile(path, flag);
+	auto mScene = importer.ReadFile(path, flag);
 			
-	if (scene == nullptr)
+	if (mScene == nullptr)
 	{
 		//エラーがでたら表示
 		OutputDebugStringA(importer.GetErrorString());
@@ -70,16 +70,16 @@ bool AssimpLoader::Load(const ImportSettings& settings)
 
 	//読み込んだデータをMeshに保存
 	meshs.clear();
-	meshs.resize(scene->mNumMeshes);
+	meshs.resize(mScene->mNumMeshes);
 	for (size_t i = 0; i < meshs.size(); i++)
 	{
-		const auto pMesh = scene->mMeshes[i];
+		const auto pMesh = mScene->mMeshes[i];
 		LoadMesh(meshs[i], pMesh, settings.mInverseU, settings.mInverseV);
-		const auto pMaterial = scene->mMaterials[i];
+		const auto pMaterial = mScene->mMaterials[i];
 		LoadTexture(settings.mFILENAME, meshs[i],pMaterial);
 	}
 
-	scene = nullptr;
+	mScene = nullptr;
 
 	return true;
 }
