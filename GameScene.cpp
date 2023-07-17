@@ -6,6 +6,8 @@
 #include "EnemyManager.h"
 #include "Input.h"
 #include "MathF.h"
+#include "TimeManager.h"
+#include "CollideManager.h"
 
 void GameScene::LoadResource()
 {
@@ -56,6 +58,9 @@ void GameScene::Update()
 	Stage::Get()->Update();
 
 	sceneChangeGUI.Begin({ 100,100 }, { 300,350 });
+
+	ImGui::Text("fps %f", TimeManager::fps);
+
 	if (ImGui::Button("mShowModel"))
 	{
 		Stage::Get()->mShowModel = !Stage::Get()->mShowModel;
@@ -105,6 +110,8 @@ void GameScene::Update()
 	{
 		pCamera->Update();
 	}
+
+	CollideManager::Get()->Update();
 
 	EnemyManager::Get()->Update();
 

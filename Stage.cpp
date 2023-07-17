@@ -51,6 +51,7 @@ void Stage::Update()
 	for (auto& obj : mColObj3ds)
 	{
 		obj.Update(*Camera::sCamera);
+		obj.CreateCol();
 	}
 	for (auto& obj : mGoals)
 	{
@@ -207,6 +208,9 @@ void Stage::ChangeUpdate()
 	mColObj3ds.clear();
 	mGoals.clear();
 	StarManager::Get()->mStars.clear();
+	CollideManager::Get()->allCols.clear();
+
+	Player::Get()->Register();
 
 	for (auto objectData = currentData->mObjects.begin(); objectData != currentData->mObjects.end(); objectData++)
 	{

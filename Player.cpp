@@ -10,32 +10,6 @@
 
 using namespace Input;
 
-bool Player::CheckDirections(const Cube& cubeCol, const Cube& blockCol,const CheckDirection& CD)
-{
-	switch (CD)
-	{
-	case CheckDirection::CD_UP:
-		return cubeCol.position.y > blockCol.position.y + blockCol.scale.y * 0.5f;
-		break;
-	case CheckDirection::CD_DOWN:
-		return cubeCol.position.y < blockCol.position.y - blockCol.scale.y * 0.5f;
-		break;
-	case CheckDirection::CD_CENTER:
-		return cubeCol.position.z > blockCol.position.z + blockCol.scale.z * 0.5f;;
-		break;
-	case CheckDirection::CD_BACK:
-		return cubeCol.position.z < blockCol.position.z - blockCol.scale.z * 0.5f;
-		break;
-	case CheckDirection::CD_LEFT:
-		return cubeCol.position.x > blockCol.position.x + blockCol.scale.x * 0.5f;
-		break;
-	case CheckDirection::CD_RIGHT:
-		return cubeCol.position.x < blockCol.position.x - blockCol.scale.x * 0.5f;
-		break;
-	}
-	return false;
-}
-
 void Player::Initialize()
 {
 	Obj3d::Initialize();
@@ -343,87 +317,12 @@ void Player::ColUpdate()
 	pCol.position += moveValue;
 
 	//for (auto& bColTemp : Stage::Get()->mColCubes)
+
+	CreateCol(pCol.position, pCol.scale);
 	for (auto& bColTemp : Stage::Get()->mColObj3ds)
 	{
-		Cube bCol;
-		bCol.position = bColTemp.position;
-		bCol.scale = bColTemp.scale;
-
-		//そのオブジェクトより
-		//上にいるか
-		bool up = CheckDirections(pCol, bCol, CheckDirection::CD_UP);
-		//下にいるか
-		bool down = CheckDirections(pCol, bCol, CheckDirection::CD_DOWN);
-		//前にいるか
-		bool center = CheckDirections(pCol, bCol, CheckDirection::CD_CENTER);
-		//後ろにいるか
-		bool back = CheckDirections(pCol, bCol, CheckDirection::CD_BACK);
-		//左にいるか
-		bool left = CheckDirections(pCol, bCol, CheckDirection::CD_LEFT);
-		//右にいるか
-		bool right = CheckDirections(pCol, bCol, CheckDirection::CD_RIGHT);
-
-		//上面の当たり判定
-		if (up)
-		{
-			//直線状で見たときに下にあるオブジェクトがあれば
-			Cube rayCube;
-			rayCube.position = pCol.position;
-			rayCube.scale = pCol.scale;
-			//スケールをめっちゃ引き延ばす
-			rayCube.scale.y = 100;
-
-			//当たったなら
-			bool cubeCol = Collsions::CubeCollision(rayCube, bCol);
-
-			if (cubeCol)
-			{
-				//リストに入れる
-				
-				//このリストをいちいち消すのではなく、
-				//当たり判定をとり、同じ要素が入っていないなら入れて
-				//当たり判定が外れたときに、その要素を消す
-				UniqueObjectPushBack(hitListY,bCol);
-				bColTemp.SetTexture(TextureManager::GetTexture("default"));
-			}
-			else
-			{
-				UniqueObjectErase(hitListY,bCol);
-				bColTemp.SetTexture(TextureManager::GetTexture("white"));
-			}
-		}
-
-		//下面の当たり判定
-		if (down)
-		{
-			
-		}
-
-		//左右の当たり判定
-		if (up == false)
-		{
-			//左右も別の当たり判定リスト作って、同じ手法で取れそう？
-			if (Collsions::CubeCollision(pCol, bCol))
-			{
-				//横方向を少し大きくして、当たり判定を取ったオブジェクトと当たっているなら
-				if (right)
-				{
-					moveValue.x = 0;
-				}
-				if (left)
-				{
-					moveValue.x = 0;
-				}
-				if (back)
-				{
-					moveValue.z = 0;
-				}
-				if (center)
-				{
-					moveValue.z = 0;
-				}
-			}
-		}
+		Block* block = static_cast<Block*>(&bColTemp);
+		CollideManager::Get()->CheckCollide(this, block);
 	}
 
 	//上方向の判定

@@ -307,6 +307,9 @@
     <Filter Include="Application\SceneChange">
       <UniqueIdentifier>{e8a48ed8-af9a-425a-a57e-23447f364934}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Application\CollideManager">
+      <UniqueIdentifier>{8b7ae840-9ed9-434c-82b0-4ac48770cf23}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="engine\input\Input.cpp">
@@ -377,9 +380,6 @@
     </ClCompile>
     <ClCompile Include="application\game\Collision.cpp">
       <Filter>Application\Collision</Filter>
-    </ClCompile>
-    <ClCompile Include="application\game\Mob.cpp">
-      <Filter>Application\Charactor\Mob</Filter>
     </ClCompile>
     <ClCompile Include="engine\libManage\ImguiManager.cpp">
       <Filter>Engine\libManage\ImguiManager</Filter>
@@ -519,6 +519,9 @@
     <ClCompile Include="SceneChange.cpp">
       <Filter>Application\SceneChange</Filter>
     </ClCompile>
+    <ClCompile Include="CollideManager.cpp">
+      <Filter>Application\CollideManager</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="engine\shader\Shader.h">
@@ -592,9 +595,6 @@
     </ClInclude>
     <ClInclude Include="application\game\Collision.h">
       <Filter>Application\Collision</Filter>
-    </ClInclude>
-    <ClInclude Include="application\game\Mob.h">
-      <Filter>Application\Charactor\Mob</Filter>
     </ClInclude>
     <ClInclude Include="engine\libManage\ImguiManager.h">
       <Filter>Engine\libManage\ImguiManager</Filter>
@@ -739,6 +739,9 @@
     </ClInclude>
     <ClInclude Include="SceneChange.h">
       <Filter>Application\SceneChange</Filter>
+    </ClInclude>
+    <ClInclude Include="CollideManager.h">
+      <Filter>Application\CollideManager</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

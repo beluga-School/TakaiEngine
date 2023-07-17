@@ -1,6 +1,6 @@
 #pragma once
-#include "Mob.h"
 #include "TEasing.h"
+#include "CollideManager.h"
 
 //プレイヤーが個別で持つ機能
 //入力
@@ -13,51 +13,7 @@
 //汎化で作りも同じ機能
 //当たり判定
 
-//リストの中に同じオブジェクトがあれば、そのオブジェクトを入れないプッシュバック
-template <class T>
-void UniqueObjectPushBack(std::list<T>& list, const T& col)
-{
-	for (auto itr = list.begin(); itr != list.end(); itr++)
-	{
-		//同じ要素が見つかったら止める
-		if (*itr == col)
-		{
-			return;
-		}
-		//回しきれたら同じ要素がない
-	}
-	//から入れる
-	list.push_back(col);
-}
-
-//リストの中に同じオブジェクトがあれば、そのオブジェクトを削除する
-template <class T>
-void UniqueObjectErase(std::list<T>& list, const T& col)
-{
-	for (auto itr = list.begin(); itr != list.end(); itr++)
-	{
-		//同じ要素が見つかったら
-		if (*itr == col)
-		{
-			//消す
-			list.erase(itr);
-			return;
-		}
-	}
-}
-
-//ブロックの方向を確認するためのenum
-enum class CheckDirection
-{
-	CD_UP,
-	CD_DOWN,
-	CD_CENTER,
-	CD_BACK,
-	CD_LEFT,
-	CD_RIGHT,
-};
-
-class Player : public Obj3d
+class Player : public Mob
 {
 public:
 	void Initialize();
@@ -86,8 +42,6 @@ public:
 	float GetFeet() {
 		return feet;
 	};
-
-	bool CheckDirections(const Cube& cubeCol, const Cube& blockCol, const CheckDirection& CD);
 
 	//呼ぶと1回ジャンプする
 	void Jump();
@@ -128,8 +82,8 @@ private:
 	Vector3 mCenterVec = {0,0,0};
 	Vector3 mSideVec = {0,0,0};
 
-	//移動値(横移動)
-	Vector3 moveValue = {0,0,0};
+	////移動値(横移動)
+	//Vector3 moveValue = {0,0,0};
 
 	///---縦移動
 	enum class JumpState
@@ -160,8 +114,8 @@ private:
 
 	///---当たり判定
 	
-	//当たった地面の情報を保存するリスト
-	std::list<Cube> hitListY;
+	////当たった地面の情報を保存するリスト
+	//std::list<Cube> hitListY;
 
 	//当たってる地面のなかで一番高い座標(今プレイヤーが立っている平面オブジェクトの座標)
 	//この取り方だと、斜め床との判定で困りそう
@@ -201,4 +155,3 @@ private:
 		Get,	//入手モーション中
 	}starState = StarState::None;
 };
-

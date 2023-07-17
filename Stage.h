@@ -6,8 +6,9 @@
 #include "GoalSystem.h"
 #include "Goal.h"
 #include "Star.h"
+#include "CollideManager.h"
 
-class ColObj3d : public Obj3d
+class ColObj3d : public Block
 {
 public:
 	Obj3d* collideObj = nullptr;

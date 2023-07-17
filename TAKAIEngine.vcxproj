@@ -102,6 +102,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="application\game\Block.cpp" />
+    <ClCompile Include="CollideManager.cpp" />
     <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="EnemyManager.cpp" />
     <ClCompile Include="GEnemy.cpp" />
@@ -119,7 +120,6 @@
     <ClCompile Include="engine\libManage\ImguiManager.cpp" />
     <ClCompile Include="engine\light\DirectionalLight.cpp" />
     <ClCompile Include="engine\light\LightGroup.cpp" />
-    <ClCompile Include="application\game\Mob.cpp" />
     <ClCompile Include="application\particle\ObjParticle.cpp" />
     <ClCompile Include="engine\Particle.cpp" />
     <ClCompile Include="engine\input\Input.cpp" />
@@ -174,6 +174,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="application\game\Block.h" />
+    <ClInclude Include="CollideManager.h" />
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="EnemyManager.h" />
     <ClInclude Include="GEnemy.h" />
@@ -191,7 +192,6 @@
     <ClInclude Include="engine\libManage\ImguiManager.h" />
     <ClInclude Include="engine\light\DirectionalLight.h" />
     <ClInclude Include="engine\light\LightGroup.h" />
-    <ClInclude Include="application\game\Mob.h" />
     <ClInclude Include="application\particle\ObjParticle.h" />
     <ClInclude Include="engine\Particle.h" />
     <ClInclude Include="engine\input\Input.h" />
