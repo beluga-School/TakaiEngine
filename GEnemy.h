@@ -67,4 +67,8 @@ private:
 
 	//€–SŒã‚Ì‚Á”ò‚Î‚³‚ê’†‚Ì‰ñ“]—Ê(1•bŠÔ)(ƒ‰ƒWƒAƒ“)
 	float deadRoring = MathF::PIf * 10;
+
+	//d—Í
+	float gravity = 0;
+	const float gravityAdd = 0.1f;
 };

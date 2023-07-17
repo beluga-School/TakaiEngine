@@ -1,8 +1,9 @@
 #pragma once
 #include "Obj.h"
 #include "Collision.h"
+#include "CollideManager.h"
 
-class Enemy : public Obj3d
+class Enemy : public Mob
 {
 public:
 	virtual void Initialize() = 0;

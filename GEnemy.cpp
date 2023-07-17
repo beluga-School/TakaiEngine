@@ -26,6 +26,12 @@ void GEnemy::Update()
 
 	Vector3 standardRotaVec = {MathF::PIf / 2,0,0};
 
+	if (attackState != AttackState::Encount)
+	{
+		gravity += gravityAdd;
+		position -= Vector3(0, gravity, 0);
+	}
+
 	switch (attackState)
 	{
 	case GEnemy::AttackState::None:
