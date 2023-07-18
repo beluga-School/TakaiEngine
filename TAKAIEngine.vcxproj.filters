@@ -313,6 +313,9 @@
     <Filter Include="Application\Charactor\Box">
       <UniqueIdentifier>{f18195f4-70bb-44f8-adf6-2b9ea029a90f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Application\EventBlock\Cannon">
+      <UniqueIdentifier>{694f7a6e-7b4a-46ee-8aa3-5f0e205738e5}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="engine\input\Input.cpp">
@@ -530,6 +533,9 @@
     </ClCompile>
     <ClCompile Include="Mob.cpp">
       <Filter>Application\Charactor\Mob</Filter>
+    </ClCompile>
+    <ClCompile Include="Cannon.cpp">
+      <Filter>Application\EventBlock\Cannon</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -757,6 +763,9 @@
     </ClInclude>
     <ClInclude Include="Mob.h">
       <Filter>Application\Charactor\Mob</Filter>
+    </ClInclude>
+    <ClInclude Include="Cannon.h">
+      <Filter>Application\EventBlock\Cannon</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

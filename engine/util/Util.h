@@ -1,6 +1,8 @@
 #pragma once
 #include <stdint.h>
 #include "Vector2.h"
+#include <vector>
+#include <string>
 
 namespace Util
 {
@@ -24,5 +26,11 @@ namespace Util
 		if (value < 0)value *= -1;
 		return value;
 	}
+
+	//string‚ğw’è‚µ‚½‹æØ‚è•¶š‚Å•ªŠ„‚·‚é
+	std::vector<std::string> SplitString(const std::string& str, const char* delimiter);
+
+	//•¶š—ñ‚É”’l‚ªŠÜ‚Ü‚ê‚Ä‚¢‚é‚©”»’è‚·‚é
+	bool IsNumber(const std::string& str);
 };
 

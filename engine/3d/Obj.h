@@ -81,6 +81,7 @@ public:
 	void DrawOutLine();
 
 	void SetOutLineState(const Float4& color,float thickness);
+	void SetOutLineAlpha(const float& alpha);
 
 	TEasing::easeTimer transparentTimer = 0.5f;
 protected:

@@ -91,8 +91,11 @@ void Mob::JumpUpdate()
 		if (position.y > hitCubeMaxY)
 		{
 			//重力落下させる
-			gravity += gravityAdd;
-			position.y -= gravity * TimeManager::deltaTime;
+			if (!noGravity)
+			{
+				gravity += gravityAdd;
+				position.y -= gravity * TimeManager::deltaTime;
+			}
 		}
 		//hitListオブジェクトの中で、最も高い位置にあるオブジェクトに自身が当たっているなら
 		else

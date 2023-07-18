@@ -2,6 +2,7 @@
 #include "TimeManager.h"
 #include "Mob.h"
 #include "Block.h"
+#include "Cannon.h"
 
 bool CollideManager::CheckDirections(const Cube& check, const Cube& collide, const CheckDirection& CD)
 {
@@ -56,17 +57,27 @@ void CollideManager::CheckCollide(Box* check, Box* collide)
 		{
 			return;
 		}
+
+		//checkがmobであることは確定しているので、mob型に変換してデータを持ってくる
+		Mob* mob = static_cast<Mob*>(check);
+
 		//される側がブロックなら
 		if (collide->tag == TagTable::Block)
 		{
-			//checkがmobであることは確定しているので、mob型に変換してデータを持ってくる
-			Mob* mob = static_cast<Mob*>(check);
-
 			//collideがBlockであることは確定しているので、Block型に変換してデータを持ってくる
 			Block* block = static_cast<Block*>(collide);
 
 			//押し戻し処理を行う
 			Osimodosi(*mob, *block);
+		}
+		if (collide->tag == TagTable::Cannon)
+		{
+			//collideがCannonであることは確定しているので、Cannon型に変換してデータを持ってくる
+			Cannon* cannon = static_cast<Cannon*>(collide);
+			if (Collsions::CubeCollision(check->cubecol, collide->cubecol))
+			{
+				cannon->OnCollide(*mob);
+			}
 		}
 	}
 }

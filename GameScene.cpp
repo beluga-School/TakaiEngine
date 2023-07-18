@@ -22,8 +22,9 @@ void GameScene::LoadResource()
 	LevelLoader::Get()->Load("Scene/stage_castle_outside", "stage_castle_outside");
 	LevelLoader::Get()->Load("Scene/stage_castle_inside", "stage_castle_inside");
 	LevelLoader::Get()->Load("Scene/stage_grasslands", "stage_grasslands");
+	LevelLoader::Get()->Load("Scene/stage_mountain", "stage_mountain");
 
-	Stage::Get()->ChangeLevel(*LevelLoader::Get()->GetData("stage_grasslands"));
+	Stage::Get()->ChangeLevel(*LevelLoader::Get()->GetData("stage_mountain"));
 }
 
 void GameScene::Initialize()

@@ -22,6 +22,7 @@ enum class TagTable
 	None = -1,
 	Mob = 0,
 	Block = 1,
+	Cannon = 2,
 };
 
 //四角で判定をとるオブジェクトの共通項だけ取り出したクラス

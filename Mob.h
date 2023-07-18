@@ -12,6 +12,12 @@ public:
 		tag = TagTable::Mob;
 	};
 
+	//trueになると重力を受けなくする(gravityの値も0にする)
+	void SetNoGravity(bool flag)
+	{
+		if (!flag)gravity = 0;
+		noGravity = flag;
+	}
 
 	//プレイヤーの足元のオブジェクトの座標
 	float GetFeet() {
@@ -19,6 +25,8 @@ public:
 	};
 
 protected:
+	bool noGravity = false;
+
 	//縦方向の更新
 	void UpdateY();
 

@@ -7,6 +7,8 @@
 #include "ClearDrawScreen.h"
 #include "Star.h"
 #include "SceneChange.h"
+#include "Cannon.h"
+#include <sstream>
 
 void Stage::ChangeLevel(LevelData& data)
 {
@@ -93,7 +95,7 @@ void Stage::NormalObjectSet(const LevelData::ObjectData& data)
 	mObj3ds.back().Initialize();
 
 	//アウトライン設定
-	mObj3ds.back().SetOutLineState({ 1,0,0,1.0f }, 0.05f);
+	mObj3ds.back().SetOutLineState({ 0,0,0,1.0f }, 0.05f);
 
 	//モデル設定
 	//ファイルネームが設定されてるならそれで
@@ -166,6 +168,8 @@ void Stage::EvenyObjectSet(const LevelData::ObjectData& data)
 
 		//オブジェクトの配置
 		LevelDataExchanger::SetObjectData(*mEventObjects.back(), data);
+
+		return;
 	}
 	//goal の文字列が含まれてるなら
 	if (data.eventtrigerName.find("goal") != std::string::npos)
@@ -179,9 +183,11 @@ void Stage::EvenyObjectSet(const LevelData::ObjectData& data)
 
 		//オブジェクトの配置
 		LevelDataExchanger::SetObjectData(*mGoals.back(), data);
+
+		return;
 	}
-	//star の文字列が含まれてるなら
-	if (data.eventtrigerName.find("star") != std::string::npos)
+	//star の文字列が完全一致するなら
+	if (data.eventtrigerName == "star")
 	{
 		StarManager::Get()->mStars.emplace_back();
 		StarManager::Get()->mStars.back() = std::make_unique<Star>();
@@ -193,6 +199,66 @@ void Stage::EvenyObjectSet(const LevelData::ObjectData& data)
 		
 		//オブジェクトの配置
 		LevelDataExchanger::SetObjectData(*StarManager::Get()->mStars.back(), data);
+
+		return;
+	}
+	//Cannon の文字列が含まれてるなら
+	if (data.eventtrigerName.find("Cannon") != std::string::npos)
+	{
+		if (data.eventtrigerName.find("start") != std::string::npos)
+		{
+			std::stringstream ss;
+
+			mEventObjects.emplace_back();
+			mEventObjects.back() = std::make_unique<Cannon>();
+			mEventObjects.back()->Initialize();
+
+			std::vector<std::string> split = Util::SplitString(data.eventtrigerName, "_");
+
+			//イベントトリガー名をstringstreamに代入
+			for (auto str : split)
+			{
+				if(Util::IsNumber(str)) ss << str;
+			}
+
+			Cannon* cannon = static_cast<Cannon*>(mEventObjects.back().get());
+			
+			//int32_t型に出力する
+			//この際、文字列から数値のみが出力される
+			ss >> cannon->id;
+			cannon->startPos = data.translation;
+
+			//オブジェクトの配置
+			LevelDataExchanger::SetObjectData(*mEventObjects.back(), data);
+		}
+		if (data.eventtrigerName.find("inter") != std::string::npos)
+		{	
+			for (auto itr = mEventObjects.begin(); itr != mEventObjects.end(); itr++)
+			{
+				Cannon* cannon = dynamic_cast<Cannon*>(itr->get());
+				if (cannon == nullptr)continue;
+
+				if (data.eventtrigerName.find(cannon->id) != std::string::npos)
+				{
+					cannon->interPos = data.translation;
+				}
+			}
+		}
+		if (data.eventtrigerName.find("end") != std::string::npos)
+		{
+			for (auto itr = mEventObjects.begin(); itr != mEventObjects.end(); itr++)
+			{
+				Cannon* cannon = dynamic_cast<Cannon*>(itr->get());
+				if (cannon == nullptr)continue;
+
+				if (data.eventtrigerName.find(cannon->id) != std::string::npos)
+				{
+					cannon->endPos = data.translation;
+				}
+			}
+		}
+
+		return;
 	}
 }
 

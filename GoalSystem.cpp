@@ -1,5 +1,6 @@
 #include "GoalSystem.h"
 #include "Util.h"
+#include "Stage.h"
 
 void GoalSystem::LoadResource()
 {
@@ -53,6 +54,8 @@ void GoalSystem::GoalAnimetion()
 		{
 			animetionState = AnimetionState::None;
 			thirdTimer.Reset();
+		
+			Stage::Get()->ChangeLevel(*LevelLoader::Get()->GetData("stage_castle_inside"));
 		}
 		break;
 	}

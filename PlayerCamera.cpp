@@ -92,7 +92,7 @@ void PlayerCamera::BackTransparent()
 				obj.collideObj->transparentTimer.Reset();
 			}
 			//アウトラインはすぐに消す
-			obj.collideObj->SetOutLineState({ 1.0f,0,0,0.0f }, 0.05f);
+			obj.collideObj->SetOutLineAlpha(0.0f);
 		}
 		//当たってないなら段々濃くする
 		else
@@ -100,7 +100,7 @@ void PlayerCamera::BackTransparent()
 			//タイマーのTimeRateが0.0~1.0の範囲で動くので、その値を反転させたものをAlphaとして扱う
 			obj.collideObj->transparentTimer.ReverseStart();
 			//アウトラインはすぐに戻す
-			obj.collideObj->SetOutLineState({ 1.0f,0,0,1.0f }, 0.05f);
+			obj.collideObj->SetOutLineAlpha(1.0f);
 		}
 		//段々薄くしたり濃くしたりする
 		obj.collideObj->color_.w = 1.0f - obj.collideObj->transparentTimer.GetTimeRate();

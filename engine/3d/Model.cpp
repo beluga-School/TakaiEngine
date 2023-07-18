@@ -299,6 +299,7 @@ void ModelManager::PreLoad()
 	LoadModel("GoalPaul", "GoalPaul",true);
 	LoadModel("GoalFrag", "GoalFrag",true);
 	LoadModel("star", "star",true);
+	LoadModel("Cannon", "Cannon",true);
 }
 
 void ModelManager::LoadModel(const std::string filepath, const std::string handle, bool smooth)

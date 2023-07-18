@@ -103,6 +103,7 @@
   <ItemGroup>
     <ClCompile Include="application\game\Block.cpp" />
     <ClCompile Include="Box.cpp" />
+    <ClCompile Include="Cannon.cpp" />
     <ClCompile Include="CollideManager.cpp" />
     <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="EnemyManager.cpp" />
@@ -177,6 +178,7 @@
   <ItemGroup>
     <ClInclude Include="application\game\Block.h" />
     <ClInclude Include="Box.h" />
+    <ClInclude Include="Cannon.h" />
     <ClInclude Include="CollideManager.h" />
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="EnemyManager.h" />

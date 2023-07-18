@@ -1,8 +1,9 @@
 #pragma once
 #include "Obj.h"
+#include "Block.h"
 
 //ワープさせるブロック
-class EventBlock : public Obj3d
+class EventBlock : public Block
 {
 public:
 	virtual void Initialize() = 0;

@@ -188,3 +188,8 @@ void Obj3d::SetOutLineState(const Float4& color, float thickness)
 	mOutLineColor = color;
 	mOutLineThickness = thickness;
 }
+
+void Obj3d::SetOutLineAlpha(const float& alpha)
+{
+	mOutLineColor.w = alpha;
+}
