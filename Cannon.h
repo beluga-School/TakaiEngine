@@ -27,14 +27,14 @@ public:
 	//番号を保持
 	std::string id = "-1";
 
-	void SetState(float maxtime = 3.0f);
+	void SetState(float maxtime);
 
 private:
 	//点の数(今後interを増やすときに使う)
 	int32_t pointNum = 3;
 
 	//合計の移動時間
-	TEasing::easeTimer timer = 3.0f;
+	TEasing::easeTimer timer = 1.0f;
 
 	//飛ばすモブを保持するポインタ
 	Mob* target = nullptr;

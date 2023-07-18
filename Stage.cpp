@@ -218,6 +218,7 @@ void Stage::EvenyObjectSet(const LevelData::ObjectData& data)
 			//イベントトリガー名をstringstreamに代入
 			for (auto str : split)
 			{
+				//数字だけ抜き出す
 				if(Util::IsNumber(str)) ss << str;
 			}
 
@@ -233,7 +234,9 @@ void Stage::EvenyObjectSet(const LevelData::ObjectData& data)
 		}
 		if (data.eventtrigerName.find("inter") != std::string::npos)
 		{	
-			for (auto itr = mEventObjects.begin(); itr != mEventObjects.end(); itr++)
+			CannonPoint point = { data.eventtrigerName, data.translation };
+			mCannonPoints.push_back(point);
+			/*for (auto itr = mEventObjects.begin(); itr != mEventObjects.end(); itr++)
 			{
 				Cannon* cannon = dynamic_cast<Cannon*>(itr->get());
 				if (cannon == nullptr)continue;
@@ -242,11 +245,13 @@ void Stage::EvenyObjectSet(const LevelData::ObjectData& data)
 				{
 					cannon->interPos = data.translation;
 				}
-			}
+			}*/
 		}
 		if (data.eventtrigerName.find("end") != std::string::npos)
 		{
-			for (auto itr = mEventObjects.begin(); itr != mEventObjects.end(); itr++)
+			CannonPoint point = { data.eventtrigerName, data.translation };
+			mCannonPoints.push_back(point);
+			/*for (auto itr = mEventObjects.begin(); itr != mEventObjects.end(); itr++)
 			{
 				Cannon* cannon = dynamic_cast<Cannon*>(itr->get());
 				if (cannon == nullptr)continue;
@@ -255,7 +260,7 @@ void Stage::EvenyObjectSet(const LevelData::ObjectData& data)
 				{
 					cannon->endPos = data.translation;
 				}
-			}
+			}*/
 		}
 
 		return;
@@ -346,6 +351,44 @@ void Stage::ChangeUpdate()
 
 			continue;
 		}
+	}
+
+	//全てのイベントオブジェクトを検索して
+	for (auto itr = mEventObjects.begin(); itr != mEventObjects.end(); itr++)
+	{
+		//Cannon型にキャスト
+		//dynamic_castの仕様で、Cannonでなければnullptrと判定されるので
+		Cannon* cannon = dynamic_cast<Cannon*>(itr->get());
+		//異なった場合次へ
+		if (cannon == nullptr)continue;
+
+		//通った場合は、事前に保管しておいた制御点の一覧から
+		for (auto itr = mCannonPoints.begin(); itr != mCannonPoints.end(); itr++)
+		{
+			//中間点と
+			if (itr->key.find("inter") != std::string::npos)
+			{
+				//idが一致した場合は入れる
+				if (itr->key.find(cannon->id) != std::string::npos)
+				{
+					cannon->interPos = itr->points;
+				}
+			}
+			//最終点を判別する
+			if (itr->key.find("end") != std::string::npos)
+			{
+				//idが一致した場合は入れる
+				if (itr->key.find(cannon->id) != std::string::npos)
+				{
+					cannon->endPos = itr->points;
+				}
+			}
+		}
+
+		//TODO:事前に保管したデータ群を検索する際、いちいち全検索(線形探索)しているので
+		//データの総量が増えると処理時間がのびてしまう アホ
+		//探索方を変えない方針で改善するなら、すでに全てのデータが見つかっているデータは
+		//スキップするなどの処理が必要だろう
 	}
 }
 

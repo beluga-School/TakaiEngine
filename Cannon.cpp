@@ -20,7 +20,7 @@ void Cannon::Update()
 			break;
 		case Cannon::CannonState::One:
 			//ターゲットを動かす
-			target->position = TEasing::InQuad(startPos, interPos, timer.GetTimeRate());
+			target->position = TEasing::lerp(startPos, interPos, timer.GetTimeRate());
 			
 
 			if (timer.GetEnd())
@@ -32,7 +32,7 @@ void Cannon::Update()
 			break;
 		case Cannon::CannonState::Two:
 			//ターゲットを動かす
-			target->position = TEasing::InQuad(interPos, endPos, timer.GetTimeRate());
+			target->position = TEasing::lerp(interPos, endPos, timer.GetTimeRate());
 		
 			if (timer.GetEnd())
 			{

@@ -7,6 +7,16 @@ float TEasing::lerp(const float& start, const float& end, const float& timeRate)
 {
 	float easeVal = timeRate;
 	return start * (1.0f - easeVal) + end * timeRate;
+}
+
+Vector3 TEasing::lerp(const Vector3& start, const Vector3& end, const float& timeRate)
+{
+	Vector3 temp;
+	temp.x = lerp(start.x, end.x, timeRate);
+	temp.y = lerp(start.y, end.y, timeRate);
+	temp.z = lerp(start.z, end.z, timeRate);
+
+	return temp;
 };
 
 float TEasing::InQuad(const float& timeRate)

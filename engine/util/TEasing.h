@@ -4,7 +4,8 @@
 namespace TEasing
 {
 	float lerp(const float& start, const float& end, const float& timeRate);
-	
+	Vector3 lerp(const Vector3& start, const Vector3& end, const float& timeRate);
+
 	float InQuad(const float& timeRate);
 	float OutQuad(const float& timeRate);
 	float InQuad(const float& start, const float& end, const float& timeRate);

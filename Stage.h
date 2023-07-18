@@ -20,6 +20,12 @@ public:
 	EventBlock* collideObj = nullptr;
 };
 
+struct CannonPoint
+{
+	std::string key = "";
+	Vector3 points{};
+};
+
 class Stage
 {
 public:
@@ -52,6 +58,9 @@ public:
 
 	//ゴールオブジェクト配列
 	std::list<std::unique_ptr<Goal>> mGoals;
+
+	//大砲の制御点を一時的に保存する用配列
+	std::vector<CannonPoint> mCannonPoints;
 
 	//コライダーを描画するか
 	bool mShowCollider = false;
