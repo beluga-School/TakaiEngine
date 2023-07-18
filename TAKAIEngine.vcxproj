@@ -102,6 +102,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="application\game\Block.cpp" />
+    <ClCompile Include="Box.cpp" />
     <ClCompile Include="CollideManager.cpp" />
     <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="EnemyManager.cpp" />
@@ -163,6 +164,7 @@
     <ClCompile Include="Goal.cpp" />
     <ClCompile Include="GoalBlock.cpp" />
     <ClCompile Include="GoalSystem.cpp" />
+    <ClCompile Include="Mob.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="PlayerCamera.cpp" />
     <ClCompile Include="SceneChange.cpp" />
@@ -174,6 +176,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="application\game\Block.h" />
+    <ClInclude Include="Box.h" />
     <ClInclude Include="CollideManager.h" />
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="EnemyManager.h" />
@@ -238,6 +241,7 @@
     <ClInclude Include="Goal.h" />
     <ClInclude Include="GoalBlock.h" />
     <ClInclude Include="GoalSystem.h" />
+    <ClInclude Include="Mob.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="PlayerCamera.h" />
     <ClInclude Include="SceneChange.h" />

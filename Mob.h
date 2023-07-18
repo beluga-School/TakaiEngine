@@ -1,0 +1,61 @@
+#pragma once
+#include "Box.h"
+
+class Mob : public Box
+{
+public:
+	Vector3 moveValue = { 0,0,0 };
+
+	std::list<Cube> hitListY;
+
+	Mob() {
+		tag = TagTable::Mob;
+	};
+
+
+	//プレイヤーの足元のオブジェクトの座標
+	float GetFeet() {
+		return feet;
+	};
+
+protected:
+	//縦方向の更新
+	void UpdateY();
+
+	///---縦移動
+	enum class JumpState
+	{
+		None,	//ジャンプしていない
+		Up,		//上昇中
+		Staying,//滞空時間
+		Down,
+	}jumpState = JumpState::None;
+
+	//上昇イージングの始点と終点
+	float upJumpS = 0;
+	float upJumpE = 0;
+
+	//ジャンプ力
+	const float jumpPower = 10.0f;
+
+	//上昇管理タイマー
+	TEasing::easeTimer jumpManageTimer = 0.5f;
+
+	//滞空時間タイマー
+	TEasing::easeTimer stayManageTimer = 0.1f;
+
+	//重力
+	float gravity = 0.0f;
+	//重力加速度
+	const float gravityAdd = 1.5f;
+
+	float hitCubeMaxY = 0;
+
+	float feet = 0;
+
+private:
+	//下方向との押し戻し処理
+	void GroundCol();
+	//重力とジャンプ機能の更新
+	void JumpUpdate();
+};
