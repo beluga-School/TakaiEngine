@@ -38,10 +38,10 @@ public:
 	//敵との当たり判定用スフィア
 	Sphere playerCol;
 
-	//プレイヤーの足元のオブジェクトの座標
-	float GetFeet() {
-		return feet;
-	};
+	////プレイヤーの足元のオブジェクトの座標
+	//float GetFeet() {
+	//	return feet;
+	//};
 
 	//呼ぶと1回ジャンプする
 	void Jump();
@@ -53,7 +53,7 @@ private:
 	void Attack();
 
 	void SideMoveUpdate();
-	void JumpUpdate();
+	//void JumpUpdate();
 	void ColUpdate();
 	void RotaUpdate();
 
@@ -85,43 +85,43 @@ private:
 	////移動値(横移動)
 	//Vector3 moveValue = {0,0,0};
 
-	///---縦移動
-	enum class JumpState
-	{
-		None,	//ジャンプしていない
-		Up,		//上昇中
-		Staying,//滞空時間
-		Down,
-	}jumpState = JumpState::None;
+	/////---縦移動
+	//enum class JumpState
+	//{
+	//	None,	//ジャンプしていない
+	//	Up,		//上昇中
+	//	Staying,//滞空時間
+	//	Down,
+	//}jumpState = JumpState::None;
 
-	//上昇イージングの始点と終点
-	float upJumpS = 0;
-	float upJumpE = 0;
+	////上昇イージングの始点と終点
+	//float upJumpS = 0;
+	//float upJumpE = 0;
 
-	//ジャンプ力
-	const float jumpPower = 10.0f;
+	////ジャンプ力
+	//const float jumpPower = 10.0f;
 
-	//上昇管理タイマー
-	TEasing::easeTimer jumpManageTimer = 0.5f;
+	////上昇管理タイマー
+	//TEasing::easeTimer jumpManageTimer = 0.5f;
 
-	//滞空時間タイマー
-	TEasing::easeTimer stayManageTimer = 0.1f;
+	////滞空時間タイマー
+	//TEasing::easeTimer stayManageTimer = 0.1f;
 
-	//重力
-	float gravity = 0.0f;
-	//重力加速度
-	const float gravityAdd = 1.5f;
+	////重力
+	//float gravity = 0.0f;
+	////重力加速度
+	//const float gravityAdd = 1.5f;
 
 	///---当たり判定
 	
 	////当たった地面の情報を保存するリスト
 	//std::list<Cube> hitListY;
 
-	//当たってる地面のなかで一番高い座標(今プレイヤーが立っている平面オブジェクトの座標)
-	//この取り方だと、斜め床との判定で困りそう
-	float hitCubeMaxY = 0;
-	
-	float feet = 0;
+	////当たってる地面のなかで一番高い座標(今プレイヤーが立っている平面オブジェクトの座標)
+	////この取り方だと、斜め床との判定で困りそう
+	//float hitCubeMaxY = 0;
+	//
+	//float feet = 0;
 
 	//敵との当たり判定用スフィアの描画
 	Obj3d colDrawer;

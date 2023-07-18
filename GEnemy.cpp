@@ -123,6 +123,12 @@ void GEnemy::Update()
 		break;
 	}
 
+
+
+	JumpUpdate();
+	
+	GroundCol();
+
 	ColUpdate();
 
 	Obj3d::Update(*Camera::sCamera);
@@ -134,8 +140,8 @@ void GEnemy::Draw()
 	BasicObjectPreDraw(PipelineManager::GetPipeLine("Toon"));
 	Obj3d::DrawMaterial();
 
-	/*BasicObjectPreDraw(PipelineManager::GetPipeLine("WireFrame"));
-	hitSphere.Draw();*/
+	BasicObjectPreDraw(PipelineManager::GetPipeLine("WireFrame"));
+	hitSphere.Draw();
 
 	BasicObjectPreDraw(PipelineManager::GetPipeLine("Toon"));
 

@@ -50,13 +50,24 @@ void Player::Update()
 	}
 	
 	//縦移動更新(重力落下含む)
+
+	//ジャンプしていない状態で入力があったらジャンプ
+	if (jumpState == JumpState::None)
+	{
+		if (Input::Keyboard::TriggerKey(DIK_SPACE) ||
+			Pad::TriggerPadButton(PadButton::A))
+		{
+			Jump();
+		}
+	}
+
 	JumpUpdate();
 
 	//当たり判定更新
 	ColUpdate();
 
 	//本加算
-	position.y = preMove.y;
+	//position.y = preMove.y;
 	position += moveValue;
 
 	//当たり判定
@@ -87,8 +98,8 @@ void Player::Draw()
 	BasicObjectPreDraw(PipelineManager::GetPipeLine("OutLine"), false);
 	Obj3d::DrawOutLine();
 	
-	/*BasicObjectPreDraw(PipelineManager::GetPipeLine("WireFrame"));
-	colDrawer.Draw();*/
+	BasicObjectPreDraw(PipelineManager::GetPipeLine("WireFrame"));
+	colDrawer.Draw();
 
 	BasicObjectPreDraw(PipelineManager::GetPipeLine("Toon"));
 	Obj3d::DrawMaterial();
@@ -238,72 +249,71 @@ void Player::SideMoveUpdate()
 	//あとで移動速度の加算に上限付ける
 }
 
-void Player::JumpUpdate()
-{
-	jumpManageTimer.Update();
-	stayManageTimer.Update();
-
-	switch (jumpState)
-	{
-	case Player::JumpState::None:
-		
-		//ジャンプしていない状態で入力があったらジャンプ
-		if (Input::Keyboard::TriggerKey(DIK_SPACE) ||
-			Pad::TriggerPadButton(PadButton::A))
-		{
-			Jump();
-		}
-		
-		if (position.y > hitCubeMaxY)
-		{
-			jumpState = JumpState::Down;
-		}
-		else
-		{
-			//地面に立っている状態にする
-			gravity = 0;
-			preMove.y = hitCubeMaxY;
-		}
-
-		break;
-	case Player::JumpState::Up:
-		//イージングで上昇
-		preMove.y = TEasing::OutQuad(upJumpS, upJumpE, jumpManageTimer.GetTimeRate());
-
-		//時間が終わったらステートを次の状態に遷移
-		if (jumpManageTimer.GetEnd())
-		{
-			jumpState = JumpState::Staying;
-			jumpManageTimer.Reset();
-			stayManageTimer.Start();
-		}
-
-		break;
-	case Player::JumpState::Staying:
-		if (stayManageTimer.GetEnd())
-		{
-			jumpState = JumpState::None;
-			stayManageTimer.Reset();
-		}
-
-		break;
-	case Player::JumpState::Down:
-		//hitListの中で、最も高い位置にあるオブジェクトより自身の座標が高かったら
-		if (position.y > hitCubeMaxY)
-		{
-			//重力落下させる
-			gravity += gravityAdd;
-			preMove.y -= gravity * TimeManager::deltaTime;
-		}
-		//hitListオブジェクトの中で、最も高い位置にあるオブジェクトに自身が当たっているなら
-		else
-		{
-			jumpState = JumpState::None;
-		}
-		
-		break;
-	}
-}
+//void Player::JumpUpdate()
+//{
+//	jumpManageTimer.Update();
+//	stayManageTimer.Update();
+//
+//	switch (jumpState)
+//	{
+//	case Player::JumpState::None:
+//		
+//		//ジャンプしていない状態で入力があったらジャンプ
+//		if (Input::Keyboard::TriggerKey(DIK_SPACE) ||
+//			Pad::TriggerPadButton(PadButton::A))
+//		{
+//			Jump();
+//		}
+//		
+//		if (position.y > hitCubeMaxY)
+//		{
+//			jumpState = JumpState::Down;
+//		}
+//		else
+//		{
+//			//地面に立っている状態にする
+//			gravity = 0;
+//		}
+//
+//		break;
+//	case Player::JumpState::Up:
+//		//イージングで上昇
+//		position.y = TEasing::OutQuad(upJumpS, upJumpE, jumpManageTimer.GetTimeRate());
+//
+//		//時間が終わったらステートを次の状態に遷移
+//		if (jumpManageTimer.GetEnd())
+//		{
+//			jumpState = JumpState::Staying;
+//			jumpManageTimer.Reset();
+//			stayManageTimer.Start();
+//		}
+//
+//		break;
+//	case Player::JumpState::Staying:
+//		if (stayManageTimer.GetEnd())
+//		{
+//			jumpState = JumpState::None;
+//			stayManageTimer.Reset();
+//		}
+//
+//		break;
+//	case Player::JumpState::Down:
+//		//hitListの中で、最も高い位置にあるオブジェクトより自身の座標が高かったら
+//		if (position.y > hitCubeMaxY)
+//		{
+//			//重力落下させる
+//			gravity += gravityAdd;
+//			position.y -= gravity * TimeManager::deltaTime;
+//		}
+//		//hitListオブジェクトの中で、最も高い位置にあるオブジェクトに自身が当たっているなら
+//		else
+//		{
+//			jumpState = JumpState::None;
+//		}
+//		
+//		break;
+//	}
+//}
 
 void Player::ColUpdate()
 {
@@ -312,7 +322,7 @@ void Player::ColUpdate()
 	pCol.position = position;
 	pCol.scale = scale;
 
-	pCol.position.y = preMove.y;
+	//pCol.position.y = preMove.y;
 
 	pCol.position += moveValue;
 
@@ -325,25 +335,40 @@ void Player::ColUpdate()
 		CollideManager::Get()->CheckCollide(this, block);
 	}
 
-	//上方向の判定
-	float preY = -114514.f;
-	float maxY = 0;
+	GroundCol();
 
-	hitCubeMaxY = preY;
+	////上方向の判定
+	//float preY = -114514.f;
+	//float maxY = 0;
 
-	for (auto& hit : hitListY)
-	{
-		maxY = hit.position.y;
-		//初期値でなく、前の値より高い位置にあるなら
-		if (maxY >= preY)
-		{
-			//一番高い座標を算出
-			//少しだけ浮かせて、ブロックの切れ目に引っかからないように
-			feet = hit.position.y + hit.scale.y / 2;
-			hitCubeMaxY = feet + pCol.scale.y / 2 + 0.01f;
-		}
-		preY = hit.position.y;
-	}
+	//hitCubeMaxY = preY;
+
+	//for (auto& hit : hitListY)
+	//{
+	//	maxY = hit.position.y;
+	//	//初期値でなく、前の値より高い位置にあるなら
+	//	if (maxY >= preY)
+	//	{
+	//		//一番高い座標を算出
+	//		//少しだけ浮かせて、ブロックの切れ目に引っかからないように
+	//		feet = hit.position.y + hit.scale.y / 2;
+	//		hitCubeMaxY = feet + pCol.scale.y / 2 + 0.01f;
+	//	}
+	//	preY = hit.position.y;
+	//}
+
+	////高さを算出した最大値に合わせる
+	//if (jumpState == JumpState::None)
+	//{
+	//	if (position.y > hitCubeMaxY)
+	//	{
+	//		jumpState = JumpState::Down;
+	//	}
+	//	else
+	//	{
+	//		position.y = hitCubeMaxY;
+	//	}
+	//}
 
 	for (auto& bColevent : Stage::Get()->mEventObjects)
 	{
