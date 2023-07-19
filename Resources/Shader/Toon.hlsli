@@ -45,6 +45,11 @@ cbuffer cbuff3 : register(b3)
     PointLight pointLights[POINTLIGHT_NUM];
 };
 
+//プレイヤーと位置が被ったら、ピクセルを描画キャンセルする
+cbuffer cbuff4 : register(b4)
+{
+    float4 playerPosAndRadius;
+};
 
 struct VSOutput
 {

@@ -1,5 +1,6 @@
 #include "Obj.h"
 #include "Result.h"
+#include "Player.h"
 
 SpecialDraw::DISOLVE DISOLVE_ = 0;
 SpecialDraw::TEXTUREBLEND TEXTUREBLEND_ = 1;
@@ -63,6 +64,9 @@ void Obj3d::Update(const Camera& camera)
 	constBufferOutLine.mConstBufferData->thickness = mOutLineThickness;
 
 	transparentTimer.Update();
+
+	constBufferCamPlayer.mConstBufferData->playerPos = Player::Get()->position;
+	constBufferCamPlayer.mConstBufferData->radius = 100;
 }
 
 Vector3 Obj3d::GetWorldTrans()

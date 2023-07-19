@@ -79,6 +79,15 @@ void GameScene::Update()
 	
 	//新規シーンを登録して、登録してあるシーンから選んで飛ぶ方式にしたい
 	ImGui::InputText("scene_name", output, sizeof(output));
+	if (ImGui::CollapsingHeader("hogehoge"))
+	{
+		//const std::string listBox_item = { "hoge","hogehoge" };
+		//ImGui::ListBox("hoge", listBox_item.c_str());
+		ImGui::Selectable("hoge");
+		ImGui::Selectable("hoge1");
+		ImGui::Selectable("hoge2");
+		ImGui::EndGroup();
+	}
 
 	if (ImGui::Button("changeScene"))
 	{
