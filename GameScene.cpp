@@ -23,12 +23,12 @@ void GameScene::LoadResource()
 	LevelLoader::Get()->Load("Scene/stage_castle_inside", "stage_castle_inside");
 	LevelLoader::Get()->Load("Scene/stage_grasslands", "stage_grasslands");
 	LevelLoader::Get()->Load("Scene/stage_mountain", "stage_mountain");
-
-	Stage::Get()->ChangeLevel(*LevelLoader::Get()->GetData("stage_mountain"));
 }
 
 void GameScene::Initialize()
 {
+	Stage::Get()->ChangeLevel(*LevelLoader::Get()->GetData("stage_mountain"));
+
 	//‰Šú‰»
 	mSkydome.Initialize();
 	mDebugCamera.Initialize();
@@ -50,8 +50,7 @@ void GameScene::Update()
 
 	if (Input::Keyboard::TriggerKey(DIK_R))
 	{
-		Stage::Get()->ChangeLevel(*LevelLoader::Get()->
-			GetData(Stage::Get()->GetNowStageHandle()));
+		Stage::Get()->Reload();
 	}
 
 	mSkydome.Update();

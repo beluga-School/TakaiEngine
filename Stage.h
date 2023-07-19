@@ -36,6 +36,8 @@ public:
 
 	void DrawSprite();
 
+	void Reload();
+
 	std::string GetNowStageHandle();
 
 	static Stage* Get()

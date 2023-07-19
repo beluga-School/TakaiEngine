@@ -77,6 +77,15 @@ void Stage::DrawSprite()
 	goalSystem.Draw();
 }
 
+void Stage::Reload()
+{
+	std::string loadfile = "Scene/";
+	loadfile += Stage::Get()->GetNowStageHandle();
+	LevelLoader::Get()->Load(loadfile, Stage::Get()->GetNowStageHandle());
+
+	Stage::Get()->ChangeLevel(*LevelLoader::Get()->GetData(Stage::Get()->GetNowStageHandle()));
+}
+
 std::string Stage::GetNowStageHandle()
 {
 	return currentHandle;
@@ -236,31 +245,11 @@ void Stage::EvenyObjectSet(const LevelData::ObjectData& data)
 		{	
 			CannonPoint point = { data.eventtrigerName, data.translation };
 			mCannonPoints.push_back(point);
-			/*for (auto itr = mEventObjects.begin(); itr != mEventObjects.end(); itr++)
-			{
-				Cannon* cannon = dynamic_cast<Cannon*>(itr->get());
-				if (cannon == nullptr)continue;
-
-				if (data.eventtrigerName.find(cannon->id) != std::string::npos)
-				{
-					cannon->interPos = data.translation;
-				}
-			}*/
 		}
 		if (data.eventtrigerName.find("end") != std::string::npos)
 		{
 			CannonPoint point = { data.eventtrigerName, data.translation };
 			mCannonPoints.push_back(point);
-			/*for (auto itr = mEventObjects.begin(); itr != mEventObjects.end(); itr++)
-			{
-				Cannon* cannon = dynamic_cast<Cannon*>(itr->get());
-				if (cannon == nullptr)continue;
-
-				if (data.eventtrigerName.find(cannon->id) != std::string::npos)
-				{
-					cannon->endPos = data.translation;
-				}
-			}*/
 		}
 
 		return;
@@ -280,6 +269,7 @@ void Stage::ChangeUpdate()
 	mGoals.clear();
 	StarManager::Get()->mStars.clear();
 	CollideManager::Get()->allCols.clear();
+	mCannonPoints.clear();
 
 	Player::Get()->Register();
 
