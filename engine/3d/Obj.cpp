@@ -1,6 +1,9 @@
 #include "Obj.h"
 #include "Result.h"
 
+SpecialDraw::DISOLVE DISOLVE_ = 0;
+SpecialDraw::TEXTUREBLEND TEXTUREBLEND_ = 1;
+
 void Obj3d::SetModel(const Model* model)
 {
 	MODEL = model;
@@ -39,26 +42,7 @@ void Obj3d::Update(const Camera& camera)
 
 	if (parent != nullptr)
 	{	
-		if (notScaleFlag)
-		{
-			/*Matrix4 matRotPar;
-			Matrix4 matTransPar;
-
-			matRotPar *= XMMatrixRotationZ(parent->rotation.z);
-			matRotPar *= XMMatrixRotationX(parent->rotation.x);
-			matRotPar *= XMMatrixRotationY(parent->rotation.y);
-
-			matTransPar = XMMatrixTranslation(
-				parent->position.x, parent->position.y, parent->position.z);
-
-			matWorld *= matRotPar;
-			matWorld *= matTransPar;*/
-		}
-		else
-		{
-			matWorld = matWorld * parent->matWorld;
-		}
-
+		matWorld = matWorld * parent->matWorld;
 	}
 
 	constBufferT.mConstBufferData->viewproj = camera.mMatView * camera.mMatProjection;
@@ -180,7 +164,7 @@ void Obj3d::DrawOutLine()
 
 }
 
-void Obj3d::DrawBlendTexture(const Texture& subTex, const Texture& maskTex)
+void Obj3d::DrawSpecial(SpecialDraw::TEXTUREBLEND drawkey, const Texture& subTex, const Texture& maskTex)
 {
 	//見えないフラグが立ってるなら描画を行わない
 	if (mIsVisiable == false)
@@ -211,6 +195,46 @@ void Obj3d::DrawBlendTexture(const Texture& subTex, const Texture& maskTex)
 	dx12->mCmdList->SetGraphicsRootConstantBufferView(2, constBufferT.mBuffer->GetGPUVirtualAddress());
 
 	dx12->mCmdList->SetGraphicsRootConstantBufferView(3, constBufferB.mBuffer->GetGPUVirtualAddress());
+	
+	//描画コマンド
+	dx12->mCmdList->DrawIndexedInstanced((UINT)MODEL->mMesh.indices.size(), 1, 0, 0, 0);
+}
+
+void Obj3d::DrawSpecial(SpecialDraw::DISOLVE drawkey, const Texture& maskTex)
+{
+	//見えないフラグが立ってるなら描画を行わない
+	if (mIsVisiable == false)
+	{
+		return;
+	}
+
+	//ここでしか使わないデータなので、ここで送っちゃう
+	constBufferDisolve.mConstBufferData->value = disolveVal;
+
+	DirectX12* dx12 = DirectX12::Get();
+	TextureManager* texM = TextureManager::Get();
+
+	//SRVヒープの先頭から順番にSRVをルートパラメータ1番に設定
+	//ルートパラメータ1番はテクスチャバッファ
+	dx12->mCmdList->SetGraphicsRootDescriptorTable(1, TEXTURE->mGpuHandle);
+
+	//サブテクスチャとマスクテクスチャを引数から取得
+	dx12->mCmdList->SetGraphicsRootDescriptorTable(6, maskTex.mGpuHandle);
+
+	//頂点バッファの設定
+	dx12->mCmdList->IASetVertexBuffers(0, 1, &MODEL->mVbView);
+
+	//インデックスバッファの設定
+	dx12->mCmdList->IASetIndexBuffer(&MODEL->mIbView);
+
+	//定数バッファビュー(CBV)の設定コマンド
+	dx12->mCmdList->SetGraphicsRootConstantBufferView(0, constBufferB1.mBuffer->GetGPUVirtualAddress());
+
+	dx12->mCmdList->SetGraphicsRootConstantBufferView(2, constBufferT.mBuffer->GetGPUVirtualAddress());
+
+	dx12->mCmdList->SetGraphicsRootConstantBufferView(3, constBufferB.mBuffer->GetGPUVirtualAddress());
+
+	dx12->mCmdList->SetGraphicsRootConstantBufferView(5, constBufferDisolve.mBuffer->GetGPUVirtualAddress());
 
 	//描画コマンド
 	dx12->mCmdList->DrawIndexedInstanced((UINT)MODEL->mMesh.indices.size(), 1, 0, 0, 0);

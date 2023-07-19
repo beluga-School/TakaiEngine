@@ -44,7 +44,7 @@ float4 main(VSOutput input) : SV_TARGET
         }
     }
 
-    return shadecolor * texcolor * color;
+    return shadecolor * color;
     
     //for (i = 0; i < POINTLIGHT_NUM; i++)
     //{

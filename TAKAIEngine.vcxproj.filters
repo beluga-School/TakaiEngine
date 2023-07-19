@@ -319,6 +319,9 @@
     <Filter Include="シェーダー\TextureBlend">
       <UniqueIdentifier>{32931717-993b-4561-a3c8-460d11203f2e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="シェーダー\Disolve">
+      <UniqueIdentifier>{b2483b9b-1183-4f37-9a49-8d332351e803}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="engine\input\Input.cpp">
@@ -833,6 +836,9 @@
     <None Include="Resources\Shader\TextureBlend\TextureBlend.hlsli">
       <Filter>シェーダー\TextureBlend</Filter>
     </None>
+    <None Include="Resources\Shader\Disolve\Disolve.hlsli">
+      <Filter>シェーダー\Disolve</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Resources\Shader\BasicPS.hlsl">
@@ -960,6 +966,12 @@
     </FxCompile>
     <FxCompile Include="Resources\Shader\TextureBlend\TextureBlendVS.hlsl">
       <Filter>シェーダー\TextureBlend</Filter>
+    </FxCompile>
+    <FxCompile Include="Resources\Shader\Disolve\DisolvePS.hlsl">
+      <Filter>シェーダー\Disolve</Filter>
+    </FxCompile>
+    <FxCompile Include="Resources\Shader\Disolve\DisolveVS.hlsl">
+      <Filter>シェーダー\Disolve</Filter>
     </FxCompile>
   </ItemGroup>
 </Project>

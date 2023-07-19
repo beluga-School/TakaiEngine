@@ -15,6 +15,7 @@ float4 main(VSOutput input) : SV_TARGET
     float4 shadecolor = { 0, 0, 0, 1 };
     float4 texcolor = { 0, 0, 0, 1 };
     
+    //マスクの赤い部分はsubTextureに、黒い部分はmainTextureに
     texcolor = mask.r * sub + (1 - mask.r) * main;
     
     for (int i = 0; i < DIRLIGHT_NUM; i++)
@@ -50,5 +51,5 @@ float4 main(VSOutput input) : SV_TARGET
         }
     }
 
-    return shadecolor * texcolor * color;
+    return shadecolor * color;
 }

@@ -140,6 +140,9 @@ private:
 	//テクスチャブレンド用パイプライン
 	void TextureBlendPipeLine();
 
+	//ディゾルブ用パイプライン
+	void DisolvePipeLine();
+
 	PipelineManager(){};
 	~PipelineManager(){};
 };

@@ -74,6 +74,7 @@ void GameScene::Update()
 		debugCam = !debugCam;
 	}
 	
+	//新規シーンを登録して、登録してあるシーンから選んで飛ぶ方式にしたい
 	ImGui::InputText("scene_name", output, sizeof(output));
 
 	if (ImGui::Button("changeScene"))

@@ -3,6 +3,7 @@
 #include "DebugCamera.h"
 #include "Skydome.h"
 #include "Billboard.h"
+#include "ImguiManager.h"
 
 class ShaderTestScene :
     public IScene
@@ -18,11 +19,18 @@ private:
     DebugCamera debugCamera;
     Skydome skydome;
 
-    //BillboardY billboard;
+    GUI gui = {"CG5_kadai"};
 
     Obj3d testObj;
 
     Texture* sub;
-    Texture* mask;
+    Texture* blendMask;
+    Texture* disolveMask;
+
+    enum class DrawMode
+    {
+        TextureBlend,
+        Disolve,
+    }mode = DrawMode::Disolve;
 };
 

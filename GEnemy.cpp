@@ -9,6 +9,7 @@ void GEnemy::Initialize()
 	Obj3d::Initialize();
 	SetModel(ModelManager::GetModel("firewisp"));
 	SetTexture(TextureManager::GetTexture("white"));
+	SetOutLineState({0,0,0,1},0.05f);
 
 	hitSphere.Initialize();
 	hitSphere.SetModel(ModelManager::GetModel("ICOSphere"));

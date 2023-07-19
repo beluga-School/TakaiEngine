@@ -241,6 +241,8 @@ void Stage::EvenyObjectSet(const LevelData::ObjectData& data)
 			//オブジェクトの配置
 			LevelDataExchanger::SetObjectData(*mEventObjects.back(), data);
 		}
+		//全てのオブジェクト配置後、制御点と大砲のみで比較しなおすため、
+		//値を一時的に保存しておく
 		if (data.eventtrigerName.find("inter") != std::string::npos)
 		{	
 			CannonPoint point = { data.eventtrigerName, data.translation };
