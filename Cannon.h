@@ -34,10 +34,12 @@ private:
 	int32_t pointNum = 3;
 
 	//合計の移動時間
-	TEasing::easeTimer timer = 1.0f;
+	TEasing::easeTimer timer = 2.0f;
 
 	//飛ばすモブを保持するポインタ
 	Mob* target = nullptr;
+
+	std::vector<Vector3> inters;
 
 	enum class CannonState
 	{

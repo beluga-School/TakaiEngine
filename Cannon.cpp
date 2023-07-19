@@ -20,13 +20,20 @@ void Cannon::Update()
 			break;
 		case Cannon::CannonState::One:
 			//ターゲットを動かす
-			target->position = TEasing::lerp(startPos, interPos, timer.GetTimeRate());
-			
+			//target->position = TEasing::lerp(startPos, interPos, timer.GetTimeRate());
+			target->position = Vector3::Spline(inters, timer.GetTimeRate());
 
 			if (timer.GetEnd())
 			{
 				timer.Start();
-				state = CannonState::Two;
+				//state = CannonState::Two;
+			
+				state = CannonState::None;
+
+				target->SetNoGravity(0);
+
+				//移動させ終わったので、ターゲットの保持を解除
+				target = nullptr;
 			}
 
 			break;
@@ -43,7 +50,6 @@ void Cannon::Update()
 
 				//移動させ終わったので、ターゲットの保持を解除
 				target = nullptr;
-
 			}
 			break;
 		}		
@@ -66,6 +72,11 @@ void Cannon::OnCollide(Mob& mob)
 	timer.Start();
 	state = CannonState::One;
 	target->SetNoGravity(1);
+
+	inters.clear();
+	inters.push_back(startPos);
+	inters.push_back(interPos);
+	inters.push_back(endPos);
 }
 
 void Cannon::SetState(float maxtime)

@@ -1,4 +1,6 @@
 #pragma once
+#include <vector>
+
 class Vector3
 {
 public:
@@ -52,13 +54,12 @@ public:
 	Vector3 GetCross(const Vector3& v)const;
 
 	/// <summary>
-	/// 直線移動するイージング
+	/// Wrelf先生のやつ丸パクりSpline
 	/// </summary>
-	/// <param name="start"></param>
-	/// <param name="end"></param>
+	/// <param name="points"></param>
 	/// <param name="t"></param>
 	/// <returns></returns>
-	static Vector3 lerp(const Vector3& start, const Vector3& end, const float t);
+	static Vector3 Spline(const std::vector<Vector3>& points, float t);
 
 	/// <summary>
 	/// 2つのベクトルのなす角(Radian)を取得
