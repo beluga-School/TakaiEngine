@@ -105,8 +105,7 @@ void Obj3d::Draw() {
 	//SRVヒープの先頭から順番にSRVをルートパラメータ1番に設定
 	//ルートパラメータ1番はテクスチャバッファ
 	dx12->mCmdList->SetGraphicsRootDescriptorTable(1, TEXTURE->mGpuHandle);
-	//commandList->SetGraphicsRootConstantBufferView(0, constBufferT.buffer->GetGPUVirtualAddress());
-
+	
 	//頂点バッファの設定
 	dx12->mCmdList->IASetVertexBuffers(0, 1, &MODEL->mVbView);
 
@@ -115,8 +114,7 @@ void Obj3d::Draw() {
 	
 	//定数バッファビュー(CBV)の設定コマンド
 	dx12->mCmdList->SetGraphicsRootConstantBufferView(0, constBufferB1.mBuffer->GetGPUVirtualAddress());
-	//commandList->SetGraphicsRootConstantBufferView(0, constBufferM.buffer->GetGPUVirtualAddress());
-
+	
 	dx12->mCmdList->SetGraphicsRootConstantBufferView(2, constBufferT.mBuffer->GetGPUVirtualAddress());
 	
 	dx12->mCmdList->SetGraphicsRootConstantBufferView(3, constBufferB.mBuffer->GetGPUVirtualAddress());
@@ -138,8 +136,7 @@ void Obj3d::DrawMaterial() {
 	//SRVヒープの先頭から順番にSRVをルートパラメータ1番に設定
 	//ルートパラメータ1番はテクスチャバッファ
 	dx12->mCmdList->SetGraphicsRootDescriptorTable(1, MODEL->mMaterial.mTextire->mGpuHandle);
-	//commandList->SetGraphicsRootConstantBufferView(0, constBufferT.buffer->GetGPUVirtualAddress());
-
+	
 	//頂点バッファの設定
 	dx12->mCmdList->IASetVertexBuffers(0, 1, &MODEL->mVbView);
 
@@ -181,6 +178,42 @@ void Obj3d::DrawOutLine()
 	//描画コマンド
 	dx12->mCmdList->DrawIndexedInstanced((UINT)MODEL->mMesh.indices.size(), 1, 0, 0, 0);
 
+}
+
+void Obj3d::DrawBlendTexture(const Texture& subTex, const Texture& maskTex)
+{
+	//見えないフラグが立ってるなら描画を行わない
+	if (mIsVisiable == false)
+	{
+		return;
+	}
+
+	DirectX12* dx12 = DirectX12::Get();
+	TextureManager* texM = TextureManager::Get();
+
+	//SRVヒープの先頭から順番にSRVをルートパラメータ1番に設定
+	//ルートパラメータ1番はテクスチャバッファ
+	dx12->mCmdList->SetGraphicsRootDescriptorTable(1, TEXTURE->mGpuHandle);
+	
+	//サブテクスチャとマスクテクスチャを引数から取得
+	dx12->mCmdList->SetGraphicsRootDescriptorTable(5, subTex.mGpuHandle);
+	dx12->mCmdList->SetGraphicsRootDescriptorTable(6, maskTex.mGpuHandle);
+	
+	//頂点バッファの設定
+	dx12->mCmdList->IASetVertexBuffers(0, 1, &MODEL->mVbView);
+
+	//インデックスバッファの設定
+	dx12->mCmdList->IASetIndexBuffer(&MODEL->mIbView);
+
+	//定数バッファビュー(CBV)の設定コマンド
+	dx12->mCmdList->SetGraphicsRootConstantBufferView(0, constBufferB1.mBuffer->GetGPUVirtualAddress());
+	
+	dx12->mCmdList->SetGraphicsRootConstantBufferView(2, constBufferT.mBuffer->GetGPUVirtualAddress());
+
+	dx12->mCmdList->SetGraphicsRootConstantBufferView(3, constBufferB.mBuffer->GetGPUVirtualAddress());
+
+	//描画コマンド
+	dx12->mCmdList->DrawIndexedInstanced((UINT)MODEL->mMesh.indices.size(), 1, 0, 0, 0);
 }
 
 void Obj3d::SetOutLineState(const Float4& color, float thickness)

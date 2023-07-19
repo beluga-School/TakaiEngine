@@ -15,10 +15,18 @@ void ShaderTestScene::Initialize()
 
 	skydome.Initialize();
 
-	billboard.Initialize();
+	/*billboard.Initialize();
 	billboard.position = {0,0,0};
-	billboard.scale = {3,3,3};
+	billboard.scale = {3,3,3};*/
 
+	TextureManager::Load("Resources\\09_AlphaMask_Resources\\Dirt.png", "Dirt");
+	TextureManager::Load("Resources\\09_AlphaMask_Resources\\FirldMask.png", "FirldMask");
+	TextureManager::Load("Resources\\09_AlphaMask_Resources\\Grass.png", "Grass");
+
+	testObj.Initialize();
+	testObj.SetTexture(TextureManager::GetTexture("Grass"));
+	sub = TextureManager::GetTexture("Dirt");
+	mask = TextureManager::GetTexture("FirldMask");
 }
 
 GUI lightGUI("lightOperator");
@@ -29,7 +37,8 @@ void ShaderTestScene::Update()
 
 	skydome.Update();
 
-	billboard.Update(*Camera::sCamera);
+	testObj.Update(*Camera::sCamera);
+	//billboard.Update(*Camera::sCamera);
 }
 
 void ShaderTestScene::Draw()
@@ -37,10 +46,10 @@ void ShaderTestScene::Draw()
 	BasicObjectPreDraw(PipelineManager::GetPipeLine("Skydome"));
 	skydome.Draw();
 
-	//BasicObjectPreDraw(PipelineManager::GetPipeLine("Phong"));
-	//billboard.Draw();
-	BasicObjectPreDraw(PipelineManager::GetPipeLine("PerlinNoise"),false);
-	billboard.Draw();
+	BasicObjectPreDraw(PipelineManager::GetPipeLine("TextureBlend"));
+	testObj.DrawBlendTexture(*sub,*mask);
+	/*BasicObjectPreDraw(PipelineManager::GetPipeLine("PerlinNoise"),false);
+	billboard.Draw();*/
 }
 
 void ShaderTestScene::End()

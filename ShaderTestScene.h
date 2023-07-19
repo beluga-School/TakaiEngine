@@ -18,6 +18,11 @@ private:
     DebugCamera debugCamera;
     Skydome skydome;
 
-    BillboardY billboard;
+    //BillboardY billboard;
+
+    Obj3d testObj;
+
+    Texture* sub;
+    Texture* mask;
 };
 

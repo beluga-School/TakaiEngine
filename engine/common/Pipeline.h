@@ -134,14 +134,14 @@ private:
 	//ワイヤーフレーム用パイプライン
 	void WireFramePipeLine();
 
+	//パーリンノイズ実装時に使ったパイプライン(まだ実践向けじゃない	)
 	void PerlinNoisePipeLine();
+
+	//テクスチャブレンド用パイプライン
+	void TextureBlendPipeLine();
 
 	PipelineManager(){};
 	~PipelineManager(){};
 };
 
 PipelineSet CreateLambertPipeline();
-
-PipelineSet CreateSpritePipeline();
-
-PipelineSet CreateGeometryPipeline();

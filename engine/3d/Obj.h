@@ -80,6 +80,8 @@ public:
 
 	void DrawOutLine();
 
+	void DrawBlendTexture(const Texture& subTex,const Texture& maskTex);
+
 	void SetOutLineState(const Float4& color,float thickness);
 	void SetOutLineAlpha(const float& alpha);
 

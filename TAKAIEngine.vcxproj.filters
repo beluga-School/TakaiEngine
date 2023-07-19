@@ -316,6 +316,9 @@
     <Filter Include="Application\EventBlock\Cannon">
       <UniqueIdentifier>{694f7a6e-7b4a-46ee-8aa3-5f0e205738e5}</UniqueIdentifier>
     </Filter>
+    <Filter Include="シェーダー\TextureBlend">
+      <UniqueIdentifier>{32931717-993b-4561-a3c8-460d11203f2e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="engine\input\Input.cpp">
@@ -827,6 +830,9 @@
     <None Include="Resources\Shader\PerlinNoise\PerlinNoise.hlsli">
       <Filter>シェーダー\PerlinNoise</Filter>
     </None>
+    <None Include="Resources\Shader\TextureBlend\TextureBlend.hlsli">
+      <Filter>シェーダー\TextureBlend</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Resources\Shader\BasicPS.hlsl">
@@ -948,6 +954,12 @@
     </FxCompile>
     <FxCompile Include="Resources\Shader\PerlinNoise\PerlinNoisePS.hlsl">
       <Filter>シェーダー\PerlinNoise</Filter>
+    </FxCompile>
+    <FxCompile Include="Resources\Shader\TextureBlend\TextureBlendPS.hlsl">
+      <Filter>シェーダー\TextureBlend</Filter>
+    </FxCompile>
+    <FxCompile Include="Resources\Shader\TextureBlend\TextureBlendVS.hlsl">
+      <Filter>シェーダー\TextureBlend</Filter>
     </FxCompile>
   </ItemGroup>
 </Project>
