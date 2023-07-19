@@ -1,10 +1,17 @@
 #include "Cannon.h"
 #include "ViewProjection.h"
+#include "ObjParticle.h"
+#include "TimeManager.h"
 
 void Cannon::Initialize()
 {
 	SetModel(ModelManager::GetModel("Cannon"));
 	SetTexture(TextureManager::GetTexture("white"));
+
+	endTargetCircle.Initialize();
+	endTargetCircle.SetModel(ModelManager::GetModel("targetMark"));
+
+	endTargetCircle.scale = { 2,2,2 };
 }
 
 void Cannon::Update()
@@ -50,17 +57,31 @@ void Cannon::Update()
 
 				//移動させ終わったので、ターゲットの保持を解除
 				target = nullptr;
+
+				for (int i = 0; i < 10; i++)
+				{
+					ParticleManager::GetInstance()->CreateCubeParticle(target->position, { 5,5,5 }, 10, { 0.1f,0.1f,0.1f,1 });
+				}
 			}
 			break;
 		}		
 	}
 
 	Obj3d::Update(*Camera::sCamera);
+
+	//常に回しとく
+	endTargetCircle.rotation.y += 2.0f * TimeManager::deltaTime;
+	endTargetCircle.Update(*Camera::sCamera);
 }
 
 void Cannon::Draw()
 {
 	Obj3d::DrawMaterial();
+
+	if (state != CannonState::None)
+	{
+		endTargetCircle.DrawMaterial();
+	}
 }
 
 void Cannon::OnCollide(Mob& mob)
@@ -77,6 +98,13 @@ void Cannon::OnCollide(Mob& mob)
 	inters.push_back(startPos);
 	inters.push_back(interPos);
 	inters.push_back(endPos);
+
+	endTargetCircle.position = endPos;
+
+	for (int i = 0; i < 10; i++)
+	{
+		ParticleManager::GetInstance()->CreateCubeParticle(target->position, { 5,5,5 }, 10, { 0.1f,0.1f,0.1f,1 });
+	}
 }
 
 void Cannon::SetState(float maxtime)

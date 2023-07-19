@@ -8,6 +8,7 @@
 #include "MathF.h"
 #include "TimeManager.h"
 #include "CollideManager.h"
+#include "ObjParticle.h"
 
 void GameScene::LoadResource()
 {
@@ -40,6 +41,8 @@ void GameScene::Initialize()
 	Stage::Get()->goalSystem.Initialize();
 
 	SceneChange::Get()->Initialize();
+
+	ParticleManager::GetInstance()->CreatePool();
 }
 
 GUI sceneChangeGUI("operator");
@@ -124,6 +127,8 @@ void GameScene::Update()
 	}
 
 	SceneChange::Get()->Update();
+
+	ParticleManager::GetInstance()->Update();
 }
 
 void GameScene::Draw()
@@ -139,6 +144,8 @@ void GameScene::Draw()
 
 	EnemyManager::Get()->Draw();
 
+	ParticleManager::GetInstance()->Draw();
+	
 	//pCamera->Draw();
 
 	BasicObjectPreDraw(PipelineManager::GetPipeLine("PerlinNoise"));
@@ -152,4 +159,5 @@ void GameScene::Draw()
 
 void GameScene::End()
 {
+	ParticleManager::GetInstance()->AllDelete();
 }

@@ -41,6 +41,8 @@ private:
 
 	std::vector<Vector3> inters;
 
+	Obj3d endTargetCircle;
+
 	enum class CannonState
 	{
 		None,

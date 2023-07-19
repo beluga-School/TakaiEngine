@@ -3,6 +3,7 @@
 #include "Player.h"
 #include "TimeManager.h"
 #include "MathF.h"
+#include "ObjParticle.h"
 
 void Star::Initialize()
 {
@@ -12,6 +13,7 @@ void Star::Initialize()
 
 void Star::Update()
 {
+	particleTimer.Update();
 	timer.Update();
 
 	switch (starState)
@@ -19,6 +21,15 @@ void Star::Update()
 	case Star::StarState::None:
 		//1•bŠÔ‚É0.25‰ñ“]‚µ‚Ä‚é
 		rotaSpeed = 0.25f;
+		if (particleTimer.GetRun() == false)
+		{
+			particleTimer.Start();
+			for (int i = 0; i < 3; i++)
+			{
+				ParticleManager::GetInstance()->CreateCubeParticle(position, { 1.5f,1.5f,1.5f }, 2.0f, { 1.0f,1.0f,0.0f,1 });
+			}
+		}
+
 		break;
 	case Star::StarState::Inhole:
 		if (timer.GetStarted() == false)

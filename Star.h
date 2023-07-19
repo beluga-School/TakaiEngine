@@ -34,6 +34,7 @@ private:
 
 	TEasing::easeTimer timer = 2.0f;
 
+	TEasing::easeTimer particleTimer = 1.0f;
 };
 
 class StarManager
