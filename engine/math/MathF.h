@@ -31,6 +31,9 @@ namespace MathF
 	/// <returns></returns>
 	Vector2 CircularMotion(const Vector2& CenterPoint,const float& radius,const float& angle);
 
+	//“ü‚Á‚Ä‚«‚½—v‘f‚Ì•½‹Ï‚ð•Ô‚· —v‘f‘S‚Ä‚ª0‚¾‚Á‚½‚ç0‚ð•Ô‚·
+	float Avarage(Vector3 v);
+
 	/// <summary>
 	/// •âŠ®(“™‘¬)
 	/// </summary>

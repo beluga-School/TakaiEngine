@@ -43,6 +43,16 @@ private:
 	void ColUpdate();
 	void RotaUpdate();
 
+	void DamageUpdate();
+
+	//
+	void DamageEffect();
+	//無敵時間
+	TEasing::easeTimer mutekiTimer = 2.0f;
+	//ダメージ受けた後の点滅
+	//0.1秒ごとに描画を取り消す
+	TEasing::easeTimer flashTimer = 0.05f;
+
 	///---横移動
 	//移動速度
 	float mSpeed = 7.5f;

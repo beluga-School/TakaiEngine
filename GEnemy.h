@@ -18,6 +18,11 @@ public:
 
 	void ColUpdate();
 
+	bool IsDead()
+	{
+		return attackState == AttackState::Dead;
+	}
+
 private:
 	Obj3d hitSphere;
 

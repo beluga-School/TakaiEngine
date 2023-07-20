@@ -3,6 +3,7 @@
 #include "TimeManager.h"
 #include "ClearDrawScreen.h"
 #include "MathF.h"
+#include "ObjParticle.h"
 
 void GEnemy::Initialize()
 {
@@ -119,6 +120,17 @@ void GEnemy::Update()
 		{
 			isDead = true;
 			//パーティクル出したい
+			//サイズが大きくなるにつれて発生量が増える
+			int32_t partnum = static_cast<int32_t>(scale.x + scale.y + scale.z) / 3 * 3;
+			float partscale = (scale.x + scale.y + scale.z) / 9;
+			float partdistance = (scale.x + scale.y + scale.z) / 3 * 10;
+			//一応発生数制限を付ける
+			partnum = Util::Clamp(partnum, 3, 50);
+			for (int32_t i = 0; i < partnum; i++)
+			{
+				ParticleManager::GetInstance()->CreateCubeParticle(position,
+					{ partscale,partscale,partscale }, partdistance, { 0,1,0,0.5f });
+			}
 		}
 
 		break;
@@ -147,20 +159,24 @@ void GEnemy::Draw()
 void GEnemy::HitEffect()
 {
 	//すでに死亡済みならスキップ
-	if (attackState == AttackState::Dead)return;
+	if (IsDead())return;
 	attackState = AttackState::Dead;
 	
 	//死亡時のプレイヤーが向いていた方向を保存
 	deadDirection = Player::Get()->matWorld.ExtractAxisZ();
 	
 	//斜め上に吹っ飛んでいくように
-	float rand = MathF::GetRand(6.0f, 8.0f);
+	float rand = MathF::GetRand(6.0f, 6.5f);
+
 	deadDirection.y = MathF::PIf / rand;
 
 	deadEasingS = position;
 
+	//スケール分より遠くに吹っ飛ぶように
+	float scaledistance = (scale.x + scale.y + scale.z) / 3 * 0.5f;
+
 	//正面に向かって吹っ飛ばされるように終点を設定
-	deadEasingE = position + deadDirection * 7.0f;
+	deadEasingE = position + deadDirection * 7.0f * scaledistance;
 
 	deadTimer.Start();
 }
@@ -178,8 +194,8 @@ void GEnemy::Encount()
 void GEnemy::ColUpdate()
 {
 	sphereCol.center = position;
-	//追跡範囲の球の半径
-	sphereCol.radius = 8;
+	//追跡範囲の球の半径(ベースの大きさ+大きさの平均を足す)
+	sphereCol.radius = 8 + MathF::Avarage(scale);;
 
 	hitSphere.position = sphereCol.center;
 	hitSphere.scale = { sphereCol.radius,sphereCol.radius,sphereCol.radius };

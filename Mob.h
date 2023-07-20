@@ -44,13 +44,13 @@ protected:
 	float upJumpE = 0;
 
 	//ジャンプ力
-	const float jumpPower = 10.0f;
+	const float jumpPower = 5.0f;
 
 	//上昇管理タイマー
 	TEasing::easeTimer jumpManageTimer = 0.5f;
 
 	//滞空時間タイマー
-	TEasing::easeTimer stayManageTimer = 0.1f;
+	TEasing::easeTimer stayManageTimer = 0.01f;
 
 	//重力
 	float gravity = 0.0f;

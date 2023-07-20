@@ -1,35 +1,21 @@
 #pragma once
 #include <stdint.h>
 #include <list>
+#include <string>
 
 struct Status
 {
 public:
 	//現在のステータス
-	int32_t current = -114514;
-	//1フレーム前のステータス
-	int32_t old = -114514;
+	int32_t mCurrent = -114514;
 
-	Status(int32_t init) {
-		current = init;
-		old = init;
-		//マネージャーに登録
-		Register();
-	};
+	int32_t getOld();
 
-	Status(const Status& rhs) {
-		current = rhs.current;
-		old = rhs.old;
-		//マネージャーに登録
-		Register();
-	}
+	Status(int32_t init);
 
-	Status& operator=(const Status& rhs) {
-		current = rhs.current;
-		old = rhs.old;
-		//マネージャーに登録
-		Register();
-	};
+	Status(const Status& rhs);
+
+	Status& operator=(const Status& rhs);
 
 	~Status();
 
@@ -43,6 +29,9 @@ public:
 	void Update();
 
 private:
+	//1フレーム前のステータス
+	int32_t mOld = -114514;
+
 	void Register();
 };
 

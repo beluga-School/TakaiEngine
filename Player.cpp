@@ -28,21 +28,7 @@ void Player::Update()
 	//ダメージ処理
 	if (Input::Keyboard::TriggerKey(DIK_T))
 	{
-		hp.current -= 1;
-	}
-
-	if (hp.DecreaseTrigger())
-	{
-		for (int i = 0; i < 3; i++)
-		{
-			ParticleManager::GetInstance()->CreateCubeParticle(position,
-				{ 3,3,3 }, 10, { 1,0,0,1 });
-		}
-	}
-	if (hp.current < 0)
-	{
-		hp.current = 8;
-		Stage::Get()->ChangeLevel(*LevelLoader::Get()->GetData("stage_graveyard"));
+		DamageEffect();
 	}
 
 	if (PlayerCamera::Get()->GetCamMode() == PlayerCamera::CamMode::Normal)
@@ -111,6 +97,9 @@ void Player::Update()
 	Obj3d::Update(*Camera::sCamera);
 
 	colDrawer.Update(*Camera::sCamera);
+
+	//当たり判定後、ステータスの更新
+	DamageUpdate();
 }
 
 void Player::Draw()
@@ -349,7 +338,16 @@ void Player::ColUpdate()
 		
 		if (Collsions::CubeCollision(enemyCol, pCol))
 		{
-			enemy->HitEffect();
+			if (enemy->IsDead())continue;
+			if (jumpState == JumpState::Down)
+			{
+				enemy->HitEffect();
+				Jump();
+			}
+			else
+			{
+				DamageEffect();
+			}
 		}
 		
 		if (Collsions::SphereCollsion(playerCol, enemy->sphereCol))
@@ -366,6 +364,59 @@ void Player::RotaUpdate()
 
 	//回転させる処理
 	rotation.y = PlayerCamera::Get()->mHorizontalRad;
+}
+
+void Player::DamageUpdate()
+{
+	mutekiTimer.Update();
+	flashTimer.Update();
+
+	//無敵時間中は点滅させる
+	if (mutekiTimer.GetRun())
+	{
+		if (flashTimer.GetRun() == false)
+		{
+			flashTimer.Start();
+			mIsVisiable = !mIsVisiable;
+		}
+	}
+	//無敵時間が終了したら点滅解除
+	if (mutekiTimer.GetEnd())
+	{
+		if (mIsVisiable == false)
+		{
+			mIsVisiable = true;
+		}
+		mutekiTimer.Reset();
+	}
+
+	//ダメージを受けたとき
+	if (hp.DecreaseTrigger())
+	{
+		//エフェクト出す
+		for (int i = 0; i < 3; i++)
+		{
+			ParticleManager::GetInstance()->CreateCubeParticle(position,
+				{ 3,3,3 }, 10, { 1,0,0,1 });
+		}
+	}
+	//0になったら墓場へいく
+	if (hp.mCurrent < 0)
+	{
+		hp.mCurrent = 8;
+		Stage::Get()->ChangeLevel(*LevelLoader::Get()->GetData("stage_graveyard"));
+	}
+}
+
+void Player::DamageEffect()
+{
+	//無敵時間中ならスキップ
+	if (mutekiTimer.GetRun())return;
+
+	//無敵時間開始
+	mutekiTimer.Start();
+	//ダメージ受ける
+	hp.mCurrent -= 1;
 }
 
 void Player::Jump()

@@ -32,6 +32,14 @@ namespace MathF
 		return position;
 	}
 
+	float Avarage(Vector3 v)
+	{
+		//0œZ‘Îô
+		if (v.x == 0 && v.y == 0 && v.z == 0)return 0.0f;
+
+		return (v.x + v.y + v.z) / 3;
+	}
+
 	float Complement(const float& x1,const float& x2,const float& flame)
 	{
 		float distanceX = x2 - x1;//‹——£‚ğo‚·

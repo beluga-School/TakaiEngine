@@ -547,7 +547,7 @@
       <Filter>Application\EventBlock\Cannon</Filter>
     </ClCompile>
     <ClCompile Include="Status.cpp">
-      <Filter>ソース ファイル</Filter>
+      <Filter>Application\Status</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -780,7 +780,7 @@
       <Filter>Application\EventBlock\Cannon</Filter>
     </ClInclude>
     <ClInclude Include="Status.h">
-      <Filter>ヘッダー ファイル</Filter>
+      <Filter>Application\Status</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
