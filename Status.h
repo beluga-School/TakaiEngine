@@ -9,7 +9,7 @@ public:
 	//現在のステータス
 	int32_t mCurrent = -114514;
 
-	int32_t getOld();
+	int32_t GetOld();
 
 	Status(int32_t init);
 

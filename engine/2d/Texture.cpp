@@ -218,6 +218,7 @@ void TextureManager::PreLoad()
 	Load("Resources\\particle.png", "particle");
 	Load("Resources\\firewisp\\tex.png", "firewisp");
 	Load("Resources\\redScreen.png", "redScreen");
+	Load("Resources\\hpGauge.png", "hpGauge");
 }
 
 //ƒlƒbƒg‚ÅE‚Á‚Ä‚«‚½string->wstring•ÏŠ·

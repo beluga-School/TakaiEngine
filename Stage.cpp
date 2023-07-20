@@ -313,19 +313,6 @@ void Stage::ChangeUpdate()
 			continue;
 		}
 
-		if (objectData->spawnpointName == "enemy")
-		{
-			//とりあえずキューブで配置
-			mObj3ds.emplace_back();
-			mObj3ds.back().Initialize();
-
-			mObj3ds.back().SetModel(ModelManager::GetModel("spawnpoint"));
-
-			LevelDataExchanger::SetObjectData(mObj3ds.back(), *objectData);
-
-			continue;
-		}
-
 		//---ここより前でcontinue忘れると、モデルを読み込んじゃってバグる可能性大
 
 		//なにも無かったら

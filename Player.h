@@ -2,6 +2,7 @@
 #include "TEasing.h"
 #include "CollideManager.h"
 #include "Status.h"
+#include "HPGauge.h"
 
 class Player : public Mob
 {
@@ -9,6 +10,8 @@ public:
 	void Initialize();
 	void Update();
 	void Draw();
+
+	void DrawUI();
 
 	void Reset();
 
@@ -32,7 +35,12 @@ public:
 	void Jump();
 
 private:
+	//hpの最大値　ステータスの最大値は外から変えられるようにしたい
+	const int32_t MAX_HP = 8;
+
 	Status hp = 8;
+
+	HPGauge hpGauge;
 
 	Player(){};
 	~Player(){};

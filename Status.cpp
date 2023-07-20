@@ -10,7 +10,7 @@ void StatusManager::Update()
 	}
 }
 
-int32_t Status::getOld()
+int32_t Status::GetOld()
 {
 	return mOld;
 }

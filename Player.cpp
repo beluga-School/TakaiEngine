@@ -21,6 +21,8 @@ void Player::Initialize()
 	colDrawer.SetTexture(TextureManager::GetTexture("white"));
 
 	SetOutLineState({ 0.1f,0.1f,0.1f,1.0f }, 0.05f);
+
+	hpGauge.Initialize();
 }
 
 void Player::Update()
@@ -29,6 +31,10 @@ void Player::Update()
 	if (Input::Keyboard::TriggerKey(DIK_T))
 	{
 		DamageEffect();
+	}
+	if (Input::Keyboard::TriggerKey(DIK_G))
+	{
+		hp.mCurrent += 1;
 	}
 
 	if (PlayerCamera::Get()->GetCamMode() == PlayerCamera::CamMode::Normal)
@@ -100,6 +106,8 @@ void Player::Update()
 
 	//当たり判定後、ステータスの更新
 	DamageUpdate();
+
+	hpGauge.Update();
 }
 
 void Player::Draw()
@@ -112,6 +120,11 @@ void Player::Draw()
 
 	BasicObjectPreDraw(PipelineManager::GetPipeLine("Toon"));
 	Obj3d::DrawMaterial();
+}
+
+void Player::DrawUI()
+{
+	hpGauge.Draw();
 }
 
 void Player::Reset()
@@ -403,8 +416,26 @@ void Player::DamageUpdate()
 	//0になったら墓場へいく
 	if (hp.mCurrent < 0)
 	{
-		hp.mCurrent = 8;
+		hp.mCurrent = MAX_HP;
 		Stage::Get()->ChangeLevel(*LevelLoader::Get()->GetData("stage_graveyard"));
+	}
+
+	//hpゲージの色を変える処理
+	int32_t changeIndex = 0;
+	
+	if (hp.DecreaseTrigger())
+	{
+		changeIndex = (MAX_HP - hp.mCurrent) - 1;
+		changeIndex = Util::Clamp(changeIndex, 0, MAX_HP);
+		
+		hpGauge.ColorChange({ 0x00,98.f / 255.f,0x05 / 255,1.f }, changeIndex);
+	}
+	if (hp.IncreaseTrigger())
+	{
+		changeIndex = (MAX_HP - hp.mCurrent);
+		changeIndex = Util::Clamp(changeIndex, 0, MAX_HP);
+
+		hpGauge.ColorChange({ 0x00,255.f / 255.f,13.f / 255.f,1.f }, changeIndex);
 	}
 }
 

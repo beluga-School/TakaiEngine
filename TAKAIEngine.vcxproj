@@ -165,6 +165,7 @@
     <ClCompile Include="Goal.cpp" />
     <ClCompile Include="GoalBlock.cpp" />
     <ClCompile Include="GoalSystem.cpp" />
+    <ClCompile Include="HPGauge.cpp" />
     <ClCompile Include="Mob.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="PlayerCamera.cpp" />
@@ -173,6 +174,7 @@
     <ClCompile Include="Skydome.cpp" />
     <ClCompile Include="Stage.cpp" />
     <ClCompile Include="Star.cpp" />
+    <ClCompile Include="StarUI.cpp" />
     <ClCompile Include="Status.cpp" />
     <ClCompile Include="WarpBlock.cpp" />
   </ItemGroup>
@@ -244,6 +246,7 @@
     <ClInclude Include="Goal.h" />
     <ClInclude Include="GoalBlock.h" />
     <ClInclude Include="GoalSystem.h" />
+    <ClInclude Include="HPGauge.h" />
     <ClInclude Include="Mob.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="PlayerCamera.h" />
@@ -252,6 +255,7 @@
     <ClInclude Include="Skydome.h" />
     <ClInclude Include="Stage.h" />
     <ClInclude Include="Star.h" />
+    <ClInclude Include="StarUI.h" />
     <ClInclude Include="Status.h" />
     <ClInclude Include="WarpBlock.h" />
   </ItemGroup>

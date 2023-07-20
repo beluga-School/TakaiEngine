@@ -3,6 +3,7 @@
 #include "GEnemy.h"
 #include "ClearDrawScreen.h"
 #include "Player.h"
+#include "CollideManager.h"
 
 void EnemyManager::Load(const LevelData::ObjectData& data)
 {

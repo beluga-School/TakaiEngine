@@ -93,7 +93,7 @@ void GameScene::Update()
 			temp.push_back(handles[i].c_str());
 		}
 		static int32_t select = 0;
-		ImGui::Combo("hoges", &select, &temp[0], (int32_t)handles.size());
+		ImGui::Combo("StageSelect", &select, &temp[0], (int32_t)handles.size());
 
 		//切り替え用の名前に保存
 		output = handles[select];
@@ -133,9 +133,11 @@ void GameScene::Update()
 		pCamera->Update();
 	}
 
+	EnemyManager::Get()->Update();
+
+	//コリジョンを付けたオブジェクトより前に呼ばれると怖い
 	CollideManager::Get()->Update();
 
-	EnemyManager::Get()->Update();
 
 	pCamera->BackTransparent();
 
@@ -164,6 +166,8 @@ void GameScene::Draw()
 	BasicObjectPreDraw(PipelineManager::GetPipeLine("PerlinNoise"));
 
 	SpriteCommonBeginDraw();
+
+	player->DrawUI();
 
 	Stage::Get()->DrawSprite();
 

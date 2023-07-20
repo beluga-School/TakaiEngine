@@ -7,8 +7,15 @@
 #include "Goal.h"
 #include "Star.h"
 #include "CollideManager.h"
+#include "Mob.h"
 
 class ColObj3d : public Block
+{
+public:
+	Obj3d* collideObj = nullptr;
+};
+
+class ColMob : public Mob
 {
 public:
 	Obj3d* collideObj = nullptr;
@@ -51,6 +58,8 @@ public:
 
 	//“–‚½‚è”»’èƒ‚ƒfƒ‹”z—ñ
 	std::list<ColObj3d> mColObj3ds;
+
+	std::list<ColMob> mColMobs;
 
 	//“–‚½‚è”»’è”z—ñ
 	std::list<Cube> mColCubes;

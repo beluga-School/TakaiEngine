@@ -325,6 +325,15 @@
     <Filter Include="Application\Status">
       <UniqueIdentifier>{5bc4e8d1-ef15-4bc3-8293-24f6b833f6b9}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Application\UI">
+      <UniqueIdentifier>{474ba4e5-8eb6-4f8f-be0f-266f1b73ee1f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Application\UI\StarUI">
+      <UniqueIdentifier>{c7988369-42db-4a28-8372-35f15dd7c01e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Application\UI\HPGauge">
+      <UniqueIdentifier>{cf542d8c-5bba-45fc-b53e-70bebf207435}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="engine\input\Input.cpp">
@@ -548,6 +557,12 @@
     </ClCompile>
     <ClCompile Include="Status.cpp">
       <Filter>Application\Status</Filter>
+    </ClCompile>
+    <ClCompile Include="StarUI.cpp">
+      <Filter>Application\UI\StarUI</Filter>
+    </ClCompile>
+    <ClCompile Include="HPGauge.cpp">
+      <Filter>Application\UI\HPGauge</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -781,6 +796,12 @@
     </ClInclude>
     <ClInclude Include="Status.h">
       <Filter>Application\Status</Filter>
+    </ClInclude>
+    <ClInclude Include="StarUI.h">
+      <Filter>Application\UI\StarUI</Filter>
+    </ClInclude>
+    <ClInclude Include="HPGauge.h">
+      <Filter>Application\UI\HPGauge</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

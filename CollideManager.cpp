@@ -68,6 +68,7 @@ void CollideManager::CheckCollide(Box* check, Box* collide)
 			Block* block = static_cast<Block*>(collide);
 
 			//押し戻し処理を行う
+			//Error:敵の地面押し戻し処理が、死んだ後に行おうとして死んでる感じ
 			Osimodosi(*mob, *block);
 		}
 		if (collide->tag == TagTable::Cannon)
