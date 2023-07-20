@@ -7,6 +7,7 @@
 #include "PlayerCamera.h"
 #include "EnemyManager.h"
 #include "ClearDrawScreen.h"
+#include "ObjParticle.h"
 
 using namespace Input;
 
@@ -24,6 +25,26 @@ void Player::Initialize()
 
 void Player::Update()
 {
+	//É_ÉÅÅ[ÉWèàóù
+	if (Input::Keyboard::TriggerKey(DIK_T))
+	{
+		hp.current -= 1;
+	}
+
+	if (hp.DecreaseTrigger())
+	{
+		for (int i = 0; i < 3; i++)
+		{
+			ParticleManager::GetInstance()->CreateCubeParticle(position,
+				{ 3,3,3 }, 10, { 1,0,0,1 });
+		}
+	}
+	if (hp.current < 0)
+	{
+		hp.current = 8;
+		Stage::Get()->ChangeLevel(*LevelLoader::Get()->GetData("stage_graveyard"));
+	}
+
 	if (PlayerCamera::Get()->GetCamMode() == PlayerCamera::CamMode::Normal)
 	{
 		starState = StarState::None;
@@ -102,7 +123,6 @@ void Player::Draw()
 
 	BasicObjectPreDraw(PipelineManager::GetPipeLine("Toon"));
 	Obj3d::DrawMaterial();
-
 }
 
 void Player::Reset()

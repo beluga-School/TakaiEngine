@@ -44,6 +44,9 @@ public:
 	void Load(const std::string &filename,const std::string& handle);
 
 	LevelData* GetData(const std::string& handle);
+	std::unordered_map<std::string, LevelData> GetDataMap() {
+		return LevelDatas;
+	}
 
 	static LevelLoader* Get()
 	{
@@ -59,8 +62,7 @@ private:
 	LevelLoader(){};
 	~LevelLoader(){};
 
-	std::map<std::string, LevelData> LevelDatas;
-
+	std::unordered_map<std::string, LevelData> LevelDatas;
 };
 
 class LevelDataExchanger

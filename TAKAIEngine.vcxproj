@@ -173,6 +173,7 @@
     <ClCompile Include="Skydome.cpp" />
     <ClCompile Include="Stage.cpp" />
     <ClCompile Include="Star.cpp" />
+    <ClCompile Include="Status.cpp" />
     <ClCompile Include="WarpBlock.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -251,6 +252,7 @@
     <ClInclude Include="Skydome.h" />
     <ClInclude Include="Stage.h" />
     <ClInclude Include="Star.h" />
+    <ClInclude Include="Status.h" />
     <ClInclude Include="WarpBlock.h" />
   </ItemGroup>
   <ItemGroup>

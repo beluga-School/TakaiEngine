@@ -123,7 +123,14 @@ void Obj3d::DrawMaterial() {
 
 	//SRVヒープの先頭から順番にSRVをルートパラメータ1番に設定
 	//ルートパラメータ1番はテクスチャバッファ
-	dx12->mCmdList->SetGraphicsRootDescriptorTable(1, MODEL->mMaterial.mTextire->mGpuHandle);
+	if (MODEL->mMaterial.mTextire->mTexBuff != nullptr)
+	{
+		dx12->mCmdList->SetGraphicsRootDescriptorTable(1, MODEL->mMaterial.mTextire->mGpuHandle);
+	}
+	else
+	{
+		dx12->mCmdList->SetGraphicsRootDescriptorTable(1, TEXTURE->mGpuHandle);
+	}
 	
 	//頂点バッファの設定
 	dx12->mCmdList->IASetVertexBuffers(0, 1, &MODEL->mVbView);

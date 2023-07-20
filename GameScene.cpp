@@ -9,21 +9,24 @@
 #include "TimeManager.h"
 #include "CollideManager.h"
 #include "ObjParticle.h"
+#include "Status.h"
 
 void GameScene::LoadResource()
 {
 	Stage::Get()->goalSystem.LoadResource();
 
 	//ロード(分けたほうがいい)
-	LevelLoader::Get()->Load("Scene/woods", "woods");
-
-	LevelLoader::Get()->Load("Scene/colliderTest", "colliderTest");
 	LevelLoader::Get()->Load("Scene/buriburi", "buriburi");
 
 	LevelLoader::Get()->Load("Scene/stage_castle_outside", "stage_castle_outside");
 	LevelLoader::Get()->Load("Scene/stage_castle_inside", "stage_castle_inside");
 	LevelLoader::Get()->Load("Scene/stage_grasslands", "stage_grasslands");
 	LevelLoader::Get()->Load("Scene/stage_mountain", "stage_mountain");
+	LevelLoader::Get()->Load("Scene/stage_graveyard", "stage_graveyard");
+	
+	//新規シーンを登録して、登録してあるシーンから選んで飛ぶ方式にしたい
+	//マップからハンドル名の一覧を取得
+	handles = Util::GetKeys(LevelLoader::Get()->GetDataMap());
 }
 
 void GameScene::Initialize()
@@ -49,6 +52,9 @@ GUI sceneChangeGUI("operator");
 
 void GameScene::Update()
 {
+	//ステータスの更新
+	StatusManager::Update();
+
 	static bool debugCam = false;
 
 	if (Input::Keyboard::TriggerKey(DIK_R))
@@ -77,23 +83,26 @@ void GameScene::Update()
 		debugCam = !debugCam;
 	}
 	
-	//新規シーンを登録して、登録してあるシーンから選んで飛ぶ方式にしたい
-	ImGui::InputText("scene_name", output, sizeof(output));
-	if (ImGui::CollapsingHeader("hogehoge"))
+	//ハンドルが空でなければ
+	if (!handles.empty())
 	{
-		//const std::string listBox_item = { "hoge","hogehoge" };
-		//ImGui::ListBox("hoge", listBox_item.c_str());
-		ImGui::Selectable("hoge");
-		ImGui::Selectable("hoge1");
-		ImGui::Selectable("hoge2");
-		ImGui::EndGroup();
+		//ハンドルの一覧をプルダウンで表示
+		std::vector<const char*> temp;
+		for (size_t i = 0; i < handles.size(); i++)
+		{
+			temp.push_back(handles[i].c_str());
+		}
+		static int32_t select = 0;
+		ImGui::Combo("hoges", &select, &temp[0], (int32_t)handles.size());
+
+		//切り替え用の名前に保存
+		output = handles[select];
 	}
 
 	if (ImGui::Button("changeScene"))
 	{
 		Stage::Get()->ChangeLevel(*LevelLoader::Get()->
 			GetData(output));
-		savename = "";
 	}
 
 	ImGui::Text("n:mouseLock Lock/UnLock change");
@@ -129,11 +138,6 @@ void GameScene::Update()
 	EnemyManager::Get()->Update();
 
 	pCamera->BackTransparent();
-
-	if (Input::Keyboard::TriggerKey(DIK_T))
-	{
-		SceneChange::Get()->Start();
-	}
 
 	SceneChange::Get()->Update();
 

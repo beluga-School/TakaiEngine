@@ -1,6 +1,7 @@
 #pragma once
 #include "TEasing.h"
 #include "CollideManager.h"
+#include "Status.h"
 
 class Player : public Mob
 {
@@ -31,6 +32,8 @@ public:
 	void Jump();
 
 private:
+	Status hp = 8;
+
 	Player(){};
 	~Player(){};
 

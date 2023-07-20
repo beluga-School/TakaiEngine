@@ -272,6 +272,7 @@ void Stage::ChangeUpdate()
 	StarManager::Get()->mStars.clear();
 	CollideManager::Get()->allCols.clear();
 	mCannonPoints.clear();
+	EnemyManager::Get()->enemyList.clear();
 
 	Player::Get()->Register();
 

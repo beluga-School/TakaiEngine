@@ -322,6 +322,9 @@
     <Filter Include="シェーダー\Disolve">
       <UniqueIdentifier>{b2483b9b-1183-4f37-9a49-8d332351e803}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Application\Status">
+      <UniqueIdentifier>{5bc4e8d1-ef15-4bc3-8293-24f6b833f6b9}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="engine\input\Input.cpp">
@@ -542,6 +545,9 @@
     </ClCompile>
     <ClCompile Include="Cannon.cpp">
       <Filter>Application\EventBlock\Cannon</Filter>
+    </ClCompile>
+    <ClCompile Include="Status.cpp">
+      <Filter>ソース ファイル</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -772,6 +778,9 @@
     </ClInclude>
     <ClInclude Include="Cannon.h">
       <Filter>Application\EventBlock\Cannon</Filter>
+    </ClInclude>
+    <ClInclude Include="Status.h">
+      <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

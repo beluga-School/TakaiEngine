@@ -3,6 +3,7 @@
 #include "Vector2.h"
 #include <vector>
 #include <string>
+#include <unordered_map>
 
 namespace Util
 {
@@ -32,5 +33,19 @@ namespace Util
 
 	//文字列に数値が含まれているか判定する
 	bool IsNumber(const std::string& str);
+
+	//マップからハンドルを取得する
+	//コピーしてるので処理速度終わってる
+	//ポインタにするとエラー吐いた
+	template <class Key, class Value>
+	std::vector<Key> GetKeys(std::unordered_map<Key, Value> map) {
+		std::vector<Key> temp;
+
+		for (std::pair<Key, Value> key : map)
+		{
+			temp.push_back(key.first);
+		}
+		return temp;
+	};
 };
 

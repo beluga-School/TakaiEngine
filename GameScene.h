@@ -25,7 +25,7 @@ private:
 	PlayerCamera* pCamera = PlayerCamera::Get();
 
 	//ƒV[ƒ“Ø‚è‘Ö‚¦—p
-	char output[50] = "";
-	std::string savename = "";
+	std::string output = "";
+	std::vector<std::string> handles;
 };
 
