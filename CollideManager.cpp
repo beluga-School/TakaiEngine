@@ -30,9 +30,25 @@ bool CollideManager::CheckDirections(const Cube& check, const Cube& collide, con
 	return false;
 }
 
+bool CheckIsDead(Box* box)
+{
+	return box->IsDead();
+}
+
 void CollideManager::Update()
 {
-	//同じリスト内の他のオブジェクト全ての数分判定を回す
+	//死んでいるなら削除する
+	for (auto itr = allCols.begin(); itr != allCols.end();)
+	{
+		if (CheckIsDead(*itr))
+		{
+			itr = allCols.erase(itr);
+		}
+		else
+		{
+			itr++;
+		}
+	}
 	for (Box*check : allCols)
 	{
 		for (Box* collide : allCols)

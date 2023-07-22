@@ -46,4 +46,11 @@ public:
 	{
 		Register();
 	}
+
+	bool IsDead() {
+		return isDead;
+	}
+
+protected:
+	bool isDead = false;
 };

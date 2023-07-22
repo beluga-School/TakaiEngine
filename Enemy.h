@@ -14,12 +14,5 @@ public:
 
 	virtual void Encount() = 0;
 
-	bool IsDead() {
-		return isDead;
-	}
-
 	Sphere sphereCol{};
-
-protected:
-	bool isDead = false;
 };

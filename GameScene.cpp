@@ -138,7 +138,6 @@ void GameScene::Update()
 	//コリジョンを付けたオブジェクトより前に呼ばれると怖い
 	CollideManager::Get()->Update();
 
-
 	pCamera->BackTransparent();
 
 	SceneChange::Get()->Update();
