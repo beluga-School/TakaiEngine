@@ -34,13 +34,19 @@ public:
 	//呼ぶと1回ジャンプする
 	void Jump();
 
+	//現在HPを取得
+	int32_t GetNowHP();
+
 private:
 	//hpの最大値　ステータスの最大値は外から変えられるようにしたい
-	const int32_t MAX_HP = 8;
+	int32_t MAX_HP = 8;
 
 	Status hp = 8;
 
-	HPGauge hpGauge;
+	Gauge hpGauge = {{
+			Util::WIN_WIDTH / 16,
+			Util::WIN_HEIGHT - Util::WIN_HEIGHT / 12
+		},8};
 
 	Player(){};
 	~Player(){};
@@ -55,6 +61,10 @@ private:
 
 	//
 	void DamageEffect();
+
+	//HPをその値に書きかえる 最大値より大きい場合、最大値を書き換える
+	void HPOverFlow(int32_t value);
+
 	//無敵時間
 	TEasing::easeTimer mutekiTimer = 2.0f;
 	//ダメージ受けた後の点滅

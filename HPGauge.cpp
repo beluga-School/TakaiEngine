@@ -2,41 +2,159 @@
 #include "MathF.h"
 #include "Util.h"
 
-void HPGauge::Initialize()
+Gauge::Gauge(const Vector2& pos, const int32_t& separetnum)
 {
-	pos = { Util::WIN_WIDTH / 4,150 };
-
-	for (int32_t i = 0; i < 8; i++)
-	{
-		ui[i].SetTexture(*TextureManager::GetTexture("hpGauge"));
-		ui[i].SetAnchor({1,1});
-		ui[i].SetPos(pos);
-		ui[i].mRotation -= (360.f / 8.f) * i - (360.f / 8.f);
-
-		//緑色で初期化
-		ColorChange({ 0x00,0xff / 255,0x0d / 255,1 },i);
-	}
+	mPos = pos;
+	mGaugeNum = separetnum;
+	mInitGaugeMax = separetnum;
+	Initialize();
 }
 
-void HPGauge::Update()
+void Gauge::Initialize()
 {
-	for (int32_t i = 0; i < 8; i++)
-	{
-		ui[i].Update();
-	}
+	mFlontGauge.SetTexture(*TextureManager::GetTexture("white"));
+	mFlontGauge.SetAnchor({ 0,0.5f });
+	mFlontGauge.SetPos(mPos);
+	mFlontGauge.SetColor(mFlontColor);
+
+	mBackGauge.SetTexture(*TextureManager::GetTexture("white"));
+	mBackGauge.SetAnchor({ 0,0.5f });
+	mBackGauge.SetPos(mPos);
+	mBackGauge.SetColor(mBackColor);
+
+	mInner.SetTexture(*TextureManager::GetTexture("white"));
+	mInner.SetAnchor({ 0,0.5f });
+	mInner.SetPos(mPos);
+	mInner.SetColor(mInnerColor);
+
+	mFrameGauge.SetTexture(*TextureManager::GetTexture("white"));
+	mFrameGauge.SetAnchor({ 0.5f,0.5f });
+	Vector2 framePos = { mPos.x + GAUGE_MAX_SIZEX / 2,mPos.y };
+	mFrameGauge.SetPos(framePos);
+	mFrameGauge.SetColor(mFrameColor);
+	
+	SetGaugeSize(mInitGaugeMax);
 }
 
-void HPGauge::Draw()
+void Gauge::Update()
+{
+	mFlontTimer.Update();
+	mBackTimer.Update();
+	mDelayTimer.Update();
+
+	//ゲージが変化した時
+	if (mGaugeNum.DecreaseTrigger())
+	{
+		//タイマーを開始
+		mBackTimer.Reset();
+		mDelayTimer.Reset();
+		mFlontTimer.Start();
+	}
+	if (mGaugeNum.IncreaseTrigger())
+	{
+		//タイマーを開始
+		mBackTimer.Reset();
+		mDelayTimer.Reset();
+		mFlontTimer.Start();
+	}
+	//都合いい感じにタイマーを操作
+	if (mFlontTimer.GetEnd())
+	{
+		if(mDelayTimer.GetStarted()==false)mDelayTimer.Start();
+	}
+	if (mDelayTimer.GetEnd())
+	{
+		if(mBackTimer.GetStarted()==false)mBackTimer.Start();
+	}
+
+	//ゲージを動かす
+	GaugeMove();
+
+	//更新
+	mBackGauge.Update();
+	mFlontGauge.Update();
+	mInner.Update();
+	mFrameGauge.Update();
+}
+
+void Gauge::Draw()
 {
 	if (mIsVisilve == false)return;
 
-	for (int32_t i = 0; i < 8; i++)
-	{
-		ui[i].Draw();
-	}
+	mFrameGauge.Draw();
+	mInner.Draw();
+	mBackGauge.Draw();
+	mFlontGauge.Draw();
 }
 
-void HPGauge::ColorChange(Float4 color, int32_t index)
+void Gauge::SetGaugeSize(int32_t separetNum, bool maxChange)
 {
-	ui[index].mColor.f4 = color;
+	mGaugeNum = separetNum;
+	if (maxChange)
+	{
+		mInitGaugeMax = separetNum;
+	}
+
+	mGaugeNum.mCurrent = Util::Clamp(mGaugeNum.mCurrent, 0, mInitGaugeMax);
+
+	if (separetNum <= 0)
+	{
+		mGaugeSizeX = 0;
+		return;
+	}
+	mGaugeSizeX = GAUGE_MAX_SIZEX / separetNum;
+
+	mFlontGauge.SetSize({ mGaugeSizeX * separetNum,mGaugeSizeY});
+	mBackGauge.SetSize({ mGaugeSizeX * separetNum,mGaugeSizeY});
+	mInner.SetSize({ mGaugeSizeX * separetNum,mGaugeSizeY});
+	mFrameGauge.SetSize({
+		(mGaugeSizeX * separetNum) * mFrameSize.x,
+		mGaugeSizeY * mFrameSize.y });
+
+	mFlontStart = mFlontGauge.mSize.x;
+	mFlontEnd = mFlontGauge.mSize.x;
+
+	mBackStart = mBackGauge.mSize.x;
+	mBackEnd = mBackGauge.mSize.x;
+}
+
+void Gauge::Addition(int32_t value)
+{
+	mGaugeNum.mCurrent += value;
+	//下限と上限を超えないように
+	mGaugeNum.mCurrent = Util::Clamp(mGaugeNum.mCurrent, 0, mInitGaugeMax);
+
+	mFlontStart = mFlontGauge.mSize.x;
+	mFlontEnd = mGaugeSizeX * (mGaugeNum.mCurrent);
+
+	mFlontStart = Util::Clamp(mFlontStart, 0.f, GAUGE_MAX_SIZEX);
+	mFlontEnd = Util::Clamp(mFlontEnd, 0.f, GAUGE_MAX_SIZEX);
+
+	mBackStart = mBackGauge.mSize.x;
+	mBackEnd = mGaugeSizeX * (mGaugeNum.mCurrent);
+
+	mBackStart = Util::Clamp(mBackStart, 0.f, GAUGE_MAX_SIZEX);
+	mBackEnd = Util::Clamp(mBackEnd, 0.f, GAUGE_MAX_SIZEX);
+}
+
+void Gauge::GaugeMove()
+{
+	//手前のゲージのイージング
+	float gaugeX = 0;
+
+	gaugeX = TEasing::lerp(mFlontStart, mFlontEnd, mFlontTimer.GetTimeRate());
+
+	mFlontGauge.SetSize({ gaugeX,mGaugeSizeY });
+
+	//後ろのゲージのイージング
+	gaugeX = TEasing::lerp(mBackStart, mBackEnd, mBackTimer.GetTimeRate());
+
+	mBackGauge.SetSize({ gaugeX,mGaugeSizeY });
+
+	//表のゲージが裏のゲージより大きくなったら
+	if (mBackGauge.mSize.x < mFlontGauge.mSize.x)
+	{
+		//裏のゲージの大きさを表ゲージに合わせる
+		mBackGauge.mSize.x = mFlontGauge.mSize.x;
+	}
 }

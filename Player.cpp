@@ -30,6 +30,7 @@ void Player::Update()
 	//ダメージ処理
 	if (Input::Keyboard::TriggerKey(DIK_T))
 	{
+		mutekiTimer.Reset();
 		DamageEffect();
 	}
 	if (Input::Keyboard::TriggerKey(DIK_G))
@@ -403,6 +404,9 @@ void Player::DamageUpdate()
 		mutekiTimer.Reset();
 	}
 
+	//外側でHPの最大値を超える処理を書いていたら丸める
+	hp.mCurrent = Util::Clamp(hp.mCurrent, -1, MAX_HP);
+
 	//ダメージを受けたとき
 	if (hp.DecreaseTrigger())
 	{
@@ -414,9 +418,10 @@ void Player::DamageUpdate()
 		}
 	}
 	//0になったら墓場へいく
-	if (hp.mCurrent < 0)
+	if (hp.mCurrent <= 0)
 	{
 		hp.mCurrent = MAX_HP;
+		hpGauge.SetGaugeSize(hp.mCurrent, true);
 		Stage::Get()->ChangeLevel(*LevelLoader::Get()->GetData("stage_graveyard"));
 	}
 
@@ -428,14 +433,14 @@ void Player::DamageUpdate()
 		changeIndex = (MAX_HP - hp.mCurrent) - 1;
 		changeIndex = Util::Clamp(changeIndex, 0, MAX_HP);
 		
-		hpGauge.ColorChange({ 0x00,98.f / 255.f,0x05 / 255,1.f }, changeIndex);
+		hpGauge.Addition(-1);
 	}
 	if (hp.IncreaseTrigger())
 	{
 		changeIndex = (MAX_HP - hp.mCurrent);
 		changeIndex = Util::Clamp(changeIndex, 0, MAX_HP);
 
-		hpGauge.ColorChange({ 0x00,255.f / 255.f,13.f / 255.f,1.f }, changeIndex);
+		hpGauge.Addition(1);
 	}
 }
 
@@ -450,6 +455,17 @@ void Player::DamageEffect()
 	hp.mCurrent -= 1;
 }
 
+void Player::HPOverFlow(int32_t value)
+{
+	hp.mCurrent = value;
+	//HPのオーバーフロー処理
+	if (hp.mCurrent > MAX_HP)
+	{
+		MAX_HP = hp.mCurrent;
+		hpGauge.SetGaugeSize(hp.mCurrent, true);
+	}
+}
+
 void Player::Jump()
 {
 	//値を指定
@@ -462,3 +478,9 @@ void Player::Jump()
 	//重力を無効化
 	gravity = 0;
 }
+
+int32_t Player::GetNowHP()
+{
+	return hp.mCurrent;
+}
+

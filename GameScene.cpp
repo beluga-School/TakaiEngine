@@ -118,6 +118,7 @@ void GameScene::Update()
 	ImGui::Text(mouseLockStates.c_str());
 
 	ImGui::Text("mouseR %f", PlayerCamera::Get()->GetRadius());
+	ImGui::Text("p:HP %d", player->Get()->GetNowHP());
 
 	sceneChangeGUI.End();
 
