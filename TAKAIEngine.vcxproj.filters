@@ -334,6 +334,9 @@
     <Filter Include="Application\UI\HPGauge">
       <UniqueIdentifier>{cf542d8c-5bba-45fc-b53e-70bebf207435}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Application\Charactor\Enemy\Bombking">
+      <UniqueIdentifier>{19be8813-a8cc-4663-9693-622a7fee7e72}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="engine\input\Input.cpp">
@@ -563,6 +566,9 @@
     </ClCompile>
     <ClCompile Include="HPGauge.cpp">
       <Filter>Application\UI\HPGauge</Filter>
+    </ClCompile>
+    <ClCompile Include="Bombking.cpp">
+      <Filter>ソース ファイル</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -802,6 +808,9 @@
     </ClInclude>
     <ClInclude Include="HPGauge.h">
       <Filter>Application\UI\HPGauge</Filter>
+    </ClInclude>
+    <ClInclude Include="Bombking.h">
+      <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -102,6 +102,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="application\game\Block.cpp" />
+    <ClCompile Include="Bombking.cpp" />
     <ClCompile Include="Box.cpp" />
     <ClCompile Include="Cannon.cpp" />
     <ClCompile Include="CollideManager.cpp" />
@@ -180,6 +181,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="application\game\Block.h" />
+    <ClInclude Include="Bombking.h" />
     <ClInclude Include="Box.h" />
     <ClInclude Include="Cannon.h" />
     <ClInclude Include="CollideManager.h" />

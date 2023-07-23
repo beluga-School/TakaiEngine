@@ -9,6 +9,7 @@
 #include "SceneChange.h"
 #include "Cannon.h"
 #include <sstream>
+#include "Bombking.h"
 
 void Stage::ChangeLevel(LevelData& data)
 {
@@ -290,10 +291,30 @@ void Stage::ChangeUpdate()
 			continue;
 		}
 
+		//ここは後で、cannonの時みたいに書式を定義してif分一個にまとめたい
 		//エネミーの配置なら
 		if (objectData->setObjectName == "enemy")
 		{
 			EnemyManager::Get()->Load(*objectData);
+			continue;
+		}
+		//ボスの配置なら
+		if (objectData->setObjectName == "bombking")
+		{
+			EnemyManager::Get()->enemyList.emplace_back();
+			EnemyManager::Get()->enemyList.back() = std::make_unique<Bombking>();
+
+			//読み込みしてないなら読み込みも行う
+			if (ModelManager::GetModel(objectData->fileName) == nullptr)
+			{
+				ModelManager::LoadModel(objectData->fileName, objectData->fileName, true);
+			}
+
+			//モデルとか設定する
+			EnemyManager::Get()->enemyList.back()->Initialize();
+
+			//positionとかを設定
+			LevelDataExchanger::SetObjectData(*EnemyManager::Get()->enemyList.back(), *objectData);
 			continue;
 		}
 

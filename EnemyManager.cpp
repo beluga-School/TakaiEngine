@@ -7,7 +7,6 @@
 
 void EnemyManager::Load(const LevelData::ObjectData& data)
 {
-	//とりあえずキューブで配置
 	enemyList.emplace_back();
 	enemyList.back() = std::make_unique<GEnemy>();
 
