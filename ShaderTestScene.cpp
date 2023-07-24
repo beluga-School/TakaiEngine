@@ -4,6 +4,7 @@
 #include "Input.h"
 #include "ImguiManager.h"
 #include "TimeManager.h"
+#include "MathF.h"
 
 void ShaderTestScene::LoadResource()
 {
@@ -15,9 +16,10 @@ void ShaderTestScene::Initialize()
 
 	skydome.Initialize();
 
-	/*billboard.Initialize();
+	billboard.Initialize();
 	billboard.position = {0,0,0};
-	billboard.scale = {3,3,3};*/
+	billboard.scale = {3,3,3};
+	billboard.rotation = {0,3.14f,0};
 
 	TextureManager::Load("Resources\\09_AlphaMask_Resources\\Dirt.png", "Dirt");
 	TextureManager::Load("Resources\\09_AlphaMask_Resources\\FirldMask.png", "FirldMask");
@@ -26,12 +28,18 @@ void ShaderTestScene::Initialize()
 
 	testObj.Initialize();
 	testObj.SetTexture(TextureManager::GetTexture("Grass"));
+	testObj.rotation = { 0,3.14f,0 };
+
 	sub = TextureManager::GetTexture("Dirt");
 	blendMask = TextureManager::GetTexture("FirldMask");
 	disolveMask = TextureManager::GetTexture("DissolveMap");
-}
 
-GUI lightGUI("lightOperator");
+	handles.push_back("TextureBlend");
+	handles.push_back("Disolve");
+	handles.push_back("Noise");
+
+	debugCamera.SetRadius(4.f);
+}
 
 void ShaderTestScene::Update()
 {
@@ -40,18 +48,42 @@ void ShaderTestScene::Update()
 	skydome.Update();
 
 	testObj.Update(*Camera::sCamera);
-	//billboard.Update(*Camera::sCamera);
+	billboard.Update(*Camera::sCamera);
 
-	gui.Begin({ 100,100 }, { 200,200 });
-	if (ImGui::Button("TextureBlend"))
+	gui.Begin({ 100,100 }, { 300,200 });
+
+	//ハンドルが空でなければ
+	if (!handles.empty())
+	{
+		//ハンドルの一覧をプルダウンで表示
+		std::vector<const char*> temp;
+		for (size_t i = 0; i < handles.size(); i++)
+		{
+			temp.push_back(handles[i].c_str());
+		}
+		static int32_t select = 0;
+		ImGui::Combo("DrawMode", &select, &temp[0], (int32_t)handles.size());
+
+		//切り替え用の名前に保存
+		output = handles[select];
+	}
+
+	if (output == "TextureBlend")
 	{
 		mode = DrawMode::TextureBlend;
+		testObj.SetTexture(TextureManager::GetTexture("Grass"));
 	}
-	if (ImGui::Button("Disolve"))
+	if (output == "Disolve")
 	{
 		mode = DrawMode::Disolve;
+		ImGui::SliderFloat("disolveValue", &testObj.disolveVal, 0.0f, 1.0f);
+		testObj.SetTexture(TextureManager::GetTexture("Dirt"));
 	}
-	ImGui::SliderFloat("disolveValue", &testObj.disolveVal,0.0f,1.0f);
+	if (output == "Noise")
+	{
+		mode = DrawMode::Noise;
+	}
+	ImGui::Text("camradius %f", debugCamera.GetRadius());
 	gui.End();
 }
 
@@ -64,18 +96,19 @@ void ShaderTestScene::Draw()
 	{
 	case ShaderTestScene::DrawMode::TextureBlend:
 		BasicObjectPreDraw(PipelineManager::GetPipeLine("TextureBlend"));
-		//testObj.DrawSpecial(SpecialDraw::TEXTUREBLEND_,*sub, *blendMask);
+		testObj.DrawSpecial(SpecialDraw::TEXTUREBLEND_,*sub, *blendMask);
 		break;
 	case ShaderTestScene::DrawMode::Disolve:
 		BasicObjectPreDraw(PipelineManager::GetPipeLine("Disolve"));
-		//testObj.DrawSpecial(SpecialDraw::DISOLVE_ ,*disolveMask);
+		testObj.DrawSpecial(SpecialDraw::DISOLVE_ ,*disolveMask);
+		break;
+	case ShaderTestScene::DrawMode::Noise:
+		BasicObjectPreDraw(PipelineManager::GetPipeLine("PerlinNoise"), false);
+		billboard.Draw();
 		break;
 	default:
 		break;
 	}
-
-	/*BasicObjectPreDraw(PipelineManager::GetPipeLine("PerlinNoise"),false);
-	billboard.Draw();*/
 }
 
 void ShaderTestScene::End()

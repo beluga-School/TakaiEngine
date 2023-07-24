@@ -61,3 +61,13 @@ void DebugCamera::Update()
 	Obj3d::Update(*Camera::sCamera);
 	Camera::sCamera->UpdatematView();
 }
+
+void DebugCamera::SetRadius(float val)
+{
+	mRadius = val;
+}
+
+float DebugCamera::GetRadius()
+{
+	return mRadius;
+}

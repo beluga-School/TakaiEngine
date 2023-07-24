@@ -27,10 +27,17 @@ private:
     Texture* blendMask;
     Texture* disolveMask;
 
+    BillboardY billboard;
+
     enum class DrawMode
     {
         TextureBlend,
         Disolve,
+        Noise,
     }mode = DrawMode::Disolve;
+
+    std::vector<std::string> handles;
+    std::string output = "";
+    std::string oldOutput = "";
 };
 

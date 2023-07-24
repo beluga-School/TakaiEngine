@@ -9,6 +9,9 @@ class DebugCamera : public Obj3d
 public:
 	void Initialize();
 	void Update();
+
+	void SetRadius(float val);
+	float GetRadius();
 private:
 	float mVerticalRad = 0;
 	float mHorizontalRad = 0;
