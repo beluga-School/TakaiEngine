@@ -337,6 +337,18 @@
     <Filter Include="Application\Charactor\Enemy\Bombking">
       <UniqueIdentifier>{19be8813-a8cc-4663-9693-622a7fee7e72}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Application\Charactor\Bombking">
+      <UniqueIdentifier>{78cc1e19-54eb-4c7e-9efa-687c2f3bd240}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Particle2D">
+      <UniqueIdentifier>{a4cb542a-92e5-43f3-90e8-c79f8f43db1c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Particle2D\IParticle2D">
+      <UniqueIdentifier>{2b2f2d23-579e-4ea8-8278-ef6f77dff9d0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Particle2D\Particle2DEmitter">
+      <UniqueIdentifier>{139ac01f-15af-4ad8-bfe9-73df1389fc92}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="engine\input\Input.cpp">
@@ -568,7 +580,10 @@
       <Filter>Application\UI\HPGauge</Filter>
     </ClCompile>
     <ClCompile Include="Bombking.cpp">
-      <Filter>ソース ファイル</Filter>
+      <Filter>Application\Charactor\Bombking</Filter>
+    </ClCompile>
+    <ClCompile Include="IParticle2D.cpp">
+      <Filter>Engine\Particle2D\IParticle2D</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -810,7 +825,10 @@
       <Filter>Application\UI\HPGauge</Filter>
     </ClInclude>
     <ClInclude Include="Bombking.h">
-      <Filter>ヘッダー ファイル</Filter>
+      <Filter>Application\Charactor\Bombking</Filter>
+    </ClInclude>
+    <ClInclude Include="IParticle2D.h">
+      <Filter>Engine\Particle2D\IParticle2D</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

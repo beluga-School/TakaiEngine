@@ -130,14 +130,6 @@ Particle::Particle(const Vector3& spawnPos_, const Vector3& velocity_,
 	mScale = scale_;
 
 	mColor = color_;
-
-	mColorRand.x = MathF::GetRand(0.1f, 1);
-	mColorRand.y = MathF::GetRand(0.1f, 1);
-	mColorRand.z = MathF::GetRand(0.1f, 1);
-
-	mRedChange = redChange_;
-
-	mVertPos = {};
 }
 
 void Particle::Update()
@@ -157,14 +149,7 @@ void Particle::Update()
 	mPosition.z += (mVelocity.z * mSpeed) * TimeManager::deltaTime;
 
 	mScale -= 1.0f * TimeManager::deltaTime;
-	
-	if (mRedChange)
-	{
-		mColor = { 1 - mLifeTime, mLifeTime ,0.0f,1.0f };
-	}
 
-
-	mVertPos.pos = mPosition;
 }
 
 void ParticleEmitter::Initialize()

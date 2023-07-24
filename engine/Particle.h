@@ -39,21 +39,15 @@ public:
 	//色
 	Float4 mColor;
 
-	Vector3 mColorRand = { 0,0,0 };
-
-	VertexPos mVertPos{};
-
 	bool mIsDead = false;
 
 	//生存時間(秒単位)
 	float mLifeTime = 0.0f;
 	float mMaxLifeTime = 0.0f;
 
-	bool mRedChange = false;
-
 	Particle(const Vector3& spawnPos,const Vector3& velocity,
 		const float& scale, const float& speed, const float& maxLifeTime, 
-		const Float4& color,const bool& redChange);
+		const Float4& color);
 
 	void Update();
 };
@@ -108,7 +102,7 @@ public:
 	/// <param name="color">パーティクルの色</param>
 	/// <param name="spawnNum">1秒間に発生するパーティクルの数 最低値は1</param>
 	void SetInfo(const Vector3& pos,const float& range, const float& scale,
-		const Float4& color,const int32_t& spawnNum = 1,const bool& redChange = false);
+		const Float4& color,const int32_t& spawnNum = 1);
 
 	void Update();
 
