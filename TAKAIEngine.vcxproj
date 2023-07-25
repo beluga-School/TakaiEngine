@@ -178,6 +178,7 @@
     <ClCompile Include="Star.cpp" />
     <ClCompile Include="StarUI.cpp" />
     <ClCompile Include="Status.cpp" />
+    <ClCompile Include="TitleScene.cpp" />
     <ClCompile Include="WarpBlock.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -261,6 +262,7 @@
     <ClInclude Include="Star.h" />
     <ClInclude Include="StarUI.h" />
     <ClInclude Include="Status.h" />
+    <ClInclude Include="TitleScene.h" />
     <ClInclude Include="WarpBlock.h" />
   </ItemGroup>
   <ItemGroup>

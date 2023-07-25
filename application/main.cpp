@@ -59,6 +59,7 @@
 #include "GameScene.h"
 #include "DemoScene.h"
 #include "ShaderTestScene.h"
+#include "TitleScene.h"
 
 //①文字列変換とサウンドデータを除き、使用していない
 //②自身のコード内ではint、shortはすべてint32_tなどに置き換えた charは一部でまだ使用している
@@ -132,11 +133,14 @@ int32_t WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_  HINSTANCE hPrevInstan
 	postEffect = std::make_unique<PostEffect>();
 	postEffect->Initialize();
 
+	//シーン切り替え演出の初期化
+	SceneChange::Get()->Initialize();
+
 	//シーンの初期化
 	SceneManager *scenemanager = SceneManager::Get();
 	//scenemanager->ChangeScene<GameScene>();
-	scenemanager->ChangeScene<ShaderTestScene>();
-	//scenemanager->ChangeScene<DemoScene>();
+	//scenemanager->ChangeScene<ShaderTestScene>();
+	scenemanager->ChangeScene<TitleScene>();
 
 #pragma endregion 描画初期化処理
 

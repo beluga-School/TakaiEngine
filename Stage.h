@@ -38,6 +38,8 @@ class Stage
 public:
 	void ChangeLevel(LevelData& data);
 
+	//初期ステージを決定
+	void Initialize(LevelData& data);
 	void Update();
 	void Draw();
 

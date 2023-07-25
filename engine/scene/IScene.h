@@ -17,6 +17,7 @@ public:
 		mSceneManager = &SceneManager_;
 	}
 
+	std::string oldSceneID = "";
 	std::string sceneID = "";
 protected:
 	//シーンマネージャ

@@ -1,4 +1,5 @@
 #include "SceneManager.h"
+#include "SceneChange.h"
 #include <cassert>
 
 void SceneManager::Update()
@@ -24,16 +25,28 @@ void SceneManager::Update()
 
 		//次シーンを初期化
 		mCurrentscene->Initialize();
+
+		//暗転を解除
+		if (SceneChange::Get()->IsBlackOut())
+		{
+			SceneChange::Get()->Open();
+		}
 	}
 
 	//実行中シーンの更新
 	mCurrentscene->Update();
+
+	SceneChange::Get()->Update();
 }
 
 void SceneManager::Draw()
 {
 	//実行中シーンの描画
 	mCurrentscene->Draw();
+
+	//切り替え演出の描画
+	SpriteCommonBeginDraw();
+	SceneChange::Get()->Draw();
 }
 
 void SceneManager::End()

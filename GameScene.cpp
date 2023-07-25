@@ -31,8 +31,6 @@ void GameScene::LoadResource()
 
 void GameScene::Initialize()
 {
-	Stage::Get()->ChangeLevel(*LevelLoader::Get()->GetData("stage_mountain"));
-
 	//初期化
 	mSkydome.Initialize();
 	mDebugCamera.Initialize();
@@ -43,9 +41,11 @@ void GameScene::Initialize()
 
 	Stage::Get()->goalSystem.Initialize();
 
-	SceneChange::Get()->Initialize();
-
 	ParticleManager::GetInstance()->CreatePool();
+
+	//初期ステージを決定
+	output = "stage_mountain";
+	Stage::Get()->Initialize(*LevelLoader::Get()->GetData(output));
 }
 
 GUI sceneChangeGUI("operator");
@@ -141,8 +141,6 @@ void GameScene::Update()
 
 	pCamera->BackTransparent();
 
-	SceneChange::Get()->Update();
-
 	ParticleManager::GetInstance()->Update();
 }
 
@@ -170,8 +168,6 @@ void GameScene::Draw()
 	player->DrawUI();
 
 	Stage::Get()->DrawSprite();
-
-	SceneChange::Get()->Draw();
 }
 
 void GameScene::End()

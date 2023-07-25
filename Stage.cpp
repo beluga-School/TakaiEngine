@@ -23,6 +23,15 @@ void Stage::ChangeLevel(LevelData& data)
 	}
 }
 
+void Stage::Initialize(LevelData& data)
+{
+	//ステージデータを保存
+	currentData = &data;
+
+	//ステージ生成
+	ChangeUpdate();
+}
+
 void Stage::Update()
 {
 	//シーン切り替えが暗転まで到達したら
