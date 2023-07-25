@@ -6,8 +6,11 @@
 #include "Input.h"
 #include "ImguiManager.h"
 #include "SceneManager.h"
+#include "MathF.h"
 
 const float PostEffect::sClearColor[4] = { 0.25f,0.5f,0.1f,1.0f };//緑っぽい色でクリア
+
+std::string PostEffect::pipeLineName = "None";
 
 PostEffect::PostEffect()
 {
@@ -77,67 +80,21 @@ void PostEffect::Initialize()
 	CreateDSV();	
 }
 
-GUI gui2("Change_PipeLine");
 void PostEffect::Update()
 {
-	if (SceneManager::Get()->mCurrentscene->sceneID == "MultiRender")
-	{
-		pipeLineName = "CG4";
-	}
-	if (SceneManager::Get()->mCurrentscene->sceneID == "FBXDemo")
-	{
-		pipeLineName = "None";
-	}
-	if (SceneManager::Get()->mCurrentscene->sceneID == "Demo")
-	{
-		if (pipeLineName == "CG4")
-		{
-			pipeLineName = "None";
-		}
+	static float t = 0;
+	t = MathF::GetRand(0,0.5f);
 
-		gui2.Begin({ 500,100 }, { 100,200 });
-		ImGui::Text("Change_PipeLine");
-		if (ImGui::Button("None"))
-		{
-			pipeLineName = "None";
-		}
-		if (ImGui::Button("GaussianBlur"))
-		{
-			pipeLineName = "GaussianBlur";
-		}
-
-		ImGui::Text(pipeLineName.c_str());
-		gui2.End();
-	}
+	//定数バッファの転送
+	sResult = mConstBuffer.mBuffer->Map(0, nullptr, (void**)&mConstBuffer.mConstBufferData);
+	mConstBuffer.mConstBufferData->time = t;
+	mConstBuffer.mBuffer->Unmap(0, nullptr);
 }
 
 void PostEffect::Draw()
 {
 	DirectX12* dx12 = DirectX12::Get();
 	TextureManager* texM = TextureManager::Get();
-
-	//static int tex = 0;
-	//if (Input::Keyboard::TriggerKey(DIK_0))
-	//{
-	//	tex = (tex + 1) % 2;
-
-	//	D3D12_SHADER_RESOURCE_VIEW_DESC srvDesc{};
-	//	srvDesc.Format = DXGI_FORMAT_R8G8B8A8_UNORM_SRGB;
-	//	srvDesc.Shader4ComponentMapping = D3D12_DEFAULT_SHADER_4_COMPONENT_MAPPING;
-	//	srvDesc.ViewDimension = D3D12_SRV_DIMENSION_TEXTURE2D;//2Dテクスチャ
-	//	srvDesc.Texture2D.MipLevels = 1;
-
-	//	//ハンドルの指す位置にシェーダーリソースビュー作成
-	//	DirectX12::Get()->mDevice->CreateShaderResourceView(mTexBuff[tex].Get(), &srvDesc, mDescHeapSRV->GetCPUDescriptorHandleForHeapStart());
-	//}
-
-	//定数バッファの転送
-	sResult = mConstBuffer.mBuffer->Map(0, nullptr, (void**)&mConstBuffer.mConstBufferData);
-	mConstBuffer.mConstBufferData->mat = DirectX::XMMatrixIdentity();
-
-	mConstBuffer.mBuffer->Unmap(0, nullptr);
-
-	
 
 	//パイプラインを引っ張ってくる
 	//ポストエフェクトなにも掛けない
@@ -146,7 +103,6 @@ void PostEffect::Draw()
 	dx12->mCmdList->SetPipelineState(pSet.mPipelinestate.Get());
 	//ルートシグネチャの設定
 	dx12->mCmdList->SetGraphicsRootSignature(pSet.mRootsignature.Get());
-	
 	
 	//プリミティブ形状を設定
 	dx12->mCmdList->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP);

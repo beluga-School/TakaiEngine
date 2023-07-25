@@ -143,6 +143,9 @@ private:
 	//ディゾルブ用パイプライン
 	void DisolvePipeLine();
 
+	//パーリンノイズをポストエフェクトとして使うパイプライン
+	void PerlinNoisePostEffectPipeLine();
+
 	PipelineManager(){};
 	~PipelineManager(){};
 };

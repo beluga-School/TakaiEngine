@@ -45,9 +45,9 @@ public:
 	float mLifeTime = 0.0f;
 	float mMaxLifeTime = 0.0f;
 
-	Particle(const Vector3& spawnPos,const Vector3& velocity,
+	/*Particle(const Vector3& spawnPos,const Vector3& velocity,
 		const float& scale, const float& speed, const float& maxLifeTime, 
-		const Float4& color);
+		const Float4& color);*/
 
 	void Update();
 };

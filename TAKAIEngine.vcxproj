@@ -277,6 +277,7 @@
     <None Include="Resources\Shader\OBJShaderHeader.hlsli" />
     <None Include="Resources\Shader\OutLine.hlsli" />
     <None Include="Resources\Shader\Particle.hlsli" />
+    <None Include="Resources\Shader\PerlinNoisePE\PerlinNoisePE.hlsli" />
     <None Include="Resources\Shader\PerlinNoise\PerlinNoise.hlsli" />
     <None Include="Resources\Shader\Phong.hlsli" />
     <None Include="Resources\Shader\GaussianBlur.hlsli" />
@@ -443,6 +444,18 @@
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">5.0</ShaderModel>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">5.0</ShaderModel>
+    </FxCompile>
+    <FxCompile Include="Resources\Shader\PerlinNoisePE\PerlinNoisePEPS.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">5.0</ShaderModel>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">5.0</ShaderModel>
+    </FxCompile>
+    <FxCompile Include="Resources\Shader\PerlinNoisePE\PerlinNoisePEVS.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">5.0</ShaderModel>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">5.0</ShaderModel>
     </FxCompile>
     <FxCompile Include="Resources\Shader\PerlinNoise\PerlinNoiseVS.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>

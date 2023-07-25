@@ -5,6 +5,7 @@
 #include "ImguiManager.h"
 #include "TimeManager.h"
 #include "MathF.h"
+#include "PostEffect.h"
 
 void ShaderTestScene::LoadResource()
 {
@@ -83,6 +84,22 @@ void ShaderTestScene::Update()
 	{
 		mode = DrawMode::Noise;
 	}
+
+	//ノイズエフェクト切り替え
+	static bool hoge = false;
+	if (ImGui::Button("NoiseEffect"))
+	{
+		hoge = !hoge;
+	}
+	if (hoge)
+	{
+		PostEffect::pipeLineName = "PerlinNoisePE";
+	}
+	else
+	{
+		PostEffect::pipeLineName = "None";
+	}
+
 	ImGui::Text("camradius %f", debugCamera.GetRadius());
 	gui.End();
 }
@@ -90,6 +107,7 @@ void ShaderTestScene::Update()
 void ShaderTestScene::Draw()
 {
 	BasicObjectPreDraw(PipelineManager::GetPipeLine("Skydome"));
+	//BasicObjectPreDraw(PipelineManager::GetPipeLine("MultiRender"));
 	skydome.Draw();
 
 	switch (mode)

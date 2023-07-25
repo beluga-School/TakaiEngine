@@ -1,6 +1,11 @@
 #pragma once
 #include "Sprite.h"
 
+struct ConstBufferTime
+{
+	float time;
+};
+
 class PostEffect 
 {
 public:
@@ -17,7 +22,7 @@ public:
 	void PostDrawScene();
 
 	//パイプライン切り替え用にとりあえず置いておく
-	std::string pipeLineName = "None";
+	static std::string pipeLineName;
 
 private:
 	//画面クリア用の色
@@ -39,7 +44,7 @@ private:
 	//頂点バッファビュー
 	D3D12_VERTEX_BUFFER_VIEW mVbView{};
 	//定数バッファ
-	ConstBuffer<ConstBufferDataSprite> mConstBuffer;
+	ConstBuffer<ConstBufferTime> mConstBuffer;
 
 	//まとめ関数
 	//テクスチャ生成(今の画面からテクスチャを生成？)

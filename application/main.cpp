@@ -134,8 +134,8 @@ int32_t WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_  HINSTANCE hPrevInstan
 
 	//ƒV[ƒ“‚Ì‰Šú‰»
 	SceneManager *scenemanager = SceneManager::Get();
-	scenemanager->ChangeScene<GameScene>();
-	//scenemanager->ChangeScene<ShaderTestScene>();
+	//scenemanager->ChangeScene<GameScene>();
+	scenemanager->ChangeScene<ShaderTestScene>();
 	//scenemanager->ChangeScene<DemoScene>();
 
 #pragma endregion •`‰æ‰Šú‰»ˆ—

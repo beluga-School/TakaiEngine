@@ -8,7 +8,7 @@ void GParticleManager::CreateParticle(const Vector3& spawnPos, const Vector3& ve
 	const float& scale, const float& speed, const bool& redChange,
 	const float& maxLifeTime, const Float4& color)
 {
-	mParticles.emplace_back(spawnPos, velocity, scale, speed,maxLifeTime,color,redChange);
+	//mParticles.emplace_back(spawnPos, velocity, scale, speed,maxLifeTime,color,redChange);
 }
 
 void GParticleManager::Initialize()
@@ -117,21 +117,6 @@ GParticleManager* GParticleManager::Getinstance()
 	return &instance;
 }
 
-Particle::Particle(const Vector3& spawnPos_, const Vector3& velocity_,
-	const float& scale_, const float& speed_, const float& maxLifeTime_,
-	const Float4& color_, const bool& redChange_)
-{
-	mPosition = spawnPos_;
-	mVelocity = velocity_;
-	mSpeed = speed_;
-
-	mMaxLifeTime = maxLifeTime_;
-
-	mScale = scale_;
-
-	mColor = color_;
-}
-
 void Particle::Update()
 {
 	mLifeTime += TimeManager::deltaTime;
@@ -158,30 +143,6 @@ void ParticleEmitter::Initialize()
 	mEmitter.position = { 0,0,0 };
 	mEmitter.SetModel(ModelManager::Get()->GetModel("Cube"));
 	mEmitter.SetTexture(TextureManager::Get()->GetTexture("white"));
-}
-
-void ParticleEmitter::SetInfo(const Vector3& pos, const float& range_, const float& scale_,
-	const Float4& color_, const int32_t& spawnNum_, const bool& redChange_)
-{
-	mEmitter.position = {
-		pos.x,
-		pos.y,
-		pos.z
-	};
-
-	mRange = range_;
-	mInitScale = scale_;
-
-	mColor = color_;
-	mSpawnNum = spawnNum_;
-
-	if (mSpawnNum <= 0)
-	{
-		mSpawnNum = 1;
-	}
-
-	mRedChange = redChange_;
-
 }
 
 void ParticleEmitter::Update()

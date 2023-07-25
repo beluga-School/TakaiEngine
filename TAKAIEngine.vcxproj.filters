@@ -334,6 +334,9 @@
     <Filter Include="Application\UI\HPGauge">
       <UniqueIdentifier>{cf542d8c-5bba-45fc-b53e-70bebf207435}</UniqueIdentifier>
     </Filter>
+    <Filter Include="シェーダー\PerlinNoisePE">
+      <UniqueIdentifier>{d961cf0c-520f-449d-9e6a-bdaf3f70f313}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Application\Charactor\Enemy\Bombking">
       <UniqueIdentifier>{19be8813-a8cc-4663-9693-622a7fee7e72}</UniqueIdentifier>
     </Filter>
@@ -896,6 +899,9 @@
     <None Include="Resources\Shader\Disolve\Disolve.hlsli">
       <Filter>シェーダー\Disolve</Filter>
     </None>
+    <None Include="Resources\Shader\PerlinNoisePE\PerlinNoisePE.hlsli">
+      <Filter>シェーダー\PerlinNoisePE</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Resources\Shader\BasicPS.hlsl">
@@ -1029,6 +1035,12 @@
     </FxCompile>
     <FxCompile Include="Resources\Shader\Disolve\DisolveVS.hlsl">
       <Filter>シェーダー\Disolve</Filter>
+    </FxCompile>
+    <FxCompile Include="Resources\Shader\PerlinNoisePE\PerlinNoisePEPS.hlsl">
+      <Filter>シェーダー\PerlinNoisePE</Filter>
+    </FxCompile>
+    <FxCompile Include="Resources\Shader\PerlinNoisePE\PerlinNoisePEVS.hlsl">
+      <Filter>シェーダー\PerlinNoisePE</Filter>
     </FxCompile>
   </ItemGroup>
 </Project>
