@@ -16,7 +16,7 @@ void Cannon::Initialize()
 
 void Cannon::Update()
 {
-	CreateCol();
+	box.CreateCol();
 	timer.Update();
 	//ターゲットに何か入ったなら
 	if (target != nullptr)
@@ -30,39 +30,27 @@ void Cannon::Update()
 			//target->position = TEasing::lerp(startPos, interPos, timer.GetTimeRate());
 			target->position = Vector3::Spline(inters, timer.GetTimeRate());
 
+			//毎フレーム煙っぽくパーティクル生成
+			ParticleManager::GetInstance()->CreateCubeParticle(target->position, { 1,1,1 }, 1, { 0.1f,0.1f,0.1f,1 });
+
 			if (timer.GetEnd())
 			{
 				timer.Start();
-				//state = CannonState::Two;
-			
-				state = CannonState::None;
-
-				target->SetNoGravity(0);
-
-				//移動させ終わったので、ターゲットの保持を解除
-				target = nullptr;
-			}
-
-			break;
-		case Cannon::CannonState::Two:
-			//ターゲットを動かす
-			target->position = TEasing::lerp(interPos, endPos, timer.GetTimeRate());
-		
-			if (timer.GetEnd())
-			{
-				timer.Start();
-				state = CannonState::None;
 				
+				state = CannonState::None;
+
 				target->SetNoGravity(0);
+
+				//着地時にパーティクル
+				for (int32_t i = 0; i < 10; i++)
+				{
+					ParticleManager::GetInstance()->CreateCubeParticle(target->position, { 3,3,3 }, 10, { 1,1,0.1f,1 });
+				}
 
 				//移動させ終わったので、ターゲットの保持を解除
 				target = nullptr;
-
-				for (int i = 0; i < 10; i++)
-				{
-					ParticleManager::GetInstance()->CreateCubeParticle(target->position, { 5,5,5 }, 10, { 0.1f,0.1f,0.1f,1 });
-				}
 			}
+
 			break;
 		}		
 	}

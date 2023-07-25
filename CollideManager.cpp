@@ -4,6 +4,10 @@
 #include "Block.h"
 #include "Cannon.h"
 
+
+#include "Player.h"
+#include "ImguiManager.h"
+
 bool CollideManager::CheckDirections(const Cube& check, const Cube& collide, const CheckDirection& CD)
 {
 	switch (CD)
@@ -30,7 +34,7 @@ bool CollideManager::CheckDirections(const Cube& check, const Cube& collide, con
 	return false;
 }
 
-bool CheckIsDead(Box* box)
+bool CheckIsDead(Entity* box)
 {
 	return box->IsDead();
 }
@@ -49,16 +53,16 @@ void CollideManager::Update()
 			itr++;
 		}
 	}
-	for (Box*check : allCols)
+	for (Entity*check : allCols)
 	{
-		for (Box* collide : allCols)
+		for (Entity* collide : allCols)
 		{
 			CheckCollide(check, collide);
 		}
 	}
 }
 
-void CollideManager::CheckCollide(Box* check, Box* collide)
+void CollideManager::CheckCollide(Entity* check, Entity* collide)
 {
 	//同じなら判定しないぜ
 	if (check == collide)
@@ -67,7 +71,7 @@ void CollideManager::CheckCollide(Box* check, Box* collide)
 	}
 
 	//判定する側がモブの時
-	if (check->tag == TagTable::Mob)
+	if (check->CheckTag(TagTable::Mob))
 	{
 		if (check == nullptr)
 		{
@@ -78,20 +82,19 @@ void CollideManager::CheckCollide(Box* check, Box* collide)
 		Mob* mob = static_cast<Mob*>(check);
 
 		//される側がブロックなら
-		if (collide->tag == TagTable::Block)
+		if (collide->CheckTag(TagTable::Block))
 		{
 			//collideがBlockであることは確定しているので、Block型に変換してデータを持ってくる
 			Block* block = static_cast<Block*>(collide);
 
 			//押し戻し処理を行う
-			//Error:敵の地面押し戻し処理が、死んだ後に行おうとして死んでる感じ
 			Osimodosi(*mob, *block);
 		}
-		if (collide->tag == TagTable::Cannon)
+		if (collide->CheckTag(TagTable::Cannon))
 		{
 			//collideがCannonであることは確定しているので、Cannon型に変換してデータを持ってくる
 			Cannon* cannon = static_cast<Cannon*>(collide);
-			if (Collsions::CubeCollision(check->cubecol, collide->cubecol))
+			if (Collsions::CubeCollision(mob->box.cubecol, cannon->box.cubecol))
 			{
 				cannon->OnCollide(*mob);
 			}
@@ -103,45 +106,45 @@ void CollideManager::Osimodosi(Mob& check, const Block& collide)
 {
 	//そのオブジェクトより
 	//上にいるか
-	bool up = CheckDirections(check.cubecol, collide.cubecol, CheckDirection::CD_UP);
+	bool up = CheckDirections(check.box.cubecol, collide.box.cubecol, CheckDirection::CD_UP);
 	//下にいるか
-	bool down = CheckDirections(check.cubecol, collide.cubecol, CheckDirection::CD_DOWN);
+	bool down = CheckDirections(check.box.cubecol, collide.box.cubecol, CheckDirection::CD_DOWN);
 	//前にいるか
-	bool center = CheckDirections(check.cubecol, collide.cubecol, CheckDirection::CD_CENTER);
+	bool center = CheckDirections(check.box.cubecol, collide.box.cubecol, CheckDirection::CD_CENTER);
 	//後ろにいるか
-	bool back = CheckDirections(check.cubecol, collide.cubecol, CheckDirection::CD_BACK);
+	bool back = CheckDirections(check.box.cubecol, collide.box.cubecol, CheckDirection::CD_BACK);
 	//左にいるか
-	bool left = CheckDirections(check.cubecol, collide.cubecol, CheckDirection::CD_LEFT);
+	bool left = CheckDirections(check.box.cubecol, collide.box.cubecol, CheckDirection::CD_LEFT);
 	//右にいるか
-	bool right = CheckDirections(check.cubecol, collide.cubecol, CheckDirection::CD_RIGHT);
+	bool right = CheckDirections(check.box.cubecol, collide.box.cubecol, CheckDirection::CD_RIGHT);
 
 	//上面の当たり判定
-	if (up)
+	//直線状で見たときに下にあるオブジェクトがあれば
+	Cube rayCube;
+	rayCube.position = check.position;
+	rayCube.scale = check.scale;
+	//スケールをめっちゃ引き延ばす
+	rayCube.scale.y = 100;
+
+	//当たったなら
+	//生き物=無機物
+	bool cubeCol = Collsions::CubeCollision(rayCube, collide.box.cubecol);
+
+	bool upCol = up && cubeCol;
+
+	//全て0なら埋まっている
+	bool isBuried = !up && !down && !right && !left && !back && !center;
+
+	//上面が当たっているかオブジェクトが埋まっているなら
+	if (upCol || isBuried)
 	{
-		//直線状で見たときに下にあるオブジェクトがあれば
-		Cube rayCube;
-		rayCube.position = check.position;
-		rayCube.scale = check.scale;
-		//スケールをめっちゃ引き延ばす
-		rayCube.scale.y = 100;
-
-		//当たったなら
-		//生き物=無機物
-		bool cubeCol = Collsions::CubeCollision(rayCube, collide.cubecol);
-
-		if (cubeCol)
-		{
-			//リストに入れる
-
-			//このリストをいちいち消すのではなく、
-			//当たり判定をとり、同じ要素が入っていないなら入れて
-			//当たり判定が外れたときに、その要素を消す
-			UniqueObjectPushBack(check.hitListY, collide.cubecol);
-		}
-		else
-		{
-			UniqueObjectErase(check.hitListY, collide.cubecol);
-		}
+		//リストに入れる
+		UniqueObjectPushBack(check.hitListY, collide.box.cubecol);
+	}
+	else
+	{
+		//そうでないなら外す
+		UniqueObjectErase(check.hitListY, collide.box.cubecol);
 	}
 	
 
@@ -155,7 +158,7 @@ void CollideManager::Osimodosi(Mob& check, const Block& collide)
 	if (up == false)
 	{
 		//左右も別の当たり判定リスト作って、同じ手法で取れそう？
-		if (Collsions::CubeCollision(check.cubecol, collide.cubecol))
+		if (Collsions::CubeCollision(check.box.cubecol, collide.box.cubecol))
 		{
 			//横方向を少し大きくして、当たり判定を取ったオブジェクトと当たっているなら
 			if (right)

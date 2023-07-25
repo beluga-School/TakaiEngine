@@ -108,6 +108,7 @@
     <ClCompile Include="CollideManager.cpp" />
     <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="EnemyManager.cpp" />
+    <ClCompile Include="Entity.cpp" />
     <ClCompile Include="GEnemy.cpp" />
     <ClCompile Include="engine\2d\PostEffect.cpp" />
     <ClCompile Include="engine\3d\Billboard.cpp" />
@@ -189,6 +190,7 @@
     <ClInclude Include="CollideManager.h" />
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="EnemyManager.h" />
+    <ClInclude Include="Entity.h" />
     <ClInclude Include="GEnemy.h" />
     <ClInclude Include="engine\2d\PostEffect.h" />
     <ClInclude Include="engine\3d\Billboard.h" />

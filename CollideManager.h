@@ -2,7 +2,7 @@
 #include "Collision.h"
 #include <list>
 #include "Obj.h"
-#include "Box.h"
+#include "Entity.h"
 #include "Mob.h"
 #include "Block.h"
 
@@ -42,7 +42,7 @@ void UniqueObjectErase(std::list<T>& list, const T& col)
 class CollideManager
 {
 public:
-	std::list<Box*> allCols;
+	std::list<Entity*> allCols;
 	void Update();
 
 	static CollideManager* Get()
@@ -52,7 +52,7 @@ public:
 	}
 
 	//è“®‚Å“–‚½‚è”»’è‚ğ“Ç‚ñ‚Å‚¨‚«‚½‚¢‚Æ‚«—p‚ÉA•Ê‚Å•ª‚¯‚é
-	void CheckCollide(Box* check,Box* collide);
+	void CheckCollide(Entity* check, Entity* collide);
 
 private:
 	CollideManager(){};

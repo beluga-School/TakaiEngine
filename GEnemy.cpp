@@ -28,12 +28,6 @@ void GEnemy::Update()
 
 	Vector3 standardRotaVec = {MathF::PIf / 2,0,0};
 
-	if (attackState != AttackState::Encount)
-	{
-		gravity += gravityAdd;
-		position -= Vector3(0, gravity, 0);
-	}
-
 	switch (attackState)
 	{
 	case GEnemy::AttackState::None:
@@ -195,7 +189,7 @@ void GEnemy::ColUpdate()
 {
 	sphereCol.center = position;
 	//’ÇÕ”ÍˆÍ‚Ì‹…‚Ì”¼Œa(ƒx[ƒX‚Ì‘å‚«‚³+‘å‚«‚³‚Ì•½‹Ï‚ğ‘«‚·)
-	sphereCol.radius = 8 + MathF::Avarage(scale);;
+	sphereCol.radius = 8 + MathF::Avarage(scale);
 
 	hitSphere.position = sphereCol.center;
 	hitSphere.scale = { sphereCol.radius,sphereCol.radius,sphereCol.radius };

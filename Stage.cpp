@@ -44,11 +44,6 @@ void Stage::Update()
 		SceneChange::Get()->Open();
 	}
 
-	for (auto &obj: mObj3ds)
-	{
-		obj.Update(*Camera::sCamera);
-	}
-
 	for (auto& obj : mEventObjects)
 	{
 		obj->Update();
@@ -60,10 +55,15 @@ void Stage::Update()
 	}
 	StarManager::Get()->Update();
 
-	for (auto& obj : mColObj3ds)
+	for (auto& obj : CollideManager::Get()->allCols)
 	{
-		obj.Update(*Camera::sCamera);
-		obj.CreateCol();
+		if (obj->CheckTag(TagTable::Block))
+		{
+			Block* block = static_cast<Block*>(obj);
+			block->box.CreateCol();
+		}
+		
+		obj->Update(*Camera::sCamera);
 	}
 	for (auto& obj : mGoals)
 	{
@@ -110,11 +110,11 @@ void Stage::NormalObjectSet(const LevelData::ObjectData& data)
 	}
 
 	//とりあえずキューブで配置
-	mObj3ds.emplace_back();
-	mObj3ds.back().Initialize();
+	mEntitys.emplace_back();
+	mEntitys.back().Initialize();
 
 	//アウトライン設定
-	mObj3ds.back().SetOutLineState({ 0,0,0,1.0f }, 0.05f);
+	mEntitys.back().SetOutLineState({ 0,0,0,1.0f }, 0.05f);
 
 	//モデル設定
 	//ファイルネームが設定されてるならそれで
@@ -125,48 +125,43 @@ void Stage::NormalObjectSet(const LevelData::ObjectData& data)
 		{
 			ModelManager::LoadModel(data.fileName, data.fileName,true);
 		}
-		mObj3ds.back().SetModel(ModelManager::GetModel(data.fileName));
+		mEntitys.back().SetModel(ModelManager::GetModel(data.fileName));
 	}
 	//ないなら四角をデフォで設定
 	else
 	{
-		mObj3ds.back().SetModel(ModelManager::GetModel("Cube"));
+		mEntitys.back().SetModel(ModelManager::GetModel("Cube"));
 	}
+
 	//バグらないように白テクスチャを入れる
-	mObj3ds.back().SetTexture(TextureManager::Get()->GetTexture("white"));
+	mEntitys.back().SetTexture(TextureManager::Get()->GetTexture("white"));
 	
 	//オブジェクトの配置
-	LevelDataExchanger::SetObjectData(mObj3ds.back(), data);
+	LevelDataExchanger::SetObjectData(mEntitys.back(), data);
 }
 
 void Stage::CollisionSet(const LevelData::ObjectData& data)
 {
 	//当たり判定を表示するオブジェクト
-	mColObj3ds.emplace_back();
-	mColObj3ds.back().Initialize();
+	mEntitys.emplace_back();
+	mEntitys.back().box.Initialize();
 
-	mColObj3ds.back().SetModel(ModelManager::GetModel("BlankCube"));
-	mColObj3ds.back().SetTexture(TextureManager::Get()->GetTexture("white"));
+	//エンティティリストで参照されたくないので、コリジョンのタグを付ける
+	mEntitys.back().taglist.push_back(TagTable::Collsion);
 
-	mColObj3ds.back().position = data.translation + data.collider.center;
-	mColObj3ds.back().scale = {
+	mEntitys.back().box.SetModel(ModelManager::GetModel("BlankCube"));
+	mEntitys.back().box.SetTexture(TextureManager::Get()->GetTexture("white"));
+
+	mEntitys.back().box.position = data.translation + data.collider.center;
+	mEntitys.back().box.scale = {
 		data.scaling.x * data.collider.size.x,
 		data.scaling.y * data.collider.size.y,
 		data.scaling.z * data.collider.size.z
 	};
-	mColObj3ds.back().rotation = {
+	mEntitys.back().box.rotation = {
 		MathF::AngleConvRad(data.rotation.x),
 		MathF::AngleConvRad(data.rotation.y),
 		MathF::AngleConvRad(data.rotation.z)
-	};
-
-	//当たり判定自体の情報を作成
-	mColCubes.emplace_back();
-	mColCubes.back().position = data.translation + data.collider.center;
-	mColCubes.back().scale = {
-		data.scaling.x * data.collider.size.x,
-		data.scaling.y * data.collider.size.y,
-		data.scaling.z * data.collider.size.z
 	};
 }
 
@@ -274,10 +269,8 @@ void Stage::ChangeUpdate()
 	currentHandle = currentData->mHandle;
 
 	//入ってたものを削除
-	mObj3ds.clear();
-	mColCubes.clear();
+	mEntitys.clear();
 	mEventObjects.clear();
-	mColObj3ds.clear();
 	mGoals.clear();
 	StarManager::Get()->mStars.clear();
 	CollideManager::Get()->allCols.clear();
@@ -354,9 +347,6 @@ void Stage::ChangeUpdate()
 			if (objectData->collider.have)
 			{
 				CollisionSet(*objectData);
-			
-				//コリジョンを取るオブジェクトへのポインタを保持
-				mColObj3ds.back().collideObj = &mObj3ds.back();
 			}
 
 			continue;
@@ -405,8 +395,10 @@ void Stage::ChangeUpdate()
 void Stage::DrawModel()
 {
 	if (mShowModel == false) return;
-	for (auto& obj : mObj3ds)
+	for (auto& obj : mEntitys)
 	{
+		if (obj.CheckTag(TagTable::Collsion))continue;
+
 		BasicObjectPreDraw(PipelineManager::GetPipeLine("OutLine"), false);
 		obj.DrawOutLine();
 		//アルファが1未満になるなら透明用描画パイプラインに切り替える
@@ -471,8 +463,9 @@ void Stage::DrawModel()
 void Stage::DrawCollider()
 {
 	if (mShowCollider == false) return;
-	for (auto& obj : mColObj3ds)
+	for (auto& obj : mEntitys)
 	{
-		obj.Draw();
+		if (!obj.CheckTag(TagTable::Collsion))continue;
+		obj.box.Draw();
 	}
 }

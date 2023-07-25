@@ -1,10 +1,11 @@
 #pragma once
+#include "Entity.h"
 #include "Box.h"
 
-class Block : public Box
+class Block : public Entity
 {
 public:
 	Block() {
-		tag = TagTable::Block;
+		taglist.push_back(TagTable::Block);
 	};
 };

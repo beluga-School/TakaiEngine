@@ -71,39 +71,45 @@ void PlayerCamera::BackTransparent()
 	transparentObj.Update(*Camera::sCamera);
 
 	//当たったオブジェクトの描画フラグを折る
-	for (auto& obj : Stage::Get()->mColObj3ds)
+	for (auto& obj : CollideManager::Get()->allCols)
 	{
+		//ブロック以外なら次へ
+		if (!obj->CheckTag(TagTable::Block))continue;
+		
+		//ブロックなのが確定したのでブロック型に変換
+		Block* block = static_cast<Block*>(obj);
+
 		//当たってたら消える
-		if (Collsions::BoxColAABB(obj, transparentObj))
+		if (Collsions::BoxColAABB(block->box, transparentObj))
 		{
 			//地面が透けてほしくないので、地面の座標がプレイヤーの足元より下なら
 			//当たってても透ける処理をスキップする
-			if (obj.position.y + obj.scale.y / 2 <= player->GetFeet())
+			if (block->box.position.y + block->box.scale.y / 2 <= player->GetFeet())
 			{
 				continue;
 			}
 
-			if (obj.collideObj->transparentTimer.GetStarted() == false)
+			if (block->box.transparentTimer.GetStarted() == false)
 			{
-				obj.collideObj->transparentTimer.Start();
+				block->box.transparentTimer.Start();
 			}
-			else if (obj.collideObj->transparentTimer.GetReverseStarted())
+			else if (block->box.transparentTimer.GetReverseStarted())
 			{
-				obj.collideObj->transparentTimer.Reset();
+				block->box.transparentTimer.Reset();
 			}
 			//アウトラインはすぐに消す
-			obj.collideObj->SetOutLineAlpha(0.0f);
+			block->box.SetOutLineAlpha(0.0f);
 		}
 		//当たってないなら段々濃くする
 		else
 		{
 			//タイマーのTimeRateが0.0~1.0の範囲で動くので、その値を反転させたものをAlphaとして扱う
-			obj.collideObj->transparentTimer.ReverseStart();
+			block->box.transparentTimer.ReverseStart();
 			//アウトラインはすぐに戻す
-			obj.collideObj->SetOutLineAlpha(1.0f);
+			block->box.SetOutLineAlpha(1.0f);
 		}
 		//段々薄くしたり濃くしたりする
-		obj.collideObj->color_.w = 1.0f - obj.collideObj->transparentTimer.GetTimeRate();
+		block->box.color_.w = 1.0f - block->box.transparentTimer.GetTimeRate();
 	}
 }
 

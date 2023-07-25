@@ -27,6 +27,8 @@ void Player::Initialize()
 
 void Player::Update()
 {
+	//SetNoGravity(true);
+
 	//ƒ_ƒ[ƒWˆ—
 	if (Input::Keyboard::TriggerKey(DIK_T))
 	{
@@ -284,14 +286,16 @@ void Player::ColUpdate()
 
 	//for (auto& bColTemp : Stage::Get()->mColCubes)
 
-	CreateCol(pCol.position, pCol.scale);
-	for (auto& bColTemp : Stage::Get()->mColObj3ds)
-	{
-		Block* block = static_cast<Block*>(&bColTemp);
-		CollideManager::Get()->CheckCollide(this, block);
-	}
+	box.CreateCol(pCol.position, pCol.scale);
 
-	//GroundCol();
+	for (auto& col : CollideManager::Get()->allCols)
+	{
+		if (col->CheckTag(TagTable::Block))
+		{
+			Block* block = static_cast<Block*>(col);
+			CollideManager::Get()->CheckCollide(this, block);
+		}
+	}
 
 	for (auto& bColevent : Stage::Get()->mEventObjects)
 	{

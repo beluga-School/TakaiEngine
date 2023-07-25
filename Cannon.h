@@ -6,7 +6,7 @@ class Cannon : public EventBlock
 {
 public:
 	Cannon() {
-		tag = TagTable::Cannon;
+		taglist.push_back(TagTable::Cannon);
 	};
 
 	void Initialize()override;
@@ -47,7 +47,6 @@ private:
 	{
 		None,
 		One,
-		Two,
 	}state = CannonState::None;
 
 	void HitEffect(){};

@@ -337,9 +337,6 @@
     <Filter Include="シェーダー\PerlinNoisePE">
       <UniqueIdentifier>{d961cf0c-520f-449d-9e6a-bdaf3f70f313}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Application\Charactor\Enemy\Bombking">
-      <UniqueIdentifier>{19be8813-a8cc-4663-9693-622a7fee7e72}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Application\Charactor\Bombking">
       <UniqueIdentifier>{78cc1e19-54eb-4c7e-9efa-687c2f3bd240}</UniqueIdentifier>
     </Filter>
@@ -354,6 +351,9 @@
     </Filter>
     <Filter Include="Application\Scene\TitleScene">
       <UniqueIdentifier>{126ea705-ae9c-4d2c-998f-b10a66c42174}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Application\Entity">
+      <UniqueIdentifier>{1594da5a-a29e-4cf2-ac1c-40929b166ee2}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -592,7 +592,10 @@
       <Filter>Engine\Particle2D\IParticle2D</Filter>
     </ClCompile>
     <ClCompile Include="TitleScene.cpp">
-      <Filter>ソース ファイル</Filter>
+      <Filter>Application\Scene\TitleScene</Filter>
+    </ClCompile>
+    <ClCompile Include="Entity.cpp">
+      <Filter>Application\Entity</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -840,7 +843,10 @@
       <Filter>Engine\Particle2D\IParticle2D</Filter>
     </ClInclude>
     <ClInclude Include="TitleScene.h">
-      <Filter>ヘッダー ファイル</Filter>
+      <Filter>Application\Scene\TitleScene</Filter>
+    </ClInclude>
+    <ClInclude Include="Entity.h">
+      <Filter>Application\Entity</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

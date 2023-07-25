@@ -9,17 +9,17 @@
 #include "CollideManager.h"
 #include "Mob.h"
 
-class ColObj3d : public Block
-{
-public:
-	Obj3d* collideObj = nullptr;
-};
-
-class ColMob : public Mob
-{
-public:
-	Obj3d* collideObj = nullptr;
-};
+//class ColObj3d : public Block
+//{
+//public:
+//	Obj3d* collideObj = nullptr;
+//};
+//
+//class ColMob : public Mob
+//{
+//public:
+//	Obj3d* collideObj = nullptr;
+//};
 
 class ColEventObj : public Obj3d
 {
@@ -56,15 +56,7 @@ public:
 	}
 
 	//モデルの配列
-	std::list<Obj3d> mObj3ds;
-
-	//当たり判定モデル配列
-	std::list<ColObj3d> mColObj3ds;
-
-	std::list<ColMob> mColMobs;
-
-	//当たり判定配列
-	std::list<Cube> mColCubes;
+	std::list<Entity> mEntitys;
 
 	//イベントオブジェクト配列
 	std::list<std::unique_ptr<EventBlock>> mEventObjects;

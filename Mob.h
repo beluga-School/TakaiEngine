@@ -1,7 +1,8 @@
 #pragma once
+#include "Entity.h"
 #include "Box.h"
 
-class Mob : public Box
+class Mob : public Entity
 {
 public:
 	Vector3 moveValue = { 0,0,0 };
@@ -9,7 +10,7 @@ public:
 	std::list<Cube> hitListY;
 
 	Mob() {
-		tag = TagTable::Mob;
+		taglist.push_back(TagTable::Mob);
 	};
 
 	//true‚É‚È‚é‚Æd—Í‚ğó‚¯‚È‚­‚·‚é(gravity‚Ì’l‚à0‚É‚·‚é)
