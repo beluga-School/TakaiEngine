@@ -1,5 +1,6 @@
 #include "Enemy.h"
 #include "MathF.h"
+#include "ClearDrawScreen.h"
 
 int32_t Enemy::GetHitDamage()
 {
@@ -30,9 +31,29 @@ void Enemy::TargetTurn(const Mob& target, const Vector3& tVec)
 	}
 }
 
+void Enemy::EncountSphereInitialize()
+{
+	encountSphere.Initialize();
+	encountSphere.SetModel(ModelManager::GetModel("ICOSphere"));
+	encountSphere.SetTexture(TextureManager::GetTexture("white"));
+}
+
 void Enemy::EncountSphereUpdate()
 {
 	sphereCol.center = position;
 	//’ÇÕ”ÍˆÍ‚Ì‹…‚Ì”¼Œa(ƒx[ƒX‚Ì‘å‚«‚³+‘å‚«‚³‚Ì•½‹Ï‚ğ‘«‚·)
 	sphereCol.radius = 8 + MathF::Avarage(scale);
+
+	encountSphere.position = sphereCol.center;
+	encountSphere.scale = { sphereCol.radius,sphereCol.radius,sphereCol.radius };
+
+	encountSphere.Update(*Camera::sCamera);
+}
+
+void Enemy::EncountSphereDraw(const std::string& oldPipeline)
+{
+	BasicObjectPreDraw(PipelineManager::GetPipeLine("WireFrame"));
+	encountSphere.Draw();
+	
+	BasicObjectPreDraw(PipelineManager::GetPipeLine(oldPipeline));
 }

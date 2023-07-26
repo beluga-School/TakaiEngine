@@ -1,6 +1,16 @@
 #include "Mob.h"
 #include "TimeManager.h"
 
+void Mob::CollsionUpdate()
+{
+	box.CreateCol(position, scale);
+
+	//ç°å„XÇ‡ì¸ÇÈó\íË
+	//UpdateX();
+
+	UpdateY();
+}
+
 void Mob::UpdateY()
 {
 	JumpUpdate();

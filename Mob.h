@@ -41,8 +41,7 @@ public:
 protected:
 	bool noGravity = false;
 
-	//縦方向の更新
-	void UpdateY();
+	void CollsionUpdate();
 
 	///---縦移動
 	JumpState jumpState = JumpState::None;
@@ -70,6 +69,10 @@ protected:
 	float feet = 0;
 
 private:
+	//---縦方向の更新
+	
+	//縦方向の更新まとめ用
+	void UpdateY();
 	//下方向との押し戻し処理
 	void GroundCol();
 	//重力とジャンプ機能の更新

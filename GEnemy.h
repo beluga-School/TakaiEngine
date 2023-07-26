@@ -21,11 +21,7 @@ public:
 
 	void Encount();
 
-	void ColUpdate();
-
 private:
-	Obj3d hitSphere;
-
 	float mSpeed = 2.5f;	//1秒間の移動速度
 
 	//発見時のジャンプ管理タイマー

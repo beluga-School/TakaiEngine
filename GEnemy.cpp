@@ -12,9 +12,7 @@ void GEnemy::Initialize()
 	SetTexture(TextureManager::GetTexture("white"));
 	SetOutLineState({0,0,0,1},0.05f);
 
-	hitSphere.Initialize();
-	hitSphere.SetModel(ModelManager::GetModel("ICOSphere"));
-	hitSphere.SetTexture(TextureManager::GetTexture("white"));
+	EncountSphereInitialize();
 
 	Register();
 }
@@ -133,24 +131,16 @@ void GEnemy::Update()
 		break;
 	}
 
-	UpdateY();
+	CollsionUpdate();
 
-	ColUpdate();
+	EncountSphereUpdate();
 
 	Obj3d::Update(*Camera::sCamera);
-	hitSphere.Update(*Camera::sCamera);
 }
 
 void GEnemy::Draw()
 {
-	BasicObjectPreDraw(PipelineManager::GetPipeLine("Toon"));
 	Obj3d::DrawMaterial();
-
-	/*BasicObjectPreDraw(PipelineManager::GetPipeLine("WireFrame"));
-	hitSphere.Draw();*/
-
-	BasicObjectPreDraw(PipelineManager::GetPipeLine("Toon"));
-
 }
 
 void GEnemy::HitEffect()
@@ -186,16 +176,4 @@ void GEnemy::Encount()
 	encountJumpTimer.Start();
 	encountJumpS = position.y;
 	encountJumpE = position.y + 2.0f;
-}
-
-void GEnemy::ColUpdate()
-{
-	box.CreateCol(position,scale);
-
-	sphereCol.center = position;
-	//’ÇÕ”ÍˆÍ‚Ì‹…‚Ì”¼Œa(ƒx[ƒX‚Ì‘å‚«‚³+‘å‚«‚³‚Ì•½‹Ï‚ğ‘«‚·)
-	sphereCol.radius = 8 + MathF::Avarage(scale);
-
-	hitSphere.position = sphereCol.center;
-	hitSphere.scale = { sphereCol.radius,sphereCol.radius,sphereCol.radius };
 }

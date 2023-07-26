@@ -72,17 +72,21 @@ void GameScene::Update()
 
 	ImGui::Text("fps %f", TimeManager::fps);
 
-	if (ImGui::Button("mShowModel"))
+	if (ImGui::Button("ShowModel"))
 	{
 		Stage::Get()->mShowModel = !Stage::Get()->mShowModel;
 	}
-	if (ImGui::Button("mShowCollider"))
+	if (ImGui::Button("ShowCollider"))
 	{
 		Stage::Get()->mShowCollider = !Stage::Get()->mShowCollider;
 	}
 	if (ImGui::Button("debugCam"))
 	{
 		debugCam = !debugCam;
+	}
+	if (ImGui::Button("CheckEncountSphere"))
+	{
+		EnemyManager::Get()->mIsDrawEncountSphere = !EnemyManager::Get()->mIsDrawEncountSphere;
 	}
 	
 	//ƒnƒ“ƒhƒ‹‚ª‹ó‚Å‚È‚¯‚ê‚Î

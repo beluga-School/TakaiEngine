@@ -77,9 +77,10 @@ void Player::Update()
 		}
 	}
 
-	UpdateY();
+	//Mob側の更新
+	Mob::CollsionUpdate();
 
-	//当たり判定更新
+	//Player特有の当たり判定更新(CollideManagerに移す)
 	ColUpdate();
 
 	//本加算

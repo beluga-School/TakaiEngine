@@ -41,6 +41,9 @@ public:
 
 	int32_t GetHitDamage();
 
+	//Encountを管理するスフィアの範囲を描画する
+	void EncountSphereDraw(const std::string& oldPipeline);
+
 protected:
 	/// <summary>
 	/// 指定したターゲットへのベクトルを返す
@@ -56,10 +59,15 @@ protected:
 	/// <param name="target"></param>
 	void TargetTurn(const Mob& target,const Vector3& tVec);
 
+	void EncountSphereInitialize();
 	void EncountSphereUpdate();
 
 	//接触時のダメージ
 	int32_t hitDamage = 1;
 
 	ActTable mActTable = ActTable::None;
+
+private:
+	//接触範囲のスフィアを描画する用(判定の管理自体はsphereColが行う)
+	Obj3d encountSphere;
 };

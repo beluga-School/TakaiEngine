@@ -13,6 +13,8 @@ void Bombking::Initialize()
 	colDrawer.SetModel(ModelManager::GetModel("BlankCube"));
 	colDrawer.SetTexture(TextureManager::GetTexture("white"));
 
+	EncountSphereInitialize();
+
 	Register();
 }
 
@@ -53,7 +55,7 @@ void Bombking::Update()
 	
 	box.CreateCol(colDrawer.position, colDrawer.scale);
 
-	UpdateY();
+	CollsionUpdate();
 
 	EncountSphereUpdate();
 

@@ -33,6 +33,7 @@ bool CollideManager::CheckDirections(const Cube& check, const Cube& collide, con
 	return false;
 }
 
+//中身見れなかったので、無理やり死亡を確認できるように関数作成
 bool CheckIsDead(Entity* box)
 {
 	return box->IsDead();

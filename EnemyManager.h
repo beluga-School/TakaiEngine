@@ -23,8 +23,10 @@ public:
 	void Draw();
 
 	std::list<std::unique_ptr<Enemy>> enemyList;
+
+	//エンカウントスフィアを描画するか
+	bool mIsDrawEncountSphere = false;
 private:
 
-	GUI eCheck = { "enemyCheck" };
 };
 
