@@ -231,7 +231,7 @@ void Stage::EvenyObjectSet(const LevelData::ObjectData& data)
 			mEventObjects.emplace_back();
 			mEventObjects.back() = std::make_unique<Cannon>();
 			mEventObjects.back()->Initialize();
-
+			
 			std::vector<std::string> split = Util::SplitString(data.eventtrigerName, "_");
 
 			//イベントトリガー名をstringstreamに代入
@@ -345,6 +345,10 @@ void Stage::ChangeUpdate()
 
 		//なにも無かったら
 		{
+			//ここまで何もかいてなければ地形の配置として扱う
+			//本来はBlock型に変換して入れたいが、ポインタで保持する形になってないのでBlock型にできない
+			//なのでTagを内部でBlockを入れる形にして何とかしている
+
 			//そのままモデルの配置
 			NormalObjectSet(*objectData);
 

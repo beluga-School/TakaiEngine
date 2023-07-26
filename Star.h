@@ -1,9 +1,14 @@
 #pragma once
 #include "EventBlock.h"
 
-class Star : public EventBlock
+class Star final : public EventBlock
 {
 public:
+	Star() : EventBlock()
+	{
+		taglist.push_back(TagTable::Star);
+	}
+
 	void Initialize()override;
 	void Update()override;
 	void Draw()override;

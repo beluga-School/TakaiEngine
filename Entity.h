@@ -17,6 +17,8 @@ enum class TagTable
 	Collsion = 4,
 	Player = 5,
 	Enemy = 6,
+	Star = 7,
+	WarpBlock = 8,
 };
 
 //3d描画される全てのオブジェクト

@@ -6,6 +6,11 @@
 class EventBlock : public Block
 {
 public:
+	EventBlock() :Block()
+	{
+
+	};
+
 	virtual void Initialize() = 0;
 
 	virtual void Update() = 0;

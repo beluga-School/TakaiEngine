@@ -6,6 +6,8 @@
 #include "ImguiManager.h"
 #include "Player.h"
 #include "Enemy.h"
+#include "Star.h"
+#include "WarpBlock.h"
 
 bool CollideManager::CheckDirections(const Cube& check, const Cube& collide, const CheckDirection& CD)
 {
@@ -140,16 +142,34 @@ void CollideManager::CheckStatus(Entity* check, Entity* collide)
 	//判定する側がPlayerの時
 	if (check->CheckTag(TagTable::Player))
 	{
+		//checkがPlayerであることは確定しているので、mob型に変換してデータを持ってくる
+		Player* player = static_cast<Player*>(check);
+
 		//される側がEnemyなら
 		if (collide->CheckTag(TagTable::Enemy))
 		{
-			//checkがPlayerであることは確定しているので、mob型に変換してデータを持ってくる
-			Player* player = static_cast<Player*>(check);
-
 			//collideがEnemyであることは確定しているので、mob型に変換してデータを持ってくる
 			Enemy* enemy = static_cast<Enemy*>(collide);
 
 			CheckPlayerToEnemy(*player, *enemy);
+		}
+		if (collide->CheckTag(TagTable::Star))
+		{
+			//collideがStarであることは確定しているので、Cannon型に変換してデータを持ってくる
+			Star* star = static_cast<Star*>(collide);
+			if (Collsions::CubeCollision(player->box.cubecol, star->box.cubecol))
+			{
+				star->HitEffect();
+			}
+		}
+		if (collide->CheckTag(TagTable::WarpBlock))
+		{
+			//collideがStarであることは確定しているので、Cannon型に変換してデータを持ってくる
+			WarpBlock* warpBlock = static_cast<WarpBlock*>(collide);
+			if (Collsions::CubeCollision(player->box.cubecol, warpBlock->box.cubecol))
+			{
+				warpBlock->HitEffect();
+			}
 		}
 	}
 }

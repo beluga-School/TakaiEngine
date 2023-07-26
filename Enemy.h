@@ -9,6 +9,8 @@ enum class ActTable
 	None,		//‰½‚à‚µ‚Ä‚¢‚È‚¢ó‘Ô
 	Encount,	//ƒvƒŒƒCƒ„[‚ğ”­Œ©‚µ‚½ó‘Ô
 	Tracking,
+	Attack1,
+	Attack2,
 	Staying,
 	Dead,		//€–Só‘Ô
 };

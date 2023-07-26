@@ -7,5 +7,6 @@ class Block : public Entity
 public:
 	Block() {
 		taglist.push_back(TagTable::Block);
+		Register();
 	};
 };

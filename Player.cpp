@@ -81,6 +81,7 @@ void Player::Update()
 	Mob::CollsionUpdate();
 
 	//Player特有の当たり判定更新(CollideManagerに移す)
+	//ここ置き換えるまでは今日やる
 	ColUpdate();
 
 	//本加算
@@ -286,11 +287,10 @@ void Player::ColUpdate()
 
 	pCol.position += moveValue;
 
-	//for (auto& bColTemp : Stage::Get()->mColCubes)
-
 	box.CreateCol(pCol.position, pCol.scale);
 
 	//ここら辺の処理を、全部CollideManagerに移す
+	//今はここに置かないと横の判定が取れない仕組みになってるので、後でX方向もシステム化する
 	for (auto& col : CollideManager::Get()->allCols)
 	{
 		if (col->CheckTag(TagTable::Block))
@@ -300,23 +300,26 @@ void Player::ColUpdate()
 		}
 	}
 
-	for (auto& bColevent : Stage::Get()->mEventObjects)
-	{
-		Cube eCol;
-		eCol.position = bColevent->position;
-		
-		//なんか判定が小さかったので2倍に そしたらぴったりだったので、どっかで半分に
-		//する処理が挟まってる
-		eCol.scale = bColevent->scale * 2;
-		
-		if (Collsions::CubeCollision(eCol, pCol))
-		{
-			bColevent->HitEffect();
+	////ここはワープブロックの当たり判定になってる
+	//for (auto& bColevent : Stage::Get()->mEventObjects)
+	//{
+	//	Cube eCol;
+	//	eCol.position = bColevent->position;
+	//	
+	//	//なんか判定が小さかったので2倍に そしたらぴったりだったので、どっかで半分にする処理が挟まってる
+	//	//->多分EventBlockの当たり判定に使ってるスケールが、モデルの物を使ってるのが原因じゃないか
+	//	//boxから持ってくるようにする
+	//	eCol.scale = bColevent->scale * 2;
+	//	
+	//	if (Collsions::CubeCollision(eCol, pCol))
+	//	{
+	//		bColevent->HitEffect();
 
-			break;
-		}
-	}
+	//		break;
+	//	}
+	//}
 
+	//ここより下二つは、Entityをポインタで保持するようにしてから修正する
 	for (auto& star : StarManager::Get()->mStars)
 	{
 		Cube eCol;
@@ -350,32 +353,6 @@ void Player::ColUpdate()
 			break;
 		}
 	}
-
-	/*for (auto& enemy : EnemyManager::Get()->enemyList)
-	{
-		Cube enemyCol;
-		enemyCol.position = enemy->position;
-		enemyCol.scale = enemy->scale;
-		
-		if (Collsions::CubeCollision(enemyCol, pCol))
-		{
-			if (enemy->IsDead())continue;
-			if (jumpState == JumpState::Down)
-			{
-				enemy->HitEffect();
-				Jump();
-			}
-			else
-			{
-				DamageEffect(1);
-			}
-		}
-		
-		if (Collsions::SphereCollsion(mEncountCol, enemy->sphereCol))
-		{
-			enemy->Encount();
-		}
-	}*/
 }
 
 void Player::RotaUpdate()

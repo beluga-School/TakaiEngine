@@ -9,18 +9,6 @@
 #include "CollideManager.h"
 #include "Mob.h"
 
-//class ColObj3d : public Block
-//{
-//public:
-//	Obj3d* collideObj = nullptr;
-//};
-//
-//class ColMob : public Mob
-//{
-//public:
-//	Obj3d* collideObj = nullptr;
-//};
-
 class ColEventObj : public Obj3d
 {
 public:
@@ -56,6 +44,8 @@ public:
 	}
 
 	//モデルの配列
+	//Entityのポインタで保存した方が便利に使えるかもしれない
+	//それはまた今度
 	std::list<Entity> mEntitys;
 
 	//イベントオブジェクト配列

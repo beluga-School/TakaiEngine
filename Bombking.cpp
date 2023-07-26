@@ -26,23 +26,23 @@ void Bombking::Update()
 		position -= Vector3(0, gravity, 0);
 	}*/
 
-	switch (state)
+	switch (mActTable)
 	{
-	case Bombking::BossState::None:
+	case ActTable::None:
 		break;
-	case Bombking::BossState::Encount:
-		state = BossState::Tracking;
+	case ActTable::Encount:
+		mActTable = ActTable::Tracking;
 		break;
-	case Bombking::BossState::Tracking:
+	case ActTable::Tracking:
 
 		Tracking();
 
 		break;
-	case Bombking::BossState::Punch:
+	case ActTable::Attack1:
 		break;
-	case Bombking::BossState::HipDrop:
+	case ActTable::Attack2:
 		break;
-	case Bombking::BossState::CoolTime:
+	case ActTable::Staying:
 		break;
 	}
 
@@ -74,7 +74,7 @@ void Bombking::HitEffect()
 
 void Bombking::Encount()
 {
-	state = BossState::Encount;
+	mActTable = ActTable::Encount;
 }
 
 void Bombking::Tracking()

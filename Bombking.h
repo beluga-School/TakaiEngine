@@ -15,16 +15,16 @@ public:
 	void Encount()override;
 
 private:
-	//‚±‚±‚àŒã‚ÅActTable‚É’u‚«Š·‚¦‚é
-	enum class BossState
-	{
-		None,
-		Encount,
-		Tracking,
-		Punch,
-		HipDrop,
-		CoolTime,
-	}state = BossState::None;
+	////‚±‚±‚àŒã‚ÅActTable‚É’u‚«Š·‚¦‚é
+	//enum class BossState
+	//{
+	//	None,
+	//	Encount,
+	//	Tracking,
+	//	Punch,
+	//	HipDrop,
+	//	CoolTime,
+	//}state = BossState::None;
 
 	void Tracking();
 
