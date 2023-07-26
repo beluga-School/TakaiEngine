@@ -44,6 +44,11 @@ void Stage::Update()
 		SceneChange::Get()->Open();
 	}
 
+	for (auto& obj : mEntitys)
+	{
+		obj.Update(*Camera::sCamera);
+		obj.box.Update(*Camera::sCamera);
+	}
 	for (auto& obj : mEventObjects)
 	{
 		obj->Update();
@@ -57,12 +62,6 @@ void Stage::Update()
 
 	for (auto& obj : CollideManager::Get()->allCols)
 	{
-		if (obj->CheckTag(TagTable::Block))
-		{
-			Block* block = static_cast<Block*>(obj);
-			block->box.CreateCol();
-		}
-		
 		obj->Update(*Camera::sCamera);
 	}
 	for (auto& obj : mGoals)
@@ -113,6 +112,8 @@ void Stage::NormalObjectSet(const LevelData::ObjectData& data)
 	mEntitys.emplace_back();
 	mEntitys.back().Initialize();
 
+	mEntitys.back().taglist.push_back(TagTable::Block);
+
 	//アウトライン設定
 	mEntitys.back().SetOutLineState({ 0,0,0,1.0f }, 0.05f);
 
@@ -143,12 +144,11 @@ void Stage::NormalObjectSet(const LevelData::ObjectData& data)
 void Stage::CollisionSet(const LevelData::ObjectData& data)
 {
 	//当たり判定を表示するオブジェクト
-	mEntitys.emplace_back();
 	mEntitys.back().box.Initialize();
 
 	//エンティティリストで参照されたくないので、コリジョンのタグを付ける
 	mEntitys.back().taglist.push_back(TagTable::Collsion);
-
+	
 	mEntitys.back().box.SetModel(ModelManager::GetModel("BlankCube"));
 	mEntitys.back().box.SetTexture(TextureManager::Get()->GetTexture("white"));
 
@@ -163,6 +163,11 @@ void Stage::CollisionSet(const LevelData::ObjectData& data)
 		MathF::AngleConvRad(data.rotation.y),
 		MathF::AngleConvRad(data.rotation.z)
 	};
+
+	mEntitys.back().box.cubecol.position = mEntitys.back().box.position;
+	mEntitys.back().box.cubecol.scale = mEntitys.back().box.scale;
+	//当たり判定だけマネージャーに登録
+	mEntitys.back().Register();
 }
 
 void Stage::EvenyObjectSet(const LevelData::ObjectData& data)
@@ -397,8 +402,6 @@ void Stage::DrawModel()
 	if (mShowModel == false) return;
 	for (auto& obj : mEntitys)
 	{
-		if (obj.CheckTag(TagTable::Collsion))continue;
-
 		BasicObjectPreDraw(PipelineManager::GetPipeLine("OutLine"), false);
 		obj.DrawOutLine();
 		//アルファが1未満になるなら透明用描画パイプラインに切り替える
@@ -466,6 +469,7 @@ void Stage::DrawCollider()
 	for (auto& obj : mEntitys)
 	{
 		if (!obj.CheckTag(TagTable::Collsion))continue;
+
 		obj.box.Draw();
 	}
 }

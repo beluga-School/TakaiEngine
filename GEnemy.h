@@ -8,6 +8,11 @@
 class GEnemy : public Enemy
 {
 public:
+	GEnemy() : Enemy()
+	{
+
+	}
+
 	void Initialize();
 	void Update();
 	void Draw();

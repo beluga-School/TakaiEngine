@@ -44,7 +44,7 @@ void GameScene::Initialize()
 	ParticleManager::GetInstance()->CreatePool();
 
 	//初期ステージを決定
-	output = "stage_mountain";
+	output = "buriburi";
 	Stage::Get()->Initialize(*LevelLoader::Get()->GetData(output));
 }
 

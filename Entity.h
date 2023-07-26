@@ -37,7 +37,7 @@ public:
 
 	Entity()
 	{
-		Register();
+		//Register();
 		taglist.push_back(TagTable::Box);
 	}
 

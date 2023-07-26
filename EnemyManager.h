@@ -24,5 +24,7 @@ public:
 
 	std::list<std::unique_ptr<Enemy>> enemyList;
 private:
+
+	GUI eCheck = { "enemyCheck" };
 };
 

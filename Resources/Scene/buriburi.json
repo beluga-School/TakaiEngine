@@ -80,28 +80,6 @@
         },
         {
             "type": "MESH",
-            "name": "立方体",
-            "transform": {
-                "translation": [
-                    13.133666038513184,
-                    0.0,
-                    0.0
-                ],
-                "rotation": [
-                    0.0,
-                    -0.0,
-                    0.0
-                ],
-                "scaling": [
-                    1.0,
-                    1.0,
-                    1.0
-                ]
-            },
-            "setObject": "player"
-        },
-        {
-            "type": "MESH",
             "name": "立方体.001",
             "transform": {
                 "translation": [
@@ -366,6 +344,29 @@
                 ]
             },
             "event_trigger": "star"
+        },
+        {
+            "type": "MESH",
+            "name": "立方体.006",
+            "transform": {
+                "translation": [
+                    10.370430946350098,
+                    -3.77886962890625,
+                    0.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "",
+            "setObject": "enemy"
         }
     ]
 }

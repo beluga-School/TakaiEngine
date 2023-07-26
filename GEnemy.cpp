@@ -15,6 +15,8 @@ void GEnemy::Initialize()
 	hitSphere.Initialize();
 	hitSphere.SetModel(ModelManager::GetModel("ICOSphere"));
 	hitSphere.SetTexture(TextureManager::GetTexture("white"));
+
+	Register();
 }
 
 void GEnemy::Update()
@@ -187,6 +189,8 @@ void GEnemy::Encount()
 
 void GEnemy::ColUpdate()
 {
+	box.CreateCol(position,scale);
+
 	sphereCol.center = position;
 	//’ÇÕ”ÍˆÍ‚Ì‹…‚Ì”¼Œa(ƒx[ƒX‚Ì‘å‚«‚³+‘å‚«‚³‚Ì•½‹Ï‚ğ‘«‚·)
 	sphereCol.radius = 8 + MathF::Avarage(scale);

@@ -27,6 +27,7 @@ void Player::Initialize()
 
 void Player::Update()
 {
+	//重力を無効化(デバッグ用)
 	//SetNoGravity(true);
 
 	//ダメージ処理

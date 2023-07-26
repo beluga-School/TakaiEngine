@@ -12,6 +12,8 @@ void Bombking::Initialize()
 	colDrawer.Initialize();
 	colDrawer.SetModel(ModelManager::GetModel("BlankCube"));
 	colDrawer.SetTexture(TextureManager::GetTexture("white"));
+
+	Register();
 }
 
 void Bombking::Update()
