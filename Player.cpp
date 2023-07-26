@@ -34,7 +34,7 @@ void Player::Update()
 	if (Input::Keyboard::TriggerKey(DIK_T))
 	{
 		mutekiTimer.Reset();
-		DamageEffect();
+		DamageEffect(1);
 	}
 	if (Input::Keyboard::TriggerKey(DIK_G))
 	{
@@ -88,8 +88,8 @@ void Player::Update()
 
 	//当たり判定
 	///--敵当たり判定
-	playerCol.center = position;
-	playerCol.radius = (scale.x + scale.y + scale.z) / 3.f;
+	mEncountCol.center = position;
+	mEncountCol.radius = (scale.x + scale.y + scale.z) / 3.f;
 
 	colDrawer.position = position;
 	colDrawer.scale = scale;
@@ -289,6 +289,7 @@ void Player::ColUpdate()
 
 	box.CreateCol(pCol.position, pCol.scale);
 
+	//ここら辺の処理を、全部CollideManagerに移す
 	for (auto& col : CollideManager::Get()->allCols)
 	{
 		if (col->CheckTag(TagTable::Block))
@@ -349,7 +350,7 @@ void Player::ColUpdate()
 		}
 	}
 
-	for (auto& enemy : EnemyManager::Get()->enemyList)
+	/*for (auto& enemy : EnemyManager::Get()->enemyList)
 	{
 		Cube enemyCol;
 		enemyCol.position = enemy->position;
@@ -365,15 +366,15 @@ void Player::ColUpdate()
 			}
 			else
 			{
-				DamageEffect();
+				DamageEffect(1);
 			}
 		}
 		
-		if (Collsions::SphereCollsion(playerCol, enemy->sphereCol))
+		if (Collsions::SphereCollsion(mEncountCol, enemy->sphereCol))
 		{
 			enemy->Encount();
 		}
-	}
+	}*/
 }
 
 void Player::RotaUpdate()
@@ -449,7 +450,7 @@ void Player::DamageUpdate()
 	}
 }
 
-void Player::DamageEffect()
+void Player::DamageEffect(int32_t damage)
 {
 	//無敵時間中ならスキップ
 	if (mutekiTimer.GetRun())return;
@@ -457,7 +458,7 @@ void Player::DamageEffect()
 	//無敵時間開始
 	mutekiTimer.Start();
 	//ダメージ受ける
-	hp.mCurrent -= 1;
+	hp.mCurrent -= damage;
 }
 
 void Player::HPOverFlow(int32_t value)

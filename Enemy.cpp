@@ -1,6 +1,11 @@
 #include "Enemy.h"
 #include "MathF.h"
 
+int32_t Enemy::GetHitDamage()
+{
+	return hitDamage;
+}
+
 Vector3 Enemy::TargetVector(const Mob& target)
 {
 	Vector3 tVec{};

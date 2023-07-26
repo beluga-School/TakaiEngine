@@ -23,22 +23,8 @@ public:
 
 	void ColUpdate();
 
-	bool IsDead()
-	{
-		return attackState == AttackState::Dead;
-	}
-
 private:
 	Obj3d hitSphere;
-
-	enum class AttackState
-	{
-		None,		//立ち止まってる状態
-		Encount,	//プレイヤーを発見した状態
-		Attacking,	//突進状態
-		Staying,	//攻撃後の後隙 状態終わりで当たり判定をとり、NoneかEncountに遷移
-		Dead,
-	}attackState = AttackState::None;
 
 	float mSpeed = 2.5f;	//1秒間の移動速度
 

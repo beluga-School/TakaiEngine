@@ -4,6 +4,8 @@
 #include "Block.h"
 #include "Cannon.h"
 #include "ImguiManager.h"
+#include "Player.h"
+#include "Enemy.h"
 
 bool CollideManager::CheckDirections(const Cube& check, const Cube& collide, const CheckDirection& CD)
 {
@@ -36,7 +38,9 @@ bool CheckIsDead(Entity* box)
 	return box->IsDead();
 }
 
-void CollideManager::Update()
+//TODO:üŒ`’Tõ‚Å‚â‚Á‚Ä‚éã‚É€–SŠm”F2‰ñŒÄ‚ñ‚Å‚³‚ç‚É2dfor•ª2‰ñŒÄ‚ñ‚Å‚é‚©‚ç‚à‚¤‚Ü‚¶‚Å‚ ‚Ù‚ ‚Ù‚ ‚Ù‚ ‚Ù
+//‚¤‚é‚¹`````‚µ‚ç‚Ë``````````
+void CollideManager::CollideUpdate()
 {
 	//€‚ñ‚Å‚¢‚é‚È‚çíœ‚·‚é
 	for (auto itr = allCols.begin(); itr != allCols.end();)
@@ -50,11 +54,36 @@ void CollideManager::Update()
 			itr++;
 		}
 	}
+
 	for (Entity*check : allCols)
 	{
 		for (Entity* collide : allCols)
 		{
 			CheckCollide(check, collide);
+		}
+	}
+}
+
+void CollideManager::StatusUpdate()
+{
+	//€‚ñ‚Å‚¢‚é‚È‚çíœ‚·‚é
+	for (auto itr = allCols.begin(); itr != allCols.end();)
+	{
+		if (CheckIsDead(*itr))
+		{
+			itr = allCols.erase(itr);
+		}
+		else
+		{
+			itr++;
+		}
+	}
+
+	for (Entity* check : allCols)
+	{
+		for (Entity* collide : allCols)
+		{
+			CheckStatus(check, collide);
 		}
 	}
 }
@@ -95,6 +124,31 @@ void CollideManager::CheckCollide(Entity* check, Entity* collide)
 			{
 				cannon->OnCollide(*mob);
 			}
+		}
+	}
+}
+
+void CollideManager::CheckStatus(Entity* check, Entity* collide)
+{
+	//“¯‚¶‚È‚ç”»’è‚µ‚È‚¢‚º
+	if (check == collide)
+	{
+		return;
+	}
+
+	//”»’è‚·‚é‘¤‚ªPlayer‚Ì
+	if (check->CheckTag(TagTable::Player))
+	{
+		//‚³‚ê‚é‘¤‚ªEnemy‚È‚ç
+		if (collide->CheckTag(TagTable::Enemy))
+		{
+			//check‚ªPlayer‚Å‚ ‚é‚±‚Æ‚ÍŠm’è‚µ‚Ä‚¢‚é‚Ì‚ÅAmobŒ^‚É•ÏŠ·‚µ‚Äƒf[ƒ^‚ğ‚Á‚Ä‚­‚é
+			Player* player = static_cast<Player*>(check);
+
+			//collide‚ªEnemy‚Å‚ ‚é‚±‚Æ‚ÍŠm’è‚µ‚Ä‚¢‚é‚Ì‚ÅAmobŒ^‚É•ÏŠ·‚µ‚Äƒf[ƒ^‚ğ‚Á‚Ä‚­‚é
+			Enemy* enemy = static_cast<Enemy*>(collide);
+
+			CheckPlayerToEnemy(*player, *enemy);
 		}
 	}
 }
@@ -175,5 +229,33 @@ void CollideManager::Osimodosi(Mob& check, const Block& collide)
 				check.moveValue.z = 0;
 			}
 		}
+	}
+}
+
+void CollideManager::CheckPlayerToEnemy(Player& player,Enemy& collide)
+{
+	//“¥‚İ‚Â‚¯”»’è&ÚG”»’è
+	if (Collsions::CubeCollision(player.box.cubecol, collide.box.cubecol))
+	{
+		//€–Sƒ‚[ƒVƒ‡ƒ“‚É“ü‚Á‚Ä‚é‚È‚ç”ò‚Î‚·
+		//¡ŒãHP‚ª‘½‚¢“G‚ªo‚Ä‚«‚½‚Æ‚«¢‚é‚©‚çAUŒ‚‚ğó‚¯‚½Œã‚ğ•\‚·ƒXƒe[ƒg‚ğì‚é‚×‚«
+		if (collide.GetNowAct(ActTable::Dead))return;
+
+		if (player.GetJumpState() == Mob::JumpState::Down)
+		{
+			collide.HitEffect();
+			player.Jump();
+		}
+		else
+		{
+			//ÚGƒ_ƒ[ƒW‚ğó‚¯‚é
+			player.DamageEffect(collide.GetHitDamage());
+		}
+	}
+
+	//ƒGƒ“ƒJƒEƒ“ƒg”»’è
+	if (Collsions::SphereCollsion(player.mEncountCol, collide.sphereCol))
+	{
+		collide.Encount();
 	}
 }

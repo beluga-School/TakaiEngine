@@ -25,6 +25,19 @@ public:
 		return feet;
 	};
 
+	//ジャンプの状態管理ステート
+	enum class JumpState
+	{
+		None,	//ジャンプしていない
+		Up,		//上昇中
+		Staying,//滞空時間
+		Down,
+	};
+
+	JumpState GetJumpState() const{
+		return jumpState;
+	};
+
 protected:
 	bool noGravity = false;
 
@@ -32,13 +45,7 @@ protected:
 	void UpdateY();
 
 	///---縦移動
-	enum class JumpState
-	{
-		None,	//ジャンプしていない
-		Up,		//上昇中
-		Staying,//滞空時間
-		Down,
-	}jumpState = JumpState::None;
+	JumpState jumpState = JumpState::None;
 
 	//上昇イージングの始点と終点
 	float upJumpS = 0;

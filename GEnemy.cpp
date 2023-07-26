@@ -30,12 +30,13 @@ void GEnemy::Update()
 
 	Vector3 standardRotaVec = {MathF::PIf / 2,0,0};
 
-	switch (attackState)
+	switch (mActTable)
 	{
-	case GEnemy::AttackState::None:
+		
+	case ActTable::None:
 		rotation.y = 0;
 		break;
-	case GEnemy::AttackState::Encount:
+	case ActTable::Encount:
 		//ジャンプする
 		position.y = TEasing::OutQuad(encountJumpS, encountJumpE, encountJumpTimer.GetTimeRate());
 
@@ -45,13 +46,13 @@ void GEnemy::Update()
 		}
 		if (encountJumpTimer.GetReverseEnd())
 		{
-			attackState = AttackState::Attacking;
+			mActTable = ActTable::Tracking;
 			metronomeTimer.Start();
 			accelerationTimer.Start();
 		}
 
 		break;
-	case GEnemy::AttackState::Attacking:
+	case ActTable::Tracking:
 		
 		///---見た目処理
 		//追いかける方向へ向きを変える
@@ -84,23 +85,23 @@ void GEnemy::Update()
 
 		///---遷移処理
 		//攻撃範囲から外れたら終わり
-		if (!Collsions::SphereCollsion(Player::Get()->playerCol, sphereCol))
+		if (!Collsions::SphereCollsion(Player::Get()->mEncountCol, sphereCol))
 		{
-			attackState = AttackState::Staying;
+			mActTable = ActTable::Staying;
 			stayTimer.Start();
 		}
 
 		break;
-	case GEnemy::AttackState::Staying:
+	case ActTable::Staying:
 		
 		if (stayTimer.GetEnd())
 		{
-			attackState = AttackState::None;
+			mActTable = ActTable::None;
 			stayTimer.Reset();
 		}
 
 		break;
-	case GEnemy::AttackState::Dead:
+	case ActTable::Dead:
 		position.x = TEasing::InQuad(deadEasingS.x, deadEasingE.x, deadTimer.GetTimeRate());
 		position.y = TEasing::InQuad(deadEasingS.y, deadEasingE.y, deadTimer.GetTimeRate());
 		position.z = TEasing::InQuad(deadEasingS.z, deadEasingE.z, deadTimer.GetTimeRate());
@@ -156,7 +157,7 @@ void GEnemy::HitEffect()
 {
 	//すでに死亡済みならスキップ
 	if (IsDead())return;
-	attackState = AttackState::Dead;
+	mActTable = ActTable::Dead;
 	
 	//死亡時のプレイヤーが向いていた方向を保存
 	deadDirection = Player::Get()->matWorld.ExtractAxisZ();
@@ -180,8 +181,8 @@ void GEnemy::HitEffect()
 void GEnemy::Encount()
 {
 	//ステートがNoneならエンカウントに以降
-	if (attackState != AttackState::None)return;
-	attackState = AttackState::Encount;
+	if (mActTable != ActTable::None)return;
+	mActTable = ActTable::Encount;
 	encountJumpTimer.Start();
 	encountJumpS = position.y;
 	encountJumpE = position.y + 2.0f;

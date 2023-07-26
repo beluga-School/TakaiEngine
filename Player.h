@@ -1,12 +1,13 @@
 #pragma once
 #include "TEasing.h"
-#include "CollideManager.h"
 #include "Status.h"
 #include "HPGauge.h"
+#include "Mob.h"
 
 class Player : public Mob
 {
 public:
+
 	void Initialize();
 	void Update();
 	void Draw();
@@ -29,13 +30,18 @@ public:
 	Vector3 preMove = { 0,0,0 };
 
 	//敵との当たり判定用スフィア
-	Sphere playerCol;
+	Sphere mEncountCol;
 
 	//呼ぶと1回ジャンプする
 	void Jump();
 
 	//現在HPを取得
 	int32_t GetNowHP();
+
+	/// <summary>
+	/// ダメージを受ける処理
+	/// </summary>
+	void DamageEffect(int32_t damage);
 
 private:
 	//hpの最大値　ステータスの最大値は外から変えられるようにしたい
@@ -48,7 +54,10 @@ private:
 			Util::WIN_HEIGHT - Util::WIN_HEIGHT / 12
 		},8};
 
-	Player(){};
+	Player() : Mob()
+	{
+		taglist.push_back(TagTable::Player);
+	};
 	~Player(){};
 
 	void Attack();
@@ -58,9 +67,6 @@ private:
 	void RotaUpdate();
 
 	void DamageUpdate();
-
-	//
-	void DamageEffect();
 
 	//HPをその値に書きかえる 最大値より大きい場合、最大値を書き換える
 	void HPOverFlow(int32_t value);

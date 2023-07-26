@@ -55,6 +55,8 @@ void GameScene::Update()
 	//ステータスの更新
 	StatusManager::Update();
 
+	CollideManager::Get()->StatusUpdate();
+
 	static bool debugCam = false;
 
 	if (Input::Keyboard::TriggerKey(DIK_R))
@@ -137,7 +139,7 @@ void GameScene::Update()
 	EnemyManager::Get()->Update();
 
 	//コリジョンを付けたオブジェクトより前に呼ばれると怖い
-	CollideManager::Get()->Update();
+	CollideManager::Get()->CollideUpdate();
 
 	pCamera->BackTransparent();
 

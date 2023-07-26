@@ -15,6 +15,8 @@ enum class TagTable
 	Cannon = 2,
 	Box = 3,
 	Collsion = 4,
+	Player = 5,
+	Enemy = 6,
 };
 
 //3d描画される全てのオブジェクト
@@ -24,7 +26,7 @@ public:
 	//判定を取るときに使うタグ
 	std::vector<TagTable> taglist;
 
-	bool IsDead() {
+	bool IsDead() const {
 		return isDead;
 	}
 
