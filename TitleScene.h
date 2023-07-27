@@ -1,5 +1,7 @@
 #pragma once
 #include "IScene.h"
+#include "Sprite.h"
+
 class TitleScene : public IScene
 {
 public:
@@ -10,6 +12,6 @@ public:
 	void End()override;
 
 private:
-
+	Sprite titleUI;
 };
 
