@@ -31,6 +31,8 @@ void Stage::Initialize(LevelData& data)
 
 	//ステージ生成
 	ChangeUpdate();
+
+	//Stage::Update();
 }
 
 void Stage::Update()
@@ -74,6 +76,7 @@ void Stage::Draw()
 {
 	//物によってマテリアル描画とテクスチャ描画が混在してるのに
 	//分ける方法を作ってないので作る
+	BasicObjectPreDraw(PipelineManager::GetPipeLine("Toon"));
 	DrawCollider();
 
 	DrawModel();
@@ -168,6 +171,35 @@ void Stage::CollisionSet(const LevelData::ObjectData& data)
 	mEntitys.back().Register();
 }
 
+void Stage::CollisionSetEvent(const LevelData::ObjectData& data)
+{
+	//当たり判定を表示するオブジェクト
+	mEventObjects.back()->box.Initialize();
+
+	//コリジョンオンリー描画で使うため、コリジョンのタグを付ける
+	mEventObjects.back()->taglist.push_back(TagTable::Collsion);
+
+	mEventObjects.back()->box.SetModel(ModelManager::GetModel("BlankCube"));
+	mEventObjects.back()->box.SetTexture(TextureManager::Get()->GetTexture("white"));
+
+	mEventObjects.back()->box.position = data.translation + data.collider.center;
+	mEventObjects.back()->box.scale = {
+		data.scaling.x * data.collider.size.x,
+		data.scaling.y * data.collider.size.y,
+		data.scaling.z * data.collider.size.z
+	};
+	mEventObjects.back()->box.rotation = {
+		MathF::AngleConvRad(data.rotation.x),
+		MathF::AngleConvRad(data.rotation.y),
+		MathF::AngleConvRad(data.rotation.z)
+	};
+
+	mEventObjects.back()->box.cubecol.position = mEntitys.back().box.position;
+	mEventObjects.back()->box.cubecol.scale = mEntitys.back().box.scale;
+	//当たり判定だけマネージャーに登録
+	mEventObjects.back()->Register();
+}
+
 void Stage::EvenyObjectSet(const LevelData::ObjectData& data)
 {
 	std::string tFilename = "";
@@ -235,7 +267,42 @@ void Stage::EvenyObjectSet(const LevelData::ObjectData& data)
 		StarManager::Get()->mStars.back()->SetOutLineState({ 0,0,0,1.0f }, 0.1f);
 
 		StarManager::Get()->mStars.back()->trigerName = data.eventtrigerName;
+		StarManager::Get()->mStars.back()->box.CreateCol(
+			StarManager::Get()->mStars.back()->position,
+			StarManager::Get()->mStars.back()->scale
+		);
 		
+		//当たり判定を作成
+		//starManagerにわけんな一意に定義出来ねえだろ！！！！！!!!!!!1
+		if (data.collider.have)
+		{
+			//当たり判定を表示するオブジェクト
+			StarManager::Get()->mStars.back()->box.Initialize();
+
+			//コリジョンオンリー描画で使うため、コリジョンのタグを付ける
+			StarManager::Get()->mStars.back()->taglist.push_back(TagTable::Collsion);
+
+			StarManager::Get()->mStars.back()->box.SetModel(ModelManager::GetModel("BlankCube"));
+			StarManager::Get()->mStars.back()->box.SetTexture(TextureManager::Get()->GetTexture("white"));
+
+			StarManager::Get()->mStars.back()->box.position = data.translation + data.collider.center;
+			StarManager::Get()->mStars.back()->box.scale = {
+				data.scaling.x * data.collider.size.x,
+				data.scaling.y * data.collider.size.y,
+				data.scaling.z * data.collider.size.z
+			};
+			StarManager::Get()->mStars.back()->box.rotation = {
+				MathF::AngleConvRad(data.rotation.x),
+				MathF::AngleConvRad(data.rotation.y),
+				MathF::AngleConvRad(data.rotation.z)
+			};
+
+			StarManager::Get()->mStars.back()->box.cubecol.position = mEntitys.back().box.position;
+			StarManager::Get()->mStars.back()->box.cubecol.scale = mEntitys.back().box.scale;
+			//当たり判定だけマネージャーに登録
+			StarManager::Get()->mStars.back()->Register();
+		}
+
 		//オブジェクトの配置
 		LevelDataExchanger::SetObjectData(*StarManager::Get()->mStars.back(), data);
 
@@ -256,6 +323,12 @@ void Stage::EvenyObjectSet(const LevelData::ObjectData& data)
 		mEventObjects.back()->SetOutLineState({ 0,0,0,1.0f }, 0.1f);
 
 		mEventObjects.back()->trigerName = data.eventtrigerName;
+
+		//当たり判定を作成
+		if (data.collider.have)
+		{
+			CollisionSetEvent(data);
+		}
 
 		//オブジェクトの配置
 		LevelDataExchanger::SetObjectData(*mEventObjects.back(), data);
@@ -363,6 +436,39 @@ void Stage::ChangeUpdate()
 
 			//positionとかを設定
 			LevelDataExchanger::SetObjectData(*EnemyManager::Get()->enemyList.back(), *objectData);
+			
+			if(objectData->collider.have)
+			{
+				//当たり判定を表示するオブジェクト
+				EnemyManager::Get()->enemyList.back()->box.Initialize();
+
+				//エンティティリストで参照されたくないので、コリジョンのタグを付ける
+				EnemyManager::Get()->enemyList.back()->taglist.push_back(TagTable::Collsion);
+
+				EnemyManager::Get()->enemyList.back()->box.SetModel(ModelManager::GetModel("BlankCube"));
+				EnemyManager::Get()->enemyList.back()->box.SetTexture(TextureManager::Get()->GetTexture("white"));
+
+				//中心位置をずらす情報を保存
+				EnemyManager::Get()->enemyList.back()->saveColCenter = objectData->collider.center;
+
+				EnemyManager::Get()->enemyList.back()->box.position = objectData->translation + EnemyManager::Get()->enemyList.back()->saveColCenter;
+				EnemyManager::Get()->enemyList.back()->box.scale = {
+					objectData->scaling.x * objectData->collider.size.x,
+					objectData->scaling.y * objectData->collider.size.y,
+					objectData->scaling.z * objectData->collider.size.z
+				};
+				EnemyManager::Get()->enemyList.back()->box.rotation = {
+					MathF::AngleConvRad(objectData->rotation.x),
+					MathF::AngleConvRad(objectData->rotation.y),
+					MathF::AngleConvRad(objectData->rotation.z)
+				};
+
+				EnemyManager::Get()->enemyList.back()->box.cubecol.position = EnemyManager::Get()->enemyList.back()->box.position;
+				EnemyManager::Get()->enemyList.back()->box.cubecol.scale = EnemyManager::Get()->enemyList.back()->box.scale;
+				//当たり判定だけマネージャーに登録
+				EnemyManager::Get()->enemyList.back()->Register();
+			}
+
 			continue;
 		}
 
@@ -372,12 +478,6 @@ void Stage::ChangeUpdate()
 			//中でさらに分類わけして配置している
 			//EventBlock を基底クラスに、HitEffectの中身を変えたクラスで実装している
 			EvenyObjectSet(*objectData);
-
-			////当たり判定を作成
-			//if (objectData->collider.have)
-			//{
-			//	CollisionSet(*objectData);
-			//}
 
 			continue;
 		}

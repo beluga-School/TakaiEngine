@@ -287,6 +287,7 @@ void Player::ColUpdate()
 
 	pCol.position += moveValue;
 
+	box.ColDrawerUpdate(pCol.position, pCol.scale);
 	box.CreateCol(pCol.position, pCol.scale);
 
 	//ここら辺の処理を、全部CollideManagerに移す
@@ -300,33 +301,14 @@ void Player::ColUpdate()
 		}
 	}
 
-	////ここはワープブロックの当たり判定になってる
-	//for (auto& bColevent : Stage::Get()->mEventObjects)
-	//{
-	//	Cube eCol;
-	//	eCol.position = bColevent->position;
-	//	
-	//	//なんか判定が小さかったので2倍に そしたらぴったりだったので、どっかで半分にする処理が挟まってる
-	//	//->多分EventBlockの当たり判定に使ってるスケールが、モデルの物を使ってるのが原因じゃないか
-	//	//boxから持ってくるようにする
-	//	eCol.scale = bColevent->scale * 2;
-	//	
-	//	if (Collsions::CubeCollision(eCol, pCol))
-	//	{
-	//		bColevent->HitEffect();
-
-	//		break;
-	//	}
-	//}
-
 	//ここより下二つは、Entityをポインタで保持するようにしてから修正する
 	for (auto& star : StarManager::Get()->mStars)
 	{
 		Cube eCol;
 		eCol.position = star->position;
 
-		//なんか判定が小さかったので2倍に そしたらぴったりだったので、どっかで半分に
-		//する処理が挟まってる
+		//なんか判定が小さかったので2倍に そしたらぴったりだったので、どっかで半分にする処理が挟まってる
+		//判定用のスケールが使われてないのが原因
 		eCol.scale = star->scale * 2;
 
 		if (Collsions::CubeCollision(eCol, pCol))
@@ -342,8 +324,7 @@ void Player::ColUpdate()
 		Cube goalCol;
 		goalCol.position = goal->position + goal->goalBlock.position;
 
-		//なんか判定が小さかったので2倍に そしたらぴったりだったので、どっかで半分に
-		//する処理が挟まってる
+		//なんか判定が小さかったので2倍に そしたらぴったりだったので、どっかで半分にする処理が挟まってる
 		goalCol.scale = goal->goalBlock.scale * 2;
 
 		if (Collsions::CubeCollision(goalCol, pCol))

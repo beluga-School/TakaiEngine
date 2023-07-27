@@ -3,7 +3,8 @@
 
 void Mob::CollsionUpdate()
 {
-	box.CreateCol(position, scale);
+	//これは本体のスケールを入れてるからいみねーだろ！！！！！！１１１
+	//box.CreateCol(position, scale);
 
 	//今後Xも入る予定
 	//UpdateX();

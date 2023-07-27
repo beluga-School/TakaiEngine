@@ -5,8 +5,6 @@ SamplerState smp : register(s0); //0番スロットに設定されたサンプラー
 
 float4 main(VSOutput input) : SV_TARGET
 {
-    //アルファが0なら描画破棄
-    clip(m_alpha-0.001f);
     
     float4 texcolor = tex.Sample(smp, input.uv);
     

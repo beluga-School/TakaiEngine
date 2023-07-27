@@ -22,6 +22,9 @@ public:
 	//void CreateCol();
 	void CreateCol(const Vector3& pos, const Vector3& scale);
 
+	//自身の描画オブジェクトを更新
+	void ColDrawerUpdate(const Vector3& pos, const Vector3& scale);
+
 	//産まれた時点でマネージャーに登録
 	Box()
 	{

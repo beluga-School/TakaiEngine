@@ -32,6 +32,5 @@ private:
 
 	float mSpeed = 10.0f;
 
-	Obj3d colDrawer;
 };
 

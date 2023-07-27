@@ -75,6 +75,9 @@ private:
 	//当たり判定配置
 	void CollisionSet(const LevelData::ObjectData& data);
 
+	//イベントオブジェクト用当たり判定配置(今後mEntityで一括管理したい)
+	void CollisionSetEvent(const LevelData::ObjectData& data);
+
 	//イベントオブジェクト(ブロック置き直し)
 	void EvenyObjectSet(const LevelData::ObjectData& data);
 

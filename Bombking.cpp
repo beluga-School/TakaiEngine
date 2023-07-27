@@ -9,10 +9,7 @@ void Bombking::Initialize()
 	SetModel(ModelManager::GetModel("bombking"));
 	SetTexture(TextureManager::GetTexture("white"));
 	SetOutLineState({ 0,0,0,1 }, 0.05f);
-	colDrawer.Initialize();
-	colDrawer.SetModel(ModelManager::GetModel("BlankCube"));
-	colDrawer.SetTexture(TextureManager::GetTexture("white"));
-
+	
 	EncountSphereInitialize();
 
 	Register();
@@ -46,14 +43,10 @@ void Bombking::Update()
 		break;
 	}
 
-
-	colDrawer.position = position;
-	colDrawer.scale = { 5,5,5 };
-
-	colDrawer.position.y += colDrawer.scale.y / 2;
-	colDrawer.Update(*Camera::sCamera);
-	
-	box.CreateCol(colDrawer.position, colDrawer.scale);
+	//Ç∏ÇÁÇµÇΩï™Çâ¡éZÇ∑ÇÈ
+	//ç°ì˙ÇÕÇ±Ç±Ç≈Ç‚ÇﬂÇÈÇØÇ«ÅAñæì˙enemyÇ‡ìØÇ∂ê›åvÇ…Ç∑ÇÈÇÃÇ≈ÅAìØÇ∂Ç∆Ç±Ç≈à¯Ç¡Ç©Ç©ÇÒÇ»Ç¢ÇÊÇ§Ç…íçà”
+	box.CreateCol(position + saveColCenter, box.scale);
+	box.ColDrawerUpdate(position + saveColCenter, box.scale);
 
 	CollsionUpdate();
 
@@ -65,7 +58,6 @@ void Bombking::Update()
 void Bombking::Draw()
 {
 	Obj3d::DrawMaterial();
-	colDrawer.Draw();
 }
 
 void Bombking::HitEffect()

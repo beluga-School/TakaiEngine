@@ -46,6 +46,8 @@ public:
 	//Encountを管理するスフィアの範囲を描画する
 	void EncountSphereDraw(const std::string& oldPipeline);
 
+	Vector3 saveColCenter = {};
+
 protected:
 	/// <summary>
 	/// 指定したターゲットへのベクトルを返す
