@@ -48,6 +48,7 @@ void Stage::Update()
 	{
 		obj.Update(*Camera::sCamera);
 		obj.box.Update(*Camera::sCamera);
+		//obj.box.CreateCol(obj.position,);
 	}
 	for (auto& obj : mEventObjects)
 	{

@@ -71,13 +71,13 @@ void PlayerCamera::BackTransparent()
 	transparentObj.Update(*Camera::sCamera);
 
 	//当たったオブジェクトの描画フラグを折る
-	for (auto& obj : CollideManager::Get()->allCols)
+	for (auto& obj : Stage::Get()->mEntitys)
 	{
 		//ブロック以外なら次へ
-		if (!obj->CheckTag(TagTable::Block))continue;
+		if (!obj.CheckTag(TagTable::Block))continue;
 		
 		//ブロックなのが確定したのでブロック型に変換
-		Block* block = static_cast<Block*>(obj);
+		Block* block = static_cast<Block*>(&obj);
 
 		//当たってたら消える
 		if (Collsions::BoxColAABB(block->box, transparentObj))
@@ -89,27 +89,27 @@ void PlayerCamera::BackTransparent()
 				continue;
 			}
 
-			if (block->box.transparentTimer.GetStarted() == false)
+			if (block->transparentTimer.GetStarted() == false)
 			{
-				block->box.transparentTimer.Start();
+				block->transparentTimer.Start();
 			}
-			else if (block->box.transparentTimer.GetReverseStarted())
+			else if (block->transparentTimer.GetReverseStarted())
 			{
-				block->box.transparentTimer.Reset();
+				block->transparentTimer.Reset();
 			}
 			//アウトラインはすぐに消す
-			block->box.SetOutLineAlpha(0.0f);
+			block->SetOutLineAlpha(0.0f);
 		}
 		//当たってないなら段々濃くする
 		else
 		{
 			//タイマーのTimeRateが0.0~1.0の範囲で動くので、その値を反転させたものをAlphaとして扱う
-			block->box.transparentTimer.ReverseStart();
+			block->transparentTimer.ReverseStart();
 			//アウトラインはすぐに戻す
-			block->box.SetOutLineAlpha(1.0f);
+			block->SetOutLineAlpha(1.0f);
 		}
 		//段々薄くしたり濃くしたりする
-		block->box.color_.w = 1.0f - block->box.transparentTimer.GetTimeRate();
+		block->color_.w = 1.0f - block->transparentTimer.GetTimeRate();
 	}
 }
 

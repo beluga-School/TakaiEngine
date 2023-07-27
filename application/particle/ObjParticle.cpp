@@ -2,6 +2,8 @@
 #include "MathF.h"
 #include "TimeManager.h"
 #include "ViewProjection.h"
+#include "ClearDrawScreen.h"
+
 using namespace std;
 
 ParticleManager* ParticleManager::GetInstance()
@@ -50,6 +52,14 @@ void ParticleManager::Update()
 
 void ParticleManager::Draw()
 {
+	BasicObjectPreDraw(PipelineManager::GetPipeLine("OutLine"),false);
+	for (unique_ptr<CubeParticle>& pat : cubePool) {
+		if (!pat->isdead) {
+			pat->cube.DrawOutLine();
+		}
+	}
+	
+	BasicObjectPreDraw(PipelineManager::GetPipeLine("Toon"));
 	for (unique_ptr<CubeParticle>& pat : cubePool) {
 		if (!pat->isdead) {
 			pat->Draw();
@@ -67,6 +77,8 @@ CubeParticle::CubeParticle()
 		159.0f / 255.0f,
 		64.0f / 255.0f,
 		1 };
+
+	cube.SetOutLineState({ 0,0,0,1 }, 0.05f);
 }
 
 CubeParticle::CubeParticle(const Vector3& pos, const Vector3& scale, const float& moveDistance, const DirectX::XMFLOAT4& color)
@@ -75,6 +87,8 @@ CubeParticle::CubeParticle(const Vector3& pos, const Vector3& scale, const float
 	cube.SetTexture(TextureManager::Get()->GetTexture("white"));
 
 	Set(pos,scale, moveDistance, color);
+
+	cube.SetOutLineState({ 0,0,0,1 }, 0.05f);
 }
 
 void CubeParticle::Set(const Vector3& pos, const Vector3& scale, const float& moveDistance, const DirectX::XMFLOAT4& color)
