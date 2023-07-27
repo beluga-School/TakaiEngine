@@ -10,6 +10,7 @@
 #include "Cannon.h"
 #include <sstream>
 #include "Bombking.h"
+#include "Coin.h"
 
 void Stage::ChangeLevel(LevelData& data)
 {
@@ -55,10 +56,6 @@ void Stage::Update()
 		obj->Update();
 	}
 
-	for (auto& obj : StarManager::Get()->mStars)
-	{
-		obj->Update();
-	}
 	StarManager::Get()->Update();
 
 	for (auto& obj : CollideManager::Get()->allCols)
@@ -173,12 +170,28 @@ void Stage::CollisionSet(const LevelData::ObjectData& data)
 
 void Stage::EvenyObjectSet(const LevelData::ObjectData& data)
 {
+	std::string tFilename = "";
+	if (data.fileName != "")
+	{
+		//読み込みしてないなら読み込みも行う
+		if (ModelManager::GetModel(data.fileName) == nullptr)
+		{
+			ModelManager::LoadModel(data.fileName, data.fileName, true);
+		}
+		tFilename = data.fileName;
+	}
+	
 	//stage の文字列が含まれてるなら
 	if (data.eventtrigerName.find("stage") != std::string::npos)
 	{
 		mEventObjects.emplace_back();
 		mEventObjects.back() = std::make_unique<WarpBlock>();
 		mEventObjects.back()->Initialize();
+		//ファイルネームがあるなら
+		if (tFilename != "")
+		{
+			mEventObjects.back()->SetModel(ModelManager::GetModel(tFilename));
+		}
 
 		mEventObjects.back()->SetOutLineState({ 1,0,0,1.0f }, 0.05f);
 
@@ -197,6 +210,7 @@ void Stage::EvenyObjectSet(const LevelData::ObjectData& data)
 		mGoals.emplace_back();
 		mGoals.back() = std::make_unique<Goal>();
 		mGoals.back()->Initialize();
+
 		mGoals.back()->trigerName = data.eventtrigerName;
 
 		mGoals.back()->SetOutLineState({ 1,0,0,1.0f }, 0.05f);
@@ -212,6 +226,11 @@ void Stage::EvenyObjectSet(const LevelData::ObjectData& data)
 		StarManager::Get()->mStars.emplace_back();
 		StarManager::Get()->mStars.back() = std::make_unique<Star>();
 		StarManager::Get()->mStars.back()->Initialize();
+		//ファイルネームがあるなら
+		if (tFilename != "")
+		{
+			StarManager::Get()->mStars.back()->SetModel(ModelManager::GetModel(tFilename));
+		}
 
 		StarManager::Get()->mStars.back()->SetOutLineState({ 0,0,0,1.0f }, 0.1f);
 
@@ -219,6 +238,27 @@ void Stage::EvenyObjectSet(const LevelData::ObjectData& data)
 		
 		//オブジェクトの配置
 		LevelDataExchanger::SetObjectData(*StarManager::Get()->mStars.back(), data);
+
+		return;
+	}
+	//coin の文字列が完全一致するなら
+	if (data.eventtrigerName == "coin")
+	{
+		mEventObjects.emplace_back();
+		mEventObjects.back() = std::make_unique<Coin>();
+		mEventObjects.back()->Initialize();
+		//ファイルネームがあるなら
+		if (tFilename != "")
+		{
+			mEventObjects.back()->SetModel(ModelManager::GetModel(tFilename));
+		}
+
+		mEventObjects.back()->SetOutLineState({ 0,0,0,1.0f }, 0.1f);
+
+		mEventObjects.back()->trigerName = data.eventtrigerName;
+
+		//オブジェクトの配置
+		LevelDataExchanger::SetObjectData(*mEventObjects.back(), data);
 
 		return;
 	}

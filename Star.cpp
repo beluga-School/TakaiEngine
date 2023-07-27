@@ -91,6 +91,11 @@ void StarManager::JumpMove()
 }
 void StarManager::Update()
 {
+	for (auto& obj : mStars)
+	{
+		obj->Update();
+	}
+
 	jumpingTimer.Update();
 
 	switch (progress)

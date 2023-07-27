@@ -308,6 +308,7 @@
                     1.0
                 ]
             },
+            "file_name": "star",
             "event_trigger": "star"
         },
         {
@@ -1971,6 +1972,7 @@
                     1.0
                 ]
             },
+            "file_name": "Cannon",
             "event_trigger": "Cannon_start_1"
         },
         {
@@ -2081,6 +2083,7 @@
                     1.0
                 ]
             },
+            "file_name": "Cannon",
             "event_trigger": "Cannon_start_2"
         },
         {
@@ -2105,6 +2108,194 @@
             },
             "file_name": "bombking",
             "setObject": "bombking"
+        },
+        {
+            "type": "MESH",
+            "name": "立方体_立方体.002",
+            "transform": {
+                "translation": [
+                    -20.320463180541992,
+                    -31.866802215576172,
+                    5.480386734008789
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "star",
+            "event_trigger": "star"
+        },
+        {
+            "type": "MESH",
+            "name": "立方体_立方体.003",
+            "transform": {
+                "translation": [
+                    -20.320463180541992,
+                    -29.53753662109375,
+                    5.480386734008789
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "star",
+            "event_trigger": "star"
+        },
+        {
+            "type": "MESH",
+            "name": "立方体_立方体.004",
+            "transform": {
+                "translation": [
+                    -20.320463180541992,
+                    -27.247312545776367,
+                    5.480386734008789
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "star",
+            "event_trigger": "star"
+        },
+        {
+            "type": "MESH",
+            "name": "立方体_立方体.005",
+            "transform": {
+                "translation": [
+                    -20.320463180541992,
+                    -25.218496322631836,
+                    5.480386734008789
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "star",
+            "event_trigger": "star"
+        },
+        {
+            "type": "MESH",
+            "name": "円柱.001",
+            "transform": {
+                "translation": [
+                    -53.84706497192383,
+                    -27.730863571166992,
+                    9.591357231140137
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "Coin",
+            "event_trigger": "coin",
+            "setObject": ""
+        },
+        {
+            "type": "MESH",
+            "name": "円柱.003",
+            "transform": {
+                "translation": [
+                    -53.84706497192383,
+                    -31.599340438842773,
+                    9.591357231140137
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "Coin",
+            "event_trigger": "coin",
+            "setObject": ""
+        },
+        {
+            "type": "MESH",
+            "name": "円柱.004",
+            "transform": {
+                "translation": [
+                    -53.84706497192383,
+                    -27.730863571166992,
+                    12.62087631225586
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "Coin",
+            "event_trigger": "coin",
+            "setObject": ""
+        },
+        {
+            "type": "MESH",
+            "name": "円柱.005",
+            "transform": {
+                "translation": [
+                    -53.84706497192383,
+                    -31.662569046020508,
+                    12.576128959655762
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "Coin",
+            "event_trigger": "coin",
+            "setObject": ""
         }
     ]
 }

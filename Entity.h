@@ -19,6 +19,7 @@ enum class TagTable
 	Enemy = 6,
 	Star = 7,
 	WarpBlock = 8,
+	Coin = 9,
 };
 
 //3d描画される全てのオブジェクト

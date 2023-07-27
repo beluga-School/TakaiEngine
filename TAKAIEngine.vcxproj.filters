@@ -355,6 +355,9 @@
     <Filter Include="Application\Entity">
       <UniqueIdentifier>{1594da5a-a29e-4cf2-ac1c-40929b166ee2}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Application\EventBlock\Coin">
+      <UniqueIdentifier>{5e73a2fe-abc5-4499-94ba-86bdd7166d70}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="engine\input\Input.cpp">
@@ -596,6 +599,9 @@
     </ClCompile>
     <ClCompile Include="Entity.cpp">
       <Filter>Application\Entity</Filter>
+    </ClCompile>
+    <ClCompile Include="Coin.cpp">
+      <Filter>Application\EventBlock\Coin</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -847,6 +853,9 @@
     </ClInclude>
     <ClInclude Include="Entity.h">
       <Filter>Application\Entity</Filter>
+    </ClInclude>
+    <ClInclude Include="Coin.h">
+      <Filter>Application\EventBlock\Coin</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
