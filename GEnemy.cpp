@@ -130,6 +130,9 @@ void GEnemy::Update()
 
 		break;
 	}
+	//‚¸‚ç‚µ‚½•ª‚ð‰ÁŽZ‚·‚é
+	box.CreateCol(position + saveColCenter, box.scale);
+	box.ColDrawerUpdate(position + saveColCenter, box.scale);
 
 	CollsionUpdate();
 

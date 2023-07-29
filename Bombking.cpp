@@ -44,7 +44,6 @@ void Bombking::Update()
 	}
 
 	//‚¸‚ç‚µ‚½•ª‚ğ‰ÁZ‚·‚é
-	//¡“ú‚Í‚±‚±‚Å‚â‚ß‚é‚¯‚ÇA–¾“úenemy‚à“¯‚¶İŒv‚É‚·‚é‚Ì‚ÅA“¯‚¶‚Æ‚±‚Åˆø‚Á‚©‚©‚ñ‚È‚¢‚æ‚¤‚É’ˆÓ
 	box.CreateCol(position + saveColCenter, box.scale);
 	box.ColDrawerUpdate(position + saveColCenter, box.scale);
 

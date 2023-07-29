@@ -16,7 +16,7 @@ void GameScene::LoadResource()
 	Stage::Get()->goalSystem.LoadResource();
 
 	//ロード(分けたほうがいい)
-	LevelLoader::Get()->Load("Scene/buriburi", "buriburi");
+	//LevelLoader::Get()->Load("Scene/buriburi", "buriburi");
 
 	LevelLoader::Get()->Load("Scene/stage_castle_outside", "stage_castle_outside");
 	LevelLoader::Get()->Load("Scene/stage_castle_inside", "stage_castle_inside");
@@ -44,7 +44,8 @@ void GameScene::Initialize()
 	ParticleManager::GetInstance()->CreatePool();
 
 	//初期ステージを決定
-	output = "stage_mountain";
+	//output = "stage_mountain";
+	output = "stage_grasslands";
 	Stage::Get()->Initialize(*LevelLoader::Get()->GetData(output));
 }
 

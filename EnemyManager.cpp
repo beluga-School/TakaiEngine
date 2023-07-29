@@ -50,6 +50,6 @@ void EnemyManager::Draw()
 			enemy->EncountSphereDraw("Toon");
 		}
 
-		enemy->box.Draw();
+		enemy->box.DrawMaterial();
 	}
 }
