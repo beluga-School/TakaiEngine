@@ -51,6 +51,12 @@ namespace TEasing
 		bool GetStarted() { return run || end; };
 
 		bool GetEnd() { return end; };
+		
+		bool GetNowEnd() {
+			return mOldElapsedTime < mMaxTime && 
+			mElapsedTime >= mMaxTime;
+		};
+
 		void SetEnd(const bool& end_) { end = end_; };
 
 		bool GetReverse() { return reverse; };
@@ -79,8 +85,10 @@ namespace TEasing
 		bool run = false;
 		//終了フラグ
 		bool end = false;
-
+	
 		bool reverse = false;
 		bool reverseend = false;
+
+		float mOldElapsedTime = 0.0f;	// 1フレーム前の経過時間
 	};
 };

@@ -31,11 +31,15 @@ public:
 	void Initialize();
 	void UpdatematView();
 
+	//void CameraShake(float power);
+
 	static std::unique_ptr<Camera> sDefaultCam;
 	static Camera *sCamera;
 
 private:
 	float mDebugAngleX = 0;
 	float mDebugAngleY = 0;
+
+	//Vector2 savePos = { 0,0 };
 };
 

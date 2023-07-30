@@ -57,8 +57,6 @@ struct Sprite
 
 	const Texture *mTEXTURE;
 
-	Vector2 mSize = {0.f,0.f};
-
 	Vector2 mAnchorpoint = { 0.5f,0.5f };
 
 	bool mIsFlipX = false;
@@ -69,8 +67,11 @@ struct Sprite
 
 	bool mIsInvisible = false;
 
+	Vector2 mSize = { 0.f,0.f };
 protected:
 	void Init();
+
+private:
 };
 
 struct SpriteCommon

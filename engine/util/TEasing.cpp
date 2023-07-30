@@ -238,6 +238,9 @@ void TEasing::easeTimer::ReverseStart()
 
 void TEasing::easeTimer::Update()
 {
+	//前フレームの経過時間を記録
+	mOldElapsedTime = mElapsedTime;
+
 	if (run) {
 		mElapsedTime += TimeManager::deltaTime;
 	}

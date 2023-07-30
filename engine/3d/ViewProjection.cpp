@@ -5,6 +5,7 @@
 #include <MathF.h>
 #include <ImguiManager.h>
 #include <DirectXMath.h>
+#include <MathF.h>
 
 std::unique_ptr<Camera> Camera::sDefaultCam = std::make_unique<Camera>();
 Camera* Camera::sCamera = sDefaultCam.get();
@@ -24,7 +25,29 @@ void Camera::UpdatematView()
 	mMatView = Matrix4::LookAtLH(mEye, mTarget, mUp);
 
 	mMatProjection = Matrix4::PerspectiveFovLH(DirectX::XMConvertToRadians(mFovAngle), mNearClip, mFarZ);
+
+	////シェイク後に位置を元に戻す
+	//mEye.x = savePos.x;
+	//mEye.y = savePos.y;
 }
+
+//void Camera::CameraShake(float power)
+//{
+//	Vector2 randomVec = {
+//		MathF::GetRand(-1,1),
+//		MathF::GetRand(-1,1)
+//	};
+//
+//	Vector2 shakePos = {
+//		mEye.x + randomVec.x * power,
+//		mEye.y + randomVec.y * power
+//	};
+//
+//	savePos = { mEye.x,mEye.y};
+//
+//	mEye.x = shakePos.x;
+//	mEye.y = shakePos.y;
+//}
 
 //void Camera::SetEye(Vector3 eye)
 //{
