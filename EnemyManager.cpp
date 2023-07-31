@@ -4,6 +4,7 @@
 #include "ClearDrawScreen.h"
 #include "Player.h"
 #include "CollideManager.h"
+#include "Stage.h"
 
 void EnemyManager::Load(const LevelData::ObjectData& data)
 {
@@ -50,6 +51,9 @@ void EnemyManager::Draw()
 			enemy->EncountSphereDraw("Toon");
 		}
 
-		enemy->box.DrawMaterial();
+		if (Stage::Get()->mShowCollider)
+		{
+			enemy->box.DrawMaterial();
+		}
 	}
 }

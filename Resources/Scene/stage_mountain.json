@@ -2426,6 +2426,29 @@
                 ]
             },
             "setObject": "bombking"
+        },
+        {
+            "type": "MESH",
+            "name": "Cube.049",
+            "transform": {
+                "translation": [
+                    0.5516853332519531,
+                    -25.489303588867188,
+                    2.6626100540161133
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "firewisp",
+            "setObject": "enemy"
         }
     ]
 }
