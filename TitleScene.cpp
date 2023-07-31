@@ -19,6 +19,7 @@ void TitleScene::LoadResource()
 	TextureManager::Load("Resources\\title_logo\\A.png", "title_a");
 	TextureManager::Load("Resources\\title_logo\\MARIMO.png", "title_marimo");
 	TextureManager::Load("Resources\\title_logo\\6400.png", "title_6400");
+	TextureManager::Load("Resources\\space.png", "space");
 	
 	TextureManager::Load("Resources\\hexagon_big.png", "hexagon_big");
 
@@ -31,6 +32,9 @@ void TitleScene::LoadResource()
 
 void TitleScene::Initialize()
 {
+	space.SetTexture(*TextureManager::GetTexture("space"));
+	space.SetPos({ Util::WIN_WIDTH / 2,Util::WIN_HEIGHT - 100 });
+
 	sceneID = "Title";
 
 	string[0].sprite.SetTexture(*TextureManager::GetTexture("title_u"));
@@ -51,21 +55,26 @@ void TitleScene::Initialize()
 		string[i].sprite.SetPos({ -114514, -114514 });
 		string[i].position.x = (invideX * i) + sideX;
 		string[i].startY = -100.f;
-		string[i].endY = Util::WIN_HEIGHT / 2 - 200.f;
+		string[i].endY = Util::WIN_HEIGHT / 2 - 50.f;
+	}
+
+	string[5].position.x = Util::WIN_WIDTH / 2;
+	string[5].startY = Util::WIN_HEIGHT + 100.f;
+	string[5].endY = Util::WIN_HEIGHT / 2 + 100.f;
+	string[5].timer.mMaxTime = 0.3f;
+
+	string[6].position.x = sideX + invideX * 5.5f;
+	string[6].startY = Util::WIN_HEIGHT + 100.f;
+	string[6].endY = Util::WIN_HEIGHT / 2;
+	string[6].timer.mMaxTime = 0.3f;
+
+	for (int32_t i = 0; i < 7; i++)
+	{
 		string[i].savePos = {
 			string[i].position.x,
 			string[i].endY
 		};
 	}
-
-	string[5].startY = Util::WIN_HEIGHT + 100.f;
-	string[5].endY = Util::WIN_HEIGHT / 2 + 200.f;
-	string[5].timer.mMaxTime = 0.3f;
-
-	string[6].startY = Util::WIN_HEIGHT + 100.f;
-	string[6].endY = Util::WIN_HEIGHT / 2 - 200.f;
-	string[6].timer.mMaxTime = 0.3f;
-
 	whiteOut.SetPos({ Util::WIN_WIDTH / 2,Util::WIN_HEIGHT / 2 });
 	whiteOut.SetTexture(*TextureManager::GetTexture("white"));
 	whiteOut.SetSize({ Util::WIN_WIDTH,Util::WIN_HEIGHT});
@@ -81,23 +90,26 @@ void TitleScene::Update()
 {
 	if (Input::Keyboard::TriggerKey(DIK_SPACE))
 	{
-		SceneChange::Get()->Start();
+		//演出開始
+		if (effectState == EffectState::None)
+		{
+			for (int32_t i = 0; i < 7; i++)
+			{
+				string[i].timer.Reset();
+			}
+			string[0].timer.Start();
+
+			effectState = EffectState::Appearance;
+		}
+		//演出が終わってspaceを押したらゲーム開始
+		if (effectState == EffectState::End)
+		{
+			SceneChange::Get()->Start();
+		}
 	}
 	if (SceneChange::Get()->IsBlackOut())
 	{
 		SceneManager::Get()->ChangeScene<GameScene>();
-	}
-
-	//演出開始
-	if (Input::Keyboard::TriggerKey(DIK_T))
-	{
-		for (int32_t i = 0; i < 7; i++)
-		{
-			string[i].timer.Reset();
-		}
-		string[0].timer.Start();
-
-		effectState = EffectState::Appearance;
 	}
 
 	shineTimer.Update();
@@ -187,6 +199,16 @@ void TitleScene::Update()
 			TEasing::InQuad(Util::WIN_WIDTH + 400,Util::WIN_WIDTH + 200,hexagonScaleTimer.GetTimeRate())
 			});
 
+
+		for (int32_t i = 0; i < 7; i++)
+		{
+			string[i].sprite.SetSize(
+				{
+				TEasing::InQuad(string[i].sprite.GetInitSize().x * 1.1f,string[i].sprite.GetInitSize().x,hexagonScaleTimer.GetTimeRate()),
+				TEasing::InQuad(string[i].sprite.GetInitSize().y * 1.1f,string[i].sprite.GetInitSize().y,hexagonScaleTimer.GetTimeRate())
+				});
+		}
+
 		break;
 	}
 
@@ -211,6 +233,7 @@ void TitleScene::Update()
 
 	whiteOut.Update();
 	backHexagon.Update();
+	space.Update();
 
 	ShakeUpdate();
 
@@ -231,6 +254,11 @@ void TitleScene::Draw()
 	for (int32_t i = 0; i < 7; i++)
 	{
 		string[i].Draw();
+	}
+
+	if (effectState == EffectState::None || effectState == EffectState::End)
+	{
+		space.Draw();
 	}
 
 	whiteOut.Draw();

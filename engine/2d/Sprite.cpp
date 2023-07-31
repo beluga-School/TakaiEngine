@@ -142,6 +142,9 @@ void Sprite::SetTexture(const Texture& tex)
 
 	mCutSize = mSize;
 
+	//デフォルトの大きさを保存
+	mInitSize = mSize;
+
 	SpriteTransferVertexBuffer(*this);
 }
 
@@ -213,6 +216,11 @@ void Sprite::Draw()
 	dx12->mCmdList->SetGraphicsRootConstantBufferView(0, mConstBuffer.mBuffer->GetGPUVirtualAddress());
 
 	dx12->mCmdList->DrawInstanced(4, 1, 0, 0);
+}
+
+Vector2 Sprite::GetInitSize()
+{
+	return mInitSize;
 }
 
 void Sprite::Init()

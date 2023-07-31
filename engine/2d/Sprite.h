@@ -68,8 +68,12 @@ struct Sprite
 	bool mIsInvisible = false;
 
 	Vector2 mSize = { 0.f,0.f };
+
+	Vector2 GetInitSize();
 protected:
 	void Init();
+	
+	Vector2 mInitSize = {};
 
 private:
 };
