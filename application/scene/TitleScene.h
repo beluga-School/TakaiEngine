@@ -18,7 +18,7 @@ private:
 
 	Sprite whiteOut;
 	Sprite backHexagon;
-	Sprite space;
+	Sprite mStart;
 
 	TEasing::easeTimer hexagonScaleTimer = 0.5f;
 

@@ -20,6 +20,7 @@ void TitleScene::LoadResource()
 	TextureManager::Load("Resources\\title_logo\\MARIMO.png", "title_marimo");
 	TextureManager::Load("Resources\\title_logo\\6400.png", "title_6400");
 	TextureManager::Load("Resources\\space.png", "space");
+	TextureManager::Load("Resources\\Start_A.png", "Start_A");
 	
 	TextureManager::Load("Resources\\hexagon_big.png", "hexagon_big");
 
@@ -32,8 +33,8 @@ void TitleScene::LoadResource()
 
 void TitleScene::Initialize()
 {
-	space.SetTexture(*TextureManager::GetTexture("space"));
-	space.SetPos({ Util::WIN_WIDTH / 2,Util::WIN_HEIGHT - 100 });
+	mStart.SetTexture(*TextureManager::GetTexture("space"));
+	mStart.SetPos({ Util::WIN_WIDTH / 2,Util::WIN_HEIGHT - 100 });
 
 	sceneID = "Title";
 
@@ -110,6 +111,21 @@ void TitleScene::Update()
 	if (SceneChange::Get()->IsBlackOut())
 	{
 		SceneManager::Get()->ChangeScene<GameScene>();
+	}
+
+	if (Input::Pad::CheckConnectPad())
+	{
+		if (mStart.mTEXTURE != TextureManager::GetTexture("Start_A"))
+		{
+			mStart.SetTexture(*TextureManager::GetTexture("Start_A"));
+		}
+	}
+	else
+	{
+		if (mStart.mTEXTURE != TextureManager::GetTexture("space"))
+		{
+			mStart.SetTexture(*TextureManager::GetTexture("space"));
+		}
 	}
 
 	shineTimer.Update();
@@ -233,7 +249,7 @@ void TitleScene::Update()
 
 	whiteOut.Update();
 	backHexagon.Update();
-	space.Update();
+	mStart.Update();
 
 	ShakeUpdate();
 
@@ -258,7 +274,7 @@ void TitleScene::Draw()
 
 	if (effectState == EffectState::None || effectState == EffectState::End)
 	{
-		space.Draw();
+		mStart.Draw();
 	}
 
 	whiteOut.Draw();
