@@ -73,7 +73,7 @@
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <TreatLinkerWarningAsErrors>true</TreatLinkerWarningAsErrors>
-      <AdditionalDependencies>assimp-vc143-mtd.lib;zlibstaticd.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>assimp-vc143-mtd.lib;zlibstaticd.lib;%(AdditionalDependencies);d3d12.lib;dxgi.lib;d3dcompiler.lib;xaudio2.lib;winmm.lib;dinput8.lib;dxguid.lib;xinput.lib</AdditionalDependencies>
       <AdditionalLibraryDirectories>$(SolutionDir)External\Assimp\lib\Debug</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
@@ -96,7 +96,7 @@
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <TreatLinkerWarningAsErrors>true</TreatLinkerWarningAsErrors>
-      <AdditionalDependencies>assimp-vc143-mt.lib;zlibstatic.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>assimp-vc143-mt.lib;zlibstatic.lib;%(AdditionalDependencies);d3d12.lib;dxgi.lib;d3dcompiler.lib;xaudio2.lib;winmm.lib;dinput8.lib;dxguid.lib;xinput.lib</AdditionalDependencies>
       <AdditionalLibraryDirectories>$(SolutionDir)External\Assimp\lib\Release</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>

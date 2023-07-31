@@ -6,25 +6,6 @@
 #include <iostream>
 #include <memory>
 
-//プロパティの変更を適用
-
-//libのリンク（いったんmainに）
-//directx12
-#pragma comment(lib,"d3d12.lib")
-#pragma comment(lib,"dxgi.lib")
-#pragma comment(lib,"d3dcompiler.lib")
-
-//sound
-#pragma comment(lib,"xaudio2.lib")
-
-//timemanager
-#pragma comment(lib,"winmm.lib")
-
-//input
-#pragma comment(lib,"dinput8.lib")
-#pragma comment(lib,"dxguid.lib")
-#pragma comment(lib,"xinput.lib")
-
 //自分でクラス化したやつ
 #include "WinAPI.h"
 #include "TimeManager.h"
