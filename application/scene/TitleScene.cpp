@@ -113,21 +113,6 @@ void TitleScene::Update()
 		SceneManager::Get()->ChangeScene<GameScene>();
 	}
 
-	if (Input::Pad::CheckConnectPad())
-	{
-		if (mStart.mTEXTURE != TextureManager::GetTexture("Start_A"))
-		{
-			mStart.SetTexture(*TextureManager::GetTexture("Start_A"));
-		}
-	}
-	else
-	{
-		if (mStart.mTEXTURE != TextureManager::GetTexture("space"))
-		{
-			mStart.SetTexture(*TextureManager::GetTexture("space"));
-		}
-	}
-
 	shineTimer.Update();
 	shineCoolTimer.Update();
 	shineEndTimer.Update();
