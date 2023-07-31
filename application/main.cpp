@@ -133,6 +133,10 @@ int32_t WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_  HINSTANCE hPrevInstan
 	postEffect = std::make_unique<PostEffect>();
 	postEffect->Initialize();
 
+	//音の初期化
+	SoundManager* soundManager = SoundManager::Get();
+	soundManager->Initialize();
+
 	//シーン切り替え演出の初期化
 	SceneChange::Get()->Initialize();
 
@@ -143,10 +147,6 @@ int32_t WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_  HINSTANCE hPrevInstan
 	scenemanager->ChangeScene<TitleScene>();
 
 #pragma endregion 描画初期化処理
-
-	//音の初期化
-	SoundManager *soundManager = SoundManager::GetInstance();
-	soundManager->Initialize();
 
 	//パイプラインの初期化
 	PipelineManager::Get()->Initialize();

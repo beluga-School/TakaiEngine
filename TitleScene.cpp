@@ -7,6 +7,7 @@
 #include "Util.h"
 #include "MathF.h"
 #include "TimeManager.h"
+#include "Sound.h"
 
 void TitleScene::LoadResource()
 {
@@ -18,11 +19,14 @@ void TitleScene::LoadResource()
 	TextureManager::Load("Resources\\title_logo\\A.png", "title_a");
 	TextureManager::Load("Resources\\title_logo\\MARIMO.png", "title_marimo");
 	TextureManager::Load("Resources\\title_logo\\6400.png", "title_6400");
+	
 	TextureManager::Load("Resources\\hexagon_big.png", "hexagon_big");
+
+	SoundManager::Load("Resources\\sound\\shock.wav", "shock");
+	SoundManager::Load("Resources\\sound\\pop.wav", "pop");
 
 	//titleUI.SetTexture(*TextureManager::GetTexture("title_logo"));
 	//titleUI.SetPos({ Util::WIN_WIDTH / 2, Util::WIN_HEIGHT / 2 });
-
 }
 
 void TitleScene::Initialize()
@@ -111,6 +115,14 @@ void TitleScene::Update()
 			//’…’nŽž‚É—h‚ç‚·
 			if (string[i].timer.GetNowEnd())
 			{
+				if (i < 6)
+				{
+					SoundManager::Get()->Play("shock");
+				}
+				else
+				{
+					SoundManager::Get()->Play("pop");
+				}
 				if (i < 5)
 				{
 					SetShake(10, 0.1f);

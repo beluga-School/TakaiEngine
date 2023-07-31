@@ -2,6 +2,8 @@
 #include "Result.h"
 #include <combaseapi.h>
 
+std::map<std::string, SoundData> SoundManager::sSounds;
+
 void SoundManager::Initialize()
 {
 	//result = CoInitializeEx(nullptr, COINIT_MULTITHREADED);
@@ -9,7 +11,7 @@ void SoundManager::Initialize()
 	sResult = mXAudio2->CreateMasteringVoice(&mMasterVoice);
 }
 
-SoundData SoundManager::SoundLoadWave(const char* filename)
+void SoundManager::Load(const char* filename, const std::string& handle)
 {
 	//①ファイルオープン
 	std::ifstream file;
@@ -74,20 +76,22 @@ SoundData SoundManager::SoundLoadWave(const char* filename)
 	soundData.pBuffer = reinterpret_cast<BYTE*>(pBuffer);
 	soundData.bufferSize = data.size;
 
-	return soundData;
+	sSounds[handle] = soundData;
 }
 
-void SoundManager::SoundPlayWave(const SoundData& soundData,const bool& loopFlag,const float& volume)
+void SoundManager::Play(const std::string &handle, const bool& loopFlag, const float& volume)
 {
+	SoundData* soundData = SoundManager::GetSound(handle);
+
 	//波形フォーマットからSourceVoiceの生成
 	IXAudio2SourceVoice* pSourceVoice = nullptr;
-	sResult = mXAudio2->CreateSourceVoice(&pSourceVoice, &soundData.wfex);
+	sResult = mXAudio2->CreateSourceVoice(&pSourceVoice, &soundData->wfex);
 	assert(SUCCEEDED(sResult));
 
 	//再生する波形データの設定
 	XAUDIO2_BUFFER buf{};
-	buf.pAudioData = soundData.pBuffer;
-	buf.AudioBytes = soundData.bufferSize;
+	buf.pAudioData = soundData->pBuffer;
+	buf.AudioBytes = soundData->bufferSize;
 	buf.Flags = XAUDIO2_END_OF_STREAM;
 
 	if (loopFlag)
@@ -101,7 +105,6 @@ void SoundManager::SoundPlayWave(const SoundData& soundData,const bool& loopFlag
 	//波形データの再生
 	sResult = pSourceVoice->SubmitSourceBuffer(&buf);
 	sResult = pSourceVoice->Start();
-
 }
 
 void SoundManager::SoundUnload(SoundData* soundData)
@@ -116,4 +119,9 @@ void SoundManager::SoundUnload(SoundData* soundData)
 void SoundManager::End()
 {
 	mXAudio2.Reset();
+}
+
+SoundData *SoundManager::GetSound(const std::string& handle)
+{
+	return &sSounds[handle];
 }

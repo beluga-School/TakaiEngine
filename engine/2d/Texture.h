@@ -62,7 +62,6 @@ public:
 	
 	static Texture* GetTexture(const std::string &handle);
 
-
 private:
 	//テクスチャの1枚目が、デバッグテキストの物になっちゃってるバグがあるのでそれを入れる用のテクスチャ
 	Texture bugfix_;

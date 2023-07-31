@@ -2,6 +2,7 @@
 #include "DirectXInit.h"
 #include <xaudio2.h>
 #include <fstream>
+#include <map>
 
 struct ChunkHeader
 {
@@ -33,19 +34,24 @@ class SoundManager
 public:
 	void Initialize();
 	//‰¹º“Ç‚İ‚İ
-	SoundData SoundLoadWave(const char* filename);
+	static void Load(const char* filename,const std::string& handle);
 	//‰¹ºÄ¶
-	void SoundPlayWave(const SoundData& soundData,const bool& loopFlag = false,const float& volume = 0.1f);
+	void Play(const std::string& handle,const bool& loopFlag = false,const float& volume = 0.1f);
 	//‰¹º‰ğ•ú
 	void SoundUnload(SoundData* soundData);
 	//xAudio2‚Ì‰ğ•ú
 	void End();
 
-	static SoundManager* GetInstance() {
+	static SoundData* GetSound(const std::string& handle);
+
+	static SoundManager* Get() {
 		static SoundManager instance;
 		return &instance;
 	};
 private:
+
+	static std::map<std::string, SoundData> sSounds;
+
 	Microsoft::WRL::ComPtr<IXAudio2> mXAudio2;
 	IXAudio2MasteringVoice* mMasterVoice = nullptr;
 };
