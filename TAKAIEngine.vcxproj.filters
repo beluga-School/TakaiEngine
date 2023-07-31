@@ -165,10 +165,6 @@
     <Filter Include="Engine\2D\PostEffect">
       <UniqueIdentifier>{28ec2c28-4740-4070-bc8c-b107df132d78}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル">
-      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
-      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
-    </Filter>
     <Filter Include="シェーダー\Basic">
       <UniqueIdentifier>{e3b12698-ea04-4a1e-96fe-5c9d2a4d011b}</UniqueIdentifier>
     </Filter>
@@ -234,9 +230,6 @@
     </Filter>
     <Filter Include="Application\Block">
       <UniqueIdentifier>{2d478356-55b8-45eb-999d-43fb364a2fe2}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Application\Skydome">
-      <UniqueIdentifier>{b0687ccb-5436-42b5-8034-0c8022f3fea5}</UniqueIdentifier>
     </Filter>
     <Filter Include="Application\Stage">
       <UniqueIdentifier>{6349d7e7-a1d1-4114-aa41-235be1768fa3}</UniqueIdentifier>
@@ -304,9 +297,6 @@
     <Filter Include="Application\EventBlock\Star">
       <UniqueIdentifier>{e234e327-a9e5-4832-8606-eb3701863442}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Application\SceneChange">
-      <UniqueIdentifier>{e8a48ed8-af9a-425a-a57e-23447f364934}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Application\CollideManager">
       <UniqueIdentifier>{8b7ae840-9ed9-434c-82b0-4ac48770cf23}</UniqueIdentifier>
     </Filter>
@@ -357,6 +347,16 @@
     </Filter>
     <Filter Include="Application\EventBlock\Coin">
       <UniqueIdentifier>{5e73a2fe-abc5-4499-94ba-86bdd7166d70}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Application\SceneChange">
+      <UniqueIdentifier>{e8a48ed8-af9a-425a-a57e-23447f364934}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Skydome">
+      <UniqueIdentifier>{b0687ccb-5436-42b5-8034-0c8022f3fea5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -516,92 +516,89 @@
     <ClCompile Include="engine\3d\Obj3dFBX.cpp">
       <Filter>Engine\3D\Obj3dFBX</Filter>
     </ClCompile>
-    <ClCompile Include="GameScene.cpp">
-      <Filter>Application\Scene\GameScene</Filter>
-    </ClCompile>
-    <ClCompile Include="Player.cpp">
-      <Filter>Application\Charactor\Player</Filter>
-    </ClCompile>
     <ClCompile Include="application\game\Block.cpp">
       <Filter>Application\Block</Filter>
     </ClCompile>
-    <ClCompile Include="Skydome.cpp">
-      <Filter>Application\Skydome</Filter>
-    </ClCompile>
-    <ClCompile Include="Stage.cpp">
-      <Filter>Application\Stage</Filter>
-    </ClCompile>
-    <ClCompile Include="PlayerCamera.cpp">
-      <Filter>Application\PlayerCamera</Filter>
-    </ClCompile>
-    <ClCompile Include="GEnemy.cpp">
-      <Filter>Application\Charactor\Enemy\GEnemy</Filter>
-    </ClCompile>
-    <ClCompile Include="EnemyManager.cpp">
-      <Filter>Application\Charactor\Enemy\EnemyManager</Filter>
-    </ClCompile>
-    <ClCompile Include="Enemy.cpp">
-      <Filter>Application\Charactor\Enemy</Filter>
-    </ClCompile>
-    <ClCompile Include="GoalBlock.cpp">
-      <Filter>Application\EventBlock\GoalBlock</Filter>
-    </ClCompile>
-    <ClCompile Include="EventBlock.cpp">
-      <Filter>Application\EventBlock\EventBlock</Filter>
-    </ClCompile>
-    <ClCompile Include="WarpBlock.cpp">
-      <Filter>Application\EventBlock\WarpBlock</Filter>
-    </ClCompile>
-    <ClCompile Include="GoalSystem.cpp">
-      <Filter>Application\System\Goal</Filter>
-    </ClCompile>
-    <ClCompile Include="ShaderTestScene.cpp">
-      <Filter>Application\Scene\ShaderTestScene</Filter>
-    </ClCompile>
-    <ClCompile Include="Goal.cpp">
-      <Filter>Application\EventBlock\GoalBlock</Filter>
-    </ClCompile>
-    <ClCompile Include="Star.cpp">
-      <Filter>Application\EventBlock\Star</Filter>
-    </ClCompile>
-    <ClCompile Include="SceneChange.cpp">
-      <Filter>Application\SceneChange</Filter>
-    </ClCompile>
-    <ClCompile Include="CollideManager.cpp">
-      <Filter>Application\CollideManager</Filter>
-    </ClCompile>
-    <ClCompile Include="Box.cpp">
-      <Filter>Application\Charactor\Box</Filter>
-    </ClCompile>
-    <ClCompile Include="Mob.cpp">
-      <Filter>Application\Charactor\Mob</Filter>
-    </ClCompile>
-    <ClCompile Include="Cannon.cpp">
-      <Filter>Application\EventBlock\Cannon</Filter>
-    </ClCompile>
-    <ClCompile Include="Status.cpp">
-      <Filter>Application\Status</Filter>
-    </ClCompile>
-    <ClCompile Include="StarUI.cpp">
-      <Filter>Application\UI\StarUI</Filter>
-    </ClCompile>
-    <ClCompile Include="HPGauge.cpp">
-      <Filter>Application\UI\HPGauge</Filter>
-    </ClCompile>
-    <ClCompile Include="Bombking.cpp">
-      <Filter>Application\Charactor\Bombking</Filter>
-    </ClCompile>
-    <ClCompile Include="IParticle2D.cpp">
-      <Filter>Engine\Particle2D\IParticle2D</Filter>
-    </ClCompile>
-    <ClCompile Include="TitleScene.cpp">
-      <Filter>Application\Scene\TitleScene</Filter>
-    </ClCompile>
-    <ClCompile Include="Entity.cpp">
+    <ClCompile Include="application\game\Entity\Entity.cpp">
       <Filter>Application\Entity</Filter>
     </ClCompile>
-    <ClCompile Include="Coin.cpp">
+    <ClCompile Include="application\game\Entity\Charactor\Bombking.cpp">
+      <Filter>Application\Charactor\Bombking</Filter>
+    </ClCompile>
+    <ClCompile Include="application\game\Entity\Charactor\Player.cpp">
+      <Filter>Application\Charactor\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="application\game\Entity\EventBlock\GoalBlock.cpp">
+      <Filter>Application\EventBlock\GoalBlock</Filter>
+    </ClCompile>
+    <ClCompile Include="application\game\Entity\EventBlock\Star.cpp">
+      <Filter>Application\EventBlock\Star</Filter>
+    </ClCompile>
+    <ClCompile Include="application\game\Entity\EventBlock\WarpBlock.cpp">
+      <Filter>Application\EventBlock\WarpBlock</Filter>
+    </ClCompile>
+    <ClCompile Include="application\game\Entity\Charactor\GEnemy.cpp">
+      <Filter>Application\Charactor\Enemy\GEnemy</Filter>
+    </ClCompile>
+    <ClCompile Include="application\game\Entity\Charactor\Enemy.cpp">
+      <Filter>Application\Charactor\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="application\game\Entity\EventBlock\Cannon.cpp">
+      <Filter>Application\EventBlock\Cannon</Filter>
+    </ClCompile>
+    <ClCompile Include="application\game\Entity\EventBlock\Coin.cpp">
       <Filter>Application\EventBlock\Coin</Filter>
+    </ClCompile>
+    <ClCompile Include="application\game\Entity\EventBlock\Goal.cpp">
+      <Filter>Application\System\Goal</Filter>
+    </ClCompile>
+    <ClCompile Include="application\game\Entity\Charactor\Mob.cpp">
+      <Filter>Application\Charactor\Mob</Filter>
+    </ClCompile>
+    <ClCompile Include="engine\Skydome.cpp">
+      <Filter>Engine\Skydome</Filter>
+    </ClCompile>
+    <ClCompile Include="application\system\GoalSystem.cpp">
+      <Filter>Application\System\Goal</Filter>
+    </ClCompile>
+    <ClCompile Include="application\game\PlayerCamera.cpp">
+      <Filter>Application\PlayerCamera</Filter>
+    </ClCompile>
+    <ClCompile Include="application\game\CollideManager.cpp">
+      <Filter>Application\CollideManager</Filter>
+    </ClCompile>
+    <ClCompile Include="application\game\Box.cpp">
+      <Filter>Application\Charactor\Box</Filter>
+    </ClCompile>
+    <ClCompile Include="application\game\EnemyManager.cpp">
+      <Filter>Application\Charactor\Enemy\EnemyManager</Filter>
+    </ClCompile>
+    <ClCompile Include="application\scene\TitleScene.cpp">
+      <Filter>Application\Scene\TitleScene</Filter>
+    </ClCompile>
+    <ClCompile Include="application\scene\ShaderTestScene.cpp">
+      <Filter>Application\Scene\ShaderTestScene</Filter>
+    </ClCompile>
+    <ClCompile Include="application\scene\GameScene.cpp">
+      <Filter>Application\Scene\GameScene</Filter>
+    </ClCompile>
+    <ClCompile Include="application\ui\StarUI.cpp">
+      <Filter>Application\UI\StarUI</Filter>
+    </ClCompile>
+    <ClCompile Include="application\ui\HPGauge.cpp">
+      <Filter>Application\UI\HPGauge</Filter>
+    </ClCompile>
+    <ClCompile Include="engine\particle\IParticle2D.cpp">
+      <Filter>Engine\Particle2D\IParticle2D</Filter>
+    </ClCompile>
+    <ClCompile Include="application\SceneChange.cpp">
+      <Filter>Application\SceneChange</Filter>
+    </ClCompile>
+    <ClCompile Include="application\Stage.cpp">
+      <Filter>Application\Stage</Filter>
+    </ClCompile>
+    <ClCompile Include="application\Status.cpp">
+      <Filter>Application\Status</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -770,92 +767,89 @@
     <ClInclude Include="engine\3d\Obj3dFBX.h">
       <Filter>Engine\3D\Obj3dFBX</Filter>
     </ClInclude>
-    <ClInclude Include="GameScene.h">
-      <Filter>Application\Scene\GameScene</Filter>
-    </ClInclude>
-    <ClInclude Include="Player.h">
-      <Filter>Application\Charactor\Player</Filter>
-    </ClInclude>
     <ClInclude Include="application\game\Block.h">
       <Filter>Application\Block</Filter>
     </ClInclude>
-    <ClInclude Include="Skydome.h">
-      <Filter>Application\Skydome</Filter>
-    </ClInclude>
-    <ClInclude Include="Stage.h">
-      <Filter>Application\Stage</Filter>
-    </ClInclude>
-    <ClInclude Include="PlayerCamera.h">
-      <Filter>Application\PlayerCamera</Filter>
-    </ClInclude>
-    <ClInclude Include="GEnemy.h">
-      <Filter>Application\Charactor\Enemy\GEnemy</Filter>
-    </ClInclude>
-    <ClInclude Include="EnemyManager.h">
-      <Filter>Application\Charactor\Enemy\EnemyManager</Filter>
-    </ClInclude>
-    <ClInclude Include="Enemy.h">
-      <Filter>Application\Charactor\Enemy</Filter>
-    </ClInclude>
-    <ClInclude Include="GoalBlock.h">
-      <Filter>Application\EventBlock\GoalBlock</Filter>
-    </ClInclude>
-    <ClInclude Include="EventBlock.h">
-      <Filter>Application\EventBlock\EventBlock</Filter>
-    </ClInclude>
-    <ClInclude Include="WarpBlock.h">
-      <Filter>Application\EventBlock\WarpBlock</Filter>
-    </ClInclude>
-    <ClInclude Include="GoalSystem.h">
-      <Filter>Application\System\Goal</Filter>
-    </ClInclude>
-    <ClInclude Include="ShaderTestScene.h">
-      <Filter>Application\Scene\ShaderTestScene</Filter>
-    </ClInclude>
-    <ClInclude Include="Goal.h">
-      <Filter>Application\EventBlock\GoalBlock</Filter>
-    </ClInclude>
-    <ClInclude Include="Star.h">
-      <Filter>Application\EventBlock\Star</Filter>
-    </ClInclude>
-    <ClInclude Include="SceneChange.h">
-      <Filter>Application\SceneChange</Filter>
-    </ClInclude>
-    <ClInclude Include="CollideManager.h">
-      <Filter>Application\CollideManager</Filter>
-    </ClInclude>
-    <ClInclude Include="Box.h">
-      <Filter>Application\Charactor\Box</Filter>
-    </ClInclude>
-    <ClInclude Include="Mob.h">
-      <Filter>Application\Charactor\Mob</Filter>
-    </ClInclude>
-    <ClInclude Include="Cannon.h">
-      <Filter>Application\EventBlock\Cannon</Filter>
-    </ClInclude>
-    <ClInclude Include="Status.h">
-      <Filter>Application\Status</Filter>
-    </ClInclude>
-    <ClInclude Include="StarUI.h">
-      <Filter>Application\UI\StarUI</Filter>
-    </ClInclude>
-    <ClInclude Include="HPGauge.h">
-      <Filter>Application\UI\HPGauge</Filter>
-    </ClInclude>
-    <ClInclude Include="Bombking.h">
-      <Filter>Application\Charactor\Bombking</Filter>
-    </ClInclude>
-    <ClInclude Include="IParticle2D.h">
-      <Filter>Engine\Particle2D\IParticle2D</Filter>
-    </ClInclude>
-    <ClInclude Include="TitleScene.h">
-      <Filter>Application\Scene\TitleScene</Filter>
-    </ClInclude>
-    <ClInclude Include="Entity.h">
+    <ClInclude Include="application\game\Entity\Entity.h">
       <Filter>Application\Entity</Filter>
     </ClInclude>
-    <ClInclude Include="Coin.h">
+    <ClInclude Include="application\game\Entity\Charactor\Bombking.h">
+      <Filter>Application\Charactor\Bombking</Filter>
+    </ClInclude>
+    <ClInclude Include="application\game\Entity\Charactor\Player.h">
+      <Filter>Application\Charactor\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="application\game\Entity\EventBlock\GoalBlock.h">
+      <Filter>Application\EventBlock\GoalBlock</Filter>
+    </ClInclude>
+    <ClInclude Include="application\game\Entity\EventBlock\Star.h">
+      <Filter>Application\EventBlock\Star</Filter>
+    </ClInclude>
+    <ClInclude Include="application\game\Entity\EventBlock\WarpBlock.h">
+      <Filter>Application\EventBlock\WarpBlock</Filter>
+    </ClInclude>
+    <ClInclude Include="application\game\Entity\Charactor\GEnemy.h">
+      <Filter>Application\Charactor\Enemy\GEnemy</Filter>
+    </ClInclude>
+    <ClInclude Include="application\game\Entity\Charactor\Enemy.h">
+      <Filter>Application\Charactor\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="application\game\Entity\EventBlock\Cannon.h">
+      <Filter>Application\EventBlock\Cannon</Filter>
+    </ClInclude>
+    <ClInclude Include="application\game\Entity\EventBlock\Coin.h">
       <Filter>Application\EventBlock\Coin</Filter>
+    </ClInclude>
+    <ClInclude Include="application\game\Entity\EventBlock\Goal.h">
+      <Filter>Application\System\Goal</Filter>
+    </ClInclude>
+    <ClInclude Include="application\game\Entity\Charactor\Mob.h">
+      <Filter>Application\Charactor\Mob</Filter>
+    </ClInclude>
+    <ClInclude Include="engine\Skydome.h">
+      <Filter>Engine\Skydome</Filter>
+    </ClInclude>
+    <ClInclude Include="application\system\GoalSystem.h">
+      <Filter>Application\System\Goal</Filter>
+    </ClInclude>
+    <ClInclude Include="application\game\PlayerCamera.h">
+      <Filter>Application\PlayerCamera</Filter>
+    </ClInclude>
+    <ClInclude Include="application\game\CollideManager.h">
+      <Filter>Application\CollideManager</Filter>
+    </ClInclude>
+    <ClInclude Include="application\game\Box.h">
+      <Filter>Application\Charactor\Box</Filter>
+    </ClInclude>
+    <ClInclude Include="application\game\EnemyManager.h">
+      <Filter>Application\Charactor\Enemy\EnemyManager</Filter>
+    </ClInclude>
+    <ClInclude Include="application\scene\TitleScene.h">
+      <Filter>Application\Scene\TitleScene</Filter>
+    </ClInclude>
+    <ClInclude Include="application\scene\ShaderTestScene.h">
+      <Filter>Application\Scene\ShaderTestScene</Filter>
+    </ClInclude>
+    <ClInclude Include="application\scene\GameScene.h">
+      <Filter>Application\Scene\GameScene</Filter>
+    </ClInclude>
+    <ClInclude Include="application\ui\StarUI.h">
+      <Filter>Application\UI\StarUI</Filter>
+    </ClInclude>
+    <ClInclude Include="application\ui\HPGauge.h">
+      <Filter>Application\UI\HPGauge</Filter>
+    </ClInclude>
+    <ClInclude Include="engine\particle\IParticle2D.h">
+      <Filter>Engine\Particle2D\IParticle2D</Filter>
+    </ClInclude>
+    <ClInclude Include="application\SceneChange.h">
+      <Filter>Application\SceneChange</Filter>
+    </ClInclude>
+    <ClInclude Include="application\Stage.h">
+      <Filter>Application\Stage</Filter>
+    </ClInclude>
+    <ClInclude Include="application\Status.h">
+      <Filter>Application\Status</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

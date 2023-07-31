@@ -65,7 +65,7 @@
       <PreprocessorDefinitions>_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
-      <AdditionalIncludeDirectories>$(ProjectDir)engine\2d;$(ProjectDir)engine\3d;$(ProjectDir)engine\common;$(ProjectDir)engine\input;$(ProjectDir)engine\libManage;$(ProjectDir)engine\light;$(ProjectDir)engine\math;$(ProjectDir)engine\shader;$(ProjectDir)engine\sound;$(ProjectDir)engine\util;$(ProjectDir)application\particle;$(ProjectDir)application\game;$(ProjectDir)engine\imgui;$(ProjectDir)engine;$(ProjectDir)application;$(ProjectDir)External;$(ProjectDir);$(ProjectDir)engine\scene;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)engine\2d;$(ProjectDir)engine\3d;$(ProjectDir)engine\common;$(ProjectDir)engine\input;$(ProjectDir)engine\libManage;$(ProjectDir)engine\light;$(ProjectDir)engine\math;$(ProjectDir)engine\shader;$(ProjectDir)engine\sound;$(ProjectDir)engine\util;$(ProjectDir)application\particle;$(ProjectDir)application\game;$(ProjectDir)engine\imgui;$(ProjectDir)engine;$(ProjectDir)application;$(ProjectDir)External;$(ProjectDir);$(ProjectDir)engine\scene;$(ProjectDir)application\game\entity;$(ProjectDir)application\game\entity\charactor;$(ProjectDir)application\game\entity\eventBlock;$(ProjectDir)application\scene;$(ProjectDir)application\ui;$(ProjectDir)application\system;$(ProjectDir)engine\particle;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <TreatWarningAsError>true</TreatWarningAsError>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
@@ -86,7 +86,7 @@
       <PreprocessorDefinitions>NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
-      <AdditionalIncludeDirectories>$(ProjectDir)engine\2d;$(ProjectDir)engine\3d;$(ProjectDir)engine\common;$(ProjectDir)engine\input;$(ProjectDir)engine\libManage;$(ProjectDir)engine\light;$(ProjectDir)engine\math;$(ProjectDir)engine\shader;$(ProjectDir)engine\sound;$(ProjectDir)engine\util;$(ProjectDir)application\particle;$(ProjectDir)application\game;$(ProjectDir)engine\imgui;$(ProjectDir)engine;$(ProjectDir)application;$(ProjectDir)External;$(ProjectDir);$(ProjectDir)engine\scene;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)engine\2d;$(ProjectDir)engine\3d;$(ProjectDir)engine\common;$(ProjectDir)engine\input;$(ProjectDir)engine\libManage;$(ProjectDir)engine\light;$(ProjectDir)engine\math;$(ProjectDir)engine\shader;$(ProjectDir)engine\sound;$(ProjectDir)engine\util;$(ProjectDir)application\particle;$(ProjectDir)application\game;$(ProjectDir)engine\imgui;$(ProjectDir)engine;$(ProjectDir)application;$(ProjectDir)External;$(ProjectDir);$(ProjectDir)engine\scene;$(ProjectDir)application\game\entity;$(ProjectDir)application\game\entity\charactor;$(ProjectDir)application\game\entity\eventBlock;$(ProjectDir)application\scene;$(ProjectDir)application\ui;$(ProjectDir)application\system;$(ProjectDir)engine\particle;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <TreatWarningAsError>true</TreatWarningAsError>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
@@ -102,15 +102,31 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="application\game\Block.cpp" />
-    <ClCompile Include="Bombking.cpp" />
-    <ClCompile Include="Box.cpp" />
-    <ClCompile Include="Cannon.cpp" />
-    <ClCompile Include="Coin.cpp" />
-    <ClCompile Include="CollideManager.cpp" />
-    <ClCompile Include="Enemy.cpp" />
-    <ClCompile Include="EnemyManager.cpp" />
-    <ClCompile Include="Entity.cpp" />
-    <ClCompile Include="GEnemy.cpp" />
+    <ClCompile Include="application\game\Box.cpp" />
+    <ClCompile Include="application\game\CollideManager.cpp" />
+    <ClCompile Include="application\game\EnemyManager.cpp" />
+    <ClCompile Include="application\game\Entity\Charactor\Bombking.cpp" />
+    <ClCompile Include="application\game\Entity\Charactor\Enemy.cpp" />
+    <ClCompile Include="application\game\Entity\Charactor\GEnemy.cpp" />
+    <ClCompile Include="application\game\Entity\Charactor\Mob.cpp" />
+    <ClCompile Include="application\game\Entity\Charactor\Player.cpp" />
+    <ClCompile Include="application\game\Entity\Entity.cpp" />
+    <ClCompile Include="application\game\Entity\EventBlock\Cannon.cpp" />
+    <ClCompile Include="application\game\Entity\EventBlock\Coin.cpp" />
+    <ClCompile Include="application\game\Entity\EventBlock\Goal.cpp" />
+    <ClCompile Include="application\game\Entity\EventBlock\GoalBlock.cpp" />
+    <ClCompile Include="application\game\Entity\EventBlock\Star.cpp" />
+    <ClCompile Include="application\game\Entity\EventBlock\WarpBlock.cpp" />
+    <ClCompile Include="application\game\PlayerCamera.cpp" />
+    <ClCompile Include="application\SceneChange.cpp" />
+    <ClCompile Include="application\scene\GameScene.cpp" />
+    <ClCompile Include="application\scene\ShaderTestScene.cpp" />
+    <ClCompile Include="application\scene\TitleScene.cpp" />
+    <ClCompile Include="application\Stage.cpp" />
+    <ClCompile Include="application\Status.cpp" />
+    <ClCompile Include="application\system\GoalSystem.cpp" />
+    <ClCompile Include="application\ui\HPGauge.cpp" />
+    <ClCompile Include="application\ui\StarUI.cpp" />
     <ClCompile Include="engine\2d\PostEffect.cpp" />
     <ClCompile Include="engine\3d\Billboard.cpp" />
     <ClCompile Include="engine\3d\Obj3dFBX.cpp" />
@@ -138,11 +154,13 @@
     <ClCompile Include="application\game\Collision.cpp" />
     <ClCompile Include="engine\light\PointLight.cpp" />
     <ClCompile Include="engine\math\Quaternion.cpp" />
+    <ClCompile Include="engine\particle\IParticle2D.cpp" />
     <ClCompile Include="engine\scene\DemoScene.cpp" />
     <ClCompile Include="engine\scene\IScene.cpp" />
     <ClCompile Include="engine\scene\SceneFactory.cpp" />
     <ClCompile Include="engine\scene\SceneManager.cpp" />
     <ClCompile Include="engine\shader\Shader.cpp" />
+    <ClCompile Include="engine\Skydome.cpp" />
     <ClCompile Include="engine\sound\Sound.cpp" />
     <ClCompile Include="engine\2d\Sprite.cpp" />
     <ClCompile Include="engine\util\StringUtil.cpp" />
@@ -156,7 +174,6 @@
     <ClCompile Include="engine\3d\Vertex.cpp" />
     <ClCompile Include="engine\3d\ViewProjection.cpp" />
     <ClCompile Include="engine\3d\WinAPI.cpp" />
-    <ClCompile Include="EventBlock.cpp" />
     <ClCompile Include="External\imgui\imgui.cpp" />
     <ClCompile Include="External\imgui\imgui_demo.cpp" />
     <ClCompile Include="External\imgui\imgui_draw.cpp" />
@@ -164,36 +181,34 @@
     <ClCompile Include="External\imgui\imgui_impl_win32.cpp" />
     <ClCompile Include="External\imgui\imgui_tables.cpp" />
     <ClCompile Include="External\imgui\imgui_widgets.cpp" />
-    <ClCompile Include="GameScene.cpp" />
-    <ClCompile Include="Goal.cpp" />
-    <ClCompile Include="GoalBlock.cpp" />
-    <ClCompile Include="GoalSystem.cpp" />
-    <ClCompile Include="HPGauge.cpp" />
-    <ClCompile Include="IParticle2D.cpp" />
-    <ClCompile Include="Mob.cpp" />
-    <ClCompile Include="Player.cpp" />
-    <ClCompile Include="PlayerCamera.cpp" />
-    <ClCompile Include="SceneChange.cpp" />
-    <ClCompile Include="ShaderTestScene.cpp" />
-    <ClCompile Include="Skydome.cpp" />
-    <ClCompile Include="Stage.cpp" />
-    <ClCompile Include="Star.cpp" />
-    <ClCompile Include="StarUI.cpp" />
-    <ClCompile Include="Status.cpp" />
-    <ClCompile Include="TitleScene.cpp" />
-    <ClCompile Include="WarpBlock.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="application\game\Block.h" />
-    <ClInclude Include="Bombking.h" />
-    <ClInclude Include="Box.h" />
-    <ClInclude Include="Cannon.h" />
-    <ClInclude Include="Coin.h" />
-    <ClInclude Include="CollideManager.h" />
-    <ClInclude Include="Enemy.h" />
-    <ClInclude Include="EnemyManager.h" />
-    <ClInclude Include="Entity.h" />
-    <ClInclude Include="GEnemy.h" />
+    <ClInclude Include="application\game\Box.h" />
+    <ClInclude Include="application\game\CollideManager.h" />
+    <ClInclude Include="application\game\EnemyManager.h" />
+    <ClInclude Include="application\game\Entity\Charactor\Bombking.h" />
+    <ClInclude Include="application\game\Entity\Charactor\Enemy.h" />
+    <ClInclude Include="application\game\Entity\Charactor\GEnemy.h" />
+    <ClInclude Include="application\game\Entity\Charactor\Mob.h" />
+    <ClInclude Include="application\game\Entity\Charactor\Player.h" />
+    <ClInclude Include="application\game\Entity\Entity.h" />
+    <ClInclude Include="application\game\Entity\EventBlock\Cannon.h" />
+    <ClInclude Include="application\game\Entity\EventBlock\Coin.h" />
+    <ClInclude Include="application\game\Entity\EventBlock\Goal.h" />
+    <ClInclude Include="application\game\Entity\EventBlock\GoalBlock.h" />
+    <ClInclude Include="application\game\Entity\EventBlock\Star.h" />
+    <ClInclude Include="application\game\Entity\EventBlock\WarpBlock.h" />
+    <ClInclude Include="application\game\PlayerCamera.h" />
+    <ClInclude Include="application\SceneChange.h" />
+    <ClInclude Include="application\scene\GameScene.h" />
+    <ClInclude Include="application\scene\ShaderTestScene.h" />
+    <ClInclude Include="application\scene\TitleScene.h" />
+    <ClInclude Include="application\Stage.h" />
+    <ClInclude Include="application\Status.h" />
+    <ClInclude Include="application\system\GoalSystem.h" />
+    <ClInclude Include="application\ui\HPGauge.h" />
+    <ClInclude Include="application\ui\StarUI.h" />
     <ClInclude Include="engine\2d\PostEffect.h" />
     <ClInclude Include="engine\3d\Billboard.h" />
     <ClInclude Include="engine\3d\Obj3dFBX.h" />
@@ -221,12 +236,14 @@
     <ClInclude Include="engine\light\PointLight.h" />
     <ClInclude Include="engine\math\Quaternion.h" />
     <ClInclude Include="engine\common\Result.h" />
+    <ClInclude Include="engine\particle\IParticle2D.h" />
     <ClInclude Include="engine\scene\AbstractSceneFactory.h" />
     <ClInclude Include="engine\scene\DemoScene.h" />
     <ClInclude Include="engine\scene\IScene.h" />
     <ClInclude Include="engine\scene\SceneFactory.h" />
     <ClInclude Include="engine\scene\SceneManager.h" />
     <ClInclude Include="engine\shader\Shader.h" />
+    <ClInclude Include="engine\Skydome.h" />
     <ClInclude Include="engine\sound\Sound.h" />
     <ClInclude Include="engine\2d\Sprite.h" />
     <ClInclude Include="engine\util\StringUtil.h" />
@@ -240,7 +257,6 @@
     <ClInclude Include="engine\3d\Vertex.h" />
     <ClInclude Include="engine\3d\ViewProjection.h" />
     <ClInclude Include="engine\common\WinAPI.h" />
-    <ClInclude Include="EventBlock.h" />
     <ClInclude Include="External\imgui\imconfig.h" />
     <ClInclude Include="External\imgui\imgui.h" />
     <ClInclude Include="External\imgui\imgui_impl_dx12.h" />
@@ -250,24 +266,6 @@
     <ClInclude Include="External\imgui\imstb_textedit.h" />
     <ClInclude Include="External\imgui\imstb_truetype.h" />
     <ClInclude Include="External\json.hpp" />
-    <ClInclude Include="GameScene.h" />
-    <ClInclude Include="Goal.h" />
-    <ClInclude Include="GoalBlock.h" />
-    <ClInclude Include="GoalSystem.h" />
-    <ClInclude Include="HPGauge.h" />
-    <ClInclude Include="IParticle2D.h" />
-    <ClInclude Include="Mob.h" />
-    <ClInclude Include="Player.h" />
-    <ClInclude Include="PlayerCamera.h" />
-    <ClInclude Include="SceneChange.h" />
-    <ClInclude Include="ShaderTestScene.h" />
-    <ClInclude Include="Skydome.h" />
-    <ClInclude Include="Stage.h" />
-    <ClInclude Include="Star.h" />
-    <ClInclude Include="StarUI.h" />
-    <ClInclude Include="Status.h" />
-    <ClInclude Include="TitleScene.h" />
-    <ClInclude Include="WarpBlock.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="External\imgui\imgui.ini" />
