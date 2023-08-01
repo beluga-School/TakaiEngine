@@ -1,0 +1,253 @@
+{
+    "name": "scene",
+    "objects": [
+        {
+            "type": "MESH",
+            "name": "Cube",
+            "transform": {
+                "translation": [
+                    -9.032285690307617,
+                    -0.17870140075683594,
+                    -2.822286605834961
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    26.858318328857422,
+                    27.454931259155273,
+                    0.6666092276573181
+                ]
+            },
+            "file_name": "groundCube",
+            "collider": {
+                "type": "BOX",
+                "center": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "size": [
+                    2.0,
+                    2.0,
+                    2.0
+                ]
+            }
+        },
+        {
+            "type": "LIGHT",
+            "name": "Light",
+            "transform": {
+                "translation": [
+                    4.076245307922363,
+                    1.0054539442062378,
+                    5.903861999511719
+                ],
+                "rotation": [
+                    37.261043548583984,
+                    3.1637072563171387,
+                    106.93630981445312
+                ],
+                "scaling": [
+                    1.0,
+                    0.9999999403953552,
+                    1.0
+                ]
+            }
+        },
+        {
+            "type": "CAMERA",
+            "name": "Camera",
+            "transform": {
+                "translation": [
+                    7.358891487121582,
+                    -6.925790786743164,
+                    4.958309173583984
+                ],
+                "rotation": [
+                    63.559303283691406,
+                    -2.664711473698844e-06,
+                    46.69194793701172
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            }
+        },
+        {
+            "type": "MESH",
+            "name": "立方体.006",
+            "transform": {
+                "translation": [
+                    10.370430946350098,
+                    -3.77886962890625,
+                    0.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "",
+            "setObject": "player"
+        },
+        {
+            "type": "MESH",
+            "name": "円柱",
+            "transform": {
+                "translation": [
+                    -3.2899742126464844,
+                    -20.02328109741211,
+                    -2.144094228744507
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    2.279975175857544,
+                    2.279975175857544,
+                    2.279975175857544
+                ]
+            },
+            "file_name": "dokan",
+            "collider": {
+                "type": "BOX",
+                "center": [
+                    0.0,
+                    0.0,
+                    1.0
+                ],
+                "size": [
+                    2.0,
+                    2.0,
+                    2.0
+                ]
+            },
+            "event_trigger": "stage_grasslands",
+            "setObject": "dokan_grasslands_0"
+        },
+        {
+            "type": "MESH",
+            "name": "円柱.001",
+            "transform": {
+                "translation": [
+                    -15.017904281616211,
+                    -15.02997875213623,
+                    -2.144094228744507
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    2.279975175857544,
+                    2.279975175857544,
+                    2.279975175857544
+                ]
+            },
+            "file_name": "dokan",
+            "collider": {
+                "type": "BOX",
+                "center": [
+                    0.0,
+                    0.0,
+                    1.0
+                ],
+                "size": [
+                    2.0,
+                    2.0,
+                    2.0
+                ]
+            },
+            "event_trigger": "stage_mountain",
+            "setObject": "dokan_mountain_0"
+        },
+        {
+            "type": "MESH",
+            "name": "円柱.002",
+            "transform": {
+                "translation": [
+                    -15.017904281616211,
+                    -7.312551975250244,
+                    -2.144094228744507
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    2.279975175857544,
+                    2.279975175857544,
+                    2.279975175857544
+                ]
+            },
+            "file_name": "dokan",
+            "collider": {
+                "type": "BOX",
+                "center": [
+                    0.0,
+                    0.0,
+                    1.0
+                ],
+                "size": [
+                    2.0,
+                    2.0,
+                    2.0
+                ]
+            },
+            "event_trigger": "stage_mountain",
+            "setObject": "dokan_mountain_1"
+        },
+        {
+            "type": "MESH",
+            "name": "円柱.003",
+            "transform": {
+                "translation": [
+                    -15.017904281616211,
+                    7.772484302520752,
+                    -2.144094228744507
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    2.279975175857544,
+                    2.279975175857544,
+                    2.279975175857544
+                ]
+            },
+            "file_name": "dokan",
+            "collider": {
+                "type": "BOX",
+                "center": [
+                    0.0,
+                    0.0,
+                    1.0
+                ],
+                "size": [
+                    2.0,
+                    2.0,
+                    2.0
+                ]
+            },
+            "event_trigger": "stage_mountain",
+            "setObject": "dokan_mountain_2"
+        }
+    ]
+}

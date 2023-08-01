@@ -127,6 +127,7 @@
     <ClCompile Include="application\system\GoalSystem.cpp" />
     <ClCompile Include="application\ui\HPGauge.cpp" />
     <ClCompile Include="application\ui\StarUI.cpp" />
+    <ClCompile Include="Dokan.cpp" />
     <ClCompile Include="engine\2d\PostEffect.cpp" />
     <ClCompile Include="engine\3d\Billboard.cpp" />
     <ClCompile Include="engine\3d\Obj3dFBX.cpp" />
@@ -209,6 +210,7 @@
     <ClInclude Include="application\system\GoalSystem.h" />
     <ClInclude Include="application\ui\HPGauge.h" />
     <ClInclude Include="application\ui\StarUI.h" />
+    <ClInclude Include="Dokan.h" />
     <ClInclude Include="engine\2d\PostEffect.h" />
     <ClInclude Include="engine\3d\Billboard.h" />
     <ClInclude Include="engine\3d\Obj3dFBX.h" />

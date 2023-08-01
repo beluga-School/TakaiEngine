@@ -11,6 +11,7 @@
 #include <sstream>
 #include "Bombking.h"
 #include "Coin.h"
+#include "Dokan.h"
 
 void Stage::ChangeLevel(LevelData& data)
 {
@@ -252,6 +253,7 @@ void Stage::EvenyObjectSet(const LevelData::ObjectData& data)
 
 		return;
 	}
+
 	//star の文字列が完全一致するなら
 	if (data.eventtrigerName == "star")
 	{
@@ -297,6 +299,7 @@ void Stage::EvenyObjectSet(const LevelData::ObjectData& data)
 				MathF::AngleConvRad(data.rotation.z)
 			};
 
+			//ここEntitysから引っ張ってきてるけど合ってるのかな
 			StarManager::Get()->mStars.back()->box.cubecol.position = mEntitys.back().box.position;
 			StarManager::Get()->mStars.back()->box.cubecol.scale = mEntitys.back().box.scale;
 			//当たり判定だけマネージャーに登録
@@ -403,11 +406,7 @@ void Stage::ChangeUpdate()
 		//プレイヤーの配置なら
 		if (objectData->setObjectName == "player")
 		{
-			Player::Get()->Reset();
-			Player::Get()->preMove = objectData->translation;
-			Player::Get()->position = objectData->translation;
-			Player::Get()->rotation = objectData->rotation;
-			Player::Get()->scale = objectData->scaling;
+			SetPlayer(*objectData);
 
 			continue;
 		}
@@ -505,6 +504,79 @@ void Stage::ChangeUpdate()
 			continue;
 		}
 
+		//土管を配置
+		if (objectData->setObjectName.find("dokan") != std::string::npos)
+		{
+			mEventObjects.emplace_back();
+			mEventObjects.back() = std::make_unique<Dokan>();
+
+			mEventObjects.back()->Initialize();
+
+			mEventObjects.back()->trigerName = objectData->eventtrigerName;
+
+			mEventObjects.back()->SetOutLineState({ 0,0,0,1 }, 0.05f);
+
+			//オブジェクトの配置
+			LevelDataExchanger::SetObjectData(*mEventObjects.back(), *objectData);
+
+			if (objectData->collider.have)
+			{
+				//当たり判定を表示するオブジェクト
+				mEventObjects.back()->box.Initialize();
+
+				//コリジョンオンリー描画で使うため、コリジョンのタグを付ける
+				mEventObjects.back()->taglist.push_back(TagTable::Collsion);
+
+				mEventObjects.back()->box.SetModel(ModelManager::GetModel("BlankCube"));
+				mEventObjects.back()->box.SetTexture(TextureManager::Get()->GetTexture("white"));
+
+				mEventObjects.back()->box.position = objectData->translation + objectData->collider.center;
+				mEventObjects.back()->box.scale = {
+					objectData->scaling.x * objectData->collider.size.x,
+					objectData->scaling.y * objectData->collider.size.y,
+					objectData->scaling.z * objectData->collider.size.z
+				};
+				mEventObjects.back()->box.rotation = {
+					MathF::AngleConvRad(objectData->rotation.x),
+					MathF::AngleConvRad(objectData->rotation.y),
+					MathF::AngleConvRad(objectData->rotation.z)
+				};
+
+				mEventObjects.back()->box.cubecol.position = mEventObjects.back()->box.position;
+				mEventObjects.back()->box.cubecol.scale = mEventObjects.back()->box.scale;
+			}
+
+			//setObjectを分解する
+			std::vector<std::string> split = Util::SplitString(objectData->setObjectName, "_");
+
+			Dokan* dokan = dynamic_cast<Dokan*>(mEventObjects.back().get());
+			for (auto str : split)
+			{
+				//数字だけ抜き出す
+				if (Util::IsNumber(str))
+				{
+					dokan->dokanInfo.id = str;
+				}
+				//stage以外の文字列なら
+				else if (str != "dokan")
+				{
+					dokan->dokanInfo.stageName = str;
+				}
+			}
+
+			//プレイヤーの配置
+			if (oldDokanInfo.stageName.find(dokan->dokanInfo.stageName) != std::string::npos &&
+				oldDokanInfo.id.find(dokan->dokanInfo.id) != std::string::npos)
+			{
+				Player::Get()->Reset();
+				Player::Get()->preMove = objectData->translation;
+				Player::Get()->position = objectData->translation;
+				Player::Get()->rotation = objectData->rotation;
+			}
+
+			continue;
+		}
+
 		//イベントオブジェクトなら設置
 		if (objectData->eventtrigerName != "")
 		{
@@ -573,6 +645,15 @@ void Stage::ChangeUpdate()
 		//探索方を変えない方針で改善するなら、すでに全てのデータが見つかっているデータは
 		//スキップするなどの処理が必要だろう
 	}
+}
+
+void Stage::SetPlayer(const LevelData::ObjectData& data)
+{
+	Player::Get()->Reset();
+	Player::Get()->preMove = data.translation;
+	Player::Get()->position = data.translation;
+	Player::Get()->rotation = data.rotation;
+	//Player::Get()->scale = data.scaling;
 }
 
 void Stage::DrawModel()

@@ -19,6 +19,10 @@ public:
 		if (!flag)gravity = 0;
 		noGravity = flag;
 	}
+	void SetNoCollsion(bool flag)
+	{
+		mNoCollision = flag;
+	}
 
 	//プレイヤーの足元のオブジェクトの座標
 	float GetFeet() {
@@ -40,6 +44,9 @@ public:
 
 protected:
 	bool noGravity = false;
+
+	//当たり判定を行わないようにする
+	bool mNoCollision = false;
 
 	void CollsionUpdate();
 

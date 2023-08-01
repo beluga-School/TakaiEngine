@@ -8,6 +8,7 @@
 #include "Enemy.h"
 #include "Star.h"
 #include "WarpBlock.h"
+#include "Dokan.h"
 
 bool CollideManager::CheckDirections(const Cube& check, const Cube& collide, const CheckDirection& CD)
 {
@@ -99,6 +100,31 @@ void CollideManager::CheckCollide(Entity* check, Entity* collide)
 		return;
 	}
 
+	//判定する側がプレイヤーの時
+	if (check->CheckTag(TagTable::Player))
+	{
+		//checkがPlayerであることは確定しているので、player型に変換してデータを持ってくる
+		Player* player = static_cast<Player*>(check);
+
+		if (collide->CheckTag(TagTable::Dokan))
+		{
+			//collideがDokanであることは確定しているので、Dokan型に変換してデータを持ってくる
+			Dokan* dokan = static_cast<Dokan*>(collide);
+			Cube tempDokan = dokan->box.cubecol;
+			tempDokan.scale.y *= 1.1f;
+
+			if (Collsions::CubeCollision(player->box.cubecol, tempDokan))
+			{
+				//プレイヤーが土管の上にいるなら
+				if (CheckDirections(player->box.cubecol, dokan->box.cubecol, CheckDirection::CD_UP))
+				{
+					//内部の処理を行えるように
+					dokan->HitEffect(player);
+				}
+			}
+		}
+	}
+
 	//判定する側がモブの時
 	if (check->CheckTag(TagTable::Mob))
 	{
@@ -155,7 +181,7 @@ void CollideManager::CheckStatus(Entity* check, Entity* collide)
 		}
 		if (collide->CheckTag(TagTable::Star))
 		{
-			//collideがStarであることは確定しているので、Cannon型に変換してデータを持ってくる
+			//collideがStarであることは確定しているので、Star型に変換してデータを持ってくる
 			Star* star = static_cast<Star*>(collide);
 			if (Collsions::CubeCollision(player->box.cubecol, star->box.cubecol))
 			{
@@ -164,7 +190,7 @@ void CollideManager::CheckStatus(Entity* check, Entity* collide)
 		}
 		if (collide->CheckTag(TagTable::WarpBlock))
 		{
-			//collideがStarであることは確定しているので、Cannon型に変換してデータを持ってくる
+			//collideがWarpであることは確定しているので、Warp型に変換してデータを持ってくる
 			WarpBlock* warpBlock = static_cast<WarpBlock*>(collide);
 			if (Collsions::CubeCollision(player->box.cubecol, warpBlock->box.cubecol))
 			{

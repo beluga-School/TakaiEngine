@@ -358,6 +358,9 @@
       <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
       <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
     </Filter>
+    <Filter Include="Application\EventBlock\Dokan">
+      <UniqueIdentifier>{ec96a8b5-3478-455f-aea2-fe63496f0b7a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="engine\input\Input.cpp">
@@ -599,6 +602,9 @@
     </ClCompile>
     <ClCompile Include="application\Status.cpp">
       <Filter>Application\Status</Filter>
+    </ClCompile>
+    <ClCompile Include="Dokan.cpp">
+      <Filter>Application\EventBlock\Dokan</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -850,6 +856,9 @@
     </ClInclude>
     <ClInclude Include="application\Status.h">
       <Filter>Application\Status</Filter>
+    </ClInclude>
+    <ClInclude Include="Dokan.h">
+      <Filter>Application\EventBlock\Dokan</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

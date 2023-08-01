@@ -27,9 +27,6 @@ void Player::Initialize()
 
 void Player::Update()
 {
-	//重力を無効化(デバッグ用)
-	//SetNoGravity(true);
-
 	//ダメージ処理
 	if (Input::Keyboard::TriggerKey(DIK_T))
 	{

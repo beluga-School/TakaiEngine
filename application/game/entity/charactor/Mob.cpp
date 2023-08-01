@@ -3,9 +3,6 @@
 
 void Mob::CollsionUpdate()
 {
-	//これは本体のスケールを入れてるからいみねーだろ！！！！！！１１１
-	//box.CreateCol(position, scale);
-
 	//今後Xも入る予定
 	//UpdateX();
 
@@ -21,6 +18,9 @@ void Mob::UpdateY()
 
 void Mob::GroundCol()
 {
+	//コリジョンを行わないフラグが立っているならスキップ
+	if (mNoCollision)return;
+
 	//上方向の判定
 	float preY = -114514.f;
 	float maxY = 0;

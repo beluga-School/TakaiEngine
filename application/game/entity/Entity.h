@@ -20,6 +20,7 @@ enum class TagTable
 	Star = 7,
 	WarpBlock = 8,
 	Coin = 9,
+	Dokan = 10,
 };
 
 //3d描画される全てのオブジェクト

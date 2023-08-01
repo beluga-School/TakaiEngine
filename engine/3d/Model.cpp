@@ -300,6 +300,7 @@ void ModelManager::PreLoad()
 	LoadModel("GoalFrag", "GoalFrag",true);
 	LoadModel("star", "star",true);
 	LoadModel("Cannon", "Cannon",true);
+	LoadModel("dokan", "dokan",true);
 }
 
 void ModelManager::LoadModel(const std::string filepath, const std::string handle, bool smooth)

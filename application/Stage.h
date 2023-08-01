@@ -8,6 +8,7 @@
 #include "Star.h"
 #include "CollideManager.h"
 #include "Mob.h"
+#include "Dokan.h"
 
 class ColEventObj : public Obj3d
 {
@@ -65,6 +66,8 @@ public:
 
 	GoalSystem goalSystem;
 
+	DokanInfo oldDokanInfo;
+
 private:
 	Stage(){};
 	~Stage(){};
@@ -83,6 +86,8 @@ private:
 
 	//ステージ切り替えの更新
 	void ChangeUpdate();
+
+	void SetPlayer(const LevelData::ObjectData& data);
 
 	void DrawModel();
 	void DrawCollider();

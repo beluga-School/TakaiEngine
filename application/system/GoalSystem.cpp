@@ -55,7 +55,8 @@ void GoalSystem::GoalAnimetion()
 			animetionState = AnimetionState::None;
 			thirdTimer.Reset();
 		
-			Stage::Get()->ChangeLevel(*LevelLoader::Get()->GetData("stage_castle_inside"));
+			//ステージセレクトに戻る
+			Stage::Get()->ChangeLevel(*LevelLoader::Get()->GetData("stage_stageselect"));
 		}
 		break;
 	}
