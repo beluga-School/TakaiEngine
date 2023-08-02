@@ -59,7 +59,7 @@ void Stage::Update()
 		obj->Update();
 	}
 
-	StarManager::Get()->Update();
+	//StarManager::Get()->Update();
 
 	for (auto& obj : CollideManager::Get()->allCols)
 	{
@@ -258,21 +258,21 @@ void Stage::EvenyObjectSet(const LevelData::ObjectData& data)
 	//star の文字列が完全一致するなら
 	if (data.eventtrigerName == "star")
 	{
-		StarManager::Get()->mStars.emplace_back();
-		StarManager::Get()->mStars.back() = std::make_unique<Star>();
-		StarManager::Get()->mStars.back()->Initialize();
+		mEventObjects.emplace_back();
+		mEventObjects.back() = std::make_unique<Star>();
+		mEventObjects.back()->Initialize();
 		//ファイルネームがあるなら
 		if (tFilename != "")
 		{
-			StarManager::Get()->mStars.back()->SetModel(ModelManager::GetModel(tFilename));
+			mEventObjects.back()->SetModel(ModelManager::GetModel(tFilename));
 		}
 
-		StarManager::Get()->mStars.back()->SetOutLineState({ 0,0,0,1.0f }, 0.1f);
+		mEventObjects.back()->SetOutLineState({ 0,0,0,1.0f }, 0.1f);
 
-		StarManager::Get()->mStars.back()->trigerName = data.eventtrigerName;
-		StarManager::Get()->mStars.back()->box.CreateCol(
-			StarManager::Get()->mStars.back()->position,
-			StarManager::Get()->mStars.back()->scale
+		mEventObjects.back()->trigerName = data.eventtrigerName;
+		mEventObjects.back()->box.CreateCol(
+			mEventObjects.back()->position,
+			mEventObjects.back()->scale
 		);
 		
 		//当たり判定を作成
@@ -280,37 +280,37 @@ void Stage::EvenyObjectSet(const LevelData::ObjectData& data)
 		if (data.collider.have)
 		{
 			//当たり判定を表示するオブジェクト
-			StarManager::Get()->mStars.back()->box.Initialize();
+			mEventObjects.back()->box.Initialize();
 
 			//コリジョンオンリー描画で使うため、コリジョンのタグを付ける
-			StarManager::Get()->mStars.back()->SetTag(TagTable::Collsion);
+			mEventObjects.back()->SetTag(TagTable::Collsion);
 			//ブロックのタグを外す
-			StarManager::Get()->mStars.back()->DeleteTag(TagTable::Block);
+			mEventObjects.back()->DeleteTag(TagTable::Block);
 
-			StarManager::Get()->mStars.back()->box.SetModel(ModelManager::GetModel("BlankCube"));
-			StarManager::Get()->mStars.back()->box.SetTexture(TextureManager::Get()->GetTexture("white"));
+			mEventObjects.back()->box.SetModel(ModelManager::GetModel("BlankCube"));
+			mEventObjects.back()->box.SetTexture(TextureManager::Get()->GetTexture("white"));
 
-			StarManager::Get()->mStars.back()->box.position = data.translation + data.collider.center;
-			StarManager::Get()->mStars.back()->box.scale = {
+			mEventObjects.back()->box.position = data.translation + data.collider.center;
+			mEventObjects.back()->box.scale = {
 				data.scaling.x * data.collider.size.x,
 				data.scaling.y * data.collider.size.y,
 				data.scaling.z * data.collider.size.z
 			};
-			StarManager::Get()->mStars.back()->box.rotation = {
+			mEventObjects.back()->box.rotation = {
 				MathF::AngleConvRad(data.rotation.x),
 				MathF::AngleConvRad(data.rotation.y),
 				MathF::AngleConvRad(data.rotation.z)
 			};
 
 			//ここEntitysから引っ張ってきてるけど合ってるのかな
-			StarManager::Get()->mStars.back()->box.cubecol.position = StarManager::Get()->mStars.back()->box.position;
-			StarManager::Get()->mStars.back()->box.cubecol.scale = StarManager::Get()->mStars.back()->box.scale;
+			mEventObjects.back()->box.cubecol.position = mEventObjects.back()->box.position;
+			mEventObjects.back()->box.cubecol.scale = mEventObjects.back()->box.scale;
 			//当たり判定だけマネージャーに登録
-			StarManager::Get()->mStars.back()->Register();
+			mEventObjects.back()->Register();
 		}
 
 		//オブジェクトの配置
-		LevelDataExchanger::SetObjectData(*StarManager::Get()->mStars.back(), data);
+		LevelDataExchanger::SetObjectData(*mEventObjects.back(), data);
 
 		return;
 	}
@@ -397,7 +397,7 @@ void Stage::ChangeUpdate()
 	mEntitys.clear();
 	mEventObjects.clear();
 	mGoals.clear();
-	StarManager::Get()->mStars.clear();
+	//StarManager::Get()->mStars.clear();
 	CollideManager::Get()->allCols.clear();
 	mCannonPoints.clear();
 	EnemyManager::Get()->enemyList.clear();
@@ -719,21 +719,21 @@ void Stage::DrawModel()
 		}
 		obj->Draw();
 	}
-	for (auto& obj : StarManager::Get()->mStars)
-	{
-		BasicObjectPreDraw(PipelineManager::GetPipeLine("OutLine"), false);
-		obj->DrawOutLine();
-		//アルファが1未満になるなら透明用描画パイプラインに切り替える
-		if (obj->color_.w < 1.0f)
-		{
-			BasicObjectPreDraw(PipelineManager::GetPipeLine("GroundToonNDW"));
-		}
-		else
-		{
-			BasicObjectPreDraw(PipelineManager::GetPipeLine("GroundToon"));
-		}
-		obj->Draw();
-	}
+	//for (auto& obj : StarManager::Get()->mStars)
+	//{
+	//	BasicObjectPreDraw(PipelineManager::GetPipeLine("OutLine"), false);
+	//	obj->DrawOutLine();
+	//	//アルファが1未満になるなら透明用描画パイプラインに切り替える
+	//	if (obj->color_.w < 1.0f)
+	//	{
+	//		BasicObjectPreDraw(PipelineManager::GetPipeLine("GroundToonNDW"));
+	//	}
+	//	else
+	//	{
+	//		BasicObjectPreDraw(PipelineManager::GetPipeLine("GroundToon"));
+	//	}
+	//	obj->Draw();
+	//}
 
 	for (auto& obj : mGoals)
 	{

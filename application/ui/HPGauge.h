@@ -52,7 +52,7 @@ private:
 	//ゲージの分割数の最大値
 	int32_t mInitGaugeMax = 0;
 
-	//Hp1あたりのゲージの大きさ
+	//値1あたりのゲージの大きさ
 	float mGaugeSizeX = 0;
 
 	//ゲージの最大サイズ

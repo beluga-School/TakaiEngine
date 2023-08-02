@@ -26,6 +26,8 @@ void GameScene::LoadResource()
 	//新規シーンを登録して、登録してあるシーンから選んで飛ぶ方式にしたい
 	//マップからハンドル名の一覧を取得
 	handles = Util::GetKeys(LevelLoader::Get()->GetDataMap());
+
+	UI::LoadResource();
 }
 
 void GameScene::Initialize()
@@ -46,6 +48,8 @@ void GameScene::Initialize()
 	//output = "stage_mountain";
 	output = "stage_stageselect";
 	Stage::Get()->Initialize(*LevelLoader::Get()->GetData(output));
+
+	ui.Initialize();
 }
 
 GUI sceneChangeGUI("operator");
@@ -126,6 +130,12 @@ void GameScene::Update()
 	ImGui::Text("mouseR %f", PlayerCamera::Get()->GetRadius());
 	ImGui::Text("p:HP %d", player->Get()->GetNowHP());
 
+
+	ui.UpdateNumber(player->GetNowHP());
+	ui.Update();
+	
+	ui.ValueSliders();
+
 	sceneChangeGUI.End();
 
 	player->Update();
@@ -148,6 +158,7 @@ void GameScene::Update()
 	pCamera->BackTransparent();
 
 	ParticleManager::GetInstance()->Update();
+
 }
 
 void GameScene::Draw()
@@ -174,6 +185,8 @@ void GameScene::Draw()
 	player->DrawUI();
 
 	Stage::Get()->DrawSprite();
+
+	ui.Draw();
 }
 
 void GameScene::End()

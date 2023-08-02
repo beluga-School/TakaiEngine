@@ -18,10 +18,6 @@ void Star::Update()
 	inholeTimer.Update();
 	delayTimer.Update();
 
-	//①取得(hiteffect)
-	//②その場で飛び上がりながら拡大
-	//③プレイヤーに吸い込まれながら縮小->爆発
-
 	//ここから別挙動 starUIで行う
 	//①(①の取得と同じタイミングで)starの文字列UIを出す
 	//②starが流れきったらGet!の文字列UIを出す
@@ -122,76 +118,4 @@ void Star::HitEffect()
 	inholeTimer.Reset();
 
 	starState = StarState::jumpUp;
-
-	//StarManager::Get()->Start();
-}
-
-void StarManager::JumpMove()
-{
-	progress = StarGetState::Jumping;
-	jumpingTimer.Start();
-	
-	Player::Get()->Jump();
-	jumpingCount++;
-}
-void StarManager::Update()
-{
-	for (auto& obj : mStars)
-	{
-		obj->Update();
-	}
-
-	jumpingTimer.Update();
-
-	switch (progress)
-	{
-	case StarManager::StarGetState::None:
-		break;
-	case StarManager::StarGetState::MoveCam:
-		PlayerCamera::Get()->ChangeStarGetMode();
-		if (PlayerCamera::Get()->CamChangeEnd())
-		{
-			progress = StarGetState::Inhole;
-		}
-
-		break;
-	case StarManager::StarGetState::Inhole:
-		//当たったオブジェクトを吸い込む
-		for (auto &star : mStars)
-		{
-			if (star->starState == Star::StarState::None)
-			{
-				if (star->hit)
-				{
-					star->starState = Star::StarState::Inhole;
-				}
-			}
-		}
-
-		break;
-	case StarManager::StarGetState::Jumping:
-
-		if (jumpingTimer.GetEnd())
-		{
-			jumpingCount++;
-			if (jumpingCount > 1)
-			{
-				progress = StarGetState::BackCam;
-			}
-			else
-			{
-				jumpingTimer.Start();
-				Player::Get()->Jump();
-			}
-		}
-
-		break;
-	case StarManager::StarGetState::BackCam:
-
-		//演出が終わったらカメラを元に戻す
-		//イージングつけてないので付ける
-		PlayerCamera::Get()->ChangeNormalMode();
-		progress = StarGetState::None;
-		break;
-	}
 }
