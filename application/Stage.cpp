@@ -106,12 +106,13 @@ void Stage::NormalObjectSet(const LevelData::ObjectData& data)
 {
 	mEntitys.emplace_back();
 	mEntitys.back().Initialize();
-	mEntitys.back().taglist.push_back(TagTable::Block);
+	mEntitys.back().SetTag(TagTable::Block);
+
 	
 	//コリジョン目的で配置したならオブジェクト配置を行わない
 	if (data.fileName == "collision")
 	{
-		mEntitys.back().taglist.push_back(TagTable::NoDraw);
+		mEntitys.back().SetTag(TagTable::NoDraw);
 		return;
 	}
 
@@ -149,7 +150,7 @@ void Stage::CollisionSet(const LevelData::ObjectData& data)
 	mEntitys.back().box.Initialize();
 
 	//エンティティリストで参照されたくないので、コリジョンのタグを付ける
-	mEntitys.back().taglist.push_back(TagTable::Collsion);
+	mEntitys.back().SetTag(TagTable::Collsion);
 	
 	mEntitys.back().box.SetModel(ModelManager::GetModel("BlankCube"));
 	mEntitys.back().box.SetTexture(TextureManager::Get()->GetTexture("white"));
@@ -178,7 +179,7 @@ void Stage::CollisionSetEvent(const LevelData::ObjectData& data)
 	mEventObjects.back()->box.Initialize();
 
 	//コリジョンオンリー描画で使うため、コリジョンのタグを付ける
-	mEventObjects.back()->taglist.push_back(TagTable::Collsion);
+	mEventObjects.back()->SetTag(TagTable::Collsion);
 
 	mEventObjects.back()->box.SetModel(ModelManager::GetModel("BlankCube"));
 	mEventObjects.back()->box.SetTexture(TextureManager::Get()->GetTexture("white"));
@@ -282,7 +283,9 @@ void Stage::EvenyObjectSet(const LevelData::ObjectData& data)
 			StarManager::Get()->mStars.back()->box.Initialize();
 
 			//コリジョンオンリー描画で使うため、コリジョンのタグを付ける
-			StarManager::Get()->mStars.back()->taglist.push_back(TagTable::Collsion);
+			StarManager::Get()->mStars.back()->SetTag(TagTable::Collsion);
+			//ブロックのタグを外す
+			StarManager::Get()->mStars.back()->DeleteTag(TagTable::Block);
 
 			StarManager::Get()->mStars.back()->box.SetModel(ModelManager::GetModel("BlankCube"));
 			StarManager::Get()->mStars.back()->box.SetTexture(TextureManager::Get()->GetTexture("white"));
@@ -300,8 +303,8 @@ void Stage::EvenyObjectSet(const LevelData::ObjectData& data)
 			};
 
 			//ここEntitysから引っ張ってきてるけど合ってるのかな
-			StarManager::Get()->mStars.back()->box.cubecol.position = mEntitys.back().box.position;
-			StarManager::Get()->mStars.back()->box.cubecol.scale = mEntitys.back().box.scale;
+			StarManager::Get()->mStars.back()->box.cubecol.position = StarManager::Get()->mStars.back()->box.position;
+			StarManager::Get()->mStars.back()->box.cubecol.scale = StarManager::Get()->mStars.back()->box.scale;
 			//当たり判定だけマネージャーに登録
 			StarManager::Get()->mStars.back()->Register();
 		}
@@ -423,7 +426,7 @@ void Stage::ChangeUpdate()
 				EnemyManager::Get()->enemyList.back()->box.Initialize();
 
 				//エンティティリストで参照されたくないので、コリジョンのタグを付ける
-				EnemyManager::Get()->enemyList.back()->taglist.push_back(TagTable::Collsion);
+				EnemyManager::Get()->enemyList.back()->SetTag(TagTable::Collsion);
 
 				EnemyManager::Get()->enemyList.back()->box.SetModel(ModelManager::GetModel("BlankCube"));
 				EnemyManager::Get()->enemyList.back()->box.SetTexture(TextureManager::Get()->GetTexture("white"));
@@ -475,7 +478,7 @@ void Stage::ChangeUpdate()
 				EnemyManager::Get()->enemyList.back()->box.Initialize();
 
 				//エンティティリストで参照されたくないので、コリジョンのタグを付ける
-				EnemyManager::Get()->enemyList.back()->taglist.push_back(TagTable::Collsion);
+				EnemyManager::Get()->enemyList.back()->SetTag(TagTable::Collsion);
 
 				EnemyManager::Get()->enemyList.back()->box.SetModel(ModelManager::GetModel("BlankCube"));
 				EnemyManager::Get()->enemyList.back()->box.SetTexture(TextureManager::Get()->GetTexture("white"));
@@ -525,7 +528,7 @@ void Stage::ChangeUpdate()
 				mEventObjects.back()->box.Initialize();
 
 				//コリジョンオンリー描画で使うため、コリジョンのタグを付ける
-				mEventObjects.back()->taglist.push_back(TagTable::Collsion);
+				mEventObjects.back()->SetTag(TagTable::Collsion);
 
 				mEventObjects.back()->box.SetModel(ModelManager::GetModel("BlankCube"));
 				mEventObjects.back()->box.SetTexture(TextureManager::Get()->GetTexture("white"));

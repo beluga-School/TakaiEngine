@@ -56,7 +56,7 @@ private:
 
 	Player() : Mob()
 	{
-		taglist.push_back(TagTable::Player);
+		SetTag(TagTable::Player);
 	};
 	~Player(){};
 

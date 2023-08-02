@@ -15,8 +15,7 @@ class Dokan : public EventBlock
 public:
 	Dokan() : EventBlock()
 	{
-		taglist.push_back(TagTable::Dokan);
-		taglist.push_back(TagTable::Block);
+		SetTag(TagTable::Dokan);
 	};
 
 	~Dokan()

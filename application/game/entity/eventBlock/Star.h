@@ -6,7 +6,7 @@ class Star final : public EventBlock
 public:
 	Star() : EventBlock()
 	{
-		taglist.push_back(TagTable::Star);
+		SetTag(TagTable::Star);
 	}
 
 	void Initialize()override;
@@ -15,12 +15,13 @@ public:
 	void HitEffect()override;
 
 	bool InHoleEnd() {
-		return timer.GetEnd();
+		return inholeTimer.GetEnd();
 	}
 
 	enum class StarState
 	{
 		None,
+		jumpUp,
 		Inhole,
 		End,
 	}starState = StarState::None;
@@ -34,11 +35,20 @@ private:
 	Vector3 saveStartPos = { 0,0,0 };
 	Vector3 savePlayerPos = { 0,0,0 };
 
+	Vector3 jumpUpPos = { 0,0,0 };
+	Vector3 jumpUpScale = { 0,0,0 };
+
 	//1秒間の回転数
 	float rotaSpeed = 0.25f;
 
-	TEasing::easeTimer timer = 2.0f;
+	//飛び上がる時間
+	TEasing::easeTimer jumpUpTimer = 1.0f;
+	//空中でとどまる時間
+	TEasing::easeTimer delayTimer = 0.2f;
+	//吸い込まれる時間
+	TEasing::easeTimer inholeTimer = 2.0f;
 
+	//パーティクルの発生タイマー
 	TEasing::easeTimer particleTimer = 1.0f;
 };
 

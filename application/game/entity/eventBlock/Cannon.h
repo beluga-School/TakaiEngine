@@ -6,7 +6,7 @@ class Cannon : public EventBlock
 {
 public:
 	Cannon() : EventBlock() {
-		taglist.push_back(TagTable::Cannon);
+		SetTag(TagTable::Cannon);
 	};
 
 	void Initialize()override;

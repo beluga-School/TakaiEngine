@@ -20,7 +20,7 @@ class Enemy : public Mob
 public:
 	Enemy() : Mob()
 	{
-		taglist.push_back(TagTable::Enemy);
+		SetTag(TagTable::Enemy);
 	}
 	virtual void Initialize() = 0;
 	virtual void Update() = 0;

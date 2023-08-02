@@ -6,7 +6,7 @@ class Coin final : public EventBlock
 public:
 	Coin() : EventBlock()
 	{
-		taglist.push_back(TagTable::Coin);
+		SetTag(TagTable::Coin);
 	}
 
 	void Initialize()override;

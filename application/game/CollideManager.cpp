@@ -183,7 +183,7 @@ void CollideManager::CheckStatus(Entity* check, Entity* collide)
 		{
 			//collideがStarであることは確定しているので、Star型に変換してデータを持ってくる
 			Star* star = static_cast<Star*>(collide);
-			if (Collsions::CubeCollision(player->box.cubecol, star->box.cubecol))
+			if (Collsions::CubeCollision(player->box.cubecol, collide->box.cubecol))
 			{
 				star->HitEffect();
 			}

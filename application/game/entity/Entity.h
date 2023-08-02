@@ -28,14 +28,30 @@ enum class TagTable
 class Entity : public Obj3d
 {
 public:
-	//判定を取るときに使うタグ
-	std::vector<TagTable> taglist;
-
 	bool IsDead() const {
 		return isDead;
 	}
 
+	/// <summary>
+	/// 指定したタグがあるか確認する
+	/// </summary>
+	/// <param name="check">確認したいタグ</param>
+	/// <returns>あったらtrue ないならfalse</returns>
 	bool CheckTag(TagTable check);
+
+	/// <summary>
+	/// 指定したタグを付ける(重複していた場合は付けない)
+	/// </summary>
+	/// <param name="check">付けたいタグ</param>
+	/// <returns>タグのセットに成功でtrue 重複があったらfalse</returns>
+	bool SetTag(TagTable check);
+	
+	/// <summary>
+	/// 指定したタグを削除する
+	/// </summary>
+	/// <param name="check">削除したいタグ</param>
+	/// <returns>タグの削除に成功でtrue タグが見つからない場合false</returns>
+	bool DeleteTag(TagTable check);
 
 	void Register();
 
@@ -44,10 +60,13 @@ public:
 
 	Entity()
 	{
-		//Register();
-		taglist.push_back(TagTable::Box);
+		SetTag(TagTable::Box);
 	}
 
 protected:
 	bool isDead = false;
+
+private:
+	//判定を取るときに使うタグ
+	std::vector<TagTable> taglist;
 };

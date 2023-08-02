@@ -298,23 +298,23 @@ void Player::ColUpdate()
 		}
 	}
 
-	//ここより下二つは、Entityをポインタで保持するようにしてから修正する
-	for (auto& star : StarManager::Get()->mStars)
-	{
-		Cube eCol;
-		eCol.position = star->position;
+	////ここより下二つは、Entityをポインタで保持するようにしてから修正する
+	//for (auto& star : StarManager::Get()->mStars)
+	//{
+	//	Cube eCol;
+	//	eCol.position = star->position;
 
-		//なんか判定が小さかったので2倍に そしたらぴったりだったので、どっかで半分にする処理が挟まってる
-		//判定用のスケールが使われてないのが原因
-		eCol.scale = star->scale * 2;
+	//	//なんか判定が小さかったので2倍に そしたらぴったりだったので、どっかで半分にする処理が挟まってる
+	//	//判定用のスケールが使われてないのが原因
+	//	eCol.scale = star->scale * 2;
 
-		if (Collsions::CubeCollision(eCol, pCol))
-		{
-			star->HitEffect();
+	//	if (Collsions::CubeCollision(eCol, pCol))
+	//	{
+	//		star->HitEffect();
 
-			break;
-		}
-	}
+	//		break;
+	//	}
+	//}
 
 	for (auto& goal : Stage::Get()->mGoals)
 	{

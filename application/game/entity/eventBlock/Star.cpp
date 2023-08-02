@@ -14,7 +14,23 @@ void Star::Initialize()
 void Star::Update()
 {
 	particleTimer.Update();
-	timer.Update();
+	jumpUpTimer.Update();
+	inholeTimer.Update();
+	delayTimer.Update();
+
+	//‡@æ“¾(hiteffect)
+	//‡A‚»‚Ìê‚Å”ò‚Ñã‚ª‚è‚È‚ª‚çŠg‘å
+	//‡BƒvƒŒƒCƒ„[‚É‹z‚¢‚Ü‚ê‚È‚ª‚çk¬->”š”­
+
+	//‚±‚±‚©‚ç•Ê‹““® starUI‚Ås‚¤
+	//‡@(‡@‚Ìæ“¾‚Æ“¯‚¶ƒ^ƒCƒ~ƒ“ƒO‚Å)star‚Ì•¶š—ñUI‚ğo‚·
+	//‡Astar‚ª—¬‚ê‚«‚Á‚½‚çGet!‚Ì•¶š—ñUI‚ğo‚·
+	//‡A.5 ”hè‚³‚ª‘«‚è‚È‚©‚Á‚½‚ç‚±‚±‚Å‰æ–Ê‘S‘Ì‚ğ‰¡Ø‚é‚Ñ[‚Æ‚¾‚¤‚ñIUI‚ğo‚·
+	//‡BƒXƒ^[‚Ì‰æ‘œ‚ğ”’‚Å“h‚è‚Â‚Ô‚µ‚½‚â‚Â‚ğo‚·
+	//‡C ‡@‡A‡B‚ğŠg‘å‚·‚é Šg‘å‚µ‚«‚Á‚½‚É’Êí‚ÌƒXƒ^[‚Ì‰æ‘œ‚ğŠg‘å‚¹‚¸‚Éo‚·
+	//‡D ‡@‡A‡B‚ğk¬‚·‚é
+
+	float randScale = 0.0f;
 
 	switch (starState)
 	{
@@ -31,23 +47,46 @@ void Star::Update()
 		}
 
 		break;
-	case Star::StarState::Inhole:
-		if (timer.GetStarted() == false)
+	case Star::StarState::jumpUp:
+		//1•bŠÔ‚É2‰ñ“]‚·‚é
+		rotaSpeed = 2;
+
+		jumpUpPos = saveStartPos;
+		jumpUpPos.y += 10.0f;
+
+		jumpUpScale = saveScale * 1.5f;
+
+		scale = TEasing::OutQuad(saveScale, jumpUpScale, jumpUpTimer.GetTimeRate());
+		position = TEasing::OutQuad(saveStartPos, jumpUpPos, jumpUpTimer.GetTimeRate());
+
+		
+		if (jumpUpTimer.GetEnd())
 		{
-			timer.Start();
+			if (delayTimer.GetStarted() == false)delayTimer.Start();
 		}
+		if (delayTimer.GetEnd())
+		{
+			starState = StarState::Inhole;
+			inholeTimer.Start();
+		}
+
+		break;
+	case Star::StarState::Inhole:
 
 		//1•bŠÔ‚É2‰ñ“]‚·‚é
 		rotaSpeed = 2;
 
-		scale = TEasing::OutQuad(saveScale, { 0,0,0 }, timer.GetTimeRate());
-		position = TEasing::OutQuad(saveStartPos, Player::Get()->position, timer.GetTimeRate());
+		scale = TEasing::OutQuad(jumpUpScale, { 0,0,0 }, inholeTimer.GetTimeRate());
+		position = TEasing::OutQuad(jumpUpPos, Player::Get()->position, inholeTimer.GetTimeRate());
 
-		if (timer.GetEnd())
+		if (inholeTimer.GetEnd())
 		{
-			starState = StarState::End;
-			//ƒXƒe[ƒgˆÚs‚ÌÛ‚ÉA‘S‘Ì‚Ìis‚ğˆê‚Âæ‚Éi‚ß‚é
-			StarManager::Get()->JumpMove();
+			starState = StarState::End;		
+			for (int i = 0; i < 10; i++)
+			{
+				randScale = MathF::GetRand(1.5f,2.0f);
+				ParticleManager::GetInstance()->CreateCubeParticle(position, { randScale,randScale,randScale }, 10.0f, { 1.0f,1.0f,0.0f,1 });
+			}
 		}
 
 		break;
@@ -78,7 +117,13 @@ void Star::HitEffect()
 
 	hit = true;
 
-	StarManager::Get()->Start();
+	jumpUpTimer.Start();
+	delayTimer.Reset();
+	inholeTimer.Reset();
+
+	starState = StarState::jumpUp;
+
+	//StarManager::Get()->Start();
 }
 
 void StarManager::JumpMove()
@@ -108,6 +153,7 @@ void StarManager::Update()
 		{
 			progress = StarGetState::Inhole;
 		}
+
 		break;
 	case StarManager::StarGetState::Inhole:
 		//“–‚½‚Á‚½ƒIƒuƒWƒFƒNƒg‚ğ‹z‚¢‚Ş

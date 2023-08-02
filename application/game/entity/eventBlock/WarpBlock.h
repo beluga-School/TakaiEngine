@@ -6,7 +6,7 @@ class WarpBlock final : public EventBlock
 public:
 	WarpBlock() : EventBlock()
 	{
-		taglist.push_back(TagTable::WarpBlock);
+		SetTag(TagTable::WarpBlock);
 	}
 
 	void Initialize()override;

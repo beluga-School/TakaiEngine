@@ -10,7 +10,7 @@ public:
 	std::list<Cube> hitListY;
 
 	Mob() {
-		taglist.push_back(TagTable::Mob);
+		SetTag(TagTable::Mob);
 	};
 
 	//true‚É‚È‚é‚Æd—Í‚ğó‚¯‚È‚­‚·‚é(gravity‚Ì’l‚à0‚É‚·‚é)
