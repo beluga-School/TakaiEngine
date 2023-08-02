@@ -14,19 +14,25 @@ public:
 	void Draw()override;
 	void HitEffect()override;
 
-	bool InHoleEnd() {
-		return inholeTimer.GetEnd();
-	}
+	//ステートがCountUpまで到達していたら、Endに変更する
+	void StateEnd();
+
+	bool InHoleEnd();
 
 	enum class StarState
 	{
 		None,
 		jumpUp,
 		Inhole,
+		CountUp,
 		End,
-	}starState = StarState::None;
+	};
+
+	//現在の状態を取得
+	StarState GetState();
 
 private:
+	StarState starState = StarState::None;
 
 	//入手時に保存するスケール
 	Vector3 saveScale = { 0,0,0 };

@@ -1,4 +1,4 @@
-#include "StarUI.h"
+#include "UI.h"
 #include "ImguiManager.h"
 #include "Util.h"
 #include <sstream>
@@ -18,11 +18,9 @@ void UI::LoadResource()
 	TextureManager::Load("Resources\\ui\\number9.png", "9");
 
 	TextureManager::Load("Resources\\ui\\twopoint.png", "twopoint");
-	TextureManager::Load("Resources\\ui\\x.png", "x");
-	TextureManager::Load("Resources\\ui\\star2d.png", "star2d");
 }
 
-void UI::Initialize()
+void UI::Initialize(const std::string& texturehandle)
 {
 	for (int i = 0; i < 2; i++)
 	{
@@ -30,7 +28,7 @@ void UI::Initialize()
 	}
 	point.SetTexture(*TextureManager::GetTexture("twopoint"));
 
-	mainTex.SetTexture(*TextureManager::GetTexture("star2d"));
+	mainTex.SetTexture(*TextureManager::GetTexture(texturehandle));
 }
 
 void UI::Update()
@@ -120,10 +118,4 @@ void UI::UpdateNumber(int32_t status)
 		oss << digit[i];
 		num[i].SetTexture(*TextureManager::GetTexture(oss.str()));
 	}
-}
-
-void StarUI::Initialize()
-{
-	UI::Initialize();
-	mainTex.SetTexture(*TextureManager::GetTexture("star2d"));
 }

@@ -585,7 +585,7 @@
     <ClCompile Include="application\scene\GameScene.cpp">
       <Filter>Application\Scene\GameScene</Filter>
     </ClCompile>
-    <ClCompile Include="application\ui\StarUI.cpp">
+    <ClCompile Include="application\ui\UI.cpp">
       <Filter>Application\UI\StarUI</Filter>
     </ClCompile>
     <ClCompile Include="application\ui\HPGauge.cpp">
@@ -839,7 +839,7 @@
     <ClInclude Include="application\scene\GameScene.h">
       <Filter>Application\Scene\GameScene</Filter>
     </ClInclude>
-    <ClInclude Include="application\ui\StarUI.h">
+    <ClInclude Include="application\ui\UI.h">
       <Filter>Application\UI\StarUI</Filter>
     </ClInclude>
     <ClInclude Include="application\ui\HPGauge.h">

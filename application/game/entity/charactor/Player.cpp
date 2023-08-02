@@ -11,6 +11,11 @@
 
 using namespace Input;
 
+void Player::LoadResource()
+{
+	TextureManager::Load("Resources\\ui\\star2d.png", "star2d");
+}
+
 void Player::Initialize()
 {
 	Obj3d::Initialize();
@@ -23,6 +28,8 @@ void Player::Initialize()
 	SetOutLineState({ 0.1f,0.1f,0.1f,1.0f }, 0.05f);
 
 	hpGauge.Initialize();
+
+	starUI.Initialize("star2d");
 }
 
 void Player::Update()
@@ -36,15 +43,6 @@ void Player::Update()
 	if (Input::Keyboard::TriggerKey(DIK_G))
 	{
 		hp.mCurrent += 1;
-	}
-
-	if (PlayerCamera::Get()->GetCamMode() == PlayerCamera::CamMode::Normal)
-	{
-		starState = StarState::None;
-	}
-	if (PlayerCamera::Get()->GetCamMode() == PlayerCamera::CamMode::StarGet)
-	{
-		starState = StarState::Get;
 	}
 
 	//ˆÚ“®’n‚ð‰Šú‰»
@@ -93,7 +91,6 @@ void Player::Update()
 	colDrawer.position = position;
 	colDrawer.scale = scale;
 
-
 	//‰ñ“]XV
 	//Œ´_‚Ý‚½‚¢‚ÈŽ~‚Ü‚Á‚Ä‚é‚Æ‚«‚Í‘OŒü‚¯‚éÝŒv‚É‚µ‚½‚¢‚È``
 	if (attackState != AttackState::Attacking)
@@ -111,6 +108,20 @@ void Player::Update()
 	DamageUpdate();
 
 	hpGauge.Update();
+
+	for (auto &obj: Stage::Get()->mEventObjects)
+	{
+		if (!obj->CheckTag(TagTable::Star))continue;
+
+		Star* star = static_cast<Star*>(obj.get());
+		if (star->GetState() == Star::StarState::CountUp)
+		{
+			starCorrectNum.mCurrent += 1;
+			star->StateEnd();
+		}
+	}
+	starUI.UpdateNumber(starCorrectNum.mCurrent);
+	starUI.Update();
 }
 
 void Player::Draw()
@@ -128,6 +139,7 @@ void Player::Draw()
 void Player::DrawUI()
 {
 	hpGauge.Draw();
+	starUI.Draw();
 }
 
 void Player::Reset()
@@ -195,9 +207,6 @@ void Player::Attack()
 
 void Player::SideMoveUpdate()
 {
-	//¯Žæ“¾’†‚È‚çˆÚ“®‚Å‚«‚È‚­‚·‚é
-	if (starState != StarState::None)return;
-
 	accelerationTimer.Update();
 	decelerationTimer.Update();
 
@@ -335,9 +344,6 @@ void Player::ColUpdate()
 
 void Player::RotaUpdate()
 {
-	//¯Žæ“¾’†‚È‚çˆÚ“®‚Å‚«‚È‚­‚·‚é
-	if (starState != StarState::None)return;
-
 	//‰ñ“]‚³‚¹‚éˆ—
 	rotation.y = PlayerCamera::Get()->mHorizontalRad;
 }

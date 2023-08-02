@@ -28,6 +28,7 @@ void GameScene::LoadResource()
 	handles = Util::GetKeys(LevelLoader::Get()->GetDataMap());
 
 	UI::LoadResource();
+	Player::LoadResource();
 }
 
 void GameScene::Initialize()
@@ -48,8 +49,6 @@ void GameScene::Initialize()
 	//output = "stage_mountain";
 	output = "stage_stageselect";
 	Stage::Get()->Initialize(*LevelLoader::Get()->GetData(output));
-
-	ui.Initialize();
 }
 
 GUI sceneChangeGUI("operator");
@@ -130,12 +129,6 @@ void GameScene::Update()
 	ImGui::Text("mouseR %f", PlayerCamera::Get()->GetRadius());
 	ImGui::Text("p:HP %d", player->Get()->GetNowHP());
 
-
-	ui.UpdateNumber(player->GetNowHP());
-	ui.Update();
-	
-	ui.ValueSliders();
-
 	sceneChangeGUI.End();
 
 	player->Update();
@@ -185,8 +178,6 @@ void GameScene::Draw()
 	player->DrawUI();
 
 	Stage::Get()->DrawSprite();
-
-	ui.Draw();
 }
 
 void GameScene::End()

@@ -12,7 +12,7 @@ public:
 		mScale.y = scale;
 		guiScale = scale;
 	}
-	void Initialize();
+	void Initialize(const std::string &texturehandle);
 	void Update();
 	void Draw();
 
@@ -36,13 +36,4 @@ private:
 	float guiScale = 1.0f;
 	char output[50] = "";
 	std::string savename = "";
-};
-
-class StarUI : public UI
-{
-public:
-
-
-	void Initialize();
-	void Update();
 };

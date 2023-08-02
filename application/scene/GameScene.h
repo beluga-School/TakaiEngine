@@ -7,7 +7,7 @@
 #include "PlayerCamera.h"
 #include "Billboard.h"
 #include "SceneChange.h"
-#include "StarUI.h"
+#include "UI.h"
 
 class GameScene : public IScene
 {
@@ -21,10 +21,6 @@ public:
 private:
 	Skydome mSkydome;
 	DebugCamera mDebugCamera;
-	
-	UI ui = {
-		{950.f, 50.f },0.5f
-	};
 	
 	Player *player = Player::Get();
 	PlayerCamera* pCamera = PlayerCamera::Get();

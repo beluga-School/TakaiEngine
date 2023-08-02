@@ -77,7 +77,7 @@ void Star::Update()
 
 		if (inholeTimer.GetEnd())
 		{
-			starState = StarState::End;		
+			starState = StarState::CountUp;
 			for (int i = 0; i < 10; i++)
 			{
 				randScale = MathF::GetRand(1.5f,2.0f);
@@ -85,6 +85,8 @@ void Star::Update()
 			}
 		}
 
+		break;
+	case Star::StarState::CountUp:
 		break;
 	case Star::StarState::End:
 	
@@ -118,4 +120,22 @@ void Star::HitEffect()
 	inholeTimer.Reset();
 
 	starState = StarState::jumpUp;
+}
+
+void Star::StateEnd()
+{
+	if (starState == StarState::CountUp)
+	{
+		starState = StarState::End;
+	}
+}
+
+bool Star::InHoleEnd()
+{
+	return inholeTimer.GetEnd();
+}
+
+Star::StarState Star::GetState()
+{
+	return starState;
 }

@@ -3,10 +3,12 @@
 #include "Status.h"
 #include "HPGauge.h"
 #include "Mob.h"
+#include "UI.h"
 
 class Player : public Mob
 {
 public:
+	static void LoadResource();
 
 	void Initialize();
 	void Update();
@@ -42,6 +44,10 @@ public:
 	/// ダメージを受ける処理
 	/// </summary>
 	void DamageEffect(int32_t damage);
+
+	UI starUI = {
+		{950.f, 50.f },0.5f
+	};
 
 private:
 	//hpの最大値　ステータスの最大値は外から変えられるようにしたい
@@ -127,10 +133,5 @@ private:
 
 	float mRolingSpeed = 15.0f;
 
-	//---スター取得
-	enum class StarState
-	{
-		None,	//未取得
-		Get,	//入手モーション中
-	}starState = StarState::None;
+	Status starCorrectNum = 0;
 };
