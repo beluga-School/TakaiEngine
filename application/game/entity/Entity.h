@@ -21,6 +21,7 @@ enum class TagTable
 	WarpBlock = 8,
 	Coin = 9,
 	Dokan = 10,
+	NoDraw = 11,
 };
 
 //3d描画される全てのオブジェクト

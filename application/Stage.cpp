@@ -104,17 +104,17 @@ std::string Stage::GetNowStageHandle()
 
 void Stage::NormalObjectSet(const LevelData::ObjectData& data)
 {
+	mEntitys.emplace_back();
+	mEntitys.back().Initialize();
+	mEntitys.back().taglist.push_back(TagTable::Block);
+	
 	//コリジョン目的で配置したならオブジェクト配置を行わない
 	if (data.fileName == "collision")
 	{
+		mEntitys.back().taglist.push_back(TagTable::NoDraw);
 		return;
 	}
 
-	//とりあえずキューブで配置
-	mEntitys.emplace_back();
-	mEntitys.back().Initialize();
-
-	mEntitys.back().taglist.push_back(TagTable::Block);
 
 	//アウトライン設定
 	mEntitys.back().SetOutLineState({ 0,0,0,1.0f }, 0.05f);
@@ -577,6 +577,30 @@ void Stage::ChangeUpdate()
 			continue;
 		}
 
+		if (objectData->setObjectName == "boardpicture")
+		{
+			//そのままモデルの配置
+			NormalObjectSet(*objectData);
+
+			//イベントトリガーに記載されたテクスチャ名を自身のテクスチャとして貼る
+			//ハンドルがないなら作成
+			if (TextureManager::GetTexture(objectData->eventtrigerName) == nullptr)
+			{
+				std::string filename = "Resources\\";
+				filename = filename + objectData->eventtrigerName + ".png";
+				TextureManager::Load(filename, objectData->eventtrigerName);
+			}
+			mEntitys.back().SetTexture(TextureManager::GetTexture(objectData->eventtrigerName));
+
+			//当たり判定を作成
+			if (objectData->collider.have)
+			{
+				CollisionSet(*objectData);
+			}
+
+			continue;
+		}
+
 		//イベントオブジェクトなら設置
 		if (objectData->eventtrigerName != "")
 		{
@@ -661,6 +685,9 @@ void Stage::DrawModel()
 	if (mShowModel == false) return;
 	for (auto& obj : mEntitys)
 	{
+		//コリジョン用に配置したオブジェクトならスキップ
+		if (obj.CheckTag(TagTable::NoDraw))continue;
+		
 		BasicObjectPreDraw(PipelineManager::GetPipeLine("OutLine"), false);
 		obj.DrawOutLine();
 		//アルファが1未満になるなら透明用描画パイプラインに切り替える

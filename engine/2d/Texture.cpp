@@ -192,6 +192,8 @@ void Texture::Load(const wchar_t& t)
 	DirectX12::Get()->mDevice->CreateShaderResourceView(mTexBuff.Get(), &mSrvDesc, mCpuHandle);
 
 	mGetResDesc = textureResourceDesc;
+
+	mCreated = true;
 }
 
 void TextureManager::Initialize()
@@ -238,5 +240,9 @@ void TextureManager::Load(const std::string &filepath, const std::string &handle
 
 Texture* TextureManager::GetTexture(const std::string &handle)
 {
+	if (sTextures[handle].mCreated == false)
+	{
+		return nullptr;
+	}
 	return &sTextures[handle];
 }

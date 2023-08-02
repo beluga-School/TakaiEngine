@@ -27,6 +27,8 @@ public:
 
 	D3D12_CPU_DESCRIPTOR_HANDLE mCpuHandle = { 0 };
 
+	bool mCreated = false;
+
 private:
 	DirectX::TexMetadata mMetadata{};
 	DirectX::ScratchImage mScratchImg{};
