@@ -318,9 +318,6 @@
     <Filter Include="Application\UI">
       <UniqueIdentifier>{474ba4e5-8eb6-4f8f-be0f-266f1b73ee1f}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Application\UI\StarUI">
-      <UniqueIdentifier>{c7988369-42db-4a28-8372-35f15dd7c01e}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Application\UI\HPGauge">
       <UniqueIdentifier>{cf542d8c-5bba-45fc-b53e-70bebf207435}</UniqueIdentifier>
     </Filter>
@@ -360,6 +357,12 @@
     </Filter>
     <Filter Include="Application\EventBlock\Dokan">
       <UniqueIdentifier>{ec96a8b5-3478-455f-aea2-fe63496f0b7a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Application\UI\UI">
+      <UniqueIdentifier>{c7988369-42db-4a28-8372-35f15dd7c01e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Application\UI\UI\StarUI">
+      <UniqueIdentifier>{559b5e9c-cf31-4caa-9bf4-112115ec33f0}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -586,7 +589,7 @@
       <Filter>Application\Scene\GameScene</Filter>
     </ClCompile>
     <ClCompile Include="application\ui\UI.cpp">
-      <Filter>Application\UI\StarUI</Filter>
+      <Filter>Application\UI\UI</Filter>
     </ClCompile>
     <ClCompile Include="application\ui\HPGauge.cpp">
       <Filter>Application\UI\HPGauge</Filter>
@@ -605,6 +608,9 @@
     </ClCompile>
     <ClCompile Include="Dokan.cpp">
       <Filter>Application\EventBlock\Dokan</Filter>
+    </ClCompile>
+    <ClCompile Include="StarUI.cpp">
+      <Filter>Application\UI\UI\StarUI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -840,7 +846,7 @@
       <Filter>Application\Scene\GameScene</Filter>
     </ClInclude>
     <ClInclude Include="application\ui\UI.h">
-      <Filter>Application\UI\StarUI</Filter>
+      <Filter>Application\UI\UI</Filter>
     </ClInclude>
     <ClInclude Include="application\ui\HPGauge.h">
       <Filter>Application\UI\HPGauge</Filter>
@@ -859,6 +865,9 @@
     </ClInclude>
     <ClInclude Include="Dokan.h">
       <Filter>Application\EventBlock\Dokan</Filter>
+    </ClInclude>
+    <ClInclude Include="StarUI.h">
+      <Filter>Application\UI\UI\StarUI</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

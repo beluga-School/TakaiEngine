@@ -117,10 +117,36 @@ void Player::Update()
 		if (star->GetState() == Star::StarState::CountUp)
 		{
 			starCorrectNum.mCurrent += 1;
+			starUI.GetMoveStart(starCorrectNum.mCurrent);
 			star->StateEnd();
 		}
+		//スター取得中なら
+		if (star->GetState() == Star::StarState::jumpUp ||
+			star->GetState() == Star::StarState::Inhole)
+		{
+			//出現状態で固定する
+			starUI.AppLock();
+		}
 	}
-	starUI.UpdateNumber(starCorrectNum.mCurrent);
+
+	UIDelayTimer.Update();
+	if (IsMove())
+	{
+		starUI.DisAppearance(0.2f);
+		UIDelayTimer.Reset();
+	}
+	else
+	{
+		if (UIDelayTimer.GetStarted() == false)
+		{
+			UIDelayTimer.Start();
+		}
+		if (UIDelayTimer.GetEnd())
+		{
+			starUI.Appearance(0.5f);
+		}
+	}
+
 	starUI.Update();
 }
 
@@ -410,6 +436,11 @@ void Player::DamageUpdate()
 
 		hpGauge.Addition(1);
 	}
+}
+
+bool Player::IsMove()
+{
+	return moveValue.x != 0 || moveValue.y != 0 || moveValue.z != 0;
 }
 
 void Player::DamageEffect(int32_t damage)

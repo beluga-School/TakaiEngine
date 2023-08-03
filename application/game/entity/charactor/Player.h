@@ -4,6 +4,7 @@
 #include "HPGauge.h"
 #include "Mob.h"
 #include "UI.h"
+#include "StarUI.h"
 
 class Player : public Mob
 {
@@ -45,8 +46,8 @@ public:
 	/// </summary>
 	void DamageEffect(int32_t damage);
 
-	UI starUI = {
-		{950.f, 50.f },0.5f
+	StarUI starUI = {
+		{171.62f, 402.235f },0.5f
 	};
 
 private:
@@ -73,6 +74,8 @@ private:
 	void RotaUpdate();
 
 	void DamageUpdate();
+
+	bool IsMove();
 
 	//HPをその値に書きかえる 最大値より大きい場合、最大値を書き換える
 	void HPOverFlow(int32_t value);
@@ -133,5 +136,9 @@ private:
 
 	float mRolingSpeed = 15.0f;
 
+	//収集物関係
+	//スターの取得数
 	Status starCorrectNum = 0;
+
+	TEasing::easeTimer UIDelayTimer = 0.5f;
 };

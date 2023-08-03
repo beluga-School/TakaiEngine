@@ -37,6 +37,12 @@ namespace TEasing
 	float InOutBack(const float& timeRate);
 	float InOutBack(const float& start, const float& end, const float& timeRate);
 
+	float InExpo(const float& timeRate);
+	float InExpo(const float& start, const float& end, const float& timeRate);
+
+	float OutExpo(const float& timeRate);
+	float OutExpo(const float& start, const float& end, const float& timeRate);
+
 	struct easeTimer
 	{
 		easeTimer(const float& maxTime_ = 1.0f) {
@@ -51,10 +57,10 @@ namespace TEasing
 		bool GetStarted() { return run || end; };
 
 		bool GetEnd() { return end; };
-		
+
 		bool GetNowEnd() {
-			return mOldElapsedTime < mMaxTime && 
-			mElapsedTime >= mMaxTime;
+			return mOldElapsedTime < mMaxTime&&
+				mElapsedTime >= mMaxTime;
 		};
 
 		void SetEnd(const bool& end_) { end = end_; };
@@ -71,6 +77,9 @@ namespace TEasing
 		// 呼び出したらイージングが起動、タイマーを初期化する
 		void Start();
 
+		// タイマーを初期化せずに起動
+		void NoInitStart();
+
 		//イージングを逆方向に再生、現在の経過時間->0秒に向かって再生される
 		void ReverseStart();
 
@@ -85,7 +94,7 @@ namespace TEasing
 		bool run = false;
 		//終了フラグ
 		bool end = false;
-	
+
 		bool reverse = false;
 		bool reverseend = false;
 

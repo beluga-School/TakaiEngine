@@ -680,7 +680,11 @@ void Stage::SetPlayer(const LevelData::ObjectData& data)
 	Player::Get()->preMove = data.translation;
 	Player::Get()->position = data.translation;
 	Player::Get()->rotation = data.rotation;
-	//Player::Get()->scale = data.scaling;
+
+	Player::Get()->box.position = Player::Get()->position;
+	Player::Get()->box.scale = Player::Get()->scale;
+	Player::Get()->box.cubecol.position = Player::Get()->position;
+	Player::Get()->box.cubecol.scale = Player::Get()->scale;
 }
 
 void Stage::DrawModel()

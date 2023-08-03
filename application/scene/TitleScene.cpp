@@ -91,6 +91,11 @@ void TitleScene::Update()
 {
 	if (Input::Keyboard::TriggerKey(DIK_SPACE))
 	{
+		//デバッグ用 演出がどのタイミングでもスキップできるように
+		if (effectState != EffectState::None)
+		{
+			SceneChange::Get()->Start();
+		}
 		//演出開始
 		if (effectState == EffectState::None)
 		{

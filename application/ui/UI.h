@@ -1,13 +1,14 @@
 #pragma once
 #include "Sprite.h"
 #include "Status.h"
+#include "TEasing.h"
 
 class UI
 {
 public:
 	static void LoadResource();
 	UI(const Vector2& pos, float scale)
-		: mPos(pos) {
+	: mPos (pos) {
 		mScale.x = scale;
 		mScale.y = scale;
 		guiScale = scale;
@@ -26,11 +27,29 @@ public:
 	Vector2 mPos = {0,0};
 	Vector2 mScale = {1,1};
 
+	//èoåªèÛë‘Ç≈å≈íËÇ∑ÇÈ
+	void AppLock();
+
+	//èoåª
+	void Appearance(float time);
+	//è¡ñ≈
+	void DisAppearance(float time);
+
 protected:
 	Sprite mainTex;
-private:
+	Sprite mainTexBack;
+
 	Sprite num[2];
+	Sprite numBack[2];
 	Sprite point;
+
+	float mAlpha = 1.0f;
+	bool mAppMode = true;
+
+	TEasing::easeTimer alphaTimer = 0.2f;
+	TEasing::easeTimer sideMoveTimer = 0.05f;
+
+	Vector2 initpos{};
 
 	//imguiópÇÃïœêî
 	float guiScale = 1.0f;

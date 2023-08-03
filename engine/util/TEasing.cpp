@@ -206,6 +206,30 @@ float TEasing::InOutBack(const float& start, const float& end, const float& time
 	return start + dif;
 }
 
+float TEasing::InExpo(const float& timeRate)
+{
+	return (float)(timeRate == 0 ? 0 : pow(2,10 * timeRate - 10));
+}
+
+float TEasing::InExpo(const float& start, const float& end, const float& timeRate)
+{
+	float dif = end - start;
+	dif *= InExpo(timeRate);
+	return start + dif;
+}
+
+float TEasing::OutExpo(const float& timeRate)
+{
+	return (float)(timeRate == 1 ? 1 : 1 - pow(2, -10 * timeRate));
+}
+
+float TEasing::OutExpo(const float& start, const float& end, const float& timeRate)
+{
+	float dif = end - start;
+	dif *= OutExpo(timeRate);
+	return start + dif;
+}
+
 
 void TEasing::easeTimer::Reset()
 {
@@ -220,6 +244,15 @@ void TEasing::easeTimer::Reset()
 void TEasing::easeTimer::Start()
 {
 	mElapsedTime = 0.0f;
+	end = false;
+	reverseend = false;
+
+	run = true;
+	reverse = false;
+}
+
+void TEasing::easeTimer::NoInitStart()
+{
 	end = false;
 	reverseend = false;
 

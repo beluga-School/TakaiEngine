@@ -129,6 +129,8 @@ void GameScene::Update()
 	ImGui::Text("mouseR %f", PlayerCamera::Get()->GetRadius());
 	ImGui::Text("p:HP %d", player->Get()->GetNowHP());
 
+	//player->starUI.ValueSliders();
+
 	sceneChangeGUI.End();
 
 	player->Update();
