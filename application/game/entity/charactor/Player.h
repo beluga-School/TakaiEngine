@@ -50,6 +50,12 @@ public:
 		{171.62f, 402.235f },0.5f
 	};
 
+	//設置されたフレームなら立つ
+	bool mSetFrame = false;
+
+	//土管から出現する動き
+	void ApparranceMove(const Vector3& dokanPos, const Vector3& dokanScale);
+
 private:
 	//hpの最大値　ステータスの最大値は外から変えられるようにしたい
 	int32_t MAX_HP = 8;
@@ -74,6 +80,9 @@ private:
 	void RotaUpdate();
 
 	void DamageUpdate();
+
+	//スター取得UIの動き
+	void StarUIUpdate();
 
 	bool IsMove();
 
@@ -141,4 +150,16 @@ private:
 	Status starCorrectNum = 0;
 
 	TEasing::easeTimer UIDelayTimer = 0.5f;
+
+	//出現処理のもろもろ
+	enum class PlayerState
+	{
+		Normal,
+		Apparrance,
+	}playerState = PlayerState::Normal;
+
+	TEasing::easeTimer apparranceTimer = 1.0f;
+
+	Vector3 saveDokanPos{};
+	Vector3 saveDokanScale{};
 };

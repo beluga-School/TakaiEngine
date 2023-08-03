@@ -110,13 +110,19 @@ void CollideManager::CheckCollide(Entity* check, Entity* collide)
 		{
 			//collideがDokanであることは確定しているので、Dokan型に変換してデータを持ってくる
 			Dokan* dokan = static_cast<Dokan*>(collide);
+			
 			Cube tempDokan = dokan->box.cubecol;
 			tempDokan.scale.y *= 1.1f;
 
 			if (Collsions::CubeCollision(player->box.cubecol, tempDokan))
 			{
+				if (player->mSetFrame)
+				{
+					player->ApparranceMove(dokan->box.cubecol.position, dokan->box.cubecol.scale);
+					player->mSetFrame = false;
+				}
 				//プレイヤーが土管の上にいるなら
-				if (CheckDirections(player->box.cubecol, dokan->box.cubecol, CheckDirection::CD_UP))
+				else if (CheckDirections(player->box.cubecol, dokan->box.cubecol, CheckDirection::CD_UP))
 				{
 					//内部の処理を行えるように
 					dokan->HitEffect(player);

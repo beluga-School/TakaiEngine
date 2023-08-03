@@ -85,6 +85,8 @@ void Dokan::HitEffect(Mob* target_)
 		mTarget = target_;
 		//ターゲットの当たり判定をなくす
 		mTarget->SetNoCollsion(true);
+		mTarget->SetNoGravity(true);
+		mTarget->SetNoMove(true);
 		mSavePos = target_->box.position;
 
 		Stage::Get()->oldDokanInfo.stageName = dokanInfo.stageName;

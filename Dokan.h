@@ -24,6 +24,8 @@ public:
 		if (mTarget != nullptr)
 		{
 			mTarget->SetNoCollsion(false);
+			mTarget->SetNoGravity(false);
+			mTarget->SetNoMove(false);
 		}
 		//ターゲットの保持を解除
 		mTarget = nullptr;

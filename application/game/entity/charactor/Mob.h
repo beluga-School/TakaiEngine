@@ -24,6 +24,10 @@ public:
 		mNoCollision = flag;
 	}
 
+	void SetNoMove(bool flag) {
+		mNoMove = flag;
+	};
+
 	//プレイヤーの足元のオブジェクトの座標
 	float GetFeet() {
 		return feet;
@@ -47,6 +51,9 @@ protected:
 
 	//当たり判定を行わないようにする
 	bool mNoCollision = false;
+
+	//移動を行えないようにする
+	bool mNoMove = false;
 
 	void CollsionUpdate();
 

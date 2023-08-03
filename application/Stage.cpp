@@ -32,8 +32,6 @@ void Stage::Initialize(LevelData& data)
 
 	//ステージ生成
 	ChangeUpdate();
-
-	//Stage::Update();
 }
 
 void Stage::Update()
@@ -410,6 +408,7 @@ void Stage::ChangeUpdate()
 		if (objectData->setObjectName == "player")
 		{
 			SetPlayer(*objectData);
+			Player::Get()->mSetFrame = false;
 
 			continue;
 		}
@@ -571,10 +570,7 @@ void Stage::ChangeUpdate()
 			if (oldDokanInfo.stageName.find(dokan->dokanInfo.stageName) != std::string::npos &&
 				oldDokanInfo.id.find(dokan->dokanInfo.id) != std::string::npos)
 			{
-				Player::Get()->Reset();
-				Player::Get()->preMove = objectData->translation;
-				Player::Get()->position = objectData->translation;
-				Player::Get()->rotation = objectData->rotation;
+				SetPlayer(*objectData);
 			}
 
 			continue;
@@ -685,6 +681,8 @@ void Stage::SetPlayer(const LevelData::ObjectData& data)
 	Player::Get()->box.scale = Player::Get()->scale;
 	Player::Get()->box.cubecol.position = Player::Get()->position;
 	Player::Get()->box.cubecol.scale = Player::Get()->scale;
+
+	Player::Get()->mSetFrame = true;
 }
 
 void Stage::DrawModel()

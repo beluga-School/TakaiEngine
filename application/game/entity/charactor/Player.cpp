@@ -34,6 +34,21 @@ void Player::Initialize()
 
 void Player::Update()
 {
+	apparranceTimer.Update();
+	if (playerState == PlayerState::Apparrance)
+	{
+		Vector3 endpos = saveDokanPos + Vector3(0, saveDokanScale.y / 2.f,0);
+		position = TEasing::OutQuad(saveDokanPos, endpos,apparranceTimer.GetTimeRate());
+
+		if (apparranceTimer.GetEnd())
+		{
+			playerState = PlayerState::Normal;
+			SetNoCollsion(false);
+			SetNoGravity(false);
+			SetNoMove(false);
+		}
+	}
+
 	//ダメージ処理
 	if (Input::Keyboard::TriggerKey(DIK_T))
 	{
@@ -80,8 +95,11 @@ void Player::Update()
 	ColUpdate();
 
 	//本加算
-	//position.y = preMove.y;
-	position += moveValue;
+	//動けないフラグ立ったら加算しない
+	if (mNoMove == false)
+	{
+		position += moveValue;
+	}
 
 	//当たり判定
 	///--敵当たり判定
@@ -109,45 +127,7 @@ void Player::Update()
 
 	hpGauge.Update();
 
-	for (auto &obj: Stage::Get()->mEventObjects)
-	{
-		if (!obj->CheckTag(TagTable::Star))continue;
-
-		Star* star = static_cast<Star*>(obj.get());
-		if (star->GetState() == Star::StarState::CountUp)
-		{
-			starCorrectNum.mCurrent += 1;
-			starUI.GetMoveStart(starCorrectNum.mCurrent);
-			star->StateEnd();
-		}
-		//スター取得中なら
-		if (star->GetState() == Star::StarState::jumpUp ||
-			star->GetState() == Star::StarState::Inhole)
-		{
-			//出現状態で固定する
-			starUI.AppLock();
-		}
-	}
-
-	UIDelayTimer.Update();
-	if (IsMove())
-	{
-		starUI.DisAppearance(0.2f);
-		UIDelayTimer.Reset();
-	}
-	else
-	{
-		if (UIDelayTimer.GetStarted() == false)
-		{
-			UIDelayTimer.Start();
-		}
-		if (UIDelayTimer.GetEnd())
-		{
-			starUI.Appearance(0.5f);
-		}
-	}
-
-	starUI.Update();
+	StarUIUpdate();
 }
 
 void Player::Draw()
@@ -438,6 +418,49 @@ void Player::DamageUpdate()
 	}
 }
 
+void Player::StarUIUpdate()
+{
+	for (auto& obj : Stage::Get()->mEventObjects)
+	{
+		if (!obj->CheckTag(TagTable::Star))continue;
+
+		Star* star = static_cast<Star*>(obj.get());
+		if (star->GetState() == Star::StarState::CountUp)
+		{
+			starCorrectNum.mCurrent += 1;
+			starUI.GetMoveStart(starCorrectNum.mCurrent);
+			star->StateEnd();
+		}
+		//スター取得中なら
+		if (star->GetState() == Star::StarState::jumpUp ||
+			star->GetState() == Star::StarState::Inhole)
+		{
+			//出現状態で固定する
+			starUI.AppLock();
+		}
+	}
+
+	UIDelayTimer.Update();
+	if (IsMove())
+	{
+		starUI.DisAppearance(0.2f);
+		UIDelayTimer.Reset();
+	}
+	else
+	{
+		if (UIDelayTimer.GetStarted() == false)
+		{
+			UIDelayTimer.Start();
+		}
+		if (UIDelayTimer.GetEnd())
+		{
+			starUI.Appearance(0.5f);
+		}
+	}
+
+	starUI.Update();
+}
+
 bool Player::IsMove()
 {
 	return moveValue.x != 0 || moveValue.y != 0 || moveValue.z != 0;
@@ -452,6 +475,18 @@ void Player::DamageEffect(int32_t damage)
 	mutekiTimer.Start();
 	//ダメージ受ける
 	hp.mCurrent -= damage;
+}
+
+void Player::ApparranceMove(const Vector3& dokanPos, const Vector3& dokanScale)
+{
+	playerState = PlayerState::Apparrance;
+	SetNoCollsion(true);
+	SetNoGravity(true);
+	SetNoMove(true);
+
+	apparranceTimer.Start();
+	saveDokanPos = dokanPos;
+	saveDokanScale = dokanScale;
 }
 
 void Player::HPOverFlow(int32_t value)
