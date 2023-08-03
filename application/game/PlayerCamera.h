@@ -43,33 +43,27 @@ public:
 		return mRadius;
 	};
 
-	enum class CamMode
-	{
-		Normal,
-		StarGet,
-	};
-
-	CamMode GetCamMode()
-	{
-		return camMode;
-	};
-
 	bool CamChangeEnd() {
 		return radiusMoveTimer.GetEnd();
 	};
 
 	void ChangeNormalMode();
 
-	void ChangeStarGetMode();
+	Sphere mSphereCol;
+
+	Obj3d sphere;
+
+	enum class CamState
+	{
+		Normal,
+		Update,
+	}camState = CamState::Normal;
+
+	TEasing::easeTimer hogeTimer = 0.1f;
 
 private:
 	PlayerCamera(){};
 	~PlayerCamera(){};
-
-	CamMode camMode = CamMode::Normal;
-
-	//スター取得時のカメラ制御
-	void StarGetUpdate();
 
 	//通常の際のカメラ制御
 	void NormalUpdate();

@@ -127,7 +127,8 @@ void GameScene::Update()
 	ImGui::Text(mouseLockStates.c_str());
 
 	ImGui::Text("mouseR %f", PlayerCamera::Get()->GetRadius());
-	ImGui::Text("p:HP %d", player->Get()->GetNowHP());
+	ImGui::Text("camera:mEye x:%f y:%f z:%f", Camera::sCamera->mEye.x, Camera::sCamera->mEye.y, Camera::sCamera->mEye.z);
+	ImGui::Text("camera:mTarget x:%f y:%f z:%f", Camera::sCamera->mTarget.x, Camera::sCamera->mTarget.y, Camera::sCamera->mTarget.z);
 
 	//player->starUI.ValueSliders();
 
@@ -171,7 +172,7 @@ void GameScene::Draw()
 
 	ParticleManager::GetInstance()->Draw();
 	
-	//pCamera->Draw();
+	pCamera->Draw();
 
 	BasicObjectPreDraw(PipelineManager::GetPipeLine("PerlinNoise"));
 

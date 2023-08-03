@@ -6,6 +6,8 @@
 #include "ImguiManager.h"
 #include "Stage.h"
 #include "Star.h"
+#include "ClearDrawScreen.h"
+#include "TimeManager.h"
 
 using namespace Input;
 
@@ -17,6 +19,10 @@ void PlayerCamera::Initialize()
 	transparentObj.Initialize();
 	transparentObj.SetModel(ModelManager::GetModel("BlankCube"));
 	transparentObj.scale = { 5,5,5 };
+
+	sphere.Initialize();
+	sphere.SetModel(ModelManager::GetModel("ICOSphere"));
+	sphere.SetTexture(TextureManager::GetTexture("white"));
 }
 
 void PlayerCamera::Update()
@@ -35,25 +41,41 @@ void PlayerCamera::Update()
 		Mouse::CurserLock(CurserLockState::UNLOCK);
 	}
 
-	switch (camMode)
-	{
-	case PlayerCamera::CamMode::Normal:
-		NormalUpdate();
-		break;
-	case PlayerCamera::CamMode::StarGet:
-		StarGetUpdate();
-		break;
-	}
+	NormalUpdate();
 
 	Camera::sCamera->UpdatematView();
 	Obj3d::Update(*Camera::sCamera);
 
 	CreateCamCol();
+
+	Vector3 playerUpPos = Player::Get()->position + Vector3(0, 5, 0);
+	if (Input::Keyboard::TriggerKey(DIK_B))
+	{
+		sphere.position = playerUpPos;
+	}
+
+	if (!Collsions::SphereCollsion(Player::Get()->mEncountCol, mSphereCol))
+	{
+		Vector3 toPlayerVec = playerUpPos - sphere.position;
+		toPlayerVec.normalize();
+
+		sphere.position += toPlayerVec * 10 * TimeManager::deltaTime;
+	}
+
+	sphere.scale = { mRadius ,mRadius ,mRadius };
+
+	mSphereCol.center = sphere.position;
+	mSphereCol.radius = mRadius;
+
+	sphere.Update(*Camera::sCamera);
 }
 
 void PlayerCamera::Draw()
 {
 	Obj3d::Draw();
+
+	BasicObjectPreDraw(PipelineManager::GetPipeLine("WireFrame"));
+	sphere.Draw();
 }
 
 void PlayerCamera::BackTransparent()
@@ -115,70 +137,19 @@ void PlayerCamera::BackTransparent()
 
 void PlayerCamera::ChangeNormalMode()
 {
-	camMode = CamMode::Normal;
-
 	camMoveTimer.Reset();
 	mRadius = saveRadius;
-}
-
-void PlayerCamera::ChangeStarGetMode()
-{
-	//すでに開始されてるならスキップ
-	if (camMode == CamMode::StarGet)return;
-
-	Player* player = Player::Get();
-
-	camMode = CamMode::StarGet;
-	camMoveTimer.Start();
-	radiusMoveTimer.Reset();
-
-	//現在位置を始点に
-	starGetCamPosS = Camera::sCamera->mEye;
-
-	//プレイヤーの正面座標を算出
-	mCenterVec = Player::Get()->matWorld.ExtractAxisZ();
-	//y方向を反対にして上に行くように
-	mCenterVec.y = 0.25f;
-
-	position = player->position;
-
-	//プレイヤーの正面座標を終点に
-	starGetCamPosE = position + (mCenterVec * mRadius);
-
-	saveRadius = mRadius;
-};
-
-void PlayerCamera::StarGetUpdate()
-{
-	Player* player = Player::Get();
-
-	camMoveTimer.Update();
-	radiusMoveTimer.Update();
-
-	Camera::sCamera->mTarget = position;
-
-	Camera::sCamera->mEye = TEasing::InQuad(starGetCamPosS, starGetCamPosE, camMoveTimer.GetTimeRate());
-
-	if (camMoveTimer.GetEnd())
-	{
-		if(radiusMoveTimer.GetStarted() == false)radiusMoveTimer.Start();
-		mRadius = TEasing::InQuad(saveRadius,4.0f, radiusMoveTimer.GetTimeRate());
-
-		position = player->position;
-
-		Camera::sCamera->mEye = position + (mCenterVec * mRadius);
-	}
 }
 
 void PlayerCamera::NormalUpdate()
 {
 	Player* player = Player::Get();
-
+	
 	mCenterVec = matWorld.ExtractAxisZ();
 	position = player->position;
 
-	Camera::sCamera->mEye = position - (mCenterVec * mRadius);
-	Camera::sCamera->mTarget = position;
+	Camera::sCamera->mEye = sphere.position + Vector3(0, 0, mRadius);
+	Camera::sCamera->mTarget = sphere.position - Vector3(0, 5, 0);
 
 	//ラディウス変更(消してもいいかも)
 	if (Mouse::Wheel() < 0)
@@ -217,7 +188,7 @@ void PlayerCamera::NormalUpdate()
 	//限界値を超えない処理
 	if (mVerticalRad > MathF::PIf / 2 - MathF::AngleConvRad(1.0f)) mVerticalRad = MathF::PIf / 2 - MathF::AngleConvRad(1.0f);
 	if (mVerticalRad < -MathF::PIf / 2 + MathF::AngleConvRad(1.0f)) mVerticalRad = -MathF::PIf / 2 + MathF::AngleConvRad(1.0f);
-
+	
 	rotation.x = mVerticalRad;
 	rotation.y = mHorizontalRad;
 }
