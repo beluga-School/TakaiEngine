@@ -364,6 +364,9 @@
     <Filter Include="Application\UI\UI\StarUI">
       <UniqueIdentifier>{559b5e9c-cf31-4caa-9bf4-112115ec33f0}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Application\LevelData">
+      <UniqueIdentifier>{154c4ae3-7d63-4ea8-871d-7721d710b902}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="engine\input\Input.cpp">
@@ -611,6 +614,9 @@
     </ClCompile>
     <ClCompile Include="StarUI.cpp">
       <Filter>Application\UI\UI\StarUI</Filter>
+    </ClCompile>
+    <ClCompile Include="LevelData.cpp">
+      <Filter>Application\LevelData</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -868,6 +874,9 @@
     </ClInclude>
     <ClInclude Include="StarUI.h">
       <Filter>Application\UI\UI\StarUI</Filter>
+    </ClInclude>
+    <ClInclude Include="LevelData.h">
+      <Filter>Application\LevelData</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

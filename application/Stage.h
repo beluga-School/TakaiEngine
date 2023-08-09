@@ -22,7 +22,7 @@ struct CannonPoint
 	Vector3 points{};
 };
 
-class Stage
+class StageChanger
 {
 public:
 	void ChangeLevel(LevelData& data);
@@ -38,15 +38,14 @@ public:
 
 	std::string GetNowStageHandle();
 
-	static Stage* Get()
+	static StageChanger* Get()
 	{
-		static Stage instance;
+		static StageChanger instance;
 		return &instance;
 	}
 
 	//モデルの配列
 	//Entityのポインタで保存した方が便利に使えるかもしれない
-	//それはまた今度
 	std::list<Entity> mEntitys;
 
 	//イベントオブジェクト配列
@@ -58,6 +57,9 @@ public:
 	//大砲の制御点を一時的に保存する用配列
 	std::vector<CannonPoint> mCannonPoints;
 
+	//スターを一時的に保存する変数
+	std::vector<Star*> mTempStarSaves;
+
 	//コライダーを描画するか
 	bool mShowCollider = false;
 
@@ -68,9 +70,19 @@ public:
 
 	DokanInfo oldDokanInfo;
 
+	//取得状況を初期化する
+	void ResetRevise(int32_t stageNumber, int32_t starID,int32_t starnum);
+	//取得状況を取得状態にする
+	void CorrectedRevise(int32_t stageNumber, int32_t starID,int32_t starnum);
+	//取得状態を読み取って、boolで返す
+	bool LoadStarCorrect(int32_t stageNumber, int32_t starID);
+
 private:
-	Stage(){};
-	~Stage(){};
+	StageChanger(){};
+	~StageChanger(){};
+
+	//ステージリロードの際に初期化するやつら
+	void Reset();
 
 	//通常のオブジェクト配置
 	void NormalObjectSet(const LevelData::ObjectData& data);

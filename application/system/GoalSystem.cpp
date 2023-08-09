@@ -56,7 +56,7 @@ void GoalSystem::GoalAnimetion()
 			thirdTimer.Reset();
 		
 			//ステージセレクトに戻る
-			Stage::Get()->ChangeLevel(*LevelLoader::Get()->GetData("stage_stageselect"));
+			StageChanger::Get()->ChangeLevel(*LevelLoader::Get()->GetData("stage_stageselect"));
 		}
 		break;
 	}

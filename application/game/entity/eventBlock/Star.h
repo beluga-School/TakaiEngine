@@ -31,6 +31,11 @@ public:
 	//Œ»İ‚Ìó‘Ô‚ğæ“¾
 	StarState GetState();
 
+	//‚·‚Å‚Éæ“¾Ï‚İ‚Ìê‡‚ÉAó‘Ô‚ğæ“¾Œã‚É•Ï‰»‚³‚¹‚éˆ—
+	void SetCorrected();
+
+	int32_t id = -1;
+
 private:
 	StarState starState = StarState::None;
 

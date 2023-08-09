@@ -331,7 +331,7 @@ void Player::ColUpdate()
 	//	}
 	//}
 
-	for (auto& goal : Stage::Get()->mGoals)
+	for (auto& goal : StageChanger::Get()->mGoals)
 	{
 		Cube goalCol;
 		goalCol.position = goal->position + goal->goalBlock.position;
@@ -396,7 +396,7 @@ void Player::DamageUpdate()
 	{
 		hp.mCurrent = MAX_HP;
 		hpGauge.SetGaugeSize(hp.mCurrent, true);
-		Stage::Get()->ChangeLevel(*LevelLoader::Get()->GetData("stage_graveyard"));
+		StageChanger::Get()->ChangeLevel(*LevelLoader::Get()->GetData("stage_graveyard"));
 	}
 
 	//hpゲージの色を変える処理
@@ -420,7 +420,7 @@ void Player::DamageUpdate()
 
 void Player::StarUIUpdate()
 {
-	for (auto& obj : Stage::Get()->mEventObjects)
+	for (auto& obj : StageChanger::Get()->mEventObjects)
 	{
 		if (!obj->CheckTag(TagTable::Star))continue;
 
@@ -430,6 +430,14 @@ void Player::StarUIUpdate()
 			starCorrectNum.mCurrent += 1;
 			starUI.GetMoveStart(starCorrectNum.mCurrent);
 			star->StateEnd();
+			for (auto& star : StageChanger::Get()->mTempStarSaves)
+			{
+				StageChanger::Get()->CorrectedRevise(
+					LevelLoader::Get()->GetData(StageChanger::Get()->GetNowStageHandle())->mStageNum,
+					star->id,
+					(int32_t)StageChanger::Get()->mTempStarSaves.size()
+				);
+			}
 		}
 		//スター取得中なら
 		if (star->GetState() == Star::StarState::jumpUp ||

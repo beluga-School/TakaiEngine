@@ -12,8 +12,10 @@
 #include "Bombking.h"
 #include "Coin.h"
 #include "Dokan.h"
+#include <fstream>
+#include <sstream>
 
-void Stage::ChangeLevel(LevelData& data)
+void StageChanger::ChangeLevel(LevelData& data)
 {
 	if (SceneChange::GetRun() == false)
 	{
@@ -25,7 +27,7 @@ void Stage::ChangeLevel(LevelData& data)
 	}
 }
 
-void Stage::Initialize(LevelData& data)
+void StageChanger::Initialize(LevelData& data)
 {
 	//ステージデータを保存
 	currentData = &data;
@@ -34,7 +36,7 @@ void Stage::Initialize(LevelData& data)
 	ChangeUpdate();
 }
 
-void Stage::Update()
+void StageChanger::Update()
 {
 	//シーン切り替えが暗転まで到達したら
 	if (SceneChange::Get()->IsBlackOut())
@@ -71,7 +73,7 @@ void Stage::Update()
 	goalSystem.Update();
 }
 
-void Stage::Draw()
+void StageChanger::Draw()
 {
 	//物によってマテリアル描画とテクスチャ描画が混在してるのに
 	//分ける方法を作ってないので作る
@@ -81,26 +83,42 @@ void Stage::Draw()
 	DrawModel();
 }
 
-void Stage::DrawSprite()
+void StageChanger::DrawSprite()
 {
 	goalSystem.Draw();
 }
 
-void Stage::Reload()
+void StageChanger::Reload()
 {
 	std::string loadfile = "Scene/";
-	loadfile += Stage::Get()->GetNowStageHandle();
-	LevelLoader::Get()->Load(loadfile, Stage::Get()->GetNowStageHandle());
+	loadfile += StageChanger::Get()->GetNowStageHandle();
+	LevelLoader::Get()->Load(loadfile, StageChanger::Get()->GetNowStageHandle(), StageChanger::Get()->currentData->mStageNum);
 
-	Stage::Get()->ChangeLevel(*LevelLoader::Get()->GetData(Stage::Get()->GetNowStageHandle()));
+	StageChanger::Get()->ChangeLevel(*LevelLoader::Get()->GetData(StageChanger::Get()->GetNowStageHandle()));
 }
 
-std::string Stage::GetNowStageHandle()
+std::string StageChanger::GetNowStageHandle()
 {
 	return currentHandle;
 }
 
-void Stage::NormalObjectSet(const LevelData::ObjectData& data)
+void StageChanger::Reset()
+{
+	//入ってたものを削除
+	mEntitys.clear();
+	mEventObjects.clear();
+	mGoals.clear();
+	//StarManager::Get()->mStars.clear();
+	CollideManager::Get()->allCols.clear();
+	mCannonPoints.clear();
+	EnemyManager::Get()->enemyList.clear();
+
+	Player::Get()->Register();
+
+	mTempStarSaves.clear();
+}
+
+void StageChanger::NormalObjectSet(const LevelData::ObjectData& data)
 {
 	mEntitys.emplace_back();
 	mEntitys.back().Initialize();
@@ -142,7 +160,7 @@ void Stage::NormalObjectSet(const LevelData::ObjectData& data)
 	LevelDataExchanger::SetObjectData(mEntitys.back(), data);
 }
 
-void Stage::CollisionSet(const LevelData::ObjectData& data)
+void StageChanger::CollisionSet(const LevelData::ObjectData& data)
 {
 	//当たり判定を表示するオブジェクト
 	mEntitys.back().box.Initialize();
@@ -171,7 +189,7 @@ void Stage::CollisionSet(const LevelData::ObjectData& data)
 	mEntitys.back().Register();
 }
 
-void Stage::CollisionSetEvent(const LevelData::ObjectData& data)
+void StageChanger::CollisionSetEvent(const LevelData::ObjectData& data)
 {
 	//当たり判定を表示するオブジェクト
 	mEventObjects.back()->box.Initialize();
@@ -200,7 +218,7 @@ void Stage::CollisionSetEvent(const LevelData::ObjectData& data)
 	mEventObjects.back()->Register();
 }
 
-void Stage::EvenyObjectSet(const LevelData::ObjectData& data)
+void StageChanger::EvenyObjectSet(const LevelData::ObjectData& data)
 {
 	std::string tFilename = "";
 	if (data.fileName != "")
@@ -310,6 +328,12 @@ void Stage::EvenyObjectSet(const LevelData::ObjectData& data)
 		//オブジェクトの配置
 		LevelDataExchanger::SetObjectData(*mEventObjects.back(), data);
 
+		Star* star = static_cast<Star*>(mEventObjects.back().get());
+
+		star->id = atoi(data.setObjectName.c_str());
+
+		mTempStarSaves.push_back(star);
+
 		return;
 	}
 	//coin の文字列が完全一致するなら
@@ -386,21 +410,12 @@ void Stage::EvenyObjectSet(const LevelData::ObjectData& data)
 	}
 }
 
-void Stage::ChangeUpdate()
+void StageChanger::ChangeUpdate()
 {
 	//ハンドルをステージに保存
 	currentHandle = currentData->mHandle;
 
-	//入ってたものを削除
-	mEntitys.clear();
-	mEventObjects.clear();
-	mGoals.clear();
-	//StarManager::Get()->mStars.clear();
-	CollideManager::Get()->allCols.clear();
-	mCannonPoints.clear();
-	EnemyManager::Get()->enemyList.clear();
-
-	Player::Get()->Register();
+	Reset();
 
 	for (auto objectData = currentData->mObjects.begin(); objectData != currentData->mObjects.end(); objectData++)
 	{
@@ -668,9 +683,20 @@ void Stage::ChangeUpdate()
 		//探索方を変えない方針で改善するなら、すでに全てのデータが見つかっているデータは
 		//スキップするなどの処理が必要だろう
 	}
+
+	//スターの取得状況に基づいてスターの状態を変化
+	for (auto &star : mTempStarSaves)
+	{
+		//返ってきた値が1なら取得済みなので
+		if (LoadStarCorrect(StageChanger::currentData->mStageNum, star->id) == 1)
+		{
+			//状態を取得後に変化
+			star->SetCorrected();
+		}
+	}
 }
 
-void Stage::SetPlayer(const LevelData::ObjectData& data)
+void StageChanger::SetPlayer(const LevelData::ObjectData& data)
 {
 	Player::Get()->Reset();
 	Player::Get()->preMove = data.translation;
@@ -685,7 +711,7 @@ void Stage::SetPlayer(const LevelData::ObjectData& data)
 	Player::Get()->mSetFrame = true;
 }
 
-void Stage::DrawModel()
+void StageChanger::DrawModel()
 {
 	if (mShowModel == false) return;
 	for (auto& obj : mEntitys)
@@ -754,7 +780,7 @@ void Stage::DrawModel()
 	}
 }
 
-void Stage::DrawCollider()
+void StageChanger::DrawCollider()
 {
 	if (mShowCollider == false) return;
 	for (auto& obj : mEntitys)
@@ -763,4 +789,104 @@ void Stage::DrawCollider()
 
 		obj.box.Draw();
 	}
+}
+
+void StageChanger::ResetRevise(int32_t stageNumber, int32_t starID, int32_t starnum)
+{
+	//ファイル出力処理
+	std::ofstream writing_file;
+
+	std::string filename = "";
+	filename = "./Resources/data/star/";
+
+	std::ostringstream oss;
+	oss << stageNumber;
+
+	filename = filename + "stage_" + oss.str() + ".txt";
+
+	writing_file.open(filename, std::ios::out);
+
+	for (int i = 0; i < starnum; i++)
+	{
+		//取得状況を0(未取得)に書き換える
+		if (starID == i)
+		{
+			int h = 0;
+			writing_file << h;
+			writing_file << "," << std::endl;
+		}
+	}
+
+	writing_file.close();
+}
+
+void StageChanger::CorrectedRevise(int32_t stageNumber, int32_t starID, int32_t starnum)
+{
+	//ファイル出力処理
+	std::ofstream writing_file;
+
+	std::string filename = "";
+	filename = "./Resources/data/star/";
+
+	std::ostringstream oss;
+	oss << stageNumber;
+
+	filename = filename + "stage_" +  oss.str() + ".txt";
+
+	writing_file.open(filename, std::ios::out);
+
+	for (int i = 0; i < starnum; i++)
+	{
+		//取得状況を1(取得済)に書き換える
+		if (starID == i)
+		{
+			int h = 1;
+			writing_file << h;
+			writing_file << "," << std::endl;
+		}
+	}
+
+	writing_file.close();
+}
+
+bool StageChanger::LoadStarCorrect(int32_t stageNumber, int32_t starID)
+{
+	//ファイル入力処理
+	std::ifstream reading_file;
+
+	std::string filename = "";
+	filename = "./Resources/data/star/";
+
+	std::ostringstream oss;
+	oss << stageNumber;
+
+	filename = filename + "stage_" + oss.str() + ".txt";
+
+	reading_file.open(filename);
+
+	//ファイルオープン失敗をチェック
+	if (reading_file.fail())
+	{
+		assert(0);
+	}
+
+	std::string line;
+	int i = 0;
+	while (getline(reading_file, line))
+	{
+		if(i == starID)
+		{
+			if (line == "0,")
+			{
+				return 0;
+			}
+			if (line == "1,")
+			{
+				return 1;
+			}
+		}
+		i++;
+	}
+
+	return 0;
 }

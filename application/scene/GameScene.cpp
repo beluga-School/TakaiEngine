@@ -13,15 +13,16 @@
 
 void GameScene::LoadResource()
 {
-	Stage::Get()->goalSystem.LoadResource();
+	StageChanger::Get()->goalSystem.LoadResource();
 
 	//ロード(分けたほうがいい)
-	LevelLoader::Get()->Load("Scene/stage_stageselect", "stage_stageselect");
-	LevelLoader::Get()->Load("Scene/stage_castle_outside", "stage_castle_outside");
-	LevelLoader::Get()->Load("Scene/stage_castle_inside", "stage_castle_inside");
-	LevelLoader::Get()->Load("Scene/stage_grasslands", "stage_grasslands");
-	LevelLoader::Get()->Load("Scene/stage_mountain", "stage_mountain");
-	LevelLoader::Get()->Load("Scene/stage_graveyard", "stage_graveyard");
+	LevelLoader::Get()->Load("Scene/stage_stageselect", "stage_stageselect",0);
+	LevelLoader::Get()->Load("Scene/stage_castle_outside", "stage_castle_outside",-1);
+	LevelLoader::Get()->Load("Scene/stage_castle_inside", "stage_castle_inside", -1);
+	LevelLoader::Get()->Load("Scene/stage_grasslands", "stage_grasslands", -1);
+	LevelLoader::Get()->Load("Scene/stage_mountain", "stage_mountain", 1);
+	LevelLoader::Get()->Load("Scene/stage_graveyard", "stage_graveyard", 2);
+	LevelLoader::Get()->Load("Scene/starTest", "starTest", -1);
 	
 	//新規シーンを登録して、登録してあるシーンから選んで飛ぶ方式にしたい
 	//マップからハンドル名の一覧を取得
@@ -41,14 +42,13 @@ void GameScene::Initialize()
 	player->Initialize();
 	EnemyManager::Get()->Initialize();
 
-	Stage::Get()->goalSystem.Initialize();
+	StageChanger::Get()->goalSystem.Initialize();
 
 	ParticleManager::GetInstance()->CreatePool();
 
 	//初期ステージを決定
-	//output = "stage_mountain";
 	output = "stage_stageselect";
-	Stage::Get()->Initialize(*LevelLoader::Get()->GetData(output));
+	StageChanger::Get()->Initialize(*LevelLoader::Get()->GetData(output));
 }
 
 GUI sceneChangeGUI("operator");
@@ -64,12 +64,12 @@ void GameScene::Update()
 
 	if (Input::Keyboard::TriggerKey(DIK_R))
 	{
-		Stage::Get()->Reload();
+		StageChanger::Get()->Reload();
 	}
 
 	mSkydome.Update();
 
-	Stage::Get()->Update();
+	StageChanger::Get()->Update();
 
 	sceneChangeGUI.Begin({ 100,100 }, { 300,350 });
 
@@ -77,11 +77,11 @@ void GameScene::Update()
 
 	if (ImGui::Button("ShowModel"))
 	{
-		Stage::Get()->mShowModel = !Stage::Get()->mShowModel;
+		StageChanger::Get()->mShowModel = !StageChanger::Get()->mShowModel;
 	}
 	if (ImGui::Button("ShowCollider"))
 	{
-		Stage::Get()->mShowCollider = !Stage::Get()->mShowCollider;
+		StageChanger::Get()->mShowCollider = !StageChanger::Get()->mShowCollider;
 	}
 	if (ImGui::Button("debugCam"))
 	{
@@ -90,6 +90,17 @@ void GameScene::Update()
 	if (ImGui::Button("CheckEncountSphere"))
 	{
 		EnemyManager::Get()->mIsDrawEncountSphere = !EnemyManager::Get()->mIsDrawEncountSphere;
+	}
+	if (ImGui::Button("SaveStar"))
+	{
+		/*for (auto& star : StageChanger::Get()->mTempStarSaves)
+		{
+			StageChanger::Get()->CorrectedRevise(
+				LevelLoader::Get()->GetData(StageChanger::Get()->GetNowStageHandle())->mStageNum,
+				star->id,
+				StageChanger::Get()->mTempStarSaves.size()
+			);
+		}*/
 	}
 	
 	//ハンドルが空でなければ
@@ -110,7 +121,7 @@ void GameScene::Update()
 
 	if (ImGui::Button("changeScene"))
 	{
-		Stage::Get()->ChangeLevel(*LevelLoader::Get()->
+		StageChanger::Get()->ChangeLevel(*LevelLoader::Get()->
 			GetData(output));
 	}
 
@@ -162,7 +173,7 @@ void GameScene::Draw()
 	mSkydome.Draw();
 	
 	//地面用シェーダーを中で呼んでる
-	Stage::Get()->Draw();
+	StageChanger::Get()->Draw();
 
 	BasicObjectPreDraw(PipelineManager::GetPipeLine("Toon"));
 	player->Draw();
@@ -179,7 +190,7 @@ void GameScene::Draw()
 
 	player->DrawUI();
 
-	Stage::Get()->DrawSprite();
+	StageChanger::Get()->DrawSprite();
 }
 
 void GameScene::End()

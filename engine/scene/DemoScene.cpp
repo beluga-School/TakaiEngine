@@ -35,8 +35,8 @@ void DemoScene::Initialize()
 	testplayer.SetModel(ModelManager::Get()->GetModel("firewisp"));
 	testplayer.SetTexture(TextureManager::Get()->GetTexture("white"));
 
-	LevelLoader::Get()->Load("Scene/default", "default");
-	LevelLoader::Get()->Load("Scene/woods", "woods");
+	LevelLoader::Get()->Load("Scene/default", "default",-1);
+	LevelLoader::Get()->Load("Scene/woods", "woods",-1);
 
 	currentLevel = "default";
 
@@ -52,7 +52,7 @@ void DemoScene::Update()
 		mObj3ds.clear();
 		std::string hoge = "Scene/";
 		hoge += currentLevel;
-		LevelLoader::Get()->Load(hoge, currentLevel);
+		LevelLoader::Get()->Load(hoge, currentLevel,-1);
 		SetObject(*LevelLoader::Get()->GetData(currentLevel));
 	}
 

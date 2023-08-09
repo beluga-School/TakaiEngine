@@ -3,7 +3,7 @@
 #include <cassert>
 #include "MathF.h"
 
-void LevelLoader::Load(const std::string& filename, const std::string& handle)
+void LevelLoader::Load(const std::string& filename, const std::string& handle, int32_t stageNum)
 {
 	const std::string fullpath = "Resources/" + filename + ".json";
 
@@ -47,6 +47,7 @@ void LevelLoader::Load(const std::string& filename, const std::string& handle)
 	//¶¬‚ªI‚í‚Á‚½‚çƒtƒ‰ƒO‚ğ—§‚Ä‚é
 	levelData.isCreate = true;
 	levelData.mHandle = handle;
+	levelData.mStageNum = stageNum;
 
 	LevelDatas[handle] = levelData;
 }

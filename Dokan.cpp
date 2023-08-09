@@ -47,7 +47,7 @@ void Dokan::Update()
 		case Dokan::DokanState::End:
 			
 			//eventtrigerに記載されたステージへ移動する
-			Stage::Get()->ChangeLevel(*LevelLoader::Get()->GetData(trigerName));
+			StageChanger::Get()->ChangeLevel(*LevelLoader::Get()->GetData(trigerName));
 
 			//諸々を元に戻す
 			mDokanState = DokanState::None;
@@ -89,7 +89,7 @@ void Dokan::HitEffect(Mob* target_)
 		mTarget->SetNoMove(true);
 		mSavePos = target_->box.position;
 
-		Stage::Get()->oldDokanInfo.stageName = dokanInfo.stageName;
-		Stage::Get()->oldDokanInfo.id = dokanInfo.id;
+		StageChanger::Get()->oldDokanInfo.stageName = dokanInfo.stageName;
+		StageChanger::Get()->oldDokanInfo.id = dokanInfo.id;
 	}
 }

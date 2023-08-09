@@ -28,7 +28,7 @@ void GoalBlock::Draw()
 
 void GoalBlock::HitEffect()
 {
-	Stage::Get()->goalSystem.AnimetionStart();
+	StageChanger::Get()->goalSystem.AnimetionStart();
 	if (goalAnimetionTimer.GetStarted() == false)
 	{
 		goalAnimetionTimer.Start();

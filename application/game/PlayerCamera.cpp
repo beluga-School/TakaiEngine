@@ -71,7 +71,7 @@ void PlayerCamera::BackTransparent()
 	transparentObj.Update(*Camera::sCamera);
 
 	//当たったオブジェクトの描画フラグを折る
-	for (auto& obj : Stage::Get()->mEntitys)
+	for (auto& obj : StageChanger::Get()->mEntitys)
 	{
 		//ブロック以外なら次へ
 		if (!obj.CheckTag(TagTable::Block))continue;

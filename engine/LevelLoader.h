@@ -4,6 +4,7 @@
 #include <vector>
 #include <unordered_map>
 #include "Obj.h"
+#include "LevelData.h"
 
 //外部のライブラリで出た警告は無視
 #pragma warning (push)
@@ -11,37 +12,10 @@
 #include <json.hpp>
 #pragma warning (pop)
 
-struct LevelData
-{
-	struct ColliderData {
-		Vector3 center;
-		Vector3 size;
-		bool have = false;
-	};
-	struct ObjectData {
-		std::string fileName;
-		std::string spawnpointName;
-		std::string eventtrigerName;
-		std::string setObjectName;
-	
-		Vector3 translation;
-		Vector3 rotation;
-		Vector3 scaling;
-
-		ColliderData collider;
-	};
-
-	std::vector<ObjectData> mObjects;
-
-	bool isCreate = false;
-
-	std::string mHandle = "";
-};
-
 class LevelLoader
 {
 public:
-	void Load(const std::string &filename,const std::string& handle);
+	void Load(const std::string &filename,const std::string& handle,int32_t stageNum);
 
 	LevelData* GetData(const std::string& handle);
 	std::unordered_map<std::string, LevelData> GetDataMap() {

@@ -139,3 +139,10 @@ Star::StarState Star::GetState()
 {
 	return starState;
 }
+
+void Star::SetCorrected()
+{
+	starState = StarState::End;
+	hit = true;
+	scale = { 0,0,0 };
+}

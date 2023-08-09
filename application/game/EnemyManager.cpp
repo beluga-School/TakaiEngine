@@ -51,7 +51,7 @@ void EnemyManager::Draw()
 			enemy->EncountSphereDraw("Toon");
 		}
 
-		if (Stage::Get()->mShowCollider)
+		if (StageChanger::Get()->mShowCollider)
 		{
 			enemy->box.DrawMaterial();
 		}

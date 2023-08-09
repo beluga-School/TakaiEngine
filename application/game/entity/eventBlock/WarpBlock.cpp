@@ -21,6 +21,6 @@ void WarpBlock::HitEffect()
 {
 	if (LevelLoader::Get()->GetData(trigerName) != nullptr)
 	{
-		Stage::Get()->ChangeLevel(*LevelLoader::Get()->GetData(trigerName));
+		StageChanger::Get()->ChangeLevel(*LevelLoader::Get()->GetData(trigerName));
 	}
 }
