@@ -151,7 +151,12 @@ void Player::DrawUI()
 void Player::Reset()
 {
 	gravity = 0;
-	hitListY.clear();
+	hitListUp.clear();
+	hitListDown.clear();
+	hitListBack.clear();
+	hitListCenter.clear();
+	hitListRight.clear();
+	hitListLeft.clear();
 }
 
 void Player::Attack()

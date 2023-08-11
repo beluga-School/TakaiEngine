@@ -7,8 +7,13 @@ class Mob : public Entity
 public:
 	Vector3 moveValue = { 0,0,0 };
 
-	std::list<Cube> hitListY;
-
+	std::list<Cube> hitListUp;
+	std::list<Cube> hitListDown;
+	std::list<Cube> hitListRight;
+	std::list<Cube> hitListLeft;
+	std::list<Cube> hitListCenter;
+	std::list<Cube> hitListBack;
+	
 	Mob() {
 		SetTag(TagTable::Mob);
 	};
@@ -78,17 +83,30 @@ protected:
 	//重力加速度
 	const float gravityAdd = 1.5f;
 
-	float hitCubeMaxY = 0;
+public:
+	//リストの中でもっとも近い座標を保存する変数
+	float hitFeetMax = 0;
+	float hitCeilingMax = 0;
+	float hitRightMin = 0;
+	float hitLeftMin = 0;
+	float hitCenterMin = 0;
+	float hitBackMin = 0;
+protected:
 
 	float feet = 0;
+
+	Vector3 initScale = { 0,0,0 };
 
 private:
 	//---縦方向の更新
 	
 	//縦方向の更新まとめ用
 	void UpdateY();
-	//下方向との押し戻し処理
-	void GroundCol();
+
+	void UpdateX();
+
+	//hitlistの中から、もっとも近い座標をX,Y,Z方向それぞれで算出する関数
+	void CalcNearestHitLists();
 	//重力とジャンプ機能の更新
 	void JumpUpdate();
 };

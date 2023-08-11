@@ -209,80 +209,144 @@ void CollideManager::CheckStatus(Entity* check, Entity* collide)
 void CollideManager::Osimodosi(Mob& check, const Block& collide)
 {
 	//そのオブジェクトより
+	
+	// collide->checkの方向
+	// check->collideの方向
+	
 	//上にいるか
 	bool up = CheckDirections(check.box.cubecol, collide.box.cubecol, CheckDirection::CD_UP);
 	//下にいるか
 	bool down = CheckDirections(check.box.cubecol, collide.box.cubecol, CheckDirection::CD_DOWN);
 	//前にいるか
-	bool center = CheckDirections(check.box.cubecol, collide.box.cubecol, CheckDirection::CD_CENTER);
+	bool back = CheckDirections(check.box.cubecol, collide.box.cubecol, CheckDirection::CD_CENTER);
 	//後ろにいるか
-	bool back = CheckDirections(check.box.cubecol, collide.box.cubecol, CheckDirection::CD_BACK);
+	bool center = CheckDirections(check.box.cubecol, collide.box.cubecol, CheckDirection::CD_BACK);
 	//左にいるか
 	bool left = CheckDirections(check.box.cubecol, collide.box.cubecol, CheckDirection::CD_LEFT);
 	//右にいるか
 	bool right = CheckDirections(check.box.cubecol, collide.box.cubecol, CheckDirection::CD_RIGHT);
 
-	//上面の当たり判定
-	//直線状で見たときに下にあるオブジェクトがあれば
-	Cube rayCube;
-	rayCube.position = check.position;
-	rayCube.scale = check.scale;
-	//スケールをめっちゃ引き延ばす
-	rayCube.scale.y = 100;
-
-	//当たったなら
-	//生き物=無機物
-	bool cubeCol = Collsions::CubeCollision(rayCube, collide.box.cubecol);
-
-	bool upCol = up && cubeCol;
-
 	//全て0なら埋まっている
 	bool isBuried = !up && !down && !right && !left && !back && !center;
 
+	//Y軸上判定
+	Cube rayCubeY;
+	rayCubeY.position = check.position;
+	rayCubeY.scale = check.scale;
+	//スケールをめっちゃ引き延ばす
+	rayCubeY.scale.y = 100;
+
+	//当たったなら
+	bool cubeColY = Collsions::CubeCollision(rayCubeY, collide.box.cubecol);
+
 	//上面が当たっているかオブジェクトが埋まっているなら
-	if (upCol || isBuried)
+	if ((up && cubeColY) || isBuried)
 	{
 		//リストに入れる
-		UniqueObjectPushBack(check.hitListY, collide.box.cubecol);
+		UniqueObjectPushBack(check.hitListDown, collide.box.cubecol);
 	}
 	else
 	{
 		//そうでないなら外す
-		UniqueObjectErase(check.hitListY, collide.box.cubecol);
+		UniqueObjectErase(check.hitListDown, collide.box.cubecol);
 	}
 	
-
 	//下面の当たり判定
-	if (down)
+	if (down && cubeColY)
 	{
+		UniqueObjectPushBack(check.hitListUp, collide.box.cubecol);
+	}
+	else
+	{
+		//そうでないなら外す
+		UniqueObjectErase(check.hitListUp, collide.box.cubecol);
+	}
 
+	//X軸上の判定
+	Cube rayCubeX;
+	rayCubeX.position = check.position;
+	rayCubeX.scale = check.scale;
+	//スケールをめっちゃ引き延ばす
+	rayCubeX.scale.x = 100;
+
+	//当たったなら
+	bool cubeColX = Collsions::CubeCollision(rayCubeX, collide.box.cubecol);
+
+	if (right && cubeColX)
+	{
+		UniqueObjectPushBack(check.hitListRight, collide.box.cubecol);
+	}
+	else
+	{
+		//そうでないなら外す
+		UniqueObjectErase(check.hitListRight, collide.box.cubecol);
+	}
+
+	if (left && cubeColX)
+	{
+		UniqueObjectPushBack(check.hitListLeft, collide.box.cubecol);
+	}
+	else
+	{
+		//そうでないなら外す
+		UniqueObjectErase(check.hitListLeft, collide.box.cubecol);
+	}
+
+	//Z軸上の判定
+	Cube rayCubeZ;
+	rayCubeZ.position = check.position;
+	rayCubeZ.scale = check.scale;
+	//スケールをめっちゃ引き延ばす
+	rayCubeZ.scale.z = 100;
+
+	//当たったなら
+	bool cubeColZ = Collsions::CubeCollision(rayCubeZ, collide.box.cubecol);
+
+	if (center && cubeColZ)
+	{
+		UniqueObjectPushBack(check.hitListCenter, collide.box.cubecol);
+	}
+	else
+	{
+		//そうでないなら外す
+		UniqueObjectErase(check.hitListCenter, collide.box.cubecol);
+	}
+
+	if (back && cubeColZ)
+	{
+		UniqueObjectPushBack(check.hitListBack, collide.box.cubecol);
+	}
+	else
+	{
+		//そうでないなら外す
+		UniqueObjectErase(check.hitListBack, collide.box.cubecol);
 	}
 
 	//左右の当たり判定
-	if (up == false)
-	{
-		//左右も別の当たり判定リスト作って、同じ手法で取れそう？
-		if (Collsions::CubeCollision(check.box.cubecol, collide.box.cubecol))
-		{
-			//横方向を少し大きくして、当たり判定を取ったオブジェクトと当たっているなら
-			if (right)
-			{
-				check.moveValue.x = 0;
-			}
-			if (left)
-			{
-				check.moveValue.x = 0;
-			}
-			if (back)
-			{
-				check.moveValue.z = 0;
-			}
-			if (center)
-			{
-				check.moveValue.z = 0;
-			}
-		}
-	}
+	//if (up == false)
+	//{
+	//	//左右も別の当たり判定リスト作って、同じ手法で取れそう？
+	//	if (Collsions::CubeCollision(check.box.cubecol, collide.box.cubecol))
+	//	{
+	//		//横方向を少し大きくして、当たり判定を取ったオブジェクトと当たっているなら
+	//		if (right)
+	//		{
+	//			check.moveValue.x = 0;
+	//		}
+	//		if (left)
+	//		{
+	//			check.moveValue.x = 0;
+	//		}
+	//		if (back)
+	//		{
+	//			check.moveValue.z = 0;
+	//		}
+	//		if (center)
+	//		{
+	//			check.moveValue.z = 0;
+	//		}
+	//	}
+	//}
 }
 
 void CollideManager::CheckPlayerToEnemy(Player& player,Enemy& collide)

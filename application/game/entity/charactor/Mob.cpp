@@ -3,54 +3,164 @@
 
 void Mob::CollsionUpdate()
 {
+	CalcNearestHitLists();
+
 	//今後Xも入る予定
-	//UpdateX();
+	UpdateX();
 
 	UpdateY();
+
 }
 
 void Mob::UpdateY()
 {
 	JumpUpdate();
-
-	GroundCol();
 }
 
-void Mob::GroundCol()
+void Mob::UpdateX()
+{
+	//右
+	if (position.x <= hitLeftMin)
+	{
+		position.x = hitLeftMin;
+	}
+	//左
+	if (position.x >= hitRightMin)
+	{
+		position.x = hitRightMin;
+	}
+	//正面
+	if (position.z >= hitCenterMin)
+	{
+		position.z = hitCenterMin;
+	}
+
+	//正面
+	if (position.z <= hitBackMin)
+	{
+		position.z = hitBackMin;
+	}
+}
+
+void Mob::CalcNearestHitLists()
 {
 	//コリジョンを行わないフラグが立っているならスキップ
 	if (mNoCollision)return;
 
-	//上方向の判定
-	float preY = -114514.f;
-	float maxY = 0;
+	//下方向の判定
+	float preDownY = -114514.f;
+	float maxDownY = 0;
 
-	hitCubeMaxY = preY;
+	hitFeetMax = preDownY;
 
-	for (auto& hit : hitListY)
+	for (auto& hit : hitListDown)
 	{
-		maxY = hit.position.y;
+		maxDownY = hit.position.y;
 		//初期値でなく、前の値より高い位置にあるなら
-		if (maxY >= preY)
+		if (maxDownY >= preDownY)
 		{
 			//一番高い座標を算出
 			//少しだけ浮かせて、ブロックの切れ目に引っかからないように
 			feet = hit.position.y + hit.scale.y / 2;
-			hitCubeMaxY = feet + scale.y / 2 + 0.01f;
+			//Q,ここのスケール/2いらなくね
+			//A,ここのスケール/2は、判定壁の太さみたいなものなので、固定の太さを持たせればいいと思います
+			hitFeetMax = feet + scale.y / 2 + 0.01f;
 		}
-		preY = hit.position.y;
+		preDownY = hit.position.y;
+	}
+
+	//上方向の判定
+	float preUpY = 114514.f;
+	float maxUpY = 0;
+
+	hitCeilingMax = preUpY;
+
+	for (auto& hit : hitListUp)
+	{
+		maxUpY = hit.position.y;
+		if (maxUpY <= preUpY)
+		{
+			hitCeilingMax = hit.position.y - hit.scale.y / 2 - scale.y / 2;
+		}
+		preUpY = hit.position.y;
+	}
+
+	//X軸判定
+	
+	//方向の判定
+	float preLeft = -114514.f;
+	float maxLeft = 0;
+
+	hitLeftMin = preLeft;
+
+	for (auto& hit : hitListLeft)
+	{
+		maxLeft = hit.position.x;
+		if (maxLeft >= preLeft)
+		{
+			hitLeftMin = hit.position.x + hit.scale.x / 2 + scale.x / 2;
+		}
+		preLeft = hit.position.x;
+	}
+
+	//方向の判定
+	float preRight = 114514.f;
+	float maxRight = 0;
+
+	hitRightMin = preRight;
+
+	for (auto& hit : hitListRight)
+	{
+		maxRight = hit.position.x;
+		if (maxRight <= preRight)
+		{
+			hitRightMin = hit.position.x - hit.scale.x / 2 - scale.x / 2;
+		}
+		preRight = hit.position.x;
+	}
+
+	//Z軸判定
+	float preCenter = 114514.f;
+	float maxCenter = 0;
+
+	hitCenterMin = preCenter;
+
+	for (auto& hit : hitListCenter)
+	{
+		maxCenter = hit.position.z;
+		if (maxCenter <= preCenter)
+		{
+			hitCenterMin = hit.position.z - hit.scale.z / 2 - scale.z / 2;
+		}
+		preCenter = hit.position.z;
+	}
+
+	float preBack = -114514.f;
+	float maxBack = 0;
+
+	hitBackMin = preBack;
+
+	for (auto& hit : hitListBack)
+	{
+		maxBack = hit.position.z;
+		if (maxBack >= preBack)
+		{
+			hitBackMin = hit.position.z + hit.scale.z / 2 + scale.z / 2;
+		}
+		preBack = hit.position.z;
 	}
 
 	//高さを算出した最大値に合わせる
 	if (jumpState == JumpState::None)
 	{
-		if (position.y > hitCubeMaxY)
+		//現在位置が
+		if (position.y > hitFeetMax)
 		{
 			jumpState = JumpState::Down;
 		}
 		else
 		{
-			position.y = hitCubeMaxY;
+			position.y = hitFeetMax;
 			gravity = 0;
 		}
 	}
@@ -65,7 +175,7 @@ void Mob::JumpUpdate()
 	{
 	case Mob::JumpState::None:
 
-		if (position.y > hitCubeMaxY)
+		if (position.y > hitFeetMax)
 		{
 			jumpState = JumpState::Down;
 		}
@@ -79,6 +189,12 @@ void Mob::JumpUpdate()
 	case Mob::JumpState::Up:
 		//イージングで上昇
 		position.y = TEasing::OutQuad(upJumpS, upJumpE, jumpManageTimer.GetTimeRate());
+
+		if (hitCeilingMax <= position.y)
+		{
+			jumpState = JumpState::Down;
+			jumpManageTimer.Reset();
+		}
 
 		//時間が終わったらステートを次の状態に遷移
 		if (jumpManageTimer.GetEnd())
@@ -99,7 +215,7 @@ void Mob::JumpUpdate()
 		break;
 	case Mob::JumpState::Down:
 		//hitListの中で、最も高い位置にあるオブジェクトより自身の座標が高かったら
-		if (position.y > hitCubeMaxY)
+		if (position.y > hitFeetMax)
 		{
 			//重力落下させる
 			if (!noGravity)

@@ -15,6 +15,8 @@ void GEnemy::Initialize()
 	EncountSphereInitialize();
 
 	Register();
+
+	initScale = scale;
 }
 
 void GEnemy::Update()
@@ -76,7 +78,7 @@ void GEnemy::Update()
 		{
 			metronomeTimer.Start();
 		}
-		rotation.x = TEasing::lerp(-MathF::PIf / 4, MathF::PIf / 4, metronomeTimer.GetTimeRate());
+		scale.y = TEasing::lerp(initScale.y - 0.2f, initScale.y + 0.2f, metronomeTimer.GetTimeRate());
 
 		///---à⁄ìÆèàóù
 		//íiÅXâ¡ë¨ÇµÇΩÇ¢
@@ -181,5 +183,5 @@ void GEnemy::Encount()
 	mActTable = ActTable::Encount;
 	encountJumpTimer.Start();
 	encountJumpS = position.y;
-	encountJumpE = position.y + 2.0f;
+	encountJumpE = position.y + 0.2f;
 }

@@ -25,7 +25,7 @@ private:
 	float mSpeed = 2.5f;	//1秒間の移動速度
 
 	//発見時のジャンプ管理タイマー
-	TEasing::easeTimer encountJumpTimer = 0.5f;
+	TEasing::easeTimer encountJumpTimer = 0.1f;
 	float encountJumpS = 0;
 	float encountJumpE = 0;
 
