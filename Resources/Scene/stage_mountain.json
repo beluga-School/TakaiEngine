@@ -2353,42 +2353,6 @@
         },
         {
             "type": "MESH",
-            "name": "Cube.052",
-            "transform": {
-                "translation": [
-                    0.0,
-                    -37.30865478515625,
-                    4.70308256149292
-                ],
-                "rotation": [
-                    0.0,
-                    -0.0,
-                    0.0
-                ],
-                "scaling": [
-                    1.0,
-                    1.0,
-                    1.0
-                ]
-            },
-            "file_name": "firewisp",
-            "collider": {
-                "type": "BOX",
-                "center": [
-                    0.0,
-                    0.0,
-                    0.15000000596046448
-                ],
-                "size": [
-                    1.0,
-                    1.0,
-                    1.0
-                ]
-            },
-            "setObject": "enemy"
-        },
-        {
-            "type": "MESH",
             "name": "円柱.006",
             "transform": {
                 "translation": [
@@ -2775,6 +2739,42 @@
                     2.0
                 ]
             }
+        },
+        {
+            "type": "MESH",
+            "name": "球",
+            "transform": {
+                "translation": [
+                    0.0,
+                    -34.218265533447266,
+                    4.362821102142334
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "slime",
+            "collider": {
+                "type": "BOX",
+                "center": [
+                    0.0,
+                    0.0,
+                    0.75
+                ],
+                "size": [
+                    2.0,
+                    2.0,
+                    1.5
+                ]
+            },
+            "setObject": "enemy"
         }
     ]
 }

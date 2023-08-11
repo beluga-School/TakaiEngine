@@ -301,6 +301,7 @@ void ModelManager::PreLoad()
 	LoadModel("star", "star",true);
 	LoadModel("Cannon", "Cannon",true);
 	LoadModel("dokan", "dokan",true);
+	LoadModel("slime", "slime",true);
 }
 
 void ModelManager::LoadModel(const std::string filepath, const std::string handle, bool smooth)

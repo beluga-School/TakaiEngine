@@ -35,6 +35,8 @@ void GEnemy::Update()
 		rotation.y = 0;
 		break;
 	case ActTable::Encount:
+		SetNoGravity(true);
+
 		//ƒWƒƒƒ“ƒv‚·‚é
 		position.y = TEasing::OutQuad(encountJumpS, encountJumpE, encountJumpTimer.GetTimeRate());
 
@@ -47,6 +49,7 @@ void GEnemy::Update()
 			mActTable = ActTable::Tracking;
 			metronomeTimer.Start();
 			accelerationTimer.Start();
+			SetNoGravity(false);
 		}
 
 		break;

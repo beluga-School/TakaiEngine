@@ -12,6 +12,7 @@ void EnemyManager::Load(const LevelData::ObjectData& data)
 	enemyList.back() = std::make_unique<GEnemy>();
 	//ƒ‚ƒfƒ‹‚Æ‚©İ’è‚·‚é
 	enemyList.back()->Initialize();
+	enemyList.back()->SetModel(ModelManager::GetModel(data.fileName));
 
 	//position‚Æ‚©‚ğİ’è
 	LevelDataExchanger::SetObjectData(*enemyList.back(), data);
