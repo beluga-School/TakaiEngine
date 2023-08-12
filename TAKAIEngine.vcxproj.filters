@@ -367,6 +367,9 @@
     <Filter Include="Application\LevelData">
       <UniqueIdentifier>{154c4ae3-7d63-4ea8-871d-7721d710b902}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Application\Charactor\Enemy\Skelton">
+      <UniqueIdentifier>{707b5be6-4406-4b09-b275-af0134f7154d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="engine\input\Input.cpp">
@@ -617,6 +620,9 @@
     </ClCompile>
     <ClCompile Include="LevelData.cpp">
       <Filter>Application\LevelData</Filter>
+    </ClCompile>
+    <ClCompile Include="Skelton.cpp">
+      <Filter>Application\Charactor\Enemy\Skelton</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -877,6 +883,9 @@
     </ClInclude>
     <ClInclude Include="LevelData.h">
       <Filter>Application\LevelData</Filter>
+    </ClInclude>
+    <ClInclude Include="Skelton.h">
+      <Filter>Application\Charactor\Enemy\Skelton</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
