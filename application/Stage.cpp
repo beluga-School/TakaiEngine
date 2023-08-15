@@ -154,7 +154,9 @@ void StageChanger::NormalObjectSet(const LevelData::ObjectData& data)
 	}
 
 	//バグらないように白テクスチャを入れる
-	mEntitys.back().SetTexture(TextureManager::Get()->GetTexture("white"));
+	//mEntitys.back().SetTexture(TextureManager::Get()->GetTexture("white"));
+	mEntitys.back().SetTexture(mEntitys.back().MODEL->mMaterial.mTexture.get());
+	mEntitys.back().mTiling = { 6,6 };
 	
 	//オブジェクトの配置
 	LevelDataExchanger::SetObjectData(mEntitys.back(), data);
@@ -721,16 +723,19 @@ void StageChanger::DrawModel()
 		
 		BasicObjectPreDraw(PipelineManager::GetPipeLine("OutLine"), false);
 		obj.DrawOutLine();
-		//アルファが1未満になるなら透明用描画パイプラインに切り替える
-		if (obj.color_.w < 1.0f)
-		{
-			BasicObjectPreDraw(PipelineManager::GetPipeLine("GroundToonNDW"));
-		}
-		else
-		{
-			BasicObjectPreDraw(PipelineManager::GetPipeLine("GroundToon"));
-		}
-		obj.DrawMaterial();
+		////アルファが1未満になるなら透明用描画パイプラインに切り替える
+		//if (obj.color_.w < 1.0f)
+		//{
+		//	BasicObjectPreDraw(PipelineManager::GetPipeLine("GroundToonNDW"));
+		//}
+		//else
+		//{
+		//	BasicObjectPreDraw(PipelineManager::GetPipeLine("GroundToon"));
+		//}
+		BasicObjectPreDraw(PipelineManager::GetPipeLine("TextureBlend"));
+		obj.DrawSpecial(SpecialDraw::TEXTUREBLEND_,
+			*TextureManager::GetTexture("Grass"),
+			*TextureManager::GetTexture("groundCubeMask"));
 	}
 	for (auto& obj : mEventObjects)
 	{

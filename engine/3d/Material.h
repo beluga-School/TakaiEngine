@@ -13,7 +13,7 @@ struct Material
 	float mAlpha;				//アルファ
 	Vector3 mColor;
 	std::string mTextureFilename;//テクスチャファイル名
-	std::unique_ptr<Texture> mTextire = std::make_unique<Texture>();
+	std::unique_ptr<Texture> mTexture = std::make_unique<Texture>();
 
 	Material() {
 		mAmbient = { 0.3f,0.3f,0.3f };

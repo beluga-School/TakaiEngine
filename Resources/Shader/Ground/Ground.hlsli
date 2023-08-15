@@ -11,7 +11,7 @@ cbuffer cbuff1 : register(b1)
     matrix viewproj; //ビュープロ行列
     matrix world; //ワールド行列
     float3 cameraPos; //カメラ座標(ワールド座標)
-    float3 cameraDir; //カメラの視線ベクトル
+    float2 tiling;  //タイリング
 };
 
 cbuffer cbuff2 : register(b2)
@@ -44,7 +44,6 @@ cbuffer cbuff3 : register(b3)
     DirLight dirLights[DIRLIGHT_NUM];
     PointLight pointLights[POINTLIGHT_NUM];
 };
-
 
 struct VSOutput
 {

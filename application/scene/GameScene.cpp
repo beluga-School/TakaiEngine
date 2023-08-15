@@ -30,6 +30,12 @@ void GameScene::LoadResource()
 
 	UI::LoadResource();
 	Player::LoadResource();
+
+	TextureManager::Load("Resources\\09_AlphaMask_Resources\\Dirt.png", "Dirt");
+	TextureManager::Load("Resources\\09_AlphaMask_Resources\\FirldMask.png", "FirldMask");
+	TextureManager::Load("Resources\\09_AlphaMask_Resources\\Scales.png", "Scales");
+	TextureManager::Load("Resources\\09_AlphaMask_Resources\\Grass.png", "Grass");
+	TextureManager::Load("Resources\\09_AlphaMask_Resources\\groundCubeMask.png", "groundCubeMask");
 }
 
 void GameScene::Initialize()

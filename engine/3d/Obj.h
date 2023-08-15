@@ -32,7 +32,7 @@ struct ConstBufferDataTransform {
 	Matrix4 world;		//ワールド行列
 	Vector3 cameraPos;	//カメラ座標(ワールド行列)
 	float pad1;
-	Vector3 cameraDir;  //カメラの視線ベクトル <-これ怪しすぎないか？？？？
+	Vector2 tiling;		//タイリング数
 	float pad2;
 };
 
@@ -76,8 +76,8 @@ public:
 	Matrix4 matWorld;
 
 	Obj3d* parent = nullptr;
-	
-	const Texture *TEXTURE = nullptr;
+
+	const Texture* TEXTURE = nullptr;
 
 	const Model* MODEL = nullptr;
 
@@ -89,8 +89,8 @@ public:
 
 public:
 	void Initialize();
-	void SetModel(const Model *model);
-	void SetTexture(const Texture *texture);
+	void SetModel(const Model* model);
+	void SetTexture(const Texture* texture);
 	void Update(const Camera& camera);
 
 	Vector3 GetWorldTrans();
@@ -103,18 +103,20 @@ public:
 	void DrawOutLine();
 
 	//テクスチャブレンドで使用する描画
-	void DrawSpecial(SpecialDraw::TEXTUREBLEND drawkey,const Texture& subTex,const Texture& maskTex);
-	void DrawSpecial(SpecialDraw::DISOLVE drawkey,const Texture& maskTex);
-	
+	void DrawSpecial(SpecialDraw::TEXTUREBLEND drawkey, const Texture& subTex, const Texture& maskTex);
+	void DrawSpecial(SpecialDraw::DISOLVE drawkey, const Texture& maskTex);
+
 	///---ここら辺は関数をひとつにして、定数で振る舞いを変えるような設計にしたい
 	///定数の中身でオーバーロード先を変えれる感じにしたい
 
-	void SetOutLineState(const Float4& color,float thickness);
+	void SetOutLineState(const Float4& color, float thickness);
 	void SetOutLineAlpha(const float& alpha);
 
 	TEasing::easeTimer transparentTimer = 0.5f;
+
+	Vector2 mTiling = { 1,1 };
 protected:
 	//アウトライン周りの設定
-	Float4 mOutLineColor = {0,0,0,1.0f};
+	Float4 mOutLineColor = { 0,0,0,1.0f };
 	float mOutLineThickness = 0.0f;
 };

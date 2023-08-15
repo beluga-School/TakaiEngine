@@ -8,9 +8,9 @@ SamplerState smp : register(s0); //0番スロットに設定されたサンプラー
 
 float4 main(VSOutput input) : SV_TARGET
 {
-    float4 main = maintex.Sample(smp, input.uv);
-    float4 sub = subtex.Sample(smp, input.uv);
-    float4 mask = masktex.Sample(smp, input.uv);
+    float4 main = maintex.Sample(smp, input.uv * tiling);
+    float4 sub = subtex.Sample(smp, input.uv * tiling);
+    float4 mask = masktex.Sample(smp, input.uv * tiling);
     
     float4 shadecolor = { 0, 0, 0, 1 };
     float4 texcolor = { 0, 0, 0, 1 };

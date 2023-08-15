@@ -48,7 +48,7 @@ void Obj3d::Update(const Camera& camera)
 	constBufferT.mConstBufferData->viewproj = camera.mMatView * camera.mMatProjection;
 	constBufferT.mConstBufferData->world = matWorld;
 	constBufferT.mConstBufferData->cameraPos = camera.mEye;
-	constBufferT.mConstBufferData->cameraDir = camera.mMatView.ExtractAxisZ();
+	constBufferT.mConstBufferData->tiling = mTiling;
 
 	if (MODEL != nullptr)
 	{
@@ -119,9 +119,9 @@ void Obj3d::DrawMaterial() {
 
 	//SRVヒープの先頭から順番にSRVをルートパラメータ1番に設定
 	//ルートパラメータ1番はテクスチャバッファ
-	if (MODEL->mMaterial.mTextire->mTexBuff != nullptr)
+	if (MODEL->mMaterial.mTexture->mTexBuff != nullptr)
 	{
-		dx12->mCmdList->SetGraphicsRootDescriptorTable(1, MODEL->mMaterial.mTextire->mGpuHandle);
+		dx12->mCmdList->SetGraphicsRootDescriptorTable(1, MODEL->mMaterial.mTexture->mGpuHandle);
 	}
 	else
 	{

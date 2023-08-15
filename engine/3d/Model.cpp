@@ -71,7 +71,7 @@ void Model::LoadMaterial(const std::string& directoryPath, const std::string& fi
 		{
 			line_stream >> mMaterial.mTextureFilename;
 
-			mMaterial.mTextire->Load(*ConvertStringToWChar(directoryPath + mMaterial.mTextureFilename).c_str());
+			mMaterial.mTexture->Load(*ConvertStringToWChar(directoryPath + mMaterial.mTextureFilename).c_str());
 		}
 	}
 	//ƒtƒ@ƒCƒ‹‚ð•Â‚¶‚é
