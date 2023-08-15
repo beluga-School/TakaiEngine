@@ -48,7 +48,7 @@ void Obj3d::Update(const Camera& camera)
 	constBufferT.mConstBufferData->viewproj = camera.mMatView * camera.mMatProjection;
 	constBufferT.mConstBufferData->world = matWorld;
 	constBufferT.mConstBufferData->cameraPos = camera.mEye;
-	constBufferT.mConstBufferData->cameraDir = camera.mMatView.ExtractAxisZ();
+	constBufferT.mConstBufferData->tiling = mTiling;
 
 	if (MODEL != nullptr)
 	{

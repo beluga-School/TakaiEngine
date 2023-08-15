@@ -1368,7 +1368,7 @@ void PipelineManager::GroundToonPipeLine()
 	pSet.pipelineDesc.RTVFormats[1] = DXGI_FORMAT_R8G8B8A8_UNORM_SRGB;	//0～255指定のRGBA
 
 	pSet.pipelineDesc.RasterizerState.CullMode = D3D12_CULL_MODE_NONE;
-
+	
 	//3dオブジェクト用のパイプライン生成
 	//頂点レイアウト
 	pSet.inputLayout =
