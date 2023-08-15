@@ -723,19 +723,16 @@ void StageChanger::DrawModel()
 		
 		BasicObjectPreDraw(PipelineManager::GetPipeLine("OutLine"), false);
 		obj.DrawOutLine();
-		////アルファが1未満になるなら透明用描画パイプラインに切り替える
-		//if (obj.color_.w < 1.0f)
-		//{
-		//	BasicObjectPreDraw(PipelineManager::GetPipeLine("GroundToonNDW"));
-		//}
-		//else
-		//{
-		//	BasicObjectPreDraw(PipelineManager::GetPipeLine("GroundToon"));
-		//}
-		BasicObjectPreDraw(PipelineManager::GetPipeLine("TextureBlend"));
-		obj.DrawSpecial(SpecialDraw::TEXTUREBLEND_,
-			*TextureManager::GetTexture("Grass"),
-			*TextureManager::GetTexture("groundCubeMask"));
+		//アルファが1未満になるなら透明用描画パイプラインに切り替える
+		if (obj.color_.w < 1.0f)
+		{
+			BasicObjectPreDraw(PipelineManager::GetPipeLine("GroundToonNDW"));
+		}
+		else
+		{
+			BasicObjectPreDraw(PipelineManager::GetPipeLine("GroundToon"));
+		}
+		obj.Draw();
 	}
 	for (auto& obj : mEventObjects)
 	{
@@ -752,21 +749,6 @@ void StageChanger::DrawModel()
 		}
 		obj->Draw();
 	}
-	//for (auto& obj : StarManager::Get()->mStars)
-	//{
-	//	BasicObjectPreDraw(PipelineManager::GetPipeLine("OutLine"), false);
-	//	obj->DrawOutLine();
-	//	//アルファが1未満になるなら透明用描画パイプラインに切り替える
-	//	if (obj->color_.w < 1.0f)
-	//	{
-	//		BasicObjectPreDraw(PipelineManager::GetPipeLine("GroundToonNDW"));
-	//	}
-	//	else
-	//	{
-	//		BasicObjectPreDraw(PipelineManager::GetPipeLine("GroundToon"));
-	//	}
-	//	obj->Draw();
-	//}
 
 	for (auto& obj : mGoals)
 	{
