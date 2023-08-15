@@ -1,5 +1,6 @@
 #pragma once
 #include "Vector3.h"
+#include "Vector2.h"
 #include <string>
 #include <list>
 
@@ -15,6 +16,8 @@ struct LevelData
 		std::string spawnpointName;
 		std::string eventtrigerName;
 		std::string setObjectName;
+		
+		Vector2 tiling;
 
 		Vector3 translation;
 		Vector3 rotation;

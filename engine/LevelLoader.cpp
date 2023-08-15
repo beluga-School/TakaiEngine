@@ -94,6 +94,17 @@ void LevelLoader::ObjectLoad(LevelData& levelData,nlohmann::json& object)
 			objectData.setObjectName = object["setObject"];
 		}
 
+		if (object.contains("tiling")) {
+			objectData.tiling.x = object["tiling"]["tiling"][0];
+			objectData.tiling.y = object["tiling"]["tiling"][1];
+		}
+		else
+		{
+			//指定なしの場合、タイリングをしない指定に
+			objectData.tiling.x = 1.0f;
+			objectData.tiling.y = 1.0f;
+		}
+
 		//パラメータ読み込み
 		nlohmann::json& transform = object["transform"];
 

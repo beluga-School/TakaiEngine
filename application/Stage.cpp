@@ -154,9 +154,10 @@ void StageChanger::NormalObjectSet(const LevelData::ObjectData& data)
 	}
 
 	//バグらないように白テクスチャを入れる
-	//mEntitys.back().SetTexture(TextureManager::Get()->GetTexture("white"));
-	mEntitys.back().SetTexture(mEntitys.back().MODEL->mMaterial.mTexture.get());
-	mEntitys.back().mTiling = { 6,6 };
+	mEntitys.back().SetTexture(TextureManager::Get()->GetTexture("white"));
+	//mEntitys.back().SetTexture(mEntitys.back().MODEL->mMaterial.mTexture.get());
+	//タイリングの設定
+	mEntitys.back().mTiling = data.tiling;
 	
 	//オブジェクトの配置
 	LevelDataExchanger::SetObjectData(mEntitys.back(), data);
@@ -732,7 +733,7 @@ void StageChanger::DrawModel()
 		{
 			BasicObjectPreDraw(PipelineManager::GetPipeLine("GroundToon"));
 		}
-		obj.Draw();
+		obj.DrawMaterial();
 	}
 	for (auto& obj : mEventObjects)
 	{
