@@ -12,6 +12,7 @@
 #include "Bombking.h"
 #include "Coin.h"
 #include "Dokan.h"
+#include "MoveBlock.h"
 #include <fstream>
 #include <sstream>
 
@@ -111,11 +112,14 @@ void StageChanger::Reset()
 	//StarManager::Get()->mStars.clear();
 	CollideManager::Get()->allCols.clear();
 	mCannonPoints.clear();
+	mMoveBlockEndPoints.clear();
 	EnemyManager::Get()->enemyList.clear();
 
 	Player::Get()->Register();
 
 	mTempStarSaves.clear();
+
+	IDdCube::ResetID();
 }
 
 void StageChanger::NormalObjectSet(const LevelData::ObjectData& data)
@@ -524,6 +528,70 @@ void StageChanger::ChangeUpdate()
 			continue;
 		}
 
+		if (objectData->setObjectName.find("moveBlock") != std::string::npos)
+		{
+			std::string saveID = "";
+			//eventtrigerNameを分解する
+			std::vector<std::string> split = Util::SplitString(objectData->eventtrigerName, "_");
+
+			for (auto str : split)
+			{
+				//数字だけ抜き出す
+				if (Util::IsNumber(str))
+				{
+					saveID = str;
+				}
+			}
+
+			//endが付いているならID検索で座標を入れて飛ばす
+			if (objectData->eventtrigerName.find("end") != std::string::npos)
+			{
+				mMoveBlockEndPoints.emplace_back();
+
+				mMoveBlockEndPoints.back().key = saveID;
+				mMoveBlockEndPoints.back().points = objectData->translation;
+
+				continue;
+			}
+
+			//endでないならstartのはずなので、オブジェクトを生成
+			mEventObjects.emplace_back();
+			mEventObjects.back() = std::make_unique<MoveBlock>();
+		
+			MoveBlock* mb = dynamic_cast<MoveBlock*>(mEventObjects.back().get());
+			
+			//初期地点なら位置を代入
+			if (objectData->eventtrigerName.find("start") != std::string::npos)
+			{
+				mb->id = saveID;
+				mb->startpos = objectData->translation;
+			}
+
+			mEventObjects.back()->Initialize();
+			mEventObjects.back()->SetOutLineState({ 0,0,0,1.0f }, 0.1f);
+
+			if (objectData->fileName != "")
+			{
+				//読み込みしてないなら読み込みも行う
+				if (ModelManager::GetModel(objectData->fileName) == nullptr)
+				{
+					ModelManager::LoadModel(objectData->fileName, objectData->fileName, true);
+				}
+				mEventObjects.back()->SetModel(ModelManager::GetModel(objectData->fileName));
+			}
+
+			//オブジェクトの配置
+			LevelDataExchanger::SetObjectData(*mEventObjects.back(), *objectData);
+
+			//当たり判定を作成
+			if (objectData->collider.have)
+			{
+				CollisionSetEvent(*objectData);
+			}
+
+			continue;
+		}
+
 		//土管を配置
 		if (objectData->setObjectName.find("dokan") != std::string::npos)
 		{
@@ -656,27 +724,43 @@ void StageChanger::ChangeUpdate()
 		//dynamic_castの仕様で、Cannonでなければnullptrと判定されるので
 		Cannon* cannon = dynamic_cast<Cannon*>(itr->get());
 		//異なった場合次へ
-		if (cannon == nullptr)continue;
-
-		//通った場合は、事前に保管しておいた制御点の一覧から
-		for (auto itr = mCannonPoints.begin(); itr != mCannonPoints.end(); itr++)
+		if (cannon != nullptr)
 		{
-			//中間点と
-			if (itr->key.find("inter") != std::string::npos)
+			//通った場合は、事前に保管しておいた制御点の一覧から
+			for (auto itr = mCannonPoints.begin(); itr != mCannonPoints.end(); itr++)
 			{
-				//idが一致した場合は入れる
-				if (itr->key.find(cannon->id) != std::string::npos)
+				//中間点と
+				if (itr->key.find("inter") != std::string::npos)
 				{
-					cannon->interPos = itr->points;
+					//idが一致した場合は入れる
+					if (itr->key.find(cannon->id) != std::string::npos)
+					{
+						cannon->interPos = itr->points;
+					}
+				}
+				//最終点を判別する
+				if (itr->key.find("end") != std::string::npos)
+				{
+					//idが一致した場合は入れる
+					if (itr->key.find(cannon->id) != std::string::npos)
+					{
+						cannon->endPos = itr->points;
+					}
 				}
 			}
-			//最終点を判別する
-			if (itr->key.find("end") != std::string::npos)
+		}
+
+		MoveBlock* moveBlock = dynamic_cast<MoveBlock*>(itr->get());
+
+		if (moveBlock != nullptr)
+		{
+			//通った場合は、事前に保管しておいた制御点の一覧から
+			for (auto itr = mMoveBlockEndPoints.begin(); itr != mMoveBlockEndPoints.end(); itr++)
 			{
 				//idが一致した場合は入れる
-				if (itr->key.find(cannon->id) != std::string::npos)
+				if (itr->key.find(moveBlock->id) != std::string::npos)
 				{
-					cannon->endPos = itr->points;
+					moveBlock->endpos = itr->points;
 				}
 			}
 		}
@@ -748,6 +832,7 @@ void StageChanger::DrawModel()
 		{
 			BasicObjectPreDraw(PipelineManager::GetPipeLine("GroundToon"));
 		}
+
 		obj->Draw();
 	}
 
@@ -776,6 +861,12 @@ void StageChanger::DrawCollider()
 		if (!obj.CheckTag(TagTable::Collsion))continue;
 
 		obj.box.Draw();
+	}
+	for (auto& obj : mEventObjects)
+	{
+		if (!obj->CheckTag(TagTable::Collsion))continue;
+
+		obj->box.Draw();
 	}
 }
 

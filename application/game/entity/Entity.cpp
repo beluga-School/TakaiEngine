@@ -44,3 +44,8 @@ void Entity::Register()
 {
 	CollideManager::Get()->allCols.push_back(this);
 }
+
+uint32_t Entity::GetID() const
+{
+	return box.cubecol.GetID();
+}

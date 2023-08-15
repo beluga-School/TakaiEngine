@@ -22,6 +22,12 @@ struct CannonPoint
 	Vector3 points{};
 };
 
+struct MoveBlockPoint
+{
+	std::string key = "";
+	Vector3 points{};
+};
+
 class StageChanger
 {
 public:
@@ -56,6 +62,9 @@ public:
 
 	//大砲の制御点を一時的に保存する用配列
 	std::vector<CannonPoint> mCannonPoints;
+
+	//移動床の最終地点を一時的に保存する配列
+	std::vector<MoveBlockPoint> mMoveBlockEndPoints;
 
 	//スターを一時的に保存する変数
 	std::vector<Star*> mTempStarSaves;
@@ -107,5 +116,7 @@ private:
 	std::string currentHandle = "";
 
 	LevelData* currentData = nullptr;
+
+	GUI hoge = { "hoge" };
 };
 

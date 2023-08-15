@@ -9,37 +9,10 @@
 #include "Player.h"
 
 //リストの中に同じオブジェクトがあれば、そのオブジェクトを入れないプッシュバック
-template <class T>
-void UniqueObjectPushBack(std::list<T>& list, const T& col)
-{
-	for (auto itr = list.begin(); itr != list.end(); itr++)
-	{
-		//同じ要素が見つかったら止める
-		if (*itr == col)
-		{
-			return;
-		}
-		//回しきれたら同じ要素がない
-	}
-	//から入れる
-	list.push_back(col);
-}
+void UniqueObjectPushBack(std::list<IDdCube>& list, const IDdCube& col);
 
 //リストの中に同じオブジェクトがあれば、そのオブジェクトを削除する
-template <class T>
-void UniqueObjectErase(std::list<T>& list, const T& col)
-{
-	for (auto itr = list.begin(); itr != list.end(); itr++)
-	{
-		//同じ要素が見つかったら
-		if (*itr == col)
-		{
-			//消す
-			list.erase(itr);
-			return;
-		}
-	}
-}
+void UniqueObjectErase(std::list<IDdCube>& list, const IDdCube& col);
 
 class CollideManager
 {

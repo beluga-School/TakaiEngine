@@ -9,7 +9,6 @@ void Mob::CollsionUpdate()
 	UpdateX();
 
 	UpdateY();
-
 }
 
 void Mob::UpdateY()

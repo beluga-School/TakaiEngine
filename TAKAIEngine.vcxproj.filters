@@ -370,6 +370,9 @@
     <Filter Include="Application\Charactor\Enemy\Skelton">
       <UniqueIdentifier>{707b5be6-4406-4b09-b275-af0134f7154d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Application\EventBlock\MoveBlock">
+      <UniqueIdentifier>{552f59a4-7d4f-426e-a7e2-a4584bc9ac09}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="engine\input\Input.cpp">
@@ -623,6 +626,9 @@
     </ClCompile>
     <ClCompile Include="Skelton.cpp">
       <Filter>Application\Charactor\Enemy\Skelton</Filter>
+    </ClCompile>
+    <ClCompile Include="MoveBlock.cpp">
+      <Filter>Application\EventBlock\MoveBlock</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -886,6 +892,9 @@
     </ClInclude>
     <ClInclude Include="Skelton.h">
       <Filter>Application\Charactor\Enemy\Skelton</Filter>
+    </ClInclude>
+    <ClInclude Include="MoveBlock.h">
+      <Filter>Application\EventBlock\MoveBlock</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

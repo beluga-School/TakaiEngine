@@ -22,6 +22,7 @@ enum class TagTable
 	Coin = 9,
 	Dokan = 10,
 	NoDraw = 11,
+	MoveBlock = 12,
 };
 
 //3d描画される全てのオブジェクト
@@ -62,6 +63,12 @@ public:
 	{
 		SetTag(TagTable::Box);
 	}
+
+	/// <summary>
+	/// 当たり判定に付与された、オブジェクトごとに一意に定義されているIDを返す
+	/// </summary>
+	/// <returns></returns>
+	uint32_t GetID()const;
 
 protected:
 	bool isDead = false;

@@ -9,6 +9,7 @@
 #include "Star.h"
 #include "WarpBlock.h"
 #include "Dokan.h"
+#include "MoveBlock.h"
 
 bool CollideManager::CheckDirections(const Cube& check, const Cube& collide, const CheckDirection& CD)
 {
@@ -209,10 +210,6 @@ void CollideManager::CheckStatus(Entity* check, Entity* collide)
 void CollideManager::Osimodosi(Mob& check, const Block& collide)
 {
 	//そのオブジェクトより
-	
-	// collide->checkの方向
-	// check->collideの方向
-	
 	//上にいるか
 	bool up = CheckDirections(check.box.cubecol, collide.box.cubecol, CheckDirection::CD_UP);
 	//下にいるか
@@ -321,32 +318,6 @@ void CollideManager::Osimodosi(Mob& check, const Block& collide)
 		//そうでないなら外す
 		UniqueObjectErase(check.hitListBack, collide.box.cubecol);
 	}
-
-	//左右の当たり判定
-	//if (up == false)
-	//{
-	//	//左右も別の当たり判定リスト作って、同じ手法で取れそう？
-	//	if (Collsions::CubeCollision(check.box.cubecol, collide.box.cubecol))
-	//	{
-	//		//横方向を少し大きくして、当たり判定を取ったオブジェクトと当たっているなら
-	//		if (right)
-	//		{
-	//			check.moveValue.x = 0;
-	//		}
-	//		if (left)
-	//		{
-	//			check.moveValue.x = 0;
-	//		}
-	//		if (back)
-	//		{
-	//			check.moveValue.z = 0;
-	//		}
-	//		if (center)
-	//		{
-	//			check.moveValue.z = 0;
-	//		}
-	//	}
-	//}
 }
 
 void CollideManager::CheckPlayerToEnemy(Player& player,Enemy& collide)
@@ -374,5 +345,41 @@ void CollideManager::CheckPlayerToEnemy(Player& player,Enemy& collide)
 	if (Collsions::SphereCollsion(player.mEncountCol, collide.sphereCol))
 	{
 		collide.Encount();
+	}
+}
+
+void UniqueObjectPushBack(std::list<IDdCube>& list, const IDdCube& col)
+{
+	for (auto itr = list.begin(); itr != list.end(); itr++)
+	{
+		//同じ要素が見つかったら止める
+		if (itr->GetID() == col.GetID())
+		{
+			//から入れる
+			list.erase(itr);
+			break;
+		}
+		//if (*itr == col)
+		//{
+		//	return;
+		//}
+		////回しきれたら同じ要素がない
+	}
+	
+	//から入れる
+	list.push_back(col);
+}
+
+void UniqueObjectErase(std::list<IDdCube>& list, const IDdCube& col)
+{
+	for (auto itr = list.begin(); itr != list.end(); itr++)
+	{
+		//同じ要素が見つかったら
+		if (itr->GetID() == col.GetID())
+		{
+			//消す
+			list.erase(itr);
+			return;
+		}
 	}
 }

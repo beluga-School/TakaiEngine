@@ -18,14 +18,6 @@ void Star::Update()
 	inholeTimer.Update();
 	delayTimer.Update();
 
-	//ここから別挙動 starUIで行う
-	//①(①の取得と同じタイミングで)starの文字列UIを出す
-	//②starが流れきったらGet!の文字列UIを出す
-	//②.5 派手さが足りなかったらここで画面全体を横切るびーとだうん！UIを出す
-	//③スターの画像を白で塗りつぶしたやつを出す
-	//④ ①②③を拡大する 拡大しきった時に通常のスターの画像を拡大せずに出す
-	//⑤ ①②③を縮小する
-
 	float randScale = 0.0f;
 
 	switch (starState)

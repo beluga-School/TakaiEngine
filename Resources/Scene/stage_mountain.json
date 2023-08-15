@@ -2668,6 +2668,178 @@
                     2.0
                 ]
             }
+        },
+        {
+            "type": "MESH",
+            "name": "Cube.062",
+            "transform": {
+                "translation": [
+                    1.076303482055664,
+                    -55.04861068725586,
+                    -0.3963747024536133
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    11.427291870117188,
+                    12.001337051391602,
+                    2.0
+                ]
+            },
+            "file_name": "stone",
+            "collider": {
+                "type": "BOX",
+                "center": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "size": [
+                    2.0,
+                    2.0,
+                    2.0
+                ]
+            },
+            "event_trigger": "start_0",
+            "setObject": "moveBlock",
+            "tiling": {
+                "tiling": [
+                    6.0,
+                    6.0
+                ]
+            }
+        },
+        {
+            "type": "MESH",
+            "name": "Cube.063",
+            "transform": {
+                "translation": [
+                    35.54826736450195,
+                    -55.04861068725586,
+                    -0.3963747024536133
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    11.427291870117188,
+                    12.001337051391602,
+                    2.0
+                ]
+            },
+            "file_name": "stone",
+            "collider": {
+                "type": "BOX",
+                "center": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "size": [
+                    2.0,
+                    2.0,
+                    2.0
+                ]
+            },
+            "event_trigger": "end_0",
+            "setObject": "moveBlock",
+            "tiling": {
+                "tiling": [
+                    6.0,
+                    6.0
+                ]
+            }
+        },
+        {
+            "type": "MESH",
+            "name": "Cube.064",
+            "transform": {
+                "translation": [
+                    -25.38568115234375,
+                    -56.63039016723633,
+                    19.603729248046875
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    11.427291870117188,
+                    12.001337051391602,
+                    2.0
+                ]
+            },
+            "file_name": "stone",
+            "collider": {
+                "type": "BOX",
+                "center": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "size": [
+                    2.0,
+                    2.0,
+                    2.0
+                ]
+            },
+            "event_trigger": "start_1",
+            "setObject": "moveBlock",
+            "tiling": {
+                "tiling": [
+                    6.0,
+                    6.0
+                ]
+            }
+        },
+        {
+            "type": "MESH",
+            "name": "Cube.065",
+            "transform": {
+                "translation": [
+                    -24.637887954711914,
+                    -56.63039016723633,
+                    -20.0330810546875
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    11.427291870117188,
+                    12.001337051391602,
+                    2.0
+                ]
+            },
+            "file_name": "stone",
+            "collider": {
+                "type": "BOX",
+                "center": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "size": [
+                    2.0,
+                    2.0,
+                    2.0
+                ]
+            },
+            "event_trigger": "end_1",
+            "setObject": "moveBlock",
+            "tiling": {
+                "tiling": [
+                    6.0,
+                    6.0
+                ]
+            }
         }
     ]
 }

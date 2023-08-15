@@ -7,12 +7,12 @@ class Mob : public Entity
 public:
 	Vector3 moveValue = { 0,0,0 };
 
-	std::list<Cube> hitListUp;
-	std::list<Cube> hitListDown;
-	std::list<Cube> hitListRight;
-	std::list<Cube> hitListLeft;
-	std::list<Cube> hitListCenter;
-	std::list<Cube> hitListBack;
+	std::list<IDdCube> hitListUp;
+	std::list<IDdCube> hitListDown;
+	std::list<IDdCube> hitListRight;
+	std::list<IDdCube> hitListLeft;
+	std::list<IDdCube> hitListCenter;
+	std::list<IDdCube> hitListBack;
 	
 	Mob() {
 		SetTag(TagTable::Mob);

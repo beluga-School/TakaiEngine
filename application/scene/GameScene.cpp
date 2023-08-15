@@ -133,32 +133,11 @@ void GameScene::Update()
 	ImGui::Text(mouseLockStates.c_str());
 
 	ImGui::Text("mouseR %f", PlayerCamera::Get()->GetRadius());
-	ImGui::Text("p:HP %d", player->Get()->GetNowHP());
-	ImGui::Text("p:pos x:%f y:%f z:%f", player->position.x, player->position.y, player->position.z);
-	ImGui::Text("p:hitBackMin %f", player->hitBackMin);
-	ImGui::Text("p:hitCenterMin %f", player->hitCenterMin);
-	//ImGui::Text("p:hitRightMin %f", player->hitRightMin);
-	//ImGui::Text("p:hitLeftMin %f", player->hitLeftMin);
-
-	/*for (auto& hit : player->Get()->hitListRight)
-	{
-		ImGui::Text("p:hitListRight %f", hit.position.x);
-	}
-
-	for (auto& hit : player->Get()->hitListLeft)
-	{
-		ImGui::Text("p:hitListLeft %f", hit.position.x);
-	}*/
-
 	
-	for (auto& hit : player->Get()->hitListCenter)
+	for (auto& down : player->hitListDown)
 	{
-		ImGui::Text("p:hitListCenter %f", hit.position.z);
-	}
 
-	for (auto& hit : player->Get()->hitListBack)
-	{
-		ImGui::Text("p:hitListBack %f", hit.position.z);
+	ImGui::Text("down.position x:%f y:%f z:%f", down.position.x, down.position.y, down.position.z);
 	}
 
 	//player->starUI.ValueSliders();
@@ -185,7 +164,6 @@ void GameScene::Update()
 	pCamera->BackTransparent();
 
 	ParticleManager::GetInstance()->Update();
-
 }
 
 void GameScene::Draw()
@@ -202,7 +180,7 @@ void GameScene::Draw()
 	EnemyManager::Get()->Draw();
 
 	ParticleManager::GetInstance()->Draw();
-	
+
 	//pCamera->Draw();
 
 	BasicObjectPreDraw(PipelineManager::GetPipeLine("PerlinNoise"));

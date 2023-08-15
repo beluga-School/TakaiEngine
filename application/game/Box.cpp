@@ -1,17 +1,10 @@
 #include "Box.h"
 #include "CollideManager.h"
 
-//void Box::CreateCol()
-//{
-//	cubecol.position = position;
-//	cubecol.scale = scale;
-//}
+uint32_t IDdCube::sMasterIDCount = 0;
 
 void Box::CreateCol(const Vector3& pos_, const Vector3& scale_)
 {
-	//position = pos_;
-	//scale = scale_;
-
 	cubecol.position = pos_;
 	cubecol.scale = scale_;
 }
@@ -22,4 +15,14 @@ void Box::ColDrawerUpdate(const Vector3& pos, const Vector3& scale_)
 	scale = scale_;
 
 	Update(*Camera::sCamera);
+}
+
+uint32_t IDdCube::GetID()const
+{
+	return masterID;
+}
+
+void IDdCube::ResetID()
+{
+	sMasterIDCount = 0;
 }
