@@ -1,6 +1,11 @@
 #include "StarUI.h"
 #include "Util.h"
 
+void StarUI::LoadResource()
+{
+	TextureManager::Load("Resources\\ui\\star2d.png", "star2d");
+}
+
 void StarUI::Update()
 {
 	GetMove();

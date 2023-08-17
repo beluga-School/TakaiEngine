@@ -113,6 +113,7 @@
     <ClCompile Include="application\game\Entity\Entity.cpp" />
     <ClCompile Include="application\game\Entity\EventBlock\Cannon.cpp" />
     <ClCompile Include="application\game\Entity\EventBlock\Coin.cpp" />
+    <ClCompile Include="application\game\entity\eventBlock\EventBlock.cpp" />
     <ClCompile Include="application\game\Entity\EventBlock\Goal.cpp" />
     <ClCompile Include="application\game\Entity\EventBlock\GoalBlock.cpp" />
     <ClCompile Include="application\game\Entity\EventBlock\Star.cpp" />
@@ -182,6 +183,7 @@
     <ClCompile Include="External\imgui\imgui_impl_win32.cpp" />
     <ClCompile Include="External\imgui\imgui_tables.cpp" />
     <ClCompile Include="External\imgui\imgui_widgets.cpp" />
+    <ClCompile Include="InStageStarUI.cpp" />
     <ClCompile Include="LevelData.cpp" />
     <ClCompile Include="MoveBlock.cpp" />
     <ClCompile Include="Skelton.cpp" />
@@ -200,6 +202,7 @@
     <ClInclude Include="application\game\Entity\Entity.h" />
     <ClInclude Include="application\game\Entity\EventBlock\Cannon.h" />
     <ClInclude Include="application\game\Entity\EventBlock\Coin.h" />
+    <ClInclude Include="application\game\entity\eventBlock\EventBlock.h" />
     <ClInclude Include="application\game\Entity\EventBlock\Goal.h" />
     <ClInclude Include="application\game\Entity\EventBlock\GoalBlock.h" />
     <ClInclude Include="application\game\Entity\EventBlock\Star.h" />
@@ -272,6 +275,7 @@
     <ClInclude Include="External\imgui\imstb_textedit.h" />
     <ClInclude Include="External\imgui\imstb_truetype.h" />
     <ClInclude Include="External\json.hpp" />
+    <ClInclude Include="InStageStarUI.h" />
     <ClInclude Include="LevelData.h" />
     <ClInclude Include="MoveBlock.h" />
     <ClInclude Include="Skelton.h" />

@@ -373,6 +373,9 @@
     <Filter Include="Application\EventBlock\MoveBlock">
       <UniqueIdentifier>{552f59a4-7d4f-426e-a7e2-a4584bc9ac09}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Application\UI\UI\InStageStarUI">
+      <UniqueIdentifier>{7a16e506-7e2f-481f-bf49-3be0b5b1ed8a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="engine\input\Input.cpp">
@@ -629,6 +632,12 @@
     </ClCompile>
     <ClCompile Include="MoveBlock.cpp">
       <Filter>Application\EventBlock\MoveBlock</Filter>
+    </ClCompile>
+    <ClCompile Include="InStageStarUI.cpp">
+      <Filter>Application\UI\UI\InStageStarUI</Filter>
+    </ClCompile>
+    <ClCompile Include="application\game\entity\eventBlock\EventBlock.cpp">
+      <Filter>Application\EventBlock\EventBlock</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -895,6 +904,12 @@
     </ClInclude>
     <ClInclude Include="MoveBlock.h">
       <Filter>Application\EventBlock\MoveBlock</Filter>
+    </ClInclude>
+    <ClInclude Include="InStageStarUI.h">
+      <Filter>Application\UI\UI\InStageStarUI</Filter>
+    </ClInclude>
+    <ClInclude Include="application\game\entity\eventBlock\EventBlock.h">
+      <Filter>Application\EventBlock\EventBlock</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

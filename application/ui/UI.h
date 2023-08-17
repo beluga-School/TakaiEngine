@@ -6,7 +6,7 @@
 class UI
 {
 public:
-	static void LoadResource();
+	static void StaticLoadResource();
 	UI(const Vector2& pos, float scale)
 	: mPos (pos) {
 		mScale.x = scale;

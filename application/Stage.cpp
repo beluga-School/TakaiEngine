@@ -15,6 +15,7 @@
 #include "MoveBlock.h"
 #include <fstream>
 #include <sstream>
+#include "InStageStarUI.h"
 
 void StageChanger::ChangeLevel(LevelData& data)
 {
@@ -771,16 +772,22 @@ void StageChanger::ChangeUpdate()
 		//スキップするなどの処理が必要だろう
 	}
 
+	int32_t i = 0;
 	//スターの取得状況に基づいてスターの状態を変化
 	for (auto &star : mTempStarSaves)
 	{
+		InStageStarUI::Get()->ChangeTexture(
+			LoadStarCorrect(StageChanger::currentData->mStageNum, star->id) == 1,
+			i);
 		//返ってきた値が1なら取得済みなので
 		if (LoadStarCorrect(StageChanger::currentData->mStageNum, star->id) == 1)
 		{
 			//状態を取得後に変化
 			star->SetCorrected();
 		}
+		i++;
 	}
+
 }
 
 void StageChanger::SetPlayer(const LevelData::ObjectData& data)

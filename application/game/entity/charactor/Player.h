@@ -9,7 +9,7 @@
 class Player : public Mob
 {
 public:
-	static void LoadResource();
+	void LoadResource();
 
 	void Initialize();
 	void Update();

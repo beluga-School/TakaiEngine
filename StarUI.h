@@ -10,6 +10,8 @@ public:
 
 	}
 
+	void LoadResource();
+
 	enum class GetMoveState
 	{
 		None,

@@ -4,7 +4,7 @@
 #include <sstream>
 #include <fstream>
 
-void UI::LoadResource()
+void UI::StaticLoadResource()
 {
 	TextureManager::Load("Resources\\ui\\number0.png", "0");
 	TextureManager::Load("Resources\\ui\\number1.png", "1");

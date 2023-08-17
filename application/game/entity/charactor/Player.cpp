@@ -13,7 +13,7 @@ using namespace Input;
 
 void Player::LoadResource()
 {
-	TextureManager::Load("Resources\\ui\\star2d.png", "star2d");
+	starUI.LoadResource();
 }
 
 void Player::Initialize()

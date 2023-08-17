@@ -10,6 +10,7 @@
 #include "CollideManager.h"
 #include "ObjParticle.h"
 #include "Status.h"
+#include "InStageStarUI.h"
 
 void GameScene::LoadResource()
 {
@@ -28,8 +29,10 @@ void GameScene::LoadResource()
 	//マップからハンドル名の一覧を取得
 	handles = Util::GetKeys(LevelLoader::Get()->GetDataMap());
 
-	UI::LoadResource();
-	Player::LoadResource();
+	UI::StaticLoadResource();
+	player->LoadResource();
+
+	InStageStarUI::Get()->LoadResource();
 
 	TextureManager::Load("Resources\\09_AlphaMask_Resources\\Dirt.png", "Dirt");
 	TextureManager::Load("Resources\\09_AlphaMask_Resources\\FirldMask.png", "FirldMask");
@@ -134,10 +137,11 @@ void GameScene::Update()
 
 	ImGui::Text("mouseR %f", PlayerCamera::Get()->GetRadius());
 	
+	player->starUI.ValueSliders();
+	
 	for (auto& down : player->hitListDown)
 	{
-
-	ImGui::Text("down.position x:%f y:%f z:%f", down.position.x, down.position.y, down.position.z);
+		ImGui::Text("down.position x:%f y:%f z:%f", down.position.x, down.position.y, down.position.z);
 	}
 
 	//player->starUI.ValueSliders();
@@ -164,6 +168,8 @@ void GameScene::Update()
 	pCamera->BackTransparent();
 
 	ParticleManager::GetInstance()->Update();
+
+	InStageStarUI::Get()->Update();
 }
 
 void GameScene::Draw()
@@ -187,9 +193,20 @@ void GameScene::Draw()
 
 	SpriteCommonBeginDraw();
 
-	player->DrawUI();
+	//ステージセレクトなら合計数表示
+	if (LevelLoader::Get()->GetData(
+		StageChanger::Get()->GetNowStageHandle())->mStageNum == 0)
+	{
+		player->DrawUI();
+	}
+	//そうでないならステージ内の取得合計表示
+	else
+	{
+		InStageStarUI::Get()->Draw();
+	}
 
 	StageChanger::Get()->DrawSprite();
+
 }
 
 void GameScene::End()
