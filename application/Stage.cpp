@@ -668,6 +668,13 @@ void StageChanger::ChangeUpdate()
 			//そのままモデルの配置
 			NormalObjectSet(*objectData);
 
+			mEntitys.back().SetModel(ModelManager::GetModel("plate"));
+			mEntitys.back().rotation += { 
+				0,
+				MathF::AngleConvRad(-180.f),
+				MathF::AngleConvRad(-90.f),
+			};
+
 			//イベントトリガーに記載されたテクスチャ名を自身のテクスチャとして貼る
 			//ハンドルがないなら作成
 			if (TextureManager::GetTexture(objectData->eventtrigerName) == nullptr)
@@ -772,22 +779,7 @@ void StageChanger::ChangeUpdate()
 		//スキップするなどの処理が必要だろう
 	}
 
-	int32_t i = 0;
-	//スターの取得状況に基づいてスターの状態を変化
-	for (auto &star : mTempStarSaves)
-	{
-		InStageStarUI::Get()->ChangeTexture(
-			LoadStarCorrect(StageChanger::currentData->mStageNum, star->id) == 1,
-			i);
-		//返ってきた値が1なら取得済みなので
-		if (LoadStarCorrect(StageChanger::currentData->mStageNum, star->id) == 1)
-		{
-			//状態を取得後に変化
-			star->SetCorrected();
-		}
-		i++;
-	}
-
+	InStageStarUI::Get()->Initialize();
 }
 
 void StageChanger::SetPlayer(const LevelData::ObjectData& data)
@@ -923,13 +915,14 @@ void StageChanger::CorrectedRevise(int32_t stageNumber, int32_t starID, int32_t 
 
 	for (int i = 0; i < starnum; i++)
 	{
+		int h = 0;
 		//取得状況を1(取得済)に書き換える
 		if (starID == i)
 		{
-			int h = 1;
-			writing_file << h;
-			writing_file << "," << std::endl;
+			h = 1;
 		}
+		writing_file << h;
+		writing_file << "," << std::endl;
 	}
 
 	writing_file.close();

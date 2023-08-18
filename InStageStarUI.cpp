@@ -30,6 +30,8 @@ void InStageStarUI::Initialize()
 		stars[i].SetSize(stars[i].GetInitSize() * mScale);
 		stars[i].mPosition.x = mPos.x + (stars[i].mSize.x * i);
 		stars[i].mPosition.y = mPos.y;
+
+		ChangeTexture(0, i);
 	}
 }
 

@@ -8,6 +8,7 @@
 #include "EnemyManager.h"
 #include "ClearDrawScreen.h"
 #include "ObjParticle.h"
+#include "InStageStarUI.h"
 
 using namespace Input;
 
@@ -300,39 +301,19 @@ void Player::ColUpdate()
 	pCol.position = position;
 	pCol.scale = scale;
 
-	//pCol.position.y = preMove.y;
-
 	pCol.position += moveValue;
 
 	box.ColDrawerUpdate(pCol.position, pCol.scale);
 	box.CreateCol(pCol.position, pCol.scale);
 
-	//ここら辺の処理を、全部CollideManagerに移す
-	//今はここに置かないと横の判定が取れない仕組みになってるので、後でX方向もシステム化する
-	for (auto& col : CollideManager::Get()->allCols)
-	{
-		if (col->CheckTag(TagTable::Block))
-		{
-			Block* block = static_cast<Block*>(col);
-			CollideManager::Get()->CheckCollide(this, block);
-		}
-	}
-
-	////ここより下二つは、Entityをポインタで保持するようにしてから修正する
-	//for (auto& star : StarManager::Get()->mStars)
+	////ここら辺の処理を、全部CollideManagerに移す
+	////今はここに置かないと横の判定が取れない仕組みになってるので、後でX方向もシステム化する
+	//for (auto& col : CollideManager::Get()->allCols)
 	//{
-	//	Cube eCol;
-	//	eCol.position = star->position;
-
-	//	//なんか判定が小さかったので2倍に そしたらぴったりだったので、どっかで半分にする処理が挟まってる
-	//	//判定用のスケールが使われてないのが原因
-	//	eCol.scale = star->scale * 2;
-
-	//	if (Collsions::CubeCollision(eCol, pCol))
+	//	if (col->CheckTag(TagTable::Block))
 	//	{
-	//		star->HitEffect();
-
-	//		break;
+	//		Block* block = static_cast<Block*>(col);
+	//		CollideManager::Get()->CheckCollide(this, block);
 	//	}
 	//}
 
@@ -435,14 +416,8 @@ void Player::StarUIUpdate()
 			starCorrectNum.mCurrent += 1;
 			starUI.GetMoveStart(starCorrectNum.mCurrent);
 			star->StateEnd();
-			for (auto& star : StageChanger::Get()->mTempStarSaves)
-			{
-				StageChanger::Get()->CorrectedRevise(
-					LevelLoader::Get()->GetData(StageChanger::Get()->GetNowStageHandle())->mStageNum,
-					star->id,
-					(int32_t)StageChanger::Get()->mTempStarSaves.size()
-				);
-			}
+		
+			InStageStarUI::Get()->ChangeTexture(1, star->id);
 		}
 		//スター取得中なら
 		if (star->GetState() == Star::StarState::jumpUp ||
