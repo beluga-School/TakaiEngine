@@ -146,6 +146,9 @@ void GameScene::Update()
 	ImGui::Text(mouseLockStates.c_str());
 
 	ImGui::Text("mouseR %f", PlayerCamera::Get()->GetRadius());
+
+	ImGui::Text("oldDokanInfo.stageName %s", StageChanger::Get()->saveNextDokanInfo.stageName.c_str());
+	ImGui::Text("oldDokanInfo.id %s", StageChanger::Get()->saveNextDokanInfo.id.c_str());
 	
 	player->starUI.ValueSliders();
 	

@@ -47,7 +47,20 @@ void Dokan::Update()
 		case Dokan::DokanState::End:
 			
 			//eventtrigerに記載されたステージへ移動する
-			StageChanger::Get()->ChangeLevel(*LevelLoader::Get()->GetData(trigerName));
+			std::vector<std::string> split = Util::SplitString(trigerName, "_");
+
+			std::string stagename = "stage_";
+
+			for (auto str : split)
+			{
+				//冠詞の"stage"でないなら保存
+				if (!Util::IsNumber(str) && str != "stage")
+				{
+					stagename += str;
+				}
+			}
+
+			StageChanger::Get()->ChangeLevel(*LevelLoader::Get()->GetData(stagename));
 
 			//諸々を元に戻す
 			mDokanState = DokanState::None;
@@ -89,7 +102,8 @@ void Dokan::HitEffect(Mob* target_)
 		mTarget->SetNoMove(true);
 		mSavePos = target_->box.position;
 
-		StageChanger::Get()->oldDokanInfo.stageName = dokanInfo.stageName;
-		StageChanger::Get()->oldDokanInfo.id = dokanInfo.id;
+		//移動先の情報をステージへ移す
+		StageChanger::Get()->saveNextDokanInfo.stageName = nextDokanInfo.stageName;
+		StageChanger::Get()->saveNextDokanInfo.id = nextDokanInfo.id;
 	}
 }

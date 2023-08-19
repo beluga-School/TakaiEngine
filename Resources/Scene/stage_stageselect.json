@@ -118,8 +118,8 @@
                     2.0
                 ]
             },
-            "event_trigger": "stage_mountain",
-            "setObject": "dokan_stageselect_0"
+            "event_trigger": "stage_mountain_0",
+            "setObject": "dokan_0"
         },
         {
             "type": "MESH",

@@ -51,7 +51,7 @@ public:
 	};
 
 	//設置されたフレームなら立つ
-	bool mSetFrame = false;
+	bool mDokanApparrance = false;
 
 	//土管から出現する動き
 	void ApparranceMove(const Vector3& dokanPos, const Vector3& dokanScale);

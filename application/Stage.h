@@ -29,6 +29,13 @@ struct MoveBlockPoint
 	Vector3 points{};
 };
 
+struct PlayerData
+{
+	LevelData::ObjectData data;
+	//土管での配置が見つかっているならそっちを優先するようにするフラグ
+	bool dokanPriority = false;
+};
+
 class StageChanger
 {
 public:
@@ -81,7 +88,7 @@ public:
 
 	GoalSystem goalSystem;
 
-	DokanInfo oldDokanInfo;
+	DokanInfo saveNextDokanInfo;
 
 	//取得状況を初期化する
 	void ResetRevise(int32_t stageNumber, int32_t starID,int32_t starnum);
@@ -120,6 +127,8 @@ private:
 	std::string currentHandle = "";
 
 	LevelData* currentData = nullptr;
+
+	PlayerData playerData;
 
 	GUI hoge = { "hoge" };
 };

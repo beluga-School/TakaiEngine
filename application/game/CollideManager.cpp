@@ -117,10 +117,10 @@ void CollideManager::CheckCollide(Entity* check, Entity* collide)
 
 			if (Collsions::CubeCollision(player->box.cubecol, tempDokan))
 			{
-				if (player->mSetFrame)
+				if (player->mDokanApparrance)
 				{
 					player->ApparranceMove(dokan->box.cubecol.position, dokan->box.cubecol.scale);
-					player->mSetFrame = false;
+					player->mDokanApparrance = false;
 				}
 				//ƒvƒŒƒCƒ„[‚ª“yŠÇ‚Ìã‚É‚¢‚é‚È‚ç
 				else if (CheckDirections(player->box.cubecol, dokan->box.cubecol, CheckDirection::CD_UP))

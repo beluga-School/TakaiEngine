@@ -445,9 +445,12 @@ void StageChanger::ChangeUpdate()
 		//プレイヤーの配置なら
 		if (objectData->setObjectName == "player")
 		{
-			SetPlayer(*objectData);
-			Player::Get()->mSetFrame = false;
-
+			if (playerData.dokanPriority == false)
+			{
+				playerData.data = *objectData;
+				Player::Get()->mDokanApparrance = false;
+			}
+			
 			continue;
 		}
 
@@ -650,29 +653,53 @@ void StageChanger::ChangeUpdate()
 				mEventObjects.back()->box.cubecol.scale = mEventObjects.back()->box.scale;
 			}
 
-			//setObjectを分解する
-			std::vector<std::string> split = Util::SplitString(objectData->setObjectName, "_");
+			//自身の情報を設定する
+			std::vector<std::string> split = Util::SplitString(objectData->eventtrigerName, "_");
 
 			Dokan* dokan = dynamic_cast<Dokan*>(mEventObjects.back().get());
 			for (auto str : split)
 			{
-				//数字だけ抜き出す
+				//移動先の土管IDを取り出す
+				if (Util::IsNumber(str))
+				{
+					dokan->nextDokanInfo.id = str;
+				}
+				//移動先のステージ名を取り出す
+				else
+				{
+					dokan->nextDokanInfo.stageName = str;
+				}
+			}
+
+			split = Util::SplitString(objectData->setObjectName, "_");
+			for (auto str : split)
+			{
+				//自身の土管IDを取り出す
 				if (Util::IsNumber(str))
 				{
 					dokan->dokanInfo.id = str;
 				}
-				//stage以外の文字列なら
-				else if (str != "dokan")
+			}
+			//現在のステージハンドル(ステージ名)を保存して、自身の情報とする
+			split = Util::SplitString(currentHandle, "_");
+
+			for (auto str : split)
+			{
+				//文字列から冠詞の"stage"を取り除いた者を保存
+				if (str != "stage")
 				{
 					dokan->dokanInfo.stageName = str;
 				}
 			}
 
-			//プレイヤーの配置
-			if (oldDokanInfo.stageName.find(dokan->dokanInfo.stageName) != std::string::npos &&
-				oldDokanInfo.id.find(dokan->dokanInfo.id) != std::string::npos)
+			//移動前の土管が持っていた情報と一致する土管が合ったら
+			if (saveNextDokanInfo.stageName == dokan->dokanInfo.stageName &&
+				saveNextDokanInfo.id == dokan->dokanInfo.id)
 			{
-				SetPlayer(*objectData);
+				//プレイヤーの情報を記録
+				playerData.data = *objectData;
+				//優先フラグを立てる
+				playerData.dokanPriority = true;
 			}
 
 			continue;
@@ -794,6 +821,27 @@ void StageChanger::ChangeUpdate()
 		//スキップするなどの処理が必要だろう
 	}
 
+	SetPlayer(playerData.data);
+	//土管からの配置でなければ
+	if (playerData.dokanPriority == false)
+	{
+		//現在のステージハンドル(ステージ名)を保存して、自身の情報とする
+	 	std::vector<std::string> split = Util::SplitString(currentHandle, "_");
+
+		//データに初期情報を書き込む
+		for (auto str : split)
+		{
+			//文字列から冠詞の"stage"を取り除いた者を保存
+			if (str != "stage")
+			{
+				saveNextDokanInfo.stageName = str;
+			}
+		}
+
+		saveNextDokanInfo.id = "0";
+		Player::Get()->mDokanApparrance = false;
+	}
+
 	InStageStarUI::Get()->Initialize();
 }
 
@@ -809,7 +857,7 @@ void StageChanger::SetPlayer(const LevelData::ObjectData& data)
 	Player::Get()->box.cubecol.position = Player::Get()->position;
 	Player::Get()->box.cubecol.scale = Player::Get()->scale;
 
-	Player::Get()->mSetFrame = true;
+	Player::Get()->mDokanApparrance = true;
 }
 
 void StageChanger::DrawModel()
