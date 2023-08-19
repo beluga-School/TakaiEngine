@@ -376,6 +376,9 @@
     <Filter Include="Application\UI\UI\InStageStarUI">
       <UniqueIdentifier>{7a16e506-7e2f-481f-bf49-3be0b5b1ed8a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Application\Sea">
+      <UniqueIdentifier>{0c69c418-773d-40fd-bdf0-5b580aeddd6c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="engine\input\Input.cpp">
@@ -638,6 +641,9 @@
     </ClCompile>
     <ClCompile Include="application\game\entity\eventBlock\EventBlock.cpp">
       <Filter>Application\EventBlock\EventBlock</Filter>
+    </ClCompile>
+    <ClCompile Include="Sea.cpp">
+      <Filter>ソース ファイル</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -910,6 +916,9 @@
     </ClInclude>
     <ClInclude Include="application\game\entity\eventBlock\EventBlock.h">
       <Filter>Application\EventBlock\EventBlock</Filter>
+    </ClInclude>
+    <ClInclude Include="Sea.h">
+      <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

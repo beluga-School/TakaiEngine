@@ -49,6 +49,7 @@ void Obj3d::Update(const Camera& camera)
 	constBufferT.mConstBufferData->world = matWorld;
 	constBufferT.mConstBufferData->cameraPos = camera.mEye;
 	constBufferT.mConstBufferData->tiling = mTiling;
+	constBufferT.mConstBufferData->offset = mOffset;
 
 	if (MODEL != nullptr)
 	{

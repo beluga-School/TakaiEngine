@@ -33,7 +33,7 @@ struct ConstBufferDataTransform {
 	Vector3 cameraPos;	//カメラ座標(ワールド行列)
 	float pad1;
 	Vector2 tiling;		//タイリング数
-	float pad2;
+	Vector2 offset;		//オフセット数
 };
 
 struct ConstBufferDataOutLine {
@@ -115,6 +115,7 @@ public:
 	TEasing::easeTimer transparentTimer = 0.5f;
 
 	Vector2 mTiling = { 1,1 };
+	Vector2 mOffset = { 0,0 };
 protected:
 	//アウトライン周りの設定
 	Float4 mOutLineColor = { 0,0,0,1.0f };

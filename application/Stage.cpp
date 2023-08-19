@@ -72,6 +72,7 @@ void StageChanger::Update()
 		obj->Update();
 	}
 
+	seaObject->Update();
 	goalSystem.Update();
 }
 
@@ -427,6 +428,20 @@ void StageChanger::ChangeUpdate()
 
 	for (auto objectData = currentData->mObjects.begin(); objectData != currentData->mObjects.end(); objectData++)
 	{
+		//海の配置なら
+		if (objectData->setObjectName == "sea")
+		{
+			seaObject = std::make_unique<Sea>();
+			seaObject->LoadResource();
+			seaObject->Initialize();
+			seaObject->SetInfo(
+				objectData->translation,
+				objectData->scaling,
+				objectData->tiling);
+
+			continue;
+		}
+
 		//プレイヤーの配置なら
 		if (objectData->setObjectName == "player")
 		{
@@ -850,6 +865,9 @@ void StageChanger::DrawModel()
 		}
 		obj->Draw();
 	}
+
+	BasicObjectPreDraw(PipelineManager::GetPipeLine("GroundToon"));
+	seaObject->Draw();
 }
 
 void StageChanger::DrawCollider()

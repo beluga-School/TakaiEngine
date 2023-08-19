@@ -39,6 +39,7 @@ void GameScene::LoadResource()
 	TextureManager::Load("Resources\\09_AlphaMask_Resources\\Scales.png", "Scales");
 	TextureManager::Load("Resources\\09_AlphaMask_Resources\\Grass.png", "Grass");
 	TextureManager::Load("Resources\\09_AlphaMask_Resources\\groundCubeMask.png", "groundCubeMask");
+
 }
 
 void GameScene::Initialize()
@@ -58,6 +59,8 @@ void GameScene::Initialize()
 	//初期ステージを決定
 	output = "stage_stageselect";
 	StageChanger::Get()->Initialize(*LevelLoader::Get()->GetData(output));
+
+	
 }
 
 GUI sceneChangeGUI("operator");
@@ -71,7 +74,14 @@ void GameScene::Update()
 
 	static bool debugCam = false;
 
+	//リロードする際の条件たち
+	//入力でリロード
 	if (Input::Keyboard::TriggerKey(DIK_R))
+	{
+		StageChanger::Get()->Reload();
+	}
+	//プレイヤーの位置が海の座標より下になったらリロード
+	if (player->position.y < StageChanger::Get()->seaObject->GetPosY())
 	{
 		StageChanger::Get()->Reload();
 	}

@@ -9,6 +9,7 @@
 #include "CollideManager.h"
 #include "Mob.h"
 #include "Dokan.h"
+#include "Sea.h"
 
 class ColEventObj : public Obj3d
 {
@@ -68,6 +69,9 @@ public:
 
 	//スターを一時的に保存する変数
 	std::vector<Star*> mTempStarSaves;
+
+	//海オブジェクトを配置(ここより下の座標に落ちたらMISS判定)
+	std::unique_ptr<Sea> seaObject;
 
 	//コライダーを描画するか
 	bool mShowCollider = false;

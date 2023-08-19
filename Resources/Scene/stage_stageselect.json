@@ -37,8 +37,8 @@
             },
             "tiling": {
                 "tiling": [
-                    3.0,
-                    3.0
+                    8.0,
+                    8.0
                 ]
             }
         },
@@ -90,7 +90,7 @@
             "transform": {
                 "translation": [
                     1.105158805847168,
-                    -12.008742332458496,
+                    -13.52035140991211,
                     0.0
                 ],
                 "rotation": [
@@ -118,8 +118,8 @@
                     2.0
                 ]
             },
-            "event_trigger": "stage_mountain_0",
-            "setObject": "dokan"
+            "event_trigger": "stage_mountain",
+            "setObject": "dokan_stageselect_0"
         },
         {
             "type": "MESH",
@@ -554,8 +554,8 @@
                 ],
                 "rotation": [
                     0.0,
-                    -0.0,
-                    90.00000762939453
+                    0.0,
+                    -90.00000762939453
                 ],
                 "scaling": [
                     0.0894201248884201,
@@ -589,6 +589,34 @@
             },
             "file_name": "signboard",
             "setObject": ""
+        },
+        {
+            "type": "MESH",
+            "name": "立方体.003",
+            "transform": {
+                "translation": [
+                    0.0,
+                    0.0,
+                    -2.601051092147827
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    500.0,
+                    500.0,
+                    0.5
+                ]
+            },
+            "setObject": "sea",
+            "tiling": {
+                "tiling": [
+                    100.0,
+                    100.0
+                ]
+            }
         }
     ]
 }

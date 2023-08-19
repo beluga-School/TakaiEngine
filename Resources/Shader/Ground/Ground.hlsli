@@ -12,6 +12,7 @@ cbuffer cbuff1 : register(b1)
     matrix world; //ワールド行列
     float3 cameraPos; //カメラ座標(ワールド座標)
     float2 tiling;  //タイリング
+    float2 offset;  //オフセット
 };
 
 cbuffer cbuff2 : register(b2)

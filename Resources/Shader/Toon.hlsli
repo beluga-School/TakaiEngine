@@ -9,9 +9,10 @@ cbuffer cbuff0 : register(b0)
 cbuffer cbuff1 : register(b1)
 {
     matrix viewproj; //ビュープロ行列
-    matrix world; //ワールド行列
+    matrix world;   //ワールド行列
     float3 cameraPos; //カメラ座標(ワールド座標)
-    float2 tiling; //タイリング
+    float2 tiling;  //タイリング
+    float2 offset;  //オフセット
 };
 
 cbuffer cbuff2 : register(b2)
