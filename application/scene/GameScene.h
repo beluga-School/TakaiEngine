@@ -18,6 +18,9 @@ public:
 	void Draw()override;
 	void End()override;
 
+	void UIUpdate();
+	void UIDraw();
+
 private:
 	Skydome mSkydome;
 	DebugCamera mDebugCamera;

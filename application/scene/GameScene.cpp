@@ -11,6 +11,7 @@
 #include "ObjParticle.h"
 #include "Status.h"
 #include "InStageStarUI.h"
+#include "StageTitleUI.h"
 
 void GameScene::LoadResource()
 {
@@ -40,6 +41,7 @@ void GameScene::LoadResource()
 	TextureManager::Load("Resources\\09_AlphaMask_Resources\\Grass.png", "Grass");
 	TextureManager::Load("Resources\\09_AlphaMask_Resources\\groundCubeMask.png", "groundCubeMask");
 
+	StageTitleUI::Get()->LoadResource();
 }
 
 void GameScene::Initialize()
@@ -60,7 +62,7 @@ void GameScene::Initialize()
 	output = "stage_stageselect";
 	StageChanger::Get()->Initialize(*LevelLoader::Get()->GetData(output));
 
-	
+	StageTitleUI::Get()->Initialize();
 }
 
 GUI sceneChangeGUI("operator");
@@ -147,8 +149,8 @@ void GameScene::Update()
 
 	ImGui::Text("mouseR %f", PlayerCamera::Get()->GetRadius());
 
-	ImGui::Text("oldDokanInfo.stageName %s", StageChanger::Get()->saveNextDokanInfo.stageName.c_str());
-	ImGui::Text("oldDokanInfo.id %s", StageChanger::Get()->saveNextDokanInfo.id.c_str());
+	//ImGui::Text("StageTitleUI:state %d", StageTitleUI::Get()->state);
+	//ImGui::Text("StageTitleUI:w %f", StageTitleUI::Get()->stageTitle.mColor.f4.w);
 	
 	player->starUI.ValueSliders();
 	
@@ -182,7 +184,7 @@ void GameScene::Update()
 
 	ParticleManager::GetInstance()->Update();
 
-	InStageStarUI::Get()->Update();
+	UIUpdate();
 }
 
 void GameScene::Draw()
@@ -206,6 +208,25 @@ void GameScene::Draw()
 
 	SpriteCommonBeginDraw();
 
+	UIDraw();
+
+	StageChanger::Get()->DrawSprite();
+
+}
+
+void GameScene::End()
+{
+	ParticleManager::GetInstance()->AllDelete();
+}
+
+void GameScene::UIUpdate()
+{
+	InStageStarUI::Get()->Update();
+	StageTitleUI::Get()->Update();
+}
+
+void GameScene::UIDraw()
+{
 	//ステージセレクトなら合計数表示
 	if (LevelLoader::Get()->GetData(
 		StageChanger::Get()->GetNowStageHandle())->mStageNum == 0)
@@ -218,11 +239,5 @@ void GameScene::Draw()
 		InStageStarUI::Get()->Draw();
 	}
 
-	StageChanger::Get()->DrawSprite();
-
-}
-
-void GameScene::End()
-{
-	ParticleManager::GetInstance()->AllDelete();
+	StageTitleUI::Get()->Draw();
 }

@@ -16,6 +16,7 @@
 #include <fstream>
 #include <sstream>
 #include "InStageStarUI.h"
+#include "StageTitleUI.h"
 
 void StageChanger::ChangeLevel(LevelData& data)
 {
@@ -700,6 +701,9 @@ void StageChanger::ChangeUpdate()
 				playerData.data = *objectData;
 				//優先フラグを立てる
 				playerData.dokanPriority = true;
+
+				//ステージ名をUIに記録
+				StageTitleUI::Get()->ChangeHandle(StageChanger::Get()->currentData->mStageNum);
 			}
 
 			continue;

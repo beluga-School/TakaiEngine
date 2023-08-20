@@ -379,6 +379,9 @@
     <Filter Include="Application\Sea">
       <UniqueIdentifier>{0c69c418-773d-40fd-bdf0-5b580aeddd6c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Application\StageTitleUI">
+      <UniqueIdentifier>{b24b72f9-59b1-4ff8-9937-a28061c7a015}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="engine\input\Input.cpp">
@@ -642,8 +645,11 @@
     <ClCompile Include="application\game\entity\eventBlock\EventBlock.cpp">
       <Filter>Application\EventBlock\EventBlock</Filter>
     </ClCompile>
+    <ClCompile Include="StageTitleUI.cpp">
+      <Filter>Application\StageTitleUI</Filter>
+    </ClCompile>
     <ClCompile Include="Sea.cpp">
-      <Filter>ソース ファイル</Filter>
+      <Filter>Application\Sea</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -917,11 +923,14 @@
     <ClInclude Include="application\game\entity\eventBlock\EventBlock.h">
       <Filter>Application\EventBlock\EventBlock</Filter>
     </ClInclude>
-    <ClInclude Include="Sea.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
     <ClInclude Include="resource.h">
       <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="StageTitleUI.h">
+      <Filter>Application\StageTitleUI</Filter>
+    </ClInclude>
+    <ClInclude Include="Sea.h">
+      <Filter>Application\Sea</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

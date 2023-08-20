@@ -45,7 +45,6 @@ void Dokan::Update()
 
 			break;
 		case Dokan::DokanState::End:
-			
 			//eventtrigerに記載されたステージへ移動する
 			std::vector<std::string> split = Util::SplitString(trigerName, "_");
 

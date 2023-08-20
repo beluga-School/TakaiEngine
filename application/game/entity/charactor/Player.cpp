@@ -9,6 +9,7 @@
 #include "ClearDrawScreen.h"
 #include "ObjParticle.h"
 #include "InStageStarUI.h"
+#include "StageTitleUI.h"
 
 using namespace Input;
 
@@ -47,6 +48,8 @@ void Player::Update()
 			SetNoCollsion(false);
 			SetNoGravity(false);
 			SetNoMove(false);
+
+			StageTitleUI::Get()->Start();
 		}
 	}
 

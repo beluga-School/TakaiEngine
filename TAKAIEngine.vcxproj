@@ -188,6 +188,7 @@
     <ClCompile Include="MoveBlock.cpp" />
     <ClCompile Include="Sea.cpp" />
     <ClCompile Include="Skelton.cpp" />
+    <ClCompile Include="StageTitleUI.cpp" />
     <ClCompile Include="StarUI.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -282,6 +283,7 @@
     <ClInclude Include="resource.h" />
     <ClInclude Include="Sea.h" />
     <ClInclude Include="Skelton.h" />
+    <ClInclude Include="StageTitleUI.h" />
     <ClInclude Include="StarUI.h" />
   </ItemGroup>
   <ItemGroup>
