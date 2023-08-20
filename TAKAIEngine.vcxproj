@@ -279,6 +279,7 @@
     <ClInclude Include="InStageStarUI.h" />
     <ClInclude Include="LevelData.h" />
     <ClInclude Include="MoveBlock.h" />
+    <ClInclude Include="resource.h" />
     <ClInclude Include="Sea.h" />
     <ClInclude Include="Skelton.h" />
     <ClInclude Include="StarUI.h" />
@@ -590,6 +591,12 @@
     <ProjectReference Include="External\DirectXTex\DirectXTex_Desktop_2022_Win10.vcxproj">
       <Project>{371b9fa9-4c90-4ac6-a123-aced756d6c77}</Project>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="TAKAIEngine.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="icon.ico" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

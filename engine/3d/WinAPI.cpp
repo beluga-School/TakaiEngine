@@ -1,6 +1,7 @@
 #include "WinAPI.h"
 #include "Util.h"
 #include "imgui_impl_win32.h"
+#include "resource.h"
 
 extern IMGUI_IMPL_API LRESULT ImGui_ImplWin32_WndProcHandler(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam);
 
@@ -41,6 +42,9 @@ void WinAPI::SetWindowClass()
 	w.hInstance = GetModuleHandle(nullptr);	//ウィンドウハンドル
 	w.hCursor = LoadCursor(NULL, IDC_ARROW);//カーソル指定
 
+	w.hIcon = LoadIcon(w.hInstance, MAKEINTRESOURCE(IDI_ICON1));
+	w.hIconSm = LoadIcon(w.hInstance, MAKEINTRESOURCE(IDI_ICON1));
+	
 	//ウィンドウクラスをOSに登録する
 	RegisterClassEx(&w);
 
