@@ -8,7 +8,6 @@
 #include "Billboard.h"
 #include "SceneChange.h"
 #include "UI.h"
-#include "EventSceneLine.h"
 
 class GameScene : public IScene
 {
@@ -32,7 +31,5 @@ private:
 	//ƒV[ƒ“Ø‚è‘Ö‚¦—p
 	std::string output = "";
 	std::vector<std::string> handles;
-
-	EventSceneLine eventui;
 };
 

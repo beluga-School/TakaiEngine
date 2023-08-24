@@ -1,36 +1,49 @@
-#include "EventSceneLine.h"
+#include "EventManager.h"
 #include "InstantDrawer.h"
 #include "Util.h"
 #include "Input.h"
 
-void EventSceneLine::Start()
+TEasing::easeTimer EventManager::startTimer = 0.5f;
+TEasing::easeTimer EventManager::endTimer = 0.5f;
+
+Vector2 EventManager::uppos{};
+Vector2 EventManager::downpos{};
+
+EventManager::State EventManager::state = State::None;
+
+void EventManager::Start()
 {
 	startTimer.Start();
 	state = State::Start;
 }
 
-void EventSceneLine::End()
+void EventManager::End()
 {
 	endTimer.Start();
 	state = State::End;
 }
 
-void EventSceneLine::Initialize()
+bool EventManager::IsNowEvent()
+{
+	return state != State::None;
+}
+
+void EventManager::Initialize()
 {
 	uppos = { 0,0 };
 	downpos = { Util::WIN_WIDTH,Util::WIN_HEIGHT };
 }
 
-void EventSceneLine::Update()
+void EventManager::Update()
 {
 	if (Input::Keyboard::TriggerKey(DIK_V))
 	{
 		switch (state)
 		{
-		case EventSceneLine::State::None:
+		case EventManager::State::None:
 			Start();
 			break;
-		case EventSceneLine::State::Start:
+		case EventManager::State::Start:
 			End();
 			break;
 		}
@@ -41,14 +54,14 @@ void EventSceneLine::Update()
 
 	switch (state)
 	{
-	case EventSceneLine::State::None:
+	case EventManager::State::None:
 
 		break;
-	case EventSceneLine::State::Start:
+	case EventManager::State::Start:
 		uppos.x = TEasing::OutQuad(0, Util::WIN_WIDTH, startTimer.GetTimeRate());
 		downpos.x = TEasing::OutQuad(Util::WIN_WIDTH, 0, startTimer.GetTimeRate());
 		break;
-	case EventSceneLine::State::End:
+	case EventManager::State::End:
 		uppos.x = TEasing::InQuad(Util::WIN_WIDTH, Util::WIN_WIDTH * 2.f, endTimer.GetTimeRate());
 		downpos.x = TEasing::InQuad(0, Util::WIN_WIDTH * -1.f, endTimer.GetTimeRate());
 		if (endTimer.GetEnd())
@@ -60,7 +73,7 @@ void EventSceneLine::Update()
 	}
 }
 
-void EventSceneLine::Draw()
+void EventManager::Draw()
 {
 	InstantDrawer::DrawBox(uppos.x, uppos.y, Util::WIN_WIDTH,100,Color(0,0,0,1),
 		InstantDrawer::Anchor::RIGHT);

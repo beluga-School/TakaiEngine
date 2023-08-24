@@ -6,6 +6,7 @@
 #include "ImguiManager.h"
 #include "Stage.h"
 #include "Star.h"
+#include "EventManager.h"
 
 using namespace Input;
 

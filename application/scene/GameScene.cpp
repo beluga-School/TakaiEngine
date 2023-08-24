@@ -12,6 +12,7 @@
 #include "Status.h"
 #include "InStageStarUI.h"
 #include "StageTitleUI.h"
+#include "EventManager.h"
 
 void GameScene::LoadResource()
 {
@@ -64,7 +65,7 @@ void GameScene::Initialize()
 
 	StageTitleUI::Get()->Initialize();
 
-	eventui.Initialize();
+	EventManager::Initialize();
 }
 
 GUI sceneChangeGUI("operator");
@@ -168,10 +169,12 @@ void GameScene::Update()
 	player->Update();
 
 	//カメラ更新
-	if (debugCam)
+	//イベント中ならカメラ変更
+	if (EventManager::IsNowEvent())
 	{
 		mDebugCamera.Update();
 	}
+	//それ以外はプレイヤーに追従
 	else
 	{
 		pCamera->Update();
@@ -188,7 +191,7 @@ void GameScene::Update()
 
 	UIUpdate();
 
-	eventui.Update();
+	EventManager::Update();
 }
 
 void GameScene::Draw()
@@ -216,7 +219,7 @@ void GameScene::Draw()
 
 	StageChanger::Get()->DrawSprite();
 
-	eventui.Draw();
+	EventManager::Draw();
 
 }
 
