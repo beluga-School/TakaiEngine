@@ -382,6 +382,12 @@
     <Filter Include="Application\StageTitleUI">
       <UniqueIdentifier>{b24b72f9-59b1-4ff8-9937-a28061c7a015}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Application\UI\EventSceneLine">
+      <UniqueIdentifier>{3e993c13-a42c-44ec-aec1-891c8b64b272}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\2D\InstantDrawer">
+      <UniqueIdentifier>{7404c217-175e-49f7-9df9-9f1f9e5c34e9}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="engine\input\Input.cpp">
@@ -650,6 +656,12 @@
     </ClCompile>
     <ClCompile Include="Sea.cpp">
       <Filter>Application\Sea</Filter>
+    </ClCompile>
+    <ClCompile Include="EventSceneLine.cpp">
+      <Filter>Application\UI\EventSceneLine</Filter>
+    </ClCompile>
+    <ClCompile Include="InstantDrawer.cpp">
+      <Filter>Engine\2D\InstantDrawer</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -931,6 +943,12 @@
     </ClInclude>
     <ClInclude Include="Sea.h">
       <Filter>Application\Sea</Filter>
+    </ClInclude>
+    <ClInclude Include="EventSceneLine.h">
+      <Filter>Application\UI\EventSceneLine</Filter>
+    </ClInclude>
+    <ClInclude Include="InstantDrawer.h">
+      <Filter>Engine\2D\InstantDrawer</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

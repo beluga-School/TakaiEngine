@@ -176,6 +176,7 @@
     <ClCompile Include="engine\3d\Vertex.cpp" />
     <ClCompile Include="engine\3d\ViewProjection.cpp" />
     <ClCompile Include="engine\3d\WinAPI.cpp" />
+    <ClCompile Include="EventSceneLine.cpp" />
     <ClCompile Include="External\imgui\imgui.cpp" />
     <ClCompile Include="External\imgui\imgui_demo.cpp" />
     <ClCompile Include="External\imgui\imgui_draw.cpp" />
@@ -184,6 +185,7 @@
     <ClCompile Include="External\imgui\imgui_tables.cpp" />
     <ClCompile Include="External\imgui\imgui_widgets.cpp" />
     <ClCompile Include="InStageStarUI.cpp" />
+    <ClCompile Include="InstantDrawer.cpp" />
     <ClCompile Include="LevelData.cpp" />
     <ClCompile Include="MoveBlock.cpp" />
     <ClCompile Include="Sea.cpp" />
@@ -268,6 +270,7 @@
     <ClInclude Include="engine\3d\Vertex.h" />
     <ClInclude Include="engine\3d\ViewProjection.h" />
     <ClInclude Include="engine\common\WinAPI.h" />
+    <ClInclude Include="EventSceneLine.h" />
     <ClInclude Include="External\imgui\imconfig.h" />
     <ClInclude Include="External\imgui\imgui.h" />
     <ClInclude Include="External\imgui\imgui_impl_dx12.h" />
@@ -278,6 +281,7 @@
     <ClInclude Include="External\imgui\imstb_truetype.h" />
     <ClInclude Include="External\json.hpp" />
     <ClInclude Include="InStageStarUI.h" />
+    <ClInclude Include="InstantDrawer.h" />
     <ClInclude Include="LevelData.h" />
     <ClInclude Include="MoveBlock.h" />
     <ClInclude Include="resource.h" />

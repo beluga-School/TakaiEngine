@@ -63,6 +63,8 @@ void GameScene::Initialize()
 	StageChanger::Get()->Initialize(*LevelLoader::Get()->GetData(output));
 
 	StageTitleUI::Get()->Initialize();
+
+	eventui.Initialize();
 }
 
 GUI sceneChangeGUI("operator");
@@ -185,6 +187,8 @@ void GameScene::Update()
 	ParticleManager::GetInstance()->Update();
 
 	UIUpdate();
+
+	eventui.Update();
 }
 
 void GameScene::Draw()
@@ -211,6 +215,8 @@ void GameScene::Draw()
 	UIDraw();
 
 	StageChanger::Get()->DrawSprite();
+
+	eventui.Draw();
 
 }
 

@@ -42,11 +42,9 @@
 #include "ShaderTestScene.h"
 #include "TitleScene.h"
 
-//①文字列変換とサウンドデータを除き、使用していない
-//②自身のコード内ではint、shortはすべてint32_tなどに置き換えた charは一部でまだ使用している
-//③確認できる限りはconst& もしくは値渡しに置き換えた
-//④文字列変換とサウンドデータを除き、使用していない
-//⑤命名規則は以下の通り
+#include "InstantDrawer.h"
+
+//命名規則は以下の通り
 //メンバ変数->手前にm, mの次は大文字(例:mHoge)
 //スタティック変数->手前にs, sの次は大文字(例:sHoge)
 //定数->全部大文字、区分けしたいときは_を付ける(例:HOGE_HOGE_DANCE)
@@ -157,6 +155,9 @@ int32_t WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_  HINSTANCE hPrevInstan
 		Input::Keyboard::Get()->Update();
 		Input::Mouse::Update();
 		Input::Pad::Update();
+
+		//DrawBoxなどの毎フレーム更新
+		InstantDrawer::DrawInit();
 		
 		scenemanager->Update();
 		postEffect->Update();
@@ -169,6 +170,9 @@ int32_t WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_  HINSTANCE hPrevInstan
 
 		postEffect->PreDrawScene();
 		scenemanager->Draw();
+		//DrawBoxなどの毎フレーム更新
+		InstantDrawer::AllUpdate();
+		InstantDrawer::AllDraw();
 		postEffect->PostDrawScene();
 
 		PreDraw();
