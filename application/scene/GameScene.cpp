@@ -45,7 +45,7 @@ void GameScene::LoadResource()
 
 	StageTitleUI::Get()->LoadResource();
 
-	EventCamera::Get()->Initialize();
+	//EventCamera::Get()->Initialize();
 }
 
 void GameScene::Initialize()
@@ -75,6 +75,12 @@ GUI sceneChangeGUI("operator");
 
 void GameScene::Update()
 {
+	if (Input::Keyboard::TriggerKey(DIK_V))
+	{
+		EventManager::Start("next_1");
+		EventManager::End();
+	}
+
 	//ステータスの更新
 	StatusManager::Update();
 
@@ -158,12 +164,7 @@ void GameScene::Update()
 	ImGui::Text("position x:%f y:%f z:%f", 
 		player->position.x, player->position.y, player->position.z);
 
-	//ImGui::Text("StageTitleUI:state %d", StageTitleUI::Get()->state);
-	//ImGui::Text("StageTitleUI:w %f", StageTitleUI::Get()->stageTitle.mColor.f4.w);
-	
 	player->starUI.ValueSliders();
-	
-	//player->starUI.ValueSliders();
 
 	sceneChangeGUI.End();
 
@@ -171,10 +172,9 @@ void GameScene::Update()
 
 	//カメラ更新
 	//イベント中ならカメラ変更
-	EventCamera::Get()->ObjUpdate();
-	if (EventManager::IsNowEvent())
+	if (EventManager::Get()->GetNowEvent() != "")
 	{
-		EventCamera::Get()->Update();
+		EventCameraManager::Get()->Update();
 	}
 	//それ以外はプレイヤーに追従
 	else
@@ -211,9 +211,9 @@ void GameScene::Draw()
 
 	ParticleManager::GetInstance()->Draw();
 
-	if (!EventManager::IsNowEvent())
+	if (EventManager::Get()->GetNowEvent() != "")
 	{
-		EventCamera::Get()->Draw();
+		EventManager::Draw();
 	}
 
 	//pCamera->Draw();

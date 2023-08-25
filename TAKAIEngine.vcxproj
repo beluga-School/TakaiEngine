@@ -176,6 +176,7 @@
     <ClCompile Include="engine\3d\Vertex.cpp" />
     <ClCompile Include="engine\3d\ViewProjection.cpp" />
     <ClCompile Include="engine\3d\WinAPI.cpp" />
+    <ClCompile Include="Event.cpp" />
     <ClCompile Include="EventCamera.cpp" />
     <ClCompile Include="EventManager.cpp" />
     <ClCompile Include="External\imgui\imgui.cpp" />
@@ -271,6 +272,7 @@
     <ClInclude Include="engine\3d\Vertex.h" />
     <ClInclude Include="engine\3d\ViewProjection.h" />
     <ClInclude Include="engine\common\WinAPI.h" />
+    <ClInclude Include="Event.h" />
     <ClInclude Include="EventCamera.h" />
     <ClInclude Include="EventManager.h" />
     <ClInclude Include="External\imgui\imconfig.h" />

@@ -8,7 +8,7 @@ struct EventCamData
 	Vector3 pos{};
 	Vector3 rotation{};
 
-	std::string eventnumber = "";
+	std::string eventName = "";
 };
 
 class EventCamera
@@ -18,23 +18,38 @@ public:
 	void Update();
 	void Draw();
 
-	void ObjUpdate();
+	//読み込んだカメラデータ
+	EventCamData eventCamData;
 
-	static EventCamera* Get() {
-		static EventCamera instance;
-		return &instance;
-	}
-
-	std::list<EventCamData> eventCamDatas;
+	EventCamera() {};
+	~EventCamera() {};
 
 private:
-	EventCamera(){};
-	~EventCamera(){};
-
+	//デバッグ用カメラ位置表示オブジェクト
 	Obj3d hontai;
 	Obj3d target;
 
-	Vector3 hoge;
-
+	float targetRadius = 10.0f;
 };
 
+class EventCameraManager
+{
+public:
+	void Update();
+	void Draw();
+
+	void Register(const EventCamData &eventCamData);
+	void Clear();
+
+	static EventCameraManager* Get()
+	{
+		static EventCameraManager instance;
+		return &instance;
+	}
+
+private:
+	EventCameraManager(){};
+	~EventCameraManager(){};
+
+	std::list<EventCamera> eventCameras;
+};

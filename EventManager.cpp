@@ -11,10 +11,21 @@ Vector2 EventManager::downpos{};
 
 EventManager::State EventManager::state = State::None;
 
-void EventManager::Start()
+bool EventManager::Start(const std::string& startEventName)
 {
-	startTimer.Start();
-	state = State::Start;
+	for (auto &Event : EventManager::Get()->allEvents)
+	{
+		//イベントがあれば実行
+		if (Event == startEventName)
+		{
+			startTimer.Start();
+			state = State::Start;
+			EventManager::Get()->nowEvent = startEventName;
+			return true;
+		}
+	}
+	//無ければ実行しない
+	return false;
 }
 
 void EventManager::End()
@@ -23,9 +34,9 @@ void EventManager::End()
 	state = State::End;
 }
 
-bool EventManager::IsNowEvent()
+std::string EventManager::GetNowEvent()
 {
-	return state != State::None;
+	return nowEvent;
 }
 
 void EventManager::Initialize()
@@ -36,19 +47,6 @@ void EventManager::Initialize()
 
 void EventManager::Update()
 {
-	if (Input::Keyboard::TriggerKey(DIK_V))
-	{
-		switch (state)
-		{
-		case EventManager::State::None:
-			Start();
-			break;
-		case EventManager::State::Start:
-			End();
-			break;
-		}
-	}
-
 	startTimer.Update();
 	endTimer.Update();
 
@@ -67,6 +65,7 @@ void EventManager::Update()
 		if (endTimer.GetEnd())
 		{
 			state = State::None;
+			EventManager::Get()->nowEvent = "";
 		}
 
 		break;
@@ -79,4 +78,14 @@ void EventManager::Draw()
 		InstantDrawer::Anchor::RIGHT);
 	InstantDrawer::DrawBox(downpos.x, downpos.y, Util::WIN_WIDTH,100,Color(0,0,0,1), 
 		InstantDrawer::Anchor::LEFT);
+}
+
+void EventManager::Register(const std::string& startEventName)
+{
+	EventManager::Get()->allEvents.push_back(startEventName);
+}
+
+void EventManager::Clear()
+{
+	EventManager::Get()->allEvents.clear();
 }

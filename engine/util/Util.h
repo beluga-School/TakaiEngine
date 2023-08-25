@@ -34,6 +34,9 @@ namespace Util
 	//文字列に数値が含まれているか判定する
 	bool IsNumber(const std::string& str);
 
+	//文字列を指定した区切り文字で分割し、一番手前にあった文字を返す
+	std::string GetNumber(const std::string& str, const char* delimiter);
+
 	//マップからハンドルを取得する
 	//コピーしてるので処理速度終わってる
 	//ポインタにするとエラー吐いた

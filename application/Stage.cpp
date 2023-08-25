@@ -17,6 +17,7 @@
 #include <sstream>
 #include "InStageStarUI.h"
 #include "StageTitleUI.h"
+#include "EventManager.h"
 
 void StageChanger::ChangeLevel(LevelData& data)
 {
@@ -112,7 +113,6 @@ void StageChanger::Reset()
 	mEntitys.clear();
 	mEventObjects.clear();
 	mGoals.clear();
-	//StarManager::Get()->mStars.clear();
 	CollideManager::Get()->allCols.clear();
 	mCannonPoints.clear();
 	mMoveBlockEndPoints.clear();
@@ -123,6 +123,10 @@ void StageChanger::Reset()
 	mTempStarSaves.clear();
 
 	IDdCube::ResetID();
+
+	EventCameraManager::Get()->Clear();
+
+	EventManager::Clear();
 }
 
 void StageChanger::NormalObjectSet(const LevelData::ObjectData& data)
@@ -432,10 +436,12 @@ void StageChanger::ChangeUpdate()
 		//ŠC‚Ì”z’u‚È‚ç
 		if (objectData->setObjectName == "eventcamera")
 		{
-			EventCamera::Get()->eventCamDatas.emplace_back();
-			EventCamera::Get()->eventCamDatas.back().pos = objectData->translation;
-			EventCamera::Get()->eventCamDatas.back().rotation = objectData->rotation;
-			EventCamera::Get()->eventCamDatas.back().eventnumber = objectData->eventtrigerName;
+			EventCamData camdata;
+			camdata.pos = objectData->translation;
+			camdata.rotation = objectData->rotation;
+			camdata.eventName = objectData->eventtrigerName;
+			EventManager::Register(objectData->eventtrigerName);
+			EventCameraManager::Get()->Register(camdata);
 		}
 
 		//ŠC‚Ì”z’u‚È‚ç

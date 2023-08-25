@@ -382,9 +382,6 @@
     <Filter Include="Engine\2D\InstantDrawer">
       <UniqueIdentifier>{7404c217-175e-49f7-9df9-9f1f9e5c34e9}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Application\UI\EventManager">
-      <UniqueIdentifier>{3e993c13-a42c-44ec-aec1-891c8b64b272}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Application\Camera">
       <UniqueIdentifier>{6e53dda4-7081-40f6-9507-9f6b735bbdde}</UniqueIdentifier>
     </Filter>
@@ -393,6 +390,15 @@
     </Filter>
     <Filter Include="Application\Camera\EventCamera">
       <UniqueIdentifier>{bdaef200-6035-4459-96b4-42c65e42d7ed}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Application\Event">
+      <UniqueIdentifier>{e89bed34-6c87-43de-9219-28dc93915c09}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Application\Event\Event">
+      <UniqueIdentifier>{ecdccc2d-73a5-4a72-91dd-9c5309f8478d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Application\Event\EventManager">
+      <UniqueIdentifier>{c9a4fc76-9fa6-4ba5-ba0f-cdaac89d0ca1}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -663,14 +669,17 @@
     <ClCompile Include="Sea.cpp">
       <Filter>Application\Sea</Filter>
     </ClCompile>
-    <ClCompile Include="EventManager.cpp">
-      <Filter>Application\UI\EventManager</Filter>
-    </ClCompile>
     <ClCompile Include="InstantDrawer.cpp">
       <Filter>Engine\2D\InstantDrawer</Filter>
     </ClCompile>
     <ClCompile Include="EventCamera.cpp">
       <Filter>Application\Camera\EventCamera</Filter>
+    </ClCompile>
+    <ClCompile Include="Event.cpp">
+      <Filter>Application\Event\Event</Filter>
+    </ClCompile>
+    <ClCompile Include="EventManager.cpp">
+      <Filter>Application\Event\EventManager</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -953,14 +962,17 @@
     <ClInclude Include="Sea.h">
       <Filter>Application\Sea</Filter>
     </ClInclude>
-    <ClInclude Include="EventManager.h">
-      <Filter>Application\UI\EventManager</Filter>
-    </ClInclude>
     <ClInclude Include="InstantDrawer.h">
       <Filter>Engine\2D\InstantDrawer</Filter>
     </ClInclude>
     <ClInclude Include="EventCamera.h">
       <Filter>Application\Camera\EventCamera</Filter>
+    </ClInclude>
+    <ClInclude Include="Event.h">
+      <Filter>Application\Event\Event</Filter>
+    </ClInclude>
+    <ClInclude Include="EventManager.h">
+      <Filter>Application\Event\EventManager</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
