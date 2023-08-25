@@ -15,6 +15,14 @@ void GoalSystem::AnimetionStart()
 	thirdTimer.Reset();
 	animetionState = AnimetionState::First;
 	mIsClear = true;
+
+	//旗を通ったフラグを立てる
+	ClearManage::Get()->isClear = true;
+
+	//通ったステージの番号を記録する
+	ClearManage::Get()->clearNumber =
+		LevelLoader::Get()->GetData(StageChanger::Get()->GetNowStageHandle())->mStageNum;
+
 }
 
 void GoalSystem::GoalAnimetion()
@@ -67,7 +75,7 @@ void GoalSystem::GoalAnimetion()
 			ClearManage::Get()->isClear = true;
 
 			//通ったステージの番号を記録する
-			ClearManage::Get()->clearNumber = 
+			ClearManage::Get()->clearNumber =
 				LevelLoader::Get()->GetData(StageChanger::Get()->GetNowStageHandle())->mStageNum;
 		}
 		break;

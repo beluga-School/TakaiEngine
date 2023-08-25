@@ -225,6 +225,10 @@ void GameScene::Draw()
 	{
 		EventManager::Draw();
 	}
+	else
+	{
+		EventCameraManager::Get()->Draw();
+	}
 
 	//pCamera->Draw();
 
@@ -235,9 +239,6 @@ void GameScene::Draw()
 	UIDraw();
 
 	StageChanger::Get()->DrawSprite();
-
-	EventManager::Draw();
-
 }
 
 void GameScene::End()

@@ -3,6 +3,7 @@
 #include "Util.h"
 #include "Input.h"
 #include "Clear1.h"
+#include "GoalSystem.h"
 
 Clear1 clear1;
 
@@ -60,6 +61,11 @@ void EventManager::Update()
 		if (clear1.RunFlag())
 		{
 			EventManager::Start("next_1");
+		}
+		//ステージ1のクリア時に実行
+		if (ClearManage::Get()->clearNumber == 1)
+		{
+			EventManager::Start("goal_1");
 		}
 
 		break;

@@ -273,7 +273,7 @@ void StageChanger::EvenyObjectSet(const LevelData::ObjectData& data)
 		return;
 	}
 	//goal ‚Ì•¶Žš—ñ‚ªŠÜ‚Ü‚ê‚Ä‚é‚È‚ç
-	if (data.eventtrigerName.find("goal") != std::string::npos)
+	if (data.eventtrigerName == "goal")
 	{
 		mGoals.emplace_back();
 		mGoals.back() = std::make_unique<Goal>();
