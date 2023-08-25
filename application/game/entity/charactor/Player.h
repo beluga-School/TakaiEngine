@@ -56,6 +56,8 @@ public:
 	//土管から出現する動き
 	void ApparranceMove(const Vector3& dokanPos, const Vector3& dokanScale);
 
+	bool GetApparanceEnd();
+
 private:
 	//hpの最大値　ステータスの最大値は外から変えられるようにしたい
 	int32_t MAX_HP = 8;

@@ -55,8 +55,20 @@ void GoalSystem::GoalAnimetion()
 			animetionState = AnimetionState::None;
 			thirdTimer.Reset();
 		
+			//移動先の情報をステージへ移す
+			StageChanger::Get()->saveNextDokanInfo.stageName = "stage_stageselect";
+			//ここ戻ってくるステージごとに変えないといけない
+			StageChanger::Get()->saveNextDokanInfo.id = "0";
+
 			//ステージセレクトに戻る
 			StageChanger::Get()->ChangeLevel(*LevelLoader::Get()->GetData("stage_stageselect"));
+		
+			//旗を通ったフラグを立てる
+			ClearManage::Get()->isClear = true;
+
+			//通ったステージの番号を記録する
+			ClearManage::Get()->clearNumber = 
+				LevelLoader::Get()->GetData(StageChanger::Get()->GetNowStageHandle())->mStageNum;
 		}
 		break;
 	}

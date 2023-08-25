@@ -394,11 +394,20 @@
     <Filter Include="Application\Event">
       <UniqueIdentifier>{e89bed34-6c87-43de-9219-28dc93915c09}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Application\Event\Event">
-      <UniqueIdentifier>{ecdccc2d-73a5-4a72-91dd-9c5309f8478d}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Application\Event\EventManager">
       <UniqueIdentifier>{c9a4fc76-9fa6-4ba5-ba0f-cdaac89d0ca1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Application\Event\Clear1">
+      <UniqueIdentifier>{bd10d056-0a74-4a2a-b7b5-92c8e40b8362}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Application\Event\IEvent">
+      <UniqueIdentifier>{ecdccc2d-73a5-4a72-91dd-9c5309f8478d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Application\Event\EventTriggers">
+      <UniqueIdentifier>{f405bb6d-add4-4de0-9bdc-70b658844f26}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Application\System\ClearManager">
+      <UniqueIdentifier>{28df7d81-ed82-4107-9a8f-61914139fd73}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -675,11 +684,17 @@
     <ClCompile Include="EventCamera.cpp">
       <Filter>Application\Camera\EventCamera</Filter>
     </ClCompile>
-    <ClCompile Include="Event.cpp">
-      <Filter>Application\Event\Event</Filter>
+    <ClCompile Include="IEvent.cpp">
+      <Filter>Application\Event\IEvent</Filter>
     </ClCompile>
     <ClCompile Include="EventManager.cpp">
       <Filter>Application\Event\EventManager</Filter>
+    </ClCompile>
+    <ClCompile Include="Clear1.cpp">
+      <Filter>Application\Event\Clear1</Filter>
+    </ClCompile>
+    <ClCompile Include="EventTriggers.cpp">
+      <Filter>ソース ファイル</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -968,11 +983,17 @@
     <ClInclude Include="EventCamera.h">
       <Filter>Application\Camera\EventCamera</Filter>
     </ClInclude>
-    <ClInclude Include="Event.h">
-      <Filter>Application\Event\Event</Filter>
+    <ClInclude Include="IEvent.h">
+      <Filter>Application\Event\IEvent</Filter>
     </ClInclude>
     <ClInclude Include="EventManager.h">
       <Filter>Application\Event\EventManager</Filter>
+    </ClInclude>
+    <ClInclude Include="Clear1.h">
+      <Filter>Application\Event\Clear1</Filter>
+    </ClInclude>
+    <ClInclude Include="EventTriggers.h">
+      <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

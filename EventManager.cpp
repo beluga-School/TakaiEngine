@@ -2,6 +2,9 @@
 #include "InstantDrawer.h"
 #include "Util.h"
 #include "Input.h"
+#include "Clear1.h"
+
+Clear1 clear1;
 
 TEasing::easeTimer EventManager::startTimer = 0.5f;
 TEasing::easeTimer EventManager::endTimer = 0.5f;
@@ -54,10 +57,32 @@ void EventManager::Update()
 	{
 	case EventManager::State::None:
 
+		if (clear1.RunFlag())
+		{
+			EventManager::Start("next_1");
+		}
+
 		break;
 	case EventManager::State::Start:
 		uppos.x = TEasing::OutQuad(0, Util::WIN_WIDTH, startTimer.GetTimeRate());
 		downpos.x = TEasing::OutQuad(Util::WIN_WIDTH, 0, startTimer.GetTimeRate());
+		if (startTimer.GetEnd())
+		{
+			state = State::RunEvent;
+			clear1.Start();
+		}
+		
+		break;
+	case EventManager::State::RunEvent:
+		//イベント発生
+		clear1.Update();
+
+		//イベント終了
+		if(clear1.End())
+		{
+			End();
+		}
+
 		break;
 	case EventManager::State::End:
 		uppos.x = TEasing::InQuad(Util::WIN_WIDTH, Util::WIN_WIDTH * 2.f, endTimer.GetTimeRate());
@@ -67,7 +92,6 @@ void EventManager::Update()
 			state = State::None;
 			EventManager::Get()->nowEvent = "";
 		}
-
 		break;
 	}
 }

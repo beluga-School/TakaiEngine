@@ -3,6 +3,7 @@
 #include "TEasing.h"
 #include <string>
 #include <list>
+#include "IEvent.h"
 
 class EventManager
 {
@@ -41,6 +42,7 @@ private:
 	{
 		None,
 		Start,
+		RunEvent,
 		End,
 	};
 	

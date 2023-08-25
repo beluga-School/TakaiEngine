@@ -128,6 +128,7 @@
     <ClCompile Include="application\system\GoalSystem.cpp" />
     <ClCompile Include="application\ui\HPGauge.cpp" />
     <ClCompile Include="application\ui\UI.cpp" />
+    <ClCompile Include="Clear1.cpp" />
     <ClCompile Include="Dokan.cpp" />
     <ClCompile Include="engine\2d\PostEffect.cpp" />
     <ClCompile Include="engine\3d\Billboard.cpp" />
@@ -176,7 +177,8 @@
     <ClCompile Include="engine\3d\Vertex.cpp" />
     <ClCompile Include="engine\3d\ViewProjection.cpp" />
     <ClCompile Include="engine\3d\WinAPI.cpp" />
-    <ClCompile Include="Event.cpp" />
+    <ClCompile Include="EventTriggers.cpp" />
+    <ClCompile Include="IEvent.cpp" />
     <ClCompile Include="EventCamera.cpp" />
     <ClCompile Include="EventManager.cpp" />
     <ClCompile Include="External\imgui\imgui.cpp" />
@@ -223,6 +225,7 @@
     <ClInclude Include="application\system\GoalSystem.h" />
     <ClInclude Include="application\ui\HPGauge.h" />
     <ClInclude Include="application\ui\UI.h" />
+    <ClInclude Include="Clear1.h" />
     <ClInclude Include="Dokan.h" />
     <ClInclude Include="engine\2d\PostEffect.h" />
     <ClInclude Include="engine\3d\Billboard.h" />
@@ -272,7 +275,8 @@
     <ClInclude Include="engine\3d\Vertex.h" />
     <ClInclude Include="engine\3d\ViewProjection.h" />
     <ClInclude Include="engine\common\WinAPI.h" />
-    <ClInclude Include="Event.h" />
+    <ClInclude Include="EventTriggers.h" />
+    <ClInclude Include="IEvent.h" />
     <ClInclude Include="EventCamera.h" />
     <ClInclude Include="EventManager.h" />
     <ClInclude Include="External\imgui\imconfig.h" />

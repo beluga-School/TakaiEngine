@@ -135,14 +135,12 @@ void StageChanger::NormalObjectSet(const LevelData::ObjectData& data)
 	mEntitys.back().Initialize();
 	mEntitys.back().SetTag(TagTable::Block);
 
-	
 	//コリジョン目的で配置したならオブジェクト配置を行わない
 	if (data.fileName == "collision")
 	{
 		mEntitys.back().SetTag(TagTable::NoDraw);
 		return;
 	}
-
 
 	//アウトライン設定
 	mEntitys.back().SetOutLineState({ 0,0,0,1.0f }, 0.05f);
@@ -166,12 +164,18 @@ void StageChanger::NormalObjectSet(const LevelData::ObjectData& data)
 
 	//バグらないように白テクスチャを入れる
 	mEntitys.back().SetTexture(TextureManager::Get()->GetTexture("white"));
-	//mEntitys.back().SetTexture(mEntitys.back().MODEL->mMaterial.mTexture.get());
+	
 	//タイリングの設定
 	mEntitys.back().mTiling = data.tiling;
 	
 	//オブジェクトの配置
 	LevelDataExchanger::SetObjectData(mEntitys.back(), data);
+
+	//当たり判定を作成
+	if (data.collider.have)
+	{
+		CollisionSet(data);
+	}
 }
 
 void StageChanger::CollisionSet(const LevelData::ObjectData& data)
@@ -775,12 +779,6 @@ void StageChanger::ChangeUpdate()
 
 			//そのままモデルの配置
 			NormalObjectSet(*objectData);
-
-			//当たり判定を作成
-			if (objectData->collider.have)
-			{
-				CollisionSet(*objectData);
-			}
 
 			continue;
 		}

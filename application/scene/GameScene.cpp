@@ -27,6 +27,7 @@ void GameScene::LoadResource()
 	LevelLoader::Get()->Load("Scene/stage_mountain", "stage_mountain", 1);
 	LevelLoader::Get()->Load("Scene/stage_graveyard", "stage_graveyard", 2);
 	LevelLoader::Get()->Load("Scene/starTest", "starTest", -1);
+	LevelLoader::Get()->Load("Scene/clear1", "clear1", -1);
 	
 	//新規シーンを登録して、登録してあるシーンから選んで飛ぶ方式にしたい
 	//マップからハンドル名の一覧を取得
@@ -78,7 +79,6 @@ void GameScene::Update()
 	if (Input::Keyboard::TriggerKey(DIK_V))
 	{
 		EventManager::Start("next_1");
-		EventManager::End();
 	}
 
 	//ステータスの更新
@@ -181,6 +181,16 @@ void GameScene::Update()
 	{
 		pCamera->Update();
 	}
+
+	////ステージごとに一回実行される感じ
+	//if (player->GetApparanceEnd())
+	//{
+	//	//ネクスト_1が実行されていないなら
+	//	if ()
+	//	{
+	//		EventManager::Start("next_1");
+	//	}
+	//}
 
 	EnemyManager::Get()->Update();
 

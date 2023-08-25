@@ -98,15 +98,15 @@ public:
 	//取得状態を読み取って、boolで返す
 	bool LoadStarCorrect(int32_t stageNumber, int32_t starID);
 
+	//通常のオブジェクト配置
+	void NormalObjectSet(const LevelData::ObjectData& data);
+
 private:
 	StageChanger(){};
 	~StageChanger(){};
 
 	//ステージリロードの際に初期化するやつら
 	void Reset();
-
-	//通常のオブジェクト配置
-	void NormalObjectSet(const LevelData::ObjectData& data);
 
 	//当たり判定配置
 	void CollisionSet(const LevelData::ObjectData& data);

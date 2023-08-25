@@ -12,7 +12,6 @@ void StageTitleUI::Start()
 	state = State::DisPlay;
 	alphaTimer.Start();
 	disPlayTimer.Reset();
-
 }
 
 void StageTitleUI::LoadResource()

@@ -10,6 +10,7 @@
 #include "ObjParticle.h"
 #include "InStageStarUI.h"
 #include "StageTitleUI.h"
+#include "EventManager.h"
 
 using namespace Input;
 
@@ -49,6 +50,7 @@ void Player::Update()
 			SetNoGravity(false);
 			SetNoMove(false);
 
+			//ここら辺システム側の処理だから、別の場所に移したい
 			StageTitleUI::Get()->Start();
 		}
 	}
@@ -478,6 +480,11 @@ void Player::ApparranceMove(const Vector3& dokanPos, const Vector3& dokanScale)
 	apparranceTimer.Start();
 	saveDokanPos = dokanPos;
 	saveDokanScale = dokanScale;
+}
+
+bool Player::GetApparanceEnd()
+{
+	return apparranceTimer.GetEnd();
 }
 
 void Player::HPOverFlow(int32_t value)
