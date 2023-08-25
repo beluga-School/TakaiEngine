@@ -430,6 +430,15 @@ void StageChanger::ChangeUpdate()
 	for (auto objectData = currentData->mObjects.begin(); objectData != currentData->mObjects.end(); objectData++)
 	{
 		//ŠC‚Ì”z’u‚È‚ç
+		if (objectData->setObjectName == "eventcamera")
+		{
+			EventCamera::Get()->eventCamDatas.emplace_back();
+			EventCamera::Get()->eventCamDatas.back().pos = objectData->translation;
+			EventCamera::Get()->eventCamDatas.back().rotation = objectData->rotation;
+			EventCamera::Get()->eventCamDatas.back().eventnumber = objectData->eventtrigerName;
+		}
+
+		//ŠC‚Ì”z’u‚È‚ç
 		if (objectData->setObjectName == "sea")
 		{
 			seaObject = std::make_unique<Sea>();

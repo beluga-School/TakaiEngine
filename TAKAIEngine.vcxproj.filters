@@ -237,9 +237,6 @@
     <Filter Include="Application\EventBlock">
       <UniqueIdentifier>{6095ec17-b870-4246-9122-9b4a2b397af5}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Application\PlayerCamera">
-      <UniqueIdentifier>{5b388bcc-558d-41e8-80d7-ab24a44fe4fe}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Application\Charactor\Enemy">
       <UniqueIdentifier>{e46da77e-f434-44e8-a38d-981d3fdb64f9}</UniqueIdentifier>
     </Filter>
@@ -387,6 +384,15 @@
     </Filter>
     <Filter Include="Application\UI\EventManager">
       <UniqueIdentifier>{3e993c13-a42c-44ec-aec1-891c8b64b272}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Application\Camera">
+      <UniqueIdentifier>{6e53dda4-7081-40f6-9507-9f6b735bbdde}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Application\Camera\PlayerCamera">
+      <UniqueIdentifier>{5b388bcc-558d-41e8-80d7-ab24a44fe4fe}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Application\Camera\EventCamera">
+      <UniqueIdentifier>{bdaef200-6035-4459-96b4-42c65e42d7ed}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -592,7 +598,7 @@
       <Filter>Application\System\Goal</Filter>
     </ClCompile>
     <ClCompile Include="application\game\PlayerCamera.cpp">
-      <Filter>Application\PlayerCamera</Filter>
+      <Filter>Application\Camera\PlayerCamera</Filter>
     </ClCompile>
     <ClCompile Include="application\game\CollideManager.cpp">
       <Filter>Application\CollideManager</Filter>
@@ -662,6 +668,9 @@
     </ClCompile>
     <ClCompile Include="InstantDrawer.cpp">
       <Filter>Engine\2D\InstantDrawer</Filter>
+    </ClCompile>
+    <ClCompile Include="EventCamera.cpp">
+      <Filter>Application\Camera\EventCamera</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -876,7 +885,7 @@
       <Filter>Application\System\Goal</Filter>
     </ClInclude>
     <ClInclude Include="application\game\PlayerCamera.h">
-      <Filter>Application\PlayerCamera</Filter>
+      <Filter>Application\Camera\PlayerCamera</Filter>
     </ClInclude>
     <ClInclude Include="application\game\CollideManager.h">
       <Filter>Application\CollideManager</Filter>
@@ -949,6 +958,9 @@
     </ClInclude>
     <ClInclude Include="InstantDrawer.h">
       <Filter>Engine\2D\InstantDrawer</Filter>
+    </ClInclude>
+    <ClInclude Include="EventCamera.h">
+      <Filter>Application\Camera\EventCamera</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

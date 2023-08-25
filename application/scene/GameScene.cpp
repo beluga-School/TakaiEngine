@@ -13,6 +13,7 @@
 #include "InStageStarUI.h"
 #include "StageTitleUI.h"
 #include "EventManager.h"
+#include "EventCamera.h"
 
 void GameScene::LoadResource()
 {
@@ -43,6 +44,8 @@ void GameScene::LoadResource()
 	TextureManager::Load("Resources\\09_AlphaMask_Resources\\groundCubeMask.png", "groundCubeMask");
 
 	StageTitleUI::Get()->LoadResource();
+
+	EventCamera::Get()->Initialize();
 }
 
 void GameScene::Initialize()
@@ -152,16 +155,14 @@ void GameScene::Update()
 
 	ImGui::Text("mouseR %f", PlayerCamera::Get()->GetRadius());
 
+	ImGui::Text("position x:%f y:%f z:%f", 
+		player->position.x, player->position.y, player->position.z);
+
 	//ImGui::Text("StageTitleUI:state %d", StageTitleUI::Get()->state);
 	//ImGui::Text("StageTitleUI:w %f", StageTitleUI::Get()->stageTitle.mColor.f4.w);
 	
 	player->starUI.ValueSliders();
 	
-	for (auto& down : player->hitListDown)
-	{
-		ImGui::Text("down.position x:%f y:%f z:%f", down.position.x, down.position.y, down.position.z);
-	}
-
 	//player->starUI.ValueSliders();
 
 	sceneChangeGUI.End();
@@ -170,9 +171,10 @@ void GameScene::Update()
 
 	//カメラ更新
 	//イベント中ならカメラ変更
+	EventCamera::Get()->ObjUpdate();
 	if (EventManager::IsNowEvent())
 	{
-		mDebugCamera.Update();
+		EventCamera::Get()->Update();
 	}
 	//それ以外はプレイヤーに追従
 	else
@@ -208,6 +210,11 @@ void GameScene::Draw()
 	EnemyManager::Get()->Draw();
 
 	ParticleManager::GetInstance()->Draw();
+
+	if (!EventManager::IsNowEvent())
+	{
+		EventCamera::Get()->Draw();
+	}
 
 	//pCamera->Draw();
 

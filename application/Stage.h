@@ -10,6 +10,7 @@
 #include "Mob.h"
 #include "Dokan.h"
 #include "Sea.h"
+#include "EventCamera.h"
 
 class ColEventObj : public Obj3d
 {
