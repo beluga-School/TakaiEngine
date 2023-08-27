@@ -2002,6 +2002,19 @@
                 ]
             },
             "file_name": "Cannon",
+            "collider": {
+                "type": "BOX",
+                "center": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "size": [
+                    2.0,
+                    2.0,
+                    2.0
+                ]
+            },
             "event_trigger": "Cannon_start_1"
         },
         {
@@ -2339,6 +2352,19 @@
                 ]
             },
             "file_name": "Cannon",
+            "collider": {
+                "type": "BOX",
+                "center": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "size": [
+                    2.0,
+                    2.0,
+                    2.0
+                ]
+            },
             "event_trigger": "Cannon_start_3"
         },
         {
@@ -2795,7 +2821,7 @@
             "name": "Cube.063",
             "transform": {
                 "translation": [
-                    35.54826736450195,
+                    21.120590209960938,
                     -55.04861068725586,
                     -0.3963747024536133
                 ],
@@ -2883,7 +2909,7 @@
                 "translation": [
                     -24.637887954711914,
                     -56.63039016723633,
-                    -20.0330810546875
+                    -0.27112483978271484
                 ],
                 "rotation": [
                     0.0,
@@ -3101,6 +3127,34 @@
             },
             "event_trigger": "stage_stageselect_0",
             "setObject": "dokan_0"
+        },
+        {
+            "type": "MESH",
+            "name": "立方体.010",
+            "transform": {
+                "translation": [
+                    0.0,
+                    0.0,
+                    -11.470523834228516
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    500.0,
+                    500.0,
+                    0.5
+                ]
+            },
+            "setObject": "sea",
+            "tiling": {
+                "tiling": [
+                    100.0,
+                    100.0
+                ]
+            }
         }
     ]
 }

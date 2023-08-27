@@ -149,20 +149,20 @@ void Mob::CalcNearestHitLists()
 		preBack = hit.position.z;
 	}
 
-	//高さを算出した最大値に合わせる
-	if (jumpState == JumpState::None)
-	{
-		//現在位置が
-		if (position.y > hitFeetMax)
-		{
-			jumpState = JumpState::Down;
-		}
-		else
-		{
-			position.y = hitFeetMax;
-			gravity = 0;
-		}
-	}
+	////高さを算出した最大値に合わせる
+	//if (jumpState == JumpState::None)
+	//{
+	//	//現在位置が
+	//	if (position.y > hitFeetMax)
+	//	{
+	//		jumpState = JumpState::Down;
+	//	}
+	//	else
+	//	{
+	//		position.y = hitFeetMax;
+	//		gravity = 0;
+	//	}
+	//}
 }
 
 void Mob::JumpUpdate()
@@ -182,6 +182,7 @@ void Mob::JumpUpdate()
 		{
 			//地面に立っている状態にする
 			gravity = 0;
+			//position.y = hitFeetMax;
 		}
 
 		break;

@@ -5,6 +5,7 @@
 #include "Mob.h"
 #include "UI.h"
 #include "StarUI.h"
+#include "ImguiManager.h"
 
 class Player : public Mob
 {
@@ -59,6 +60,20 @@ public:
 	bool GetApparanceEnd();
 
 private:
+	//ここら辺の状態管理は統一したいし、Apparranceがここにいると色々不都合がありそう
+	//出現処理のもろもろ
+	enum class PlayerState
+	{
+		Normal,
+		Apparrance,
+		Debug,
+	}playerState = PlayerState::Normal;
+
+	//プレイヤーのモードを変える(0,通常,1,デバッグモード)
+	void ChangeMode(const PlayerState& pState);
+
+	GUI debugGUI = {"DebugGUI"};
+
 	//hpの最大値　ステータスの最大値は外から変えられるようにしたい
 	int32_t MAX_HP = 8;
 
@@ -75,11 +90,10 @@ private:
 	};
 	~Player(){};
 
-	void Attack();
-
 	void SideMoveUpdate();
 	void ColUpdate();
 	void RotaUpdate();
+	void Fly();
 
 	void DamageUpdate();
 
@@ -125,40 +139,11 @@ private:
 	//敵との当たり判定用スフィアの描画
 	Obj3d colDrawer;
 
-	///---攻撃
-	enum class AttackState
-	{
-		None,		//攻撃していない
-		Attacking,	//攻撃中
-		CoolTime,	//クールタイム
-	}attackState = AttackState::None;
-
-	//ローリング時間の管理
-	TEasing::easeTimer attackingTimer = 1.0f;
-	//ローリングの回転モーションの管理
-	TEasing::easeTimer attackingMotionTimer = 0.5f;
-	//ローリングのクールタイムの管理
-	TEasing::easeTimer attackCoolTimer = 0.75f;
-
-	//ローリングの回転数の管理
-	int32_t mRolingNum = 3;
-
-	Vector3 mRolingVec = {0,0,0};
-
-	float mRolingSpeed = 15.0f;
-
 	//収集物関係
 	//スターの取得数
 	Status starCorrectNum = 0;
 
 	TEasing::easeTimer UIDelayTimer = 0.5f;
-
-	//出現処理のもろもろ
-	enum class PlayerState
-	{
-		Normal,
-		Apparrance,
-	}playerState = PlayerState::Normal;
 
 	TEasing::easeTimer apparranceTimer = 1.0f;
 

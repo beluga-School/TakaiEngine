@@ -21,7 +21,7 @@ public:
 	//true‚É‚È‚é‚Æd—Í‚ğó‚¯‚È‚­‚·‚é(gravity‚Ì’l‚à0‚É‚·‚é)
 	void SetNoGravity(bool flag)
 	{
-		if (!flag)gravity = 0;
+		if (flag)gravity = 0;
 		noGravity = flag;
 	}
 	void SetNoCollsion(bool flag)

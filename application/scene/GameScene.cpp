@@ -227,10 +227,8 @@ void GameScene::Draw()
 	}
 	else
 	{
-		EventCameraManager::Get()->Draw();
+		//EventCameraManager::Get()->Draw();
 	}
-
-	//pCamera->Draw();
 
 	BasicObjectPreDraw(PipelineManager::GetPipeLine("PerlinNoise"));
 

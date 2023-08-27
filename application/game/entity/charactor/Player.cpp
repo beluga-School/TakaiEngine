@@ -45,25 +45,11 @@ void Player::Update()
 
 		if (apparranceTimer.GetEnd())
 		{
-			playerState = PlayerState::Normal;
-			SetNoCollsion(false);
-			SetNoGravity(false);
-			SetNoMove(false);
-
+			ChangeMode(PlayerState::Normal);
+			
 			//ここら辺システム側の処理だから、別の場所に移したい
 			StageTitleUI::Get()->Start();
 		}
-	}
-
-	//ダメージ処理
-	if (Input::Keyboard::TriggerKey(DIK_T))
-	{
-		mutekiTimer.Reset();
-		DamageEffect(1);
-	}
-	if (Input::Keyboard::TriggerKey(DIK_G))
-	{
-		hp.mCurrent += 1;
 	}
 
 	//移動地を初期化
@@ -73,28 +59,65 @@ void Player::Update()
 	mCenterVec = matWorld.ExtractAxisZ();
 	mSideVec = matWorld.ExtractAxisX();
 
-	Attack();
-
-	//横移動更新
-	if (attackState != AttackState::Attacking)
+	switch (playerState)
 	{
+	case Player::PlayerState::Normal:
+		SetNoCollsion(false);
+		SetNoGravity(false);
+		SetNoMove(false);
+
 		SideMoveUpdate();
-	}
-	
-	//縦移動更新(重力落下含む)
 
-	//ジャンプしていない状態で入力があったらジャンプ
-	if (jumpState == JumpState::None)
-	{
-		if (Input::Keyboard::TriggerKey(DIK_SPACE) ||
-			Pad::TriggerPadButton(PadButton::A))
+		//縦移動更新(重力落下含む)
+		//ジャンプしていない状態で入力があったらジャンプ
+		if (jumpState == JumpState::None)
 		{
-			Jump();
+			if (Input::Keyboard::TriggerKey(DIK_SPACE) ||
+				Pad::TriggerPadButton(PadButton::A))
+			{
+				Jump();
+			}
 		}
-	}
 
-	//Mob側の更新
-	Mob::CollsionUpdate();
+		if (Input::Keyboard::TriggerKey(DIK_1))
+		{
+			ChangeMode(PlayerState::Debug);
+		}
+
+		break;
+	case Player::PlayerState::Apparrance:
+		SetNoCollsion(true);
+		SetNoGravity(true);
+		SetNoMove(true);
+
+		break;
+	case Player::PlayerState::Debug:
+		SetNoCollsion(false);
+		SetNoGravity(true);
+		SetNoMove(false);
+
+		SideMoveUpdate();
+
+		Fly();
+
+		//ダメージ処理テスト
+		if (Input::Keyboard::TriggerKey(DIK_T))
+		{
+			mutekiTimer.Reset();
+			DamageEffect(1);
+		}
+		if (Input::Keyboard::TriggerKey(DIK_G))
+		{
+			hp.mCurrent += 1;
+		}
+
+		if (Input::Keyboard::TriggerKey(DIK_1))
+		{
+			ChangeMode(PlayerState::Normal);
+		}
+
+		break;
+	}
 
 	//Player特有の当たり判定更新(CollideManagerに移す)
 	//ここ置き換えるまでは今日やる
@@ -107,6 +130,9 @@ void Player::Update()
 		position += moveValue;
 	}
 
+	//Mob側の更新
+	Mob::CollsionUpdate();
+
 	//当たり判定
 	///--敵当たり判定
 	mEncountCol.center = position;
@@ -116,12 +142,8 @@ void Player::Update()
 	colDrawer.scale = scale;
 
 	//回転更新
-	//原神みたいな止まってるときは前向ける設計にしたいな～～
-	if (attackState != AttackState::Attacking)
-	{
-		//スター取得中は正面を向けるため回転の更新をストップ(中に書いてある)
-		RotaUpdate();
-	}
+	//スター取得中は正面を向けるため回転の更新をストップ(中に書いてある)
+	RotaUpdate();
 
 	//更新
 	Obj3d::Update(*Camera::sCamera);
@@ -134,6 +156,18 @@ void Player::Update()
 	hpGauge.Update();
 
 	StarUIUpdate();
+
+	debugGUI.Begin({ 800,100 }, { 200,200 });
+	if (playerState == PlayerState::Debug)
+	{
+		ImGui::Text("debugmode:on");
+	}
+	ImGui::Text("jumpState:%d", (int32_t)JumpState::None);
+	ImGui::Text("hitFeetMax:%f", hitFeetMax);
+	ImGui::Text("gravity:%f", gravity);
+	ImGui::Text("position x:%fy:%f z:%f",
+		position.x, position.y, position.z);
+	debugGUI.End();
 }
 
 void Player::Draw()
@@ -163,63 +197,6 @@ void Player::Reset()
 	hitListCenter.clear();
 	hitListRight.clear();
 	hitListLeft.clear();
-}
-
-void Player::Attack()
-{
-	//攻撃更新
-	attackingTimer.Update();
-	attackCoolTimer.Update();
-	attackingMotionTimer.Update();
-
-	//入力
-	switch (attackState)
-	{
-	case Player::AttackState::None:
-		//攻撃していない状態で入力があったら
-		//if (Mouse::Triggered(Click::LEFT))
-		if(0)
-		{
-			//攻撃状態に遷移
-			attackState = AttackState::Attacking;
-			attackingTimer.Start();
-
-			//ここで正面ベクトルを保存
-			mRolingVec = mCenterVec;
-
-			//ローリング数が適用されるように最大時間を割る
-			attackingMotionTimer.mMaxTime = attackingTimer.mMaxTime;
-			//attackingMotionTimer.mMaxTime = attackingTimer.mMaxTime;
-		}
-		break;
-	case Player::AttackState::Attacking:
-
-		if (attackingMotionTimer.GetRun() == false)
-		{
-			attackingMotionTimer.Start();
-		}
-
-		//正面ベクトルの方向に進める
-		moveValue += mRolingVec * mRolingSpeed * TimeManager::deltaTime;
-		rotation.x = TEasing::InQuad(-MathF::PIf * 2.f, MathF::PIf * 2.f, attackingMotionTimer.GetTimeRate());
-
-		if (attackingTimer.GetEnd())
-		{
-			attackState = AttackState::CoolTime;
-			attackingTimer.Reset();
-			attackCoolTimer.Start();
-
-			rotation.x = 0;
-		}
-		break;
-	case Player::AttackState::CoolTime:
-		if (attackCoolTimer.GetEnd())
-		{
-			attackState = AttackState::None;
-			attackCoolTimer.Reset();
-		}
-		break;
-	}
 }
 
 void Player::SideMoveUpdate()
@@ -311,17 +288,6 @@ void Player::ColUpdate()
 	box.ColDrawerUpdate(pCol.position, pCol.scale);
 	box.CreateCol(pCol.position, pCol.scale);
 
-	////ここら辺の処理を、全部CollideManagerに移す
-	////今はここに置かないと横の判定が取れない仕組みになってるので、後でX方向もシステム化する
-	//for (auto& col : CollideManager::Get()->allCols)
-	//{
-	//	if (col->CheckTag(TagTable::Block))
-	//	{
-	//		Block* block = static_cast<Block*>(col);
-	//		CollideManager::Get()->CheckCollide(this, block);
-	//	}
-	//}
-
 	for (auto& goal : StageChanger::Get()->mGoals)
 	{
 		Cube goalCol;
@@ -343,6 +309,21 @@ void Player::RotaUpdate()
 {
 	//回転させる処理
 	rotation.y = PlayerCamera::Get()->mHorizontalRad;
+}
+
+void Player::Fly()
+{
+	Vector3 upVec = {0,1,0};
+	
+	if (Input::Keyboard::PushKey(DIK_SPACE))
+	{
+		moveValue += upVec * mSpeed * TimeManager::deltaTime;
+	}
+
+	if (Input::Keyboard::PushKey(DIK_LSHIFT))
+	{
+		moveValue -= upVec * mSpeed * TimeManager::deltaTime;
+	}
 }
 
 void Player::DamageUpdate()
@@ -472,10 +453,7 @@ void Player::DamageEffect(int32_t damage)
 
 void Player::ApparranceMove(const Vector3& dokanPos, const Vector3& dokanScale)
 {
-	playerState = PlayerState::Apparrance;
-	SetNoCollsion(true);
-	SetNoGravity(true);
-	SetNoMove(true);
+	ChangeMode(PlayerState::Apparrance);
 
 	apparranceTimer.Start();
 	saveDokanPos = dokanPos;
@@ -496,6 +474,11 @@ void Player::HPOverFlow(int32_t value)
 		MAX_HP = hp.mCurrent;
 		hpGauge.SetGaugeSize(hp.mCurrent, true);
 	}
+}
+
+void Player::ChangeMode(const PlayerState& pState)
+{
+	playerState = pState;
 }
 
 void Player::Jump()
