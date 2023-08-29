@@ -63,7 +63,8 @@ void EventManager::Update()
 			EventManager::Start("next_1");
 		}
 		//ステージ1のクリア時に実行
-		if (ClearManage::Get()->clearNumber == 1)
+		//クリアしたステージ番号を参照して実行
+		if (ClearManage::Get()->isClear)
 		{
 			EventManager::Start("goal_1");
 		}

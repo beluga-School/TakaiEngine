@@ -11,9 +11,21 @@ public:
 		return &instance;
 	}
 
-	//直前でクリアしたステージの情報を保存する
+	//ゴールしたらゴール演出を実行するための情報
 	bool isClear = false;
-	int32_t clearNumber = -1;
+	int32_t eventNumber = -1;
+
+	void SetClearInfo(const std::string& stageName = "");
+
+	//これでよくない？？？？？？？？？？？？？？？？？？？
+	//ここが初めてtrueになったときに解放演出が入る
+	bool stage1clear = 0;
+	bool stage2clear = 0;
+	bool stage3clear = 0;
+	bool stage4clear = 0;
+	bool stage5clear = 0;
+	bool stage6clear = 0;
+
 private:
 	~ClearManage(){};
 	ClearManage(){};

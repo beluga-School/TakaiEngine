@@ -694,7 +694,7 @@
       <Filter>Application\Event\Clear1</Filter>
     </ClCompile>
     <ClCompile Include="EventTriggers.cpp">
-      <Filter>ソース ファイル</Filter>
+      <Filter>Application\Event\EventTriggers</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -993,7 +993,7 @@
       <Filter>Application\Event\Clear1</Filter>
     </ClInclude>
     <ClInclude Include="EventTriggers.h">
-      <Filter>ヘッダー ファイル</Filter>
+      <Filter>Application\Event\EventTriggers</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

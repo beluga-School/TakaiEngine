@@ -23,9 +23,9 @@ void GameScene::LoadResource()
 	LevelLoader::Get()->Load("Scene/stage_stageselect", "stage_stageselect",0);
 	LevelLoader::Get()->Load("Scene/stage_castle_outside", "stage_castle_outside",-1);
 	LevelLoader::Get()->Load("Scene/stage_castle_inside", "stage_castle_inside", -1);
-	LevelLoader::Get()->Load("Scene/stage_grasslands", "stage_grasslands", -1);
+	LevelLoader::Get()->Load("Scene/stage_grasslands", "stage_grasslands", 2);
 	LevelLoader::Get()->Load("Scene/stage_mountain", "stage_mountain", 1);
-	LevelLoader::Get()->Load("Scene/stage_graveyard", "stage_graveyard", 2);
+	LevelLoader::Get()->Load("Scene/stage_graveyard", "stage_graveyard", -1);
 	LevelLoader::Get()->Load("Scene/starTest", "starTest", -1);
 	LevelLoader::Get()->Load("Scene/clear1", "clear1", -1);
 	

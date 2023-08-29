@@ -9,7 +9,7 @@ void Clear1::Start()
 	timer.Start();
 
 	ClearManage::Get()->isClear = false;
-	ClearManage::Get()->clearNumber = -1;
+	ClearManage::Get()->eventNumber = -1;
 }
 
 void Clear1::Update()
@@ -33,7 +33,7 @@ void Clear1::Draw()
 bool Clear1::RunFlag()
 {
 	//ステージ1がクリアされていて、戻ってきて土管の演出が終わったら実行
-	return ClearManage::Get()->isClear && ClearManage::Get()->clearNumber == 1 &&
+	return ClearManage::Get()->isClear && ClearManage::Get()->eventNumber == 1 &&
 		Player::Get()->GetApparanceEnd();
 
 	//return Player::Get()->GetApparanceEnd();

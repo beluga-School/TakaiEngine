@@ -164,43 +164,6 @@
         },
         {
             "type": "MESH",
-            "name": "円柱.001",
-            "transform": {
-                "translation": [
-                    -13.184408187866211,
-                    13.14631175994873,
-                    9.76955509185791
-                ],
-                "rotation": [
-                    0.0,
-                    -0.0,
-                    0.0
-                ],
-                "scaling": [
-                    2.0,
-                    2.0,
-                    2.0
-                ]
-            },
-            "file_name": "dokan",
-            "collider": {
-                "type": "BOX",
-                "center": [
-                    0.0,
-                    0.0,
-                    1.0
-                ],
-                "size": [
-                    2.0,
-                    2.0,
-                    2.0
-                ]
-            },
-            "event_trigger": "stage_grassland_0",
-            "setObject": "dokan"
-        },
-        {
-            "type": "MESH",
             "name": "Cube.002",
             "transform": {
                 "translation": [
@@ -315,8 +278,8 @@
                     2.0
                 ]
             },
-            "event_trigger": "stage_grassland_0",
-            "setObject": "dokan"
+            "event_trigger": "stage_grasslands_0",
+            "setObject": "dokan_0"
         },
         {
             "type": "MESH",
@@ -361,43 +324,6 @@
         },
         {
             "type": "MESH",
-            "name": "円柱.003",
-            "transform": {
-                "translation": [
-                    2.0854458808898926,
-                    17.62509536743164,
-                    22.45597267150879
-                ],
-                "rotation": [
-                    0.0,
-                    -0.0,
-                    0.0
-                ],
-                "scaling": [
-                    2.0,
-                    2.0,
-                    2.0
-                ]
-            },
-            "file_name": "dokan",
-            "collider": {
-                "type": "BOX",
-                "center": [
-                    0.0,
-                    0.0,
-                    1.0
-                ],
-                "size": [
-                    2.0,
-                    2.0,
-                    2.0
-                ]
-            },
-            "event_trigger": "stage_grassland_0",
-            "setObject": "dokan"
-        },
-        {
-            "type": "MESH",
             "name": "Cube.005",
             "transform": {
                 "translation": [
@@ -436,43 +362,6 @@
                     3.0
                 ]
             }
-        },
-        {
-            "type": "MESH",
-            "name": "円柱.004",
-            "transform": {
-                "translation": [
-                    14.70766830444336,
-                    4.896257400512695,
-                    33.814125061035156
-                ],
-                "rotation": [
-                    0.0,
-                    -0.0,
-                    0.0
-                ],
-                "scaling": [
-                    2.0,
-                    2.0,
-                    2.0
-                ]
-            },
-            "file_name": "dokan",
-            "collider": {
-                "type": "BOX",
-                "center": [
-                    0.0,
-                    0.0,
-                    1.0
-                ],
-                "size": [
-                    2.0,
-                    2.0,
-                    2.0
-                ]
-            },
-            "event_trigger": "stage_grassland_0",
-            "setObject": "dokan"
         },
         {
             "type": "MESH",
