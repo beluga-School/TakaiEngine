@@ -161,6 +161,16 @@ void CollideManager::CheckCollide(Entity* check, Entity* collide)
 				cannon->OnCollide(*mob);
 			}
 		}
+		if (collide->CheckTag(TagTable::MoveBlock))
+		{
+			//collideがBlockであることは確定しているので、Block型に変換してデータを持ってくる
+			MoveBlock* moveblock = static_cast<MoveBlock*>(collide);
+
+			if (Collsions::CubeCollision(mob->box.cubecol, moveblock->box.cubecol))
+			{
+				moveblock->OnCollide(mob);
+			}
+		}
 	}
 }
 

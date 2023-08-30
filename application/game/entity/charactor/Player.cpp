@@ -123,13 +123,6 @@ void Player::Update()
 	//ここ置き換えるまでは今日やる
 	ColUpdate();
 
-	//本加算
-	//動けないフラグ立ったら加算しない
-	if (mNoMove == false)
-	{
-		position += moveValue;
-	}
-
 	//Mob側の更新
 	Mob::CollsionUpdate();
 

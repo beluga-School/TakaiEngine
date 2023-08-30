@@ -3,12 +3,28 @@
 
 void Mob::CollsionUpdate()
 {
+	//本加算
+	//動けないフラグ立ったら加算しない
+	if (mNoMove == false)
+	{
+		position += moveValue;
+	}
+
+	//当たり判定の丸め
 	CalcNearestHitLists();
 
 	//今後Xも入る予定
 	UpdateX();
 
 	UpdateY();
+
+	if (moveBlockHit)
+	{
+		jumpState = JumpState::None;
+		position = moveBlockPosition;
+	}
+
+	moveBlockHit = false;
 }
 
 void Mob::UpdateY()
@@ -33,7 +49,6 @@ void Mob::UpdateX()
 	{
 		position.z = hitCenterMin;
 	}
-
 	//正面
 	if (position.z <= hitBackMin)
 	{
@@ -64,6 +79,13 @@ void Mob::CalcNearestHitLists()
 			//Q,ここのスケール/2いらなくね
 			//A,ここのスケール/2は、判定壁の太さみたいなものなので、固定の太さを持たせればいいと思います
 			hitFeetMax = feet + scale.y / 2 + 0.01f;
+			
+			//移動ブロック用に座標を記録する
+			moveBlockPosition = {
+				position.x,
+				hitFeetMax,
+				position.z
+			};
 		}
 		preDownY = hit.position.y;
 	}
@@ -148,21 +170,6 @@ void Mob::CalcNearestHitLists()
 		}
 		preBack = hit.position.z;
 	}
-
-	////高さを算出した最大値に合わせる
-	//if (jumpState == JumpState::None)
-	//{
-	//	//現在位置が
-	//	if (position.y > hitFeetMax)
-	//	{
-	//		jumpState = JumpState::Down;
-	//	}
-	//	else
-	//	{
-	//		position.y = hitFeetMax;
-	//		gravity = 0;
-	//	}
-	//}
 }
 
 void Mob::JumpUpdate()

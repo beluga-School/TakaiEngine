@@ -36,5 +36,8 @@ public:
 
 private:
 	TEasing::easeTimer moveTimer = 2.0f;
+	//1ƒtƒŒ[ƒ€‚ÅˆÚ“®‚µ‚½—Ê
+	Vector3 moveValue{};
+	Vector3 oldPos{};
 };
 

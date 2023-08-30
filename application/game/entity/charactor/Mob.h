@@ -51,6 +51,11 @@ public:
 		return jumpState;
 	};
 
+	//ムーブブロックに当たってるなら座標を記録し、そこに移動値加算前にポジション代入する
+	Vector3 moveBlockPosition{};
+
+	bool moveBlockHit = false;
+
 protected:
 	bool noGravity = false;
 
