@@ -219,6 +219,8 @@ void CollideManager::CheckStatus(Entity* check, Entity* collide)
 
 void CollideManager::Osimodosi(Mob& check, const Block& collide)
 {
+	
+
 	//そのオブジェクトより
 	//上にいるか
 	bool up = CheckDirections(check.box.cubecol, collide.box.cubecol, CheckDirection::CD_UP);

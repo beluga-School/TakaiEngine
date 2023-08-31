@@ -3,6 +3,14 @@
 
 void Mob::CollsionUpdate()
 {
+	//当たり判定の丸め
+	CalcNearestHitLists();
+
+	if (moveBlockHit)
+	{
+		position += moveBlockPosition;
+	}
+	
 	//本加算
 	//動けないフラグ立ったら加算しない
 	if (mNoMove == false)
@@ -10,19 +18,12 @@ void Mob::CollsionUpdate()
 		position += moveValue;
 	}
 
-	//当たり判定の丸め
-	CalcNearestHitLists();
-
 	//今後Xも入る予定
 	UpdateX();
 
 	UpdateY();
 
-	if (moveBlockHit)
-	{
-		jumpState = JumpState::None;
-		position = moveBlockPosition;
-	}
+	moveBlockPosition = { 0,0,0 };
 
 	moveBlockHit = false;
 }
@@ -79,13 +80,6 @@ void Mob::CalcNearestHitLists()
 			//Q,ここのスケール/2いらなくね
 			//A,ここのスケール/2は、判定壁の太さみたいなものなので、固定の太さを持たせればいいと思います
 			hitFeetMax = feet + scale.y / 2 + 0.01f;
-			
-			//移動ブロック用に座標を記録する
-			moveBlockPosition = {
-				position.x,
-				hitFeetMax,
-				position.z
-			};
 		}
 		preDownY = hit.position.y;
 	}
@@ -181,6 +175,17 @@ void Mob::JumpUpdate()
 	{
 	case Mob::JumpState::None:
 
+		for (auto& hit : hitListDown)
+		{
+			if (hit.parentEntity->CheckTag(TagTable::MoveBlock))
+			{
+				if (moveBlockPosition.y <= 0.001)
+				{
+					position.y = hitFeetMax - 0.01f;
+				}
+			}
+		}
+
 		if (position.y > hitFeetMax)
 		{
 			jumpState = JumpState::Down;
@@ -189,7 +194,6 @@ void Mob::JumpUpdate()
 		{
 			//地面に立っている状態にする
 			gravity = 0;
-			//position.y = hitFeetMax;
 		}
 
 		break;
@@ -215,7 +219,7 @@ void Mob::JumpUpdate()
 	case Mob::JumpState::Staying:
 		if (stayManageTimer.GetEnd())
 		{
-			jumpState = JumpState::None;
+			jumpState = JumpState::Down;
 			stayManageTimer.Reset();
 		}
 

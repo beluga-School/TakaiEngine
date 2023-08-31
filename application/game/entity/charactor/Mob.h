@@ -14,7 +14,7 @@ public:
 	std::list<IDdCube> hitListCenter;
 	std::list<IDdCube> hitListBack;
 	
-	Mob() {
+	Mob() : Entity() {
 		SetTag(TagTable::Mob);
 	};
 

@@ -53,4 +53,7 @@ void MoveBlock::OnCollide(Mob* mob)
 	//ムーブブロックで加算される値をmobに作り、そこに値を代入
 	//計算するときに値があるなら計算する感じに
 	mob->moveBlockHit = true;
+	
+	//移動ブロック用に座標を記録する
+	mob->moveBlockPosition = moveValue;
 }

@@ -123,6 +123,13 @@ void Player::Update()
 	//Ç±Ç±íuÇ´ä∑Ç¶ÇÈÇ‹Ç≈ÇÕç°ì˙Ç‚ÇÈ
 	ColUpdate();
 
+
+	debugGUI.Begin({ 800,100 }, { 200,200 });
+	ImGui::Text("moveBlockPosition x:%fy:%f z:%f",
+		moveBlockPosition.x, moveBlockPosition.y, moveBlockPosition.z);
+	ImGui::Text("moveBlockHit %d",
+		moveBlockHit);
+
 	//Mobë§ÇÃçXêV
 	Mob::CollsionUpdate();
 
@@ -150,7 +157,7 @@ void Player::Update()
 
 	StarUIUpdate();
 
-	debugGUI.Begin({ 800,100 }, { 200,200 });
+
 	if (playerState == PlayerState::Debug)
 	{
 		ImGui::Text("debugmode:on");
@@ -161,6 +168,7 @@ void Player::Update()
 	ImGui::Text("position x:%fy:%f z:%f",
 		position.x, position.y, position.z);
 	debugGUI.End();
+
 }
 
 void Player::Draw()

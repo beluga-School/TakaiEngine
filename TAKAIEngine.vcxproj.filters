@@ -995,6 +995,9 @@
     <ClInclude Include="EventTriggers.h">
       <Filter>Application\Event\EventTriggers</Filter>
     </ClInclude>
+    <ClInclude Include="Tag.h">
+      <Filter>Application</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="External\imgui\imgui.ini" />

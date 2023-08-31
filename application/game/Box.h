@@ -1,5 +1,7 @@
 #pragma once
 #include "Collision.h"
+#include "Tag.h"
+#include <list>
 
 //ブロックの方向を確認するためのenum
 enum class CheckDirection
@@ -11,6 +13,8 @@ enum class CheckDirection
 	CD_LEFT,
 	CD_RIGHT,
 };
+
+class Entity;
 
 //当たり判定用に、ID識別ができるようにしたCube
 struct IDdCube : public Cube
@@ -33,6 +37,8 @@ struct IDdCube : public Cube
 	/// 全オブジェクト消去の際のみに使用し、それ以外では使用しないこと
 	/// </summary>
 	static void ResetID();
+
+	Entity* parentEntity = nullptr;
 
 private:
 	//全てのオブジェクトが、自身だけのマイナンバーを持つ
