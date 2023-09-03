@@ -1,15 +1,11 @@
 #include "Clear1.h"
 #include "Stage.h"
 #include "GoalSystem.h"
-#include "Player.h"
 
 void Clear1::Start()
 {
 	setFlag = false;
 	timer.Start();
-
-	ClearManage::Get()->isClear = false;
-	ClearManage::Get()->eventNumber = -1;
 }
 
 void Clear1::Update()

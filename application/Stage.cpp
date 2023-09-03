@@ -55,18 +55,23 @@ void StageChanger::Update()
 		SceneChange::Get()->Open();
 	}
 
+	//ステージごとに実行されるイベントがあればここで実行
+	if (GetNowStageHandle() == "stage_stageselect" &&
+		LevelLoader::Get()->GetData("stage_mountain")->isClear &&
+		EventManager::Get()->GetEvent("next_1")->get()->isExecuted == false)
+	{
+		EventManager::Get()->Start("next_1");
+	}
+
 	for (auto& obj : mEntitys)
 	{
 		obj.Update(*Camera::sCamera);
 		obj.box.Update(*Camera::sCamera);
-		//obj.box.CreateCol(obj.position,);
 	}
 	for (auto& obj : mEventObjects)
 	{
 		obj->Update();
 	}
-
-	//StarManager::Get()->Update();
 
 	for (auto& obj : CollideManager::Get()->allCols)
 	{
@@ -108,6 +113,11 @@ void StageChanger::Reload()
 std::string StageChanger::GetNowStageHandle()
 {
 	return currentHandle;
+}
+
+LevelData* StageChanger::GetNowStageData()
+{
+	return LevelLoader::Get()->GetData(GetNowStageHandle());
 }
 
 void StageChanger::Reset()

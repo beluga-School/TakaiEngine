@@ -94,20 +94,12 @@ void GoalSystem::Draw()
 	}
 }
 
-void ClearManage::SetClearInfo(const std::string& stageName)
+void ClearManage::SetClearInfo(const std::string& clearStageName)
 {
-	//情報が入っているなら
-	if (stageName != "")
-	{
-		//旗を通ったフラグを立てる
-		isClear = true;
-
-		////通ったステージの番号を記録する
-		//ClearManage::Get()->eventNumber =
-		//	LevelLoader::Get()->GetData(stageName)->mStageNum;
-
-		//ステージセレクトに戻れるように情報を記録
-		StageChanger::Get()->saveNextDokanInfo.stageName = "stageselect";
-		StageChanger::Get()->saveNextDokanInfo.id = LevelLoader::Get()->GetData(stageName)->mStageNum;
-	}
+	//クリアしたステージのクリアフラグを立てる
+	LevelLoader::Get()->GetData(clearStageName)->isClear = true;;
+	//ステージセレクトに戻れるように情報を記録
+	StageChanger::Get()->saveNextDokanInfo.stageName = "stageselect";
+	//土管idを記録(ステージセレクトの土管idはステージidと同じになるようになっている)
+	StageChanger::Get()->saveNextDokanInfo.id = LevelLoader::Get()->GetData(clearStageName)->mStageNum;
 }

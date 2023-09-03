@@ -7,6 +7,9 @@
 
 bool EventManager::Start(const std::string& startEventName)
 {
+	//イベントが入っていれば成功で返す
+	if (GetNowEvent() != nullptr)return true;
+
 	for (auto &Event : allEvents)
 	{
 		//イベントがあれば実行
@@ -27,6 +30,7 @@ bool EventManager::Start(const std::string& startEventName)
 void EventManager::ForceEnd()
 {
 	state = State::None;
+	nowEvent->get()->isExecuted = true;
 	nowEvent = nullptr;
 
 	uppos.x = 0;
@@ -42,6 +46,21 @@ void EventManager::End()
 std::unique_ptr<IEvent>* EventManager::GetNowEvent()
 {
 	return nowEvent;
+}
+
+std::unique_ptr<IEvent>* EventManager::GetEvent(const std::string& eventName)
+{
+	for (auto& Event : allEvents)
+	{
+		//イベントがあれば返す
+		if (Event->eventName == eventName)
+		{
+			return &Event;
+		}
+	}
+
+	//見つからなかったらぬるぽ
+	return nullptr;
 }
 
 void EventManager::Initialize()

@@ -53,6 +53,9 @@ public:
 
 	std::string GetNowStageHandle();
 
+	//現在読み込まれているステージのデータを返す
+	LevelData* GetNowStageData();
+
 	static StageChanger* Get()
 	{
 		static StageChanger instance;

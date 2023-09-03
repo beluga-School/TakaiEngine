@@ -15,8 +15,11 @@ public:
 	//イベントを強制終了(nowEventを即時nullptrにする)
 	void ForceEnd();
 
-	//イベント名からイベントを取得
+	//現在実行中のイベントを取得
 	std::unique_ptr<IEvent>* GetNowEvent();
+
+	//イベント名からイベントを取得
+	std::unique_ptr<IEvent>* GetEvent(const std::string& eventName);
 
 	static EventManager* Get()
 	{

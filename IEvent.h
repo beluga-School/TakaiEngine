@@ -13,6 +13,9 @@ public:
 	//I—¹ğŒ
 	virtual bool End() = 0;
 
+	//ÀsÏ‚İ‚È‚ç—§‚Â
+	bool isExecuted = false;
+
 	std::string eventName;
 
 	EventCamera eventCamera;

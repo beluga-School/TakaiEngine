@@ -18,6 +18,7 @@ public:
 	void Load(const std::string &filename,const std::string& handle,int32_t stageNum);
 
 	LevelData* GetData(const std::string& handle);
+	
 	std::unordered_map<std::string, LevelData> GetDataMap() {
 		return LevelDatas;
 	}

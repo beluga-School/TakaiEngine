@@ -34,5 +34,8 @@ struct LevelData
 
 	//このステージが何番目かを表す値(starなどのステージごとの収集状況の合致に使用)
 	int32_t mStageNum = -1;
+
+	//このステージがクリアされたか
+	bool isClear = false;
 };
 

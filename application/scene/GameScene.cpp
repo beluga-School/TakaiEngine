@@ -45,8 +45,6 @@ void GameScene::LoadResource()
 	TextureManager::Load("Resources\\09_AlphaMask_Resources\\groundCubeMask.png", "groundCubeMask");
 
 	StageTitleUI::Get()->LoadResource();
-
-	//EventCamera::Get()->Initialize();
 }
 
 void GameScene::Initialize()
@@ -65,6 +63,7 @@ void GameScene::Initialize()
 
 	//初期ステージを決定
 	output = "stage_stageselect";
+
 	StageChanger::Get()->Initialize(*LevelLoader::Get()->GetData(output));
 
 	StageTitleUI::Get()->Initialize();
