@@ -1,4 +1,0 @@
-mPos.x:1110.88,
-mPos.y:37.306,
-mScale.x:0.441,
-mScale.y:0.441,

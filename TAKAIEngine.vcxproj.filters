@@ -213,12 +213,6 @@
     <Filter Include="Application\Scene\GameScene">
       <UniqueIdentifier>{ce4cfff0-1968-40c3-ba1f-e331b0cf73d7}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Application\Old">
-      <UniqueIdentifier>{8f0d3db2-c9b8-4e55-b126-9cd4ddde39f1}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Application\Old\ObjParticle">
-      <UniqueIdentifier>{460b4cdc-d13a-4f0a-9bbe-019b405a216e}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Application\Charactor">
       <UniqueIdentifier>{3dc3946a-e343-4223-9cad-c16ebeddf8c8}</UniqueIdentifier>
     </Filter>
@@ -228,29 +222,14 @@
     <Filter Include="Application\Collision">
       <UniqueIdentifier>{921fc882-a1c8-46bd-a451-bd0c04bdebcf}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Application\Block">
-      <UniqueIdentifier>{2d478356-55b8-45eb-999d-43fb364a2fe2}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Application\Stage">
       <UniqueIdentifier>{6349d7e7-a1d1-4114-aa41-235be1768fa3}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Application\EventBlock">
-      <UniqueIdentifier>{6095ec17-b870-4246-9122-9b4a2b397af5}</UniqueIdentifier>
     </Filter>
     <Filter Include="Application\Charactor\Enemy">
       <UniqueIdentifier>{e46da77e-f434-44e8-a38d-981d3fdb64f9}</UniqueIdentifier>
     </Filter>
     <Filter Include="シェーダー\Toon">
       <UniqueIdentifier>{fc37acf7-e514-49f2-94bb-842ba4c4fe9d}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Application\EventBlock\GoalBlock">
-      <UniqueIdentifier>{a52e176c-a13d-4d73-92ab-eb92512e6e93}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Application\EventBlock\EventBlock">
-      <UniqueIdentifier>{b571a83b-7bd6-423f-9e0b-9870427ee5b1}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Application\EventBlock\WarpBlock">
-      <UniqueIdentifier>{db5f74d3-d1ec-493a-b286-b3edd3031475}</UniqueIdentifier>
     </Filter>
     <Filter Include="Application\Charactor\Enemy\EnemyManager">
       <UniqueIdentifier>{4a1c0f97-a5fe-4cce-a633-5de90a38ede8}</UniqueIdentifier>
@@ -291,17 +270,11 @@
     <Filter Include="シェーダー\PerlinNoise">
       <UniqueIdentifier>{3930595b-e030-492e-9060-c73041f3772b}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Application\EventBlock\Star">
-      <UniqueIdentifier>{e234e327-a9e5-4832-8606-eb3701863442}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Application\CollideManager">
       <UniqueIdentifier>{8b7ae840-9ed9-434c-82b0-4ac48770cf23}</UniqueIdentifier>
     </Filter>
     <Filter Include="Application\Charactor\Box">
       <UniqueIdentifier>{f18195f4-70bb-44f8-adf6-2b9ea029a90f}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Application\EventBlock\Cannon">
-      <UniqueIdentifier>{694f7a6e-7b4a-46ee-8aa3-5f0e205738e5}</UniqueIdentifier>
     </Filter>
     <Filter Include="シェーダー\TextureBlend">
       <UniqueIdentifier>{32931717-993b-4561-a3c8-460d11203f2e}</UniqueIdentifier>
@@ -339,9 +312,6 @@
     <Filter Include="Application\Entity">
       <UniqueIdentifier>{1594da5a-a29e-4cf2-ac1c-40929b166ee2}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Application\EventBlock\Coin">
-      <UniqueIdentifier>{5e73a2fe-abc5-4499-94ba-86bdd7166d70}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Application\SceneChange">
       <UniqueIdentifier>{e8a48ed8-af9a-425a-a57e-23447f364934}</UniqueIdentifier>
     </Filter>
@@ -352,32 +322,17 @@
       <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
       <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
     </Filter>
-    <Filter Include="Application\EventBlock\Dokan">
-      <UniqueIdentifier>{ec96a8b5-3478-455f-aea2-fe63496f0b7a}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Application\UI\UI">
       <UniqueIdentifier>{c7988369-42db-4a28-8372-35f15dd7c01e}</UniqueIdentifier>
     </Filter>
     <Filter Include="Application\UI\UI\StarUI">
       <UniqueIdentifier>{559b5e9c-cf31-4caa-9bf4-112115ec33f0}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Application\LevelData">
-      <UniqueIdentifier>{154c4ae3-7d63-4ea8-871d-7721d710b902}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Application\Charactor\Enemy\Skelton">
       <UniqueIdentifier>{707b5be6-4406-4b09-b275-af0134f7154d}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Application\EventBlock\MoveBlock">
-      <UniqueIdentifier>{552f59a4-7d4f-426e-a7e2-a4584bc9ac09}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Application\UI\UI\InStageStarUI">
       <UniqueIdentifier>{7a16e506-7e2f-481f-bf49-3be0b5b1ed8a}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Application\Sea">
-      <UniqueIdentifier>{0c69c418-773d-40fd-bdf0-5b580aeddd6c}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Application\StageTitleUI">
-      <UniqueIdentifier>{b24b72f9-59b1-4ff8-9937-a28061c7a015}</UniqueIdentifier>
     </Filter>
     <Filter Include="Engine\2D\InstantDrawer">
       <UniqueIdentifier>{7404c217-175e-49f7-9df9-9f1f9e5c34e9}</UniqueIdentifier>
@@ -391,23 +346,65 @@
     <Filter Include="Application\Camera\EventCamera">
       <UniqueIdentifier>{bdaef200-6035-4459-96b4-42c65e42d7ed}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Application\Event">
+    <Filter Include="Application\Entity\EventBlock">
+      <UniqueIdentifier>{6095ec17-b870-4246-9122-9b4a2b397af5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Application\Entity\EventBlock\GoalBlock">
+      <UniqueIdentifier>{a52e176c-a13d-4d73-92ab-eb92512e6e93}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Application\Entity\EventBlock\EventBlock">
+      <UniqueIdentifier>{b571a83b-7bd6-423f-9e0b-9870427ee5b1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Application\Entity\EventBlock\WarpBlock">
+      <UniqueIdentifier>{db5f74d3-d1ec-493a-b286-b3edd3031475}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Application\Entity\EventBlock\Star">
+      <UniqueIdentifier>{e234e327-a9e5-4832-8606-eb3701863442}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Application\Entity\EventBlock\Cannon">
+      <UniqueIdentifier>{694f7a6e-7b4a-46ee-8aa3-5f0e205738e5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Application\Entity\EventBlock\Coin">
+      <UniqueIdentifier>{5e73a2fe-abc5-4499-94ba-86bdd7166d70}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Application\Entity\EventBlock\Dokan">
+      <UniqueIdentifier>{ec96a8b5-3478-455f-aea2-fe63496f0b7a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Application\Entity\EventBlock\MoveBlock">
+      <UniqueIdentifier>{552f59a4-7d4f-426e-a7e2-a4584bc9ac09}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Application\System\Event">
       <UniqueIdentifier>{e89bed34-6c87-43de-9219-28dc93915c09}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Application\Event\EventManager">
+    <Filter Include="Application\System\Event\EventManager">
       <UniqueIdentifier>{c9a4fc76-9fa6-4ba5-ba0f-cdaac89d0ca1}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Application\Event\Clear1">
+    <Filter Include="Application\System\Event\Clear1">
       <UniqueIdentifier>{bd10d056-0a74-4a2a-b7b5-92c8e40b8362}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Application\Event\IEvent">
+    <Filter Include="Application\System\Event\IEvent">
       <UniqueIdentifier>{ecdccc2d-73a5-4a72-91dd-9c5309f8478d}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Application\Event\EventTriggers">
+    <Filter Include="Application\System\Event\EventTriggers">
       <UniqueIdentifier>{f405bb6d-add4-4de0-9bdc-70b658844f26}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Application\Event\GoalCamChange">
+    <Filter Include="Application\System\Event\GoalCamChange">
       <UniqueIdentifier>{21dd0378-7023-4b0f-a7ba-e2e5aea7e0dc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Application\ObjParticle">
+      <UniqueIdentifier>{460b4cdc-d13a-4f0a-9bbe-019b405a216e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Application\LevelLoader\LevelData">
+      <UniqueIdentifier>{154c4ae3-7d63-4ea8-871d-7721d710b902}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Application\Entity\Block">
+      <UniqueIdentifier>{2d478356-55b8-45eb-999d-43fb364a2fe2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Application\Entity\Sea">
+      <UniqueIdentifier>{0c69c418-773d-40fd-bdf0-5b580aeddd6c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Application\UI\StageTitleUI">
+      <UniqueIdentifier>{b24b72f9-59b1-4ff8-9937-a28061c7a015}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -418,7 +415,7 @@
       <Filter>Engine\Sound</Filter>
     </ClCompile>
     <ClCompile Include="application\particle\ObjParticle.cpp">
-      <Filter>Application\Old\ObjParticle</Filter>
+      <Filter>Application\ObjParticle</Filter>
     </ClCompile>
     <ClCompile Include="External\imgui\imgui.cpp">
       <Filter>Engine\External\ImGui</Filter>
@@ -476,9 +473,6 @@
     </ClCompile>
     <ClCompile Include="engine\3d\ViewProjection.cpp">
       <Filter>Engine\3D\Camera</Filter>
-    </ClCompile>
-    <ClCompile Include="application\game\Collision.cpp">
-      <Filter>Application\Collision</Filter>
     </ClCompile>
     <ClCompile Include="engine\libManage\ImguiManager.cpp">
       <Filter>Engine\libManage\ImguiManager</Filter>
@@ -567,9 +561,6 @@
     <ClCompile Include="engine\3d\Obj3dFBX.cpp">
       <Filter>Engine\3D\Obj3dFBX</Filter>
     </ClCompile>
-    <ClCompile Include="application\game\Block.cpp">
-      <Filter>Application\Block</Filter>
-    </ClCompile>
     <ClCompile Include="application\game\Entity\Entity.cpp">
       <Filter>Application\Entity</Filter>
     </ClCompile>
@@ -580,13 +571,13 @@
       <Filter>Application\Charactor\Player</Filter>
     </ClCompile>
     <ClCompile Include="application\game\Entity\EventBlock\GoalBlock.cpp">
-      <Filter>Application\EventBlock\GoalBlock</Filter>
+      <Filter>Application\Entity\EventBlock\GoalBlock</Filter>
     </ClCompile>
     <ClCompile Include="application\game\Entity\EventBlock\Star.cpp">
-      <Filter>Application\EventBlock\Star</Filter>
+      <Filter>Application\Entity\EventBlock\Star</Filter>
     </ClCompile>
     <ClCompile Include="application\game\Entity\EventBlock\WarpBlock.cpp">
-      <Filter>Application\EventBlock\WarpBlock</Filter>
+      <Filter>Application\Entity\EventBlock\WarpBlock</Filter>
     </ClCompile>
     <ClCompile Include="application\game\Entity\Charactor\GEnemy.cpp">
       <Filter>Application\Charactor\Enemy\GEnemy</Filter>
@@ -595,10 +586,10 @@
       <Filter>Application\Charactor\Enemy</Filter>
     </ClCompile>
     <ClCompile Include="application\game\Entity\EventBlock\Cannon.cpp">
-      <Filter>Application\EventBlock\Cannon</Filter>
+      <Filter>Application\Entity\EventBlock\Cannon</Filter>
     </ClCompile>
     <ClCompile Include="application\game\Entity\EventBlock\Coin.cpp">
-      <Filter>Application\EventBlock\Coin</Filter>
+      <Filter>Application\Entity\EventBlock\Coin</Filter>
     </ClCompile>
     <ClCompile Include="application\game\Entity\EventBlock\Goal.cpp">
       <Filter>Application\System\Goal</Filter>
@@ -614,9 +605,6 @@
     </ClCompile>
     <ClCompile Include="application\game\PlayerCamera.cpp">
       <Filter>Application\Camera\PlayerCamera</Filter>
-    </ClCompile>
-    <ClCompile Include="application\game\CollideManager.cpp">
-      <Filter>Application\CollideManager</Filter>
     </ClCompile>
     <ClCompile Include="application\game\Box.cpp">
       <Filter>Application\Charactor\Box</Filter>
@@ -642,7 +630,7 @@
     <ClCompile Include="engine\particle\IParticle2D.cpp">
       <Filter>Engine\Particle2D\IParticle2D</Filter>
     </ClCompile>
-    <ClCompile Include="application\SceneChange.cpp">
+    <ClCompile Include="application\scene\SceneChange.cpp">
       <Filter>Application\SceneChange</Filter>
     </ClCompile>
     <ClCompile Include="application\Stage.cpp">
@@ -651,53 +639,62 @@
     <ClCompile Include="application\Status.cpp">
       <Filter>Application\Status</Filter>
     </ClCompile>
-    <ClCompile Include="Dokan.cpp">
-      <Filter>Application\EventBlock\Dokan</Filter>
-    </ClCompile>
-    <ClCompile Include="StarUI.cpp">
-      <Filter>Application\UI\UI\StarUI</Filter>
-    </ClCompile>
-    <ClCompile Include="LevelData.cpp">
-      <Filter>Application\LevelData</Filter>
-    </ClCompile>
-    <ClCompile Include="Skelton.cpp">
-      <Filter>Application\Charactor\Enemy\Skelton</Filter>
-    </ClCompile>
-    <ClCompile Include="MoveBlock.cpp">
-      <Filter>Application\EventBlock\MoveBlock</Filter>
-    </ClCompile>
-    <ClCompile Include="InStageStarUI.cpp">
-      <Filter>Application\UI\UI\InStageStarUI</Filter>
-    </ClCompile>
     <ClCompile Include="application\game\entity\eventBlock\EventBlock.cpp">
-      <Filter>Application\EventBlock\EventBlock</Filter>
+      <Filter>Application\Entity\EventBlock\EventBlock</Filter>
     </ClCompile>
-    <ClCompile Include="StageTitleUI.cpp">
-      <Filter>Application\StageTitleUI</Filter>
+    <ClCompile Include="application\collision\CollideManager.cpp">
+      <Filter>Application\CollideManager</Filter>
     </ClCompile>
-    <ClCompile Include="Sea.cpp">
-      <Filter>Application\Sea</Filter>
+    <ClCompile Include="application\collision\Collision.cpp">
+      <Filter>Application\Collision</Filter>
     </ClCompile>
-    <ClCompile Include="InstantDrawer.cpp">
-      <Filter>Engine\2D\InstantDrawer</Filter>
+    <ClCompile Include="application\system\event\Clear1.cpp">
+      <Filter>Application\System\Event\Clear1</Filter>
     </ClCompile>
-    <ClCompile Include="EventCamera.cpp">
-      <Filter>Application\Camera\EventCamera</Filter>
+    <ClCompile Include="application\game\entity\Block.cpp">
+      <Filter>Application\Entity\Block</Filter>
     </ClCompile>
-    <ClCompile Include="IEvent.cpp">
-      <Filter>Application\Event\IEvent</Filter>
+    <ClCompile Include="application\game\Dokan.cpp">
+      <Filter>Application\Entity\EventBlock\Dokan</Filter>
     </ClCompile>
-    <ClCompile Include="EventManager.cpp">
-      <Filter>Application\Event\EventManager</Filter>
+    <ClCompile Include="application\camera\EventCamera.cpp">
+      <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="Clear1.cpp">
-      <Filter>Application\Event\Clear1</Filter>
+    <ClCompile Include="application\system\event\EventManager.cpp">
+      <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="EventTriggers.cpp">
-      <Filter>Application\Event\EventTriggers</Filter>
+    <ClCompile Include="application\system\event\EventTriggers.cpp">
+      <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="GoalCamChange.cpp">
-      <Filter>Application\Event\GoalCamChange</Filter>
+    <ClCompile Include="application\system\event\GoalCamChange.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="application\system\event\IEvent.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="application\ui\InStageStarUI.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="engine\util\InstantDrawer.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="application\level\LevelData.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="application\game\entity\eventBlock\MoveBlock.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="application\game\entity\eventBlock\Sea.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="application\game\entity\charactor\Skelton.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="application\ui\StageTitleUI.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="application\ui\StarUI.cpp">
+      <Filter>ソース ファイル</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -770,9 +767,6 @@
     <ClInclude Include="engine\scene\AbstractSceneFactory.h">
       <Filter>Engine\Scene</Filter>
     </ClInclude>
-    <ClInclude Include="application\game\Collision.h">
-      <Filter>Application\Collision</Filter>
-    </ClInclude>
     <ClInclude Include="engine\libManage\ImguiManager.h">
       <Filter>Engine\libManage\ImguiManager</Filter>
     </ClInclude>
@@ -822,7 +816,7 @@
       <Filter>Engine\Math\Float4</Filter>
     </ClInclude>
     <ClInclude Include="application\particle\ObjParticle.h">
-      <Filter>Application\Old\ObjParticle</Filter>
+      <Filter>Application\ObjParticle</Filter>
     </ClInclude>
     <ClInclude Include="engine\sound\Sound.h">
       <Filter>Engine\Sound</Filter>
@@ -866,9 +860,6 @@
     <ClInclude Include="engine\3d\Obj3dFBX.h">
       <Filter>Engine\3D\Obj3dFBX</Filter>
     </ClInclude>
-    <ClInclude Include="application\game\Block.h">
-      <Filter>Application\Block</Filter>
-    </ClInclude>
     <ClInclude Include="application\game\Entity\Entity.h">
       <Filter>Application\Entity</Filter>
     </ClInclude>
@@ -879,13 +870,13 @@
       <Filter>Application\Charactor\Player</Filter>
     </ClInclude>
     <ClInclude Include="application\game\Entity\EventBlock\GoalBlock.h">
-      <Filter>Application\EventBlock\GoalBlock</Filter>
+      <Filter>Application\Entity\EventBlock\GoalBlock</Filter>
     </ClInclude>
     <ClInclude Include="application\game\Entity\EventBlock\Star.h">
-      <Filter>Application\EventBlock\Star</Filter>
+      <Filter>Application\Entity\EventBlock\Star</Filter>
     </ClInclude>
     <ClInclude Include="application\game\Entity\EventBlock\WarpBlock.h">
-      <Filter>Application\EventBlock\WarpBlock</Filter>
+      <Filter>Application\Entity\EventBlock\WarpBlock</Filter>
     </ClInclude>
     <ClInclude Include="application\game\Entity\Charactor\GEnemy.h">
       <Filter>Application\Charactor\Enemy\GEnemy</Filter>
@@ -894,10 +885,10 @@
       <Filter>Application\Charactor\Enemy</Filter>
     </ClInclude>
     <ClInclude Include="application\game\Entity\EventBlock\Cannon.h">
-      <Filter>Application\EventBlock\Cannon</Filter>
+      <Filter>Application\Entity\EventBlock\Cannon</Filter>
     </ClInclude>
     <ClInclude Include="application\game\Entity\EventBlock\Coin.h">
-      <Filter>Application\EventBlock\Coin</Filter>
+      <Filter>Application\Entity\EventBlock\Coin</Filter>
     </ClInclude>
     <ClInclude Include="application\game\Entity\EventBlock\Goal.h">
       <Filter>Application\System\Goal</Filter>
@@ -913,9 +904,6 @@
     </ClInclude>
     <ClInclude Include="application\game\PlayerCamera.h">
       <Filter>Application\Camera\PlayerCamera</Filter>
-    </ClInclude>
-    <ClInclude Include="application\game\CollideManager.h">
-      <Filter>Application\CollideManager</Filter>
     </ClInclude>
     <ClInclude Include="application\game\Box.h">
       <Filter>Application\Charactor\Box</Filter>
@@ -941,7 +929,7 @@
     <ClInclude Include="engine\particle\IParticle2D.h">
       <Filter>Engine\Particle2D\IParticle2D</Filter>
     </ClInclude>
-    <ClInclude Include="application\SceneChange.h">
+    <ClInclude Include="application\scene\SceneChange.h">
       <Filter>Application\SceneChange</Filter>
     </ClInclude>
     <ClInclude Include="application\Stage.h">
@@ -950,59 +938,68 @@
     <ClInclude Include="application\Status.h">
       <Filter>Application\Status</Filter>
     </ClInclude>
-    <ClInclude Include="Dokan.h">
-      <Filter>Application\EventBlock\Dokan</Filter>
-    </ClInclude>
-    <ClInclude Include="StarUI.h">
-      <Filter>Application\UI\UI\StarUI</Filter>
-    </ClInclude>
-    <ClInclude Include="LevelData.h">
-      <Filter>Application\LevelData</Filter>
-    </ClInclude>
-    <ClInclude Include="Skelton.h">
-      <Filter>Application\Charactor\Enemy\Skelton</Filter>
-    </ClInclude>
-    <ClInclude Include="MoveBlock.h">
-      <Filter>Application\EventBlock\MoveBlock</Filter>
-    </ClInclude>
-    <ClInclude Include="InStageStarUI.h">
-      <Filter>Application\UI\UI\InStageStarUI</Filter>
-    </ClInclude>
     <ClInclude Include="application\game\entity\eventBlock\EventBlock.h">
-      <Filter>Application\EventBlock\EventBlock</Filter>
+      <Filter>Application\Entity\EventBlock\EventBlock</Filter>
     </ClInclude>
     <ClInclude Include="resource.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="StageTitleUI.h">
-      <Filter>Application\StageTitleUI</Filter>
+    <ClInclude Include="application\collision\CollideManager.h">
+      <Filter>Application\CollideManager</Filter>
     </ClInclude>
-    <ClInclude Include="Sea.h">
-      <Filter>Application\Sea</Filter>
+    <ClInclude Include="application\collision\Collision.h">
+      <Filter>Application\Collision</Filter>
     </ClInclude>
-    <ClInclude Include="InstantDrawer.h">
-      <Filter>Engine\2D\InstantDrawer</Filter>
+    <ClInclude Include="application\system\event\Clear1.h">
+      <Filter>Application\System\Event\Clear1</Filter>
     </ClInclude>
-    <ClInclude Include="EventCamera.h">
-      <Filter>Application\Camera\EventCamera</Filter>
+    <ClInclude Include="application\game\entity\Block.h">
+      <Filter>Application\Entity\Block</Filter>
     </ClInclude>
-    <ClInclude Include="IEvent.h">
-      <Filter>Application\Event\IEvent</Filter>
+    <ClInclude Include="application\game\Dokan.h">
+      <Filter>Application\Entity\EventBlock\Dokan</Filter>
     </ClInclude>
-    <ClInclude Include="EventManager.h">
-      <Filter>Application\Event\EventManager</Filter>
+    <ClInclude Include="application\camera\EventCamera.h">
+      <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="Clear1.h">
-      <Filter>Application\Event\Clear1</Filter>
+    <ClInclude Include="application\system\event\EventManager.h">
+      <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="EventTriggers.h">
-      <Filter>Application\Event\EventTriggers</Filter>
+    <ClInclude Include="application\system\event\EventTriggers.h">
+      <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="Tag.h">
-      <Filter>Application</Filter>
+    <ClInclude Include="application\system\event\GoalCamChange.h">
+      <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="GoalCamChange.h">
-      <Filter>Application\Event\GoalCamChange</Filter>
+    <ClInclude Include="application\system\event\IEvent.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="application\ui\InStageStarUI.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="engine\util\InstantDrawer.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="application\level\LevelData.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="application\game\entity\eventBlock\MoveBlock.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="application\game\entity\eventBlock\Sea.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="application\game\entity\charactor\Skelton.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="application\ui\StageTitleUI.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="application\ui\StarUI.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="application\Tag.h">
+      <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
