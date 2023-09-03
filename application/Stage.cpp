@@ -619,6 +619,10 @@ void StageChanger::ChangeUpdate()
 				mEventObjects.back()->SetModel(ModelManager::GetModel(objectData->fileName));
 			}
 
+			if (objectData->fileName != "")
+			{
+			}
+
 			//オブジェクトの配置
 			LevelDataExchanger::SetObjectData(*mEventObjects.back(), *objectData);
 

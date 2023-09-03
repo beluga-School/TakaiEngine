@@ -282,6 +282,7 @@ void Player::ColUpdate()
 	///--’n–Ê“–‚½‚è”»’è
 	Cube pCol;
 	pCol.position = position;
+	//–³—‚â‚è‚¿‚å‚Á‚Æ‘å‚«‚­
 	pCol.scale = scale;
 
 	pCol.position += moveValue;

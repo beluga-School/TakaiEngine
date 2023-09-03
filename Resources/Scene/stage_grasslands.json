@@ -1274,6 +1274,203 @@
                 ]
             },
             "setObject": ""
+        },
+        {
+            "type": "MESH",
+            "name": "立方体_立方体.006",
+            "transform": {
+                "translation": [
+                    -23.971349716186523,
+                    -11.7166166305542,
+                    -3.5565385818481445
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "star",
+            "collider": {
+                "type": "BOX",
+                "center": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "size": [
+                    0.25,
+                    1.5,
+                    1.5
+                ]
+            },
+            "event_trigger": "star",
+            "setObject": "1"
+        },
+        {
+            "type": "MESH",
+            "name": "立方体_立方体.001",
+            "transform": {
+                "translation": [
+                    -2.9400081634521484,
+                    -173.46372985839844,
+                    17.13226890563965
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "star",
+            "collider": {
+                "type": "BOX",
+                "center": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "size": [
+                    0.25,
+                    1.5,
+                    1.5
+                ]
+            },
+            "event_trigger": "star",
+            "setObject": "2"
+        },
+        {
+            "type": "MESH",
+            "name": "Cube.020",
+            "transform": {
+                "translation": [
+                    -2.5904903411865234,
+                    -180.88877868652344,
+                    14.04901123046875
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    11.427291870117188,
+                    12.001337051391602,
+                    2.0
+                ]
+            },
+            "file_name": "stone",
+            "collider": {
+                "type": "BOX",
+                "center": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "size": [
+                    2.0,
+                    2.0,
+                    2.0
+                ]
+            },
+            "event_trigger": "end_6",
+            "setObject": "moveBlock",
+            "tiling": {
+                "tiling": [
+                    3.0,
+                    3.0
+                ]
+            }
+        },
+        {
+            "type": "MESH",
+            "name": "Cube.021",
+            "transform": {
+                "translation": [
+                    -2.5904903411865234,
+                    -142.27369689941406,
+                    14.04901123046875
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    11.427291870117188,
+                    12.001337051391602,
+                    2.0
+                ]
+            },
+            "file_name": "stone",
+            "collider": {
+                "type": "BOX",
+                "center": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "size": [
+                    2.0,
+                    2.0,
+                    2.0
+                ]
+            },
+            "event_trigger": "start_6",
+            "setObject": "moveBlock",
+            "tiling": {
+                "tiling": [
+                    3.0,
+                    3.0
+                ]
+            }
+        },
+        {
+            "type": "MESH",
+            "name": "立方体_立方体.002",
+            "transform": {
+                "translation": [
+                    -20.372190475463867,
+                    30.385189056396484,
+                    14.649192810058594
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "star",
+            "collider": {
+                "type": "BOX",
+                "center": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "size": [
+                    0.25,
+                    1.5,
+                    1.5
+                ]
+            },
+            "event_trigger": "star",
+            "setObject": "0"
         }
     ]
 }

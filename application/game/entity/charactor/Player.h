@@ -7,7 +7,7 @@
 #include "StarUI.h"
 #include "ImguiManager.h"
 
-class Player : public Mob
+class Player final : public Mob
 {
 public:
 	void LoadResource();

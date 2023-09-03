@@ -13,7 +13,7 @@ struct LevelData
 	};
 	struct ObjectData {
 		std::string fileName;
-		std::string spawnpointName;
+		std::string textureName;
 		std::string eventtrigerName;
 		std::string setObjectName;
 		

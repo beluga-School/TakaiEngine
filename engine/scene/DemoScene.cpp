@@ -196,13 +196,13 @@ void DemoScene::SetObject(LevelData& data)
 	{
 		//スポーンポイントを設定
 		//指定された名前が入ってるなら対応したやつを入れる
-		if (objectData->spawnpointName == "player")
+		if (objectData->textureName == "player")
 		{
 			testplayer.position = objectData->translation;
 			testplayer.rotation = objectData->rotation;
 			testplayer.scale = objectData->scaling;
 		}
-		else if (objectData->spawnpointName == "enemy")
+		else if (objectData->textureName == "enemy")
 		{
 			//とりあえずキューブで配置
 			mObj3ds.emplace_back();
