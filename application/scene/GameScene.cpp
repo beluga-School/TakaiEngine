@@ -88,11 +88,6 @@ void GameScene::Update()
 	static bool debugCam = false;
 
 	//リロードする際の条件たち
-	//入力でリロード
-	if (Input::Keyboard::TriggerKey(DIK_R))
-	{
-		StageChanger::Get()->Reload();
-	}
 	//プレイヤーの位置が海の座標より下になったらリロード
 	if (player->position.y < StageChanger::Get()->seaObject->GetPosY())
 	{

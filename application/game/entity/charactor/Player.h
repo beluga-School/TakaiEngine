@@ -72,8 +72,6 @@ private:
 	//プレイヤーのモードを変える(0,通常,1,デバッグモード)
 	void ChangeMode(const PlayerState& pState);
 
-	GUI debugGUI = {"DebugGUI"};
-
 	//hpの最大値　ステータスの最大値は外から変えられるようにしたい
 	int32_t MAX_HP = 8;
 

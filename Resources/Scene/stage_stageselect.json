@@ -715,7 +715,7 @@
                     1.0
                 ]
             },
-            "event_trigger": "Cannon_inter_1"
+            "event_trigger": "Cannon_inter_2"
         },
         {
             "type": "MESH",
@@ -1124,6 +1124,127 @@
                     2.0
                 ]
             }
+        },
+        {
+            "type": "MESH",
+            "name": "Cube.017",
+            "transform": {
+                "translation": [
+                    2.4371089935302734,
+                    44.19618225097656,
+                    -6.188303470611572
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    2.6230838298797607,
+                    2.6230838298797607,
+                    2.6230838298797607
+                ]
+            },
+            "file_name": "flyblock",
+            "collider": {
+                "type": "BOX",
+                "center": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "size": [
+                    16.0,
+                    18.0,
+                    5.0
+                ]
+            },
+            "tiling": {
+                "tiling": [
+                    5.0,
+                    5.0
+                ]
+            }
+        },
+        {
+            "type": "MESH",
+            "name": "円柱.004",
+            "transform": {
+                "translation": [
+                    5.648643493652344,
+                    35.254817962646484,
+                    0.11379766464233398
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "Cannon",
+            "collider": {
+                "type": "BOX",
+                "center": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "size": [
+                    2.0,
+                    2.0,
+                    2.0
+                ]
+            },
+            "event_trigger": "Cannon_start_3"
+        },
+        {
+            "type": "MESH",
+            "name": "立方体.009",
+            "transform": {
+                "translation": [
+                    6.841615676879883,
+                    -88.6702651977539,
+                    62.35859680175781
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "event_trigger": "Cannon_inter_3"
+        },
+        {
+            "type": "MESH",
+            "name": "立方体.010",
+            "transform": {
+                "translation": [
+                    -31.418039321899414,
+                    -103.2386474609375,
+                    18.660133361816406
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "event_trigger": "Cannon_end_3"
         }
     ]
 }

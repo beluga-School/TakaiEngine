@@ -116,19 +116,18 @@ void Player::Update()
 			ChangeMode(PlayerState::Normal);
 		}
 
+		//入力でリロード
+		if (Input::Keyboard::TriggerKey(DIK_R))
+		{
+			StageChanger::Get()->Reload();
+		}
+
 		break;
 	}
 
 	//Player特有の当たり判定更新(CollideManagerに移す)
 	//ここ置き換えるまでは今日やる
 	ColUpdate();
-
-
-	debugGUI.Begin({ 800,100 }, { 200,200 });
-	ImGui::Text("moveBlockPosition x:%fy:%f z:%f",
-		moveBlockPosition.x, moveBlockPosition.y, moveBlockPosition.z);
-	ImGui::Text("moveBlockHit %d",
-		moveBlockHit);
 
 	//Mob側の更新
 	Mob::CollsionUpdate();
@@ -156,19 +155,6 @@ void Player::Update()
 	hpGauge.Update();
 
 	StarUIUpdate();
-
-
-	if (playerState == PlayerState::Debug)
-	{
-		ImGui::Text("debugmode:on");
-	}
-	ImGui::Text("jumpState:%d", (int32_t)JumpState::None);
-	ImGui::Text("hitFeetMax:%f", hitFeetMax);
-	ImGui::Text("gravity:%f", gravity);
-	ImGui::Text("position x:%fy:%f z:%f",
-		position.x, position.y, position.z);
-	debugGUI.End();
-
 }
 
 void Player::Draw()
@@ -366,11 +352,12 @@ void Player::DamageUpdate()
 		}
 	}
 	//0になったら墓場へいく
+	//いったんいらないので消す 今後別の形で再利用
 	if (hp.mCurrent <= 0)
 	{
-		hp.mCurrent = MAX_HP;
-		hpGauge.SetGaugeSize(hp.mCurrent, true);
-		StageChanger::Get()->ChangeLevel(*LevelLoader::Get()->GetData("stage_graveyard"));
+		//hp.mCurrent = MAX_HP;
+		//hpGauge.SetGaugeSize(hp.mCurrent, true);
+		//StageChanger::Get()->ChangeLevel(*LevelLoader::Get()->GetData("stage_graveyard"));
 	}
 
 	//hpゲージの色を変える処理
