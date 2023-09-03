@@ -694,7 +694,7 @@ void StageChanger::ChangeUpdate()
 				//移動先の土管IDを取り出す
 				if (Util::IsNumber(str))
 				{
-					dokan->nextDokanInfo.id = str;
+					dokan->nextDokanInfo.id = atoi(str.c_str());
 				}
 				//移動先のステージ名を取り出す
 				else
@@ -709,7 +709,7 @@ void StageChanger::ChangeUpdate()
 				//自身の土管IDを取り出す
 				if (Util::IsNumber(str))
 				{
-					dokan->dokanInfo.id = str;
+					dokan->dokanInfo.id = atoi(str.c_str());
 				}
 			}
 			//現在のステージハンドル(ステージ名)を保存して、自身の情報とする
@@ -867,7 +867,7 @@ void StageChanger::ChangeUpdate()
 			}
 		}
 
-		saveNextDokanInfo.id = "0";
+		saveNextDokanInfo.id = 0;
 		Player::Get()->mDokanApparrance = false;
 	}
 

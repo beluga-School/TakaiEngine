@@ -3125,7 +3125,7 @@
                     2.0
                 ]
             },
-            "event_trigger": "stage_stageselect_0",
+            "event_trigger": "stage_stageselect_1",
             "setObject": "dokan_0"
         },
         {

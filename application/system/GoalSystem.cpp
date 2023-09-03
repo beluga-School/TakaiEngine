@@ -19,9 +19,6 @@ void GoalSystem::AnimetionStart()
 
 	//ゴールイベントをスタート
 	EventManager::Get()->Start("goalCamera");
-
-	//ゴール演出実行用にデータを代入
-	ClearManage::Get()->SetClearInfo(StageChanger::Get()->GetNowStageHandle());
 }
 
 void GoalSystem::GoalAnimetion()
@@ -65,6 +62,9 @@ void GoalSystem::GoalAnimetion()
 			//イベントを強制終了
 			EventManager::Get()->ForceEnd();
 
+			//土管用にデータを代入
+			ClearManage::Get()->SetClearInfo(StageChanger::Get()->GetNowStageHandle());
+
 			//ステージセレクトに戻る
 			StageChanger::Get()->ChangeLevel(*LevelLoader::Get()->GetData("stage_stageselect"));
 		}
@@ -102,8 +102,12 @@ void ClearManage::SetClearInfo(const std::string& stageName)
 		//旗を通ったフラグを立てる
 		isClear = true;
 
-		//通ったステージの番号を記録する
-		ClearManage::Get()->eventNumber =
-			LevelLoader::Get()->GetData(stageName)->mStageNum;
+		////通ったステージの番号を記録する
+		//ClearManage::Get()->eventNumber =
+		//	LevelLoader::Get()->GetData(stageName)->mStageNum;
+
+		//ステージセレクトに戻れるように情報を記録
+		StageChanger::Get()->saveNextDokanInfo.stageName = "stageselect";
+		StageChanger::Get()->saveNextDokanInfo.id = LevelLoader::Get()->GetData(stageName)->mStageNum;
 	}
 }

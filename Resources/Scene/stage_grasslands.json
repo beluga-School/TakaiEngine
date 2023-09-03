@@ -330,7 +330,7 @@
                     2.0
                 ]
             },
-            "event_trigger": "stage_stageselect_1",
+            "event_trigger": "stage_stageselect_2",
             "setObject": "dokan_0"
         },
         {
@@ -1042,7 +1042,7 @@
                     0.6321309804916382
                 ]
             },
-            "event_trigger": "goal_1",
+            "event_trigger": "goalCamera",
             "setObject": "eventcamera"
         },
         {

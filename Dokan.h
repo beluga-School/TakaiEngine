@@ -6,7 +6,7 @@
 
 struct DokanInfo
 {
-	std::string id = "";
+	int32_t id = -1;
 	std::string stageName = "";
 };
 

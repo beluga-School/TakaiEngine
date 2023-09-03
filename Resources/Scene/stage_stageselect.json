@@ -78,7 +78,7 @@
                 ]
             },
             "event_trigger": "stage_mountain_0",
-            "setObject": "dokan_0"
+            "setObject": "dokan_1"
         },
         {
             "type": "MESH",
@@ -115,7 +115,7 @@
                 ]
             },
             "event_trigger": "stage_grasslands_0",
-            "setObject": "dokan_1"
+            "setObject": "dokan_2"
         },
         {
             "type": "MESH",
