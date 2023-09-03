@@ -69,7 +69,7 @@ void GameScene::Initialize()
 
 	StageTitleUI::Get()->Initialize();
 
-	EventManager::Initialize();
+	EventManager::Get()->Initialize();
 }
 
 GUI sceneChangeGUI("operator");
@@ -78,7 +78,7 @@ void GameScene::Update()
 {
 	if (Input::Keyboard::TriggerKey(DIK_V))
 	{
-		EventManager::Start("next_1");
+		EventManager::Get()->Start("next_1");
 	}
 
 	//ステータスの更新
@@ -170,27 +170,19 @@ void GameScene::Update()
 
 	player->Update();
 
+	EventManager::Get()->Update();
+
 	//カメラ更新
 	//イベント中ならカメラ変更
-	if (EventManager::Get()->GetNowEvent() != "")
+	if (EventManager::Get()->GetNowEvent() != nullptr)
 	{
-		EventCameraManager::Get()->Update();
+		EventManager::Get()->GetNowEvent()->get()->eventCamera.Update();
 	}
 	//それ以外はプレイヤーに追従
 	else
 	{
 		pCamera->Update();
 	}
-
-	////ステージごとに一回実行される感じ
-	//if (player->GetApparanceEnd())
-	//{
-	//	//ネクスト_1が実行されていないなら
-	//	if ()
-	//	{
-	//		EventManager::Start("next_1");
-	//	}
-	//}
 
 	EnemyManager::Get()->Update();
 
@@ -202,8 +194,6 @@ void GameScene::Update()
 	ParticleManager::GetInstance()->Update();
 
 	UIUpdate();
-
-	EventManager::Update();
 }
 
 void GameScene::Draw()
@@ -221,13 +211,9 @@ void GameScene::Draw()
 
 	ParticleManager::GetInstance()->Draw();
 
-	if (EventManager::Get()->GetNowEvent() != "")
+	if (EventManager::Get()->GetNowEvent() != nullptr)
 	{
-		EventManager::Draw();
-	}
-	else
-	{
-		//EventCameraManager::Get()->Draw();
+		EventManager::Get()->Draw();
 	}
 
 	BasicObjectPreDraw(PipelineManager::GetPipeLine("PerlinNoise"));

@@ -7,8 +7,6 @@ struct EventCamData
 {
 	Vector3 pos{};
 	Vector3 rotation{};
-
-	std::string eventName = "";
 };
 
 class EventCamera
@@ -32,24 +30,24 @@ private:
 	float targetRadius = 10.0f;
 };
 
-class EventCameraManager
-{
-public:
-	void Update();
-	void Draw();
-
-	void Register(const EventCamData &eventCamData);
-	void Clear();
-
-	static EventCameraManager* Get()
-	{
-		static EventCameraManager instance;
-		return &instance;
-	}
-
-private:
-	EventCameraManager(){};
-	~EventCameraManager(){};
-
-	std::list<EventCamera> eventCameras;
-};
+//class EventCameraManager
+//{
+//public:
+//	void Update();
+//	void Draw();
+//
+//	void Register(const EventCamData &eventCamData);
+//	void Clear();
+//
+//	static EventCameraManager* Get()
+//	{
+//		static EventCameraManager instance;
+//		return &instance;
+//	}
+//
+//private:
+//	EventCameraManager(){};
+//	~EventCameraManager(){};
+//
+//	std::list<EventCamera> eventCameras;
+//};

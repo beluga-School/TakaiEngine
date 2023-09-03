@@ -40,35 +40,3 @@ void EventCamera::Draw()
 	hontai.Draw();
 	target.Draw();
 }
-
-void EventCameraManager::Update()
-{
-	for (auto& camera : eventCameras)
-	{
-		//イベント番号が一致したらそのカメラを実行
-		if (EventManager::Get()->GetNowEvent() == camera.eventCamData.eventName)
-		{
-			camera.Update();
-		}
-	}
-}
-
-void EventCameraManager::Draw()
-{
-	for (auto& camera : eventCameras)
-	{
-		camera.Draw();
-	}
-}
-
-void EventCameraManager::Register(const EventCamData& eventCamData)
-{
-	eventCameras.emplace_back();
-	eventCameras.back().eventCamData = eventCamData;
-	eventCameras.back().Initialize();
-}
-
-void EventCameraManager::Clear()
-{
-	eventCameras.clear();
-}

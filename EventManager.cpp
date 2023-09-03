@@ -5,31 +5,32 @@
 #include "Clear1.h"
 #include "GoalSystem.h"
 
-Clear1 clear1;
-
-TEasing::easeTimer EventManager::startTimer = 0.5f;
-TEasing::easeTimer EventManager::endTimer = 0.5f;
-
-Vector2 EventManager::uppos{};
-Vector2 EventManager::downpos{};
-
-EventManager::State EventManager::state = State::None;
-
 bool EventManager::Start(const std::string& startEventName)
 {
-	for (auto &Event : EventManager::Get()->allEvents)
+	for (auto &Event : allEvents)
 	{
 		//イベントがあれば実行
-		if (Event == startEventName)
+		if (Event->eventName == startEventName)
 		{
 			startTimer.Start();
 			state = State::Start;
-			EventManager::Get()->nowEvent = startEventName;
+			
+			nowEvent = &Event;
+
 			return true;
 		}
 	}
 	//無ければ実行しない
 	return false;
+}
+
+void EventManager::ForceEnd()
+{
+	state = State::None;
+	nowEvent = nullptr;
+
+	uppos.x = 0;
+	downpos.x = Util::WIN_WIDTH;
 }
 
 void EventManager::End()
@@ -38,7 +39,7 @@ void EventManager::End()
 	state = State::End;
 }
 
-std::string EventManager::GetNowEvent()
+std::unique_ptr<IEvent>* EventManager::GetNowEvent()
 {
 	return nowEvent;
 }
@@ -58,34 +59,23 @@ void EventManager::Update()
 	{
 	case EventManager::State::None:
 
-		if (clear1.RunFlag())
-		{
-			EventManager::Start("next_1");
-		}
-		//ステージ1のクリア時に実行
-		//クリアしたステージ番号を参照して実行
-		if (ClearManage::Get()->isClear)
-		{
-			EventManager::Start("goal_1");
-		}
-
 		break;
 	case EventManager::State::Start:
 		uppos.x = TEasing::OutQuad(0, Util::WIN_WIDTH, startTimer.GetTimeRate());
 		downpos.x = TEasing::OutQuad(Util::WIN_WIDTH, 0, startTimer.GetTimeRate());
 		if (startTimer.GetEnd())
 		{
+			nowEvent->get()->Start();
 			state = State::RunEvent;
-			clear1.Start();
 		}
 		
 		break;
 	case EventManager::State::RunEvent:
 		//イベント発生
-		clear1.Update();
+		nowEvent->get()->Update();
 
 		//イベント終了
-		if(clear1.End())
+		if(nowEvent->get()->End())
 		{
 			End();
 		}
@@ -96,8 +86,8 @@ void EventManager::Update()
 		downpos.x = TEasing::InQuad(0, Util::WIN_WIDTH * -1.f, endTimer.GetTimeRate());
 		if (endTimer.GetEnd())
 		{
-			state = State::None;
-			EventManager::Get()->nowEvent = "";
+			//強制終了と同じ効果を呼び出す
+			ForceEnd();
 		}
 		break;
 	}
@@ -109,11 +99,6 @@ void EventManager::Draw()
 		InstantDrawer::Anchor::RIGHT);
 	InstantDrawer::DrawBox(downpos.x, downpos.y, Util::WIN_WIDTH,100,Color(0,0,0,1), 
 		InstantDrawer::Anchor::LEFT);
-}
-
-void EventManager::Register(const std::string& startEventName)
-{
-	EventManager::Get()->allEvents.push_back(startEventName);
 }
 
 void EventManager::Clear()

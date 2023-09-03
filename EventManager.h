@@ -4,17 +4,19 @@
 #include <string>
 #include <list>
 #include "IEvent.h"
+#include <memory>
 
 class EventManager
 {
 public:
 	//イベント開始
-	static bool Start(const std::string& startEventName);
-	//イベント終了
-	static void End();
+	bool Start(const std::string& startEventName);
 
-	//現在のイベントを取得
-	std::string GetNowEvent();
+	//イベントを強制終了(nowEventを即時nullptrにする)
+	void ForceEnd();
+
+	//イベント名からイベントを取得
+	std::unique_ptr<IEvent>* GetNowEvent();
 
 	static EventManager* Get()
 	{
@@ -22,21 +24,30 @@ public:
 		return &instance;
 	}
 
-	static void Initialize();
+	void Initialize();
 
-	static void Update();
+	void Update();
 	
 	//イベント中用の線を表示
-	static void Draw();
+	void Draw();
 
-	//イベントを登録
-	static void Register(const std::string& startEventName);
+	void Clear();
 
-	static void Clear();
+	template <class Event> void Register(const EventCamData& camdata,const std::string& eventName)
+	{
+		allEvents.emplace_back();
+		allEvents.back() = std::make_unique<Event>();
+		allEvents.back()->eventName = eventName;
+		allEvents.back()->eventCamera.eventCamData = camdata;
+		allEvents.back()->eventCamera.Initialize();
+	}
 
 private:
 	EventManager(){};
 	~EventManager(){};
+
+	//イベントの上下黒線をなくして、end状態に移行
+	void End();
 
 	enum class State
 	{
@@ -46,17 +57,15 @@ private:
 		End,
 	};
 	
-	std::list<std::string> allEvents;
+	std::list<std::unique_ptr<IEvent>> allEvents;
+	std::unique_ptr<IEvent>* nowEvent = nullptr;
 
-	//現在発生させているイベント
-	std::string nowEvent;
+	TEasing::easeTimer startTimer = 0.5f;
+	TEasing::easeTimer endTimer = 0.5f;
 
-	static TEasing::easeTimer startTimer;
-	static TEasing::easeTimer endTimer;
+	Vector2 uppos{};
+	Vector2 downpos{};
 
-	static Vector2 uppos;
-	static Vector2 downpos;
-
-	static State state;
+	State state = State::None;
 };
 

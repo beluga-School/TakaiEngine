@@ -19,6 +19,9 @@
 #include "StageTitleUI.h"
 #include "EventManager.h"
 
+#include "Clear1.h"
+#include "GoalCamChange.h"
+
 void StageChanger::ChangeLevel(LevelData& data)
 {
 	if (SceneChange::GetRun() == false)
@@ -124,9 +127,9 @@ void StageChanger::Reset()
 
 	IDdCube::ResetID();
 
-	EventCameraManager::Get()->Clear();
+	//EventCameraManager::Get()->Clear();
 
-	EventManager::Clear();
+	EventManager::Get()->Clear();
 }
 
 void StageChanger::NormalObjectSet(const LevelData::ObjectData& data)
@@ -437,15 +440,20 @@ void StageChanger::ChangeUpdate()
 
 	for (auto objectData = currentData->mObjects.begin(); objectData != currentData->mObjects.end(); objectData++)
 	{
-		//海の配置なら
+		//カメラの配置なら
 		if (objectData->setObjectName == "eventcamera")
 		{
 			EventCamData camdata;
 			camdata.pos = objectData->translation;
 			camdata.rotation = objectData->rotation;
-			camdata.eventName = objectData->eventtrigerName;
-			EventManager::Register(objectData->eventtrigerName);
-			EventCameraManager::Get()->Register(camdata);
+			if (objectData->eventtrigerName == "next_1")
+			{
+				EventManager::Get()->Register<Clear1>(camdata, objectData->eventtrigerName);
+			}
+			if (objectData->eventtrigerName == "goalCamera")
+			{
+				EventManager::Get()->Register<GoalCamChange>(camdata, objectData->eventtrigerName);
+			}
 		}
 
 		//海の配置なら

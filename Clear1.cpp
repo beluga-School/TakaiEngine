@@ -30,15 +30,6 @@ void Clear1::Draw()
 {
 }
 
-bool Clear1::RunFlag()
-{
-	//ステージ1がクリアされていて、戻ってきて土管の演出が終わったら実行
-	return ClearManage::Get()->isClear && ClearManage::Get()->eventNumber == 1 &&
-		Player::Get()->GetApparanceEnd();
-
-	//return Player::Get()->GetApparanceEnd();
-}
-
 bool Clear1::End()
 {
 	return timer.GetEnd();

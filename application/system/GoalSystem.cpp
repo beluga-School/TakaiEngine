@@ -1,6 +1,7 @@
 #include "GoalSystem.h"
 #include "Util.h"
 #include "Stage.h"
+#include "EventManager.h"
 
 void GoalSystem::LoadResource()
 {
@@ -15,6 +16,9 @@ void GoalSystem::AnimetionStart()
 	thirdTimer.Reset();
 	animetionState = AnimetionState::First;
 	mIsClear = true;
+
+	//ゴールイベントをスタート
+	EventManager::Get()->Start("goalCamera");
 
 	//ゴール演出実行用にデータを代入
 	ClearManage::Get()->SetClearInfo(StageChanger::Get()->GetNowStageHandle());
@@ -58,8 +62,9 @@ void GoalSystem::GoalAnimetion()
 			animetionState = AnimetionState::None;
 			thirdTimer.Reset();
 		
-			//ClearManage::Get()->SetClearInfo("stage_stageselect");
-			
+			//イベントを強制終了
+			EventManager::Get()->ForceEnd();
+
 			//ステージセレクトに戻る
 			StageChanger::Get()->ChangeLevel(*LevelLoader::Get()->GetData("stage_stageselect"));
 		}

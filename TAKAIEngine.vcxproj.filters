@@ -406,8 +406,8 @@
     <Filter Include="Application\Event\EventTriggers">
       <UniqueIdentifier>{f405bb6d-add4-4de0-9bdc-70b658844f26}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Application\System\ClearManager">
-      <UniqueIdentifier>{28df7d81-ed82-4107-9a8f-61914139fd73}</UniqueIdentifier>
+    <Filter Include="Application\Event\GoalCamChange">
+      <UniqueIdentifier>{21dd0378-7023-4b0f-a7ba-e2e5aea7e0dc}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -695,6 +695,9 @@
     </ClCompile>
     <ClCompile Include="EventTriggers.cpp">
       <Filter>Application\Event\EventTriggers</Filter>
+    </ClCompile>
+    <ClCompile Include="GoalCamChange.cpp">
+      <Filter>Application\Event\GoalCamChange</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -997,6 +1000,9 @@
     </ClInclude>
     <ClInclude Include="Tag.h">
       <Filter>Application</Filter>
+    </ClInclude>
+    <ClInclude Include="GoalCamChange.h">
+      <Filter>Application\Event\GoalCamChange</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

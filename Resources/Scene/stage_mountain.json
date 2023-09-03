@@ -3088,7 +3088,7 @@
                     0.6321309804916382
                 ]
             },
-            "event_trigger": "goal_1",
+            "event_trigger": "goalCamera",
             "setObject": "eventcamera"
         },
         {

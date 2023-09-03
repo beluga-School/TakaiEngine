@@ -178,6 +178,7 @@
     <ClCompile Include="engine\3d\ViewProjection.cpp" />
     <ClCompile Include="engine\3d\WinAPI.cpp" />
     <ClCompile Include="EventTriggers.cpp" />
+    <ClCompile Include="GoalCamChange.cpp" />
     <ClCompile Include="IEvent.cpp" />
     <ClCompile Include="EventCamera.cpp" />
     <ClCompile Include="EventManager.cpp" />
@@ -276,6 +277,7 @@
     <ClInclude Include="engine\3d\ViewProjection.h" />
     <ClInclude Include="engine\common\WinAPI.h" />
     <ClInclude Include="EventTriggers.h" />
+    <ClInclude Include="GoalCamChange.h" />
     <ClInclude Include="IEvent.h" />
     <ClInclude Include="EventCamera.h" />
     <ClInclude Include="EventManager.h" />
