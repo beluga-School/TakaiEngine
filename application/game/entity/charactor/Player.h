@@ -3,7 +3,7 @@
 #include "Status.h"
 #include "HPGauge.h"
 #include "Mob.h"
-#include "UI.h"
+#include "IStarUI.h"
 #include "StarUI.h"
 #include "ImguiManager.h"
 

@@ -127,6 +127,7 @@
     <ClCompile Include="application\system\event\GoalCamChange.cpp" />
     <ClCompile Include="application\system\event\IEvent.cpp" />
     <ClCompile Include="application\ui\InStageStarUI.cpp" />
+    <ClCompile Include="APPLICATION\UI\UI.cpp" />
     <ClCompile Include="engine\util\InstantDrawer.cpp" />
     <ClCompile Include="application\level\LevelData.cpp" />
     <ClCompile Include="application\game\entity\eventBlock\MoveBlock.cpp" />
@@ -143,7 +144,7 @@
     <ClCompile Include="application\system\event\Clear1.cpp" />
     <ClCompile Include="application\system\GoalSystem.cpp" />
     <ClCompile Include="application\ui\HPGauge.cpp" />
-    <ClCompile Include="application\ui\UI.cpp" />
+    <ClCompile Include="application\ui\IStarUI.cpp" />
     <ClCompile Include="engine\2d\PostEffect.cpp" />
     <ClCompile Include="engine\3d\Billboard.cpp" />
     <ClCompile Include="engine\3d\Obj3dFBX.cpp" />
@@ -197,6 +198,7 @@
     <ClCompile Include="External\imgui\imgui_impl_win32.cpp" />
     <ClCompile Include="External\imgui\imgui_tables.cpp" />
     <ClCompile Include="External\imgui\imgui_widgets.cpp" />
+    <ClCompile Include="InterfaceUI.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="application\collision\CollideManager.h" />
@@ -242,7 +244,7 @@
     <ClInclude Include="application\system\GoalSystem.h" />
     <ClInclude Include="application\Tag.h" />
     <ClInclude Include="application\ui\HPGauge.h" />
-    <ClInclude Include="application\ui\UI.h" />
+    <ClInclude Include="application\ui\IStarUI.h" />
     <ClInclude Include="engine\2d\PostEffect.h" />
     <ClInclude Include="engine\3d\Billboard.h" />
     <ClInclude Include="engine\3d\Obj3dFBX.h" />
@@ -299,7 +301,9 @@
     <ClInclude Include="External\imgui\imstb_textedit.h" />
     <ClInclude Include="External\imgui\imstb_truetype.h" />
     <ClInclude Include="External\json.hpp" />
+    <ClInclude Include="InterfaceUI.h" />
     <ClInclude Include="resource.h" />
+    <ClInclude Include="UI.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="External\imgui\imgui.ini" />

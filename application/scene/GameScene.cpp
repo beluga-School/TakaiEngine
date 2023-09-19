@@ -33,7 +33,7 @@ void GameScene::LoadResource()
 	//マップからハンドル名の一覧を取得
 	handles = Util::GetKeys(LevelLoader::Get()->GetDataMap());
 
-	UI::StaticLoadResource();
+	IStarUI::StaticLoadResource();
 	player->LoadResource();
 
 	InStageStarUI::Get()->LoadResource();
@@ -69,6 +69,9 @@ void GameScene::Initialize()
 	StageTitleUI::Get()->Initialize();
 
 	EventManager::Get()->Initialize();
+
+	newStarUI.InitPos({(float)Util::CenterX(),-200}, { (float)Util::CenterX(),(float)Util::CenterY()});
+	newStarUI.SetTexture("star2d");
 }
 
 GUI sceneChangeGUI("operator");
@@ -78,6 +81,14 @@ void GameScene::Update()
 	if (Input::Keyboard::TriggerKey(DIK_V))
 	{
 		EventManager::Get()->Start("next_1");
+	}
+	if (Input::Keyboard::TriggerKey(DIK_3))
+	{
+		newStarUI.Move(UIMove::START);
+	}
+	if (Input::Keyboard::TriggerKey(DIK_4))
+	{
+		newStarUI.Move(UIMove::END);
 	}
 
 	//ステータスの更新
@@ -188,6 +199,8 @@ void GameScene::Update()
 	ParticleManager::GetInstance()->Update();
 
 	UIUpdate();
+
+	newStarUI.Update();
 }
 
 void GameScene::Draw()
@@ -215,6 +228,8 @@ void GameScene::Draw()
 	SpriteCommonBeginDraw();
 
 	UIDraw();
+
+	newStarUI.Draw();
 
 	StageChanger::Get()->DrawSprite();
 }

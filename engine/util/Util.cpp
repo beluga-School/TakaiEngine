@@ -8,6 +8,16 @@ bool Util::OutOfScreen(const Vector2& pos)
     return pos.x < minX || WIN_WIDTH < pos.x || pos.y < minY || WIN_HEIGHT < pos.y;
 }
 
+uint32_t Util::CenterX()
+{
+    return WIN_WIDTH / 2;
+}
+
+uint32_t Util::CenterY()
+{
+    return WIN_HEIGHT / 2;
+}
+
 vector<string> Util::SplitString(const string& str, const char* delimiter)
 {
     vector<string> vec;

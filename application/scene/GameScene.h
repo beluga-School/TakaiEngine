@@ -7,7 +7,8 @@
 #include "PlayerCamera.h"
 #include "Billboard.h"
 #include "SceneChange.h"
-#include "UI.h"
+#include "IStarUI.h"
+#include <UI.h>
 
 class GameScene : public IScene
 {
@@ -31,5 +32,7 @@ private:
 	//ƒV[ƒ“Ø‚è‘Ö‚¦—p
 	std::string output = "";
 	std::vector<std::string> handles;
+
+	UI newStarUI;
 };
 

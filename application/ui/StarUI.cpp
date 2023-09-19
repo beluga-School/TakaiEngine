@@ -10,7 +10,7 @@ void StarUI::Update()
 {
 	GetMove();
 
-	UI::Update();
+	IStarUI::Update();
 }
 
 void StarUI::GetMove()

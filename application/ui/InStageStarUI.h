@@ -1,11 +1,11 @@
 #pragma once
-#include "UI.h"
+#include "IStarUI.h"
 #include <vector>
 
-class InStageStarUI : public UI
+class InStageStarUI : public IStarUI
 {
 public:
-	InStageStarUI(const Vector2& pos, float scale) : UI(pos, scale)
+	InStageStarUI(const Vector2& pos, float scale) : IStarUI(pos, scale)
 	{
 
 	}

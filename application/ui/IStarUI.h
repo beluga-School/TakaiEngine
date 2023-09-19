@@ -3,11 +3,11 @@
 #include "Status.h"
 #include "TEasing.h"
 
-class UI
+class IStarUI
 {
 public:
 	static void StaticLoadResource();
-	UI(const Vector2& pos, float scale)
+	IStarUI(const Vector2& pos, float scale)
 	: mPos (pos) {
 		mScale.x = scale;
 		mScale.y = scale;

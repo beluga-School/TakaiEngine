@@ -13,6 +13,9 @@ namespace Util
 
 	bool OutOfScreen(const Vector2& pos);
 
+	uint32_t CenterX();
+	uint32_t CenterY();
+
 	template <class T>
 	T Clamp(T t,T min, T max)
 	{
