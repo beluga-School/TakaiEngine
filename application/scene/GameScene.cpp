@@ -28,6 +28,7 @@ void GameScene::LoadResource()
 	LevelLoader::Get()->Load("Scene/stage_graveyard", "stage_graveyard", -1);
 	LevelLoader::Get()->Load("Scene/starTest", "starTest", -1);
 	LevelLoader::Get()->Load("Scene/clear1", "clear1", -1);
+	LevelLoader::Get()->Load("Scene/stage_desert", "stage_desert", -1);
 	
 	//新規シーンを登録して、登録してあるシーンから選んで飛ぶ方式にしたい
 	//マップからハンドル名の一覧を取得
@@ -43,6 +44,7 @@ void GameScene::LoadResource()
 	TextureManager::Load("Resources\\09_AlphaMask_Resources\\Scales.png", "Scales");
 	TextureManager::Load("Resources\\09_AlphaMask_Resources\\Grass.png", "Grass");
 	TextureManager::Load("Resources\\09_AlphaMask_Resources\\groundCubeMask.png", "groundCubeMask");
+	TextureManager::Load("Resources\\desertTex.png", "desertTex");
 
 	StageTitleUI::Get()->LoadResource();
 }

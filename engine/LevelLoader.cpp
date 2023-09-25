@@ -82,8 +82,8 @@ void LevelLoader::ObjectLoad(LevelData& levelData,nlohmann::json& object)
 			objectData.fileName = object["file_name"];
 		}
 
-		if (object.contains("spawnpoint")) {
-			objectData.textureName = object["spawnpoint"];
+		if (object.contains("texture")) {
+			objectData.textureName = object["texture"];
 		}
 
 		if (object.contains("event_trigger")) {

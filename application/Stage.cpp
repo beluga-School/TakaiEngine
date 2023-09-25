@@ -178,6 +178,13 @@ void StageChanger::NormalObjectSet(const LevelData::ObjectData& data)
 	//バグらないように白テクスチャを入れる
 	mEntitys.back().SetTexture(TextureManager::Get()->GetTexture("white"));
 	
+	if (data.textureName != "")
+	{
+		//指定テクスチャがあるならそっちを使う
+		mEntitys.back().SetTexture(TextureManager::Get()->GetTexture(data.textureName));
+		mEntitys.back().isTexDraw = true;
+	}
+
 	//タイリングの設定
 	mEntitys.back().mTiling = data.tiling;
 	
@@ -637,10 +644,6 @@ void StageChanger::ChangeUpdate()
 				mEventObjects.back()->SetModel(ModelManager::GetModel(objectData->fileName));
 			}
 
-			if (objectData->fileName != "")
-			{
-			}
-
 			//オブジェクトの配置
 			LevelDataExchanger::SetObjectData(*mEventObjects.back(), *objectData);
 
@@ -918,7 +921,14 @@ void StageChanger::DrawModel()
 		{
 			BasicObjectPreDraw(PipelineManager::GetPipeLine("GroundToon"));
 		}
-		obj.DrawMaterial();
+		if (obj.isTexDraw)
+		{
+			obj.Draw();
+		}
+		else
+		{
+			obj.DrawMaterial();
+		}
 	}
 	for (auto& obj : mEventObjects)
 	{

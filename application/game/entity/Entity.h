@@ -51,6 +51,8 @@ public:
 	/// <returns></returns>
 	uint32_t GetID()const;
 
+	bool isTexDraw = false;
+
 protected:
 	bool isDead = false;
 
