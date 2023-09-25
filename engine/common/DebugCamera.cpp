@@ -18,11 +18,12 @@ void DebugCamera::Update()
 
 	mCenterVec = matWorld.ExtractAxisZ();
 	mSideVec = matWorld.ExtractAxisX();
+	Vector3 mUpVec = -matWorld.ExtractAxisY();
 
 	int16_t inputCenter = (Keyboard::PushKey(DIK_DOWN) - Keyboard::PushKey(DIK_UP));
-	position.x += inputCenter * mCenterVec.x * MOVE_SPEED;
-	position.y += inputCenter * mCenterVec.y * MOVE_SPEED;
-	position.z += inputCenter * mCenterVec.z * MOVE_SPEED;
+	position.x += inputCenter * mUpVec.x * MOVE_SPEED;
+	position.y += inputCenter * mUpVec.y * MOVE_SPEED;
+	position.z += inputCenter * mUpVec.z * MOVE_SPEED;
 
 	int16_t inputSide = (Keyboard::PushKey(DIK_LEFT) - Keyboard::PushKey(DIK_RIGHT));
 	position.x += inputSide * mSideVec.x * MOVE_SPEED;
@@ -35,11 +36,15 @@ void DebugCamera::Update()
 
 	if (Mouse::Wheel() < 0)
 	{
-		mRadius += 2.0f;
+		position.x += mCenterVec.x * MOVE_SPEED;
+		position.y += mCenterVec.y * MOVE_SPEED;
+		position.z += mCenterVec.z * MOVE_SPEED;
 	}
 	if (Mouse::Wheel() > 0)
 	{
-		mRadius -= 2.0f;
+		position.x -= mCenterVec.x * MOVE_SPEED;
+		position.y -= mCenterVec.y * MOVE_SPEED;
+		position.z -= mCenterVec.z * MOVE_SPEED;
 	}
 
 	mRadius = Util::Clamp(mRadius, 1.0f, 100.f);

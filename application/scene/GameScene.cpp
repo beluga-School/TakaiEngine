@@ -183,6 +183,10 @@ void GameScene::Update()
 	{
 		EventManager::Get()->GetNowEvent()->get()->eventCamera.Update();
 	}
+	else if(debugCam)
+	{
+		mDebugCamera.Update();
+	}
 	//それ以外はプレイヤーに追従
 	else
 	{

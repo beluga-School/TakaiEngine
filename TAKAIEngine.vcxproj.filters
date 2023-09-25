@@ -675,9 +675,6 @@
     <ClCompile Include="application\system\event\IEvent.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="application\level\LevelData.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
     <ClCompile Include="application\game\entity\eventBlock\MoveBlock.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
@@ -707,6 +704,9 @@
     </ClCompile>
     <ClCompile Include="APPLICATION\UI\UI.cpp">
       <Filter>Application\UI\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="application\level\LevelData.cpp">
+      <Filter>Application\LevelLoader\LevelData</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -983,9 +983,6 @@
     <ClInclude Include="application\system\event\IEvent.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="application\level\LevelData.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
     <ClInclude Include="application\game\entity\eventBlock\MoveBlock.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
@@ -1018,6 +1015,9 @@
     </ClInclude>
     <ClInclude Include="UI.h">
       <Filter>Application\UI\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="application\level\LevelData.h">
+      <Filter>Application\LevelLoader\LevelData</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
