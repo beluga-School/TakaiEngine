@@ -7,8 +7,6 @@
 #include "PlayerCamera.h"
 #include "Billboard.h"
 #include "SceneChange.h"
-#include "IStarUI.h"
-#include <UI.h>
 
 class GameScene : public IScene
 {
@@ -18,9 +16,6 @@ public:
 	void Update()override;
 	void Draw()override;
 	void End()override;
-
-	void UIUpdate();
-	void UIDraw();
 
 private:
 	Skydome mSkydome;
@@ -32,7 +27,5 @@ private:
 	//ƒV[ƒ“Ø‚è‘Ö‚¦—p
 	std::string output = "";
 	std::vector<std::string> handles;
-
-	UI newStarUI;
 };
 

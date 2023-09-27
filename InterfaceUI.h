@@ -18,6 +18,13 @@ public:
 	/// <param name="end">終点</param>
 	void InitPos(const Vector2& start, const Vector2& end);
 
+	/// <summary>
+	/// 拡縮する大きさの最大と最小を指定
+	/// </summary>
+	/// <param name="start"></param>
+	/// <param name="end"></param>
+	void InitScale(const Vector2& min, const Vector2& max);
+
 	virtual void Update() = 0;
 	virtual void Draw() = 0;
 
@@ -26,6 +33,12 @@ public:
 	/// </summary>
 	/// <param name="move">入り挙動or戻り挙動を指定</param>
 	void Move(UIMove move);
+
+	/// <summary>
+	/// UIを拡縮する
+	/// </summary>
+	/// <param name="move">大きくなる挙動or小さくなる挙動を指定</param>
+	void Scaling(UIMove move);
 
 	/// <summary>
 	/// 位置を取得
@@ -38,7 +51,9 @@ public:
 	/// </summary>
 	/// <param name="move">確認したい方の挙動を指定</param>
 	/// <returns></returns>
-	bool GetEnd(UIMove move);
+	bool GetMoveEnd(UIMove move_);
+
+	bool GetScaleEnd(UIMove scale_);
 
 protected:
 	/// <summary>
@@ -48,6 +63,7 @@ protected:
 	void InterFaceUpdate();
 
 	Vector2 pos = {-1000,-1000};
+	Vector2 scale = {1.0f,1.0f};
 	
 	Vector2 startPos{-1000,-1000};
 	Vector2 endPos{ -1000,-1000 };
@@ -55,8 +71,13 @@ protected:
 	Vector2 saveStartPos{ -1000,-1000 };
 	Vector2 saveEndPos{ -1000,-1000 };
 
-	TEasing::easeTimer moveTimer = 0.5f;
+	Vector2 minScale{ -1000,-1000 };
+	Vector2 maxScale{ -1000,-1000 };
 
-	UIMove flag = UIMove::START;
+	TEasing::easeTimer moveTimer = 0.5f;
+	TEasing::easeTimer scalingTimer = 0.5f;
+
+	UIMove move = UIMove::START;
+	UIMove scaling = UIMove::START;
 };
 

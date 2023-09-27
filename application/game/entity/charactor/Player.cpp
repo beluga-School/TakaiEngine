@@ -8,15 +8,15 @@
 #include "EnemyManager.h"
 #include "ClearDrawScreen.h"
 #include "ObjParticle.h"
-#include "InStageStarUI.h"
 #include "StageTitleUI.h"
 #include "EventManager.h"
+#include "GameUIManager.h"
 
 using namespace Input;
 
 void Player::LoadResource()
 {
-	starUI.LoadResource();
+	//starUI.LoadResource();
 }
 
 void Player::Initialize()
@@ -31,8 +31,6 @@ void Player::Initialize()
 	SetOutLineState({ 0.1f,0.1f,0.1f,1.0f }, 0.05f);
 
 	hpGauge.Initialize();
-
-	starUI.Initialize("star2d");
 }
 
 void Player::Update()
@@ -48,7 +46,7 @@ void Player::Update()
 			ChangeMode(PlayerState::Normal);
 			
 			//ここら辺システム側の処理だから、別の場所に移したい
-			StageTitleUI::Get()->Start();
+			GameUIManager::Get()->Move(UIMove::START);
 		}
 	}
 
@@ -153,8 +151,6 @@ void Player::Update()
 	DamageUpdate();
 
 	hpGauge.Update();
-
-	StarUIUpdate();
 }
 
 void Player::Draw()
@@ -172,7 +168,6 @@ void Player::Draw()
 void Player::DrawUI()
 {
 	hpGauge.Draw();
-	starUI.Draw();
 }
 
 void Player::Reset()
@@ -377,51 +372,6 @@ void Player::DamageUpdate()
 
 		hpGauge.Addition(1);
 	}
-}
-
-void Player::StarUIUpdate()
-{
-	for (auto& obj : StageChanger::Get()->mEventObjects)
-	{
-		if (!obj->CheckTag(TagTable::Star))continue;
-
-		Star* star = static_cast<Star*>(obj.get());
-		if (star->GetState() == Star::StarState::CountUp)
-		{
-			starCorrectNum.mCurrent += 1;
-			starUI.GetMoveStart(starCorrectNum.mCurrent);
-			star->StateEnd();
-		
-			InStageStarUI::Get()->ChangeTexture(1, star->id);
-		}
-		//スター取得中なら
-		if (star->GetState() == Star::StarState::jumpUp ||
-			star->GetState() == Star::StarState::Inhole)
-		{
-			//出現状態で固定する
-			starUI.AppLock();
-		}
-	}
-
-	UIDelayTimer.Update();
-	if (IsMove())
-	{
-		starUI.DisAppearance(0.2f);
-		UIDelayTimer.Reset();
-	}
-	else
-	{
-		if (UIDelayTimer.GetStarted() == false)
-		{
-			UIDelayTimer.Start();
-		}
-		if (UIDelayTimer.GetEnd())
-		{
-			starUI.Appearance(0.5f);
-		}
-	}
-
-	starUI.Update();
 }
 
 bool Player::IsMove()

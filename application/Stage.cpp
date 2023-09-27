@@ -15,12 +15,12 @@
 #include "MoveBlock.h"
 #include <fstream>
 #include <sstream>
-#include "InStageStarUI.h"
 #include "StageTitleUI.h"
 #include "EventManager.h"
 
 #include "Clear1.h"
 #include "GoalCamChange.h"
+#include <GameUIManager.h>
 
 void StageChanger::ChangeLevel(LevelData& data)
 {
@@ -136,8 +136,6 @@ void StageChanger::Reset()
 	mTempStarSaves.clear();
 
 	IDdCube::ResetID();
-
-	//EventCameraManager::Get()->Clear();
 
 	EventManager::Get()->Clear();
 }
@@ -747,7 +745,7 @@ void StageChanger::ChangeUpdate()
 				playerData.dokanPriority = true;
 
 				//ステージ名をUIに記録
-				StageTitleUI::Get()->ChangeHandle(StageChanger::Get()->currentData->mStageNum);
+				GameUIManager::Get()->GetStageTitleUI()->ChangeHandle(StageChanger::Get()->currentData->mStageNum);
 			}
 
 			continue;
@@ -883,8 +881,6 @@ void StageChanger::ChangeUpdate()
 		saveNextDokanInfo.id = 0;
 		Player::Get()->mDokanApparrance = false;
 	}
-
-	InStageStarUI::Get()->Initialize();
 }
 
 void StageChanger::SetPlayer(const LevelData::ObjectData& data)

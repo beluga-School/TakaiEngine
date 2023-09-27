@@ -8,10 +8,15 @@ void StageTitleUI::ChangeHandle(int32_t stagenum)
 
 void StageTitleUI::Start()
 {
-	if (state != State::None)return;
+	if (state == State::DisPlay)return;
 	state = State::DisPlay;
 	alphaTimer.Start();
 	disPlayTimer.Reset();
+}
+
+bool StageTitleUI::GetEnd()
+{
+	return state == State::Vanish;
 }
 
 void StageTitleUI::LoadResource()
@@ -61,10 +66,6 @@ void StageTitleUI::Update()
 		break;
 	case StageTitleUI::State::Vanish:
 		stageTitle.mColor.f4.w = TEasing::InQuad(1.0f, 0.0f, alphaTimer.GetTimeRate());
-		if (alphaTimer.GetEnd())
-		{
-			state = State::None;
-		}
 
 		break;
 	}
@@ -75,10 +76,4 @@ void StageTitleUI::Update()
 void StageTitleUI::Draw()
 {
 	stageTitle.Draw();
-}
-
-StageTitleUI* StageTitleUI::Get()
-{
-	static StageTitleUI instance;
-	return &instance;
 }

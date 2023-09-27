@@ -11,6 +11,7 @@ void UI::Update()
 	InterFaceUpdate();
 
 	sprite.mPosition = { pos.x,pos.y,0};
+	SetSize(scale);
 	sprite.Update();
 }
 
@@ -25,4 +26,9 @@ void UI::SetSize(const Vector2& size)
 		sprite.GetInitSize().x * size.x,
 		sprite.GetInitSize().y * size.y,
 		});
+}
+
+void UI::SetColor(const Color& color)
+{
+	sprite.SetColor(color);
 }

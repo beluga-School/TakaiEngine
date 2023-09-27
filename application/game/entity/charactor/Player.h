@@ -3,8 +3,6 @@
 #include "Status.h"
 #include "HPGauge.h"
 #include "Mob.h"
-#include "IStarUI.h"
-#include "StarUI.h"
 #include "ImguiManager.h"
 
 class Player final : public Mob
@@ -46,10 +44,6 @@ public:
 	/// ダメージを受ける処理
 	/// </summary>
 	void DamageEffect(int32_t damage);
-
-	StarUI starUI = {
-		{171.62f, 402.235f },0.5f
-	};
 
 	//設置されたフレームなら立つ
 	bool mDokanApparrance = false;
@@ -94,9 +88,6 @@ private:
 	void Fly();
 
 	void DamageUpdate();
-
-	//スター取得UIの動き
-	void StarUIUpdate();
 
 	bool IsMove();
 

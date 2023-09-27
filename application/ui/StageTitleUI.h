@@ -9,12 +9,11 @@ public:
 
 	void ChangeHandle(int32_t stagenum);
 	void Start();
+	bool GetEnd();
 
 	void Initialize();
 	void Update();
 	void Draw();
-
-	static StageTitleUI* Get();
 
 private:
 	enum class State

@@ -14,6 +14,8 @@ public:
 
 	void SetSize(const Vector2& size);
 
+	void SetColor(const Color& color);
+
 private:
 	Sprite sprite;
 };

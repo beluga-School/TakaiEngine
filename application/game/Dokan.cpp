@@ -2,6 +2,7 @@
 #include "Input.h"
 #include "Stage.h"
 #include "SceneChange.h"
+#include <GameUIManager.h>
 
 void Dokan::Initialize()
 {
@@ -104,5 +105,8 @@ void Dokan::HitEffect(Mob* target_)
 		//移動先の情報をステージへ移す
 		StageChanger::Get()->saveNextDokanInfo.stageName = nextDokanInfo.stageName;
 		StageChanger::Get()->saveNextDokanInfo.id = nextDokanInfo.id;
+
+		//UIを動かす
+		GameUIManager::Get()->Move(UIMove::END);
 	}
 }

@@ -400,17 +400,11 @@
     <Filter Include="Application\UI\StarUI">
       <UniqueIdentifier>{c7988369-42db-4a28-8372-35f15dd7c01e}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Application\UI\StarUI\StarUI">
-      <UniqueIdentifier>{559b5e9c-cf31-4caa-9bf4-112115ec33f0}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Application\UI\StarUI\InStageStarUI">
-      <UniqueIdentifier>{7a16e506-7e2f-481f-bf49-3be0b5b1ed8a}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Application\UI\StarUI\StageTitleUI">
-      <UniqueIdentifier>{b24b72f9-59b1-4ff8-9937-a28061c7a015}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Application\UI\UI">
       <UniqueIdentifier>{c0ce0d6d-b600-46db-9dea-4d6233f7d49c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Application\UI\StageTitleUI">
+      <UniqueIdentifier>{b24b72f9-59b1-4ff8-9937-a28061c7a015}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -684,14 +678,8 @@
     <ClCompile Include="application\game\entity\charactor\Skelton.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="application\ui\InStageStarUI.cpp">
-      <Filter>Application\UI\StarUI\InStageStarUI</Filter>
-    </ClCompile>
-    <ClCompile Include="application\ui\StarUI.cpp">
-      <Filter>Application\UI\StarUI\StarUI</Filter>
-    </ClCompile>
     <ClCompile Include="application\ui\StageTitleUI.cpp">
-      <Filter>Application\UI\StarUI\StageTitleUI</Filter>
+      <Filter>Application\UI\StageTitleUI</Filter>
     </ClCompile>
     <ClCompile Include="InterfaceUI.cpp">
       <Filter>Application\UI\InterfaceUI</Filter>
@@ -699,14 +687,17 @@
     <ClCompile Include="engine\util\InstantDrawer.cpp">
       <Filter>Engine\Util</Filter>
     </ClCompile>
-    <ClCompile Include="application\ui\IStarUI.cpp">
-      <Filter>Application\UI\StarUI\StarUI</Filter>
-    </ClCompile>
     <ClCompile Include="APPLICATION\UI\UI.cpp">
       <Filter>Application\UI\UI</Filter>
     </ClCompile>
     <ClCompile Include="application\level\LevelData.cpp">
       <Filter>Application\LevelLoader\LevelData</Filter>
+    </ClCompile>
+    <ClCompile Include="StarUI.cpp">
+      <Filter>Application\UI\StarUI</Filter>
+    </ClCompile>
+    <ClCompile Include="GameUIManager.cpp">
+      <Filter>Application\UI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -995,14 +986,8 @@
     <ClInclude Include="application\Tag.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="application\ui\InStageStarUI.h">
-      <Filter>Application\UI\StarUI\InStageStarUI</Filter>
-    </ClInclude>
-    <ClInclude Include="application\ui\StarUI.h">
-      <Filter>Application\UI\StarUI\StarUI</Filter>
-    </ClInclude>
     <ClInclude Include="application\ui\StageTitleUI.h">
-      <Filter>Application\UI\StarUI\StageTitleUI</Filter>
+      <Filter>Application\UI\StageTitleUI</Filter>
     </ClInclude>
     <ClInclude Include="InterfaceUI.h">
       <Filter>Application\UI\InterfaceUI</Filter>
@@ -1010,14 +995,17 @@
     <ClInclude Include="engine\util\InstantDrawer.h">
       <Filter>Engine\Util</Filter>
     </ClInclude>
-    <ClInclude Include="application\ui\IStarUI.h">
-      <Filter>Application\UI\StarUI\StarUI</Filter>
-    </ClInclude>
     <ClInclude Include="UI.h">
       <Filter>Application\UI\UI</Filter>
     </ClInclude>
     <ClInclude Include="application\level\LevelData.h">
       <Filter>Application\LevelLoader\LevelData</Filter>
+    </ClInclude>
+    <ClInclude Include="StarUI.h">
+      <Filter>Application\UI\StarUI</Filter>
+    </ClInclude>
+    <ClInclude Include="GameUIManager.h">
+      <Filter>Application\UI</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

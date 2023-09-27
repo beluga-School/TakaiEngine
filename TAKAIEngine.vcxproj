@@ -126,7 +126,6 @@
     <ClCompile Include="application\game\PlayerCamera.cpp" />
     <ClCompile Include="application\system\event\GoalCamChange.cpp" />
     <ClCompile Include="application\system\event\IEvent.cpp" />
-    <ClCompile Include="application\ui\InStageStarUI.cpp" />
     <ClCompile Include="APPLICATION\UI\UI.cpp" />
     <ClCompile Include="engine\util\InstantDrawer.cpp" />
     <ClCompile Include="application\level\LevelData.cpp" />
@@ -139,12 +138,10 @@
     <ClCompile Include="application\game\entity\charactor\Skelton.cpp" />
     <ClCompile Include="application\Stage.cpp" />
     <ClCompile Include="application\ui\StageTitleUI.cpp" />
-    <ClCompile Include="application\ui\StarUI.cpp" />
     <ClCompile Include="application\Status.cpp" />
     <ClCompile Include="application\system\event\Clear1.cpp" />
     <ClCompile Include="application\system\GoalSystem.cpp" />
     <ClCompile Include="application\ui\HPGauge.cpp" />
-    <ClCompile Include="application\ui\IStarUI.cpp" />
     <ClCompile Include="engine\2d\PostEffect.cpp" />
     <ClCompile Include="engine\3d\Billboard.cpp" />
     <ClCompile Include="engine\3d\Obj3dFBX.cpp" />
@@ -198,7 +195,9 @@
     <ClCompile Include="External\imgui\imgui_impl_win32.cpp" />
     <ClCompile Include="External\imgui\imgui_tables.cpp" />
     <ClCompile Include="External\imgui\imgui_widgets.cpp" />
+    <ClCompile Include="GameUIManager.cpp" />
     <ClCompile Include="InterfaceUI.cpp" />
+    <ClCompile Include="StarUI.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="application\collision\CollideManager.h" />
@@ -226,7 +225,6 @@
     <ClInclude Include="application\game\PlayerCamera.h" />
     <ClInclude Include="application\system\event\GoalCamChange.h" />
     <ClInclude Include="application\system\event\IEvent.h" />
-    <ClInclude Include="application\ui\InStageStarUI.h" />
     <ClInclude Include="engine\util\InstantDrawer.h" />
     <ClInclude Include="application\level\LevelData.h" />
     <ClInclude Include="application\game\entity\eventBlock\MoveBlock.h" />
@@ -238,13 +236,11 @@
     <ClInclude Include="application\game\entity\charactor\Skelton.h" />
     <ClInclude Include="application\Stage.h" />
     <ClInclude Include="application\ui\StageTitleUI.h" />
-    <ClInclude Include="application\ui\StarUI.h" />
     <ClInclude Include="application\Status.h" />
     <ClInclude Include="application\system\event\Clear1.h" />
     <ClInclude Include="application\system\GoalSystem.h" />
     <ClInclude Include="application\Tag.h" />
     <ClInclude Include="application\ui\HPGauge.h" />
-    <ClInclude Include="application\ui\IStarUI.h" />
     <ClInclude Include="engine\2d\PostEffect.h" />
     <ClInclude Include="engine\3d\Billboard.h" />
     <ClInclude Include="engine\3d\Obj3dFBX.h" />
@@ -301,8 +297,10 @@
     <ClInclude Include="External\imgui\imstb_textedit.h" />
     <ClInclude Include="External\imgui\imstb_truetype.h" />
     <ClInclude Include="External\json.hpp" />
+    <ClInclude Include="GameUIManager.h" />
     <ClInclude Include="InterfaceUI.h" />
     <ClInclude Include="resource.h" />
+    <ClInclude Include="StarUI.h" />
     <ClInclude Include="UI.h" />
   </ItemGroup>
   <ItemGroup>

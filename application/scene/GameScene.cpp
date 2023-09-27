@@ -10,10 +10,9 @@
 #include "CollideManager.h"
 #include "ObjParticle.h"
 #include "Status.h"
-#include "InStageStarUI.h"
-#include "StageTitleUI.h"
 #include "EventManager.h"
 #include "EventCamera.h"
+#include <GameUIManager.h>
 
 void GameScene::LoadResource()
 {
@@ -34,10 +33,7 @@ void GameScene::LoadResource()
 	//マップからハンドル名の一覧を取得
 	handles = Util::GetKeys(LevelLoader::Get()->GetDataMap());
 
-	IStarUI::StaticLoadResource();
 	player->LoadResource();
-
-	InStageStarUI::Get()->LoadResource();
 
 	TextureManager::Load("Resources\\09_AlphaMask_Resources\\Dirt.png", "Dirt");
 	TextureManager::Load("Resources\\09_AlphaMask_Resources\\FirldMask.png", "FirldMask");
@@ -45,8 +41,9 @@ void GameScene::LoadResource()
 	TextureManager::Load("Resources\\09_AlphaMask_Resources\\Grass.png", "Grass");
 	TextureManager::Load("Resources\\09_AlphaMask_Resources\\groundCubeMask.png", "groundCubeMask");
 	TextureManager::Load("Resources\\desertTex.png", "desertTex");
+	TextureManager::Load("Resources\\rockTex.png", "rockTex");
 
-	StageTitleUI::Get()->LoadResource();
+	GameUIManager::LoadResource();
 }
 
 void GameScene::Initialize()
@@ -68,12 +65,9 @@ void GameScene::Initialize()
 
 	StageChanger::Get()->Initialize(*LevelLoader::Get()->GetData(output));
 
-	StageTitleUI::Get()->Initialize();
-
 	EventManager::Get()->Initialize();
 
-	newStarUI.InitPos({(float)Util::CenterX(),-200}, { (float)Util::CenterX(),(float)Util::CenterY()});
-	newStarUI.SetTexture("star2d");
+	GameUIManager::Get()->Initialize();
 }
 
 GUI sceneChangeGUI("operator");
@@ -83,14 +77,6 @@ void GameScene::Update()
 	if (Input::Keyboard::TriggerKey(DIK_V))
 	{
 		EventManager::Get()->Start("next_1");
-	}
-	if (Input::Keyboard::TriggerKey(DIK_3))
-	{
-		newStarUI.Move(UIMove::START);
-	}
-	if (Input::Keyboard::TriggerKey(DIK_4))
-	{
-		newStarUI.Move(UIMove::END);
 	}
 
 	//ステータスの更新
@@ -171,8 +157,6 @@ void GameScene::Update()
 	ImGui::Text("position x:%f y:%f z:%f", 
 		player->position.x, player->position.y, player->position.z);
 
-	player->starUI.ValueSliders();
-
 	sceneChangeGUI.End();
 
 	player->Update();
@@ -204,9 +188,8 @@ void GameScene::Update()
 
 	ParticleManager::GetInstance()->Update();
 
-	UIUpdate();
-
-	newStarUI.Update();
+	//UI更新
+	GameUIManager::Get()->Update();
 }
 
 void GameScene::Draw()
@@ -233,9 +216,10 @@ void GameScene::Draw()
 
 	SpriteCommonBeginDraw();
 
-	UIDraw();
+	//UI描画
+	player->DrawUI();
 
-	newStarUI.Draw();
+	GameUIManager::Get()->Draw();
 
 	StageChanger::Get()->DrawSprite();
 }
@@ -243,27 +227,4 @@ void GameScene::Draw()
 void GameScene::End()
 {
 	ParticleManager::GetInstance()->AllDelete();
-}
-
-void GameScene::UIUpdate()
-{
-	InStageStarUI::Get()->Update();
-	StageTitleUI::Get()->Update();
-}
-
-void GameScene::UIDraw()
-{
-	//ステージセレクトなら合計数表示
-	if (LevelLoader::Get()->GetData(
-		StageChanger::Get()->GetNowStageHandle())->mStageNum == 0)
-	{
-		player->DrawUI();
-	}
-	//そうでないならステージ内の取得合計表示
-	else
-	{
-		InStageStarUI::Get()->Draw();
-	}
-
-	StageTitleUI::Get()->Draw();
 }
