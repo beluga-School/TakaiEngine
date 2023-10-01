@@ -654,9 +654,6 @@
     <ClCompile Include="application\game\Dokan.cpp">
       <Filter>Application\Entity\EventBlock\Dokan</Filter>
     </ClCompile>
-    <ClCompile Include="application\camera\EventCamera.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
     <ClCompile Include="application\system\event\EventManager.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
@@ -681,7 +678,7 @@
     <ClCompile Include="application\ui\StageTitleUI.cpp">
       <Filter>Application\UI\StageTitleUI</Filter>
     </ClCompile>
-    <ClCompile Include="InterfaceUI.cpp">
+    <ClCompile Include="application\ui\InterfaceUI.cpp">
       <Filter>Application\UI\InterfaceUI</Filter>
     </ClCompile>
     <ClCompile Include="engine\util\InstantDrawer.cpp">
@@ -693,11 +690,14 @@
     <ClCompile Include="application\level\LevelData.cpp">
       <Filter>Application\LevelLoader\LevelData</Filter>
     </ClCompile>
-    <ClCompile Include="StarUI.cpp">
+    <ClCompile Include="application\ui\StarUI.cpp">
       <Filter>Application\UI\StarUI</Filter>
     </ClCompile>
-    <ClCompile Include="GameUIManager.cpp">
+    <ClCompile Include="application\ui\GameUIManager.cpp">
       <Filter>Application\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="application\camera\EventCamera.cpp">
+      <Filter>Application\Camera\EventCamera</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -959,9 +959,6 @@
     <ClInclude Include="application\game\Dokan.h">
       <Filter>Application\Entity\EventBlock\Dokan</Filter>
     </ClInclude>
-    <ClInclude Include="application\camera\EventCamera.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
     <ClInclude Include="application\system\event\EventManager.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
@@ -989,23 +986,26 @@
     <ClInclude Include="application\ui\StageTitleUI.h">
       <Filter>Application\UI\StageTitleUI</Filter>
     </ClInclude>
-    <ClInclude Include="InterfaceUI.h">
+    <ClInclude Include="application\ui\InterfaceUI.h">
       <Filter>Application\UI\InterfaceUI</Filter>
     </ClInclude>
     <ClInclude Include="engine\util\InstantDrawer.h">
       <Filter>Engine\Util</Filter>
     </ClInclude>
-    <ClInclude Include="UI.h">
+    <ClInclude Include="application\ui\UI.h">
       <Filter>Application\UI\UI</Filter>
     </ClInclude>
     <ClInclude Include="application\level\LevelData.h">
       <Filter>Application\LevelLoader\LevelData</Filter>
     </ClInclude>
-    <ClInclude Include="StarUI.h">
+    <ClInclude Include="application\ui\StarUI.h">
       <Filter>Application\UI\StarUI</Filter>
     </ClInclude>
-    <ClInclude Include="GameUIManager.h">
+    <ClInclude Include="application\ui\GameUIManager.h">
       <Filter>Application\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="application\camera\EventCamera.h">
+      <Filter>Application\Camera\EventCamera</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
