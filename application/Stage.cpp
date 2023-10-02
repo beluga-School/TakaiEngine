@@ -469,6 +469,10 @@ void StageChanger::ChangeUpdate()
 			{
 				EventManager::Get()->Register<GoalCamChange>(camdata, objectData->eventtrigerName);
 			}
+			if (Util::CheckString(objectData->eventtrigerName,"moveCamera"))
+			{
+
+			}
 		}
 
 		//ŠC‚Ì”z’u‚È‚ç

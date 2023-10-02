@@ -34,6 +34,7 @@ public:
 	//イベント中用の線を表示
 	void Draw();
 
+	//登録されたイベントをリセット
 	void Clear();
 
 	template <class Event> void Register(const EventCamData& camdata,const std::string& eventName)

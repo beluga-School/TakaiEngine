@@ -43,6 +43,11 @@ bool Util::IsNumber(const std::string& str)
     return str.find_first_not_of("0123456789") == string::npos;
 }
 
+bool Util::CheckString(const std::string& checkStr, const std::string& searchStr)
+{
+    return checkStr.find(searchStr) != std::string::npos;
+}
+
 std::string Util::GetNumber(const std::string& str, const char* delimiter)
 {
     std::vector<std::string> split = Util::SplitString(str, delimiter);

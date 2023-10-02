@@ -172,7 +172,8 @@ int32_t WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_  HINSTANCE hPrevInstan
 		scenemanager->Draw();
 		//DrawBoxなどの毎フレーム更新
 		InstantDrawer::AllUpdate();
-		InstantDrawer::AllDraw();
+		InstantDrawer::AllDraw3D();
+		InstantDrawer::AllDraw2D();
 		postEffect->PostDrawScene();
 
 		PreDraw();

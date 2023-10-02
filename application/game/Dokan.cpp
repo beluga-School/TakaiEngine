@@ -3,6 +3,7 @@
 #include "Stage.h"
 #include "SceneChange.h"
 #include <GameUIManager.h>
+#include <InstantDrawer.h>
 
 void Dokan::Initialize()
 {
@@ -78,6 +79,12 @@ void Dokan::Update()
 void Dokan::Draw()
 {
 	DrawMaterial();
+
+	InstantDrawer::DrawGraph3D({
+		position.x,
+		position.y + 5,
+		position.z,
+		}, {1,1,1}, "white");
 }
 
 void Dokan::HitEffect()

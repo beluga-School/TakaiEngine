@@ -318,15 +318,8 @@
     <Filter Include="Engine\Skydome">
       <UniqueIdentifier>{b0687ccb-5436-42b5-8034-0c8022f3fea5}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル">
-      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
-      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
-    </Filter>
     <Filter Include="Application\Charactor\Enemy\Skelton">
       <UniqueIdentifier>{707b5be6-4406-4b09-b275-af0134f7154d}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Engine\2D\InstantDrawer">
-      <UniqueIdentifier>{7404c217-175e-49f7-9df9-9f1f9e5c34e9}</UniqueIdentifier>
     </Filter>
     <Filter Include="Application\Camera">
       <UniqueIdentifier>{6e53dda4-7081-40f6-9507-9f6b735bbdde}</UniqueIdentifier>
@@ -364,24 +357,6 @@
     <Filter Include="Application\Entity\EventBlock\MoveBlock">
       <UniqueIdentifier>{552f59a4-7d4f-426e-a7e2-a4584bc9ac09}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Application\System\Event">
-      <UniqueIdentifier>{e89bed34-6c87-43de-9219-28dc93915c09}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Application\System\Event\EventManager">
-      <UniqueIdentifier>{c9a4fc76-9fa6-4ba5-ba0f-cdaac89d0ca1}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Application\System\Event\Clear1">
-      <UniqueIdentifier>{bd10d056-0a74-4a2a-b7b5-92c8e40b8362}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Application\System\Event\IEvent">
-      <UniqueIdentifier>{ecdccc2d-73a5-4a72-91dd-9c5309f8478d}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Application\System\Event\EventTriggers">
-      <UniqueIdentifier>{f405bb6d-add4-4de0-9bdc-70b658844f26}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Application\System\Event\GoalCamChange">
-      <UniqueIdentifier>{21dd0378-7023-4b0f-a7ba-e2e5aea7e0dc}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Application\ObjParticle">
       <UniqueIdentifier>{460b4cdc-d13a-4f0a-9bbe-019b405a216e}</UniqueIdentifier>
     </Filter>
@@ -405,6 +380,34 @@
     </Filter>
     <Filter Include="Application\UI\StageTitleUI">
       <UniqueIdentifier>{b24b72f9-59b1-4ff8-9937-a28061c7a015}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Application\Event">
+      <UniqueIdentifier>{e89bed34-6c87-43de-9219-28dc93915c09}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Application\Event\EventManager">
+      <UniqueIdentifier>{c9a4fc76-9fa6-4ba5-ba0f-cdaac89d0ca1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Application\Event\Clear1">
+      <UniqueIdentifier>{bd10d056-0a74-4a2a-b7b5-92c8e40b8362}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Application\Event\IEvent">
+      <UniqueIdentifier>{ecdccc2d-73a5-4a72-91dd-9c5309f8478d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Application\Event\EventTriggers">
+      <UniqueIdentifier>{f405bb6d-add4-4de0-9bdc-70b658844f26}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Application\Event\GoalCamChange">
+      <UniqueIdentifier>{21dd0378-7023-4b0f-a7ba-e2e5aea7e0dc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Application\Event\CamMoveEvent">
+      <UniqueIdentifier>{9c1d6142-b4b8-445a-bc93-2f2a2abf85f9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Engine\Util\InstantDrawer">
+      <UniqueIdentifier>{7404c217-175e-49f7-9df9-9f1f9e5c34e9}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -646,28 +649,13 @@
       <Filter>Application\Collision</Filter>
     </ClCompile>
     <ClCompile Include="application\system\event\Clear1.cpp">
-      <Filter>Application\System\Event\Clear1</Filter>
+      <Filter>Application\Event\Clear1</Filter>
     </ClCompile>
     <ClCompile Include="application\game\entity\Block.cpp">
       <Filter>Application\Entity\Block</Filter>
     </ClCompile>
     <ClCompile Include="application\game\Dokan.cpp">
       <Filter>Application\Entity\EventBlock\Dokan</Filter>
-    </ClCompile>
-    <ClCompile Include="application\system\event\EventManager.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="application\system\event\EventTriggers.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="application\system\event\GoalCamChange.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="application\system\event\IEvent.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="application\game\entity\eventBlock\MoveBlock.cpp">
-      <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="application\game\entity\eventBlock\Sea.cpp">
       <Filter>ソース ファイル</Filter>
@@ -680,9 +668,6 @@
     </ClCompile>
     <ClCompile Include="application\ui\InterfaceUI.cpp">
       <Filter>Application\UI\InterfaceUI</Filter>
-    </ClCompile>
-    <ClCompile Include="engine\util\InstantDrawer.cpp">
-      <Filter>Engine\Util</Filter>
     </ClCompile>
     <ClCompile Include="APPLICATION\UI\UI.cpp">
       <Filter>Application\UI\UI</Filter>
@@ -698,6 +683,24 @@
     </ClCompile>
     <ClCompile Include="application\camera\EventCamera.cpp">
       <Filter>Application\Camera\EventCamera</Filter>
+    </ClCompile>
+    <ClCompile Include="application\system\event\EventManager.cpp">
+      <Filter>Application\Event\EventManager</Filter>
+    </ClCompile>
+    <ClCompile Include="application\system\event\IEvent.cpp">
+      <Filter>Application\Event\IEvent</Filter>
+    </ClCompile>
+    <ClCompile Include="application\system\event\GoalCamChange.cpp">
+      <Filter>Application\Event\GoalCamChange</Filter>
+    </ClCompile>
+    <ClCompile Include="application\system\event\EventTriggers.cpp">
+      <Filter>Application\Event\EventTriggers</Filter>
+    </ClCompile>
+    <ClCompile Include="application\game\entity\eventBlock\MoveBlock.cpp">
+      <Filter>Application\Entity\EventBlock\MoveBlock</Filter>
+    </ClCompile>
+    <ClCompile Include="engine\util\InstantDrawer.cpp">
+      <Filter>Engine\Util\InstantDrawer</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -951,28 +954,13 @@
       <Filter>Application\Collision</Filter>
     </ClInclude>
     <ClInclude Include="application\system\event\Clear1.h">
-      <Filter>Application\System\Event\Clear1</Filter>
+      <Filter>Application\Event\Clear1</Filter>
     </ClInclude>
     <ClInclude Include="application\game\entity\Block.h">
       <Filter>Application\Entity\Block</Filter>
     </ClInclude>
     <ClInclude Include="application\game\Dokan.h">
       <Filter>Application\Entity\EventBlock\Dokan</Filter>
-    </ClInclude>
-    <ClInclude Include="application\system\event\EventManager.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="application\system\event\EventTriggers.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="application\system\event\GoalCamChange.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="application\system\event\IEvent.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="application\game\entity\eventBlock\MoveBlock.h">
-      <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="application\game\entity\eventBlock\Sea.h">
       <Filter>ヘッダー ファイル</Filter>
@@ -989,9 +977,6 @@
     <ClInclude Include="application\ui\InterfaceUI.h">
       <Filter>Application\UI\InterfaceUI</Filter>
     </ClInclude>
-    <ClInclude Include="engine\util\InstantDrawer.h">
-      <Filter>Engine\Util</Filter>
-    </ClInclude>
     <ClInclude Include="application\ui\UI.h">
       <Filter>Application\UI\UI</Filter>
     </ClInclude>
@@ -1006,6 +991,24 @@
     </ClInclude>
     <ClInclude Include="application\camera\EventCamera.h">
       <Filter>Application\Camera\EventCamera</Filter>
+    </ClInclude>
+    <ClInclude Include="application\system\event\EventManager.h">
+      <Filter>Application\Event\EventManager</Filter>
+    </ClInclude>
+    <ClInclude Include="application\system\event\IEvent.h">
+      <Filter>Application\Event\IEvent</Filter>
+    </ClInclude>
+    <ClInclude Include="application\system\event\GoalCamChange.h">
+      <Filter>Application\Event\GoalCamChange</Filter>
+    </ClInclude>
+    <ClInclude Include="application\system\event\EventTriggers.h">
+      <Filter>Application\Event\EventTriggers</Filter>
+    </ClInclude>
+    <ClInclude Include="application\game\entity\eventBlock\MoveBlock.h">
+      <Filter>Application\Entity\EventBlock\MoveBlock</Filter>
+    </ClInclude>
+    <ClInclude Include="engine\util\InstantDrawer.h">
+      <Filter>Engine\Util\InstantDrawer</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

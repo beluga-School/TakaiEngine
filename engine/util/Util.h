@@ -37,6 +37,9 @@ namespace Util
 	//文字列に数値が含まれているか判定する
 	bool IsNumber(const std::string& str);
 
+	//文字列に指定した文字列が含まれているか判定する
+	bool CheckString(const std::string& checkStr, const std::string& searchStr);
+
 	//文字列を指定した区切り文字で分割し、一番手前にあった文字を返す
 	std::string GetNumber(const std::string& str, const char* delimiter);
 
