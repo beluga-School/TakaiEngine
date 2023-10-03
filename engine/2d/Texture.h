@@ -29,6 +29,8 @@ public:
 
 	bool mCreated = false;
 
+	DirectX::TexMetadata* GetMetaData();
+
 private:
 	DirectX::TexMetadata mMetadata{};
 	DirectX::ScratchImage mScratchImg{};

@@ -1,5 +1,7 @@
 #include "InstantDrawer.h"
 #include "ClearDrawScreen.h"
+#include "MathF.h"
+#include <minmax.h>
 
 std::list<Sprite> InstantDrawer::sSprites;
 std::list<Billboard> InstantDrawer::sBillboards;
@@ -31,12 +33,31 @@ void InstantDrawer::DrawBox(const float& x, const float& y, const float& width, 
 	}
 }
 
-void InstantDrawer::DrawGraph3D(const Vector3& pos, const Vector3& scale, const std::string& handle)
+void InstantDrawer::DrawGraph3D(const Vector3& pos, float width, float height, const std::string& handle)
 {
 	sBillboards.emplace_back();
 	sBillboards.back().SetTexture(TextureManager::GetTexture(handle));
 	sBillboards.back().position = pos;
-	sBillboards.back().scale = scale;
+
+	int32_t texWidth = (int32_t)TextureManager::GetTexture(handle)->GetMetaData()->width;
+	int32_t texHeight = (int32_t)TextureManager::GetTexture(handle)->GetMetaData()->height;
+
+	int32_t bigger = max(texWidth, texHeight);
+	int32_t smaller = min(texWidth, texHeight);
+
+	bigger /= smaller;
+	smaller = 1;
+
+	//‰¡‚Ì•û‚ª‘å‚«‚¢‚È‚ç
+	if (texWidth > texHeight)
+	{
+		sBillboards.back().scale = { (float)bigger ,(float)smaller,1 };
+	}
+	//c‚Ì•û‚ª‘å‚«‚¢or“¯‚¶‚È‚ç
+	else
+	{
+		sBillboards.back().scale = { (float)smaller,(float)bigger,1 };
+	}
 }
 
 void InstantDrawer::AllUpdate()
@@ -63,7 +84,7 @@ void InstantDrawer::AllDraw2D()
 
 void InstantDrawer::AllDraw3D()
 {
-	BasicObjectPreDraw(PipelineManager::GetPipeLine("Toon"));
+	BasicObjectPreDraw(PipelineManager::GetPipeLine("GroundToon"));
 
 	for (auto& billboard : sBillboards)
 	{

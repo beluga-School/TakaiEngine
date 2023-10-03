@@ -1,9 +1,13 @@
 #include "SceneManager.h"
 #include "SceneChange.h"
 #include <cassert>
+#include "InstantDrawer.h"
 
 void SceneManager::Update()
 {
+	//溜め込んだ描画実行を破棄
+	InstantDrawer::DrawInit();
+
 	//切り替え機構
 	//次のシーンの予約があるなら
 	if (mNextscene)
@@ -43,6 +47,12 @@ void SceneManager::Draw()
 {
 	//実行中シーンの描画
 	mCurrentscene->Draw();
+
+	//簡易描画クラスの毎フレーム更新
+	InstantDrawer::AllUpdate();
+	//簡易描画クラスの描画
+	InstantDrawer::AllDraw3D();
+	InstantDrawer::AllDraw2D();
 
 	//切り替え演出の描画
 	SpriteCommonBeginDraw();

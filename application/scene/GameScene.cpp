@@ -16,7 +16,7 @@
 
 void GameScene::LoadResource()
 {
-	StageChanger::Get()->goalSystem.LoadResource();
+	StageChanger::LoadResource();
 
 	//ƒ[ƒh(•ª‚¯‚½‚Ù‚¤‚ª‚¢‚¢)
 	LevelLoader::Get()->Load("Scene/stage_stageselect", "stage_stageselect",0);

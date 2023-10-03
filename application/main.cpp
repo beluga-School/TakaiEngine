@@ -42,8 +42,6 @@
 #include "ShaderTestScene.h"
 #include "TitleScene.h"
 
-#include "InstantDrawer.h"
-
 //命名規則は以下の通り
 //メンバ変数->手前にm, mの次は大文字(例:mHoge)
 //スタティック変数->手前にs, sの次は大文字(例:sHoge)
@@ -156,9 +154,6 @@ int32_t WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_  HINSTANCE hPrevInstan
 		Input::Mouse::Update();
 		Input::Pad::Update();
 
-		//DrawBoxなどの毎フレーム更新
-		InstantDrawer::DrawInit();
-		
 		scenemanager->Update();
 		postEffect->Update();
 
@@ -170,10 +165,6 @@ int32_t WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_  HINSTANCE hPrevInstan
 
 		postEffect->PreDrawScene();
 		scenemanager->Draw();
-		//DrawBoxなどの毎フレーム更新
-		InstantDrawer::AllUpdate();
-		InstantDrawer::AllDraw3D();
-		InstantDrawer::AllDraw2D();
 		postEffect->PostDrawScene();
 
 		PreDraw();

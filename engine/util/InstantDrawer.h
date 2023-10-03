@@ -21,7 +21,7 @@ public:
 		const float& width, const float& height,
 		const Color& color, const Anchor& anchor = Anchor::CENTER);
 
-	static void DrawGraph3D(const Vector3& pos,const Vector3& scale,const std::string& handle);
+	static void DrawGraph3D(const Vector3& pos,float width,float height,const std::string& handle);
 
 	static void AllUpdate();
 	static void AllDraw2D();

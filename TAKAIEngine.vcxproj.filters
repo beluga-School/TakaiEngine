@@ -409,6 +409,9 @@
     <Filter Include="Engine\Util\InstantDrawer">
       <UniqueIdentifier>{7404c217-175e-49f7-9df9-9f1f9e5c34e9}</UniqueIdentifier>
     </Filter>
+    <Filter Include="シェーダー\Billboard">
+      <UniqueIdentifier>{6a19937d-d9b5-48f5-b5aa-7d6dcda02ab8}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="engine\input\Input.cpp">
@@ -1079,6 +1082,9 @@
     <None Include="Resources\Shader\PerlinNoisePE\PerlinNoisePE.hlsli">
       <Filter>シェーダー\PerlinNoisePE</Filter>
     </None>
+    <None Include="Billboard.hlsli">
+      <Filter>シェーダー\Billboard</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Resources\Shader\BasicPS.hlsl">
@@ -1218,6 +1224,12 @@
     </FxCompile>
     <FxCompile Include="Resources\Shader\PerlinNoisePE\PerlinNoisePEVS.hlsl">
       <Filter>シェーダー\PerlinNoisePE</Filter>
+    </FxCompile>
+    <FxCompile Include="BillboardPS.hlsl">
+      <Filter>シェーダー\Billboard</Filter>
+    </FxCompile>
+    <FxCompile Include="BillboardVS.hlsl">
+      <Filter>シェーダー\Billboard</Filter>
     </FxCompile>
   </ItemGroup>
   <ItemGroup>

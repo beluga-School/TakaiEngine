@@ -1,4 +1,4 @@
-#include "Ground.hlsli"
+#include "Billboard.hlsli"
 
 Texture2D<float4> tex : register(t0); //0番スロットに設定されたテクスチャ
 SamplerState smp : register(s0); //0番スロットに設定されたサンプラー
@@ -6,9 +6,6 @@ SamplerState smp : register(s0); //0番スロットに設定されたサンプラー
 float4 main(VSOutput input) : SV_TARGET
 {
     float4 texcolor = tex.Sample(smp, input.uv * tiling + offset);
-    
-    clip(m_alpha);
-    //clip(texcolor.r + texcolor.g + texcolor.b);
     
     float4 shadecolor = { 0, 0, 0, 1 };
     
@@ -38,5 +35,5 @@ float4 main(VSOutput input) : SV_TARGET
         }
     }
     
-    return float4(shadecolor.rgb * color.rgb, color.a * texcolor.a);
+    return shadecolor * color;
 }

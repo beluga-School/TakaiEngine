@@ -40,6 +40,8 @@ struct PlayerData
 class StageChanger
 {
 public:
+	static void LoadResource();
+
 	void ChangeLevel(LevelData& data);
 
 	//初期ステージを決定

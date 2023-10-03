@@ -14,6 +14,8 @@ struct DokanInfo
 class Dokan : public EventBlock
 {
 public:
+	static void LoadResource();
+
 	Dokan() : EventBlock()
 	{
 		SetTag(TagTable::Dokan);

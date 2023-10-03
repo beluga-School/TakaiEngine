@@ -7,6 +7,11 @@ using namespace DirectX;
 
 std::map<std::string, Texture> TextureManager::sTextures;
 
+DirectX::TexMetadata* Texture::GetMetaData()
+{
+	return &mMetadata;
+}
+
 void Texture::CreateWhiteTexture()
 {
 	const size_t TEXTURE_WIDTH = 256;

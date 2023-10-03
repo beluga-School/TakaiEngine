@@ -22,6 +22,12 @@
 #include "GoalCamChange.h"
 #include <GameUIManager.h>
 
+void StageChanger::LoadResource()
+{
+	StageChanger::Get()->goalSystem.LoadResource();
+	Dokan::LoadResource();
+}
+
 void StageChanger::ChangeLevel(LevelData& data)
 {
 	if (SceneChange::GetRun() == false)

@@ -5,6 +5,11 @@
 #include <GameUIManager.h>
 #include <InstantDrawer.h>
 
+void Dokan::LoadResource()
+{
+	TextureManager::Load("Resources\\ui\\LSHIFTdownUI.png", "LSHIFTdownUI");
+}
+
 void Dokan::Initialize()
 {
 	SetModel(ModelManager::GetModel("dokan"));
@@ -84,7 +89,7 @@ void Dokan::Draw()
 		position.x,
 		position.y + 5,
 		position.z,
-		}, {1,1,1}, "white");
+		}, 1,1, "LSHIFTdownUI");
 }
 
 void Dokan::HitEffect()
