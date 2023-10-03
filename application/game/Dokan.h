@@ -70,7 +70,7 @@ public:
 
 	//ˆÚ“®æ‚Ìî•ñ‚ğ•Û
 	DokanInfo nextDokanInfo;
-
+	
 	//©g‚Ìî•ñ‚ğ•Û
 	DokanInfo dokanInfo;
 

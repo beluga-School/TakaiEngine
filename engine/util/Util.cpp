@@ -48,7 +48,16 @@ bool Util::CheckString(const std::string& checkStr, const std::string& searchStr
     return checkStr.find(searchStr) != std::string::npos;
 }
 
-std::string Util::GetNumber(const std::string& str, const char* delimiter)
+std::string Util::GetString(const std::string& checkStr, const std::string& searchStr)
+{
+    if (checkStr.find(searchStr) != std::string::npos)
+    {
+        return searchStr;
+    }
+    return "notFound";
+}
+
+int32_t Util::GetNumber(const std::string& str, const char* delimiter)
 {
     std::vector<std::string> split = Util::SplitString(str, delimiter);
 
@@ -57,9 +66,9 @@ std::string Util::GetNumber(const std::string& str, const char* delimiter)
         //”š‚¾‚¯”²‚«o‚·
         if (Util::IsNumber(str))
         {
-            return str;
+            return int32_t(atoi(str.c_str()));
         }
     }
 
-    return "";
+    return -1;
 }

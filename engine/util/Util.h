@@ -39,9 +39,18 @@ namespace Util
 
 	//文字列に指定した文字列が含まれているか判定する
 	bool CheckString(const std::string& checkStr, const std::string& searchStr);
+	//さらに見つけた文字列を返す
+	std::string GetString(const std::string& checkStr, const std::string& searchStr);
 
 	//文字列を指定した区切り文字で分割し、一番手前にあった文字を返す
-	std::string GetNumber(const std::string& str, const char* delimiter);
+	int32_t GetNumber(const std::string& str, const char* delimiter);
+
+	//そのキーがマップ内に存在するかを検索する
+	template <class Key, class Value>
+	bool CheckFindEvent(std::unordered_map<Key, Value> map, Key key) {
+		//存在するならtrueになり、存在しないならfalseになる
+		return !(map.find(key) == map.end());
+	}
 
 	//マップからハンドルを取得する
 	//コピーしてるので処理速度終わってる

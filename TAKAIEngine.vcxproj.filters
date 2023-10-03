@@ -412,6 +412,12 @@
     <Filter Include="シェーダー\Billboard">
       <UniqueIdentifier>{6a19937d-d9b5-48f5-b5aa-7d6dcda02ab8}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Application\UI\TutorialUI">
+      <UniqueIdentifier>{4f3f7b7d-ce1e-4064-8521-29ee7f7fedfd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Application\Event\EventCameraManager">
+      <UniqueIdentifier>{7c95df73-a48d-46bd-acaf-780786ceb817}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="engine\input\Input.cpp">
@@ -704,6 +710,12 @@
     </ClCompile>
     <ClCompile Include="engine\util\InstantDrawer.cpp">
       <Filter>Engine\Util\InstantDrawer</Filter>
+    </ClCompile>
+    <ClCompile Include="TutorialUI.cpp">
+      <Filter>Application\UI\TutorialUI</Filter>
+    </ClCompile>
+    <ClCompile Include="EventCameraManager.cpp">
+      <Filter>Application\Event\EventCameraManager</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1012,6 +1024,12 @@
     </ClInclude>
     <ClInclude Include="engine\util\InstantDrawer.h">
       <Filter>Engine\Util\InstantDrawer</Filter>
+    </ClInclude>
+    <ClInclude Include="TutorialUI.h">
+      <Filter>Application\UI\TutorialUI</Filter>
+    </ClInclude>
+    <ClInclude Include="EventCameraManager.h">
+      <Filter>Application\Event\EventCameraManager</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

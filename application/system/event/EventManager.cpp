@@ -4,6 +4,7 @@
 #include "Input.h"
 #include "Clear1.h"
 #include "GoalSystem.h"
+#include <EventCameraManager.h>
 
 bool EventManager::Start(const std::string& startEventName)
 {
@@ -19,6 +20,15 @@ bool EventManager::Start(const std::string& startEventName)
 			state = State::Start;
 			
 			nowEvent = &Event;
+			
+			bool result = EventCameraManager::Get()->SetEventCamera(Event->eventName);
+
+			//イベントカメラが見つかったら
+			if (result)
+			{
+				//カメラ使うフラグを立てる
+				nowEvent->get()->isUseCamera = true;
+			}
 
 			return true;
 		}
@@ -86,6 +96,7 @@ void EventManager::Update()
 		{
 			nowEvent->get()->Start();
 			state = State::RunEvent;
+			EventCameraManager::Get()->Start();
 		}
 		
 		break;

@@ -1,6 +1,7 @@
 #pragma once
 #include <string>
 #include "EventCamera.h"
+#include <list>
 
 //イベントのインターフェース
 class IEvent
@@ -18,5 +19,9 @@ public:
 
 	std::string eventName;
 
-	EventCamera eventCamera;
+	//カメラを使用するか
+	bool isUseCamera = false;
+
+	//プレイヤーを動けなくするか
+
 };

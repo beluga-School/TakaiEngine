@@ -37,13 +37,11 @@ public:
 	//登録されたイベントをリセット
 	void Clear();
 
-	template <class Event> void Register(const EventCamData& camdata,const std::string& eventName)
+	template <class Event> void Register(const std::string& eventName)
 	{
 		allEvents.emplace_back();
 		allEvents.back() = std::make_unique<Event>();
 		allEvents.back()->eventName = eventName;
-		allEvents.back()->eventCamera.eventCamData = camdata;
-		allEvents.back()->eventCamera.Initialize();
 	}
 
 private:

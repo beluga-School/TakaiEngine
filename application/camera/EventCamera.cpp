@@ -8,16 +8,23 @@ void EventCamera::Initialize()
 	target.Initialize();
 }
 
-void EventCamera::Update()
+void EventCamera::SetPos(const Vector3& position)
 {
 	//カメラ位置をオブジェクトに読み込み
-	hontai.position = eventCamData.pos;
-	hontai.rotation = {
-		MathF::AngleConvRad(eventCamData.rotation.x),
-		MathF::AngleConvRad(eventCamData.rotation.y),
-		MathF::AngleConvRad(eventCamData.rotation.z)
-	};
+	hontai.position = position;
+}
 
+void EventCamera::SetRotation(const Vector3& rotation)
+{
+	hontai.rotation = {
+		MathF::AngleConvRad(rotation.x),
+		MathF::AngleConvRad(rotation.y),
+		MathF::AngleConvRad(rotation.z)
+	};
+}
+
+void EventCamera::Update()
+{
 	Vector3 centerVec = hontai.matWorld.ExtractAxisZ();
 	centerVec.normalize();
 

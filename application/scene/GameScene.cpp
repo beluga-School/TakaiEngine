@@ -13,6 +13,7 @@
 #include "EventManager.h"
 #include "EventCamera.h"
 #include <GameUIManager.h>
+#include <EventCameraManager.h>
 
 void GameScene::LoadResource()
 {
@@ -165,9 +166,10 @@ void GameScene::Update()
 
 	//カメラ更新
 	//イベント中ならカメラ変更
-	if (EventManager::Get()->GetNowEvent() != nullptr)
+	if (EventManager::Get()->GetNowEvent() != nullptr && 
+		EventManager::Get()->GetNowEvent()->get()->isUseCamera)
 	{
-		EventManager::Get()->GetNowEvent()->get()->eventCamera.Update();
+		EventCameraManager::Get()->Update();
 	}
 	else if(debugCam)
 	{

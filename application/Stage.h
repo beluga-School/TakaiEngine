@@ -11,6 +11,7 @@
 #include "Dokan.h"
 #include "Sea.h"
 #include "EventCamera.h"
+#include <vector>
 
 class ColEventObj : public Obj3d
 {
@@ -35,6 +36,24 @@ struct PlayerData
 	LevelData::ObjectData data;
 	//土管での配置が見つかっているならそっちを優先するようにするフラグ
 	bool dokanPriority = false;
+};
+
+//イベントカメラデータをまとめて読み込む用のデータ配列
+struct LoadCamData
+{
+	LoadCamData(std::string& eventname_, int32_t eventnumber_, EventCamData camData_) 
+	{
+		eventname = eventname_;
+		eventnumber = eventnumber_;
+		camData.pos = camData_.pos;
+		camData.rotation = camData_.rotation;
+	};
+
+	std::string eventname = "";
+
+	int32_t eventnumber = -1;
+	
+	EventCamData camData{};
 };
 
 class StageChanger
@@ -135,6 +154,9 @@ private:
 	LevelData* currentData = nullptr;
 
 	PlayerData playerData;
+
+	std::vector<LoadCamData> loadCamDatas;
+	std::list<std::string> eventCameraNames;
 
 	GUI hoge = { "hoge" };
 };

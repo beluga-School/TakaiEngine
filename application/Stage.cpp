@@ -21,6 +21,7 @@
 #include "Clear1.h"
 #include "GoalCamChange.h"
 #include <GameUIManager.h>
+#include <EventCameraManager.h>
 
 void StageChanger::LoadResource()
 {
@@ -467,13 +468,23 @@ void StageChanger::ChangeUpdate()
 			EventCamData camdata;
 			camdata.pos = objectData->translation;
 			camdata.rotation = objectData->rotation;
+
 			if (objectData->eventtrigerName == "next_1")
 			{
-				EventManager::Get()->Register<Clear1>(camdata, objectData->eventtrigerName);
+				EventManager::Get()->Register<Clear1>(objectData->eventtrigerName);
 			}
-			if (objectData->eventtrigerName == "goalCamera")
+			if (Util::CheckString(objectData->eventtrigerName, "goalCamera"))
 			{
-				EventManager::Get()->Register<GoalCamChange>(camdata, objectData->eventtrigerName);
+				//数字を分離
+				int32_t number = Util::GetNumber(objectData->eventtrigerName, "_");
+				//イベント名を分離
+				std::string eventName = Util::GetString(objectData->eventtrigerName, "goalCamera");
+				
+				EventManager::Get()->Register<GoalCamChange>(eventName);
+				eventCameraNames.push_back(eventName);
+
+				//イベント名、番号、カメラ位置を保存
+				loadCamDatas.emplace_back(eventName, number, camdata);
 			}
 			if (Util::CheckString(objectData->eventtrigerName,"moveCamera"))
 			{
@@ -869,6 +880,25 @@ void StageChanger::ChangeUpdate()
 		//データの総量が増えると処理時間がのびてしまう アホ
 		//探索方を変えない方針で改善するなら、すでに全てのデータが見つかっているデータは
 		//スキップするなどの処理が必要だろう
+	}
+
+	//全てのカメラオブジェクトを検索して
+	for (auto itr = eventCameraNames.begin(); itr != eventCameraNames.end(); itr++)
+	{
+		//並び替える
+		std::stable_sort(loadCamDatas.begin(), loadCamDatas.end(),[](const LoadCamData& lh, const LoadCamData& rh) {
+			return lh.eventnumber < rh.eventnumber;
+			});
+
+		std::vector<EventCamData> datas;
+		//入れたいデータだけ取り出して
+		for (auto& data : loadCamDatas)
+		{
+			datas.push_back(data.camData);
+		}
+
+		//イベント名と並び替えたカメラデータが入る
+		EventCameraManager::Get()->Register(*itr, datas);
 	}
 
 	SetPlayer(playerData.data);

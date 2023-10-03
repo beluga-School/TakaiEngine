@@ -12,12 +12,12 @@ struct EventCamData
 class EventCamera
 {
 public:
+	void SetPos(const Vector3& position);
+	void SetRotation(const Vector3& rotation);
+
 	void Initialize();
 	void Update();
 	void Draw();
-
-	//読み込んだカメラデータ
-	EventCamData eventCamData;
 
 	EventCamera() {};
 	~EventCamera() {};
