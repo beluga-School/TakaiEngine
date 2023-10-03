@@ -129,6 +129,14 @@ void CollideManager::CheckCollide(Entity* check, Entity* collide)
 					dokan->HitEffect(player);
 				}
 			}
+			if (Collsions::SphereCollsion(player->mEncountCol, dokan->popUIRangeSphere))
+			{
+				dokan->PopUpUI();
+			}
+			else
+			{
+				dokan->PopOutUI();
+			}
 		}
 	}
 

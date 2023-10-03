@@ -409,3 +409,15 @@ bool Cube::operator==(const Cube& cube)const
 		cube.scale.y == scale.y &&
 		cube.scale.z == scale.z);
 }
+
+Sphere::Sphere()
+{
+	center = { 0,0,0 };
+	radius = 1.0f;
+}
+
+Sphere::Sphere(const Vector3& center_, float radius_)
+{
+	center = center_;
+	radius = radius_;
+}

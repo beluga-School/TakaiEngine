@@ -21,6 +21,57 @@ void Dokan::Update()
 	mPreMoveTimer.Update();
 	mMainMoveTimer.Update();
 
+	TargetEnter();
+
+	UIUpdate();
+
+	Obj3d::Update(*Camera::sCamera);
+}
+
+void Dokan::Draw()
+{
+	DrawMaterial();
+
+	InstantDrawer::DrawGraph3D({
+		position.x,
+		position.y + 5,
+		position.z,
+		}, mUISize.x, mUISize.y, "LSHIFTdownUI");
+}
+
+void Dokan::HitEffect()
+{
+	
+}
+
+void Dokan::HitEffect(Mob* target_)
+{
+	//すでに開始しているならスキップ
+	if (mDokanState != DokanState::None)return;
+
+	//ボタン入力があったら
+	if (Input::Keyboard::TriggerKey(DIK_LSHIFT))
+	{
+		mPreMoveTimer.Start();
+		mDokanState = DokanState::PreMove;
+		mTarget = target_;
+		//ターゲットの当たり判定をなくす
+		mTarget->SetNoCollsion(true);
+		mTarget->SetNoGravity(true);
+		mTarget->SetNoMove(true);
+		mSavePos = target_->box.position;
+
+		//移動先の情報をステージへ移す
+		StageChanger::Get()->saveNextDokanInfo.stageName = nextDokanInfo.stageName;
+		StageChanger::Get()->saveNextDokanInfo.id = nextDokanInfo.id;
+
+		//UIを動かす
+		GameUIManager::Get()->Move(UIMove::END);
+	}
+}
+
+void Dokan::TargetEnter()
+{
 	//保持したターゲットがいるなら
 	if (mTarget != nullptr)
 	{
@@ -29,7 +80,7 @@ void Dokan::Update()
 		case Dokan::DokanState::None:
 			break;
 		case Dokan::DokanState::PreMove:
-			
+
 			//ターゲットの初期位置を土管の真上に移動
 			mStartPos = { box.position.x ,box.position.y + box.scale.y / 2,box.position.z };
 			mTarget->position = TEasing::InQuad(mSavePos, mStartPos, mPreMoveTimer.GetTimeRate());
@@ -39,12 +90,12 @@ void Dokan::Update()
 				mDokanState = DokanState::MainMove;
 				mMainMoveTimer.Start();
 			}
-			
+
 			break;
 		case Dokan::DokanState::MainMove:
 			//土管の原点まで移動させる
 			mTarget->position.y = TEasing::InQuad(mStartPos.y, box.position.y - scale.y / 2, mMainMoveTimer.GetTimeRate());
-			
+
 			if (mMainMoveTimer.GetEnd())
 			{
 				mDokanState = DokanState::End;
@@ -77,48 +128,58 @@ void Dokan::Update()
 			break;
 		}
 	}
-
-	Obj3d::Update(*Camera::sCamera);
 }
 
-void Dokan::Draw()
+void Dokan::UIUpdate()
 {
-	DrawMaterial();
-
-	InstantDrawer::DrawGraph3D({
-		position.x,
-		position.y + 5,
-		position.z,
-		}, 1,1, "LSHIFTdownUI");
-}
-
-void Dokan::HitEffect()
-{
+	popUIRangeSphere.center = position;
 	
+	mUIPopUpTimer.Update();
+	mUIPopOutTimer.Update();
+
+	switch (mUIState)
+	{
+	case Dokan::UIState::None:
+		break;
+	case Dokan::UIState::PopUp:
+		mUISize.x = TEasing::OutBack(0.0f, 1.0f, mUIPopUpTimer.GetTimeRate());
+		mUISize.y = TEasing::OutBack(0.0f, 1.0f, mUIPopUpTimer.GetTimeRate());
+		
+		if (mUIPopUpTimer.GetEnd())
+		{
+			mUIState = UIState::Exist;
+		}
+
+		break;
+	case Dokan::UIState::Exist:
+		break;
+	case Dokan::UIState::PopOut:
+		mUISize.x = TEasing::InBack(1.0f, 0.0f, mUIPopOutTimer.GetTimeRate());
+		mUISize.y = TEasing::InBack(1.0f, 0.0f, mUIPopOutTimer.GetTimeRate());
+
+		if (mUIPopOutTimer.GetEnd())
+		{
+			mUIState = UIState::None;
+		}
+
+		break;
+	}
 }
 
-void Dokan::HitEffect(Mob* target_)
+void Dokan::PopUpUI()
 {
-	//すでに開始しているならスキップ
-	if (mDokanState != DokanState::None)return;
+	//未出現状態以外で入ったらスキップ
+	if (mUIState != UIState::None)return;
 
-	//ボタン入力があったら
-	if (Input::Keyboard::TriggerKey(DIK_LSHIFT))
-	{
-		mPreMoveTimer.Start();
-		mDokanState = DokanState::PreMove;
-		mTarget = target_;
-		//ターゲットの当たり判定をなくす
-		mTarget->SetNoCollsion(true);
-		mTarget->SetNoGravity(true);
-		mTarget->SetNoMove(true);
-		mSavePos = target_->box.position;
+	mUIPopUpTimer.Start();
+	mUIState = UIState::PopUp;
+}
 
-		//移動先の情報をステージへ移す
-		StageChanger::Get()->saveNextDokanInfo.stageName = nextDokanInfo.stageName;
-		StageChanger::Get()->saveNextDokanInfo.id = nextDokanInfo.id;
+void Dokan::PopOutUI()
+{
+	//出現状態以外で入ったらスキップ
+	if (mUIState != UIState::Exist)return;
 
-		//UIを動かす
-		GameUIManager::Get()->Move(UIMove::END);
-	}
+	mUIPopOutTimer.Start();
+	mUIState = UIState::PopOut;
 }

@@ -29,6 +29,9 @@ struct Cube
 
 struct Sphere
 {
+	Sphere();
+	Sphere(const Vector3& center,float radius);
+
 	Vector3 center = { 0,0,0 };
 	float radius = 1.0f;
 };

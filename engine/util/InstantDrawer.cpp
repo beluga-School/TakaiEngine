@@ -51,12 +51,12 @@ void InstantDrawer::DrawGraph3D(const Vector3& pos, float width, float height, c
 	//‰¡‚Ì•û‚ª‘å‚«‚¢‚È‚ç
 	if (texWidth > texHeight)
 	{
-		sBillboards.back().scale = { (float)bigger ,(float)smaller,1 };
+		sBillboards.back().scale = { (float)bigger * width,(float)smaller * height,1 };
 	}
 	//c‚Ì•û‚ª‘å‚«‚¢or“¯‚¶‚È‚ç
 	else
 	{
-		sBillboards.back().scale = { (float)smaller,(float)bigger,1 };
+		sBillboards.back().scale = { (float)smaller * width,(float)bigger * height,1 };
 	}
 }
 

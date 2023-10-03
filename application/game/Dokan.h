@@ -13,6 +13,23 @@ struct DokanInfo
 
 class Dokan : public EventBlock
 {
+private:
+	enum class DokanState
+	{
+		None,
+		PreMove,
+		MainMove,
+		End,
+	}mDokanState = DokanState::None;
+
+	enum class UIState
+	{
+		None,
+		PopUp,
+		Exist,
+		PopOut,
+	}mUIState = UIState::None;
+
 public:
 	static void LoadResource();
 
@@ -45,25 +62,38 @@ public:
 	void HitEffect();
 	void HitEffect(Mob* target);
 
+	//呼び出すとUIが出現する
+	void PopUpUI();
+
+	//呼び出すとUIが引っ込む
+	void PopOutUI();
+
 	//移動先の情報を保持
 	DokanInfo nextDokanInfo;
 
 	//自身の情報を保持
 	DokanInfo dokanInfo;
 
+	//ある程度近づいたらUIを表示するための球
+	Sphere popUIRangeSphere = { {0,0,0} ,10.0f};
+
 private:
-	enum class DokanState
-	{
-		None,
-		PreMove,
-		MainMove,
-		End,
-	}mDokanState = DokanState::None;
+
+	//ターゲットを自身の中に入れる関数
+	void TargetEnter();
+
+	//UIの更新
+	void UIUpdate();
 
 	TEasing::easeTimer mPreMoveTimer = 0.25f;
 	TEasing::easeTimer mMainMoveTimer = 0.75f;
 
 	Vector3 mSavePos = {};
 	Vector3 mStartPos = {};
+
+	Vector2 mUISize = { 0,0 };
+
+	TEasing::easeTimer mUIPopUpTimer = 0.5f;
+	TEasing::easeTimer mUIPopOutTimer = 0.5f;
 };
 
