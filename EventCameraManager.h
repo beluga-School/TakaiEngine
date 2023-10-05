@@ -4,6 +4,8 @@
 #include <vector>
 #include <unordered_map>
 #include <TEasing.h>
+#include "ImguiManager.h"
+
 
 class EventCameraManager
 {
@@ -26,6 +28,10 @@ public:
 
 	void Register(std::string string, std::vector<EventCamData> datas);
 
+	void Reset();
+
+	void DebugGUI();
+
 	//イージング移動の始点カメラ情報
 	EventCamData* frontCamera = nullptr;
 
@@ -44,5 +50,7 @@ private:
 	~EventCameraManager() {};
 
 	TEasing::easeTimer moveTimer = 1.0f;
+
+	GUI hoge = { "hogeDebug" };
 };
 

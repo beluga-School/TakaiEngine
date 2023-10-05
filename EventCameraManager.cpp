@@ -34,14 +34,34 @@ void EventCameraManager::Start()
 void EventCameraManager::Update()
 {
 	moveTimer.Update();
-
+	
 	eventCamera.SetPos(TEasing::InQuad(frontCamera->pos, backCamera->pos, moveTimer.GetTimeRate()));
 	eventCamera.SetRotation(TEasing::InQuad(frontCamera->rotation, backCamera->rotation, moveTimer.GetTimeRate()));
 
 	eventCamera.Update();
+
+	DebugGUI();
 }
 
 void EventCameraManager::Register(std::string string, std::vector<EventCamData> datas)
 {
 	eventCameraDatas[string] = datas;
+}
+
+void EventCameraManager::DebugGUI()
+{
+	hoge.Begin({200,200},{500,300});
+	ImGui::Text("frontCamera pos.x:%f,y:%f,z:%f", frontCamera->pos.x, frontCamera->pos.y, frontCamera->pos.z);
+	ImGui::Text("backCamera pos.x:%f,y:%f,z:%f", backCamera->pos.x, backCamera->pos.y, backCamera->pos.z);
+	ImGui::Text("eventCameraDatas.size:%d", (int32_t)eventCameraDatas.size());
+	ImGui::Text("moveTimer:%f", moveTimer.GetTimeRate());
+	hoge.End();
+}
+
+void EventCameraManager::Reset()
+{
+	frontCamera = nullptr;
+	backCamera = nullptr;
+	eventCameraDatas.clear();
+	moveTimer.Reset();
 }

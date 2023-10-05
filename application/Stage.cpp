@@ -145,6 +145,10 @@ void StageChanger::Reset()
 	IDdCube::ResetID();
 
 	EventManager::Get()->Clear();
+
+	eventCameraNames.clear();
+	loadCamDatas.clear();
+	EventCameraManager::Get()->Reset();
 }
 
 void StageChanger::NormalObjectSet(const LevelData::ObjectData& data)
