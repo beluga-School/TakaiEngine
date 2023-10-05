@@ -12,6 +12,7 @@
 #include "Sea.h"
 #include "EventCamera.h"
 #include <vector>
+#include "EventManager.h"
 
 class ColEventObj : public Obj3d
 {
@@ -38,22 +39,38 @@ struct PlayerData
 	bool dokanPriority = false;
 };
 
+enum CameraNumber
+{
+	Error = -1,
+	Target = -2,
+};
+
 //イベントカメラデータをまとめて読み込む用のデータ配列
 struct LoadCamData
 {
-	LoadCamData(std::string& eventname_, int32_t eventnumber_, EventCamData camData_) 
+	LoadCamData(int32_t eventnumber_, EventCamData camData_) 
 	{
-		eventname = eventname_;
 		eventnumber = eventnumber_;
 		camData.pos = camData_.pos;
 		camData.rotation = camData_.rotation;
 	};
 
-	std::string eventname = "";
-
 	int32_t eventnumber = -1;
 	
 	EventCamData camData{};
+};
+
+struct LoadTargetData
+{
+	LoadTargetData(std::string& eventname_,const Vector3& target_)
+	{
+		eventname = eventname_;
+		target = target_;
+	}
+
+	std::string eventname = "";
+
+	Vector3 target = {};
 };
 
 class StageChanger
@@ -149,15 +166,49 @@ private:
 	void DrawModel();
 	void DrawCollider();
 
+	void EventNameUniquePush(const std::string& eventname);
+
 	std::string currentHandle = "";
 
 	LevelData* currentData = nullptr;
 
 	PlayerData playerData;
 
-	std::vector<LoadCamData> loadCamDatas;
+	std::unordered_map<std::string, std::vector<LoadCamData>> loadCamDatas;
+	std::vector<LoadTargetData> loadTargetDatas;
 	std::list<std::string> eventCameraNames;
 
 	GUI hoge = { "hoge" };
+
+	template <class TEventCamera> void CameraLoader(const LevelData::ObjectData& data, const std::string& eventname)
+	{
+		EventCamData camdata;
+		camdata.pos = data.translation;
+		camdata.rotation = data.rotation;
+
+		if (Util::CheckString(data.eventtrigerName, eventname))
+		{
+			//数字を分離
+			int32_t number = Util::GetNumber(data.eventtrigerName, "_");
+			//イベント名を分離
+			std::string eventName = Util::GetString(data.eventtrigerName, eventname);
+
+			EventManager::Get()->Register<TEventCamera>(eventName);
+
+			EventNameUniquePush(eventName);
+
+			//ターゲットであるなら
+			if (Util::CheckString(data.eventtrigerName, "target"))
+			{
+				//ターゲットを示す番号を挿入
+				loadTargetDatas.emplace_back(eventName, camdata.pos);
+				//残りを飛ばす
+				return;
+			}
+
+			//イベント名、番号、カメラ位置を保存
+			loadCamDatas[eventName].emplace_back(number, camdata);
+		}
+	}
 };
 

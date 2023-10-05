@@ -396,9 +396,6 @@
     <Filter Include="Application\Event\EventTriggers">
       <UniqueIdentifier>{f405bb6d-add4-4de0-9bdc-70b658844f26}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Application\Event\GoalCamChange">
-      <UniqueIdentifier>{21dd0378-7023-4b0f-a7ba-e2e5aea7e0dc}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Application\Event\CamMoveEvent">
       <UniqueIdentifier>{9c1d6142-b4b8-445a-bc93-2f2a2abf85f9}</UniqueIdentifier>
     </Filter>
@@ -417,6 +414,9 @@
     </Filter>
     <Filter Include="Application\Event\EventCameraManager">
       <UniqueIdentifier>{7c95df73-a48d-46bd-acaf-780786ceb817}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Application\Event\NoEffectEvent">
+      <UniqueIdentifier>{21dd0378-7023-4b0f-a7ba-e2e5aea7e0dc}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -699,8 +699,8 @@
     <ClCompile Include="application\system\event\IEvent.cpp">
       <Filter>Application\Event\IEvent</Filter>
     </ClCompile>
-    <ClCompile Include="application\system\event\GoalCamChange.cpp">
-      <Filter>Application\Event\GoalCamChange</Filter>
+    <ClCompile Include="application\system\event\NoEffectEvent.cpp">
+      <Filter>Application\Event\NoEffectEvent</Filter>
     </ClCompile>
     <ClCompile Include="application\system\event\EventTriggers.cpp">
       <Filter>Application\Event\EventTriggers</Filter>
@@ -1013,8 +1013,8 @@
     <ClInclude Include="application\system\event\IEvent.h">
       <Filter>Application\Event\IEvent</Filter>
     </ClInclude>
-    <ClInclude Include="application\system\event\GoalCamChange.h">
-      <Filter>Application\Event\GoalCamChange</Filter>
+    <ClInclude Include="application\system\event\NoEffectEvent.h">
+      <Filter>Application\Event\NoEffectEvent</Filter>
     </ClInclude>
     <ClInclude Include="application\system\event\EventTriggers.h">
       <Filter>Application\Event\EventTriggers</Filter>

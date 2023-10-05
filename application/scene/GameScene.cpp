@@ -77,7 +77,7 @@ void GameScene::Update()
 {
 	if (Input::Keyboard::TriggerKey(DIK_V))
 	{
-		EventManager::Get()->Start("next_1");
+		EventManager::Get()->Start("startCamera");
 	}
 
 	//ステータスの更新

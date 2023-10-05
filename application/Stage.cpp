@@ -19,7 +19,7 @@
 #include "EventManager.h"
 
 #include "Clear1.h"
-#include "GoalCamChange.h"
+#include "NoEffectEvent.h"
 #include <GameUIManager.h>
 #include <EventCameraManager.h>
 
@@ -65,9 +65,15 @@ void StageChanger::Update()
 	//ステージごとに実行されるイベントがあればここで実行
 	if (GetNowStageHandle() == "stage_stageselect" &&
 		LevelLoader::Get()->GetData("stage_mountain")->isClear &&
-		EventManager::Get()->GetEvent("next_1")->get()->isExecuted == false)
+		EventManager::Get()->GetEvent("nextCamera")->get()->isExecuted == false)
 	{
-		EventManager::Get()->Start("next_1");
+		EventManager::Get()->Start("nextCamera");
+	}
+
+	if (GetNowStageHandle() == "stage_mountain" &&
+		EventManager::Get()->GetEvent("startCamera")->get()->isExecuted == false)
+	{
+		EventManager::Get()->Start("startCamera");
 	}
 
 	for (auto& obj : mEntitys)
@@ -148,6 +154,7 @@ void StageChanger::Reset()
 
 	eventCameraNames.clear();
 	loadCamDatas.clear();
+	loadTargetDatas.clear();
 	EventCameraManager::Get()->Reset();
 }
 
@@ -469,31 +476,11 @@ void StageChanger::ChangeUpdate()
 		//カメラの配置なら
 		if (objectData->setObjectName == "eventcamera")
 		{
-			EventCamData camdata;
-			camdata.pos = objectData->translation;
-			camdata.rotation = objectData->rotation;
+			CameraLoader<Clear1>(*objectData,"nextCamera");
+			CameraLoader<NoEffectEvent>(*objectData,"goalCamera");
+			CameraLoader<NoEffectEvent>(*objectData,"startCamera");
 
-			if (objectData->eventtrigerName == "next_1")
-			{
-				EventManager::Get()->Register<Clear1>(objectData->eventtrigerName);
-			}
-			if (Util::CheckString(objectData->eventtrigerName, "goalCamera"))
-			{
-				//数字を分離
-				int32_t number = Util::GetNumber(objectData->eventtrigerName, "_");
-				//イベント名を分離
-				std::string eventName = Util::GetString(objectData->eventtrigerName, "goalCamera");
-				
-				EventManager::Get()->Register<GoalCamChange>(eventName);
-				eventCameraNames.push_back(eventName);
-
-				//イベント名、番号、カメラ位置を保存
-				loadCamDatas.emplace_back(eventName, number, camdata);
-			}
-			if (Util::CheckString(objectData->eventtrigerName,"moveCamera"))
-			{
-
-			}
+			continue;
 		}
 
 		//海の配置なら
@@ -890,15 +877,27 @@ void StageChanger::ChangeUpdate()
 	for (auto itr = eventCameraNames.begin(); itr != eventCameraNames.end(); itr++)
 	{
 		//並び替える
-		std::stable_sort(loadCamDatas.begin(), loadCamDatas.end(),[](const LoadCamData& lh, const LoadCamData& rh) {
-			return lh.eventnumber < rh.eventnumber;
+		std::stable_sort(loadCamDatas[*itr].begin(), loadCamDatas[*itr].end(), [](const LoadCamData& lh, const LoadCamData& rh) {
+		return lh.eventnumber < rh.eventnumber;
 			});
 
-		std::vector<EventCamData> datas;
+		EventCamManageData datas;
 		//入れたいデータだけ取り出して
-		for (auto& data : loadCamDatas)
+		for (auto& data : loadCamDatas[*itr])
 		{
-			datas.push_back(data.camData);
+			datas.datas.push_back(data.camData);
+		}
+
+		//ターゲットがあるか確認
+		for (auto itr2 = loadTargetDatas.begin(); itr2 != loadTargetDatas.end(); itr2++)
+		{
+			//イベント名が一致するものが有ったら
+			if (*itr == itr2->eventname)
+			{
+				//ターゲットを入れる
+				datas.target = itr2->target;
+				break;
+			}
 		}
 
 		//イベント名と並び替えたカメラデータが入る
@@ -1022,6 +1021,20 @@ void StageChanger::DrawCollider()
 
 		obj->box.Draw();
 	}
+}
+
+void StageChanger::EventNameUniquePush(const std::string& eventname)
+{
+	//すでに同じものが入っているなら飛ばす
+	for (auto& name : eventCameraNames)
+	{
+		if (name == eventname) {
+			return;
+		}
+	}
+
+	//そうでないなら入れる
+	eventCameraNames.push_back(eventname);
 }
 
 void StageChanger::ResetRevise(int32_t stageNumber, int32_t starID, int32_t starnum)

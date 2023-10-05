@@ -13,6 +13,7 @@ class EventCamera
 {
 public:
 	void SetPos(const Vector3& position);
+	void SetTarget(const Vector3& targetpos);
 	void SetRotation(const Vector3& rotation);
 
 	void Initialize();
@@ -28,4 +29,6 @@ private:
 	Obj3d target;
 
 	float targetRadius = 10.0f;
+
+	bool useTarget = false;
 };

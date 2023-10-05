@@ -62,7 +62,8 @@ Vector3 Vector3::GetCross(const Vector3& v)const
 
 Vector3 Vector3::Spline(const std::vector<Vector3>& points, float t)
 {
-	if (points.size() <= 2) { return Vector3(0, 0, 0); }
+	//‚Ð‚Æ‚Â‚µ‚©“ü‚Á‚Ä‚¢‚È‚¢‚È‚ç‚»‚Ì‚Ü‚Ü•Ô‚·
+	if (points.size() <= 1) { return Vector3(points.front()); }
 	t = Util::Clamp(t, 0.f, 1.f);
 
 	float perSegment = 1.f / (points.size() - 1);

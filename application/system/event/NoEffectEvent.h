@@ -2,17 +2,14 @@
 #include "IEvent.h"
 #include "TEasing.h"
 
-class GoalCamChange :public IEvent
+//特に効果がないイベント　カメラで演出したいときに使う
+class NoEffectEvent :public IEvent
 {
 public:
 	void Start()override;
 	void Update()override;
 	void Draw()override;
 
-	//一応時間で終了するが、強制終了した方が安全
 	bool End()override;
-
-private:
-	TEasing::easeTimer timer = 2.0f;
 };
 

@@ -2,6 +2,7 @@
 #include "Util.h"
 #include "Stage.h"
 #include "EventManager.h"
+#include "EventCameraManager.h"
 
 void GoalSystem::LoadResource()
 {
@@ -54,7 +55,7 @@ void GoalSystem::GoalAnimetion()
 	case GoalSystem::AnimetionState::Third:
 		mClearSprite.mPosition.y = TEasing::InQuad(Util::WIN_HEIGHT / 2, Util::WIN_HEIGHT + 100, thirdTimer.GetTimeRate());
 
-		if (thirdTimer.GetEnd())
+		if (thirdTimer.GetEnd() && EventCameraManager::Get()->GetEventEnd())
 		{
 			animetionState = AnimetionState::None;
 			thirdTimer.Reset();

@@ -124,7 +124,7 @@
     <ClCompile Include="application\game\Entity\EventBlock\Star.cpp" />
     <ClCompile Include="application\game\Entity\EventBlock\WarpBlock.cpp" />
     <ClCompile Include="application\game\PlayerCamera.cpp" />
-    <ClCompile Include="application\system\event\GoalCamChange.cpp" />
+    <ClCompile Include="application\system\event\NoEffectEvent.cpp" />
     <ClCompile Include="application\system\event\IEvent.cpp" />
     <ClCompile Include="APPLICATION\UI\UI.cpp" />
     <ClCompile Include="engine\util\InstantDrawer.cpp" />
@@ -225,7 +225,7 @@
     <ClInclude Include="application\game\Entity\EventBlock\Star.h" />
     <ClInclude Include="application\game\Entity\EventBlock\WarpBlock.h" />
     <ClInclude Include="application\game\PlayerCamera.h" />
-    <ClInclude Include="application\system\event\GoalCamChange.h" />
+    <ClInclude Include="application\system\event\NoEffectEvent.h" />
     <ClInclude Include="application\system\event\IEvent.h" />
     <ClInclude Include="engine\util\InstantDrawer.h" />
     <ClInclude Include="application\level\LevelData.h" />
