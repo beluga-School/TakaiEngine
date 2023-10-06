@@ -3,13 +3,13 @@
 #include "Enemy.h"
 #include "ImguiManager.h"
 
-//‘S‚Ä‚Ì“G‚ğŠÇ—‚·‚éEnemyManager‚ª‚¢‚Ä
-//‚»‚¢‚Â‚ª“G‚Ìƒ[ƒ_[‚Æ‚µ‚Ä‚Ì‹@”\‚à‚à‚Â
+//å…¨ã¦ã®æ•µã‚’ç®¡ç†ã™ã‚‹EnemyManagerãŒã„ã¦
+//ãã„ã¤ãŒæ•µã®ãƒ­ãƒ¼ãƒ€ãƒ¼ã¨ã—ã¦ã®æ©Ÿèƒ½ã‚‚ã‚‚ã¤
 
 class EnemyManager
 {
 public:
-	//‚¢‚Á‚½‚ñeventtriger‚É"enemy"‚Á‚Ä‘‚¢‚Ä‚ ‚Á‚½‚çGEnemy‚ğ”z’u‚·‚éİŒv‚É
+	//ã„ã£ãŸã‚“eventtrigerã«"enemy"ã£ã¦æ›¸ã„ã¦ã‚ã£ãŸã‚‰GEnemyã‚’é…ç½®ã™ã‚‹è¨­è¨ˆã«
 	void Load(const LevelData::ObjectData &data);
 
 	static EnemyManager* Get()
@@ -24,7 +24,7 @@ public:
 
 	std::list<std::unique_ptr<Enemy>> enemyList;
 
-	//ƒGƒ“ƒJƒEƒ“ƒgƒXƒtƒBƒA‚ğ•`‰æ‚·‚é‚©
+	//ã‚¨ãƒ³ã‚«ã‚¦ãƒ³ãƒˆã‚¹ãƒ•ã‚£ã‚¢ã‚’æç”»ã™ã‚‹ã‹
 	bool mIsDrawEncountSphere = false;
 private:
 

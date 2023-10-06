@@ -285,12 +285,6 @@
     <Filter Include="Application\Status">
       <UniqueIdentifier>{5bc4e8d1-ef15-4bc3-8293-24f6b833f6b9}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Application\UI">
-      <UniqueIdentifier>{474ba4e5-8eb6-4f8f-be0f-266f1b73ee1f}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Application\UI\HPGauge">
-      <UniqueIdentifier>{cf542d8c-5bba-45fc-b53e-70bebf207435}</UniqueIdentifier>
-    </Filter>
     <Filter Include="シェーダー\PerlinNoisePE">
       <UniqueIdentifier>{d961cf0c-520f-449d-9e6a-bdaf3f70f313}</UniqueIdentifier>
     </Filter>
@@ -369,18 +363,6 @@
     <Filter Include="Application\Entity\Sea">
       <UniqueIdentifier>{0c69c418-773d-40fd-bdf0-5b580aeddd6c}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Application\UI\InterfaceUI">
-      <UniqueIdentifier>{a82005b8-1bbf-4b18-bc60-c9cbd3286e55}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Application\UI\StarUI">
-      <UniqueIdentifier>{c7988369-42db-4a28-8372-35f15dd7c01e}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Application\UI\UI">
-      <UniqueIdentifier>{c0ce0d6d-b600-46db-9dea-4d6233f7d49c}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Application\UI\StageTitleUI">
-      <UniqueIdentifier>{b24b72f9-59b1-4ff8-9937-a28061c7a015}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Application\Event">
       <UniqueIdentifier>{e89bed34-6c87-43de-9219-28dc93915c09}</UniqueIdentifier>
     </Filter>
@@ -409,14 +391,32 @@
     <Filter Include="シェーダー\Billboard">
       <UniqueIdentifier>{6a19937d-d9b5-48f5-b5aa-7d6dcda02ab8}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Application\UI\TutorialUI">
-      <UniqueIdentifier>{4f3f7b7d-ce1e-4064-8521-29ee7f7fedfd}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Application\Event\EventCameraManager">
       <UniqueIdentifier>{7c95df73-a48d-46bd-acaf-780786ceb817}</UniqueIdentifier>
     </Filter>
     <Filter Include="Application\Event\NoEffectEvent">
       <UniqueIdentifier>{21dd0378-7023-4b0f-a7ba-e2e5aea7e0dc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Application\UI">
+      <UniqueIdentifier>{474ba4e5-8eb6-4f8f-be0f-266f1b73ee1f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Application\UI\HPGauge">
+      <UniqueIdentifier>{cf542d8c-5bba-45fc-b53e-70bebf207435}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Application\UI\InterfaceUI">
+      <UniqueIdentifier>{a82005b8-1bbf-4b18-bc60-c9cbd3286e55}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Application\UI\StarUI">
+      <UniqueIdentifier>{c7988369-42db-4a28-8372-35f15dd7c01e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Application\UI\UI">
+      <UniqueIdentifier>{c0ce0d6d-b600-46db-9dea-4d6233f7d49c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Application\UI\StageTitleUI">
+      <UniqueIdentifier>{b24b72f9-59b1-4ff8-9937-a28061c7a015}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Application\UI\TutorialUI">
+      <UniqueIdentifier>{4f3f7b7d-ce1e-4064-8521-29ee7f7fedfd}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -456,7 +456,7 @@
     <ClCompile Include="engine\scene\IScene.cpp">
       <Filter>Engine\Scene\IScene</Filter>
     </ClCompile>
-    <ClCompile Include="engine\LevelLoader.cpp">
+    <ClCompile Include="application\level\LevelLoader.cpp">
       <Filter>Application\LevelLoader</Filter>
     </ClCompile>
     <ClCompile Include="engine\2d\Sprite.cpp">
@@ -477,7 +477,7 @@
     <ClCompile Include="engine\3d\Obj.cpp">
       <Filter>Engine\3D\Obj</Filter>
     </ClCompile>
-    <ClCompile Include="engine\Particle.cpp">
+    <ClCompile Include="engine\particle\Particle.cpp">
       <Filter>Engine\Particle</Filter>
     </ClCompile>
     <ClCompile Include="engine\3d\Vertex.cpp">
@@ -546,13 +546,13 @@
     <ClCompile Include="engine\util\Util.cpp">
       <Filter>Engine\Util\Util</Filter>
     </ClCompile>
-    <ClCompile Include="application\main.cpp">
+    <ClCompile Include="engine\main.cpp">
       <Filter>Engine</Filter>
     </ClCompile>
-    <ClCompile Include="engine\Color.cpp">
+    <ClCompile Include="engine\util\Color.cpp">
       <Filter>Engine\Color</Filter>
     </ClCompile>
-    <ClCompile Include="engine\AssimpLoader.cpp">
+    <ClCompile Include="engine\libManage\AssimpLoader.cpp">
       <Filter>Engine\AssimpLoader</Filter>
     </ClCompile>
     <ClCompile Include="engine\scene\SceneFactory.cpp">
@@ -609,7 +609,7 @@
     <ClCompile Include="application\game\Entity\Charactor\Mob.cpp">
       <Filter>Application\Charactor\Mob</Filter>
     </ClCompile>
-    <ClCompile Include="engine\Skydome.cpp">
+    <ClCompile Include="engine\3d\Skydome.cpp">
       <Filter>Engine\Skydome</Filter>
     </ClCompile>
     <ClCompile Include="application\system\GoalSystem.cpp">
@@ -642,10 +642,10 @@
     <ClCompile Include="application\scene\SceneChange.cpp">
       <Filter>Application\SceneChange</Filter>
     </ClCompile>
-    <ClCompile Include="application\Stage.cpp">
+    <ClCompile Include="application\game\Stage.cpp">
       <Filter>Application\Stage</Filter>
     </ClCompile>
-    <ClCompile Include="application\Status.cpp">
+    <ClCompile Include="application\game\Status.cpp">
       <Filter>Application\Status</Filter>
     </ClCompile>
     <ClCompile Include="application\game\entity\eventBlock\EventBlock.cpp">
@@ -665,12 +665,6 @@
     </ClCompile>
     <ClCompile Include="application\game\Dokan.cpp">
       <Filter>Application\Entity\EventBlock\Dokan</Filter>
-    </ClCompile>
-    <ClCompile Include="application\game\entity\eventBlock\Sea.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="application\game\entity\charactor\Skelton.cpp">
-      <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="application\ui\StageTitleUI.cpp">
       <Filter>Application\UI\StageTitleUI</Filter>
@@ -711,11 +705,14 @@
     <ClCompile Include="engine\util\InstantDrawer.cpp">
       <Filter>Engine\Util\InstantDrawer</Filter>
     </ClCompile>
-    <ClCompile Include="TutorialUI.cpp">
+    <ClCompile Include="application\ui\TutorialUI.cpp">
       <Filter>Application\UI\TutorialUI</Filter>
     </ClCompile>
-    <ClCompile Include="EventCameraManager.cpp">
+    <ClCompile Include="application\camera\EventCameraManager.cpp">
       <Filter>Application\Event\EventCameraManager</Filter>
+    </ClCompile>
+    <ClCompile Include="application\game\entity\eventBlock\Sea.cpp">
+      <Filter>Application\Entity\Sea</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -752,7 +749,7 @@
     <ClInclude Include="engine\scene\DemoScene.h">
       <Filter>Application\Scene\DemoScene</Filter>
     </ClInclude>
-    <ClInclude Include="engine\LevelLoader.h">
+    <ClInclude Include="application\level\LevelLoader.h">
       <Filter>Application\LevelLoader</Filter>
     </ClInclude>
     <ClInclude Include="External\json.hpp">
@@ -776,7 +773,7 @@
     <ClInclude Include="engine\3d\Obj.h">
       <Filter>Engine\3D\Obj</Filter>
     </ClInclude>
-    <ClInclude Include="engine\Particle.h">
+    <ClInclude Include="engine\particle\Particle.h">
       <Filter>Engine\Particle</Filter>
     </ClInclude>
     <ClInclude Include="engine\3d\Vertex.h">
@@ -857,10 +854,10 @@
     <ClInclude Include="engine\util\Util.h">
       <Filter>Engine\Util\Util</Filter>
     </ClInclude>
-    <ClInclude Include="engine\Color.h">
+    <ClInclude Include="engine\util\Color.h">
       <Filter>Engine\Color</Filter>
     </ClInclude>
-    <ClInclude Include="engine\AssimpLoader.h">
+    <ClInclude Include="engine\libManage\AssimpLoader.h">
       <Filter>Engine\AssimpLoader</Filter>
     </ClInclude>
     <ClInclude Include="engine\scene\SceneFactory.h">
@@ -917,7 +914,7 @@
     <ClInclude Include="application\game\Entity\Charactor\Mob.h">
       <Filter>Application\Charactor\Mob</Filter>
     </ClInclude>
-    <ClInclude Include="engine\Skydome.h">
+    <ClInclude Include="engine\3d\Skydome.h">
       <Filter>Engine\Skydome</Filter>
     </ClInclude>
     <ClInclude Include="application\system\GoalSystem.h">
@@ -950,10 +947,10 @@
     <ClInclude Include="application\scene\SceneChange.h">
       <Filter>Application\SceneChange</Filter>
     </ClInclude>
-    <ClInclude Include="application\Stage.h">
+    <ClInclude Include="application\game\Stage.h">
       <Filter>Application\Stage</Filter>
     </ClInclude>
-    <ClInclude Include="application\Status.h">
+    <ClInclude Include="application\game\Status.h">
       <Filter>Application\Status</Filter>
     </ClInclude>
     <ClInclude Include="application\game\entity\eventBlock\EventBlock.h">
@@ -976,15 +973,6 @@
     </ClInclude>
     <ClInclude Include="application\game\Dokan.h">
       <Filter>Application\Entity\EventBlock\Dokan</Filter>
-    </ClInclude>
-    <ClInclude Include="application\game\entity\eventBlock\Sea.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="application\game\entity\charactor\Skelton.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="application\Tag.h">
-      <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="application\ui\StageTitleUI.h">
       <Filter>Application\UI\StageTitleUI</Filter>
@@ -1025,18 +1013,21 @@
     <ClInclude Include="engine\util\InstantDrawer.h">
       <Filter>Engine\Util\InstantDrawer</Filter>
     </ClInclude>
-    <ClInclude Include="TutorialUI.h">
+    <ClInclude Include="application\ui\TutorialUI.h">
       <Filter>Application\UI\TutorialUI</Filter>
     </ClInclude>
-    <ClInclude Include="EventCameraManager.h">
+    <ClInclude Include="application\camera\EventCameraManager.h">
       <Filter>Application\Event\EventCameraManager</Filter>
+    </ClInclude>
+    <ClInclude Include="application\game\entity\eventBlock\Sea.h">
+      <Filter>Application\Entity\Sea</Filter>
+    </ClInclude>
+    <ClInclude Include="application\game\Tag.h">
+      <Filter>Application\Charactor</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="External\imgui\imgui.ini" />
-    <None Include="Resources\Shader\Basic.hlsli">
-      <Filter>シェーダー\Basic</Filter>
-    </None>
     <None Include="Resources\Shader\GeometryHeader.hlsli">
       <Filter>シェーダー\Geometry</Filter>
     </None>
@@ -1066,9 +1057,6 @@
     </None>
     <None Include="Resources\Shader\MultiRender.hlsli">
       <Filter>シェーダー\MultiRender</Filter>
-    </None>
-    <None Include="Resources\Shader\CG4.hlsli">
-      <Filter>シェーダー\CG4</Filter>
     </None>
     <None Include="Resources\Shader\SingleColor.hlsli">
       <Filter>シェーダー\SingleColor</Filter>
@@ -1100,17 +1088,17 @@
     <None Include="Resources\Shader\PerlinNoisePE\PerlinNoisePE.hlsli">
       <Filter>シェーダー\PerlinNoisePE</Filter>
     </None>
-    <None Include="Billboard.hlsli">
+    <None Include="Resources\Shader\Basic.hlsli">
+      <Filter>シェーダー\Basic</Filter>
+    </None>
+    <None Include="Resources\Shader\Billboard.hlsli">
       <Filter>シェーダー\Billboard</Filter>
+    </None>
+    <None Include="Resources\Shader\CG4.hlsli">
+      <Filter>シェーダー\CG4</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>
-    <FxCompile Include="Resources\Shader\BasicPS.hlsl">
-      <Filter>シェーダー\Basic</Filter>
-    </FxCompile>
-    <FxCompile Include="Resources\Shader\BasicVS.hlsl">
-      <Filter>シェーダー\Basic</Filter>
-    </FxCompile>
     <FxCompile Include="Resources\Shader\GeometryGS.hlsl">
       <Filter>シェーダー\Geometry</Filter>
     </FxCompile>
@@ -1177,12 +1165,6 @@
     <FxCompile Include="Resources\Shader\MultiRenderPS.hlsl">
       <Filter>シェーダー\MultiRender</Filter>
     </FxCompile>
-    <FxCompile Include="Resources\Shader\CG4VS.hlsl">
-      <Filter>シェーダー\CG4</Filter>
-    </FxCompile>
-    <FxCompile Include="Resources\Shader\CG4PS.hlsl">
-      <Filter>シェーダー\CG4</Filter>
-    </FxCompile>
     <FxCompile Include="Resources\Shader\SingleColorPS.hlsl">
       <Filter>シェーダー\SingleColor</Filter>
     </FxCompile>
@@ -1243,11 +1225,23 @@
     <FxCompile Include="Resources\Shader\PerlinNoisePE\PerlinNoisePEVS.hlsl">
       <Filter>シェーダー\PerlinNoisePE</Filter>
     </FxCompile>
-    <FxCompile Include="BillboardPS.hlsl">
+    <FxCompile Include="Resources\Shader\BasicPS.hlsl">
+      <Filter>シェーダー\Basic</Filter>
+    </FxCompile>
+    <FxCompile Include="Resources\Shader\BasicVS.hlsl">
+      <Filter>シェーダー\Basic</Filter>
+    </FxCompile>
+    <FxCompile Include="Resources\Shader\BillboardVS.hlsl">
       <Filter>シェーダー\Billboard</Filter>
     </FxCompile>
-    <FxCompile Include="BillboardVS.hlsl">
+    <FxCompile Include="Resources\Shader\BillboardPS.hlsl">
       <Filter>シェーダー\Billboard</Filter>
+    </FxCompile>
+    <FxCompile Include="Resources\Shader\CG4PS.hlsl">
+      <Filter>シェーダー\CG4</Filter>
+    </FxCompile>
+    <FxCompile Include="Resources\Shader\CG4VS.hlsl">
+      <Filter>シェーダー\CG4</Filter>
     </FxCompile>
   </ItemGroup>
   <ItemGroup>

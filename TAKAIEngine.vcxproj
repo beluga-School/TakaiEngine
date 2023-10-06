@@ -68,6 +68,8 @@
       <AdditionalIncludeDirectories>$(ProjectDir)engine\2d;$(ProjectDir)engine\3d;$(ProjectDir)engine\common;$(ProjectDir)engine\input;$(ProjectDir)engine\libManage;$(ProjectDir)engine\light;$(ProjectDir)engine\math;$(ProjectDir)engine\shader;$(ProjectDir)engine\sound;$(ProjectDir)engine\util;$(ProjectDir)application\particle;$(ProjectDir)application\game;$(ProjectDir)engine\imgui;$(ProjectDir)engine;$(ProjectDir)application;$(ProjectDir)External;$(ProjectDir);$(ProjectDir)engine\scene;$(ProjectDir)application\game\entity;$(ProjectDir)application\game\entity\charactor;$(ProjectDir)application\game\entity\eventBlock;$(ProjectDir)application\scene;$(ProjectDir)application\ui;$(ProjectDir)application\system;$(ProjectDir)engine\particle;$(ProjectDir)application\system\event;$(ProjectDir)application\collision;$(ProjectDir)application\camera;$(ProjectDir)application\level;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <TreatWarningAsError>true</TreatWarningAsError>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <LanguageStandard>stdcpp20</LanguageStandard>
+      <AdditionalOptions>/utf-8 %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -89,6 +91,8 @@
       <AdditionalIncludeDirectories>$(ProjectDir)engine\2d;$(ProjectDir)engine\3d;$(ProjectDir)engine\common;$(ProjectDir)engine\input;$(ProjectDir)engine\libManage;$(ProjectDir)engine\light;$(ProjectDir)engine\math;$(ProjectDir)engine\shader;$(ProjectDir)engine\sound;$(ProjectDir)engine\util;$(ProjectDir)application\particle;$(ProjectDir)application\game;$(ProjectDir)engine\imgui;$(ProjectDir)engine;$(ProjectDir)application;$(ProjectDir)External;$(ProjectDir);$(ProjectDir)engine\scene;$(ProjectDir)application\game\entity;$(ProjectDir)application\game\entity\charactor;$(ProjectDir)application\game\entity\eventBlock;$(ProjectDir)application\scene;$(ProjectDir)application\ui;$(ProjectDir)application\system;$(ProjectDir)engine\particle;$(ProjectDir)application\system\event;$(ProjectDir)application\collision;$(ProjectDir)application\camera;$(ProjectDir)application\level;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <TreatWarningAsError>true</TreatWarningAsError>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <LanguageStandard>stdcpp20</LanguageStandard>
+      <AdditionalOptions>/utf-8 %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -135,31 +139,30 @@
     <ClCompile Include="application\scene\ShaderTestScene.cpp" />
     <ClCompile Include="application\scene\TitleScene.cpp" />
     <ClCompile Include="application\game\entity\eventBlock\Sea.cpp" />
-    <ClCompile Include="application\game\entity\charactor\Skelton.cpp" />
-    <ClCompile Include="application\Stage.cpp" />
+    <ClCompile Include="application\game\Stage.cpp" />
     <ClCompile Include="application\ui\StageTitleUI.cpp" />
-    <ClCompile Include="application\Status.cpp" />
+    <ClCompile Include="application\game\Status.cpp" />
     <ClCompile Include="application\system\event\Clear1.cpp" />
     <ClCompile Include="application\system\GoalSystem.cpp" />
     <ClCompile Include="application\ui\HPGauge.cpp" />
     <ClCompile Include="engine\2d\PostEffect.cpp" />
     <ClCompile Include="engine\3d\Billboard.cpp" />
     <ClCompile Include="engine\3d\Obj3dFBX.cpp" />
-    <ClCompile Include="engine\AssimpLoader.cpp" />
-    <ClCompile Include="engine\Color.cpp" />
+    <ClCompile Include="engine\libManage\AssimpLoader.cpp" />
+    <ClCompile Include="engine\util\Color.cpp" />
     <ClCompile Include="engine\common\ClearDrawScreen.cpp" />
     <ClCompile Include="engine\common\ConstBuffer.cpp" />
     <ClCompile Include="engine\2d\DebugText.cpp" />
     <ClCompile Include="engine\common\DebugCamera.cpp" />
     <ClCompile Include="engine\common\DirectXInit.cpp" />
-    <ClCompile Include="engine\LevelLoader.cpp" />
+    <ClCompile Include="application\level\LevelLoader.cpp" />
     <ClCompile Include="engine\libManage\ImguiManager.cpp" />
     <ClCompile Include="engine\light\DirectionalLight.cpp" />
     <ClCompile Include="engine\light\LightGroup.cpp" />
     <ClCompile Include="application\particle\ObjParticle.cpp" />
-    <ClCompile Include="engine\Particle.cpp" />
+    <ClCompile Include="engine\particle\Particle.cpp" />
     <ClCompile Include="engine\input\Input.cpp" />
-    <ClCompile Include="application\main.cpp" />
+    <ClCompile Include="engine\main.cpp" />
     <ClCompile Include="engine\3d\Material.cpp" />
     <ClCompile Include="engine\math\MathF.cpp" />
     <ClCompile Include="engine\math\Matrix4.cpp" />
@@ -174,7 +177,7 @@
     <ClCompile Include="engine\scene\SceneFactory.cpp" />
     <ClCompile Include="engine\scene\SceneManager.cpp" />
     <ClCompile Include="engine\shader\Shader.cpp" />
-    <ClCompile Include="engine\Skydome.cpp" />
+    <ClCompile Include="engine\3d\Skydome.cpp" />
     <ClCompile Include="engine\sound\Sound.cpp" />
     <ClCompile Include="engine\2d\Sprite.cpp" />
     <ClCompile Include="engine\util\StringUtil.cpp" />
@@ -188,7 +191,7 @@
     <ClCompile Include="engine\3d\Vertex.cpp" />
     <ClCompile Include="engine\3d\ViewProjection.cpp" />
     <ClCompile Include="engine\3d\WinAPI.cpp" />
-    <ClCompile Include="EventCameraManager.cpp" />
+    <ClCompile Include="application\camera\EventCameraManager.cpp" />
     <ClCompile Include="External\imgui\imgui.cpp" />
     <ClCompile Include="External\imgui\imgui_demo.cpp" />
     <ClCompile Include="External\imgui\imgui_draw.cpp" />
@@ -199,7 +202,7 @@
     <ClCompile Include="application\ui\GameUIManager.cpp" />
     <ClCompile Include="application\ui\InterfaceUI.cpp" />
     <ClCompile Include="application\ui\StarUI.cpp" />
-    <ClCompile Include="TutorialUI.cpp" />
+    <ClCompile Include="application\ui\TutorialUI.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="application\collision\CollideManager.h" />
@@ -235,30 +238,29 @@
     <ClInclude Include="application\scene\ShaderTestScene.h" />
     <ClInclude Include="application\scene\TitleScene.h" />
     <ClInclude Include="application\game\entity\eventBlock\Sea.h" />
-    <ClInclude Include="application\game\entity\charactor\Skelton.h" />
-    <ClInclude Include="application\Stage.h" />
+    <ClInclude Include="application\game\Stage.h" />
     <ClInclude Include="application\ui\StageTitleUI.h" />
-    <ClInclude Include="application\Status.h" />
+    <ClInclude Include="application\game\Status.h" />
     <ClInclude Include="application\system\event\Clear1.h" />
     <ClInclude Include="application\system\GoalSystem.h" />
-    <ClInclude Include="application\Tag.h" />
+    <ClInclude Include="application\game\Tag.h" />
     <ClInclude Include="application\ui\HPGauge.h" />
     <ClInclude Include="engine\2d\PostEffect.h" />
     <ClInclude Include="engine\3d\Billboard.h" />
     <ClInclude Include="engine\3d\Obj3dFBX.h" />
-    <ClInclude Include="engine\AssimpLoader.h" />
-    <ClInclude Include="engine\Color.h" />
+    <ClInclude Include="engine\libManage\AssimpLoader.h" />
+    <ClInclude Include="engine\util\Color.h" />
     <ClInclude Include="engine\common\ClearDrawScreen.h" />
     <ClInclude Include="engine\common\ConstBuffer.h" />
     <ClInclude Include="engine\2d\DebugText.h" />
     <ClInclude Include="engine\common\DebugCamera.h" />
     <ClInclude Include="engine\common\DirectXInit.h" />
-    <ClInclude Include="engine\LevelLoader.h" />
+    <ClInclude Include="application\level\LevelLoader.h" />
     <ClInclude Include="engine\libManage\ImguiManager.h" />
     <ClInclude Include="engine\light\DirectionalLight.h" />
     <ClInclude Include="engine\light\LightGroup.h" />
     <ClInclude Include="application\particle\ObjParticle.h" />
-    <ClInclude Include="engine\Particle.h" />
+    <ClInclude Include="engine\particle\Particle.h" />
     <ClInclude Include="engine\input\Input.h" />
     <ClInclude Include="engine\3d\Material.h" />
     <ClInclude Include="engine\math\MathF.h" />
@@ -276,7 +278,7 @@
     <ClInclude Include="engine\scene\SceneFactory.h" />
     <ClInclude Include="engine\scene\SceneManager.h" />
     <ClInclude Include="engine\shader\Shader.h" />
-    <ClInclude Include="engine\Skydome.h" />
+    <ClInclude Include="engine\3d\Skydome.h" />
     <ClInclude Include="engine\sound\Sound.h" />
     <ClInclude Include="engine\2d\Sprite.h" />
     <ClInclude Include="engine\util\StringUtil.h" />
@@ -290,7 +292,7 @@
     <ClInclude Include="engine\3d\Vertex.h" />
     <ClInclude Include="engine\3d\ViewProjection.h" />
     <ClInclude Include="engine\common\WinAPI.h" />
-    <ClInclude Include="EventCameraManager.h" />
+    <ClInclude Include="application\camera\EventCameraManager.h" />
     <ClInclude Include="External\imgui\imconfig.h" />
     <ClInclude Include="External\imgui\imgui.h" />
     <ClInclude Include="External\imgui\imgui_impl_dx12.h" />
@@ -305,12 +307,12 @@
     <ClInclude Include="resource.h" />
     <ClInclude Include="application\ui\StarUI.h" />
     <ClInclude Include="application\ui\UI.h" />
-    <ClInclude Include="TutorialUI.h" />
+    <ClInclude Include="application\ui\TutorialUI.h" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Billboard.hlsli" />
     <None Include="External\imgui\imgui.ini" />
     <None Include="Resources\Shader\Basic.hlsli" />
+    <None Include="Resources\Shader\Billboard.hlsli" />
     <None Include="Resources\Shader\CG4.hlsli" />
     <None Include="Resources\Shader\Disolve\Disolve.hlsli" />
     <None Include="Resources\Shader\GeometryHeader.hlsli" />
@@ -334,18 +336,6 @@
     <None Include="Resources\Shader\Toon.hlsli" />
   </ItemGroup>
   <ItemGroup>
-    <FxCompile Include="BillboardPS.hlsl">
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
-      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">5.0</ShaderModel>
-      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">5.0</ShaderModel>
-    </FxCompile>
-    <FxCompile Include="BillboardVS.hlsl">
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
-      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">5.0</ShaderModel>
-      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">5.0</ShaderModel>
-    </FxCompile>
     <FxCompile Include="Resources\Shader\BasicPS.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">5.0</ShaderModel>
@@ -357,6 +347,18 @@
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">5.0</ShaderModel>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">5.0</ShaderModel>
+    </FxCompile>
+    <FxCompile Include="Resources\Shader\BillboardPS.hlsl">
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">5.0</ShaderModel>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">5.0</ShaderModel>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
+    </FxCompile>
+    <FxCompile Include="Resources\Shader\BillboardVS.hlsl">
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">5.0</ShaderModel>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">5.0</ShaderModel>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
     </FxCompile>
     <FxCompile Include="Resources\Shader\CG4PS.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
