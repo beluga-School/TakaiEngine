@@ -16,7 +16,7 @@ public:
 	void HitEffect()override;
 private:
 
-	//初期位置を配置しなおすフラグ
+	//蛻晄悄菴咲ｽｮ繧帝�咲ｽｮ縺励↑縺翫☆繝輔Λ繧ｰ
 	bool mInitFragPos = false;
 
 };

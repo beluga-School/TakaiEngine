@@ -6,7 +6,7 @@
 struct Status
 {
 public:
-	//���݂̃X�e�[�^�X
+	//現在のステータス
 	int32_t mCurrent = -114514;
 
 	int32_t GetOld();
@@ -19,17 +19,17 @@ public:
 
 	~Status();
 
-	//�����g���K�[
+	//減少トリガー
 	bool DecreaseTrigger();
-	//�㏸�g���K�[
+	//上昇トリガー
 	bool IncreaseTrigger();
-	//�ω����Ȃ��t���O
+	//変化がないフラグ
 	bool Constant();
 
 	void Update();
 
 private:
-	//1�t���[���O�̃X�e�[�^�X
+	//1フレーム前のステータス
 	int32_t mOld = -114514;
 
 	void Register();

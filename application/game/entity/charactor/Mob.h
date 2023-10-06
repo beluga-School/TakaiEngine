@@ -18,7 +18,7 @@ public:
 		SetTag(TagTable::Mob);
 	};
 
-	//true‚É‚È‚é‚Æd—Í‚ğó‚¯‚È‚­‚·‚é(gravity‚Ì’l‚à0‚É‚·‚é)
+	//trueã«ãªã‚‹ã¨é‡åŠ›ã‚’å—ã‘ãªãã™ã‚‹(gravityã®å€¤ã‚‚0ã«ã™ã‚‹)
 	void SetNoGravity(bool flag)
 	{
 		if (flag)gravity = 0;
@@ -33,17 +33,17 @@ public:
 		mNoMove = flag;
 	};
 
-	//ƒvƒŒƒCƒ„[‚Ì‘«Œ³‚ÌƒIƒuƒWƒFƒNƒg‚ÌÀ•W
+	//ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã®è¶³å…ƒã®ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®åº§æ¨™
 	float GetFeet() {
 		return feet;
 	};
 
-	//ƒWƒƒƒ“ƒv‚Ìó‘ÔŠÇ—ƒXƒe[ƒg
+	//ã‚¸ãƒ£ãƒ³ãƒ—ã®çŠ¶æ…‹ç®¡ç†ã‚¹ãƒ†ãƒ¼ãƒˆ
 	enum class JumpState
 	{
-		None,	//ƒWƒƒƒ“ƒv‚µ‚Ä‚¢‚È‚¢
-		Up,		//ã¸’†
-		Staying,//‘Ø‹óŠÔ
+		None,	//ã‚¸ãƒ£ãƒ³ãƒ—ã—ã¦ã„ãªã„
+		Up,		//ä¸Šæ˜‡ä¸­
+		Staying,//æ»ç©ºæ™‚é–“
 		Down,
 	};
 
@@ -51,7 +51,7 @@ public:
 		return jumpState;
 	};
 
-	//ƒ€[ƒuƒuƒƒbƒN‚É“–‚½‚Á‚Ä‚é‚È‚çÀ•W‚ğ‹L˜^‚µA‚»‚±‚ÉˆÚ“®’l‰ÁZ‘O‚Éƒ|ƒWƒVƒ‡ƒ“‘ã“ü‚·‚é
+	//ãƒ ãƒ¼ãƒ–ãƒ–ãƒ­ãƒƒã‚¯ã«å½“ãŸã£ã¦ã‚‹ãªã‚‰åº§æ¨™ã‚’è¨˜éŒ²ã—ã€ãã“ã«ç§»å‹•å€¤åŠ ç®—å‰ã«ãƒã‚¸ã‚·ãƒ§ãƒ³ä»£å…¥ã™ã‚‹
 	Vector3 moveBlockPosition{};
 
 	bool moveBlockHit = false;
@@ -59,37 +59,37 @@ public:
 protected:
 	bool noGravity = false;
 
-	//“–‚½‚è”»’è‚ğs‚í‚È‚¢‚æ‚¤‚É‚·‚é
+	//å½“ãŸã‚Šåˆ¤å®šã‚’è¡Œã‚ãªã„ã‚ˆã†ã«ã™ã‚‹
 	bool mNoCollision = false;
 
-	//ˆÚ“®‚ğs‚¦‚È‚¢‚æ‚¤‚É‚·‚é
+	//ç§»å‹•ã‚’è¡Œãˆãªã„ã‚ˆã†ã«ã™ã‚‹
 	bool mNoMove = false;
 
 	void CollsionUpdate();
 
-	///---cˆÚ“®
+	///---ç¸¦ç§»å‹•
 	JumpState jumpState = JumpState::None;
 
-	//ã¸ƒC[ƒWƒ“ƒO‚Ìn“_‚ÆI“_
+	//ä¸Šæ˜‡ã‚¤ãƒ¼ã‚¸ãƒ³ã‚°ã®å§‹ç‚¹ã¨çµ‚ç‚¹
 	float upJumpS = 0;
 	float upJumpE = 0;
 
-	//ƒWƒƒƒ“ƒv—Í
+	//ã‚¸ãƒ£ãƒ³ãƒ—åŠ›
 	const float jumpPower = 5.0f;
 
-	//ã¸ŠÇ—ƒ^ƒCƒ}[
+	//ä¸Šæ˜‡ç®¡ç†ã‚¿ã‚¤ãƒãƒ¼
 	TEasing::easeTimer jumpManageTimer = 0.5f;
 
-	//‘Ø‹óŠÔƒ^ƒCƒ}[
+	//æ»ç©ºæ™‚é–“ã‚¿ã‚¤ãƒãƒ¼
 	TEasing::easeTimer stayManageTimer = 0.01f;
 
-	//d—Í
+	//é‡åŠ›
 	float gravity = 0.0f;
-	//d—Í‰Á‘¬“x
+	//é‡åŠ›åŠ é€Ÿåº¦
 	const float gravityAdd = 1.5f;
 
 public:
-	//ƒŠƒXƒg‚Ì’†‚Å‚à‚Á‚Æ‚à‹ß‚¢À•W‚ğ•Û‘¶‚·‚é•Ï”
+	//ãƒªã‚¹ãƒˆã®ä¸­ã§ã‚‚ã£ã¨ã‚‚è¿‘ã„åº§æ¨™ã‚’ä¿å­˜ã™ã‚‹å¤‰æ•°
 	float hitFeetMax = 0;
 	float hitCeilingMax = 0;
 	float hitRightMin = 0;
@@ -103,15 +103,15 @@ protected:
 	Vector3 initScale = { 0,0,0 };
 
 private:
-	//---c•ûŒü‚ÌXV
+	//---ç¸¦æ–¹å‘ã®æ›´æ–°
 	
-	//c•ûŒü‚ÌXV‚Ü‚Æ‚ß—p
+	//ç¸¦æ–¹å‘ã®æ›´æ–°ã¾ã¨ã‚ç”¨
 	void UpdateY();
 
 	void UpdateX();
 
-	//hitlist‚Ì’†‚©‚çA‚à‚Á‚Æ‚à‹ß‚¢À•W‚ğX,Y,Z•ûŒü‚»‚ê‚¼‚ê‚ÅZo‚·‚éŠÖ”
+	//hitlistã®ä¸­ã‹ã‚‰ã€ã‚‚ã£ã¨ã‚‚è¿‘ã„åº§æ¨™ã‚’X,Y,Zæ–¹å‘ãã‚Œãã‚Œã§ç®—å‡ºã™ã‚‹é–¢æ•°
 	void CalcNearestHitLists();
-	//d—Í‚ÆƒWƒƒƒ“ƒv‹@”\‚ÌXV
+	//é‡åŠ›ã¨ã‚¸ãƒ£ãƒ³ãƒ—æ©Ÿèƒ½ã®æ›´æ–°
 	void JumpUpdate();
 };

@@ -5,16 +5,16 @@
 struct Ray
 {
 public:
-	//n“_
+	//å§‹ç‚¹
 	Vector3 start;
 	
-	//•ûŒü
+	//æ–¹å‘
 	Vector3 direction;
 };
 
 struct Plane
 {
-	//–@üƒxƒNƒgƒ‹
+	//æ³•ç·šãƒ™ã‚¯ãƒˆãƒ«
 	Vector3 normal;
 	float distance = 0.0f;
 };
@@ -53,18 +53,18 @@ struct RayCubeColOutput
 	bool XZDown = false;
 	bool YZRight = false;
 	bool YZLeft = false;
-	//‚Ç‚ê‚Æ‚à“–‚½‚Á‚Ä‚È‚¢
+	//ã©ã‚Œã¨ã‚‚å½“ãŸã£ã¦ãªã„
 	bool none = true;
 };
 
 namespace Collsions
 {
-	//ƒŒƒC‚Æ•½–Ê‚Ì“–‚½‚è”»’è
+	//ãƒ¬ã‚¤ã¨å¹³é¢ã®å½“ãŸã‚Šåˆ¤å®š
 	bool RayPlaneCollision(const Ray& ray, const Plane& plane);
 
 	RayCubeColOutput RayCubeCollision(const Ray& ray, const Cube& cube);
 
-	//y²‚ğ0‚Æ‚µ‚ÄAx‚Æz‚Ì2²‚ÅlŠp“¯m‚Å”»’è‚·‚é“–‚½‚è”»’è
+	//yè»¸ã‚’0ã¨ã—ã¦ã€xã¨zã®2è»¸ã§å››è§’åŒå£«ã§åˆ¤å®šã™ã‚‹å½“ãŸã‚Šåˆ¤å®š
 	bool RectangleXZCollision(const Cube& cube1, const Cube& cube2);
 
 	bool CubeCollision(const Cube& cube1, const Cube& cube2);

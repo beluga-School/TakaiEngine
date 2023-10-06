@@ -4,7 +4,7 @@
 #include "Tag.h"
 #include <vector>
 
-//3d�`�悳���S�ẴI�u�W�F�N�g
+//3d描画される全てのオブジェクト
 class Entity : public Obj3d
 {
 public:
@@ -13,29 +13,29 @@ public:
 	}
 
 	/// <summary>
-	/// �w�肵���^�O�����邩�m�F����
+	/// 指定したタグがあるか確認する
 	/// </summary>
-	/// <param name="check">�m�F�������^�O</param>
-	/// <returns>��������true �Ȃ��Ȃ�false</returns>
+	/// <param name="check">確認したいタグ</param>
+	/// <returns>あったらtrue ないならfalse</returns>
 	bool CheckTag(TagTable check);
 
 	/// <summary>
-	/// �w�肵���^�O��t����(�d�����Ă����ꍇ�͕t���Ȃ�)
+	/// 指定したタグを付ける(重複していた場合は付けない)
 	/// </summary>
-	/// <param name="check">�t�������^�O</param>
-	/// <returns>�^�O�̃Z�b�g�ɐ�����true �d������������false</returns>
+	/// <param name="check">付けたいタグ</param>
+	/// <returns>タグのセットに成功でtrue 重複があったらfalse</returns>
 	bool SetTag(TagTable check);
 	
 	/// <summary>
-	/// �w�肵���^�O���폜����
+	/// 指定したタグを削除する
 	/// </summary>
-	/// <param name="check">�폜�������^�O</param>
-	/// <returns>�^�O�̍폜�ɐ�����true �^�O��������Ȃ��ꍇfalse</returns>
+	/// <param name="check">削除したいタグ</param>
+	/// <returns>タグの削除に成功でtrue タグが見つからない場合false</returns>
 	bool DeleteTag(TagTable check);
 
 	void Register();
 
-	//Entity�͕K���l�p�̓����蔻�������
+	//Entityは必ず四角の当たり判定を持つ
 	Box box;
 
 	Entity()
@@ -46,7 +46,7 @@ public:
 	}
 
 	/// <summary>
-	/// �����蔻��ɕt�^���ꂽ�A�I�u�W�F�N�g���ƂɈ�ӂɒ�`����Ă���ID��Ԃ�
+	/// 当たり判定に付与された、オブジェクトごとに一意に定義されているIDを返す
 	/// </summary>
 	/// <returns></returns>
 	uint32_t GetID()const;
@@ -57,6 +57,6 @@ protected:
 	bool isDead = false;
 
 private:
-	//��������Ƃ��Ɏg���^�O
+	//判定を取るときに使うタグ
 	std::vector<TagTable> taglist;
 };

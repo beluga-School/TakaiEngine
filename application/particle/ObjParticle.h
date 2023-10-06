@@ -30,13 +30,13 @@ public:
 
 	void Update();
 private:
-	//‰ñ“]‘¬“x‚Ì”{—¦
+	//å›è»¢é€Ÿåº¦ã®å€ç‡
 	float rotateMag = 10.0f;
 
-	//“®‚­‘¬‚³
+	//å‹•ãé€Ÿã•
 	Vector3 moveSpeed = {0,0,0};
 
-	//k¬‚·‚é‘¬‚³
+	//ç¸®å°ã™ã‚‹é€Ÿã•
 	Vector3 shrinkSpeed = { 1.0f,1.0f,1.0f };
 
 	Vector3 rotateSpeed = { 0,0,0 };

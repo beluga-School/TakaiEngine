@@ -22,45 +22,45 @@ public:
 	void Encount();
 
 private:
-	float mSpeed = 2.5f;	//1•bŠÔ‚ÌˆÚ“®‘¬“x
+	float mSpeed = 2.5f;	//1ç§’é–“ã®ç§»å‹•é€Ÿåº¦
 
-	//”­Œ©‚ÌƒWƒƒƒ“ƒvŠÇ—ƒ^ƒCƒ}[
+	//ç™ºè¦‹æ™‚ã®ã‚¸ãƒ£ãƒ³ãƒ—ç®¡ç†ã‚¿ã‚¤ãƒãƒ¼
 	TEasing::easeTimer encountJumpTimer = 0.1f;
 	float encountJumpS = 0;
 	float encountJumpE = 0;
 
-	//’ÇÕŠÔŠÇ—ƒ^ƒCƒ}[(I‚í‚Á‚½‚çÄ“x“–‚½‚è”»’è‚ğ‚Æ‚èA“–‚½‚Á‚Ä‚È‚¢‚È‚ç’ÇÕ‚ğI—¹‚·‚é)
+	//è¿½è·¡æ™‚é–“ç®¡ç†ã‚¿ã‚¤ãƒãƒ¼(çµ‚ã‚ã£ãŸã‚‰å†åº¦å½“ãŸã‚Šåˆ¤å®šã‚’ã¨ã‚Šã€å½“ãŸã£ã¦ãªã„ãªã‚‰è¿½è·¡ã‚’çµ‚äº†ã™ã‚‹)
 	Vector3 attackPosS = {0,0,0};
 	Vector3 attackPosE = {0,0,0};
 	float attackDistance = 2.0f;
 
-	//ƒvƒŒƒCƒ„[‚Ö‚ÌƒxƒNƒgƒ‹
+	//ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã¸ã®ãƒ™ã‚¯ãƒˆãƒ«
 	Vector3 pVec{};
 
 	TEasing::easeTimer accelerationTimer = 0.5f;
 
-	//‰Á‘¬‚ÌÅ‘å’l
+	//åŠ é€Ÿã®æœ€å¤§å€¤
 	const float MAX_ACCELERATION = 6.0f;
 
-	//’ÇÕ‚Ì‰¡—h‚êŠÇ—ƒ^ƒCƒ}[
+	//è¿½è·¡æ™‚ã®æ¨ªæºã‚Œç®¡ç†ã‚¿ã‚¤ãƒãƒ¼
 	TEasing::easeTimer metronomeTimer = 0.5f;
-	//UŒ‚Œã‚ÌŒãŒ„ŠÔ
+	//æ”»æ’ƒå¾Œã®å¾Œéš™æ™‚é–“
 	TEasing::easeTimer stayTimer = 1.0f;
 
-	//€–SŒã‚Ì‚Á”ò‚Î‚³‚ê‰‰o‚Åg‚¤‚â‚Â
-	//‚Á”ò‚Î‚³‚êƒC[ƒWƒ“ƒO‚Ìn“_‚ÆI“_
+	//æ­»äº¡å¾Œã®å¹ã£é£›ã°ã•ã‚Œæ¼”å‡ºã§ä½¿ã†ã‚„ã¤
+	//å¹ã£é£›ã°ã•ã‚Œã‚¤ãƒ¼ã‚¸ãƒ³ã‚°ã®å§‹ç‚¹ã¨çµ‚ç‚¹
 	Vector3 deadEasingS{};
 	Vector3 deadEasingE{};
 
 	TEasing::easeTimer deadTimer = 0.5f;
 
-	//‚Á”ò‚Î‚³‚ê‚½‚Ì•ûŒü
+	//å¹ã£é£›ã°ã•ã‚ŒãŸæ™‚ã®æ–¹å‘
 	Vector3 deadDirection;
 
-	//€–SŒã‚Ì‚Á”ò‚Î‚³‚ê’†‚Ì‰ñ“]—Ê(1•bŠÔ)(ƒ‰ƒWƒAƒ“)
+	//æ­»äº¡å¾Œã®å¹ã£é£›ã°ã•ã‚Œä¸­ã®å›è»¢é‡(1ç§’é–“)(ãƒ©ã‚¸ã‚¢ãƒ³)
 	float deadRoring = MathF::PIf * 10;
 
-	//d—Í
+	//é‡åŠ›
 	float gravity = 0;
 	const float gravityAdd = 0.1f;
 };

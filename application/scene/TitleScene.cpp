@@ -46,10 +46,10 @@ void TitleScene::Initialize()
 	string[5].sprite.SetTexture(*TextureManager::GetTexture("title_marimo"));
 	string[6].sprite.SetTexture(*TextureManager::GetTexture("title_6400"));
 
-	//‰Šúİ’è
-	//ˆÊ’u‚¸‚ç‚µ
+	//åˆæœŸè¨­å®š
+	//ä½ç½®ãšã‚‰ã—
 	const float sideX = 300;
-	//1•¶š‚²‚Æ‚ÌŠÔŠu
+	//1æ–‡å­—ã”ã¨ã®é–“éš”
 	const float invideX = 600 / 5;
 	for (int32_t i = 0; i < 7; i++)
 	{
@@ -91,12 +91,12 @@ void TitleScene::Update()
 {
 	if (Input::Keyboard::TriggerKey(DIK_SPACE))
 	{
-		//ƒfƒoƒbƒO—p ‰‰o‚ª‚Ç‚Ìƒ^ƒCƒ~ƒ“ƒO‚Å‚àƒXƒLƒbƒv‚Å‚«‚é‚æ‚¤‚É
+		//ãƒ‡ãƒãƒƒã‚°ç”¨ æ¼”å‡ºãŒã©ã®ã‚¿ã‚¤ãƒŸãƒ³ã‚°ã§ã‚‚ã‚¹ã‚­ãƒƒãƒ—ã§ãã‚‹ã‚ˆã†ã«
 		if (effectState != EffectState::None)
 		{
 			SceneChange::Get()->Start();
 		}
-		//‰‰oŠJn
+		//æ¼”å‡ºé–‹å§‹
 		if (effectState == EffectState::None)
 		{
 			for (int32_t i = 0; i < 7; i++)
@@ -107,7 +107,7 @@ void TitleScene::Update()
 
 			effectState = EffectState::Appearance;
 		}
-		//‰‰o‚ªI‚í‚Á‚Äspace‚ğ‰Ÿ‚µ‚½‚çƒQ[ƒ€ŠJn
+		//æ¼”å‡ºãŒçµ‚ã‚ã£ã¦spaceã‚’æŠ¼ã—ãŸã‚‰ã‚²ãƒ¼ãƒ é–‹å§‹
 		if (effectState == EffectState::End)
 		{
 			SceneChange::Get()->Start();
@@ -130,7 +130,7 @@ void TitleScene::Update()
 	case TitleScene::EffectState::Appearance:
 		for (int32_t i = 0; i < 7; i++)
 		{
-			//’…’n‚É—h‚ç‚·
+			//ç€åœ°æ™‚ã«æºã‚‰ã™
 			if (string[i].timer.GetNowEnd())
 			{
 				if (i < 6)
@@ -152,10 +152,10 @@ void TitleScene::Update()
 			}
 		}
 
-		//ÅŒã‚Ìƒ^ƒCƒ}[‚ªI‚í‚Á‚½‚ç
+		//æœ€å¾Œã®ã‚¿ã‚¤ãƒãƒ¼ãŒçµ‚ã‚ã£ãŸã‚‰
 		if (string[6].timer.GetEnd())
 		{
-			//Ÿ‚Éi‚Ş
+			//æ¬¡ã«é€²ã‚€
 			effectState = EffectState::ScreenShine;
 			shineTimer.Start();
 		}
@@ -169,7 +169,7 @@ void TitleScene::Update()
 			shineTimer.GetTimeRate()
 		);
 
-		//ƒ^ƒCƒ}[‚ğ“s‡‚æ‚­“®‚©‚·
+		//ã‚¿ã‚¤ãƒãƒ¼ã‚’éƒ½åˆã‚ˆãå‹•ã‹ã™
 		if (shineTimer.GetEnd())
 		{
 			if (shineCoolTimer.GetStarted() == false)
@@ -220,8 +220,8 @@ void TitleScene::Update()
 
 	for (int32_t i = 0; i < 7; i++)
 	{
-		//Ÿ‚Ìƒ^ƒCƒ}[‚Éi‚ß‚éˆ—
-		//0‚È‚ç”ò‚Î‚·
+		//æ¬¡ã®ã‚¿ã‚¤ãƒãƒ¼ã«é€²ã‚ã‚‹å‡¦ç†
+		//0ãªã‚‰é£›ã°ã™
 		if (i == 0)continue;
 		if (string[i - 1].timer.GetEnd())
 		{
@@ -277,7 +277,7 @@ void TitleScene::End()
 
 void TitleScene::ShakeUpdate()
 {
-	//ˆÊ’u‚ğ‰Šú‚É–ß‚·
+	//ä½ç½®ã‚’åˆæœŸã«æˆ»ã™
 	for (int32_t i = 0; i < 7; i++)
 	{
 		string[i].position = string[i].savePos;
@@ -285,16 +285,16 @@ void TitleScene::ShakeUpdate()
 
 	shakeTimer.Update();
 
-	//ƒ^ƒCƒ}[‚ª“®‚¢‚Ä‚é‚È‚çÀs
+	//ã‚¿ã‚¤ãƒãƒ¼ãŒå‹•ã„ã¦ã‚‹ãªã‚‰å®Ÿè¡Œ
 	if (shakeTimer.GetRun())
 	{
-		//ˆÊ’u‚ğƒ‰ƒ“ƒ_ƒ€‰»
+		//ä½ç½®ã‚’ãƒ©ãƒ³ãƒ€ãƒ åŒ–
 		Vector2 randomVec = {
 			MathF::GetRand(-1,1),
 			MathF::GetRand(-1,1)
 		};
 
-		//•Û‘¶‚µ‚½ƒpƒ[‚ğŒ³‚É—h‚ç‚·
+		//ä¿å­˜ã—ãŸãƒ‘ãƒ¯ãƒ¼ã‚’å…ƒã«æºã‚‰ã™
 		shake = randomVec * shakePower;
 		for (int32_t i = 0; i < 7; i++)
 		{

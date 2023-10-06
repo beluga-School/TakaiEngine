@@ -33,36 +33,36 @@ void StageChanger::ChangeLevel(LevelData& data)
 {
 	if (SceneChange::GetRun() == false)
 	{
-		//ƒV[ƒ“Ø‚è‘Ö‚¦‚ğŠJn
+		//ã‚·ãƒ¼ãƒ³åˆ‡ã‚Šæ›¿ãˆã‚’é–‹å§‹
 		SceneChange::Get()->Start();
 
-		//ƒXƒe[ƒWƒf[ƒ^‚ğ•Û‘¶
+		//ã‚¹ãƒ†ãƒ¼ã‚¸ãƒ‡ãƒ¼ã‚¿ã‚’ä¿å­˜
 		currentData = &data;
 	}
 }
 
 void StageChanger::Initialize(LevelData& data)
 {
-	//ƒXƒe[ƒWƒf[ƒ^‚ğ•Û‘¶
+	//ã‚¹ãƒ†ãƒ¼ã‚¸ãƒ‡ãƒ¼ã‚¿ã‚’ä¿å­˜
 	currentData = &data;
 
-	//ƒXƒe[ƒW¶¬
+	//ã‚¹ãƒ†ãƒ¼ã‚¸ç”Ÿæˆ
 	ChangeUpdate();
 }
 
 void StageChanger::Update()
 {
-	//ƒV[ƒ“Ø‚è‘Ö‚¦‚ªˆÃ“]‚Ü‚Å“’B‚µ‚½‚ç
+	//ã‚·ãƒ¼ãƒ³åˆ‡ã‚Šæ›¿ãˆãŒæš—è»¢ã¾ã§åˆ°é”ã—ãŸã‚‰
 	if (SceneChange::Get()->IsBlackOut())
 	{
-		//Ø‚è‘Ö‚¦ŠJn(“¯Šúˆ—)
+		//åˆ‡ã‚Šæ›¿ãˆé–‹å§‹(åŒæœŸå‡¦ç†)
 		ChangeUpdate();
 
-		//Ø‚è‘Ö‚¦‚ªI‚í‚Á‚½‚çˆÃ“]‚ğ‰ğœ
+		//åˆ‡ã‚Šæ›¿ãˆãŒçµ‚ã‚ã£ãŸã‚‰æš—è»¢ã‚’è§£é™¤
 		SceneChange::Get()->Open();
 	}
 
-	//ƒXƒe[ƒW‚²‚Æ‚ÉÀs‚³‚ê‚éƒCƒxƒ“ƒg‚ª‚ ‚ê‚Î‚±‚±‚ÅÀs
+	//ã‚¹ãƒ†ãƒ¼ã‚¸ã”ã¨ã«å®Ÿè¡Œã•ã‚Œã‚‹ã‚¤ãƒ™ãƒ³ãƒˆãŒã‚ã‚Œã°ã“ã“ã§å®Ÿè¡Œ
 	if (GetNowStageHandle() == "stage_stageselect" &&
 		LevelLoader::Get()->GetData("stage_mountain")->isClear &&
 		EventManager::Get()->GetEvent("nextCamera")->get()->isExecuted == false)
@@ -101,8 +101,8 @@ void StageChanger::Update()
 
 void StageChanger::Draw()
 {
-	//•¨‚É‚æ‚Á‚Äƒ}ƒeƒŠƒAƒ‹•`‰æ‚ÆƒeƒNƒXƒ`ƒƒ•`‰æ‚ª¬İ‚µ‚Ä‚é‚Ì‚É
-	//•ª‚¯‚é•û–@‚ğì‚Á‚Ä‚È‚¢‚Ì‚Åì‚é
+	//ç‰©ã«ã‚ˆã£ã¦ãƒãƒ†ãƒªã‚¢ãƒ«æç”»ã¨ãƒ†ã‚¯ã‚¹ãƒãƒ£æç”»ãŒæ··åœ¨ã—ã¦ã‚‹ã®ã«
+	//åˆ†ã‘ã‚‹æ–¹æ³•ã‚’ä½œã£ã¦ãªã„ã®ã§ä½œã‚‹
 	BasicObjectPreDraw(PipelineManager::GetPipeLine("Toon"));
 	DrawCollider();
 
@@ -135,7 +135,7 @@ LevelData* StageChanger::GetNowStageData()
 
 void StageChanger::Reset()
 {
-	//“ü‚Á‚Ä‚½‚à‚Ì‚ğíœ
+	//å…¥ã£ã¦ãŸã‚‚ã®ã‚’å‰Šé™¤
 	mEntitys.clear();
 	mEventObjects.clear();
 	mGoals.clear();
@@ -164,50 +164,50 @@ void StageChanger::NormalObjectSet(const LevelData::ObjectData& data)
 	mEntitys.back().Initialize();
 	mEntitys.back().SetTag(TagTable::Block);
 
-	//ƒRƒŠƒWƒ‡ƒ“–Ú“I‚Å”z’u‚µ‚½‚È‚çƒIƒuƒWƒFƒNƒg”z’u‚ğs‚í‚È‚¢
+	//ã‚³ãƒªã‚¸ãƒ§ãƒ³ç›®çš„ã§é…ç½®ã—ãŸãªã‚‰ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆé…ç½®ã‚’è¡Œã‚ãªã„
 	if (data.fileName == "collision")
 	{
 		mEntitys.back().SetTag(TagTable::NoDraw);
 		return;
 	}
 
-	//ƒAƒEƒgƒ‰ƒCƒ“İ’è
+	//ã‚¢ã‚¦ãƒˆãƒ©ã‚¤ãƒ³è¨­å®š
 	mEntitys.back().SetOutLineState({ 0,0,0,1.0f }, 0.05f);
 
-	//ƒ‚ƒfƒ‹İ’è
-	//ƒtƒ@ƒCƒ‹ƒl[ƒ€‚ªİ’è‚³‚ê‚Ä‚é‚È‚ç‚»‚ê‚Å
+	//ãƒ¢ãƒ‡ãƒ«è¨­å®š
+	//ãƒ•ã‚¡ã‚¤ãƒ«ãƒãƒ¼ãƒ ãŒè¨­å®šã•ã‚Œã¦ã‚‹ãªã‚‰ãã‚Œã§
 	if (data.fileName != "")
 	{
-		//“Ç‚İ‚İ‚µ‚Ä‚È‚¢‚È‚ç“Ç‚İ‚İ‚às‚¤
+		//èª­ã¿è¾¼ã¿ã—ã¦ãªã„ãªã‚‰èª­ã¿è¾¼ã¿ã‚‚è¡Œã†
 		if (ModelManager::GetModel(data.fileName) == nullptr)
 		{
 			ModelManager::LoadModel(data.fileName, data.fileName,true);
 		}
 		mEntitys.back().SetModel(ModelManager::GetModel(data.fileName));
 	}
-	//‚È‚¢‚È‚çlŠp‚ğƒfƒtƒH‚Åİ’è
+	//ãªã„ãªã‚‰å››è§’ã‚’ãƒ‡ãƒ•ã‚©ã§è¨­å®š
 	else
 	{
 		mEntitys.back().SetModel(ModelManager::GetModel("Cube"));
 	}
 
-	//ƒoƒO‚ç‚È‚¢‚æ‚¤‚É”’ƒeƒNƒXƒ`ƒƒ‚ğ“ü‚ê‚é
+	//ãƒã‚°ã‚‰ãªã„ã‚ˆã†ã«ç™½ãƒ†ã‚¯ã‚¹ãƒãƒ£ã‚’å…¥ã‚Œã‚‹
 	mEntitys.back().SetTexture(TextureManager::Get()->GetTexture("white"));
 	
 	if (data.textureName != "")
 	{
-		//w’èƒeƒNƒXƒ`ƒƒ‚ª‚ ‚é‚È‚ç‚»‚Á‚¿‚ğg‚¤
+		//æŒ‡å®šãƒ†ã‚¯ã‚¹ãƒãƒ£ãŒã‚ã‚‹ãªã‚‰ãã£ã¡ã‚’ä½¿ã†
 		mEntitys.back().SetTexture(TextureManager::Get()->GetTexture(data.textureName));
 		mEntitys.back().isTexDraw = true;
 	}
 
-	//ƒ^ƒCƒŠƒ“ƒO‚Ìİ’è
+	//ã‚¿ã‚¤ãƒªãƒ³ã‚°ã®è¨­å®š
 	mEntitys.back().mTiling = data.tiling;
 	
-	//ƒIƒuƒWƒFƒNƒg‚Ì”z’u
+	//ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®é…ç½®
 	LevelDataExchanger::SetObjectData(mEntitys.back(), data);
 
-	//“–‚½‚è”»’è‚ğì¬
+	//å½“ãŸã‚Šåˆ¤å®šã‚’ä½œæˆ
 	if (data.collider.have)
 	{
 		CollisionSet(data);
@@ -216,10 +216,10 @@ void StageChanger::NormalObjectSet(const LevelData::ObjectData& data)
 
 void StageChanger::CollisionSet(const LevelData::ObjectData& data)
 {
-	//“–‚½‚è”»’è‚ğ•\¦‚·‚éƒIƒuƒWƒFƒNƒg
+	//å½“ãŸã‚Šåˆ¤å®šã‚’è¡¨ç¤ºã™ã‚‹ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
 	mEntitys.back().box.Initialize();
 
-	//ƒGƒ“ƒeƒBƒeƒBƒŠƒXƒg‚ÅQÆ‚³‚ê‚½‚­‚È‚¢‚Ì‚ÅAƒRƒŠƒWƒ‡ƒ“‚Ìƒ^ƒO‚ğ•t‚¯‚é
+	//ã‚¨ãƒ³ãƒ†ã‚£ãƒ†ã‚£ãƒªã‚¹ãƒˆã§å‚ç…§ã•ã‚ŒãŸããªã„ã®ã§ã€ã‚³ãƒªã‚¸ãƒ§ãƒ³ã®ã‚¿ã‚°ã‚’ä»˜ã‘ã‚‹
 	mEntitys.back().SetTag(TagTable::Collsion);
 	
 	mEntitys.back().box.SetModel(ModelManager::GetModel("BlankCube"));
@@ -239,16 +239,16 @@ void StageChanger::CollisionSet(const LevelData::ObjectData& data)
 
 	mEntitys.back().box.cubecol.position = mEntitys.back().box.position;
 	mEntitys.back().box.cubecol.scale = mEntitys.back().box.scale;
-	//“–‚½‚è”»’è‚¾‚¯ƒ}ƒl[ƒWƒƒ[‚É“o˜^
+	//å½“ãŸã‚Šåˆ¤å®šã ã‘ãƒãƒãƒ¼ã‚¸ãƒ£ãƒ¼ã«ç™»éŒ²
 	mEntitys.back().Register();
 }
 
 void StageChanger::CollisionSetEvent(const LevelData::ObjectData& data)
 {
-	//“–‚½‚è”»’è‚ğ•\¦‚·‚éƒIƒuƒWƒFƒNƒg
+	//å½“ãŸã‚Šåˆ¤å®šã‚’è¡¨ç¤ºã™ã‚‹ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
 	mEventObjects.back()->box.Initialize();
 
-	//ƒRƒŠƒWƒ‡ƒ“ƒIƒ“ƒŠ[•`‰æ‚Åg‚¤‚½‚ßAƒRƒŠƒWƒ‡ƒ“‚Ìƒ^ƒO‚ğ•t‚¯‚é
+	//ã‚³ãƒªã‚¸ãƒ§ãƒ³ã‚ªãƒ³ãƒªãƒ¼æç”»ã§ä½¿ã†ãŸã‚ã€ã‚³ãƒªã‚¸ãƒ§ãƒ³ã®ã‚¿ã‚°ã‚’ä»˜ã‘ã‚‹
 	mEventObjects.back()->SetTag(TagTable::Collsion);
 
 	mEventObjects.back()->box.SetModel(ModelManager::GetModel("BlankCube"));
@@ -268,7 +268,7 @@ void StageChanger::CollisionSetEvent(const LevelData::ObjectData& data)
 
 	mEventObjects.back()->box.cubecol.position = mEntitys.back().box.position;
 	mEventObjects.back()->box.cubecol.scale = mEntitys.back().box.scale;
-	//“–‚½‚è”»’è‚¾‚¯ƒ}ƒl[ƒWƒƒ[‚É“o˜^
+	//å½“ãŸã‚Šåˆ¤å®šã ã‘ãƒãƒãƒ¼ã‚¸ãƒ£ãƒ¼ã«ç™»éŒ²
 	mEventObjects.back()->Register();
 }
 
@@ -277,7 +277,7 @@ void StageChanger::EvenyObjectSet(const LevelData::ObjectData& data)
 	std::string tFilename = "";
 	if (data.fileName != "")
 	{
-		//“Ç‚İ‚İ‚µ‚Ä‚È‚¢‚È‚ç“Ç‚İ‚İ‚às‚¤
+		//èª­ã¿è¾¼ã¿ã—ã¦ãªã„ãªã‚‰èª­ã¿è¾¼ã¿ã‚‚è¡Œã†
 		if (ModelManager::GetModel(data.fileName) == nullptr)
 		{
 			ModelManager::LoadModel(data.fileName, data.fileName, true);
@@ -285,13 +285,13 @@ void StageChanger::EvenyObjectSet(const LevelData::ObjectData& data)
 		tFilename = data.fileName;
 	}
 	
-	//stage ‚Ì•¶š—ñ‚ªŠÜ‚Ü‚ê‚Ä‚é‚È‚ç
+	//stage ã®æ–‡å­—åˆ—ãŒå«ã¾ã‚Œã¦ã‚‹ãªã‚‰
 	if (data.eventtrigerName.find("stage") != std::string::npos)
 	{
 		mEventObjects.emplace_back();
 		mEventObjects.back() = std::make_unique<WarpBlock>();
 		mEventObjects.back()->Initialize();
-		//ƒtƒ@ƒCƒ‹ƒl[ƒ€‚ª‚ ‚é‚È‚ç
+		//ãƒ•ã‚¡ã‚¤ãƒ«ãƒãƒ¼ãƒ ãŒã‚ã‚‹ãªã‚‰
 		if (tFilename != "")
 		{
 			mEventObjects.back()->SetModel(ModelManager::GetModel(tFilename));
@@ -300,15 +300,15 @@ void StageChanger::EvenyObjectSet(const LevelData::ObjectData& data)
 		mEventObjects.back()->SetOutLineState({ 1,0,0,1.0f }, 0.05f);
 
 		mEventObjects.back()->trigerName = data.eventtrigerName;
-		//ƒoƒO‚ç‚È‚¢‚æ‚¤‚É”’ƒeƒNƒXƒ`ƒƒ‚ğ“ü‚ê‚é
+		//ãƒã‚°ã‚‰ãªã„ã‚ˆã†ã«ç™½ãƒ†ã‚¯ã‚¹ãƒãƒ£ã‚’å…¥ã‚Œã‚‹
 		mEventObjects.back()->SetTexture(TextureManager::Get()->GetTexture("white"));
 
-		//ƒIƒuƒWƒFƒNƒg‚Ì”z’u
+		//ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®é…ç½®
 		LevelDataExchanger::SetObjectData(*mEventObjects.back(), data);
 
 		return;
 	}
-	//goal ‚Ì•¶š—ñ‚ªŠÜ‚Ü‚ê‚Ä‚é‚È‚ç
+	//goal ã®æ–‡å­—åˆ—ãŒå«ã¾ã‚Œã¦ã‚‹ãªã‚‰
 	if (data.eventtrigerName == "goal")
 	{
 		mGoals.emplace_back();
@@ -319,19 +319,19 @@ void StageChanger::EvenyObjectSet(const LevelData::ObjectData& data)
 
 		mGoals.back()->SetOutLineState({ 1,0,0,1.0f }, 0.05f);
 
-		//ƒIƒuƒWƒFƒNƒg‚Ì”z’u
+		//ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®é…ç½®
 		LevelDataExchanger::SetObjectData(*mGoals.back(), data);
 
 		return;
 	}
 
-	//star ‚Ì•¶š—ñ‚ªŠ®‘Sˆê’v‚·‚é‚È‚ç
+	//star ã®æ–‡å­—åˆ—ãŒå®Œå…¨ä¸€è‡´ã™ã‚‹ãªã‚‰
 	if (data.eventtrigerName == "star")
 	{
 		mEventObjects.emplace_back();
 		mEventObjects.back() = std::make_unique<Star>();
 		mEventObjects.back()->Initialize();
-		//ƒtƒ@ƒCƒ‹ƒl[ƒ€‚ª‚ ‚é‚È‚ç
+		//ãƒ•ã‚¡ã‚¤ãƒ«ãƒãƒ¼ãƒ ãŒã‚ã‚‹ãªã‚‰
 		if (tFilename != "")
 		{
 			mEventObjects.back()->SetModel(ModelManager::GetModel(tFilename));
@@ -345,16 +345,16 @@ void StageChanger::EvenyObjectSet(const LevelData::ObjectData& data)
 			mEventObjects.back()->scale
 		);
 		
-		//“–‚½‚è”»’è‚ğì¬
-		//starManager‚É‚í‚¯‚ñ‚ÈˆêˆÓ‚É’è‹`o—ˆ‚Ë‚¦‚¾‚ëIIIII!!!!!!1
+		//å½“ãŸã‚Šåˆ¤å®šã‚’ä½œæˆ
+		//starManagerã«ã‚ã‘ã‚“ãªä¸€æ„ã«å®šç¾©å‡ºæ¥ã­ãˆã ã‚ï¼ï¼ï¼ï¼ï¼!!!!!!1
 		if (data.collider.have)
 		{
-			//“–‚½‚è”»’è‚ğ•\¦‚·‚éƒIƒuƒWƒFƒNƒg
+			//å½“ãŸã‚Šåˆ¤å®šã‚’è¡¨ç¤ºã™ã‚‹ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
 			mEventObjects.back()->box.Initialize();
 
-			//ƒRƒŠƒWƒ‡ƒ“ƒIƒ“ƒŠ[•`‰æ‚Åg‚¤‚½‚ßAƒRƒŠƒWƒ‡ƒ“‚Ìƒ^ƒO‚ğ•t‚¯‚é
+			//ã‚³ãƒªã‚¸ãƒ§ãƒ³ã‚ªãƒ³ãƒªãƒ¼æç”»ã§ä½¿ã†ãŸã‚ã€ã‚³ãƒªã‚¸ãƒ§ãƒ³ã®ã‚¿ã‚°ã‚’ä»˜ã‘ã‚‹
 			mEventObjects.back()->SetTag(TagTable::Collsion);
-			//ƒuƒƒbƒN‚Ìƒ^ƒO‚ğŠO‚·
+			//ãƒ–ãƒ­ãƒƒã‚¯ã®ã‚¿ã‚°ã‚’å¤–ã™
 			mEventObjects.back()->DeleteTag(TagTable::Block);
 
 			mEventObjects.back()->box.SetModel(ModelManager::GetModel("BlankCube"));
@@ -372,14 +372,14 @@ void StageChanger::EvenyObjectSet(const LevelData::ObjectData& data)
 				MathF::AngleConvRad(data.rotation.z)
 			};
 
-			//‚±‚±Entitys‚©‚çˆø‚Á’£‚Á‚Ä‚«‚Ä‚é‚¯‚Ç‡‚Á‚Ä‚é‚Ì‚©‚È
+			//ã“ã“Entitysã‹ã‚‰å¼•ã£å¼µã£ã¦ãã¦ã‚‹ã‘ã©åˆã£ã¦ã‚‹ã®ã‹ãª
 			mEventObjects.back()->box.cubecol.position = mEventObjects.back()->box.position;
 			mEventObjects.back()->box.cubecol.scale = mEventObjects.back()->box.scale;
-			//“–‚½‚è”»’è‚¾‚¯ƒ}ƒl[ƒWƒƒ[‚É“o˜^
+			//å½“ãŸã‚Šåˆ¤å®šã ã‘ãƒãƒãƒ¼ã‚¸ãƒ£ãƒ¼ã«ç™»éŒ²
 			mEventObjects.back()->Register();
 		}
 
-		//ƒIƒuƒWƒFƒNƒg‚Ì”z’u
+		//ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®é…ç½®
 		LevelDataExchanger::SetObjectData(*mEventObjects.back(), data);
 
 		Star* star = static_cast<Star*>(mEventObjects.back().get());
@@ -390,13 +390,13 @@ void StageChanger::EvenyObjectSet(const LevelData::ObjectData& data)
 
 		return;
 	}
-	//coin ‚Ì•¶š—ñ‚ªŠ®‘Sˆê’v‚·‚é‚È‚ç
+	//coin ã®æ–‡å­—åˆ—ãŒå®Œå…¨ä¸€è‡´ã™ã‚‹ãªã‚‰
 	if (data.eventtrigerName == "coin")
 	{
 		mEventObjects.emplace_back();
 		mEventObjects.back() = std::make_unique<Coin>();
 		mEventObjects.back()->Initialize();
-		//ƒtƒ@ƒCƒ‹ƒl[ƒ€‚ª‚ ‚é‚È‚ç
+		//ãƒ•ã‚¡ã‚¤ãƒ«ãƒãƒ¼ãƒ ãŒã‚ã‚‹ãªã‚‰
 		if (tFilename != "")
 		{
 			mEventObjects.back()->SetModel(ModelManager::GetModel(tFilename));
@@ -406,18 +406,18 @@ void StageChanger::EvenyObjectSet(const LevelData::ObjectData& data)
 
 		mEventObjects.back()->trigerName = data.eventtrigerName;
 
-		//“–‚½‚è”»’è‚ğì¬
+		//å½“ãŸã‚Šåˆ¤å®šã‚’ä½œæˆ
 		if (data.collider.have)
 		{
 			CollisionSetEvent(data);
 		}
 
-		//ƒIƒuƒWƒFƒNƒg‚Ì”z’u
+		//ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®é…ç½®
 		LevelDataExchanger::SetObjectData(*mEventObjects.back(), data);
 
 		return;
 	}
-	//Cannon ‚Ì•¶š—ñ‚ªŠÜ‚Ü‚ê‚Ä‚é‚È‚ç
+	//Cannon ã®æ–‡å­—åˆ—ãŒå«ã¾ã‚Œã¦ã‚‹ãªã‚‰
 	if (data.eventtrigerName.find("Cannon") != std::string::npos)
 	{
 		if (data.eventtrigerName.find("start") != std::string::npos)
@@ -430,25 +430,25 @@ void StageChanger::EvenyObjectSet(const LevelData::ObjectData& data)
 			
 			std::vector<std::string> split = Util::SplitString(data.eventtrigerName, "_");
 
-			//ƒCƒxƒ“ƒgƒgƒŠƒK[–¼‚ğstringstream‚É‘ã“ü
+			//ã‚¤ãƒ™ãƒ³ãƒˆãƒˆãƒªã‚¬ãƒ¼åã‚’stringstreamã«ä»£å…¥
 			for (auto str : split)
 			{
-				//”š‚¾‚¯”²‚«o‚·
+				//æ•°å­—ã ã‘æŠœãå‡ºã™
 				if(Util::IsNumber(str)) ss << str;
 			}
 
 			Cannon* cannon = static_cast<Cannon*>(mEventObjects.back().get());
 			
-			//int32_tŒ^‚Éo—Í‚·‚é
-			//‚±‚ÌÛA•¶š—ñ‚©‚ç”’l‚Ì‚İ‚ªo—Í‚³‚ê‚é
+			//int32_tå‹ã«å‡ºåŠ›ã™ã‚‹
+			//ã“ã®éš›ã€æ–‡å­—åˆ—ã‹ã‚‰æ•°å€¤ã®ã¿ãŒå‡ºåŠ›ã•ã‚Œã‚‹
 			ss >> cannon->id;
 			cannon->startPos = data.translation;
 
-			//ƒIƒuƒWƒFƒNƒg‚Ì”z’u
+			//ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®é…ç½®
 			LevelDataExchanger::SetObjectData(*mEventObjects.back(), data);
 		}
-		//‘S‚Ä‚ÌƒIƒuƒWƒFƒNƒg”z’uŒãA§Œä“_‚Æ‘å–C‚Ì‚İ‚Å”äŠr‚µ‚È‚¨‚·‚½‚ßA
-		//’l‚ğˆê“I‚É•Û‘¶‚µ‚Ä‚¨‚­
+		//å…¨ã¦ã®ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆé…ç½®å¾Œã€åˆ¶å¾¡ç‚¹ã¨å¤§ç ²ã®ã¿ã§æ¯”è¼ƒã—ãªãŠã™ãŸã‚ã€
+		//å€¤ã‚’ä¸€æ™‚çš„ã«ä¿å­˜ã—ã¦ãŠã
 		if (data.eventtrigerName.find("inter") != std::string::npos)
 		{	
 			CannonPoint point = { data.eventtrigerName, data.translation };
@@ -466,14 +466,14 @@ void StageChanger::EvenyObjectSet(const LevelData::ObjectData& data)
 
 void StageChanger::ChangeUpdate()
 {
-	//ƒnƒ“ƒhƒ‹‚ğƒXƒe[ƒW‚É•Û‘¶
+	//ãƒãƒ³ãƒ‰ãƒ«ã‚’ã‚¹ãƒ†ãƒ¼ã‚¸ã«ä¿å­˜
 	currentHandle = currentData->mHandle;
 
 	Reset();
 
 	for (auto objectData = currentData->mObjects.begin(); objectData != currentData->mObjects.end(); objectData++)
 	{
-		//ƒJƒƒ‰‚Ì”z’u‚È‚ç
+		//ã‚«ãƒ¡ãƒ©ã®é…ç½®ãªã‚‰
 		if (objectData->setObjectName == "eventcamera")
 		{
 			CameraLoader<Clear1>(*objectData,"nextCamera");
@@ -483,7 +483,7 @@ void StageChanger::ChangeUpdate()
 			continue;
 		}
 
-		//ŠC‚Ì”z’u‚È‚ç
+		//æµ·ã®é…ç½®ãªã‚‰
 		if (objectData->setObjectName == "sea")
 		{
 			seaObject = std::make_unique<Sea>();
@@ -497,7 +497,7 @@ void StageChanger::ChangeUpdate()
 			continue;
 		}
 
-		//ƒvƒŒƒCƒ„[‚Ì”z’u‚È‚ç
+		//ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã®é…ç½®ãªã‚‰
 		if (objectData->setObjectName == "player")
 		{
 			if (playerData.dokanPriority == false)
@@ -509,24 +509,24 @@ void StageChanger::ChangeUpdate()
 			continue;
 		}
 
-		//‚±‚±‚ÍŒã‚ÅAcannon‚Ì‚İ‚½‚¢‚É‘®‚ğ’è‹`‚µ‚Äif•ªˆêŒÂ‚É‚Ü‚Æ‚ß‚½‚¢
-		//ƒGƒlƒ~[‚Ì”z’u‚È‚ç
+		//ã“ã“ã¯å¾Œã§ã€cannonã®æ™‚ã¿ãŸã„ã«æ›¸å¼ã‚’å®šç¾©ã—ã¦ifåˆ†ä¸€å€‹ã«ã¾ã¨ã‚ãŸã„
+		//ã‚¨ãƒãƒŸãƒ¼ã®é…ç½®ãªã‚‰
 		if (objectData->setObjectName == "enemy")
 		{
 			EnemyManager::Get()->Load(*objectData);
 			
 			if (objectData->collider.have)
 			{
-				//“–‚½‚è”»’è‚ğ•\¦‚·‚éƒIƒuƒWƒFƒNƒg
+				//å½“ãŸã‚Šåˆ¤å®šã‚’è¡¨ç¤ºã™ã‚‹ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
 				EnemyManager::Get()->enemyList.back()->box.Initialize();
 
-				//ƒGƒ“ƒeƒBƒeƒBƒŠƒXƒg‚ÅQÆ‚³‚ê‚½‚­‚È‚¢‚Ì‚ÅAƒRƒŠƒWƒ‡ƒ“‚Ìƒ^ƒO‚ğ•t‚¯‚é
+				//ã‚¨ãƒ³ãƒ†ã‚£ãƒ†ã‚£ãƒªã‚¹ãƒˆã§å‚ç…§ã•ã‚ŒãŸããªã„ã®ã§ã€ã‚³ãƒªã‚¸ãƒ§ãƒ³ã®ã‚¿ã‚°ã‚’ä»˜ã‘ã‚‹
 				EnemyManager::Get()->enemyList.back()->SetTag(TagTable::Collsion);
 
 				EnemyManager::Get()->enemyList.back()->box.SetModel(ModelManager::GetModel("BlankCube"));
 				EnemyManager::Get()->enemyList.back()->box.SetTexture(TextureManager::Get()->GetTexture("white"));
 
-				//’†SˆÊ’u‚ğ‚¸‚ç‚·î•ñ‚ğ•Û‘¶
+				//ä¸­å¿ƒä½ç½®ã‚’ãšã‚‰ã™æƒ…å ±ã‚’ä¿å­˜
 				EnemyManager::Get()->enemyList.back()->saveColCenter = objectData->collider.center;
 
 				EnemyManager::Get()->enemyList.back()->box.position = objectData->translation + EnemyManager::Get()->enemyList.back()->saveColCenter;
@@ -543,42 +543,42 @@ void StageChanger::ChangeUpdate()
 
 				EnemyManager::Get()->enemyList.back()->box.cubecol.position = EnemyManager::Get()->enemyList.back()->box.position;
 				EnemyManager::Get()->enemyList.back()->box.cubecol.scale = EnemyManager::Get()->enemyList.back()->box.scale;
-				//“–‚½‚è”»’è‚¾‚¯ƒ}ƒl[ƒWƒƒ[‚É“o˜^
+				//å½“ãŸã‚Šåˆ¤å®šã ã‘ãƒãƒãƒ¼ã‚¸ãƒ£ãƒ¼ã«ç™»éŒ²
 				EnemyManager::Get()->enemyList.back()->Register();
 			}
 
 			continue;
 		}
-		//ƒ{ƒX‚Ì”z’u‚È‚ç
+		//ãƒœã‚¹ã®é…ç½®ãªã‚‰
 		if (objectData->setObjectName == "bombking")
 		{
 			EnemyManager::Get()->enemyList.emplace_back();
 			EnemyManager::Get()->enemyList.back() = std::make_unique<Bombking>();
 
-			//“Ç‚İ‚İ‚µ‚Ä‚È‚¢‚È‚ç“Ç‚İ‚İ‚às‚¤
+			//èª­ã¿è¾¼ã¿ã—ã¦ãªã„ãªã‚‰èª­ã¿è¾¼ã¿ã‚‚è¡Œã†
 			if (ModelManager::GetModel(objectData->fileName) == nullptr)
 			{
 				ModelManager::LoadModel(objectData->fileName, objectData->fileName, true);
 			}
 
-			//ƒ‚ƒfƒ‹‚Æ‚©İ’è‚·‚é
+			//ãƒ¢ãƒ‡ãƒ«ã¨ã‹è¨­å®šã™ã‚‹
 			EnemyManager::Get()->enemyList.back()->Initialize();
 
-			//position‚Æ‚©‚ğİ’è
+			//positionã¨ã‹ã‚’è¨­å®š
 			LevelDataExchanger::SetObjectData(*EnemyManager::Get()->enemyList.back(), *objectData);
 			
 			if(objectData->collider.have)
 			{
-				//“–‚½‚è”»’è‚ğ•\¦‚·‚éƒIƒuƒWƒFƒNƒg
+				//å½“ãŸã‚Šåˆ¤å®šã‚’è¡¨ç¤ºã™ã‚‹ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
 				EnemyManager::Get()->enemyList.back()->box.Initialize();
 
-				//ƒGƒ“ƒeƒBƒeƒBƒŠƒXƒg‚ÅQÆ‚³‚ê‚½‚­‚È‚¢‚Ì‚ÅAƒRƒŠƒWƒ‡ƒ“‚Ìƒ^ƒO‚ğ•t‚¯‚é
+				//ã‚¨ãƒ³ãƒ†ã‚£ãƒ†ã‚£ãƒªã‚¹ãƒˆã§å‚ç…§ã•ã‚ŒãŸããªã„ã®ã§ã€ã‚³ãƒªã‚¸ãƒ§ãƒ³ã®ã‚¿ã‚°ã‚’ä»˜ã‘ã‚‹
 				EnemyManager::Get()->enemyList.back()->SetTag(TagTable::Collsion);
 
 				EnemyManager::Get()->enemyList.back()->box.SetModel(ModelManager::GetModel("BlankCube"));
 				EnemyManager::Get()->enemyList.back()->box.SetTexture(TextureManager::Get()->GetTexture("white"));
 
-				//’†SˆÊ’u‚ğ‚¸‚ç‚·î•ñ‚ğ•Û‘¶
+				//ä¸­å¿ƒä½ç½®ã‚’ãšã‚‰ã™æƒ…å ±ã‚’ä¿å­˜
 				EnemyManager::Get()->enemyList.back()->saveColCenter = objectData->collider.center;
 
 				EnemyManager::Get()->enemyList.back()->box.position = objectData->translation + EnemyManager::Get()->enemyList.back()->saveColCenter;
@@ -595,7 +595,7 @@ void StageChanger::ChangeUpdate()
 
 				EnemyManager::Get()->enemyList.back()->box.cubecol.position = EnemyManager::Get()->enemyList.back()->box.position;
 				EnemyManager::Get()->enemyList.back()->box.cubecol.scale = EnemyManager::Get()->enemyList.back()->box.scale;
-				//“–‚½‚è”»’è‚¾‚¯ƒ}ƒl[ƒWƒƒ[‚É“o˜^
+				//å½“ãŸã‚Šåˆ¤å®šã ã‘ãƒãƒãƒ¼ã‚¸ãƒ£ãƒ¼ã«ç™»éŒ²
 				EnemyManager::Get()->enemyList.back()->Register();
 			}
 
@@ -605,19 +605,19 @@ void StageChanger::ChangeUpdate()
 		if (objectData->setObjectName.find("moveBlock") != std::string::npos)
 		{
 			std::string saveID = "";
-			//eventtrigerName‚ğ•ª‰ğ‚·‚é
+			//eventtrigerNameã‚’åˆ†è§£ã™ã‚‹
 			std::vector<std::string> split = Util::SplitString(objectData->eventtrigerName, "_");
 
 			for (auto str : split)
 			{
-				//”š‚¾‚¯”²‚«o‚·
+				//æ•°å­—ã ã‘æŠœãå‡ºã™
 				if (Util::IsNumber(str))
 				{
 					saveID = str;
 				}
 			}
 
-			//end‚ª•t‚¢‚Ä‚¢‚é‚È‚çIDŒŸõ‚ÅÀ•W‚ğ“ü‚ê‚Ä”ò‚Î‚·
+			//endãŒä»˜ã„ã¦ã„ã‚‹ãªã‚‰IDæ¤œç´¢ã§åº§æ¨™ã‚’å…¥ã‚Œã¦é£›ã°ã™
 			if (objectData->eventtrigerName.find("end") != std::string::npos)
 			{
 				mMoveBlockEndPoints.emplace_back();
@@ -628,13 +628,13 @@ void StageChanger::ChangeUpdate()
 				continue;
 			}
 
-			//end‚Å‚È‚¢‚È‚çstart‚Ì‚Í‚¸‚È‚Ì‚ÅAƒIƒuƒWƒFƒNƒg‚ğ¶¬
+			//endã§ãªã„ãªã‚‰startã®ã¯ãšãªã®ã§ã€ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã‚’ç”Ÿæˆ
 			mEventObjects.emplace_back();
 			mEventObjects.back() = std::make_unique<MoveBlock>();
 		
 			MoveBlock* mb = dynamic_cast<MoveBlock*>(mEventObjects.back().get());
 			
-			//‰Šú’n“_‚È‚çˆÊ’u‚ğ‘ã“ü
+			//åˆæœŸåœ°ç‚¹ãªã‚‰ä½ç½®ã‚’ä»£å…¥
 			if (objectData->eventtrigerName.find("start") != std::string::npos)
 			{
 				mb->id = saveID;
@@ -646,7 +646,7 @@ void StageChanger::ChangeUpdate()
 
 			if (objectData->fileName != "")
 			{
-				//“Ç‚İ‚İ‚µ‚Ä‚È‚¢‚È‚ç“Ç‚İ‚İ‚às‚¤
+				//èª­ã¿è¾¼ã¿ã—ã¦ãªã„ãªã‚‰èª­ã¿è¾¼ã¿ã‚‚è¡Œã†
 				if (ModelManager::GetModel(objectData->fileName) == nullptr)
 				{
 					ModelManager::LoadModel(objectData->fileName, objectData->fileName, true);
@@ -654,10 +654,10 @@ void StageChanger::ChangeUpdate()
 				mEventObjects.back()->SetModel(ModelManager::GetModel(objectData->fileName));
 			}
 
-			//ƒIƒuƒWƒFƒNƒg‚Ì”z’u
+			//ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®é…ç½®
 			LevelDataExchanger::SetObjectData(*mEventObjects.back(), *objectData);
 
-			//“–‚½‚è”»’è‚ğì¬
+			//å½“ãŸã‚Šåˆ¤å®šã‚’ä½œæˆ
 			if (objectData->collider.have)
 			{
 				CollisionSetEvent(*objectData);
@@ -666,7 +666,7 @@ void StageChanger::ChangeUpdate()
 			continue;
 		}
 
-		//“yŠÇ‚ğ”z’u
+		//åœŸç®¡ã‚’é…ç½®
 		if (objectData->setObjectName.find("dokan") != std::string::npos)
 		{
 			mEventObjects.emplace_back();
@@ -678,15 +678,15 @@ void StageChanger::ChangeUpdate()
 
 			mEventObjects.back()->SetOutLineState({ 0,0,0,1 }, 0.05f);
 
-			//ƒIƒuƒWƒFƒNƒg‚Ì”z’u
+			//ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®é…ç½®
 			LevelDataExchanger::SetObjectData(*mEventObjects.back(), *objectData);
 
 			if (objectData->collider.have)
 			{
-				//“–‚½‚è”»’è‚ğ•\¦‚·‚éƒIƒuƒWƒFƒNƒg
+				//å½“ãŸã‚Šåˆ¤å®šã‚’è¡¨ç¤ºã™ã‚‹ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
 				mEventObjects.back()->box.Initialize();
 
-				//ƒRƒŠƒWƒ‡ƒ“ƒIƒ“ƒŠ[•`‰æ‚Åg‚¤‚½‚ßAƒRƒŠƒWƒ‡ƒ“‚Ìƒ^ƒO‚ğ•t‚¯‚é
+				//ã‚³ãƒªã‚¸ãƒ§ãƒ³ã‚ªãƒ³ãƒªãƒ¼æç”»ã§ä½¿ã†ãŸã‚ã€ã‚³ãƒªã‚¸ãƒ§ãƒ³ã®ã‚¿ã‚°ã‚’ä»˜ã‘ã‚‹
 				mEventObjects.back()->SetTag(TagTable::Collsion);
 
 				mEventObjects.back()->box.SetModel(ModelManager::GetModel("BlankCube"));
@@ -708,18 +708,18 @@ void StageChanger::ChangeUpdate()
 				mEventObjects.back()->box.cubecol.scale = mEventObjects.back()->box.scale;
 			}
 
-			//©g‚Ìî•ñ‚ğİ’è‚·‚é
+			//è‡ªèº«ã®æƒ…å ±ã‚’è¨­å®šã™ã‚‹
 			std::vector<std::string> split = Util::SplitString(objectData->eventtrigerName, "_");
 
 			Dokan* dokan = dynamic_cast<Dokan*>(mEventObjects.back().get());
 			for (auto str : split)
 			{
-				//ˆÚ“®æ‚Ì“yŠÇID‚ğæ‚èo‚·
+				//ç§»å‹•å…ˆã®åœŸç®¡IDã‚’å–ã‚Šå‡ºã™
 				if (Util::IsNumber(str))
 				{
 					dokan->nextDokanInfo.id = atoi(str.c_str());
 				}
-				//ˆÚ“®æ‚ÌƒXƒe[ƒW–¼‚ğæ‚èo‚·
+				//ç§»å‹•å…ˆã®ã‚¹ãƒ†ãƒ¼ã‚¸åã‚’å–ã‚Šå‡ºã™
 				else
 				{
 					dokan->nextDokanInfo.stageName = str;
@@ -729,34 +729,34 @@ void StageChanger::ChangeUpdate()
 			split = Util::SplitString(objectData->setObjectName, "_");
 			for (auto str : split)
 			{
-				//©g‚Ì“yŠÇID‚ğæ‚èo‚·
+				//è‡ªèº«ã®åœŸç®¡IDã‚’å–ã‚Šå‡ºã™
 				if (Util::IsNumber(str))
 				{
 					dokan->dokanInfo.id = atoi(str.c_str());
 				}
 			}
-			//Œ»İ‚ÌƒXƒe[ƒWƒnƒ“ƒhƒ‹(ƒXƒe[ƒW–¼)‚ğ•Û‘¶‚µ‚ÄA©g‚Ìî•ñ‚Æ‚·‚é
+			//ç¾åœ¨ã®ã‚¹ãƒ†ãƒ¼ã‚¸ãƒãƒ³ãƒ‰ãƒ«(ã‚¹ãƒ†ãƒ¼ã‚¸å)ã‚’ä¿å­˜ã—ã¦ã€è‡ªèº«ã®æƒ…å ±ã¨ã™ã‚‹
 			split = Util::SplitString(currentHandle, "_");
 
 			for (auto str : split)
 			{
-				//•¶š—ñ‚©‚çŠ¥Œ‚Ì"stage"‚ğæ‚èœ‚¢‚½Ò‚ğ•Û‘¶
+				//æ–‡å­—åˆ—ã‹ã‚‰å† è©ã®"stage"ã‚’å–ã‚Šé™¤ã„ãŸè€…ã‚’ä¿å­˜
 				if (str != "stage")
 				{
 					dokan->dokanInfo.stageName = str;
 				}
 			}
 
-			//ˆÚ“®‘O‚Ì“yŠÇ‚ª‚Á‚Ä‚¢‚½î•ñ‚Æˆê’v‚·‚é“yŠÇ‚ª‡‚Á‚½‚ç
+			//ç§»å‹•å‰ã®åœŸç®¡ãŒæŒã£ã¦ã„ãŸæƒ…å ±ã¨ä¸€è‡´ã™ã‚‹åœŸç®¡ãŒåˆã£ãŸã‚‰
 			if (saveNextDokanInfo.stageName == dokan->dokanInfo.stageName &&
 				saveNextDokanInfo.id == dokan->dokanInfo.id)
 			{
-				//ƒvƒŒƒCƒ„[‚Ìî•ñ‚ğ‹L˜^
+				//ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã®æƒ…å ±ã‚’è¨˜éŒ²
 				playerData.data = *objectData;
-				//—Dæƒtƒ‰ƒO‚ğ—§‚Ä‚é
+				//å„ªå…ˆãƒ•ãƒ©ã‚°ã‚’ç«‹ã¦ã‚‹
 				playerData.dokanPriority = true;
 
-				//ƒXƒe[ƒW–¼‚ğUI‚É‹L˜^
+				//ã‚¹ãƒ†ãƒ¼ã‚¸åã‚’UIã«è¨˜éŒ²
 				GameUIManager::Get()->GetStageTitleUI()->ChangeHandle(StageChanger::Get()->currentData->mStageNum);
 			}
 
@@ -765,7 +765,7 @@ void StageChanger::ChangeUpdate()
 
 		if (objectData->setObjectName == "boardpicture")
 		{
-			//‚»‚Ì‚Ü‚Üƒ‚ƒfƒ‹‚Ì”z’u
+			//ãã®ã¾ã¾ãƒ¢ãƒ‡ãƒ«ã®é…ç½®
 			NormalObjectSet(*objectData);
 
 			mEntitys.back().SetModel(ModelManager::GetModel("plate"));
@@ -775,8 +775,8 @@ void StageChanger::ChangeUpdate()
 				MathF::AngleConvRad(-90.f),
 			};
 
-			//ƒCƒxƒ“ƒgƒgƒŠƒK[‚É‹LÚ‚³‚ê‚½ƒeƒNƒXƒ`ƒƒ–¼‚ğ©g‚ÌƒeƒNƒXƒ`ƒƒ‚Æ‚µ‚Ä“\‚é
-			//ƒnƒ“ƒhƒ‹‚ª‚È‚¢‚È‚çì¬
+			//ã‚¤ãƒ™ãƒ³ãƒˆãƒˆãƒªã‚¬ãƒ¼ã«è¨˜è¼‰ã•ã‚ŒãŸãƒ†ã‚¯ã‚¹ãƒãƒ£åã‚’è‡ªèº«ã®ãƒ†ã‚¯ã‚¹ãƒãƒ£ã¨ã—ã¦è²¼ã‚‹
+			//ãƒãƒ³ãƒ‰ãƒ«ãŒãªã„ãªã‚‰ä½œæˆ
 			if (TextureManager::GetTexture(objectData->eventtrigerName) == nullptr)
 			{
 				std::string filename = "Resources\\";
@@ -785,7 +785,7 @@ void StageChanger::ChangeUpdate()
 			}
 			mEntitys.back().SetTexture(TextureManager::GetTexture(objectData->eventtrigerName));
 
-			//“–‚½‚è”»’è‚ğì¬
+			//å½“ãŸã‚Šåˆ¤å®šã‚’ä½œæˆ
 			if (objectData->collider.have)
 			{
 				CollisionSet(*objectData);
@@ -794,56 +794,56 @@ void StageChanger::ChangeUpdate()
 			continue;
 		}
 
-		//ƒCƒxƒ“ƒgƒIƒuƒWƒFƒNƒg‚È‚çİ’u
+		//ã‚¤ãƒ™ãƒ³ãƒˆã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆãªã‚‰è¨­ç½®
 		if (objectData->eventtrigerName != "")
 		{
-			//’†‚Å‚³‚ç‚É•ª—Ş‚í‚¯‚µ‚Ä”z’u‚µ‚Ä‚¢‚é
-			//EventBlock ‚ğŠî’êƒNƒ‰ƒX‚ÉAHitEffect‚Ì’†g‚ğ•Ï‚¦‚½ƒNƒ‰ƒX‚ÅÀ‘•‚µ‚Ä‚¢‚é
+			//ä¸­ã§ã•ã‚‰ã«åˆ†é¡ã‚ã‘ã—ã¦é…ç½®ã—ã¦ã„ã‚‹
+			//EventBlock ã‚’åŸºåº•ã‚¯ãƒ©ã‚¹ã«ã€HitEffectã®ä¸­èº«ã‚’å¤‰ãˆãŸã‚¯ãƒ©ã‚¹ã§å®Ÿè£…ã—ã¦ã„ã‚‹
 			EvenyObjectSet(*objectData);
 
 			continue;
 		}
 
-		//---‚±‚±‚æ‚è‘O‚Åcontinue–Y‚ê‚é‚ÆAƒ‚ƒfƒ‹‚ğ“Ç‚İ‚ñ‚¶‚á‚Á‚ÄƒoƒO‚é‰Â”\«‘å
+		//---ã“ã“ã‚ˆã‚Šå‰ã§continueå¿˜ã‚Œã‚‹ã¨ã€ãƒ¢ãƒ‡ãƒ«ã‚’èª­ã¿è¾¼ã‚“ã˜ã‚ƒã£ã¦ãƒã‚°ã‚‹å¯èƒ½æ€§å¤§
 
-		//‚È‚É‚à–³‚©‚Á‚½‚ç
+		//ãªã«ã‚‚ç„¡ã‹ã£ãŸã‚‰
 		{
-			//‚±‚±‚Ü‚Å‰½‚à‚©‚¢‚Ä‚È‚¯‚ê‚Î’nŒ`‚Ì”z’u‚Æ‚µ‚Äˆµ‚¤
-			//–{—ˆ‚ÍBlockŒ^‚É•ÏŠ·‚µ‚Ä“ü‚ê‚½‚¢‚ªAƒ|ƒCƒ“ƒ^‚Å•Û‚·‚éŒ`‚É‚È‚Á‚Ä‚È‚¢‚Ì‚ÅBlockŒ^‚É‚Å‚«‚È‚¢
-			//‚È‚Ì‚ÅTag‚ğ“à•”‚ÅBlock‚ğ“ü‚ê‚éŒ`‚É‚µ‚Ä‰½‚Æ‚©‚µ‚Ä‚¢‚é
+			//ã“ã“ã¾ã§ä½•ã‚‚ã‹ã„ã¦ãªã‘ã‚Œã°åœ°å½¢ã®é…ç½®ã¨ã—ã¦æ‰±ã†
+			//æœ¬æ¥ã¯Blockå‹ã«å¤‰æ›ã—ã¦å…¥ã‚ŒãŸã„ãŒã€ãƒã‚¤ãƒ³ã‚¿ã§ä¿æŒã™ã‚‹å½¢ã«ãªã£ã¦ãªã„ã®ã§Blockå‹ã«ã§ããªã„
+			//ãªã®ã§Tagã‚’å†…éƒ¨ã§Blockã‚’å…¥ã‚Œã‚‹å½¢ã«ã—ã¦ä½•ã¨ã‹ã—ã¦ã„ã‚‹
 
-			//‚»‚Ì‚Ü‚Üƒ‚ƒfƒ‹‚Ì”z’u
+			//ãã®ã¾ã¾ãƒ¢ãƒ‡ãƒ«ã®é…ç½®
 			NormalObjectSet(*objectData);
 
 			continue;
 		}
 	}
 
-	//‘S‚Ä‚ÌƒCƒxƒ“ƒgƒIƒuƒWƒFƒNƒg‚ğŒŸõ‚µ‚Ä
+	//å…¨ã¦ã®ã‚¤ãƒ™ãƒ³ãƒˆã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã‚’æ¤œç´¢ã—ã¦
 	for (auto itr = mEventObjects.begin(); itr != mEventObjects.end(); itr++)
 	{
-		//CannonŒ^‚ÉƒLƒƒƒXƒg
-		//dynamic_cast‚Ìd—l‚ÅACannon‚Å‚È‚¯‚ê‚Înullptr‚Æ”»’è‚³‚ê‚é‚Ì‚Å
+		//Cannonå‹ã«ã‚­ãƒ£ã‚¹ãƒˆ
+		//dynamic_castã®ä»•æ§˜ã§ã€Cannonã§ãªã‘ã‚Œã°nullptrã¨åˆ¤å®šã•ã‚Œã‚‹ã®ã§
 		Cannon* cannon = dynamic_cast<Cannon*>(itr->get());
-		//ˆÙ‚È‚Á‚½ê‡Ÿ‚Ö
+		//ç•°ãªã£ãŸå ´åˆæ¬¡ã¸
 		if (cannon != nullptr)
 		{
-			//’Ê‚Á‚½ê‡‚ÍA–‘O‚É•ÛŠÇ‚µ‚Ä‚¨‚¢‚½§Œä“_‚Ìˆê——‚©‚ç
+			//é€šã£ãŸå ´åˆã¯ã€äº‹å‰ã«ä¿ç®¡ã—ã¦ãŠã„ãŸåˆ¶å¾¡ç‚¹ã®ä¸€è¦§ã‹ã‚‰
 			for (auto itr = mCannonPoints.begin(); itr != mCannonPoints.end(); itr++)
 			{
-				//’†ŠÔ“_‚Æ
+				//ä¸­é–“ç‚¹ã¨
 				if (itr->key.find("inter") != std::string::npos)
 				{
-					//id‚ªˆê’v‚µ‚½ê‡‚Í“ü‚ê‚é
+					//idãŒä¸€è‡´ã—ãŸå ´åˆã¯å…¥ã‚Œã‚‹
 					if (itr->key.find(cannon->id) != std::string::npos)
 					{
 						cannon->interPos = itr->points;
 					}
 				}
-				//ÅI“_‚ğ”»•Ê‚·‚é
+				//æœ€çµ‚ç‚¹ã‚’åˆ¤åˆ¥ã™ã‚‹
 				if (itr->key.find("end") != std::string::npos)
 				{
-					//id‚ªˆê’v‚µ‚½ê‡‚Í“ü‚ê‚é
+					//idãŒä¸€è‡´ã—ãŸå ´åˆã¯å…¥ã‚Œã‚‹
 					if (itr->key.find(cannon->id) != std::string::npos)
 					{
 						cannon->endPos = itr->points;
@@ -856,10 +856,10 @@ void StageChanger::ChangeUpdate()
 
 		if (moveBlock != nullptr)
 		{
-			//’Ê‚Á‚½ê‡‚ÍA–‘O‚É•ÛŠÇ‚µ‚Ä‚¨‚¢‚½§Œä“_‚Ìˆê——‚©‚ç
+			//é€šã£ãŸå ´åˆã¯ã€äº‹å‰ã«ä¿ç®¡ã—ã¦ãŠã„ãŸåˆ¶å¾¡ç‚¹ã®ä¸€è¦§ã‹ã‚‰
 			for (auto itr = mMoveBlockEndPoints.begin(); itr != mMoveBlockEndPoints.end(); itr++)
 			{
-				//id‚ªˆê’v‚µ‚½ê‡‚Í“ü‚ê‚é
+				//idãŒä¸€è‡´ã—ãŸå ´åˆã¯å…¥ã‚Œã‚‹
 				if (itr->key.find(moveBlock->id) != std::string::npos)
 				{
 					moveBlock->endpos = itr->points;
@@ -867,54 +867,54 @@ void StageChanger::ChangeUpdate()
 			}
 		}
 
-		//TODO:–‘O‚É•ÛŠÇ‚µ‚½ƒf[ƒ^ŒQ‚ğŒŸõ‚·‚éÛA‚¢‚¿‚¢‚¿‘SŒŸõ(üŒ`’Tõ)‚µ‚Ä‚¢‚é‚Ì‚Å
-		//ƒf[ƒ^‚Ì‘—Ê‚ª‘‚¦‚é‚Æˆ—ŠÔ‚ª‚Ì‚Ñ‚Ä‚µ‚Ü‚¤ ƒAƒz
-		//’Tõ•û‚ğ•Ï‚¦‚È‚¢•ûj‚Å‰ü‘P‚·‚é‚È‚çA‚·‚Å‚É‘S‚Ä‚Ìƒf[ƒ^‚ªŒ©‚Â‚©‚Á‚Ä‚¢‚éƒf[ƒ^‚Í
-		//ƒXƒLƒbƒv‚·‚é‚È‚Ç‚Ìˆ—‚ª•K—v‚¾‚ë‚¤
+		//TODO:äº‹å‰ã«ä¿ç®¡ã—ãŸãƒ‡ãƒ¼ã‚¿ç¾¤ã‚’æ¤œç´¢ã™ã‚‹éš›ã€ã„ã¡ã„ã¡å…¨æ¤œç´¢(ç·šå½¢æ¢ç´¢)ã—ã¦ã„ã‚‹ã®ã§
+		//ãƒ‡ãƒ¼ã‚¿ã®ç·é‡ãŒå¢—ãˆã‚‹ã¨å‡¦ç†æ™‚é–“ãŒã®ã³ã¦ã—ã¾ã† ã‚¢ãƒ›
+		//æ¢ç´¢æ–¹ã‚’å¤‰ãˆãªã„æ–¹é‡ã§æ”¹å–„ã™ã‚‹ãªã‚‰ã€ã™ã§ã«å…¨ã¦ã®ãƒ‡ãƒ¼ã‚¿ãŒè¦‹ã¤ã‹ã£ã¦ã„ã‚‹ãƒ‡ãƒ¼ã‚¿ã¯
+		//ã‚¹ã‚­ãƒƒãƒ—ã™ã‚‹ãªã©ã®å‡¦ç†ãŒå¿…è¦ã ã‚ã†
 	}
 
-	//‘S‚Ä‚ÌƒJƒƒ‰ƒIƒuƒWƒFƒNƒg‚ğŒŸõ‚µ‚Ä
+	//å…¨ã¦ã®ã‚«ãƒ¡ãƒ©ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã‚’æ¤œç´¢ã—ã¦
 	for (auto itr = eventCameraNames.begin(); itr != eventCameraNames.end(); itr++)
 	{
-		//•À‚Ñ‘Ö‚¦‚é
+		//ä¸¦ã³æ›¿ãˆã‚‹
 		std::stable_sort(loadCamDatas[*itr].begin(), loadCamDatas[*itr].end(), [](const LoadCamData& lh, const LoadCamData& rh) {
 		return lh.eventnumber < rh.eventnumber;
 			});
 
 		EventCamManageData datas;
-		//“ü‚ê‚½‚¢ƒf[ƒ^‚¾‚¯æ‚èo‚µ‚Ä
+		//å…¥ã‚ŒãŸã„ãƒ‡ãƒ¼ã‚¿ã ã‘å–ã‚Šå‡ºã—ã¦
 		for (auto& data : loadCamDatas[*itr])
 		{
 			datas.datas.push_back(data.camData);
 		}
 
-		//ƒ^[ƒQƒbƒg‚ª‚ ‚é‚©Šm”F
+		//ã‚¿ãƒ¼ã‚²ãƒƒãƒˆãŒã‚ã‚‹ã‹ç¢ºèª
 		for (auto itr2 = loadTargetDatas.begin(); itr2 != loadTargetDatas.end(); itr2++)
 		{
-			//ƒCƒxƒ“ƒg–¼‚ªˆê’v‚·‚é‚à‚Ì‚ª—L‚Á‚½‚ç
+			//ã‚¤ãƒ™ãƒ³ãƒˆåãŒä¸€è‡´ã™ã‚‹ã‚‚ã®ãŒæœ‰ã£ãŸã‚‰
 			if (*itr == itr2->eventname)
 			{
-				//ƒ^[ƒQƒbƒg‚ğ“ü‚ê‚é
+				//ã‚¿ãƒ¼ã‚²ãƒƒãƒˆã‚’å…¥ã‚Œã‚‹
 				datas.target = itr2->target;
 				break;
 			}
 		}
 
-		//ƒCƒxƒ“ƒg–¼‚Æ•À‚Ñ‘Ö‚¦‚½ƒJƒƒ‰ƒf[ƒ^‚ª“ü‚é
+		//ã‚¤ãƒ™ãƒ³ãƒˆåã¨ä¸¦ã³æ›¿ãˆãŸã‚«ãƒ¡ãƒ©ãƒ‡ãƒ¼ã‚¿ãŒå…¥ã‚‹
 		EventCameraManager::Get()->Register(*itr, datas);
 	}
 
 	SetPlayer(playerData.data);
-	//“yŠÇ‚©‚ç‚Ì”z’u‚Å‚È‚¯‚ê‚Î
+	//åœŸç®¡ã‹ã‚‰ã®é…ç½®ã§ãªã‘ã‚Œã°
 	if (playerData.dokanPriority == false)
 	{
-		//Œ»İ‚ÌƒXƒe[ƒWƒnƒ“ƒhƒ‹(ƒXƒe[ƒW–¼)‚ğ•Û‘¶‚µ‚ÄA©g‚Ìî•ñ‚Æ‚·‚é
+		//ç¾åœ¨ã®ã‚¹ãƒ†ãƒ¼ã‚¸ãƒãƒ³ãƒ‰ãƒ«(ã‚¹ãƒ†ãƒ¼ã‚¸å)ã‚’ä¿å­˜ã—ã¦ã€è‡ªèº«ã®æƒ…å ±ã¨ã™ã‚‹
 	 	std::vector<std::string> split = Util::SplitString(currentHandle, "_");
 
-		//ƒf[ƒ^‚É‰Šúî•ñ‚ğ‘‚«‚Ş
+		//ãƒ‡ãƒ¼ã‚¿ã«åˆæœŸæƒ…å ±ã‚’æ›¸ãè¾¼ã‚€
 		for (auto str : split)
 		{
-			//•¶š—ñ‚©‚çŠ¥Œ‚Ì"stage"‚ğæ‚èœ‚¢‚½Ò‚ğ•Û‘¶
+			//æ–‡å­—åˆ—ã‹ã‚‰å† è©ã®"stage"ã‚’å–ã‚Šé™¤ã„ãŸè€…ã‚’ä¿å­˜
 			if (str != "stage")
 			{
 				saveNextDokanInfo.stageName = str;
@@ -946,12 +946,12 @@ void StageChanger::DrawModel()
 	if (mShowModel == false) return;
 	for (auto& obj : mEntitys)
 	{
-		//ƒRƒŠƒWƒ‡ƒ“—p‚É”z’u‚µ‚½ƒIƒuƒWƒFƒNƒg‚È‚çƒXƒLƒbƒv
+		//ã‚³ãƒªã‚¸ãƒ§ãƒ³ç”¨ã«é…ç½®ã—ãŸã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆãªã‚‰ã‚¹ã‚­ãƒƒãƒ—
 		if (obj.CheckTag(TagTable::NoDraw))continue;
 		
 		BasicObjectPreDraw(PipelineManager::GetPipeLine("OutLine"), false);
 		obj.DrawOutLine();
-		//ƒAƒ‹ƒtƒ@‚ª1–¢–‚É‚È‚é‚È‚ç“§–¾—p•`‰æƒpƒCƒvƒ‰ƒCƒ“‚ÉØ‚è‘Ö‚¦‚é
+		//ã‚¢ãƒ«ãƒ•ã‚¡ãŒ1æœªæº€ã«ãªã‚‹ãªã‚‰é€æ˜ç”¨æç”»ãƒ‘ã‚¤ãƒ—ãƒ©ã‚¤ãƒ³ã«åˆ‡ã‚Šæ›¿ãˆã‚‹
 		if (obj.color_.w < 1.0f)
 		{
 			BasicObjectPreDraw(PipelineManager::GetPipeLine("GroundToonNDW"));
@@ -973,7 +973,7 @@ void StageChanger::DrawModel()
 	{
 		BasicObjectPreDraw(PipelineManager::GetPipeLine("OutLine"),false);
 		obj->DrawOutLine();
-		//ƒAƒ‹ƒtƒ@‚ª1–¢–‚É‚È‚é‚È‚ç“§–¾—p•`‰æƒpƒCƒvƒ‰ƒCƒ“‚ÉØ‚è‘Ö‚¦‚é
+		//ã‚¢ãƒ«ãƒ•ã‚¡ãŒ1æœªæº€ã«ãªã‚‹ãªã‚‰é€æ˜ç”¨æç”»ãƒ‘ã‚¤ãƒ—ãƒ©ã‚¤ãƒ³ã«åˆ‡ã‚Šæ›¿ãˆã‚‹
 		if (obj->color_.w < 1.0f)
 		{
 			BasicObjectPreDraw(PipelineManager::GetPipeLine("GroundToonNDW"));
@@ -990,7 +990,7 @@ void StageChanger::DrawModel()
 	{
 		BasicObjectPreDraw(PipelineManager::GetPipeLine("OutLine"), false);
 		obj->DrawOutLine();
-		//ƒAƒ‹ƒtƒ@‚ª1–¢–‚É‚È‚é‚È‚ç“§–¾—p•`‰æƒpƒCƒvƒ‰ƒCƒ“‚ÉØ‚è‘Ö‚¦‚é
+		//ã‚¢ãƒ«ãƒ•ã‚¡ãŒ1æœªæº€ã«ãªã‚‹ãªã‚‰é€æ˜ç”¨æç”»ãƒ‘ã‚¤ãƒ—ãƒ©ã‚¤ãƒ³ã«åˆ‡ã‚Šæ›¿ãˆã‚‹
 		if (obj->color_.w < 1.0f)
 		{
 			BasicObjectPreDraw(PipelineManager::GetPipeLine("ToonNDW"));
@@ -1025,7 +1025,7 @@ void StageChanger::DrawCollider()
 
 void StageChanger::EventNameUniquePush(const std::string& eventname)
 {
-	//‚·‚Å‚É“¯‚¶‚à‚Ì‚ª“ü‚Á‚Ä‚¢‚é‚È‚ç”ò‚Î‚·
+	//ã™ã§ã«åŒã˜ã‚‚ã®ãŒå…¥ã£ã¦ã„ã‚‹ãªã‚‰é£›ã°ã™
 	for (auto& name : eventCameraNames)
 	{
 		if (name == eventname) {
@@ -1033,13 +1033,13 @@ void StageChanger::EventNameUniquePush(const std::string& eventname)
 		}
 	}
 
-	//‚»‚¤‚Å‚È‚¢‚È‚ç“ü‚ê‚é
+	//ãã†ã§ãªã„ãªã‚‰å…¥ã‚Œã‚‹
 	eventCameraNames.push_back(eventname);
 }
 
 void StageChanger::ResetRevise(int32_t stageNumber, int32_t starID, int32_t starnum)
 {
-	//ƒtƒ@ƒCƒ‹o—Íˆ—
+	//ãƒ•ã‚¡ã‚¤ãƒ«å‡ºåŠ›å‡¦ç†
 	std::ofstream writing_file;
 
 	std::string filename = "";
@@ -1054,7 +1054,7 @@ void StageChanger::ResetRevise(int32_t stageNumber, int32_t starID, int32_t star
 
 	for (int i = 0; i < starnum; i++)
 	{
-		//æ“¾ó‹µ‚ğ0(–¢æ“¾)‚É‘‚«Š·‚¦‚é
+		//å–å¾—çŠ¶æ³ã‚’0(æœªå–å¾—)ã«æ›¸ãæ›ãˆã‚‹
 		if (starID == i)
 		{
 			int h = 0;
@@ -1068,7 +1068,7 @@ void StageChanger::ResetRevise(int32_t stageNumber, int32_t starID, int32_t star
 
 void StageChanger::CorrectedRevise(int32_t stageNumber, int32_t starID, int32_t starnum)
 {
-	//ƒtƒ@ƒCƒ‹o—Íˆ—
+	//ãƒ•ã‚¡ã‚¤ãƒ«å‡ºåŠ›å‡¦ç†
 	std::ofstream writing_file;
 
 	std::string filename = "";
@@ -1084,7 +1084,7 @@ void StageChanger::CorrectedRevise(int32_t stageNumber, int32_t starID, int32_t 
 	for (int i = 0; i < starnum; i++)
 	{
 		int h = 0;
-		//æ“¾ó‹µ‚ğ1(æ“¾Ï)‚É‘‚«Š·‚¦‚é
+		//å–å¾—çŠ¶æ³ã‚’1(å–å¾—æ¸ˆ)ã«æ›¸ãæ›ãˆã‚‹
 		if (starID == i)
 		{
 			h = 1;
@@ -1098,7 +1098,7 @@ void StageChanger::CorrectedRevise(int32_t stageNumber, int32_t starID, int32_t 
 
 bool StageChanger::LoadStarCorrect(int32_t stageNumber, int32_t starID)
 {
-	//ƒtƒ@ƒCƒ‹“ü—Íˆ—
+	//ãƒ•ã‚¡ã‚¤ãƒ«å…¥åŠ›å‡¦ç†
 	std::ifstream reading_file;
 
 	std::string filename = "";
@@ -1111,7 +1111,7 @@ bool StageChanger::LoadStarCorrect(int32_t stageNumber, int32_t starID)
 
 	reading_file.open(filename);
 
-	//ƒtƒ@ƒCƒ‹ƒI[ƒvƒ“¸”s‚ğƒ`ƒFƒbƒN
+	//ãƒ•ã‚¡ã‚¤ãƒ«ã‚ªãƒ¼ãƒ—ãƒ³å¤±æ•—ã‚’ãƒã‚§ãƒƒã‚¯
 	if (reading_file.fail())
 	{
 		assert(0);

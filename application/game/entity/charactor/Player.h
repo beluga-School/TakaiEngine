@@ -24,38 +24,38 @@ public:
 		return &instance;
 	}
 
-	//�v���C���[�̉�]���Ǘ�����ϐ�
+	//プレイヤーの回転を管理する変数
 	float mVerticalRad = 0;
 	float mHorizontalRad = 0;
 
-	//�O�ړ�(��ړ�)
+	//前移動(上移動)
 	Vector3 preMove = { 0,0,0 };
 
-	//�G�Ƃ̓����蔻��p�X�t�B�A
+	//敵との当たり判定用スフィア
 	Sphere mEncountCol;
 
-	//�ĂԂ�1��W�����v����
+	//呼ぶと1回ジャンプする
 	void Jump();
 
-	//����HP���擾
+	//現在HPを取得
 	int32_t GetNowHP();
 
 	/// <summary>
-	/// �_���[�W���󂯂鏈��
+	/// ダメージを受ける処理
 	/// </summary>
 	void DamageEffect(int32_t damage);
 
-	//�ݒu���ꂽ�t���[���Ȃ痧��
+	//設置されたフレームなら立つ
 	bool mDokanApparrance = false;
 
-	//�y�ǂ���o�����铮��
+	//土管から出現する動き
 	void ApparranceMove(const Vector3& dokanPos, const Vector3& dokanScale);
 
 	bool GetApparanceEnd();
 
 private:
-	//������ӂ̏�ԊǗ��͓��ꂵ�������AApparrance�������ɂ���ƐF�X�s�s�������肻��
-	//�o�������̂������
+	//ここら辺の状態管理は統一したいし、Apparranceがここにいると色々不都合がありそう
+	//出現処理のもろもろ
 	enum class PlayerState
 	{
 		Normal,
@@ -63,10 +63,10 @@ private:
 		Debug,
 	}playerState = PlayerState::Normal;
 
-	//�v���C���[�̃��[�h��ς���(0,�ʏ�,1,�f�o�b�O���[�h)
+	//プレイヤーのモードを変える(0,通常,1,デバッグモード)
 	void ChangeMode(const PlayerState& pState);
 
-	//hp�̍ő�l�@�X�e�[�^�X�̍ő�l�͊O����ς�����悤�ɂ�����
+	//hpの最大値　ステータスの最大値は外から変えられるようにしたい
 	int32_t MAX_HP = 8;
 
 	Status hp = 8;
@@ -91,45 +91,45 @@ private:
 
 	bool IsMove();
 
-	//HP�����̒l�ɏ��������� �ő�l���傫���ꍇ�A�ő�l������������
+	//HPをその値に書きかえる 最大値より大きい場合、最大値を書き換える
 	void HPOverFlow(int32_t value);
 
-	//���G����
+	//無敵時間
 	TEasing::easeTimer mutekiTimer = 2.0f;
-	//�_���[�W�󂯂���̓_��
-	//0.1�b���Ƃɕ`���������
+	//ダメージ受けた後の点滅
+	//0.1秒ごとに描画を取り消す
 	TEasing::easeTimer flashTimer = 0.05f;
 
-	///---���ړ�
-	//�ړ����x
+	///---横移動
+	//移動速度
 	float mSpeed = 7.5f;
 
-	//�ő�l�ɂȂ�܂ł̉�������
+	//最大値になるまでの加速時間
 	TEasing::easeTimer accelerationTimer = 0.25f;
 
-	//�ő�l���猸��܂ł̌�������
+	//最大値から減るまでの減速時間
 	TEasing::easeTimer decelerationTimer = 0.25f;
 
-	//�ړ��I��������̑��x
+	//移動終わった時の速度
 	float mSaveSpeed = 0.0f;
 
-	//�ő呬�x
+	//最大速度
 	const float MAX_SPEED = 7.5f;
 
-	//�_�b�V�����̍ő呬�x
+	//ダッシュ時の最大速度
 	const float MAX_DASH_SPEED = 15.0f;
 
 	Vector3 oldMoveVec = {0,0,0};
 
-	//�����x�N�g���ۑ�
+	//方向ベクトル保存
 	Vector3 mCenterVec = {0,0,0};
 	Vector3 mSideVec = {0,0,0};
 
-	//�G�Ƃ̓����蔻��p�X�t�B�A�̕`��
+	//敵との当たり判定用スフィアの描画
 	Obj3d colDrawer;
 
-	//���W���֌W
-	//�X�^�[�̎擾��
+	//収集物関係
+	//スターの取得数
 	Status starCorrectNum = 0;
 
 	TEasing::easeTimer UIDelayTimer = 0.5f;

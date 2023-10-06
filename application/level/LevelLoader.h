@@ -6,7 +6,7 @@
 #include "Obj.h"
 #include "LevelData.h"
 
-//ŠO•”‚Ìƒ‰ƒCƒuƒ‰ƒŠ‚Åo‚½Œx‚Í–³‹
+//å¤–éƒ¨ã®ãƒ©ã‚¤ãƒ–ãƒ©ãƒªã§å‡ºãŸè­¦å‘Šã¯ç„¡è¦–
 #pragma warning (push)
 #pragma warning ( disable : 26800)
 #include <json.hpp>
@@ -43,6 +43,6 @@ private:
 class LevelDataExchanger
 {
 public:
-	//ƒIƒuƒWƒFƒNƒgƒf[ƒ^‚©‚çObj3d‚É•ÏŠ·‚·‚éŠÖ”
+	//ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆãƒ‡ãƒ¼ã‚¿ã‹ã‚‰Obj3dã«å¤‰æ›ã™ã‚‹é–¢æ•°
 	static void SetObjectData(Obj3d& exportData, const LevelData::ObjectData& inportData);
 };

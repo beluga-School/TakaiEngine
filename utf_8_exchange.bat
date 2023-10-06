@@ -12,7 +12,7 @@ function sjis_to_utf8($src, $dst) {
 
 foreach ($file in Get-ChildItem -Path $args) {
     if (Test-Path -LiteralPath $file -Include $fileTypes -Type Leaf) {
-        $dst = $file.fullname + ".utf8" + $file.extension
+        $dst = $file.fullname
         echo $dst
         sjis_to_utf8 $file $dst
     }

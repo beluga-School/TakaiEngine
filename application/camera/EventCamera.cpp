@@ -11,7 +11,7 @@ void EventCamera::Initialize()
 
 void EventCamera::SetPos(const Vector3& position)
 {
-	//ƒJƒƒ‰ˆÊ’u‚ðƒIƒuƒWƒFƒNƒg‚É“Ç‚Ýž‚Ý
+	//ã‚«ãƒ¡ãƒ©ä½ç½®ã‚’ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã«èª­ã¿è¾¼ã¿
 	hontai.position = position;
 }
 
@@ -35,18 +35,18 @@ void EventCamera::Update()
 	Vector3 centerVec = hontai.matWorld.ExtractAxisZ();
 	centerVec.normalize();
 
-	//ŠO•”“Ç‚Ýž‚Ý‚µ‚½ƒ^[ƒQƒbƒg‚ðŽg‚í‚È‚¢‚È‚ç
+	//å¤–éƒ¨èª­ã¿è¾¼ã¿ã—ãŸã‚¿ãƒ¼ã‚²ãƒƒãƒˆã‚’ä½¿ã‚ãªã„ãªã‚‰
 	if (!useTarget)
 	{
-		//ƒ^[ƒQƒbƒgˆÊ’u‚ð³–Ê‚Ì‚¢‚¢Š´‚¶‚ÌˆÊ’u‚ÉÝ’è
+		//ã‚¿ãƒ¼ã‚²ãƒƒãƒˆä½ç½®ã‚’æ­£é¢ã®ã„ã„æ„Ÿã˜ã®ä½ç½®ã«è¨­å®š
 		target.position = hontai.position + centerVec * targetRadius;
 	}
 
-	//XV
+	//æ›´æ–°
 	hontai.Update(*Camera::sCamera);
 	target.Update(*Camera::sCamera);
 
-	//ƒJƒƒ‰ˆÊ’u‚ðƒJƒƒ‰–{‘Ì‚É“Ç‚Ýž‚Ý
+	//ã‚«ãƒ¡ãƒ©ä½ç½®ã‚’ã‚«ãƒ¡ãƒ©æœ¬ä½“ã«èª­ã¿è¾¼ã¿
 	Camera::sCamera->mEye = hontai.position;
 	Camera::sCamera->mTarget = target.position;
 

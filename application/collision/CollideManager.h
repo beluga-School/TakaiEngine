@@ -8,10 +8,10 @@
 #include "Enemy.h"
 #include "Player.h"
 
-//ƒŠƒXƒg‚Ì’†‚É“¯‚¶ƒIƒuƒWƒFƒNƒg‚ª‚ ‚ê‚ÎA‚»‚ÌƒIƒuƒWƒFƒNƒg‚ğ“ü‚ê‚È‚¢ƒvƒbƒVƒ…ƒoƒbƒN
+//ãƒªã‚¹ãƒˆã®ä¸­ã«åŒã˜ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆãŒã‚ã‚Œã°ã€ãã®ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã‚’å…¥ã‚Œãªã„ãƒ—ãƒƒã‚·ãƒ¥ãƒãƒƒã‚¯
 void UniqueObjectPushBack(std::list<IDdCube>& list, const IDdCube& col);
 
-//ƒŠƒXƒg‚Ì’†‚É“¯‚¶ƒIƒuƒWƒFƒNƒg‚ª‚ ‚ê‚ÎA‚»‚ÌƒIƒuƒWƒFƒNƒg‚ğíœ‚·‚é
+//ãƒªã‚¹ãƒˆã®ä¸­ã«åŒã˜ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆãŒã‚ã‚Œã°ã€ãã®ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã‚’å‰Šé™¤ã™ã‚‹
 void UniqueObjectErase(std::list<IDdCube>& list, const IDdCube& col);
 
 class CollideManager
@@ -19,10 +19,10 @@ class CollideManager
 public:
 	std::list<Entity*> allCols;
 	
-	//HP‚Ì•ÏX‚âó‘Ô‚Ì•Ï‰»‚È‚ÇAƒXƒe[ƒ^ƒX‚ğ•ÏX‚·‚é“–‚½‚è”»’è‚ÌXV
+	//HPã®å¤‰æ›´ã‚„çŠ¶æ…‹ã®å¤‰åŒ–ãªã©ã€ã‚¹ãƒ†ãƒ¼ã‚¿ã‚¹ã‚’å¤‰æ›´ã™ã‚‹å½“ãŸã‚Šåˆ¤å®šã®æ›´æ–°
 	void StatusUpdate();
 	
-	//‰Ÿ‚µ–ß‚µˆ—‚È‚ÇAÀ•W‚ª•Ï‰»‚·‚é“–‚½‚è”»’è‚ÌXV
+	//æŠ¼ã—æˆ»ã—å‡¦ç†ãªã©ã€åº§æ¨™ãŒå¤‰åŒ–ã™ã‚‹å½“ãŸã‚Šåˆ¤å®šã®æ›´æ–°
 	void CollideUpdate();
 
 	static CollideManager* Get()
@@ -31,24 +31,24 @@ public:
 		return &instance;
 	}
 
-	//è“®‚Å“–‚½‚è”»’è‚ğ“Ç‚ñ‚Å‚¨‚«‚½‚¢‚Æ‚«—p‚ÉA•Ê‚Å•ª‚¯‚é
+	//æ‰‹å‹•ã§å½“ãŸã‚Šåˆ¤å®šã‚’èª­ã‚“ã§ãŠããŸã„ã¨ãç”¨ã«ã€åˆ¥ã§åˆ†ã‘ã‚‹
 	
-	//’nŒ`XV—p
+	//åœ°å½¢æ›´æ–°ç”¨
 	void CheckCollide(Entity* check, Entity* collide);
 
-	//ƒXƒe[ƒ^ƒXXV—p
+	//ã‚¹ãƒ†ãƒ¼ã‚¿ã‚¹æ›´æ–°ç”¨
 	void CheckStatus(Entity* check, Entity* collide);
 
 private:
 	CollideManager(){};
 	~CollideManager(){};
 
-	//‰Ÿ‚µ–ß‚µˆ—
+	//æŠ¼ã—æˆ»ã—å‡¦ç†
 	void Osimodosi(Mob& check, const Block& collide);
 
-	//check‚Æcollide‚ÌˆÊ’uŠÖŒW‚ğŒ©‚ÄA‰E‚É‚¢‚é‚©¶‚É‚¢‚é‚©‚È‚Ç‚Åtrue/false‚ğ•Ô‚·
+	//checkã¨collideã®ä½ç½®é–¢ä¿‚ã‚’è¦‹ã¦ã€å³ã«ã„ã‚‹ã‹å·¦ã«ã„ã‚‹ã‹ãªã©ã§true/falseã‚’è¿”ã™
 	bool CheckDirections(const Cube& check, const Cube& collide, const CheckDirection& CD);
 
-	//ƒvƒŒƒCƒ„[‚ÆEnemy‚Ì“–‚½‚è”»’è
+	//ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã¨Enemyã®å½“ãŸã‚Šåˆ¤å®š
 	void CheckPlayerToEnemy(Player& player, Enemy& collide);
 };

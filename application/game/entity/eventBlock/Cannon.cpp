@@ -18,7 +18,7 @@ void Cannon::Update()
 {
 	box.CreateCol(position,scale);
 	timer.Update();
-	//ƒ^[ƒQƒbƒg‚É‰½‚©“ü‚Á‚½‚È‚ç
+	//ã‚¿ãƒ¼ã‚²ãƒƒãƒˆã«ä½•ã‹å…¥ã£ãŸãªã‚‰
 	if (target != nullptr)
 	{
 		switch (state)
@@ -26,11 +26,11 @@ void Cannon::Update()
 		case Cannon::CannonState::None:
 			break;
 		case Cannon::CannonState::One:
-			//ƒ^[ƒQƒbƒg‚ğ“®‚©‚·
+			//ã‚¿ãƒ¼ã‚²ãƒƒãƒˆã‚’å‹•ã‹ã™
 			//target->position = TEasing::lerp(startPos, interPos, timer.GetTimeRate());
 			target->position = Vector3::Spline(inters, timer.GetTimeRate());
 
-			//–ˆƒtƒŒ[ƒ€‰Œ‚Á‚Û‚­ƒp[ƒeƒBƒNƒ‹¶¬
+			//æ¯ãƒ•ãƒ¬ãƒ¼ãƒ ç…™ã£ã½ããƒ‘ãƒ¼ãƒ†ã‚£ã‚¯ãƒ«ç”Ÿæˆ
 			ParticleManager::GetInstance()->CreateCubeParticle(target->position, { 1,1,1 }, 1, { 0.1f,0.1f,0.1f,1 });
 
 			if (timer.GetEnd())
@@ -41,13 +41,13 @@ void Cannon::Update()
 
 				target->SetNoGravity(0);
 
-				//’…’n‚Éƒp[ƒeƒBƒNƒ‹
+				//ç€åœ°æ™‚ã«ãƒ‘ãƒ¼ãƒ†ã‚£ã‚¯ãƒ«
 				for (int32_t i = 0; i < 10; i++)
 				{
 					ParticleManager::GetInstance()->CreateCubeParticle(target->position, { 3,3,3 }, 10, { 1,1,0.1f,1 });
 				}
 
-				//ˆÚ“®‚³‚¹I‚í‚Á‚½‚Ì‚ÅAƒ^[ƒQƒbƒg‚Ì•Û‚ğ‰ğœ
+				//ç§»å‹•ã•ã›çµ‚ã‚ã£ãŸã®ã§ã€ã‚¿ãƒ¼ã‚²ãƒƒãƒˆã®ä¿æŒã‚’è§£é™¤
 				target = nullptr;
 			}
 
@@ -57,7 +57,7 @@ void Cannon::Update()
 
 	Obj3d::Update(*Camera::sCamera);
 
-	//í‚É‰ñ‚µ‚Æ‚­
+	//å¸¸ã«å›ã—ã¨ã
 	endTargetCircle.rotation.y += 2.0f * TimeManager::deltaTime;
 	endTargetCircle.Update(*Camera::sCamera);
 }
@@ -74,7 +74,7 @@ void Cannon::Draw()
 
 void Cannon::OnCollide(Mob& mob)
 {
-	//‚·‚Å‚É‰½‚©“ü‚Á‚Ä‚¢‚é‚È‚çƒXƒLƒbƒv
+	//ã™ã§ã«ä½•ã‹å…¥ã£ã¦ã„ã‚‹ãªã‚‰ã‚¹ã‚­ãƒƒãƒ—
 	if (target != nullptr)return;
 	
 	target = &mob;

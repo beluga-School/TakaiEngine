@@ -45,15 +45,15 @@ void Player::Update()
 		{
 			ChangeMode(PlayerState::Normal);
 			
-			//‚±‚±‚ç•ÓƒVƒXƒeƒ€‘¤‚Ìˆ—‚¾‚©‚çA•Ê‚ÌêŠ‚ÉˆÚ‚µ‚½‚¢
+			//ã“ã“ã‚‰è¾ºã‚·ã‚¹ãƒ†ãƒ å´ã®å‡¦ç†ã ã‹ã‚‰ã€åˆ¥ã®å ´æ‰€ã«ç§»ã—ãŸã„
 			GameUIManager::Get()->Move(UIMove::START);
 		}
 	}
 
-	//ˆÚ“®’n‚ğ‰Šú‰»
+	//ç§»å‹•åœ°ã‚’åˆæœŸåŒ–
 	moveValue = { 0,0,0 };
 
-	//ƒxƒNƒgƒ‹‚ğ•Û‘¶
+	//ãƒ™ã‚¯ãƒˆãƒ«ã‚’ä¿å­˜
 	mCenterVec = matWorld.ExtractAxisZ();
 	mSideVec = matWorld.ExtractAxisX();
 
@@ -66,8 +66,8 @@ void Player::Update()
 
 		SideMoveUpdate();
 
-		//cˆÚ“®XV(d—Í—‰ºŠÜ‚Ş)
-		//ƒWƒƒƒ“ƒv‚µ‚Ä‚¢‚È‚¢ó‘Ô‚Å“ü—Í‚ª‚ ‚Á‚½‚çƒWƒƒƒ“ƒv
+		//ç¸¦ç§»å‹•æ›´æ–°(é‡åŠ›è½ä¸‹å«ã‚€)
+		//ã‚¸ãƒ£ãƒ³ãƒ—ã—ã¦ã„ãªã„çŠ¶æ…‹ã§å…¥åŠ›ãŒã‚ã£ãŸã‚‰ã‚¸ãƒ£ãƒ³ãƒ—
 		if (jumpState == JumpState::None)
 		{
 			if (Input::Keyboard::TriggerKey(DIK_SPACE) ||
@@ -98,7 +98,7 @@ void Player::Update()
 
 		Fly();
 
-		//ƒ_ƒ[ƒWˆ—ƒeƒXƒg
+		//ãƒ€ãƒ¡ãƒ¼ã‚¸å‡¦ç†ãƒ†ã‚¹ãƒˆ
 		if (Input::Keyboard::TriggerKey(DIK_T))
 		{
 			mutekiTimer.Reset();
@@ -114,7 +114,7 @@ void Player::Update()
 			ChangeMode(PlayerState::Normal);
 		}
 
-		//“ü—Í‚ÅƒŠƒ[ƒh
+		//å…¥åŠ›ã§ãƒªãƒ­ãƒ¼ãƒ‰
 		if (Input::Keyboard::TriggerKey(DIK_R))
 		{
 			StageChanger::Get()->Reload();
@@ -123,31 +123,31 @@ void Player::Update()
 		break;
 	}
 
-	//Player“Á—L‚Ì“–‚½‚è”»’èXV(CollideManager‚ÉˆÚ‚·)
-	//‚±‚±’u‚«Š·‚¦‚é‚Ü‚Å‚Í¡“ú‚â‚é
+	//Playerç‰¹æœ‰ã®å½“ãŸã‚Šåˆ¤å®šæ›´æ–°(CollideManagerã«ç§»ã™)
+	//ã“ã“ç½®ãæ›ãˆã‚‹ã¾ã§ã¯ä»Šæ—¥ã‚„ã‚‹
 	ColUpdate();
 
-	//Mob‘¤‚ÌXV
+	//Mobå´ã®æ›´æ–°
 	Mob::CollsionUpdate();
 
-	//“–‚½‚è”»’è
-	///--“G“–‚½‚è”»’è
+	//å½“ãŸã‚Šåˆ¤å®š
+	///--æ•µå½“ãŸã‚Šåˆ¤å®š
 	mEncountCol.center = position;
 	mEncountCol.radius = (scale.x + scale.y + scale.z) / 3.f;
 
 	colDrawer.position = position;
 	colDrawer.scale = scale;
 
-	//‰ñ“]XV
-	//ƒXƒ^[æ“¾’†‚Í³–Ê‚ğŒü‚¯‚é‚½‚ß‰ñ“]‚ÌXV‚ğƒXƒgƒbƒv(’†‚É‘‚¢‚Ä‚ ‚é)
+	//å›è»¢æ›´æ–°
+	//ã‚¹ã‚¿ãƒ¼å–å¾—ä¸­ã¯æ­£é¢ã‚’å‘ã‘ã‚‹ãŸã‚å›è»¢ã®æ›´æ–°ã‚’ã‚¹ãƒˆãƒƒãƒ—(ä¸­ã«æ›¸ã„ã¦ã‚ã‚‹)
 	RotaUpdate();
 
-	//XV
+	//æ›´æ–°
 	Obj3d::Update(*Camera::sCamera);
 
 	colDrawer.Update(*Camera::sCamera);
 
-	//“–‚½‚è”»’èŒãAƒXƒe[ƒ^ƒX‚ÌXV
+	//å½“ãŸã‚Šåˆ¤å®šå¾Œã€ã‚¹ãƒ†ãƒ¼ã‚¿ã‚¹ã®æ›´æ–°
 	DamageUpdate();
 
 	hpGauge.Update();
@@ -186,10 +186,10 @@ void Player::SideMoveUpdate()
 	accelerationTimer.Update();
 	decelerationTimer.Update();
 
-	//“ü—Í‚ª‚ ‚Á‚½‚çAƒ^ƒCƒ}[‚ª‘‚¦‚Ä‚¢‚«A
-	//“ü—Í‚ª‚È‚©‚Á‚½‚çAƒ^ƒCƒ}[‚ªŒ¸‚Á‚Ä‚¢‚­
+	//å…¥åŠ›ãŒã‚ã£ãŸã‚‰ã€ã‚¿ã‚¤ãƒãƒ¼ãŒå¢—ãˆã¦ã„ãã€
+	//å…¥åŠ›ãŒãªã‹ã£ãŸã‚‰ã€ã‚¿ã‚¤ãƒãƒ¼ãŒæ¸›ã£ã¦ã„ã
 
-	//ˆÚ“®—Ê‚ğæ“¾A‰ÁZ
+	//ç§»å‹•é‡ã‚’å–å¾—ã€åŠ ç®—
 	if ((Pad::GetLStickMove().GetLength() != 0 || 
 		Pad::GetRStickMove().GetLength() != 0) ||
 		(Input::Keyboard::PushKey(DIK_W) || 
@@ -203,30 +203,30 @@ void Player::SideMoveUpdate()
 		}
 		decelerationTimer.Reset();
 	
-		//‰Á‘¬‚ğ‘¬“x‚É”½‰f
+		//åŠ é€Ÿã‚’é€Ÿåº¦ã«åæ˜ 
 		mSpeed = TEasing::InQuad(0.0f, MAX_SPEED, accelerationTimer.GetTimeRate());
 	
-		//‘O‰ñ‚ÌˆÚ“®•ûŒü‚ğ‹L˜^(ƒL[ƒ{[ƒh‚Ì‚İ)
+		//å‰å›ã®ç§»å‹•æ–¹å‘ã‚’è¨˜éŒ²(ã‚­ãƒ¼ãƒœãƒ¼ãƒ‰ã®ã¿)
 		oldMoveVec += mCenterVec * static_cast<float>((Input::Keyboard::PushKey(DIK_W) - Input::Keyboard::PushKey(DIK_S)));
 		oldMoveVec += mSideVec * static_cast<float>((Input::Keyboard::PushKey(DIK_D) - Input::Keyboard::PushKey(DIK_A)));
 
 		oldMoveVec.normalize();
 	}
-	else if(oldMoveVec.length() != 0)//‘OƒtƒŒ[ƒ€‚ÅƒL[ƒ{[ƒh“ü—Í‚ª‚ ‚Á‚½‚ç(ƒpƒbƒh‚È‚çŒ¸‘¬‚È‚µ)
+	else if(oldMoveVec.length() != 0)//å‰ãƒ•ãƒ¬ãƒ¼ãƒ ã§ã‚­ãƒ¼ãƒœãƒ¼ãƒ‰å…¥åŠ›ãŒã‚ã£ãŸã‚‰(ãƒ‘ãƒƒãƒ‰ãªã‚‰æ¸›é€Ÿãªã—)
 	{
 		if (decelerationTimer.GetStarted() == false)
 		{
 			decelerationTimer.Start();
-			//‘¬“x‚ğ•Û‘¶
+			//é€Ÿåº¦ã‚’ä¿å­˜
 			mSaveSpeed = mSpeed;
 		}
 		accelerationTimer.Reset();
 
-		//‰Á‘¬‚ğ‘¬“x‚É”½‰f
+		//åŠ é€Ÿã‚’é€Ÿåº¦ã«åæ˜ 
 		mSpeed = TEasing::InQuad(mSaveSpeed,0.0f, decelerationTimer.GetTimeRate());
 	}
 
-	//Œ¸‘¬’†‚ÌˆÚ“®
+	//æ¸›é€Ÿä¸­ã®ç§»å‹•
 	if (decelerationTimer.GetRun())
 	{
 		moveValue += oldMoveVec * mSpeed * TimeManager::deltaTime;
@@ -255,15 +255,15 @@ void Player::SideMoveUpdate()
 		moveValue -= mSideVec * mSpeed * TimeManager::deltaTime;
 	}
 
-	//‚ ‚Æ‚ÅˆÚ“®‘¬“x‚Ì‰ÁZ‚ÉãŒÀ•t‚¯‚é
+	//ã‚ã¨ã§ç§»å‹•é€Ÿåº¦ã®åŠ ç®—ã«ä¸Šé™ä»˜ã‘ã‚‹
 }
 
 void Player::ColUpdate()
 {
-	///--’n–Ê“–‚½‚è”»’è
+	///--åœ°é¢å½“ãŸã‚Šåˆ¤å®š
 	Cube pCol;
 	pCol.position = position;
-	//–³—‚â‚è‚¿‚å‚Á‚Æ‘å‚«‚­
+	//ç„¡ç†ã‚„ã‚Šã¡ã‚‡ã£ã¨å¤§ãã
 	pCol.scale = scale;
 
 	pCol.position += moveValue;
@@ -276,7 +276,7 @@ void Player::ColUpdate()
 		Cube goalCol;
 		goalCol.position = goal->position + goal->goalBlock.position;
 
-		//‚È‚ñ‚©”»’è‚ª¬‚³‚©‚Á‚½‚Ì‚Å2”{‚É ‚»‚µ‚½‚ç‚Ò‚Á‚½‚è‚¾‚Á‚½‚Ì‚ÅA‚Ç‚Á‚©‚Å”¼•ª‚É‚·‚éˆ—‚ª‹²‚Ü‚Á‚Ä‚é
+		//ãªã‚“ã‹åˆ¤å®šãŒå°ã•ã‹ã£ãŸã®ã§2å€ã« ãã—ãŸã‚‰ã´ã£ãŸã‚Šã ã£ãŸã®ã§ã€ã©ã£ã‹ã§åŠåˆ†ã«ã™ã‚‹å‡¦ç†ãŒæŒŸã¾ã£ã¦ã‚‹
 		goalCol.scale = goal->goalBlock.scale * 2;
 
 		if (Collsions::CubeCollision(goalCol, pCol))
@@ -290,7 +290,7 @@ void Player::ColUpdate()
 
 void Player::RotaUpdate()
 {
-	//‰ñ“]‚³‚¹‚éˆ—
+	//å›è»¢ã•ã›ã‚‹å‡¦ç†
 	rotation.y = PlayerCamera::Get()->mHorizontalRad;
 }
 
@@ -314,7 +314,7 @@ void Player::DamageUpdate()
 	mutekiTimer.Update();
 	flashTimer.Update();
 
-	//–³“GŠÔ’†‚Í“_–Å‚³‚¹‚é
+	//ç„¡æ•µæ™‚é–“ä¸­ã¯ç‚¹æ»…ã•ã›ã‚‹
 	if (mutekiTimer.GetRun())
 	{
 		if (flashTimer.GetRun() == false)
@@ -323,7 +323,7 @@ void Player::DamageUpdate()
 			mIsVisiable = !mIsVisiable;
 		}
 	}
-	//–³“GŠÔ‚ªI—¹‚µ‚½‚ç“_–Å‰ğœ
+	//ç„¡æ•µæ™‚é–“ãŒçµ‚äº†ã—ãŸã‚‰ç‚¹æ»…è§£é™¤
 	if (mutekiTimer.GetEnd())
 	{
 		if (mIsVisiable == false)
@@ -333,21 +333,21 @@ void Player::DamageUpdate()
 		mutekiTimer.Reset();
 	}
 
-	//ŠO‘¤‚ÅHP‚ÌÅ‘å’l‚ğ’´‚¦‚éˆ—‚ğ‘‚¢‚Ä‚¢‚½‚çŠÛ‚ß‚é
+	//å¤–å´ã§HPã®æœ€å¤§å€¤ã‚’è¶…ãˆã‚‹å‡¦ç†ã‚’æ›¸ã„ã¦ã„ãŸã‚‰ä¸¸ã‚ã‚‹
 	hp.mCurrent = Util::Clamp(hp.mCurrent, -1, MAX_HP);
 
-	//ƒ_ƒ[ƒW‚ğó‚¯‚½‚Æ‚«
+	//ãƒ€ãƒ¡ãƒ¼ã‚¸ã‚’å—ã‘ãŸã¨ã
 	if (hp.DecreaseTrigger())
 	{
-		//ƒGƒtƒFƒNƒgo‚·
+		//ã‚¨ãƒ•ã‚§ã‚¯ãƒˆå‡ºã™
 		for (int i = 0; i < 3; i++)
 		{
 			ParticleManager::GetInstance()->CreateCubeParticle(position,
 				{ 3,3,3 }, 10, { 1,0,0,1 });
 		}
 	}
-	//0‚É‚È‚Á‚½‚ç•æê‚Ö‚¢‚­
-	//‚¢‚Á‚½‚ñ‚¢‚ç‚È‚¢‚Ì‚ÅÁ‚· ¡Œã•Ê‚ÌŒ`‚ÅÄ—˜—p
+	//0ã«ãªã£ãŸã‚‰å¢“å ´ã¸ã„ã
+	//ã„ã£ãŸã‚“ã„ã‚‰ãªã„ã®ã§æ¶ˆã™ ä»Šå¾Œåˆ¥ã®å½¢ã§å†åˆ©ç”¨
 	if (hp.mCurrent <= 0)
 	{
 		//hp.mCurrent = MAX_HP;
@@ -355,7 +355,7 @@ void Player::DamageUpdate()
 		//StageChanger::Get()->ChangeLevel(*LevelLoader::Get()->GetData("stage_graveyard"));
 	}
 
-	//hpƒQ[ƒW‚ÌF‚ğ•Ï‚¦‚éˆ—
+	//hpã‚²ãƒ¼ã‚¸ã®è‰²ã‚’å¤‰ãˆã‚‹å‡¦ç†
 	int32_t changeIndex = 0;
 	
 	if (hp.DecreaseTrigger())
@@ -381,12 +381,12 @@ bool Player::IsMove()
 
 void Player::DamageEffect(int32_t damage)
 {
-	//–³“GŠÔ’†‚È‚çƒXƒLƒbƒv
+	//ç„¡æ•µæ™‚é–“ä¸­ãªã‚‰ã‚¹ã‚­ãƒƒãƒ—
 	if (mutekiTimer.GetRun())return;
 
-	//–³“GŠÔŠJn
+	//ç„¡æ•µæ™‚é–“é–‹å§‹
 	mutekiTimer.Start();
-	//ƒ_ƒ[ƒWó‚¯‚é
+	//ãƒ€ãƒ¡ãƒ¼ã‚¸å—ã‘ã‚‹
 	hp.mCurrent -= damage;
 }
 
@@ -407,7 +407,7 @@ bool Player::GetApparanceEnd()
 void Player::HPOverFlow(int32_t value)
 {
 	hp.mCurrent = value;
-	//HP‚ÌƒI[ƒo[ƒtƒ[ˆ—
+	//HPã®ã‚ªãƒ¼ãƒãƒ¼ãƒ•ãƒ­ãƒ¼å‡¦ç†
 	if (hp.mCurrent > MAX_HP)
 	{
 		MAX_HP = hp.mCurrent;
@@ -422,14 +422,14 @@ void Player::ChangeMode(const PlayerState& pState)
 
 void Player::Jump()
 {
-	//’l‚ğw’è
+	//å€¤ã‚’æŒ‡å®š
 	upJumpS = position.y;
 	upJumpE = position.y + jumpPower;
 
 	jumpManageTimer.Start();
 	jumpState = JumpState::Up;
 
-	//d—Í‚ğ–³Œø‰»
+	//é‡åŠ›ã‚’ç„¡åŠ¹åŒ–
 	gravity = 0;
 }
 

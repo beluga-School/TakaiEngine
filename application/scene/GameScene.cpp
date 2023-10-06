@@ -19,7 +19,7 @@ void GameScene::LoadResource()
 {
 	StageChanger::LoadResource();
 
-	//���[�h(�������ق�������)
+	//ロード(分けたほうがいい)
 	LevelLoader::Get()->Load("Scene/stage_stageselect", "stage_stageselect",0);
 	LevelLoader::Get()->Load("Scene/stage_castle_outside", "stage_castle_outside",-1);
 	LevelLoader::Get()->Load("Scene/stage_castle_inside", "stage_castle_inside", -1);
@@ -30,8 +30,8 @@ void GameScene::LoadResource()
 	LevelLoader::Get()->Load("Scene/clear1", "clear1", -1);
 	LevelLoader::Get()->Load("Scene/stage_desert", "stage_desert", -1);
 	
-	//�V�K�V�[����o�^���āA�o�^���Ă���V�[������I��Ŕ�ԕ����ɂ�����
-	//�}�b�v����n���h�����̈ꗗ���擾
+	//新規シーンを登録して、登録してあるシーンから選んで飛ぶ方式にしたい
+	//マップからハンドル名の一覧を取得
 	handles = Util::GetKeys(LevelLoader::Get()->GetDataMap());
 
 	player->LoadResource();
@@ -49,7 +49,7 @@ void GameScene::LoadResource()
 
 void GameScene::Initialize()
 {
-	//������
+	//初期化
 	mSkydome.Initialize();
 	mDebugCamera.Initialize();
 	pCamera->Initialize();
@@ -61,7 +61,7 @@ void GameScene::Initialize()
 
 	ParticleManager::GetInstance()->CreatePool();
 
-	//�����X�e�[�W������
+	//初期ステージを決定
 	output = "stage_stageselect";
 
 	StageChanger::Get()->Initialize(*LevelLoader::Get()->GetData(output));
@@ -80,15 +80,15 @@ void GameScene::Update()
 		EventManager::Get()->Start("startCamera");
 	}
 
-	//�X�e�[�^�X�̍X�V
+	//ステータスの更新
 	StatusManager::Update();
 
 	CollideManager::Get()->StatusUpdate();
 
 	static bool debugCam = false;
 
-	//�����[�h����ۂ̏�������
-	//�v���C���[�̈ʒu���C�̍��W��艺�ɂȂ����烊���[�h
+	//リロードする際の条件たち
+	//プレイヤーの位置が海の座標より下になったらリロード
 	if (player->position.y < StageChanger::Get()->seaObject->GetPosY())
 	{
 		StageChanger::Get()->Reload();
@@ -119,10 +119,10 @@ void GameScene::Update()
 		EnemyManager::Get()->mIsDrawEncountSphere = !EnemyManager::Get()->mIsDrawEncountSphere;
 	}
 	
-	//�n���h������łȂ����
+	//ハンドルが空でなければ
 	if (!handles.empty())
 	{
-		//�n���h���̈ꗗ���v���_�E���ŕ\��
+		//ハンドルの一覧をプルダウンで表示
 		std::vector<const char*> temp;
 		for (size_t i = 0; i < handles.size(); i++)
 		{
@@ -131,7 +131,7 @@ void GameScene::Update()
 		static int32_t select = 0;
 		ImGui::Combo("StageSelect", &select, &temp[0], (int32_t)handles.size());
 
-		//�؂�ւ��p�̖��O�ɕۑ�
+		//切り替え用の名前に保存
 		output = handles[select];
 	}
 
@@ -164,8 +164,8 @@ void GameScene::Update()
 
 	EventManager::Get()->Update();
 
-	//�J�����X�V
-	//�C�x���g���Ȃ�J�����ύX
+	//カメラ更新
+	//イベント中ならカメラ変更
 	if (EventManager::Get()->GetNowEvent() != nullptr && 
 		EventManager::Get()->GetNowEvent()->get()->isUseCamera)
 	{
@@ -175,7 +175,7 @@ void GameScene::Update()
 	{
 		mDebugCamera.Update();
 	}
-	//����ȊO�̓v���C���[�ɒǏ]
+	//それ以外はプレイヤーに追従
 	else
 	{
 		pCamera->Update();
@@ -183,14 +183,14 @@ void GameScene::Update()
 
 	EnemyManager::Get()->Update();
 
-	//�R���W������t�����I�u�W�F�N�g���O�ɌĂ΂��ƕ|��
+	//コリジョンを付けたオブジェクトより前に呼ばれると怖い
 	CollideManager::Get()->CollideUpdate();
 
 	pCamera->BackTransparent();
 
 	ParticleManager::GetInstance()->Update();
 
-	//UI�X�V
+	//UI更新
 	GameUIManager::Get()->Update();
 }
 
@@ -199,7 +199,7 @@ void GameScene::Draw()
 	BasicObjectPreDraw(PipelineManager::GetPipeLine("Skydome"));
 	mSkydome.Draw();
 	
-	//�n�ʗp�V�F�[�_�[�𒆂ŌĂ�ł�
+	//地面用シェーダーを中で呼んでる
 	StageChanger::Get()->Draw();
 
 	BasicObjectPreDraw(PipelineManager::GetPipeLine("Toon"));
@@ -218,7 +218,7 @@ void GameScene::Draw()
 
 	SpriteCommonBeginDraw();
 
-	//UI�`��
+	//UI描画
 	player->DrawUI();
 
 	GameUIManager::Get()->Draw();

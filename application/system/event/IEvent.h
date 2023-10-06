@@ -3,7 +3,7 @@
 #include "EventCamera.h"
 #include <list>
 
-//ƒCƒxƒ“ƒg‚ÌƒCƒ“ƒ^[ƒtƒF[ƒX
+//ã‚¤ãƒ™ãƒ³ãƒˆã®ã‚¤ãƒ³ã‚¿ãƒ¼ãƒ•ã‚§ãƒ¼ã‚¹
 class IEvent
 {
 public:
@@ -11,17 +11,17 @@ public:
 	virtual void Update() = 0;
 	virtual void Draw() = 0;
 
-	//I—¹ğŒ
+	//çµ‚äº†æ¡ä»¶
 	virtual bool End() = 0;
 
-	//ÀsÏ‚İ‚È‚ç—§‚Â
+	//å®Ÿè¡Œæ¸ˆã¿ãªã‚‰ç«‹ã¤
 	bool isExecuted = false;
 
 	std::string eventName;
 
-	//ƒJƒƒ‰‚ğg—p‚·‚é‚©
+	//ã‚«ãƒ¡ãƒ©ã‚’ä½¿ç”¨ã™ã‚‹ã‹
 	bool isUseCamera = false;
 
-	//ƒvƒŒƒCƒ„[‚ğ“®‚¯‚È‚­‚·‚é‚©
+	//ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã‚’å‹•ã‘ãªãã™ã‚‹ã‹
 
 };

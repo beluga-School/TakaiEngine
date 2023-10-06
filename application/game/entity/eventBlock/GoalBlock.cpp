@@ -8,7 +8,7 @@ void GoalBlock::Initialize()
 
 	position = { -1,10,0 };
 
-	//’ÊíƒIƒuƒWƒFƒNƒg‚Æ“¯‚¶ƒAƒEƒgƒ‰ƒCƒ“‚ð•t‚¯‚é
+	//é€šå¸¸ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã¨åŒã˜ã‚¢ã‚¦ãƒˆãƒ©ã‚¤ãƒ³ã‚’ä»˜ã‘ã‚‹
 	SetOutLineState({ 1,0,0,1.0f }, 0.05f);
 }
 

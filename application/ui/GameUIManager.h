@@ -2,7 +2,7 @@
 #include <StarUI.h>
 #include <StageTitleUI.h>
 
-//ゲーム画面上に出てくる2DUIを管理するマネージャー
+//繧ｲ繝ｼ繝逕ｻ髱｢荳翫↓蜃ｺ縺ｦ縺上ｋ2DUI繧堤ｮ｡逅�縺吶ｋ繝槭ロ繝ｼ繧ｸ繝｣繝ｼ
 class GameUIManager
 {
 public:

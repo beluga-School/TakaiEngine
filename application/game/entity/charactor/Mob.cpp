@@ -3,7 +3,7 @@
 
 void Mob::CollsionUpdate()
 {
-	//“–‚½‚è”»’è‚ÌŠÛ‚ß
+	//å½“ãŸã‚Šåˆ¤å®šã®ä¸¸ã‚
 	CalcNearestHitLists();
 
 	if (moveBlockHit)
@@ -11,14 +11,14 @@ void Mob::CollsionUpdate()
 		position += moveBlockPosition;
 	}
 	
-	//–{‰ÁZ
-	//“®‚¯‚È‚¢ƒtƒ‰ƒO—§‚Á‚½‚ç‰ÁZ‚µ‚È‚¢
+	//æœ¬åŠ ç®—
+	//å‹•ã‘ãªã„ãƒ•ãƒ©ã‚°ç«‹ã£ãŸã‚‰åŠ ç®—ã—ãªã„
 	if (mNoMove == false)
 	{
 		position += moveValue;
 	}
 
-	//¡ŒãX‚à“ü‚é—\’è
+	//ä»Šå¾ŒXã‚‚å…¥ã‚‹äºˆå®š
 	UpdateX();
 
 	UpdateY();
@@ -35,22 +35,22 @@ void Mob::UpdateY()
 
 void Mob::UpdateX()
 {
-	//‰E
+	//å³
 	if (position.x <= hitLeftMin)
 	{
 		position.x = hitLeftMin;
 	}
-	//¶
+	//å·¦
 	if (position.x >= hitRightMin)
 	{
 		position.x = hitRightMin;
 	}
-	//³–Ê
+	//æ­£é¢
 	if (position.z >= hitCenterMin)
 	{
 		position.z = hitCenterMin;
 	}
-	//³–Ê
+	//æ­£é¢
 	if (position.z <= hitBackMin)
 	{
 		position.z = hitBackMin;
@@ -59,10 +59,10 @@ void Mob::UpdateX()
 
 void Mob::CalcNearestHitLists()
 {
-	//ƒRƒŠƒWƒ‡ƒ“‚ğs‚í‚È‚¢ƒtƒ‰ƒO‚ª—§‚Á‚Ä‚¢‚é‚È‚çƒXƒLƒbƒv
+	//ã‚³ãƒªã‚¸ãƒ§ãƒ³ã‚’è¡Œã‚ãªã„ãƒ•ãƒ©ã‚°ãŒç«‹ã£ã¦ã„ã‚‹ãªã‚‰ã‚¹ã‚­ãƒƒãƒ—
 	if (mNoCollision)return;
 
-	//‰º•ûŒü‚Ì”»’è
+	//ä¸‹æ–¹å‘ã®åˆ¤å®š
 	float preDownY = -114514.f;
 	float maxDownY = 0;
 
@@ -71,20 +71,20 @@ void Mob::CalcNearestHitLists()
 	for (auto& hit : hitListDown)
 	{
 		maxDownY = hit.position.y;
-		//‰Šú’l‚Å‚È‚­A‘O‚Ì’l‚æ‚è‚‚¢ˆÊ’u‚É‚ ‚é‚È‚ç
+		//åˆæœŸå€¤ã§ãªãã€å‰ã®å€¤ã‚ˆã‚Šé«˜ã„ä½ç½®ã«ã‚ã‚‹ãªã‚‰
 		if (maxDownY >= preDownY)
 		{
-			//ˆê”Ô‚‚¢À•W‚ğZo
-			//­‚µ‚¾‚¯•‚‚©‚¹‚ÄAƒuƒƒbƒN‚ÌØ‚ê–Ú‚Éˆø‚Á‚©‚©‚ç‚È‚¢‚æ‚¤‚É
+			//ä¸€ç•ªé«˜ã„åº§æ¨™ã‚’ç®—å‡º
+			//å°‘ã—ã ã‘æµ®ã‹ã›ã¦ã€ãƒ–ãƒ­ãƒƒã‚¯ã®åˆ‡ã‚Œç›®ã«å¼•ã£ã‹ã‹ã‚‰ãªã„ã‚ˆã†ã«
 			feet = hit.position.y + hit.scale.y / 2;
-			//Q,‚±‚±‚ÌƒXƒP[ƒ‹/2‚¢‚ç‚È‚­‚Ë
-			//A,‚±‚±‚ÌƒXƒP[ƒ‹/2‚ÍA”»’è•Ç‚Ì‘¾‚³‚İ‚½‚¢‚È‚à‚Ì‚È‚Ì‚ÅAŒÅ’è‚Ì‘¾‚³‚ğ‚½‚¹‚ê‚Î‚¢‚¢‚Æv‚¢‚Ü‚·
+			//Q,ã“ã“ã®ã‚¹ã‚±ãƒ¼ãƒ«/2ã„ã‚‰ãªãã­
+			//A,ã“ã“ã®ã‚¹ã‚±ãƒ¼ãƒ«/2ã¯ã€åˆ¤å®šå£ã®å¤ªã•ã¿ãŸã„ãªã‚‚ã®ãªã®ã§ã€å›ºå®šã®å¤ªã•ã‚’æŒãŸã›ã‚Œã°ã„ã„ã¨æ€ã„ã¾ã™
 			hitFeetMax = feet + scale.y / 2 + 0.01f;
 		}
 		preDownY = hit.position.y;
 	}
 
-	//ã•ûŒü‚Ì”»’è
+	//ä¸Šæ–¹å‘ã®åˆ¤å®š
 	float preUpY = 114514.f;
 	float maxUpY = 0;
 
@@ -100,9 +100,9 @@ void Mob::CalcNearestHitLists()
 		preUpY = hit.position.y;
 	}
 
-	//X²”»’è
+	//Xè»¸åˆ¤å®š
 	
-	//•ûŒü‚Ì”»’è
+	//æ–¹å‘ã®åˆ¤å®š
 	float preLeft = -114514.f;
 	float maxLeft = 0;
 
@@ -118,7 +118,7 @@ void Mob::CalcNearestHitLists()
 		preLeft = hit.position.x;
 	}
 
-	//•ûŒü‚Ì”»’è
+	//æ–¹å‘ã®åˆ¤å®š
 	float preRight = 114514.f;
 	float maxRight = 0;
 
@@ -134,7 +134,7 @@ void Mob::CalcNearestHitLists()
 		preRight = hit.position.x;
 	}
 
-	//Z²”»’è
+	//Zè»¸åˆ¤å®š
 	float preCenter = 114514.f;
 	float maxCenter = 0;
 
@@ -192,13 +192,13 @@ void Mob::JumpUpdate()
 		}
 		else
 		{
-			//’n–Ê‚É—§‚Á‚Ä‚¢‚éó‘Ô‚É‚·‚é
+			//åœ°é¢ã«ç«‹ã£ã¦ã„ã‚‹çŠ¶æ…‹ã«ã™ã‚‹
 			gravity = 0;
 		}
 
 		break;
 	case Mob::JumpState::Up:
-		//ƒC[ƒWƒ“ƒO‚Åã¸
+		//ã‚¤ãƒ¼ã‚¸ãƒ³ã‚°ã§ä¸Šæ˜‡
 		position.y = TEasing::OutQuad(upJumpS, upJumpE, jumpManageTimer.GetTimeRate());
 
 		if (hitCeilingMax <= position.y)
@@ -207,7 +207,7 @@ void Mob::JumpUpdate()
 			jumpManageTimer.Reset();
 		}
 
-		//ŠÔ‚ªI‚í‚Á‚½‚çƒXƒe[ƒg‚ğŸ‚Ìó‘Ô‚É‘JˆÚ
+		//æ™‚é–“ãŒçµ‚ã‚ã£ãŸã‚‰ã‚¹ãƒ†ãƒ¼ãƒˆã‚’æ¬¡ã®çŠ¶æ…‹ã«é·ç§»
 		if (jumpManageTimer.GetEnd())
 		{
 			jumpState = JumpState::Staying;
@@ -225,17 +225,17 @@ void Mob::JumpUpdate()
 
 		break;
 	case Mob::JumpState::Down:
-		//hitList‚Ì’†‚ÅAÅ‚à‚‚¢ˆÊ’u‚É‚ ‚éƒIƒuƒWƒFƒNƒg‚æ‚è©g‚ÌÀ•W‚ª‚‚©‚Á‚½‚ç
+		//hitListã®ä¸­ã§ã€æœ€ã‚‚é«˜ã„ä½ç½®ã«ã‚ã‚‹ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã‚ˆã‚Šè‡ªèº«ã®åº§æ¨™ãŒé«˜ã‹ã£ãŸã‚‰
 		if (position.y > hitFeetMax)
 		{
-			//d—Í—‰º‚³‚¹‚é
+			//é‡åŠ›è½ä¸‹ã•ã›ã‚‹
 			if (!noGravity)
 			{
 				gravity += gravityAdd;
 				position.y -= gravity * TimeManager::deltaTime;
 			}
 		}
-		//hitListƒIƒuƒWƒFƒNƒg‚Ì’†‚ÅAÅ‚à‚‚¢ˆÊ’u‚É‚ ‚éƒIƒuƒWƒFƒNƒg‚É©g‚ª“–‚½‚Á‚Ä‚¢‚é‚È‚ç
+		//hitListã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®ä¸­ã§ã€æœ€ã‚‚é«˜ã„ä½ç½®ã«ã‚ã‚‹ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã«è‡ªèº«ãŒå½“ãŸã£ã¦ã„ã‚‹ãªã‚‰
 		else
 		{
 			jumpState = JumpState::None;

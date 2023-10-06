@@ -35,7 +35,7 @@ struct MoveBlockPoint
 struct PlayerData
 {
 	LevelData::ObjectData data;
-	//“yŠÇ‚Å‚Ì”z’u‚ªŒ©‚Â‚©‚Á‚Ä‚¢‚é‚È‚ç‚»‚Á‚¿‚ğ—Dæ‚·‚é‚æ‚¤‚É‚·‚éƒtƒ‰ƒO
+	//åœŸç®¡ã§ã®é…ç½®ãŒè¦‹ã¤ã‹ã£ã¦ã„ã‚‹ãªã‚‰ãã£ã¡ã‚’å„ªå…ˆã™ã‚‹ã‚ˆã†ã«ã™ã‚‹ãƒ•ãƒ©ã‚°
 	bool dokanPriority = false;
 };
 
@@ -45,7 +45,7 @@ enum CameraNumber
 	Target = -2,
 };
 
-//ƒCƒxƒ“ƒgƒJƒƒ‰ƒf[ƒ^‚ğ‚Ü‚Æ‚ß‚Ä“Ç‚İ‚Ş—p‚Ìƒf[ƒ^”z—ñ
+//ã‚¤ãƒ™ãƒ³ãƒˆã‚«ãƒ¡ãƒ©ãƒ‡ãƒ¼ã‚¿ã‚’ã¾ã¨ã‚ã¦èª­ã¿è¾¼ã‚€ç”¨ã®ãƒ‡ãƒ¼ã‚¿é…åˆ—
 struct LoadCamData
 {
 	LoadCamData(int32_t eventnumber_, EventCamData camData_) 
@@ -80,7 +80,7 @@ public:
 
 	void ChangeLevel(LevelData& data);
 
-	//‰ŠúƒXƒe[ƒW‚ğŒˆ’è
+	//åˆæœŸã‚¹ãƒ†ãƒ¼ã‚¸ã‚’æ±ºå®š
 	void Initialize(LevelData& data);
 	void Update();
 	void Draw();
@@ -91,7 +91,7 @@ public:
 
 	std::string GetNowStageHandle();
 
-	//Œ»İ“Ç‚İ‚Ü‚ê‚Ä‚¢‚éƒXƒe[ƒW‚Ìƒf[ƒ^‚ğ•Ô‚·
+	//ç¾åœ¨èª­ã¿è¾¼ã¾ã‚Œã¦ã„ã‚‹ã‚¹ãƒ†ãƒ¼ã‚¸ã®ãƒ‡ãƒ¼ã‚¿ã‚’è¿”ã™
 	LevelData* GetNowStageData();
 
 	static StageChanger* Get()
@@ -100,65 +100,65 @@ public:
 		return &instance;
 	}
 
-	//ƒ‚ƒfƒ‹‚Ì”z—ñ
-	//Entity‚Ìƒ|ƒCƒ“ƒ^‚Å•Û‘¶‚µ‚½•û‚ª•Ö—˜‚Ég‚¦‚é‚©‚à‚µ‚ê‚È‚¢
+	//ãƒ¢ãƒ‡ãƒ«ã®é…åˆ—
+	//Entityã®ãƒã‚¤ãƒ³ã‚¿ã§ä¿å­˜ã—ãŸæ–¹ãŒä¾¿åˆ©ã«ä½¿ãˆã‚‹ã‹ã‚‚ã—ã‚Œãªã„
 	std::list<Entity> mEntitys;
 
-	//ƒCƒxƒ“ƒgƒIƒuƒWƒFƒNƒg”z—ñ
+	//ã‚¤ãƒ™ãƒ³ãƒˆã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆé…åˆ—
 	std::list<std::unique_ptr<EventBlock>> mEventObjects;
 
-	//ƒS[ƒ‹ƒIƒuƒWƒFƒNƒg”z—ñ
+	//ã‚´ãƒ¼ãƒ«ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆé…åˆ—
 	std::list<std::unique_ptr<Goal>> mGoals;
 
-	//‘å–C‚Ì§Œä“_‚ğˆê“I‚É•Û‘¶‚·‚é—p”z—ñ
+	//å¤§ç ²ã®åˆ¶å¾¡ç‚¹ã‚’ä¸€æ™‚çš„ã«ä¿å­˜ã™ã‚‹ç”¨é…åˆ—
 	std::vector<CannonPoint> mCannonPoints;
 
-	//ˆÚ“®°‚ÌÅI’n“_‚ğˆê“I‚É•Û‘¶‚·‚é”z—ñ
+	//ç§»å‹•åºŠã®æœ€çµ‚åœ°ç‚¹ã‚’ä¸€æ™‚çš„ã«ä¿å­˜ã™ã‚‹é…åˆ—
 	std::vector<MoveBlockPoint> mMoveBlockEndPoints;
 
-	//ƒXƒ^[‚ğˆê“I‚É•Û‘¶‚·‚é•Ï”
+	//ã‚¹ã‚¿ãƒ¼ã‚’ä¸€æ™‚çš„ã«ä¿å­˜ã™ã‚‹å¤‰æ•°
 	std::vector<Star*> mTempStarSaves;
 
-	//ŠCƒIƒuƒWƒFƒNƒg‚ğ”z’u(‚±‚±‚æ‚è‰º‚ÌÀ•W‚É—‚¿‚½‚çMISS”»’è)
+	//æµ·ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã‚’é…ç½®(ã“ã“ã‚ˆã‚Šä¸‹ã®åº§æ¨™ã«è½ã¡ãŸã‚‰MISSåˆ¤å®š)
 	std::unique_ptr<Sea> seaObject;
 
-	//ƒRƒ‰ƒCƒ_[‚ğ•`‰æ‚·‚é‚©
+	//ã‚³ãƒ©ã‚¤ãƒ€ãƒ¼ã‚’æç”»ã™ã‚‹ã‹
 	bool mShowCollider = false;
 
-	//ƒ‚ƒfƒ‹‚ğ•`‰æ‚·‚é‚©(ƒRƒ‰ƒCƒ_[•`‰æ‚É×–‚‚É‚È‚é‚Ì‚Å)
+	//ãƒ¢ãƒ‡ãƒ«ã‚’æç”»ã™ã‚‹ã‹(ã‚³ãƒ©ã‚¤ãƒ€ãƒ¼æç”»æ™‚ã«é‚ªé­”ã«ãªã‚‹ã®ã§)
 	bool mShowModel = true;
 
 	GoalSystem goalSystem;
 
 	DokanInfo saveNextDokanInfo;
 
-	//æ“¾ó‹µ‚ğ‰Šú‰»‚·‚é
+	//å–å¾—çŠ¶æ³ã‚’åˆæœŸåŒ–ã™ã‚‹
 	void ResetRevise(int32_t stageNumber, int32_t starID,int32_t starnum);
-	//æ“¾ó‹µ‚ğæ“¾ó‘Ô‚É‚·‚é
+	//å–å¾—çŠ¶æ³ã‚’å–å¾—çŠ¶æ…‹ã«ã™ã‚‹
 	void CorrectedRevise(int32_t stageNumber, int32_t starID,int32_t starnum);
-	//æ“¾ó‘Ô‚ğ“Ç‚İæ‚Á‚ÄAbool‚Å•Ô‚·
+	//å–å¾—çŠ¶æ…‹ã‚’èª­ã¿å–ã£ã¦ã€boolã§è¿”ã™
 	bool LoadStarCorrect(int32_t stageNumber, int32_t starID);
 
-	//’Êí‚ÌƒIƒuƒWƒFƒNƒg”z’u
+	//é€šå¸¸ã®ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆé…ç½®
 	void NormalObjectSet(const LevelData::ObjectData& data);
 
 private:
 	StageChanger(){};
 	~StageChanger(){};
 
-	//ƒXƒe[ƒWƒŠƒ[ƒh‚ÌÛ‚É‰Šú‰»‚·‚é‚â‚Â‚ç
+	//ã‚¹ãƒ†ãƒ¼ã‚¸ãƒªãƒ­ãƒ¼ãƒ‰ã®éš›ã«åˆæœŸåŒ–ã™ã‚‹ã‚„ã¤ã‚‰
 	void Reset();
 
-	//“–‚½‚è”»’è”z’u
+	//å½“ãŸã‚Šåˆ¤å®šé…ç½®
 	void CollisionSet(const LevelData::ObjectData& data);
 
-	//ƒCƒxƒ“ƒgƒIƒuƒWƒFƒNƒg—p“–‚½‚è”»’è”z’u(¡ŒãmEntity‚ÅˆêŠ‡ŠÇ—‚µ‚½‚¢)
+	//ã‚¤ãƒ™ãƒ³ãƒˆã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆç”¨å½“ãŸã‚Šåˆ¤å®šé…ç½®(ä»Šå¾ŒmEntityã§ä¸€æ‹¬ç®¡ç†ã—ãŸã„)
 	void CollisionSetEvent(const LevelData::ObjectData& data);
 
-	//ƒCƒxƒ“ƒgƒIƒuƒWƒFƒNƒg(ƒuƒƒbƒN’u‚«’¼‚µ)
+	//ã‚¤ãƒ™ãƒ³ãƒˆã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ(ãƒ–ãƒ­ãƒƒã‚¯ç½®ãç›´ã—)
 	void EvenyObjectSet(const LevelData::ObjectData& data);
 
-	//ƒXƒe[ƒWØ‚è‘Ö‚¦‚ÌXV
+	//ã‚¹ãƒ†ãƒ¼ã‚¸åˆ‡ã‚Šæ›¿ãˆã®æ›´æ–°
 	void ChangeUpdate();
 
 	void SetPlayer(const LevelData::ObjectData& data);
@@ -188,25 +188,25 @@ private:
 
 		if (Util::CheckString(data.eventtrigerName, eventname))
 		{
-			//”š‚ğ•ª—£
+			//æ•°å­—ã‚’åˆ†é›¢
 			int32_t number = Util::GetNumber(data.eventtrigerName, "_");
-			//ƒCƒxƒ“ƒg–¼‚ğ•ª—£
+			//ã‚¤ãƒ™ãƒ³ãƒˆåã‚’åˆ†é›¢
 			std::string eventName = Util::GetString(data.eventtrigerName, eventname);
 
 			EventManager::Get()->Register<TEventCamera>(eventName);
 
 			EventNameUniquePush(eventName);
 
-			//ƒ^[ƒQƒbƒg‚Å‚ ‚é‚È‚ç
+			//ã‚¿ãƒ¼ã‚²ãƒƒãƒˆã§ã‚ã‚‹ãªã‚‰
 			if (Util::CheckString(data.eventtrigerName, "target"))
 			{
-				//ƒ^[ƒQƒbƒg‚ğ¦‚·”Ô†‚ğ‘}“ü
+				//ã‚¿ãƒ¼ã‚²ãƒƒãƒˆã‚’ç¤ºã™ç•ªå·ã‚’æŒ¿å…¥
 				loadTargetDatas.emplace_back(eventName, camdata.pos);
-				//c‚è‚ğ”ò‚Î‚·
+				//æ®‹ã‚Šã‚’é£›ã°ã™
 				return;
 			}
 
-			//ƒCƒxƒ“ƒg–¼A”Ô†AƒJƒƒ‰ˆÊ’u‚ğ•Û‘¶
+			//ã‚¤ãƒ™ãƒ³ãƒˆåã€ç•ªå·ã€ã‚«ãƒ¡ãƒ©ä½ç½®ã‚’ä¿å­˜
 			loadCamDatas[eventName].emplace_back(number, camdata);
 		}
 	}

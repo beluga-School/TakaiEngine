@@ -42,22 +42,22 @@ void Gauge::Update()
 	mBackTimer.Update();
 	mDelayTimer.Update();
 
-	//ƒQ[ƒW‚ª•Ï‰»‚µ‚½
+	//ã‚²ãƒ¼ã‚¸ãŒå¤‰åŒ–ã—ãŸæ™‚
 	if (mGaugeNum.DecreaseTrigger())
 	{
-		//ƒ^ƒCƒ}[‚ğŠJn
+		//ã‚¿ã‚¤ãƒãƒ¼ã‚’é–‹å§‹
 		mBackTimer.Reset();
 		mDelayTimer.Reset();
 		mFlontTimer.Start();
 	}
 	if (mGaugeNum.IncreaseTrigger())
 	{
-		//ƒ^ƒCƒ}[‚ğŠJn
+		//ã‚¿ã‚¤ãƒãƒ¼ã‚’é–‹å§‹
 		mBackTimer.Reset();
 		mDelayTimer.Reset();
 		mFlontTimer.Start();
 	}
-	//“s‡‚¢‚¢Š´‚¶‚Éƒ^ƒCƒ}[‚ğ‘€ì
+	//éƒ½åˆã„ã„æ„Ÿã˜ã«ã‚¿ã‚¤ãƒãƒ¼ã‚’æ“ä½œ
 	if (mFlontTimer.GetEnd())
 	{
 		if(mDelayTimer.GetStarted()==false)mDelayTimer.Start();
@@ -67,10 +67,10 @@ void Gauge::Update()
 		if(mBackTimer.GetStarted()==false)mBackTimer.Start();
 	}
 
-	//ƒQ[ƒW‚ğ“®‚©‚·
+	//ã‚²ãƒ¼ã‚¸ã‚’å‹•ã‹ã™
 	GaugeMove();
 
-	//XV
+	//æ›´æ–°
 	mBackGauge.Update();
 	mFlontGauge.Update();
 	mInner.Update();
@@ -121,7 +121,7 @@ void Gauge::SetGaugeSize(int32_t separetNum, bool maxChange)
 void Gauge::Addition(int32_t value)
 {
 	mGaugeNum.mCurrent += value;
-	//‰ºŒÀ‚ÆãŒÀ‚ğ’´‚¦‚È‚¢‚æ‚¤‚É
+	//ä¸‹é™ã¨ä¸Šé™ã‚’è¶…ãˆãªã„ã‚ˆã†ã«
 	mGaugeNum.mCurrent = Util::Clamp(mGaugeNum.mCurrent, 0, mInitGaugeMax);
 
 	mFlontStart = mFlontGauge.mSize.x;
@@ -139,22 +139,22 @@ void Gauge::Addition(int32_t value)
 
 void Gauge::GaugeMove()
 {
-	//è‘O‚ÌƒQ[ƒW‚ÌƒC[ƒWƒ“ƒO
+	//æ‰‹å‰ã®ã‚²ãƒ¼ã‚¸ã®ã‚¤ãƒ¼ã‚¸ãƒ³ã‚°
 	float gaugeX = 0;
 
 	gaugeX = TEasing::lerp(mFlontStart, mFlontEnd, mFlontTimer.GetTimeRate());
 
 	mFlontGauge.SetSize({ gaugeX,mGaugeSizeY });
 
-	//Œã‚ë‚ÌƒQ[ƒW‚ÌƒC[ƒWƒ“ƒO
+	//å¾Œã‚ã®ã‚²ãƒ¼ã‚¸ã®ã‚¤ãƒ¼ã‚¸ãƒ³ã‚°
 	gaugeX = TEasing::lerp(mBackStart, mBackEnd, mBackTimer.GetTimeRate());
 
 	mBackGauge.SetSize({ gaugeX,mGaugeSizeY });
 
-	//•\‚ÌƒQ[ƒW‚ª— ‚ÌƒQ[ƒW‚æ‚è‘å‚«‚­‚È‚Á‚½‚ç
+	//è¡¨ã®ã‚²ãƒ¼ã‚¸ãŒè£ã®ã‚²ãƒ¼ã‚¸ã‚ˆã‚Šå¤§ãããªã£ãŸã‚‰
 	if (mBackGauge.mSize.x < mFlontGauge.mSize.x)
 	{
-		//— ‚ÌƒQ[ƒW‚Ì‘å‚«‚³‚ğ•\ƒQ[ƒW‚É‡‚í‚¹‚é
+		//è£ã®ã‚²ãƒ¼ã‚¸ã®å¤§ãã•ã‚’è¡¨ã‚²ãƒ¼ã‚¸ã«åˆã‚ã›ã‚‹
 		mBackGauge.mSize.x = mFlontGauge.mSize.x;
 	}
 }

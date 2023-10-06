@@ -24,7 +24,7 @@ public:
 	~EventCamera() {};
 
 private:
-	//ƒfƒoƒbƒO—pƒJƒƒ‰ˆÊ’u•\¦ƒIƒuƒWƒFƒNƒg
+	//ãƒ‡ãƒãƒƒã‚°ç”¨ã‚«ãƒ¡ãƒ©ä½ç½®è¡¨ç¤ºã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
 	Obj3d hontai;
 	Obj3d target;
 

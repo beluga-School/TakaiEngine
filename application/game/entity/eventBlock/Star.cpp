@@ -23,7 +23,7 @@ void Star::Update()
 	switch (starState)
 	{
 	case Star::StarState::None:
-		//1•bŠÔ‚É0.25‰ñ“]‚µ‚Ä‚é
+		//1ç§’é–“ã«0.25å›è»¢ã—ã¦ã‚‹
 		rotaSpeed = 0.25f;
 		if (particleTimer.GetRun() == false)
 		{
@@ -36,7 +36,7 @@ void Star::Update()
 
 		break;
 	case Star::StarState::jumpUp:
-		//1•bŠÔ‚É2‰ñ“]‚·‚é
+		//1ç§’é–“ã«2å›è»¢ã™ã‚‹
 		rotaSpeed = 2;
 
 		jumpUpPos = saveStartPos;
@@ -61,7 +61,7 @@ void Star::Update()
 		break;
 	case Star::StarState::Inhole:
 
-		//1•bŠÔ‚É2‰ñ“]‚·‚é
+		//1ç§’é–“ã«2å›è»¢ã™ã‚‹
 		rotaSpeed = 2;
 
 		scale = TEasing::OutQuad(jumpUpScale, { 0,0,0 }, inholeTimer.GetTimeRate());
@@ -97,7 +97,7 @@ void Star::Draw()
 
 void Star::HitEffect()
 {
-	//2‰ñ–Ú‚Í“ü‚ç‚È‚¢‚æ‚¤‚É
+	//2å›ç›®ã¯å…¥ã‚‰ãªã„ã‚ˆã†ã«
 	if (hit)return;
 
 	saveScale = scale;

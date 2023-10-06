@@ -7,7 +7,7 @@
 class Gauge
 {
 public:
-	//ˆÊ’u‚Æ•ªŠ„”‚ğİ’è
+	//ä½ç½®ã¨åˆ†å‰²æ•°ã‚’è¨­å®š
 	Gauge(const Vector2& pos, const int32_t& separetnum);
 
 	void Initialize();
@@ -15,27 +15,27 @@ public:
 	void Draw();
 
 	/// <summary>
-	/// ƒQ[ƒW‚ÌƒTƒCƒY‚ğ•Ï‚¦‚éŠÖ”
+	/// ã‚²ãƒ¼ã‚¸ã®ã‚µã‚¤ã‚ºã‚’å¤‰ãˆã‚‹é–¢æ•°
 	/// </summary>
-	/// <param name="currentNum">Œ»İ’n‚ğ‘‚«Š·‚¦‚é</param>
-	/// <param name="maxChange">true‚É‚·‚é‚ÆÅ‘å’l‚à‘‚«Š·‚¦‚é</param>
+	/// <param name="currentNum">ç¾åœ¨åœ°ã‚’æ›¸ãæ›ãˆã‚‹</param>
+	/// <param name="maxChange">trueã«ã™ã‚‹ã¨æœ€å¤§å€¤ã‚‚æ›¸ãæ›ãˆã‚‹</param>
 	void SetGaugeSize(int32_t currentNum,bool maxChange = false);
 
 	/// <summary>
-	/// ƒQ[ƒW‚Ì’l‚ğˆø”•ª‘«‚·
+	/// ã‚²ãƒ¼ã‚¸ã®å€¤ã‚’å¼•æ•°åˆ†è¶³ã™
 	/// </summary>
-	/// <param name="value">’l</param>
+	/// <param name="value">å€¤</param>
 	void Addition(int32_t value);
 
 	bool mIsVisilve = true;
 
-	//•\‚ÌF
+	//è¡¨ã®è‰²
 	Color mFlontColor = {0,1,0,1};
-	//— ‚ÌF(ƒQ[ƒW‚ªí‚ê‚½‚ÌF)
+	//è£ã®è‰²(ã‚²ãƒ¼ã‚¸ãŒå‰Šã‚ŒãŸæ™‚ã®è‰²)
 	Color mBackColor = {1,0,0,1};
-	//ƒCƒ“ƒi[‚ÌF(ÔƒQ[ƒW‚Ì‚³‚ç‚ÉŒã‚ë‚ÌF)
+	//ã‚¤ãƒ³ãƒŠãƒ¼ã®è‰²(èµ¤ã‚²ãƒ¼ã‚¸ã®ã•ã‚‰ã«å¾Œã‚ã®è‰²)
 	Color mInnerColor = { 0.1f,0.1f,0.1f,1};
-	//ƒtƒŒ[ƒ€‚ÌF
+	//ãƒ•ãƒ¬ãƒ¼ãƒ ã®è‰²
 	Color mFrameColor = {0,0,0,1};
 
 private:
@@ -47,33 +47,33 @@ private:
 	Sprite mInner;
 	Sprite mFrameGauge;
 
-	//Œ»İ‚ÌƒQ[ƒW”
+	//ç¾åœ¨ã®ã‚²ãƒ¼ã‚¸æ•°
 	Status mGaugeNum = 0;
-	//ƒQ[ƒW‚Ì•ªŠ„”‚ÌÅ‘å’l
+	//ã‚²ãƒ¼ã‚¸ã®åˆ†å‰²æ•°ã®æœ€å¤§å€¤
 	int32_t mInitGaugeMax = 0;
 
-	//’l1‚ ‚½‚è‚ÌƒQ[ƒW‚Ì‘å‚«‚³
+	//å€¤1ã‚ãŸã‚Šã®ã‚²ãƒ¼ã‚¸ã®å¤§ãã•
 	float mGaugeSizeX = 0;
 
-	//ƒQ[ƒW‚ÌÅ‘åƒTƒCƒY
+	//ã‚²ãƒ¼ã‚¸ã®æœ€å¤§ã‚µã‚¤ã‚º
 	const float GAUGE_MAX_SIZEX = 400.0f;
 
-	//ƒQ[ƒW‚ÌcƒTƒCƒY
+	//ã‚²ãƒ¼ã‚¸ã®ç¸¦ã‚µã‚¤ã‚º
 	float mGaugeSizeY = 25.0f;
 
-	//ƒtƒŒ[ƒ€‚Ì‘å‚«‚³‚Ì”{—¦
+	//ãƒ•ãƒ¬ãƒ¼ãƒ ã®å¤§ãã•ã®å€ç‡
 	Vector2 mFrameSize = { 1.05f,1.5f };
 
-	//í‚ê‚é‚Æ‚«‚Ìƒ^ƒCƒ}[
+	//å‰Šã‚Œã‚‹ã¨ãã®ã‚¿ã‚¤ãƒãƒ¼
 	TEasing::easeTimer mFlontTimer = 0.1f;
-	//Œ¸‚é‚Éˆêuæ‚Á‚¿‚å‚ªí‚ê‚é‚Ì‚ª‹C‚É‚È‚é‚Ì‚ÅA—P—\ŠÔ‚ğ•t‚¯‚é
+	//æ¸›ã‚‹æ™‚ã«ä¸€ç¬å…ˆã£ã¡ã‚‡ãŒå‰Šã‚Œã‚‹ã®ãŒæ°—ã«ãªã‚‹ã®ã§ã€çŒ¶äºˆæ™‚é–“ã‚’ä»˜ã‘ã‚‹
 	TEasing::easeTimer mDelayTimer = 0.5f;
 
 	TEasing::easeTimer mBackTimer = 0.75f;
 
 	void GaugeMove();
 
-	//ƒC[ƒWƒ“ƒO—p‚Ì‚¢‚ë‚¢‚ë
+	//ã‚¤ãƒ¼ã‚¸ãƒ³ã‚°ç”¨ã®ã„ã‚ã„ã‚
 	float mFlontStart = 0;
 	float mFlontEnd = 0;
 	float mBackStart = 0;

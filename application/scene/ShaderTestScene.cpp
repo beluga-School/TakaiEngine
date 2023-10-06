@@ -53,10 +53,10 @@ void ShaderTestScene::Update()
 
 	gui.Begin({ 100,100 }, { 300,200 });
 
-	//ƒnƒ“ƒhƒ‹‚ª‹ó‚Å‚È‚¯‚ê‚Î
+	//ãƒãƒ³ãƒ‰ãƒ«ãŒç©ºã§ãªã‘ã‚Œã°
 	if (!handles.empty())
 	{
-		//ƒnƒ“ƒhƒ‹‚Ìˆê——‚ğƒvƒ‹ƒ_ƒEƒ“‚Å•\¦
+		//ãƒãƒ³ãƒ‰ãƒ«ã®ä¸€è¦§ã‚’ãƒ—ãƒ«ãƒ€ã‚¦ãƒ³ã§è¡¨ç¤º
 		std::vector<const char*> temp;
 		for (size_t i = 0; i < handles.size(); i++)
 		{
@@ -65,7 +65,7 @@ void ShaderTestScene::Update()
 		static int32_t select = 0;
 		ImGui::Combo("DrawMode", &select, &temp[0], (int32_t)handles.size());
 
-		//Ø‚è‘Ö‚¦—p‚Ì–¼‘O‚É•Û‘¶
+		//åˆ‡ã‚Šæ›¿ãˆç”¨ã®åå‰ã«ä¿å­˜
 		output = handles[select];
 	}
 
@@ -85,7 +85,7 @@ void ShaderTestScene::Update()
 		mode = DrawMode::Noise;
 	}
 
-	//ƒmƒCƒYƒGƒtƒFƒNƒgØ‚è‘Ö‚¦
+	//ãƒã‚¤ã‚ºã‚¨ãƒ•ã‚§ã‚¯ãƒˆåˆ‡ã‚Šæ›¿ãˆ
 	static bool hoge = false;
 	if (ImGui::Button("NoiseEffect"))
 	{

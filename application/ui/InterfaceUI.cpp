@@ -20,10 +20,10 @@ void InterfaceUI::Move(UIMove move_)
 	startPos = saveStartPos;
 	endPos = saveEndPos;
 
-	//ˆÊ’u‚ª‰Šú‚Å‚È‚¢‚È‚ç
+	//ä½ç½®ãŒåˆæœŸã§ãªã„ãªã‚‰
 	if (pos.x != -1000 && pos.y != -1000)
 	{
-		//n‚Ü‚éˆÊ’u‚ğ©g‚ÌˆÊ’u‚Éã‘‚«
+		//å§‹ã¾ã‚‹ä½ç½®ã‚’è‡ªèº«ã®ä½ç½®ã«ä¸Šæ›¸ã
 		switch (move)
 		{
 		case UIMove::START:
@@ -49,14 +49,14 @@ Vector2 InterfaceUI::GetPos()
 
 bool InterfaceUI::GetMoveEnd(UIMove move_)
 {
-	//‚à‚µŒ»İ‹““®‚ÆˆÙ‚È‚é•û‚ğŠm”F‚µ‚½‚¢‚Æ—ˆ‚½‚ç¸”s
+	//ã‚‚ã—ç¾åœ¨æŒ™å‹•ã¨ç•°ãªã‚‹æ–¹ã‚’ç¢ºèªã—ãŸã„ã¨æ¥ãŸã‚‰å¤±æ•—
 	if (move != move_)return false;
 	return moveTimer.GetEnd();
 }
 
 bool InterfaceUI::GetScaleEnd(UIMove scale_)
 {
-	//‚à‚µŒ»İ‹““®‚ÆˆÙ‚È‚é•û‚ğŠm”F‚µ‚½‚¢‚Æ—ˆ‚½‚ç¸”s
+	//ã‚‚ã—ç¾åœ¨æŒ™å‹•ã¨ç•°ãªã‚‹æ–¹ã‚’ç¢ºèªã—ãŸã„ã¨æ¥ãŸã‚‰å¤±æ•—
 	if (scaling != scale_)return false;
 	return scalingTimer.GetEnd();
 }

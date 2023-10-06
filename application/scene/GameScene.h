@@ -24,7 +24,7 @@ private:
 	Player *player = Player::Get();
 	PlayerCamera* pCamera = PlayerCamera::Get();
 
-	//ƒV[ƒ“Ø‚è‘Ö‚¦—p
+	//ã‚·ãƒ¼ãƒ³åˆ‡ã‚Šæ›¿ãˆç”¨
 	std::string output = "";
 	std::vector<std::string> handles;
 };

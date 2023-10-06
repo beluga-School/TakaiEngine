@@ -3,7 +3,7 @@
 #include <Sprite.h>
 #include <Texture.h>
 
-//テクスチャベタ貼りのUIを作れるクラス
+//繝�繧ｯ繧ｹ繝√Ε繝吶ち雋ｼ繧翫�ｮUI繧剃ｽ懊ｌ繧九け繝ｩ繧ｹ
 class UI : public InterfaceUI
 {
 public:

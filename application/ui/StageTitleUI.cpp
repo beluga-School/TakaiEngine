@@ -28,7 +28,7 @@ void StageTitleUI::LoadResource()
 void StageTitleUI::Initialize()
 {
 	stageHandles.clear();
-	//�X�e�[�W0�̓X�e�[�W�I���Ȃ̂ŋ�����Ă���
+	//ステージ0はステージ選択なので空を入れておく
 	stageHandles.push_back("stageTitle_1");
 	stageHandles.push_back("stageTitle_1");
 	stageHandles.push_back("stageTitle_2");

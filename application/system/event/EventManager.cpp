@@ -8,12 +8,12 @@
 
 bool EventManager::Start(const std::string& startEventName)
 {
-	//ƒCƒxƒ“ƒg‚ª“ü‚Á‚Ä‚¢‚ê‚Î¬Œ÷‚Å•Ô‚·
+	//ã‚¤ãƒ™ãƒ³ãƒˆãŒå…¥ã£ã¦ã„ã‚Œã°æˆåŠŸã§è¿”ã™
 	if (GetNowEvent() != nullptr)return true;
 
 	for (auto &Event : allEvents)
 	{
-		//ƒCƒxƒ“ƒg‚ª‚ ‚ê‚ÎÀs
+		//ã‚¤ãƒ™ãƒ³ãƒˆãŒã‚ã‚Œã°å®Ÿè¡Œ
 		if (Event->eventName == startEventName)
 		{
 			startTimer.Start();
@@ -23,17 +23,17 @@ bool EventManager::Start(const std::string& startEventName)
 			
 			bool result = EventCameraManager::Get()->SetEventCamera(Event->eventName);
 
-			//ƒCƒxƒ“ƒgƒJƒƒ‰‚ªŒ©‚Â‚©‚Á‚½‚ç
+			//ã‚¤ãƒ™ãƒ³ãƒˆã‚«ãƒ¡ãƒ©ãŒè¦‹ã¤ã‹ã£ãŸã‚‰
 			if (result)
 			{
-				//ƒJƒƒ‰g‚¤ƒtƒ‰ƒO‚ğ—§‚Ä‚é
+				//ã‚«ãƒ¡ãƒ©ä½¿ã†ãƒ•ãƒ©ã‚°ã‚’ç«‹ã¦ã‚‹
 				nowEvent->get()->isUseCamera = true;
 			}
 
 			return true;
 		}
 	}
-	//–³‚¯‚ê‚ÎÀs‚µ‚È‚¢
+	//ç„¡ã‘ã‚Œã°å®Ÿè¡Œã—ãªã„
 	return false;
 }
 
@@ -62,14 +62,14 @@ std::unique_ptr<IEvent>* EventManager::GetEvent(const std::string& eventName)
 {
 	for (auto& Event : allEvents)
 	{
-		//ƒCƒxƒ“ƒg‚ª‚ ‚ê‚Î•Ô‚·
+		//ã‚¤ãƒ™ãƒ³ãƒˆãŒã‚ã‚Œã°è¿”ã™
 		if (Event->eventName == eventName)
 		{
 			return &Event;
 		}
 	}
 
-	//Œ©‚Â‚©‚ç‚È‚©‚Á‚½‚ç‚Ê‚é‚Û
+	//è¦‹ã¤ã‹ã‚‰ãªã‹ã£ãŸã‚‰ã¬ã‚‹ã½
 	return nullptr;
 }
 
@@ -101,10 +101,10 @@ void EventManager::Update()
 		
 		break;
 	case EventManager::State::RunEvent:
-		//ƒCƒxƒ“ƒg”­¶
+		//ã‚¤ãƒ™ãƒ³ãƒˆç™ºç”Ÿ
 		nowEvent->get()->Update();
 
-		//ƒCƒxƒ“ƒgI—¹
+		//ã‚¤ãƒ™ãƒ³ãƒˆçµ‚äº†
 		if(nowEvent->get()->End())
 		{
 			End();
@@ -116,7 +116,7 @@ void EventManager::Update()
 		downpos.x = TEasing::InQuad(0, Util::WIN_WIDTH * -1.f, endTimer.GetTimeRate());
 		if (endTimer.GetEnd())
 		{
-			//‹­§I—¹‚Æ“¯‚¶Œø‰Ê‚ğŒÄ‚Ño‚·
+			//å¼·åˆ¶çµ‚äº†ã¨åŒã˜åŠ¹æœã‚’å‘¼ã³å‡ºã™
 			ForceEnd();
 		}
 		break;

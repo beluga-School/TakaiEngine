@@ -39,7 +39,7 @@ void GEnemy::Update()
 	case ActTable::Encount:
 		SetNoGravity(true);
 
-		//ƒWƒƒƒ“ƒv‚·‚é
+		//ã‚¸ãƒ£ãƒ³ãƒ—ã™ã‚‹
 		position.y = TEasing::OutQuad(encountJumpS, encountJumpE, encountJumpTimer.GetTimeRate());
 
 		if (encountJumpTimer.GetEnd())
@@ -57,19 +57,19 @@ void GEnemy::Update()
 		break;
 	case ActTable::Tracking:
 		
-		///---Œ©‚½–Úˆ—
-		//’Ç‚¢‚©‚¯‚é•ûŒü‚ÖŒü‚«‚ğ•Ï‚¦‚é
+		///---è¦‹ãŸç›®å‡¦ç†
+		//è¿½ã„ã‹ã‘ã‚‹æ–¹å‘ã¸å‘ãã‚’å¤‰ãˆã‚‹
 		pVec = Player::Get()->position - position;
 		pVec.normalize();
 		pVec.y = 0;
 
 		rotation.y = standardRotaVec.Radian(pVec);
 		if (pVec.z > 0) {
-			//–³—‚â‚èŒü‚«‚ğ”½‘Î‚É
+			//ç„¡ç†ã‚„ã‚Šå‘ãã‚’åå¯¾ã«
 			rotation.y *= -1;
 		}
 
-		//‰¡—h‚ê‚·‚é
+		//æ¨ªæºã‚Œã™ã‚‹
 		if (metronomeTimer.GetEnd())
 		{
 			metronomeTimer.ReverseStart();
@@ -80,14 +80,14 @@ void GEnemy::Update()
 		}
 		scale.y = TEasing::lerp(initScale.y - 0.2f, initScale.y + 0.2f, metronomeTimer.GetTimeRate());
 
-		///---ˆÚ“®ˆ—
-		//’iX‰Á‘¬‚µ‚½‚¢
+		///---ç§»å‹•å‡¦ç†
+		//æ®µã€…åŠ é€Ÿã—ãŸã„
 		mSpeed = TEasing::InQuad(0.0f, MAX_ACCELERATION, accelerationTimer.GetTimeRate());
 
 		position += pVec * mSpeed * TimeManager::deltaTime;
 
-		///---‘JˆÚˆ—
-		//UŒ‚”ÍˆÍ‚©‚çŠO‚ê‚½‚çI‚í‚è
+		///---é·ç§»å‡¦ç†
+		//æ”»æ’ƒç¯„å›²ã‹ã‚‰å¤–ã‚ŒãŸã‚‰çµ‚ã‚ã‚Š
 		if (!Collsions::SphereCollsion(Player::Get()->mEncountCol, sphereCol))
 		{
 			mActTable = ActTable::Staying;
@@ -109,22 +109,22 @@ void GEnemy::Update()
 		position.y = TEasing::InQuad(deadEasingS.y, deadEasingE.y, deadTimer.GetTimeRate());
 		position.z = TEasing::InQuad(deadEasingS.z, deadEasingE.z, deadTimer.GetTimeRate());
 
-		//y‚ğ0‚É
+		//yã‚’0ã«
 		rotation.x = 0;
 		rotation.y = 0;
 
-		//‰ñ“]‚ğ‰ÁZ
+		//å›è»¢ã‚’åŠ ç®—
 		rotation.z += deadRoring * TimeManager::deltaTime;
 
 		if (deadTimer.GetEnd())
 		{
 			isDead = true;
-			//ƒp[ƒeƒBƒNƒ‹o‚µ‚½‚¢
-			//ƒTƒCƒY‚ª‘å‚«‚­‚È‚é‚É‚Â‚ê‚Ä”­¶—Ê‚ª‘‚¦‚é
+			//ãƒ‘ãƒ¼ãƒ†ã‚£ã‚¯ãƒ«å‡ºã—ãŸã„
+			//ã‚µã‚¤ã‚ºãŒå¤§ãããªã‚‹ã«ã¤ã‚Œã¦ç™ºç”Ÿé‡ãŒå¢—ãˆã‚‹
 			int32_t partnum = static_cast<int32_t>(scale.x + scale.y + scale.z) / 3 * 3;
 			float partscale = (scale.x + scale.y + scale.z) / 9;
 			float partdistance = (scale.x + scale.y + scale.z) / 3 * 10;
-			//ˆê‰”­¶”§ŒÀ‚ğ•t‚¯‚é
+			//ä¸€å¿œç™ºç”Ÿæ•°åˆ¶é™ã‚’ä»˜ã‘ã‚‹
 			partnum = Util::Clamp(partnum, 3, 50);
 			for (int32_t i = 0; i < partnum; i++)
 			{
@@ -135,7 +135,7 @@ void GEnemy::Update()
 
 		break;
 	}
-	//‚¸‚ç‚µ‚½•ª‚ğ‰ÁZ‚·‚é
+	//ãšã‚‰ã—ãŸåˆ†ã‚’åŠ ç®—ã™ã‚‹
 	box.CreateCol(position + saveColCenter, box.scale);
 	box.ColDrawerUpdate(position + saveColCenter, box.scale);
 
@@ -153,24 +153,24 @@ void GEnemy::Draw()
 
 void GEnemy::HitEffect()
 {
-	//‚·‚Å‚É€–SÏ‚İ‚È‚çƒXƒLƒbƒv
+	//ã™ã§ã«æ­»äº¡æ¸ˆã¿ãªã‚‰ã‚¹ã‚­ãƒƒãƒ—
 	if (IsDead())return;
 	mActTable = ActTable::Dead;
 	
-	//€–S‚ÌƒvƒŒƒCƒ„[‚ªŒü‚¢‚Ä‚¢‚½•ûŒü‚ğ•Û‘¶
+	//æ­»äº¡æ™‚ã®ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ãŒå‘ã„ã¦ã„ãŸæ–¹å‘ã‚’ä¿å­˜
 	deadDirection = Player::Get()->matWorld.ExtractAxisZ();
 	
-	//Î‚ßã‚É‚Á”ò‚ñ‚Å‚¢‚­‚æ‚¤‚É
+	//æ–œã‚ä¸Šã«å¹ã£é£›ã‚“ã§ã„ãã‚ˆã†ã«
 	float rand = MathF::GetRand(6.0f, 6.5f);
 
 	deadDirection.y = MathF::PIf / rand;
 
 	deadEasingS = position;
 
-	//ƒXƒP[ƒ‹•ª‚æ‚è‰“‚­‚É‚Á”ò‚Ô‚æ‚¤‚É
+	//ã‚¹ã‚±ãƒ¼ãƒ«åˆ†ã‚ˆã‚Šé ãã«å¹ã£é£›ã¶ã‚ˆã†ã«
 	float scaledistance = (scale.x + scale.y + scale.z) / 3 * 0.5f;
 
-	//³–Ê‚ÉŒü‚©‚Á‚Ä‚Á”ò‚Î‚³‚ê‚é‚æ‚¤‚ÉI“_‚ğİ’è
+	//æ­£é¢ã«å‘ã‹ã£ã¦å¹ã£é£›ã°ã•ã‚Œã‚‹ã‚ˆã†ã«çµ‚ç‚¹ã‚’è¨­å®š
 	deadEasingE = position + deadDirection * 7.0f * scaledistance;
 
 	deadTimer.Start();
@@ -178,7 +178,7 @@ void GEnemy::HitEffect()
 
 void GEnemy::Encount()
 {
-	//ƒXƒe[ƒg‚ªNone‚È‚çƒGƒ“ƒJƒEƒ“ƒg‚ÉˆÈ~
+	//ã‚¹ãƒ†ãƒ¼ãƒˆãŒNoneãªã‚‰ã‚¨ãƒ³ã‚«ã‚¦ãƒ³ãƒˆã«ä»¥é™
 	if (mActTable != ActTable::None)return;
 	mActTable = ActTable::Encount;
 	encountJumpTimer.Start();

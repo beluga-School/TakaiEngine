@@ -15,7 +15,7 @@ public:
 	void Encount()override;
 
 private:
-	////‚±‚±‚àŒã‚ÅActTable‚É’u‚«Š·‚¦‚é
+	////ã“ã“ã‚‚å¾Œã§ActTableã«ç½®ãæ›ãˆã‚‹
 	//enum class BossState
 	//{
 	//	None,

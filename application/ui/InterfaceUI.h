@@ -12,14 +12,14 @@ class InterfaceUI
 {
 public:
 	/// <summary>
-	/// �ړ�����ʒu�̎n�_�ƏI�_���w��
+	/// 移動する位置の始点と終点を指定
 	/// </summary>
-	/// <param name="start">�n�_</param>
-	/// <param name="end">�I�_</param>
+	/// <param name="start">始点</param>
+	/// <param name="end">終点</param>
 	void InitPos(const Vector2& start, const Vector2& end);
 
 	/// <summary>
-	/// �g�k����傫���̍ő�ƍŏ����w��
+	/// 拡縮する大きさの最大と最小を指定
 	/// </summary>
 	/// <param name="start"></param>
 	/// <param name="end"></param>
@@ -29,27 +29,27 @@ public:
 	virtual void Draw() = 0;
 
 	/// <summary>
-	/// UI�𓮂����n�߂�
+	/// UIを動かし始める
 	/// </summary>
-	/// <param name="move">���苓��or�߂苓�����w��</param>
+	/// <param name="move">入り挙動or戻り挙動を指定</param>
 	void Move(UIMove move);
 
 	/// <summary>
-	/// UI���g�k����
+	/// UIを拡縮する
 	/// </summary>
-	/// <param name="move">�傫���Ȃ鋓��or�������Ȃ鋓�����w��</param>
+	/// <param name="move">大きくなる挙動or小さくなる挙動を指定</param>
 	void Scaling(UIMove move);
 
 	/// <summary>
-	/// �ʒu���擾
+	/// 位置を取得
 	/// </summary>
 	/// <returns></returns>
 	Vector2 GetPos();
 
 	/// <summary>
-	/// �I�����Ă��邩���擾
+	/// 終了しているかを取得
 	/// </summary>
-	/// <param name="move">�m�F���������̋������w��</param>
+	/// <param name="move">確認したい方の挙動を指定</param>
 	/// <returns></returns>
 	bool GetMoveEnd(UIMove move_);
 
@@ -57,8 +57,8 @@ public:
 
 protected:
 	/// <summary>
-	/// �C���^�[�t�F�[�X���Ŏw�肵�Ă��鏔�X�𓮂���
-	/// Update�̍Ō�ŌĂԂ̂�z��
+	/// インターフェース内で指定している諸々を動かす
+	/// Updateの最後で呼ぶのを想定
 	/// </summary>
 	void InterFaceUpdate();
 

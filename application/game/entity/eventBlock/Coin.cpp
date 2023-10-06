@@ -19,7 +19,7 @@ void Coin::Draw()
 
 void Coin::HitEffect()
 {
-	//2‰ñ–Ú‚Í“ü‚ç‚È‚¢‚æ‚¤‚É
+	//2å›ç›®ã¯å…¥ã‚‰ãªã„ã‚ˆã†ã«
 	if (hit)return;
 
 	hit = true;

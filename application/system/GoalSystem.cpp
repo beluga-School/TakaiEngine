@@ -18,7 +18,7 @@ void GoalSystem::AnimetionStart()
 	animetionState = AnimetionState::First;
 	mIsClear = true;
 
-	//ƒS[ƒ‹ƒCƒxƒ“ƒg‚ðƒXƒ^[ƒg
+	//ã‚´ãƒ¼ãƒ«ã‚¤ãƒ™ãƒ³ãƒˆã‚’ã‚¹ã‚¿ãƒ¼ãƒˆ
 	EventManager::Get()->Start("goalCamera");
 }
 
@@ -60,13 +60,13 @@ void GoalSystem::GoalAnimetion()
 			animetionState = AnimetionState::None;
 			thirdTimer.Reset();
 		
-			//ƒCƒxƒ“ƒg‚ð‹­§I—¹
+			//ã‚¤ãƒ™ãƒ³ãƒˆã‚’å¼·åˆ¶çµ‚äº†
 			EventManager::Get()->ForceEnd();
 
-			//“yŠÇ—p‚Éƒf[ƒ^‚ð‘ã“ü
+			//åœŸç®¡ç”¨ã«ãƒ‡ãƒ¼ã‚¿ã‚’ä»£å…¥
 			ClearManage::Get()->SetClearInfo(StageChanger::Get()->GetNowStageHandle());
 
-			//ƒXƒe[ƒWƒZƒŒƒNƒg‚É–ß‚é
+			//ã‚¹ãƒ†ãƒ¼ã‚¸ã‚»ãƒ¬ã‚¯ãƒˆã«æˆ»ã‚‹
 			StageChanger::Get()->ChangeLevel(*LevelLoader::Get()->GetData("stage_stageselect"));
 		}
 		break;
@@ -97,10 +97,10 @@ void GoalSystem::Draw()
 
 void ClearManage::SetClearInfo(const std::string& clearStageName)
 {
-	//ƒNƒŠƒA‚µ‚½ƒXƒe[ƒW‚ÌƒNƒŠƒAƒtƒ‰ƒO‚ð—§‚Ä‚é
+	//ã‚¯ãƒªã‚¢ã—ãŸã‚¹ãƒ†ãƒ¼ã‚¸ã®ã‚¯ãƒªã‚¢ãƒ•ãƒ©ã‚°ã‚’ç«‹ã¦ã‚‹
 	LevelLoader::Get()->GetData(clearStageName)->isClear = true;;
-	//ƒXƒe[ƒWƒZƒŒƒNƒg‚É–ß‚ê‚é‚æ‚¤‚Éî•ñ‚ð‹L˜^
+	//ã‚¹ãƒ†ãƒ¼ã‚¸ã‚»ãƒ¬ã‚¯ãƒˆã«æˆ»ã‚Œã‚‹ã‚ˆã†ã«æƒ…å ±ã‚’è¨˜éŒ²
 	StageChanger::Get()->saveNextDokanInfo.stageName = "stageselect";
-	//“yŠÇid‚ð‹L˜^(ƒXƒe[ƒWƒZƒŒƒNƒg‚Ì“yŠÇid‚ÍƒXƒe[ƒWid‚Æ“¯‚¶‚É‚È‚é‚æ‚¤‚É‚È‚Á‚Ä‚¢‚é)
+	//åœŸç®¡idã‚’è¨˜éŒ²(ã‚¹ãƒ†ãƒ¼ã‚¸ã‚»ãƒ¬ã‚¯ãƒˆã®åœŸç®¡idã¯ã‚¹ãƒ†ãƒ¼ã‚¸idã¨åŒã˜ã«ãªã‚‹ã‚ˆã†ã«ãªã£ã¦ã„ã‚‹)
 	StageChanger::Get()->saveNextDokanInfo.id = LevelLoader::Get()->GetData(clearStageName)->mStageNum;
 }

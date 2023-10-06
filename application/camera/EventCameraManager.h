@@ -6,13 +6,13 @@
 #include <TEasing.h>
 #include "ImguiManager.h"
 
-//ƒ}ƒl[ƒWƒƒ[‚ÅŠÇ—‚·‚é—p‚Ìƒf[ƒ^
+//ãƒãƒãƒ¼ã‚¸ãƒ£ãƒ¼ã§ç®¡ç†ã™ã‚‹ç”¨ã®ãƒ‡ãƒ¼ã‚¿
 struct EventCamManageData
 {
 	std::vector<EventCamData> datas;
 	Vector3 target = { -1000,-1000,-1000 };
 
-	//ƒ^[ƒQƒbƒgƒf[ƒ^‚Éî•ñ‚ª“ü‚Á‚Ä‚¢‚é‚È‚çtrue‚ğ•Ô‚·
+	//ã‚¿ãƒ¼ã‚²ãƒƒãƒˆãƒ‡ãƒ¼ã‚¿ã«æƒ…å ±ãŒå…¥ã£ã¦ã„ã‚‹ãªã‚‰trueã‚’è¿”ã™
 	bool InTargetData();
 };
 
@@ -25,10 +25,10 @@ public:
 	};
 
 	/// <summary>
-	/// ƒCƒxƒ“ƒg–¼‚ğw’è‚·‚é‚ÆA‚»‚ê‚É‘Î‰‚µ‚½ƒJƒƒ‰‚ğŒÄ‚Ño‚·
+	/// ã‚¤ãƒ™ãƒ³ãƒˆåã‚’æŒ‡å®šã™ã‚‹ã¨ã€ãã‚Œã«å¯¾å¿œã—ãŸã‚«ãƒ¡ãƒ©ã‚’å‘¼ã³å‡ºã™
 	/// </summary>
-	/// <param name="eventname">ŒŸõ‚µ‚½‚¢ƒCƒxƒ“ƒg–¼</param>
-	/// <returns>¬Œ÷or¸”s</returns>
+	/// <param name="eventname">æ¤œç´¢ã—ãŸã„ã‚¤ãƒ™ãƒ³ãƒˆå</param>
+	/// <returns>æˆåŠŸorå¤±æ•—</returns>
 	bool SetEventCamera(const std::string& eventname);
 
 	bool GetEventEnd();
@@ -43,16 +43,16 @@ public:
 
 	void DebugGUI();
 
-	//ƒC[ƒWƒ“ƒOˆÚ“®‚Ìn“_ƒJƒƒ‰î•ñ
+	//ã‚¤ãƒ¼ã‚¸ãƒ³ã‚°ç§»å‹•ã®å§‹ç‚¹ã‚«ãƒ¡ãƒ©æƒ…å ±
 	EventCamData* frontCamera = nullptr;
 
-	//ƒC[ƒWƒ“ƒOˆÚ“®‚ÌI“_ƒJƒƒ‰î•ñ
+	//ã‚¤ãƒ¼ã‚¸ãƒ³ã‚°ç§»å‹•ã®çµ‚ç‚¹ã‚«ãƒ¡ãƒ©æƒ…å ±
 	EventCamData* backCamera = nullptr;
 
-	//ƒCƒxƒ“ƒgƒJƒƒ‰î•ñ”z—ñ‚ğƒCƒxƒ“ƒg–¼‚Å•Û‚·‚éƒ}ƒbƒv
+	//ã‚¤ãƒ™ãƒ³ãƒˆã‚«ãƒ¡ãƒ©æƒ…å ±é…åˆ—ã‚’ã‚¤ãƒ™ãƒ³ãƒˆåã§ä¿æŒã™ã‚‹ãƒãƒƒãƒ—
 	std::unordered_map<std::string, EventCamManageData> eventCameraDatas;
 
-	//ƒCƒxƒ“ƒgƒJƒƒ‰–{‘Ì
+	//ã‚¤ãƒ™ãƒ³ãƒˆã‚«ãƒ¡ãƒ©æœ¬ä½“
 	EventCamera eventCamera{};
 
 private:

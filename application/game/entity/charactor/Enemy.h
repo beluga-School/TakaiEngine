@@ -3,16 +3,16 @@
 #include "Collision.h"
 #include "Mob.h"
 
-//s“®ƒe[ƒuƒ‹ ‚±‚Ì’†‚©‚ç•K—v‚È‚à‚Ì‚¾‚¯”²‚«o‚µ‚Äg‚¤İŒv
+//è¡Œå‹•ãƒ†ãƒ¼ãƒ–ãƒ« ã“ã®ä¸­ã‹ã‚‰å¿…è¦ãªã‚‚ã®ã ã‘æŠœãå‡ºã—ã¦ä½¿ã†è¨­è¨ˆ
 enum class ActTable
 {
-	None,		//‰½‚à‚µ‚Ä‚¢‚È‚¢ó‘Ô
-	Encount,	//ƒvƒŒƒCƒ„[‚ğ”­Œ©‚µ‚½ó‘Ô
+	None,		//ä½•ã‚‚ã—ã¦ã„ãªã„çŠ¶æ…‹
+	Encount,	//ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã‚’ç™ºè¦‹ã—ãŸçŠ¶æ…‹
 	Tracking,
 	Attack1,
 	Attack2,
 	Staying,
-	Dead,		//€–Só‘Ô
+	Dead,		//æ­»äº¡çŠ¶æ…‹
 };
 
 class Enemy : public Mob
@@ -31,9 +31,9 @@ public:
 	virtual void Encount() = 0;
 
 	/// <summary>
-	/// Œ»İ‚Ìƒe[ƒuƒ‹‚ªˆø”‚Æˆê’v‚µ‚Ä‚¢‚é‚È‚çtrue‚ğ•Ô‚·
+	/// ç¾åœ¨ã®ãƒ†ãƒ¼ãƒ–ãƒ«ãŒå¼•æ•°ã¨ä¸€è‡´ã—ã¦ã„ã‚‹ãªã‚‰trueã‚’è¿”ã™
 	/// </summary>
-	/// <param name="table">ActTable‚©‚çŠm”F‚µ‚½‚¢ƒXƒe[ƒg‚ğ“ü‚ê‚é</param>
+	/// <param name="table">ActTableã‹ã‚‰ç¢ºèªã—ãŸã„ã‚¹ãƒ†ãƒ¼ãƒˆã‚’å…¥ã‚Œã‚‹</param>
 	/// <returns></returns>
 	bool GetNowAct(ActTable table) {
 		return mActTable == table;
@@ -43,22 +43,22 @@ public:
 
 	int32_t GetHitDamage();
 
-	//Encount‚ğŠÇ—‚·‚éƒXƒtƒBƒA‚Ì”ÍˆÍ‚ğ•`‰æ‚·‚é
+	//Encountã‚’ç®¡ç†ã™ã‚‹ã‚¹ãƒ•ã‚£ã‚¢ã®ç¯„å›²ã‚’æç”»ã™ã‚‹
 	void EncountSphereDraw(const std::string& oldPipeline);
 
 	Vector3 saveColCenter = {};
 
 protected:
 	/// <summary>
-	/// w’è‚µ‚½ƒ^[ƒQƒbƒg‚Ö‚ÌƒxƒNƒgƒ‹‚ğ•Ô‚·
+	/// æŒ‡å®šã—ãŸã‚¿ãƒ¼ã‚²ãƒƒãƒˆã¸ã®ãƒ™ã‚¯ãƒˆãƒ«ã‚’è¿”ã™
 	/// </summary>
-	/// <param name="target">‘ÎÛ‚Ìƒ^[ƒQƒbƒg</param>
+	/// <param name="target">å¯¾è±¡ã®ã‚¿ãƒ¼ã‚²ãƒƒãƒˆ</param>
 	/// <returns></returns>
 	Vector3 TargetVector(const Mob& target);
 
 	/// <summary>
-	/// w’è‚µ‚½ƒ^[ƒQƒbƒg‚Ì•ûŒü‚ğŒü‚­
-	/// ¡‚ÌƒvƒƒOƒ‰ƒ€‚¾‚Æâ‘Î‚É³–Ê‚ğŒü‚­‚Ì‚ÅAŒü‚«‚ğ•Ï‚¦‚é‚Ì‚ÉŠÔ‚©‚©‚éŠ´‚¶‚ÌƒvƒƒOƒ‰ƒ€‚É‚µ‚½‚¢
+	/// æŒ‡å®šã—ãŸã‚¿ãƒ¼ã‚²ãƒƒãƒˆã®æ–¹å‘ã‚’å‘ã
+	/// ä»Šã®ãƒ—ãƒ­ã‚°ãƒ©ãƒ ã ã¨çµ¶å¯¾ã«æ­£é¢ã‚’å‘ãã®ã§ã€å‘ãã‚’å¤‰ãˆã‚‹ã®ã«æ™‚é–“ã‹ã‹ã‚‹æ„Ÿã˜ã®ãƒ—ãƒ­ã‚°ãƒ©ãƒ ã«ã—ãŸã„
 	/// </summary>
 	/// <param name="target"></param>
 	void TargetTurn(const Mob& target,const Vector3& tVec);
@@ -66,12 +66,12 @@ protected:
 	void EncountSphereInitialize();
 	void EncountSphereUpdate();
 
-	//ÚG‚Ìƒ_ƒ[ƒW
+	//æ¥è§¦æ™‚ã®ãƒ€ãƒ¡ãƒ¼ã‚¸
 	int32_t hitDamage = 1;
 
 	ActTable mActTable = ActTable::None;
 
 private:
-	//ÚG”ÍˆÍ‚ÌƒXƒtƒBƒA‚ğ•`‰æ‚·‚é—p(”»’è‚ÌŠÇ—©‘Ì‚ÍsphereCol‚ªs‚¤)
+	//æ¥è§¦ç¯„å›²ã®ã‚¹ãƒ•ã‚£ã‚¢ã‚’æç”»ã™ã‚‹ç”¨(åˆ¤å®šã®ç®¡ç†è‡ªä½“ã¯sphereColãŒè¡Œã†)
 	Obj3d encountSphere;
 };

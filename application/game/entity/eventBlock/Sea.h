@@ -11,23 +11,23 @@ public:
 	void Draw();
 
 	/// <summary>
-	/// ŠO‚©‚çó‚¯æ‚éî•ñ‚ğİ’è‚·‚éŠÖ”
+	/// å¤–ã‹ã‚‰å—ã‘å–ã‚‹æƒ…å ±ã‚’è¨­å®šã™ã‚‹é–¢æ•°
 	/// </summary>
 	void SetInfo(const Vector3& position,const Vector3& scale,const Vector2& tiling);
 
 	float GetPosY();
 
 private:
-	//”g‚ª—¬‚ê‚é‘¬“x
+	//æ³¢ãŒæµã‚Œã‚‹é€Ÿåº¦
 	TEasing::easeTimer flowTimer = 100.0f;
 
-	//ã‰º‚É—h‚ê‚éŠ´Šo
+	//ä¸Šä¸‹ã«æºã‚Œã‚‹æ„Ÿè¦š
 	TEasing::easeTimer updownTimer = 5.0f;
 
 	Vector3 initPos{};
 	bool updown = false;
 
-	//ã‰º‚É—h‚ê‚é‘å‚«‚³‚Ì”¼Œa
+	//ä¸Šä¸‹ã«æºã‚Œã‚‹å¤§ãã•ã®åŠå¾„
 	float updownRadius = 0.2f;
 };
 

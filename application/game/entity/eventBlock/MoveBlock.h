@@ -18,13 +18,13 @@ public:
 	void HitEffect()override;
 
 	/// <summary>
-	/// “–‚½‚Á‚Ä‚¢‚é‚É“Ç‚Ü‚ê‚éŠÖ”
+	/// å½“ãŸã£ã¦ã„ã‚‹æ™‚ã«èª­ã¾ã‚Œã‚‹é–¢æ•°
 	/// </summary>
 	/// <param name="mob"></param>
 	void OnCollide(Mob* mob);
 
 	/// <summary>
-	/// “–‚½‚Á‚Ä‚¢‚È‚¢‚É“Ç‚Ü‚ê‚éŠÖ”
+	/// å½“ãŸã£ã¦ã„ãªã„æ™‚ã«èª­ã¾ã‚Œã‚‹é–¢æ•°
 	/// </summary>
 	/// <param name="mob"></param>
 	void NotCollide(Mob* mob);
@@ -36,7 +36,7 @@ public:
 
 private:
 	TEasing::easeTimer moveTimer = 2.0f;
-	//1ƒtƒŒ[ƒ€‚ÅˆÚ“®‚µ‚½—Ê
+	//1ãƒ•ãƒ¬ãƒ¼ãƒ ã§ç§»å‹•ã—ãŸé‡
 	Vector3 moveValue{};
 	Vector3 oldPos{};
 };

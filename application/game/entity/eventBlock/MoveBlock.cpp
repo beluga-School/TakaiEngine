@@ -25,7 +25,7 @@ void MoveBlock::Update()
 
 	oldPos = position;
 
-	//À•W‚ðXV
+	//åº§æ¨™ã‚’æ›´æ–°
 	position = TEasing::lerp(startpos, endpos, moveTimer.GetTimeRate());
 
 	moveValue = position - oldPos;
@@ -35,8 +35,8 @@ void MoveBlock::Update()
 
 	Obj3d::Update(*Camera::sCamera);
 
-	//ˆÚ“®—Ê‚ð‘«‚·A‚Í‚È‚ñ‚©‚â‚è•û‚ðH•v‚µ‚È‚¢‚Æƒ_ƒ‚»‚¤
-	//À•W‚ðmob‚Ì“–‚½‚è”»’è‚æ‚èæ‚ÉŒÅ’è‚µ‚ÄAŒã‚©‚çƒ‚ƒu‚ÌˆÚ“®‚ð‰ÁŽZ‚·‚é•ûŽ®‚È‚çH
+	//ç§»å‹•é‡ã‚’è¶³ã™ã€ã¯ãªã‚“ã‹ã‚„ã‚Šæ–¹ã‚’å·¥å¤«ã—ãªã„ã¨ãƒ€ãƒ¡ãã†
+	//åº§æ¨™ã‚’mobã®å½“ãŸã‚Šåˆ¤å®šã‚ˆã‚Šå…ˆã«å›ºå®šã—ã¦ã€å¾Œã‹ã‚‰ãƒ¢ãƒ–ã®ç§»å‹•ã‚’åŠ ç®—ã™ã‚‹æ–¹å¼ãªã‚‰ï¼Ÿ
 }
 
 void MoveBlock::Draw()
@@ -50,10 +50,10 @@ void MoveBlock::HitEffect()
 
 void MoveBlock::OnCollide(Mob* mob)
 {
-	//ƒ€[ƒuƒuƒƒbƒN‚Å‰ÁŽZ‚³‚ê‚é’l‚ðmob‚Éì‚èA‚»‚±‚É’l‚ð‘ã“ü
-	//ŒvŽZ‚·‚é‚Æ‚«‚É’l‚ª‚ ‚é‚È‚çŒvŽZ‚·‚éŠ´‚¶‚É
+	//ãƒ ãƒ¼ãƒ–ãƒ–ãƒ­ãƒƒã‚¯ã§åŠ ç®—ã•ã‚Œã‚‹å€¤ã‚’mobã«ä½œã‚Šã€ãã“ã«å€¤ã‚’ä»£å…¥
+	//è¨ˆç®—ã™ã‚‹ã¨ãã«å€¤ãŒã‚ã‚‹ãªã‚‰è¨ˆç®—ã™ã‚‹æ„Ÿã˜ã«
 	mob->moveBlockHit = true;
 	
-	//ˆÚ“®ƒuƒƒbƒN—p‚ÉÀ•W‚ð‹L˜^‚·‚é
+	//ç§»å‹•ãƒ–ãƒ­ãƒƒã‚¯ç”¨ã«åº§æ¨™ã‚’è¨˜éŒ²ã™ã‚‹
 	mob->moveBlockPosition = moveValue;
 }

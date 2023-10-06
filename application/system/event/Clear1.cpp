@@ -11,7 +11,7 @@ void Clear1::Start()
 void Clear1::Update()
 {
 	timer.Update();
-	//ƒuƒƒbƒN‚ð“Á’è‚ÌˆÊ’u‚É’u‚­
+	//ãƒ–ãƒ­ãƒƒã‚¯ã‚’ç‰¹å®šã®ä½ç½®ã«ç½®ã
 	if (timer.GetTimeRate() >= 0.5f && setFlag == false)
 	{
 		for (auto& objectData : LevelLoader::Get()->GetData("clear1")->mObjects)

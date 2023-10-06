@@ -37,17 +37,17 @@ bool CollideManager::CheckDirections(const Cube& check, const Cube& collide, con
 	return false;
 }
 
-//’†gŒ©‚ê‚È‚©‚Á‚½‚Ì‚ÅA–³—‚â‚è€–S‚ğŠm”F‚Å‚«‚é‚æ‚¤‚ÉŠÖ”ì¬
+//ä¸­èº«è¦‹ã‚Œãªã‹ã£ãŸã®ã§ã€ç„¡ç†ã‚„ã‚Šæ­»äº¡ã‚’ç¢ºèªã§ãã‚‹ã‚ˆã†ã«é–¢æ•°ä½œæˆ
 bool CheckIsDead(Entity* box)
 {
 	return box->IsDead();
 }
 
-//TODO:üŒ`’Tõ‚Å‚â‚Á‚Ä‚éã‚É€–SŠm”F2‰ñŒÄ‚ñ‚Å‚³‚ç‚É2dfor•ª2‰ñŒÄ‚ñ‚Å‚é‚©‚ç‚à‚¤‚Ü‚¶‚Å‚ ‚Ù‚ ‚Ù‚ ‚Ù‚ ‚Ù
-//‚¤‚é‚¹`````‚µ‚ç‚Ë``````````
+//TODO:ç·šå½¢æ¢ç´¢ã§ã‚„ã£ã¦ã‚‹ä¸Šã«æ­»äº¡ç¢ºèª2å›å‘¼ã‚“ã§ã•ã‚‰ã«2é‡foråˆ†2å›å‘¼ã‚“ã§ã‚‹ã‹ã‚‰ã‚‚ã†ã¾ã˜ã§ã‚ã»ã‚ã»ã‚ã»ã‚ã»
+//ã†ã‚‹ã›ï½ï½ï½ï½ï½ã—ã‚‰ã­ï½ï½ï½ï½ï½ï½ï½ï½ï½ï½
 void CollideManager::CollideUpdate()
 {
-	//€‚ñ‚Å‚¢‚é‚È‚çíœ‚·‚é
+	//æ­»ã‚“ã§ã„ã‚‹ãªã‚‰å‰Šé™¤ã™ã‚‹
 	for (auto itr = allCols.begin(); itr != allCols.end();)
 	{
 		if (CheckIsDead(*itr))
@@ -71,7 +71,7 @@ void CollideManager::CollideUpdate()
 
 void CollideManager::StatusUpdate()
 {
-	//€‚ñ‚Å‚¢‚é‚È‚çíœ‚·‚é
+	//æ­»ã‚“ã§ã„ã‚‹ãªã‚‰å‰Šé™¤ã™ã‚‹
 	for (auto itr = allCols.begin(); itr != allCols.end();)
 	{
 		if (CheckIsDead(*itr))
@@ -95,21 +95,21 @@ void CollideManager::StatusUpdate()
 
 void CollideManager::CheckCollide(Entity* check, Entity* collide)
 {
-	//“¯‚¶‚È‚ç”»’è‚µ‚È‚¢‚º
+	//åŒã˜ãªã‚‰åˆ¤å®šã—ãªã„ãœ
 	if (check == collide)
 	{
 		return;
 	}
 
-	//”»’è‚·‚é‘¤‚ªƒvƒŒƒCƒ„[‚Ì
+	//åˆ¤å®šã™ã‚‹å´ãŒãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã®æ™‚
 	if (check->CheckTag(TagTable::Player))
 	{
-		//check‚ªPlayer‚Å‚ ‚é‚±‚Æ‚ÍŠm’è‚µ‚Ä‚¢‚é‚Ì‚ÅAplayerŒ^‚É•ÏŠ·‚µ‚Äƒf[ƒ^‚ğ‚Á‚Ä‚­‚é
+		//checkãŒPlayerã§ã‚ã‚‹ã“ã¨ã¯ç¢ºå®šã—ã¦ã„ã‚‹ã®ã§ã€playerå‹ã«å¤‰æ›ã—ã¦ãƒ‡ãƒ¼ã‚¿ã‚’æŒã£ã¦ãã‚‹
 		Player* player = static_cast<Player*>(check);
 
 		if (collide->CheckTag(TagTable::Dokan))
 		{
-			//collide‚ªDokan‚Å‚ ‚é‚±‚Æ‚ÍŠm’è‚µ‚Ä‚¢‚é‚Ì‚ÅADokanŒ^‚É•ÏŠ·‚µ‚Äƒf[ƒ^‚ğ‚Á‚Ä‚­‚é
+			//collideãŒDokanã§ã‚ã‚‹ã“ã¨ã¯ç¢ºå®šã—ã¦ã„ã‚‹ã®ã§ã€Dokanå‹ã«å¤‰æ›ã—ã¦ãƒ‡ãƒ¼ã‚¿ã‚’æŒã£ã¦ãã‚‹
 			Dokan* dokan = static_cast<Dokan*>(collide);
 			
 			Cube tempDokan = dokan->box.cubecol;
@@ -122,10 +122,10 @@ void CollideManager::CheckCollide(Entity* check, Entity* collide)
 					player->ApparranceMove(dokan->box.cubecol.position, dokan->box.cubecol.scale);
 					player->mDokanApparrance = false;
 				}
-				//ƒvƒŒƒCƒ„[‚ª“yŠÇ‚Ìã‚É‚¢‚é‚È‚ç
+				//ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ãŒåœŸç®¡ã®ä¸Šã«ã„ã‚‹ãªã‚‰
 				else if (CheckDirections(player->box.cubecol, dokan->box.cubecol, CheckDirection::CD_UP))
 				{
-					//“à•”‚Ìˆ—‚ğs‚¦‚é‚æ‚¤‚É
+					//å†…éƒ¨ã®å‡¦ç†ã‚’è¡Œãˆã‚‹ã‚ˆã†ã«
 					dokan->HitEffect(player);
 				}
 			}
@@ -140,7 +140,7 @@ void CollideManager::CheckCollide(Entity* check, Entity* collide)
 		}
 	}
 
-	//”»’è‚·‚é‘¤‚ªƒ‚ƒu‚Ì
+	//åˆ¤å®šã™ã‚‹å´ãŒãƒ¢ãƒ–ã®æ™‚
 	if (check->CheckTag(TagTable::Mob))
 	{
 		if (check == nullptr)
@@ -148,21 +148,21 @@ void CollideManager::CheckCollide(Entity* check, Entity* collide)
 			return;
 		}
 
-		//check‚ªmob‚Å‚ ‚é‚±‚Æ‚ÍŠm’è‚µ‚Ä‚¢‚é‚Ì‚ÅAmobŒ^‚É•ÏŠ·‚µ‚Äƒf[ƒ^‚ğ‚Á‚Ä‚­‚é
+		//checkãŒmobã§ã‚ã‚‹ã“ã¨ã¯ç¢ºå®šã—ã¦ã„ã‚‹ã®ã§ã€mobå‹ã«å¤‰æ›ã—ã¦ãƒ‡ãƒ¼ã‚¿ã‚’æŒã£ã¦ãã‚‹
 		Mob* mob = static_cast<Mob*>(check);
 
-		//‚³‚ê‚é‘¤‚ªƒuƒƒbƒN‚È‚ç
+		//ã•ã‚Œã‚‹å´ãŒãƒ–ãƒ­ãƒƒã‚¯ãªã‚‰
 		if (collide->CheckTag(TagTable::Block))
 		{
-			//collide‚ªBlock‚Å‚ ‚é‚±‚Æ‚ÍŠm’è‚µ‚Ä‚¢‚é‚Ì‚ÅABlockŒ^‚É•ÏŠ·‚µ‚Äƒf[ƒ^‚ğ‚Á‚Ä‚­‚é
+			//collideãŒBlockã§ã‚ã‚‹ã“ã¨ã¯ç¢ºå®šã—ã¦ã„ã‚‹ã®ã§ã€Blockå‹ã«å¤‰æ›ã—ã¦ãƒ‡ãƒ¼ã‚¿ã‚’æŒã£ã¦ãã‚‹
 			Block* block = static_cast<Block*>(collide);
 
-			//‰Ÿ‚µ–ß‚µˆ—‚ğs‚¤
+			//æŠ¼ã—æˆ»ã—å‡¦ç†ã‚’è¡Œã†
 			Osimodosi(*mob, *block);
 		}
 		if (collide->CheckTag(TagTable::Cannon))
 		{
-			//collide‚ªCannon‚Å‚ ‚é‚±‚Æ‚ÍŠm’è‚µ‚Ä‚¢‚é‚Ì‚ÅACannonŒ^‚É•ÏŠ·‚µ‚Äƒf[ƒ^‚ğ‚Á‚Ä‚­‚é
+			//collideãŒCannonã§ã‚ã‚‹ã“ã¨ã¯ç¢ºå®šã—ã¦ã„ã‚‹ã®ã§ã€Cannonå‹ã«å¤‰æ›ã—ã¦ãƒ‡ãƒ¼ã‚¿ã‚’æŒã£ã¦ãã‚‹
 			Cannon* cannon = static_cast<Cannon*>(collide);
 			if (Collsions::CubeCollision(mob->box.cubecol, cannon->box.cubecol))
 			{
@@ -171,7 +171,7 @@ void CollideManager::CheckCollide(Entity* check, Entity* collide)
 		}
 		if (collide->CheckTag(TagTable::MoveBlock))
 		{
-			//collide‚ªBlock‚Å‚ ‚é‚±‚Æ‚ÍŠm’è‚µ‚Ä‚¢‚é‚Ì‚ÅABlockŒ^‚É•ÏŠ·‚µ‚Äƒf[ƒ^‚ğ‚Á‚Ä‚­‚é
+			//collideãŒBlockã§ã‚ã‚‹ã“ã¨ã¯ç¢ºå®šã—ã¦ã„ã‚‹ã®ã§ã€Blockå‹ã«å¤‰æ›ã—ã¦ãƒ‡ãƒ¼ã‚¿ã‚’æŒã£ã¦ãã‚‹
 			MoveBlock* moveblock = static_cast<MoveBlock*>(collide);
 
 			if (Collsions::CubeCollision(mob->box.cubecol, moveblock->box.cubecol))
@@ -184,29 +184,29 @@ void CollideManager::CheckCollide(Entity* check, Entity* collide)
 
 void CollideManager::CheckStatus(Entity* check, Entity* collide)
 {
-	//“¯‚¶‚È‚ç”»’è‚µ‚È‚¢‚º
+	//åŒã˜ãªã‚‰åˆ¤å®šã—ãªã„ãœ
 	if (check == collide)
 	{
 		return;
 	}
 
-	//”»’è‚·‚é‘¤‚ªPlayer‚Ì
+	//åˆ¤å®šã™ã‚‹å´ãŒPlayerã®æ™‚
 	if (check->CheckTag(TagTable::Player))
 	{
-		//check‚ªPlayer‚Å‚ ‚é‚±‚Æ‚ÍŠm’è‚µ‚Ä‚¢‚é‚Ì‚ÅAmobŒ^‚É•ÏŠ·‚µ‚Äƒf[ƒ^‚ğ‚Á‚Ä‚­‚é
+		//checkãŒPlayerã§ã‚ã‚‹ã“ã¨ã¯ç¢ºå®šã—ã¦ã„ã‚‹ã®ã§ã€mobå‹ã«å¤‰æ›ã—ã¦ãƒ‡ãƒ¼ã‚¿ã‚’æŒã£ã¦ãã‚‹
 		Player* player = static_cast<Player*>(check);
 
-		//‚³‚ê‚é‘¤‚ªEnemy‚È‚ç
+		//ã•ã‚Œã‚‹å´ãŒEnemyãªã‚‰
 		if (collide->CheckTag(TagTable::Enemy))
 		{
-			//collide‚ªEnemy‚Å‚ ‚é‚±‚Æ‚ÍŠm’è‚µ‚Ä‚¢‚é‚Ì‚ÅAmobŒ^‚É•ÏŠ·‚µ‚Äƒf[ƒ^‚ğ‚Á‚Ä‚­‚é
+			//collideãŒEnemyã§ã‚ã‚‹ã“ã¨ã¯ç¢ºå®šã—ã¦ã„ã‚‹ã®ã§ã€mobå‹ã«å¤‰æ›ã—ã¦ãƒ‡ãƒ¼ã‚¿ã‚’æŒã£ã¦ãã‚‹
 			Enemy* enemy = static_cast<Enemy*>(collide);
 
 			CheckPlayerToEnemy(*player, *enemy);
 		}
 		if (collide->CheckTag(TagTable::Star))
 		{
-			//collide‚ªStar‚Å‚ ‚é‚±‚Æ‚ÍŠm’è‚µ‚Ä‚¢‚é‚Ì‚ÅAStarŒ^‚É•ÏŠ·‚µ‚Äƒf[ƒ^‚ğ‚Á‚Ä‚­‚é
+			//collideãŒStarã§ã‚ã‚‹ã“ã¨ã¯ç¢ºå®šã—ã¦ã„ã‚‹ã®ã§ã€Starå‹ã«å¤‰æ›ã—ã¦ãƒ‡ãƒ¼ã‚¿ã‚’æŒã£ã¦ãã‚‹
 			Star* star = static_cast<Star*>(collide);
 			if (Collsions::CubeCollision(player->box.cubecol, collide->box.cubecol))
 			{
@@ -215,7 +215,7 @@ void CollideManager::CheckStatus(Entity* check, Entity* collide)
 		}
 		if (collide->CheckTag(TagTable::WarpBlock))
 		{
-			//collide‚ªWarp‚Å‚ ‚é‚±‚Æ‚ÍŠm’è‚µ‚Ä‚¢‚é‚Ì‚ÅAWarpŒ^‚É•ÏŠ·‚µ‚Äƒf[ƒ^‚ğ‚Á‚Ä‚­‚é
+			//collideãŒWarpã§ã‚ã‚‹ã“ã¨ã¯ç¢ºå®šã—ã¦ã„ã‚‹ã®ã§ã€Warpå‹ã«å¤‰æ›ã—ã¦ãƒ‡ãƒ¼ã‚¿ã‚’æŒã£ã¦ãã‚‹
 			WarpBlock* warpBlock = static_cast<WarpBlock*>(collide);
 			if (Collsions::CubeCollision(player->box.cubecol, warpBlock->box.cubecol))
 			{
@@ -229,64 +229,64 @@ void CollideManager::Osimodosi(Mob& check, const Block& collide)
 {
 	
 
-	//‚»‚ÌƒIƒuƒWƒFƒNƒg‚æ‚è
-	//ã‚É‚¢‚é‚©
+	//ãã®ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã‚ˆã‚Š
+	//ä¸Šã«ã„ã‚‹ã‹
 	bool up = CheckDirections(check.box.cubecol, collide.box.cubecol, CheckDirection::CD_UP);
-	//‰º‚É‚¢‚é‚©
+	//ä¸‹ã«ã„ã‚‹ã‹
 	bool down = CheckDirections(check.box.cubecol, collide.box.cubecol, CheckDirection::CD_DOWN);
-	//‘O‚É‚¢‚é‚©
+	//å‰ã«ã„ã‚‹ã‹
 	bool back = CheckDirections(check.box.cubecol, collide.box.cubecol, CheckDirection::CD_CENTER);
-	//Œã‚ë‚É‚¢‚é‚©
+	//å¾Œã‚ã«ã„ã‚‹ã‹
 	bool center = CheckDirections(check.box.cubecol, collide.box.cubecol, CheckDirection::CD_BACK);
-	//¶‚É‚¢‚é‚©
+	//å·¦ã«ã„ã‚‹ã‹
 	bool left = CheckDirections(check.box.cubecol, collide.box.cubecol, CheckDirection::CD_LEFT);
-	//‰E‚É‚¢‚é‚©
+	//å³ã«ã„ã‚‹ã‹
 	bool right = CheckDirections(check.box.cubecol, collide.box.cubecol, CheckDirection::CD_RIGHT);
 
-	//‘S‚Ä0‚È‚ç–„‚Ü‚Á‚Ä‚¢‚é
+	//å…¨ã¦0ãªã‚‰åŸ‹ã¾ã£ã¦ã„ã‚‹
 	bool isBuried = !up && !down && !right && !left && !back && !center;
 
-	//Y²ã”»’è
+	//Yè»¸ä¸Šåˆ¤å®š
 	Cube rayCubeY;
 	rayCubeY.position = check.position;
 	rayCubeY.scale = check.scale;
-	//ƒXƒP[ƒ‹‚ğ‚ß‚Á‚¿‚áˆø‚«‰„‚Î‚·
+	//ã‚¹ã‚±ãƒ¼ãƒ«ã‚’ã‚ã£ã¡ã‚ƒå¼•ãå»¶ã°ã™
 	rayCubeY.scale.y = 100;
 
-	//“–‚½‚Á‚½‚È‚ç
+	//å½“ãŸã£ãŸãªã‚‰
 	bool cubeColY = Collsions::CubeCollision(rayCubeY, collide.box.cubecol);
 
-	//ã–Ê‚ª“–‚½‚Á‚Ä‚¢‚é‚©ƒIƒuƒWƒFƒNƒg‚ª–„‚Ü‚Á‚Ä‚¢‚é‚È‚ç
+	//ä¸Šé¢ãŒå½“ãŸã£ã¦ã„ã‚‹ã‹ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆãŒåŸ‹ã¾ã£ã¦ã„ã‚‹ãªã‚‰
 	if ((up && cubeColY) || isBuried)
 	{
-		//ƒŠƒXƒg‚É“ü‚ê‚é
+		//ãƒªã‚¹ãƒˆã«å…¥ã‚Œã‚‹
 		UniqueObjectPushBack(check.hitListDown, collide.box.cubecol);
 	}
 	else
 	{
-		//‚»‚¤‚Å‚È‚¢‚È‚çŠO‚·
+		//ãã†ã§ãªã„ãªã‚‰å¤–ã™
 		UniqueObjectErase(check.hitListDown, collide.box.cubecol);
 	}
 	
-	//‰º–Ê‚Ì“–‚½‚è”»’è
+	//ä¸‹é¢ã®å½“ãŸã‚Šåˆ¤å®š
 	if (down && cubeColY)
 	{
 		UniqueObjectPushBack(check.hitListUp, collide.box.cubecol);
 	}
 	else
 	{
-		//‚»‚¤‚Å‚È‚¢‚È‚çŠO‚·
+		//ãã†ã§ãªã„ãªã‚‰å¤–ã™
 		UniqueObjectErase(check.hitListUp, collide.box.cubecol);
 	}
 
-	//X²ã‚Ì”»’è
+	//Xè»¸ä¸Šã®åˆ¤å®š
 	Cube rayCubeX;
 	rayCubeX.position = check.position;
 	rayCubeX.scale = check.scale;
-	//ƒXƒP[ƒ‹‚ğ‚ß‚Á‚¿‚áˆø‚«‰„‚Î‚·
+	//ã‚¹ã‚±ãƒ¼ãƒ«ã‚’ã‚ã£ã¡ã‚ƒå¼•ãå»¶ã°ã™
 	rayCubeX.scale.x = 100;
 
-	//“–‚½‚Á‚½‚È‚ç
+	//å½“ãŸã£ãŸãªã‚‰
 	bool cubeColX = Collsions::CubeCollision(rayCubeX, collide.box.cubecol);
 
 	if (right && cubeColX)
@@ -295,7 +295,7 @@ void CollideManager::Osimodosi(Mob& check, const Block& collide)
 	}
 	else
 	{
-		//‚»‚¤‚Å‚È‚¢‚È‚çŠO‚·
+		//ãã†ã§ãªã„ãªã‚‰å¤–ã™
 		UniqueObjectErase(check.hitListRight, collide.box.cubecol);
 	}
 
@@ -305,18 +305,18 @@ void CollideManager::Osimodosi(Mob& check, const Block& collide)
 	}
 	else
 	{
-		//‚»‚¤‚Å‚È‚¢‚È‚çŠO‚·
+		//ãã†ã§ãªã„ãªã‚‰å¤–ã™
 		UniqueObjectErase(check.hitListLeft, collide.box.cubecol);
 	}
 
-	//Z²ã‚Ì”»’è
+	//Zè»¸ä¸Šã®åˆ¤å®š
 	Cube rayCubeZ;
 	rayCubeZ.position = check.position;
 	rayCubeZ.scale = check.scale;
-	//ƒXƒP[ƒ‹‚ğ‚ß‚Á‚¿‚áˆø‚«‰„‚Î‚·
+	//ã‚¹ã‚±ãƒ¼ãƒ«ã‚’ã‚ã£ã¡ã‚ƒå¼•ãå»¶ã°ã™
 	rayCubeZ.scale.z = 100;
 
-	//“–‚½‚Á‚½‚È‚ç
+	//å½“ãŸã£ãŸãªã‚‰
 	bool cubeColZ = Collsions::CubeCollision(rayCubeZ, collide.box.cubecol);
 
 	if (center && cubeColZ)
@@ -325,7 +325,7 @@ void CollideManager::Osimodosi(Mob& check, const Block& collide)
 	}
 	else
 	{
-		//‚»‚¤‚Å‚È‚¢‚È‚çŠO‚·
+		//ãã†ã§ãªã„ãªã‚‰å¤–ã™
 		UniqueObjectErase(check.hitListCenter, collide.box.cubecol);
 	}
 
@@ -335,18 +335,18 @@ void CollideManager::Osimodosi(Mob& check, const Block& collide)
 	}
 	else
 	{
-		//‚»‚¤‚Å‚È‚¢‚È‚çŠO‚·
+		//ãã†ã§ãªã„ãªã‚‰å¤–ã™
 		UniqueObjectErase(check.hitListBack, collide.box.cubecol);
 	}
 }
 
 void CollideManager::CheckPlayerToEnemy(Player& player,Enemy& collide)
 {
-	//“¥‚İ‚Â‚¯”»’è&ÚG”»’è
+	//è¸ã¿ã¤ã‘åˆ¤å®š&æ¥è§¦åˆ¤å®š
 	if (Collsions::CubeCollision(player.box.cubecol, collide.box.cubecol))
 	{
-		//€–Sƒ‚[ƒVƒ‡ƒ“‚É“ü‚Á‚Ä‚é‚È‚ç”ò‚Î‚·
-		//¡ŒãHP‚ª‘½‚¢“G‚ªo‚Ä‚«‚½‚Æ‚«¢‚é‚©‚çAUŒ‚‚ğó‚¯‚½Œã‚ğ•\‚·ƒXƒe[ƒg‚ğì‚é‚×‚«
+		//æ­»äº¡ãƒ¢ãƒ¼ã‚·ãƒ§ãƒ³ã«å…¥ã£ã¦ã‚‹ãªã‚‰é£›ã°ã™
+		//ä»Šå¾ŒHPãŒå¤šã„æ•µãŒå‡ºã¦ããŸã¨ãå›°ã‚‹ã‹ã‚‰ã€æ”»æ’ƒã‚’å—ã‘ãŸå¾Œã‚’è¡¨ã™ã‚¹ãƒ†ãƒ¼ãƒˆã‚’ä½œã‚‹ã¹ã
 		if (collide.GetNowAct(ActTable::Dead))return;
 
 		if (player.GetJumpState() == Mob::JumpState::Down)
@@ -356,12 +356,12 @@ void CollideManager::CheckPlayerToEnemy(Player& player,Enemy& collide)
 		}
 		else
 		{
-			//ÚGƒ_ƒ[ƒW‚ğó‚¯‚é
+			//æ¥è§¦ãƒ€ãƒ¡ãƒ¼ã‚¸ã‚’å—ã‘ã‚‹
 			player.DamageEffect(collide.GetHitDamage());
 		}
 	}
 
-	//ƒGƒ“ƒJƒEƒ“ƒg”»’è
+	//ã‚¨ãƒ³ã‚«ã‚¦ãƒ³ãƒˆåˆ¤å®š
 	if (Collsions::SphereCollsion(player.mEncountCol, collide.sphereCol))
 	{
 		collide.Encount();
@@ -372,10 +372,10 @@ void UniqueObjectPushBack(std::list<IDdCube>& list, const IDdCube& col)
 {
 	for (auto itr = list.begin(); itr != list.end(); itr++)
 	{
-		//“¯‚¶—v‘f‚ªŒ©‚Â‚©‚Á‚½‚ç~‚ß‚é
+		//åŒã˜è¦ç´ ãŒè¦‹ã¤ã‹ã£ãŸã‚‰æ­¢ã‚ã‚‹
 		if (itr->GetID() == col.GetID())
 		{
-			//‚©‚ç“ü‚ê‚é
+			//ã‹ã‚‰å…¥ã‚Œã‚‹
 			list.erase(itr);
 			break;
 		}
@@ -383,10 +383,10 @@ void UniqueObjectPushBack(std::list<IDdCube>& list, const IDdCube& col)
 		//{
 		//	return;
 		//}
-		////‰ñ‚µ‚«‚ê‚½‚ç“¯‚¶—v‘f‚ª‚È‚¢
+		////å›ã—ãã‚ŒãŸã‚‰åŒã˜è¦ç´ ãŒãªã„
 	}
 	
-	//‚©‚ç“ü‚ê‚é
+	//ã‹ã‚‰å…¥ã‚Œã‚‹
 	list.push_back(col);
 }
 
@@ -394,10 +394,10 @@ void UniqueObjectErase(std::list<IDdCube>& list, const IDdCube& col)
 {
 	for (auto itr = list.begin(); itr != list.end(); itr++)
 	{
-		//“¯‚¶—v‘f‚ªŒ©‚Â‚©‚Á‚½‚ç
+		//åŒã˜è¦ç´ ãŒè¦‹ã¤ã‹ã£ãŸã‚‰
 		if (itr->GetID() == col.GetID())
 		{
-			//Á‚·
+			//æ¶ˆã™
 			list.erase(itr);
 			return;
 		}

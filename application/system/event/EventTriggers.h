@@ -3,13 +3,13 @@
 
 struct EventTrigger
 {
-	//ƒCƒxƒ“ƒgƒgƒŠƒK[‚Ì–¼‘O
+	//ã‚¤ãƒ™ãƒ³ãƒˆãƒˆãƒªã‚¬ãƒ¼ã®åå‰
 	std::string triggerName = "";
 
-	//ðŒ‚ª–ž‚½‚³‚ê‚Ä‚¢‚½‚çtrue‚É‚È‚é
+	//æ¡ä»¶ãŒæº€ãŸã•ã‚Œã¦ã„ãŸã‚‰trueã«ãªã‚‹
 };
 
-//ƒCƒxƒ“ƒg‚ðŽÀs‚·‚é‚½‚ß‚ÌðŒ‚ðW‚ß‚Äƒtƒ‰ƒO‰»‚·‚éƒNƒ‰ƒX
+//ã‚¤ãƒ™ãƒ³ãƒˆã‚’å®Ÿè¡Œã™ã‚‹ãŸã‚ã®æ¡ä»¶ã‚’é›†ã‚ã¦ãƒ•ãƒ©ã‚°åŒ–ã™ã‚‹ã‚¯ãƒ©ã‚¹
 class EventTriggers
 {
 public:

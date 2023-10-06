@@ -7,44 +7,44 @@ void LevelLoader::Load(const std::string& filename, const std::string& handle, i
 {
 	const std::string fullpath = "Resources/" + filename + ".json";
 
-	//ƒtƒ@ƒCƒ‹ƒXƒgƒŠ[ƒ€
+	//ãƒ•ã‚¡ã‚¤ãƒ«ã‚¹ãƒˆãƒªãƒ¼ãƒ 
 	std::ifstream file;
 
-	//ƒtƒ@ƒCƒ‹‚ğŠJ‚­
+	//ãƒ•ã‚¡ã‚¤ãƒ«ã‚’é–‹ã
 	file.open(fullpath);
-	//ƒtƒ@ƒCƒ‹ƒI[ƒvƒ“¸”s‚ğƒ`ƒFƒbƒN
+	//ãƒ•ã‚¡ã‚¤ãƒ«ã‚ªãƒ¼ãƒ—ãƒ³å¤±æ•—ã‚’ãƒã‚§ãƒƒã‚¯
 	if (file.fail())
 	{
 		assert(0);
 	}
 	
-	//JSON•¶š—ñ‚©‚ç‰ğ“€‚µ‚½ƒf[ƒ^
+	//JSONæ–‡å­—åˆ—ã‹ã‚‰è§£å‡ã—ãŸãƒ‡ãƒ¼ã‚¿
 	nlohmann::json deserialized;
 
-	//‰ğ“€
+	//è§£å‡
 	file >> deserialized;
 
-	//³‚µ‚¢ƒtƒ@ƒCƒ‹‚©ƒ`ƒFƒbƒN
+	//æ­£ã—ã„ãƒ•ã‚¡ã‚¤ãƒ«ã‹ãƒã‚§ãƒƒã‚¯
 	assert(deserialized.is_object());
 	assert(deserialized.contains("name"));
 	assert(deserialized["name"].is_string());
 
-	//"name"‚ğ•¶š—ñ‚Æ‚µ‚Äæ“¾
+	//"name"ã‚’æ–‡å­—åˆ—ã¨ã—ã¦å–å¾—
 	std::string name =
 		deserialized["name"].get<std::string>();
-	//³‚µ‚¢ƒŒƒxƒ‹ƒf[ƒ^ƒtƒ@ƒCƒ‹‚©ƒ`ƒFƒbƒN
+	//æ­£ã—ã„ãƒ¬ãƒ™ãƒ«ãƒ‡ãƒ¼ã‚¿ãƒ•ã‚¡ã‚¤ãƒ«ã‹ãƒã‚§ãƒƒã‚¯
 	assert(name.compare("scene") == 0);
 	
-	//ƒŒƒxƒ‹ƒf[ƒ^Ši”[—pƒCƒ“ƒXƒ^ƒ“ƒX‚ğ¶¬
+	//ãƒ¬ãƒ™ãƒ«ãƒ‡ãƒ¼ã‚¿æ ¼ç´ç”¨ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹ã‚’ç”Ÿæˆ
 	LevelData levelData;
 
-	//"objects"‚Ì‘SƒIƒuƒWƒFƒNƒg‚ğ‘–¸
+	//"objects"ã®å…¨ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã‚’èµ°æŸ»
 	for (nlohmann::json& object : deserialized["objects"])
 	{
 		ObjectLoad(levelData, object);
 	}
 
-	//¶¬‚ªI‚í‚Á‚½‚çƒtƒ‰ƒO‚ğ—§‚Ä‚é
+	//ç”ŸæˆãŒçµ‚ã‚ã£ãŸã‚‰ãƒ•ãƒ©ã‚°ã‚’ç«‹ã¦ã‚‹
 	levelData.isCreate = true;
 	levelData.mHandle = handle;
 	levelData.mStageNum = stageNum;
@@ -64,18 +64,18 @@ LevelData* LevelLoader::GetData(const std::string& handle)
 
 void LevelLoader::ObjectLoad(LevelData& levelData,nlohmann::json& object)
 {
-	//"type"ƒf[ƒ^‚ª‚È‚¯‚ê‚Î•s³‚Æ‚·‚é
+	//"type"ãƒ‡ãƒ¼ã‚¿ãŒãªã‘ã‚Œã°ä¸æ­£ã¨ã™ã‚‹
 	assert(object.contains("type"));
 
-	//í•Ê‚ğæ“¾
+	//ç¨®åˆ¥ã‚’å–å¾—
 	std::string type = object["type"].get<std::string>();
 
-	//"MESH"‚È‚ç
+	//"MESH"ãªã‚‰
 	if (type.compare("MESH") == 0)
 	{
-		//—v‘f’Ç‰Á
+		//è¦ç´ è¿½åŠ 
 		levelData.mObjects.emplace_back(LevelData::ObjectData{});
-		//¡’Ç‰Á‚µ‚½—v‘f‚ÌQÆ‚ğ“¾‚é
+		//ä»Šè¿½åŠ ã—ãŸè¦ç´ ã®å‚ç…§ã‚’å¾—ã‚‹
 		LevelData::ObjectData& objectData = levelData.mObjects.back();
 
 		if (object.contains("file_name")) {
@@ -100,26 +100,26 @@ void LevelLoader::ObjectLoad(LevelData& levelData,nlohmann::json& object)
 		}
 		else
 		{
-			//w’è‚È‚µ‚Ìê‡Aƒ^ƒCƒŠƒ“ƒO‚ğ‚µ‚È‚¢w’è‚É
+			//æŒ‡å®šãªã—ã®å ´åˆã€ã‚¿ã‚¤ãƒªãƒ³ã‚°ã‚’ã—ãªã„æŒ‡å®šã«
 			objectData.tiling.x = 1.0f;
 			objectData.tiling.y = 1.0f;
 		}
 
-		//ƒpƒ‰ƒ[ƒ^“Ç‚İ‚İ
+		//ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿èª­ã¿è¾¼ã¿
 		nlohmann::json& transform = object["transform"];
 
-		//À•W
-		//blender‚ÆdirectX‚Å‚ÍÀ•WŒn‚ªˆÙ‚È‚é‚½‚ßA‚±‚±‚Å•ÏŠ·‚·‚é(ƒGƒNƒXƒ|[ƒg‚É•ÏŠ·‚·‚é‚Ì‚ªˆê”Ê“I‚Å‚Í‚ ‚é)
+		//åº§æ¨™
+		//blenderã¨directXã§ã¯åº§æ¨™ç³»ãŒç•°ãªã‚‹ãŸã‚ã€ã“ã“ã§å¤‰æ›ã™ã‚‹(ã‚¨ã‚¯ã‚¹ãƒãƒ¼ãƒˆæ™‚ã«å¤‰æ›ã™ã‚‹ã®ãŒä¸€èˆ¬çš„ã§ã¯ã‚ã‚‹)
 		objectData.translation.x = (float)transform["translation"][1];
 		objectData.translation.y = (float)transform["translation"][2];
 		objectData.translation.z = -1 * (float)transform["translation"][0];
 
-		//‰ñ“]
+		//å›è»¢
 		objectData.rotation.x = -1 * (float)transform["rotation"][1];
 		objectData.rotation.y = -1 * (float)transform["rotation"][2];
 		objectData.rotation.z = (float)transform["rotation"][0];
 
-		//ƒXƒP[ƒŠƒ“ƒO
+		//ã‚¹ã‚±ãƒ¼ãƒªãƒ³ã‚°
 		objectData.scaling.x = (float)transform["scaling"][1];
 		objectData.scaling.y = (float)transform["scaling"][2];
 		objectData.scaling.z = (float)transform["scaling"][0];
@@ -129,18 +129,18 @@ void LevelLoader::ObjectLoad(LevelData& levelData,nlohmann::json& object)
 		if (collider != nullptr)
 		{
 			objectData.collider.have = true;
-			//’†S“_
+			//ä¸­å¿ƒç‚¹
 			objectData.collider.center.x = (float)collider["center"][1];
 			objectData.collider.center.y = (float)collider["center"][2];
 			objectData.collider.center.z = (float)collider["center"][0];
-			//‘å‚«‚³
+			//å¤§ãã•
 			objectData.collider.size.x = (float)collider["size"][1];
 			objectData.collider.size.y = (float)collider["size"][2];
 			objectData.collider.size.z = (float)collider["size"][0];
 		}
 
-		//qƒm[ƒh‚ª‚¢‚é‚È‚çÄ‹A
-		//reverve‚µ‚Äƒƒ‚ƒŠ‚ğŠm•Û‚µ‚È‚¢‚ÆAƒƒ‚ƒŠ‚ªˆÚ“®‚·‚éŠëŒ¯«‚ ‚è
+		//å­ãƒãƒ¼ãƒ‰ãŒã„ã‚‹ãªã‚‰å†å¸°
+		//reverveã—ã¦ãƒ¡ãƒ¢ãƒªã‚’ç¢ºä¿ã—ãªã„ã¨ã€ãƒ¡ãƒ¢ãƒªãŒç§»å‹•ã™ã‚‹å±é™ºæ€§ã‚ã‚Š
 		if (object.contains("children"))
 		{
 			//reservenum++;
@@ -155,15 +155,15 @@ void LevelLoader::ObjectLoad(LevelData& levelData,nlohmann::json& object)
 
 void LevelDataExchanger::SetObjectData(Obj3d& exportData, const LevelData::ObjectData& inportData)
 {
-	//À•W
+	//åº§æ¨™
 	exportData.position = inportData.translation;
-	//‰ñ“]Šp
+	//å›è»¢è§’
 	exportData.rotation = {
 			MathF::AngleConvRad(inportData.rotation.x),
 			MathF::AngleConvRad(inportData.rotation.y),
 			MathF::AngleConvRad(inportData.rotation.z)
 	};
-	//‘å‚«‚³
+	//å¤§ãã•
 	exportData.scale = inportData.scaling;
 }
 

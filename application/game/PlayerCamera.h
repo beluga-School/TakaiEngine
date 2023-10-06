@@ -4,7 +4,7 @@
 #include "Obj.h"
 #include "Collision.h"
 
-//ƒvƒŒƒCƒ„[‚Ìƒ|ƒCƒ“ƒ^‚ğæ“¾‚µA‚»‚ê‚ÉsCamera‚ğ’Ç]‚³‚¹‚é
+//ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã®ãƒã‚¤ãƒ³ã‚¿ã‚’å–å¾—ã—ã€ãã‚Œã«sCameraã‚’è¿½å¾“ã•ã›ã‚‹
 class PlayerCamera : public Obj3d
 {
 public:
@@ -12,7 +12,7 @@ public:
 	void Update();
 	void Draw();
 
-	//ƒJƒƒ‰‚ÌŒã‚ë‚É‚ ‚éƒIƒuƒWƒFƒNƒg‚ğ“§‚¯‚³‚¹‚éˆ—
+	//ã‚«ãƒ¡ãƒ©ã®å¾Œã‚ã«ã‚ã‚‹ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã‚’é€ã‘ã•ã›ã‚‹å‡¦ç†
 	void BackTransparent();
 
 	static PlayerCamera* Get() {
@@ -20,21 +20,21 @@ public:
 		return &instance;
 	}
 
-	//ƒJƒƒ‰‚ÌÀ•W‚ğ•Û‘¶
+	//ã‚«ãƒ¡ãƒ©ã®åº§æ¨™ã‚’ä¿å­˜
 	Cube cameraCol;
 
-	//c‰ñ“]
+	//ç¸¦å›è»¢
 	float mVerticalRad = 0;
-	//‰¡‰ñ“]
+	//æ¨ªå›è»¢
 	float mHorizontalRad = 0;
 
-	//ƒJƒƒ‰‰ñ“]‚ÌŠ´“x(ƒ}ƒEƒX)
+	//ã‚«ãƒ¡ãƒ©å›è»¢ã®æ„Ÿåº¦(ãƒã‚¦ã‚¹)
 	float mMouseSensitivity = 0.15f;
 
-	//ƒJƒƒ‰‰ñ“]‚ÌŠ´“x(ƒpƒbƒh)
+	//ã‚«ãƒ¡ãƒ©å›è»¢ã®æ„Ÿåº¦(ãƒ‘ãƒƒãƒ‰)
 	float mPadSensitivity = 1.0f;
 
-	//ƒJƒƒ‰ƒxƒNƒgƒ‹
+	//ã‚«ãƒ¡ãƒ©ãƒ™ã‚¯ãƒˆãƒ«
 	Vector3 mCenterVec = { 0,0,0 };
 
 	bool mouseLockChange = true;
@@ -68,33 +68,33 @@ private:
 
 	CamMode camMode = CamMode::Normal;
 
-	//ƒXƒ^[æ“¾‚ÌƒJƒƒ‰§Œä
+	//ã‚¹ã‚¿ãƒ¼å–å¾—æ™‚ã®ã‚«ãƒ¡ãƒ©åˆ¶å¾¡
 	void StarGetUpdate();
 
-	//’Êí‚ÌÛ‚ÌƒJƒƒ‰§Œä
+	//é€šå¸¸ã®éš›ã®ã‚«ãƒ¡ãƒ©åˆ¶å¾¡
 	void NormalUpdate();
 
-	//ƒJƒƒ‰‚Ì“–‚½‚è”»’è‚ğì¬
+	//ã‚«ãƒ¡ãƒ©ã®å½“ãŸã‚Šåˆ¤å®šã‚’ä½œæˆ
 	void CreateCamCol();
 
-	//‰Šú‚ÌƒJƒƒ‰‹——£
+	//åˆæœŸã®ã‚«ãƒ¡ãƒ©è·é›¢
 	float mRadius = 8.0f;
 
-	//‚±‚ÌƒIƒuƒWƒFƒNƒg‚Æ“–‚½‚Á‚½ƒIƒuƒWƒFƒNƒg‚ğ“§‚¯‚³‚¹‚é
+	//ã“ã®ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã¨å½“ãŸã£ãŸã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã‚’é€ã‘ã•ã›ã‚‹
 	Obj3d transparentObj;
 
-	//---ƒXƒ^[æ“¾‚ÌƒJƒƒ‰‚Ì‹““®§Œä•Ï”ŒQ
-	//Œ³‚Ìƒ‰ƒfƒBƒEƒX‚ğ•Û‘¶
+	//---ã‚¹ã‚¿ãƒ¼å–å¾—æ™‚ã®ã‚«ãƒ¡ãƒ©ã®æŒ™å‹•åˆ¶å¾¡å¤‰æ•°ç¾¤
+	//å…ƒã®ãƒ©ãƒ‡ã‚£ã‚¦ã‚¹ã‚’ä¿å­˜
 	float saveRadius = 0.0f;
 
-	//ƒC[ƒWƒ“ƒO‚Ìn“_AI“_
+	//ã‚¤ãƒ¼ã‚¸ãƒ³ã‚°ã®å§‹ç‚¹ã€çµ‚ç‚¹
 	Vector3 starGetCamPosS{};
 	Vector3 starGetCamPosE{};
 
-	//ƒJƒƒ‰‚ğ“®‚©‚·ƒ^ƒCƒ}[
+	//ã‚«ãƒ¡ãƒ©ã‚’å‹•ã‹ã™ã‚¿ã‚¤ãƒãƒ¼
 	TEasing::easeTimer camMoveTimer = 1.0f;
 
-	//ƒ‰ƒfƒBƒEƒX‚ğ“®‚©‚·ƒ^ƒCƒ}[
+	//ãƒ©ãƒ‡ã‚£ã‚¦ã‚¹ã‚’å‹•ã‹ã™ã‚¿ã‚¤ãƒãƒ¼
 	TEasing::easeTimer radiusMoveTimer = 0.5f;
 };
 

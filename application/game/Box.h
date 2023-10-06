@@ -3,7 +3,7 @@
 #include "Tag.h"
 #include <list>
 
-//�u���b�N�̕������m�F���邽�߂�enum
+//ブロックの方向を確認するためのenum
 enum class CheckDirection
 {
 	CD_UP,
@@ -16,48 +16,48 @@ enum class CheckDirection
 
 class Entity;
 
-//�����蔻��p�ɁAID���ʂ��ł���悤�ɂ���Cube
+//当たり判定用に、ID識別ができるようにしたCube
 struct IDdCube : public Cube
 {
 	IDdCube()
 	{
-		//ID��Count�𑝂₷
+		//IDのCountを増やす
 		IDdCube::sMasterIDCount++;
 
-		//Entity���Y�܂ꂽ��A�����݂̂ɑΉ�����ID������U��
-		//�X�e�[�W�ړ��̍ۂ�ID������������\��Ȃ̂ŁAID���d������\��������
+		//Entityが産まれたら、そいつのみに対応するIDを割り振る
+		//ステージ移動の際にIDを初期化する予定なので、IDが重複する可能性がある
 		masterID = IDdCube::sMasterIDCount;
 	}
 
-	//���g��ID���擾����֐�
+	//自身のIDを取得する関数
 	uint32_t GetID()const;
 
 	/// <summary>
-	/// �t�^ID��0�ɖ߂��֐�
-	/// �S�I�u�W�F�N�g�����̍ۂ݂̂Ɏg�p���A����ȊO�ł͎g�p���Ȃ�����
+	/// 付与IDを0に戻す関数
+	/// 全オブジェクト消去の際のみに使用し、それ以外では使用しないこと
 	/// </summary>
 	static void ResetID();
 
 	Entity* parentEntity = nullptr;
 
 private:
-	//�S�ẴI�u�W�F�N�g���A���g�����̃}�C�i���o�[������
+	//全てのオブジェクトが、自身だけのマイナンバーを持つ
 	uint32_t masterID = 0;
 
-	//���ɕt�^����ID���Ǘ�����i���o�[
+	//次に付与するIDを管理するナンバー
 	static uint32_t sMasterIDCount;
 };
 
-//�l�p�Ŕ�����Ƃ�I�u�W�F�N�g�̋��ʍ��������o�����N���X
+//四角で判定をとるオブジェクトの共通項だけ取り出したクラス
 class Box : public Obj3d
 {
 public:
 	IDdCube cubecol;
 
-	//���g�̓����蔻����쐬(�X�V)
+	//自身の当たり判定を作成(更新)
 	void CreateCol(const Vector3& pos, const Vector3& scale);
 
-	//���g�̕`��I�u�W�F�N�g���X�V
+	//自身の描画オブジェクトを更新
 	void ColDrawerUpdate(const Vector3& pos, const Vector3& scale);
 
 	Box()

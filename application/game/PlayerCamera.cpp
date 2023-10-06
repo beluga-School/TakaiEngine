@@ -22,7 +22,7 @@ void PlayerCamera::Initialize()
 
 void PlayerCamera::Update()
 {
-	//ƒ}ƒEƒXŒÅ’è
+	//ãƒã‚¦ã‚¹å›ºå®š
 	if (Input::Keyboard::TriggerKey(DIK_N))
 	{
 		mouseLockChange = !mouseLockChange;
@@ -61,30 +61,30 @@ void PlayerCamera::BackTransparent()
 {
 	Player* player = Player::Get();
 
-	//X‚ÆZ‚ğƒvƒŒƒCƒ„[‚ÌŒã‚ë‚ğ‰~‰^“®‚Å‚¢‚¢Š´‚¶‚É’Ç]‚·‚é
+	//Xã¨Zã‚’ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã®å¾Œã‚ã‚’å††é‹å‹•ã§ã„ã„æ„Ÿã˜ã«è¿½å¾“ã™ã‚‹
 	Vector2 invObjNonY = MathF::CircularMotion({ player->position.x,player->position.z },
 		(transparentObj.scale.x + transparentObj.scale.z) / 2 * 0.8f,
 		-player->rotation.y - MathF::PIf / 2);
 
-	//Y‚ÍƒJƒƒ‰ˆÊ’u‚Æ“¯‚¶‚É‚·‚é
+	//Yã¯ã‚«ãƒ¡ãƒ©ä½ç½®ã¨åŒã˜ã«ã™ã‚‹
 	transparentObj.position = { invObjNonY.x,Camera::sCamera->mEye.y,invObjNonY.y };
 
 	transparentObj.Update(*Camera::sCamera);
 
-	//“–‚½‚Á‚½ƒIƒuƒWƒFƒNƒg‚Ì•`‰æƒtƒ‰ƒO‚ğÜ‚é
+	//å½“ãŸã£ãŸã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®æç”»ãƒ•ãƒ©ã‚°ã‚’æŠ˜ã‚‹
 	for (auto& obj : StageChanger::Get()->mEntitys)
 	{
-		//ƒuƒƒbƒNˆÈŠO‚È‚çŸ‚Ö
+		//ãƒ–ãƒ­ãƒƒã‚¯ä»¥å¤–ãªã‚‰æ¬¡ã¸
 		if (!obj.CheckTag(TagTable::Block))continue;
 		
-		//ƒuƒƒbƒN‚È‚Ì‚ªŠm’è‚µ‚½‚Ì‚ÅƒuƒƒbƒNŒ^‚É•ÏŠ·
+		//ãƒ–ãƒ­ãƒƒã‚¯ãªã®ãŒç¢ºå®šã—ãŸã®ã§ãƒ–ãƒ­ãƒƒã‚¯å‹ã«å¤‰æ›
 		Block* block = static_cast<Block*>(&obj);
 
-		//“–‚½‚Á‚Ä‚½‚çÁ‚¦‚é
+		//å½“ãŸã£ã¦ãŸã‚‰æ¶ˆãˆã‚‹
 		if (Collsions::BoxColAABB(block->box, transparentObj))
 		{
-			//’n–Ê‚ª“§‚¯‚Ä‚Ù‚µ‚­‚È‚¢‚Ì‚ÅA’n–Ê‚ÌÀ•W‚ªƒvƒŒƒCƒ„[‚Ì‘«Œ³‚æ‚è‰º‚È‚ç
-			//“–‚½‚Á‚Ä‚Ä‚à“§‚¯‚éˆ—‚ğƒXƒLƒbƒv‚·‚é
+			//åœ°é¢ãŒé€ã‘ã¦ã»ã—ããªã„ã®ã§ã€åœ°é¢ã®åº§æ¨™ãŒãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã®è¶³å…ƒã‚ˆã‚Šä¸‹ãªã‚‰
+			//å½“ãŸã£ã¦ã¦ã‚‚é€ã‘ã‚‹å‡¦ç†ã‚’ã‚¹ã‚­ãƒƒãƒ—ã™ã‚‹
 			if (block->box.position.y + block->box.scale.y / 2 <= player->GetFeet())
 			{
 				continue;
@@ -98,18 +98,18 @@ void PlayerCamera::BackTransparent()
 			{
 				block->transparentTimer.Reset();
 			}
-			//ƒAƒEƒgƒ‰ƒCƒ“‚Í‚·‚®‚ÉÁ‚·
+			//ã‚¢ã‚¦ãƒˆãƒ©ã‚¤ãƒ³ã¯ã™ãã«æ¶ˆã™
 			block->SetOutLineAlpha(0.0f);
 		}
-		//“–‚½‚Á‚Ä‚È‚¢‚È‚ç’iX”Z‚­‚·‚é
+		//å½“ãŸã£ã¦ãªã„ãªã‚‰æ®µã€…æ¿ƒãã™ã‚‹
 		else
 		{
-			//ƒ^ƒCƒ}[‚ÌTimeRate‚ª0.0~1.0‚Ì”ÍˆÍ‚Å“®‚­‚Ì‚ÅA‚»‚Ì’l‚ğ”½“]‚³‚¹‚½‚à‚Ì‚ğAlpha‚Æ‚µ‚Äˆµ‚¤
+			//ã‚¿ã‚¤ãƒãƒ¼ã®TimeRateãŒ0.0~1.0ã®ç¯„å›²ã§å‹•ãã®ã§ã€ãã®å€¤ã‚’åè»¢ã•ã›ãŸã‚‚ã®ã‚’Alphaã¨ã—ã¦æ‰±ã†
 			block->transparentTimer.ReverseStart();
-			//ƒAƒEƒgƒ‰ƒCƒ“‚Í‚·‚®‚É–ß‚·
+			//ã‚¢ã‚¦ãƒˆãƒ©ã‚¤ãƒ³ã¯ã™ãã«æˆ»ã™
 			block->SetOutLineAlpha(1.0f);
 		}
-		//’iX”–‚­‚µ‚½‚è”Z‚­‚µ‚½‚è‚·‚é
+		//æ®µã€…è–„ãã—ãŸã‚Šæ¿ƒãã—ãŸã‚Šã™ã‚‹
 		block->color_.w = 1.0f - block->transparentTimer.GetTimeRate();
 	}
 }
@@ -124,7 +124,7 @@ void PlayerCamera::ChangeNormalMode()
 
 void PlayerCamera::ChangeStarGetMode()
 {
-	//‚·‚Å‚ÉŠJn‚³‚ê‚Ä‚é‚È‚çƒXƒLƒbƒv
+	//ã™ã§ã«é–‹å§‹ã•ã‚Œã¦ã‚‹ãªã‚‰ã‚¹ã‚­ãƒƒãƒ—
 	if (camMode == CamMode::StarGet)return;
 
 	Player* player = Player::Get();
@@ -133,17 +133,17 @@ void PlayerCamera::ChangeStarGetMode()
 	camMoveTimer.Start();
 	radiusMoveTimer.Reset();
 
-	//Œ»İˆÊ’u‚ğn“_‚É
+	//ç¾åœ¨ä½ç½®ã‚’å§‹ç‚¹ã«
 	starGetCamPosS = Camera::sCamera->mEye;
 
-	//ƒvƒŒƒCƒ„[‚Ì³–ÊÀ•W‚ğZo
+	//ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã®æ­£é¢åº§æ¨™ã‚’ç®—å‡º
 	mCenterVec = Player::Get()->matWorld.ExtractAxisZ();
-	//y•ûŒü‚ğ”½‘Î‚É‚µ‚Äã‚És‚­‚æ‚¤‚É
+	//yæ–¹å‘ã‚’åå¯¾ã«ã—ã¦ä¸Šã«è¡Œãã‚ˆã†ã«
 	mCenterVec.y = 0.25f;
 
 	position = player->position;
 
-	//ƒvƒŒƒCƒ„[‚Ì³–ÊÀ•W‚ğI“_‚É
+	//ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã®æ­£é¢åº§æ¨™ã‚’çµ‚ç‚¹ã«
 	starGetCamPosE = position + (mCenterVec * mRadius);
 
 	saveRadius = mRadius;
@@ -181,7 +181,7 @@ void PlayerCamera::NormalUpdate()
 	Camera::sCamera->mEye = position - (mCenterVec * mRadius);
 	Camera::sCamera->mTarget = position;
 
-	//ƒ‰ƒfƒBƒEƒX•ÏX(Á‚µ‚Ä‚à‚¢‚¢‚©‚à)
+	//ãƒ©ãƒ‡ã‚£ã‚¦ã‚¹å¤‰æ›´(æ¶ˆã—ã¦ã‚‚ã„ã„ã‹ã‚‚)
 	if (Mouse::Wheel() < 0)
 	{
 		mRadius += 2.0f;
@@ -193,29 +193,29 @@ void PlayerCamera::NormalUpdate()
 
 	mRadius = Util::Clamp(mRadius, 1.0f, 30.f);
 
-	//‰ñ“]‚³‚¹‚éˆ—
+	//å›è»¢ã•ã›ã‚‹å‡¦ç†
 	if (Input::Pad::CheckConnectPad())
 	{
-		//c‰ñ“]
+		//ç¸¦å›è»¢
 		mVerticalRad += MathF::AngleConvRad(Pad::GetRStickMove().y) * mPadSensitivity;
 
-		//‰¡‰ñ“]
+		//æ¨ªå›è»¢
 		mHorizontalRad += MathF::AngleConvRad(Pad::GetRStickMove().x) * mPadSensitivity;
 	}
 
-	//ƒ}ƒEƒXŒÅ’è‚³‚ê‚Ä‚é‚È‚ç
+	//ãƒã‚¦ã‚¹å›ºå®šã•ã‚Œã¦ã‚‹ãªã‚‰
 	if (mouseLockChange)
 	{
-		//c‰ñ“]
+		//ç¸¦å›è»¢
 		mVerticalRad += MathF::AngleConvRad(Mouse::GetVelocity().y) * mMouseSensitivity;
 
-		//‰¡‰ñ“]
+		//æ¨ªå›è»¢
 		mHorizontalRad += MathF::AngleConvRad(Mouse::GetVelocity().x) * mMouseSensitivity;
 	}
 
-	//Œã‚Å—¼•û“¯‚É“®‚©‚µ‚½‚Æ‚«‚É‰Á‘¬‚µ‚È‚¢‚æ‚¤‚Éclamp‚·‚é
+	//å¾Œã§ä¸¡æ–¹åŒæ™‚ã«å‹•ã‹ã—ãŸã¨ãã«åŠ é€Ÿã—ãªã„ã‚ˆã†ã«clampã™ã‚‹
 
-	//ŒÀŠE’l‚ğ’´‚¦‚È‚¢ˆ—
+	//é™ç•Œå€¤ã‚’è¶…ãˆãªã„å‡¦ç†
 	if (mVerticalRad > MathF::PIf / 2 - MathF::AngleConvRad(1.0f)) mVerticalRad = MathF::PIf / 2 - MathF::AngleConvRad(1.0f);
 	if (mVerticalRad < -MathF::PIf / 2 + MathF::AngleConvRad(1.0f)) mVerticalRad = -MathF::PIf / 2 + MathF::AngleConvRad(1.0f);
 
@@ -227,16 +227,16 @@ void PlayerCamera::CreateCamCol()
 {
 	Player* player = Player::Get();
 
-	//ƒJƒƒ‰À•W‚ğ“–‚½‚è”»’è—p‚É•Û‘¶
-	//ƒJƒƒ‰ˆÊ’u‚ÆƒvƒŒƒCƒ„[ˆÊ’u‚Ì’†S‚ğæ‚é
+	//ã‚«ãƒ¡ãƒ©åº§æ¨™ã‚’å½“ãŸã‚Šåˆ¤å®šç”¨ã«ä¿å­˜
+	//ã‚«ãƒ¡ãƒ©ä½ç½®ã¨ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ä½ç½®ã®ä¸­å¿ƒã‚’å–ã‚‹
 	cameraCol.position = {
 		(Camera::sCamera->mEye.x + player->position.x) / 2,
 		(Camera::sCamera->mEye.y + player->position.y) / 2,
 		(Camera::sCamera->mEye.z + player->position.z) / 2,
 	};
 
-	//’†SˆÊ’u‚©‚çŒ³À•W‚Öˆø‚«Z‚µ‚ÄŠÔ‚Ì’·‚³‚ğo‚·
-	//X‚ÆZ‚Ì•‚Ìo‚µ•û‚ª‚í‚©‚ñ‚È‚¢‚Ì‚Å“K“–‚È‘å‚«‚³‚ğ“ü‚ê‚Ä‚¨‚­
+	//ä¸­å¿ƒä½ç½®ã‹ã‚‰å…ƒåº§æ¨™ã¸å¼•ãç®—ã—ã¦é–“ã®é•·ã•ã‚’å‡ºã™
+	//Xã¨Zã®å¹…ã®å‡ºã—æ–¹ãŒã‚ã‹ã‚“ãªã„ã®ã§é©å½“ãªå¤§ãã•ã‚’å…¥ã‚Œã¦ãŠã
 	cameraCol.scale = { player->scale.x,
 		Util::Abs(cameraCol.position.y - Camera::sCamera->mEye.y),
 		player->scale.z };

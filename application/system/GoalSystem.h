@@ -18,9 +18,9 @@ private:
 	ClearManage(){};
 };
 
-//ƒS[ƒ‹Œã‚Ìˆ—‚ði‚ß‚éƒNƒ‰ƒX
-//¡‚ÍƒXƒvƒ‰ƒCƒgo‚·‚¾‚¯
-//¡ŒãƒXƒe[ƒW‚ÉŽ‚½‚¹‚ÄA1ƒXƒe[ƒW=1ƒS[ƒ‹‚ð‚à‚ÂA‚Æ‚¢‚¤Œ`‚É‚µ‚½‚¢
+//ã‚´ãƒ¼ãƒ«å¾Œã®å‡¦ç†ã‚’é€²ã‚ã‚‹ã‚¯ãƒ©ã‚¹
+//ä»Šã¯ã‚¹ãƒ—ãƒ©ã‚¤ãƒˆå‡ºã™ã ã‘
+//ä»Šå¾Œã‚¹ãƒ†ãƒ¼ã‚¸ã«æŒãŸã›ã¦ã€1ã‚¹ãƒ†ãƒ¼ã‚¸=1ã‚´ãƒ¼ãƒ«ã‚’ã‚‚ã¤ã€ã¨ã„ã†å½¢ã«ã—ãŸã„
 class GoalSystem
 {
 public:
@@ -33,7 +33,7 @@ public:
 	void Update();
 	void Draw();
 
-	//ƒNƒŠƒAƒtƒ‰ƒO
+	//ã‚¯ãƒªã‚¢ãƒ•ãƒ©ã‚°
 	bool mIsClear = false;
 
 private:

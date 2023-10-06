@@ -4,27 +4,27 @@
 
 bool EventCameraManager::SetEventCamera(const std::string& eventname)
 {
-	//ƒCƒxƒ“ƒg‚ªŒ©‚Â‚©‚ñ‚È‚©‚Á‚½‚ç¸”s‚Å•Ô‚·
+	//ã‚¤ãƒ™ãƒ³ãƒˆãŒè¦‹ã¤ã‹ã‚“ãªã‹ã£ãŸã‚‰å¤±æ•—ã§è¿”ã™
 	if (eventCameraDatas.find(eventname) == eventCameraDatas.end()) return false;
 
 	eventCamera.Initialize();
 
-	//ƒCƒxƒ“ƒg–¼‚ğ•Û
+	//ã‚¤ãƒ™ãƒ³ãƒˆåã‚’ä¿æŒ
 	eventname_ = eventname;
 
-	//ƒJƒƒ‰‚ª•¡”‚ ‚é‚È‚ç
+	//ã‚«ãƒ¡ãƒ©ãŒè¤‡æ•°ã‚ã‚‹ãªã‚‰
 	if (eventCameraDatas[eventname].datas.size() > 1)
 	{
 		itrNumber = 1;
 	}
-	//‚»‚¤‚Å‚È‚¢‚È‚ç
+	//ãã†ã§ãªã„ãªã‚‰
 	else
 	{
-		//è‘O‚ÆŒã‚ë‚É“¯‚¶‚à‚Ì‚ğƒZƒbƒg‚µ‚Ä‚¨‚­
+		//æ‰‹å‰ã¨å¾Œã‚ã«åŒã˜ã‚‚ã®ã‚’ã‚»ãƒƒãƒˆã—ã¦ãŠã
 		itrNumber = 0;
 	}
 
-	//”Ô†‚ªá‚¢“ñ‚Â‚ğƒZƒbƒg‚·‚é
+	//ç•ªå·ãŒè‹¥ã„äºŒã¤ã‚’ã‚»ãƒƒãƒˆã™ã‚‹
 	frontCamera = &eventCameraDatas[eventname].datas.front();
 	backCamera = &eventCameraDatas[eventname].datas.front() + itrNumber;
 
@@ -34,10 +34,10 @@ bool EventCameraManager::SetEventCamera(const std::string& eventname)
 		eventPositions.push_back(camdata.pos);
 	}
 
-	//ƒ^[ƒQƒbƒgƒf[ƒ^‚ª‰½‚©‚µ‚ç“ü‚Á‚Ä‚¢‚é‚È‚ç
+	//ã‚¿ãƒ¼ã‚²ãƒƒãƒˆãƒ‡ãƒ¼ã‚¿ãŒä½•ã‹ã—ã‚‰å…¥ã£ã¦ã„ã‚‹ãªã‚‰
 	if (eventCameraDatas[eventname].InTargetData())
 	{
-		//ƒ^[ƒQƒbƒgƒf[ƒ^‚ğƒZƒbƒg
+		//ã‚¿ãƒ¼ã‚²ãƒƒãƒˆãƒ‡ãƒ¼ã‚¿ã‚’ã‚»ãƒƒãƒˆ
 		eventCamera.SetTarget(eventCameraDatas[eventname_].target);
 	}
 
@@ -79,10 +79,10 @@ void EventCameraManager::Update()
 		eventCamera.SetRotation(TEasing::InQuad(frontCamera->rotation, backCamera->rotation, rotaTimer.GetTimeRate()));
 		if (rotaTimer.GetEnd())
 		{
-			//ŠÇ—”Ô†‚ª‘S‘Ì‚ÌƒTƒCƒY‚æ‚è¬‚³‚¢‚È‚ç
+			//ç®¡ç†ç•ªå·ãŒå…¨ä½“ã®ã‚µã‚¤ã‚ºã‚ˆã‚Šå°ã•ã„ãªã‚‰
 			if (itrNumber < eventCameraDatas[eventname_].datas.size() - 1)
 			{
-				//”Ô†‚ğ‘‚â‚µ‚Ä
+				//ç•ªå·ã‚’å¢—ã‚„ã—ã¦
 				itrNumber++;
 				frontCamera = backCamera;
 				backCamera = &eventCameraDatas[eventname_].datas.front() + itrNumber;
@@ -121,6 +121,6 @@ void EventCameraManager::Reset()
 
 bool EventCamManageData::InTargetData()
 {
-	//ƒ^[ƒQƒbƒg‚Ì’l‚ª‰Šú’l‚Å‚È‚¢‚È‚ç“ü‚Á‚Ä‚¢‚é‚Æ”»’è
+	//ã‚¿ãƒ¼ã‚²ãƒƒãƒˆã®å€¤ãŒåˆæœŸå€¤ã§ãªã„ãªã‚‰å…¥ã£ã¦ã„ã‚‹ã¨åˆ¤å®š
 	return target.x != -1000 &&target.y != -1000 && target.z != -1000;
 }

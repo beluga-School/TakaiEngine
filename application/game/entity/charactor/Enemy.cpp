@@ -11,8 +11,8 @@ Vector3 Enemy::TargetVector(const Mob& target)
 {
 	Vector3 tVec{};
 
-	///---Œ©‚½–Úˆ—
-	//’Ç‚¢‚©‚¯‚é•ûŒü‚ÖŒü‚«‚ğ•Ï‚¦‚é
+	///---è¦‹ãŸç›®å‡¦ç†
+	//è¿½ã„ã‹ã‘ã‚‹æ–¹å‘ã¸å‘ãã‚’å¤‰ãˆã‚‹
 	tVec = target.position - position;
 	tVec.normalize();
 	tVec.y = 0;
@@ -26,7 +26,7 @@ void Enemy::TargetTurn(const Mob& target, const Vector3& tVec)
 
 	rotation.y = standardRotaVec.Radian(tVec);
 	if (tVec.z > 0) {
-		//–³—‚â‚èŒü‚«‚ğ”½‘Î‚É
+		//ç„¡ç†ã‚„ã‚Šå‘ãã‚’åå¯¾ã«
 		rotation.y *= -1;
 	}
 }
@@ -41,7 +41,7 @@ void Enemy::EncountSphereInitialize()
 void Enemy::EncountSphereUpdate()
 {
 	sphereCol.center = position;
-	//’ÇÕ”ÍˆÍ‚Ì‹…‚Ì”¼Œa(ƒx[ƒX‚Ì‘å‚«‚³+‘å‚«‚³‚Ì•½‹Ï‚ğ‘«‚·)
+	//è¿½è·¡ç¯„å›²ã®çƒã®åŠå¾„(ãƒ™ãƒ¼ã‚¹ã®å¤§ãã•+å¤§ãã•ã®å¹³å‡ã‚’è¶³ã™)
 	sphereCol.radius = 8 + MathF::Avarage(scale);
 
 	encountSphere.position = sphereCol.center;

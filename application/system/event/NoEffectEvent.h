@@ -2,7 +2,7 @@
 #include "IEvent.h"
 #include "TEasing.h"
 
-//“Á‚ÉŒø‰Ê‚ª‚È‚¢ƒCƒxƒ“ƒg@ƒJƒƒ‰‚Å‰‰o‚µ‚½‚¢‚Æ‚«‚ÉŽg‚¤
+//ç‰¹ã«åŠ¹æžœãŒãªã„ã‚¤ãƒ™ãƒ³ãƒˆã€€ã‚«ãƒ¡ãƒ©ã§æ¼”å‡ºã—ãŸã„ã¨ãã«ä½¿ã†
 class NoEffectEvent :public IEvent
 {
 public:

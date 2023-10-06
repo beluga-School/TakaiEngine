@@ -17,26 +17,26 @@ public:
 
 	void OnCollide(Mob& mob);
 
-	//¡‚Ì‚Æ‚±‚ë‚Í’†ŠÔ“_‚ğ1‚Â‚µ‚©İ’è‚Å‚«‚È‚¢
+	//ä»Šã®ã¨ã“ã‚ã¯ä¸­é–“ç‚¹ã‚’1ã¤ã—ã‹è¨­å®šã§ããªã„
 	
-	//n“_A’†ŠÔ“_AI“_
+	//å§‹ç‚¹ã€ä¸­é–“ç‚¹ã€çµ‚ç‚¹
 	Vector3 startPos = {};
 	Vector3 interPos = {};
 	Vector3 endPos = {};
 	
-	//”Ô†‚ğ•Û
+	//ç•ªå·ã‚’ä¿æŒ
 	std::string id = "-1";
 
 	void SetState(float maxtime);
 
 private:
-	//“_‚Ì”(¡Œãinter‚ğ‘‚â‚·‚Æ‚«‚Ég‚¤)
+	//ç‚¹ã®æ•°(ä»Šå¾Œinterã‚’å¢—ã‚„ã™ã¨ãã«ä½¿ã†)
 	int32_t pointNum = 3;
 
-	//‡Œv‚ÌˆÚ“®ŠÔ
+	//åˆè¨ˆã®ç§»å‹•æ™‚é–“
 	TEasing::easeTimer timer = 2.0f;
 
-	//”ò‚Î‚·ƒ‚ƒu‚ğ•Û‚·‚éƒ|ƒCƒ“ƒ^
+	//é£›ã°ã™ãƒ¢ãƒ–ã‚’ä¿æŒã™ã‚‹ãƒã‚¤ãƒ³ã‚¿
 	Mob* target = nullptr;
 
 	std::vector<Vector3> inters;

@@ -40,14 +40,14 @@ public:
 
 	~Dokan()
 	{
-		//�^�[�Q�b�g�̓����蔻��Ȃ�������������
+		//ターゲットの当たり判定なくす処理を解除
 		if (mTarget != nullptr)
 		{
 			mTarget->SetNoCollsion(false);
 			mTarget->SetNoGravity(false);
 			mTarget->SetNoMove(false);
 		}
-		//�^�[�Q�b�g�̕ێ�������
+		//ターゲットの保持を解除
 		mTarget = nullptr;
 	}
 
@@ -62,27 +62,27 @@ public:
 	void HitEffect();
 	void HitEffect(Mob* target);
 
-	//�Ăяo����UI���o������
+	//呼び出すとUIが出現する
 	void PopUpUI();
 
-	//�Ăяo����UI����������
+	//呼び出すとUIが引っ込む
 	void PopOutUI();
 
-	//�ړ���̏���ێ�
+	//移動先の情報を保持
 	DokanInfo nextDokanInfo;
 	
-	//���g�̏���ێ�
+	//自身の情報を保持
 	DokanInfo dokanInfo;
 
-	//������x�߂Â�����UI��\�����邽�߂̋�
+	//ある程度近づいたらUIを表示するための球
 	Sphere popUIRangeSphere = { {0,0,0} ,10.0f};
 
 private:
 
-	//�^�[�Q�b�g�����g�̒��ɓ����֐�
+	//ターゲットを自身の中に入れる関数
 	void TargetEnter();
 
-	//UI�̍X�V
+	//UIの更新
 	void UIUpdate();
 
 	TEasing::easeTimer mPreMoveTimer = 0.25f;

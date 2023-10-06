@@ -18,21 +18,21 @@ int32_t Status::GetOld()
 Status::Status(int32_t init) {
 	mCurrent = init;
 	mOld = init;
-	//ƒ}ƒl[ƒWƒƒ[‚É“o˜^
+	//ãƒãƒãƒ¼ã‚¸ãƒ£ãƒ¼ã«ç™»éŒ²
 	Register();
 };
 
 Status::Status(const Status& rhs) {
 	mCurrent = rhs.mCurrent;
 	mOld = rhs.mOld;
-	//ƒ}ƒl[ƒWƒƒ[‚É“o˜^
+	//ãƒãƒãƒ¼ã‚¸ãƒ£ãƒ¼ã«ç™»éŒ²
 	Register();
 }
 
 Status& Status::operator=(const Status& rhs) {
 	mCurrent = rhs.mCurrent;
 	mOld = rhs.mOld;
-	//ƒ}ƒl[ƒWƒƒ[‚É“o˜^
+	//ãƒãƒãƒ¼ã‚¸ãƒ£ãƒ¼ã«ç™»éŒ²
 	Register();
 
 	return *this;
@@ -44,28 +44,28 @@ Status::~Status()
 	{
 		if (*itr == this)
 		{
-			//erase‚ÍŸ‚Ìƒ|ƒCƒ“ƒ^‚ğ•Ô‚·‚Ì‚ÅAitr‚É‘ã“ü‚·‚é‚±‚Æ‚Åitr++‚Æ“¯‚¶‹““®‚ğ‚µ‚È‚ª‚ç—v‘f‚ğÁ‚¹‚é‚º
+			//eraseã¯æ¬¡ã®ãƒã‚¤ãƒ³ã‚¿ã‚’è¿”ã™ã®ã§ã€itrã«ä»£å…¥ã™ã‚‹ã“ã¨ã§itr++ã¨åŒã˜æŒ™å‹•ã‚’ã—ãªãŒã‚‰è¦ç´ ã‚’æ¶ˆã›ã‚‹ãœ
 			itr = StatusManager::GetStatuses().erase(itr);
 		}
 		else
 		{
-			//‚»‚êˆÈŠO‚Í‚¢‚Â‚à’Ê‚èi‚ß‚é‚º
+			//ãã‚Œä»¥å¤–ã¯ã„ã¤ã‚‚é€šã‚Šé€²ã‚ã‚‹ãœ
 			itr++;
 		}
 	}
 }
 
-//Œ¸­ƒgƒŠƒK[
+//æ¸›å°‘ãƒˆãƒªã‚¬ãƒ¼
 bool Status::DecreaseTrigger() {
 	return mCurrent < mOld;
 };
 
-//ã¸ƒgƒŠƒK[
+//ä¸Šæ˜‡ãƒˆãƒªã‚¬ãƒ¼
 bool Status::IncreaseTrigger() {
 	return mCurrent > mOld;
 };
 
-//•Ï‰»‚ª‚È‚¢ƒtƒ‰ƒO
+//å¤‰åŒ–ãŒãªã„ãƒ•ãƒ©ã‚°
 bool Status::Constant() {
 	return mCurrent == mOld;
 };

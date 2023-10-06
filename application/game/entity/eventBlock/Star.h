@@ -14,7 +14,7 @@ public:
 	void Draw()override;
 	void HitEffect()override;
 
-	//ƒXƒe[ƒg‚ªCountUp‚Ü‚Å“’B‚µ‚Ä‚¢‚½‚çAEnd‚É•ÏX‚·‚é
+	//ã‚¹ãƒ†ãƒ¼ãƒˆãŒCountUpã¾ã§åˆ°é”ã—ã¦ã„ãŸã‚‰ã€Endã«å¤‰æ›´ã™ã‚‹
 	void StateEnd();
 
 	bool InHoleEnd();
@@ -28,10 +28,10 @@ public:
 		End,
 	};
 
-	//Œ»İ‚Ìó‘Ô‚ğæ“¾
+	//ç¾åœ¨ã®çŠ¶æ…‹ã‚’å–å¾—
 	StarState GetState();
 
-	//‚·‚Å‚Éæ“¾Ï‚İ‚Ìê‡‚ÉAó‘Ô‚ğæ“¾Œã‚É•Ï‰»‚³‚¹‚éˆ—
+	//ã™ã§ã«å–å¾—æ¸ˆã¿ã®å ´åˆã«ã€çŠ¶æ…‹ã‚’å–å¾—å¾Œã«å¤‰åŒ–ã•ã›ã‚‹å‡¦ç†
 	void SetCorrected();
 
 	int32_t id = -1;
@@ -39,26 +39,26 @@ public:
 private:
 	StarState starState = StarState::None;
 
-	//“üè‚É•Û‘¶‚·‚éƒXƒP[ƒ‹
+	//å…¥æ‰‹æ™‚ã«ä¿å­˜ã™ã‚‹ã‚¹ã‚±ãƒ¼ãƒ«
 	Vector3 saveScale = { 0,0,0 };
 
-	//“üè‚ÉƒvƒŒƒCƒ„[‚É‹z‚¢‚Ü‚ê‚éƒC[ƒWƒ“ƒO‚Ìn“_‚ÆI“_
+	//å…¥æ‰‹æ™‚ã«ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã«å¸ã„è¾¼ã¾ã‚Œã‚‹ã‚¤ãƒ¼ã‚¸ãƒ³ã‚°ã®å§‹ç‚¹ã¨çµ‚ç‚¹
 	Vector3 saveStartPos = { 0,0,0 };
 	Vector3 savePlayerPos = { 0,0,0 };
 
 	Vector3 jumpUpPos = { 0,0,0 };
 	Vector3 jumpUpScale = { 0,0,0 };
 
-	//1•bŠÔ‚Ì‰ñ“]”
+	//1ç§’é–“ã®å›è»¢æ•°
 	float rotaSpeed = 0.25f;
 
-	//”ò‚Ñã‚ª‚éŠÔ
+	//é£›ã³ä¸ŠãŒã‚‹æ™‚é–“
 	TEasing::easeTimer jumpUpTimer = 1.0f;
-	//‹ó’†‚Å‚Æ‚Ç‚Ü‚éŠÔ
+	//ç©ºä¸­ã§ã¨ã©ã¾ã‚‹æ™‚é–“
 	TEasing::easeTimer delayTimer = 0.2f;
-	//‹z‚¢‚Ü‚ê‚éŠÔ
+	//å¸ã„è¾¼ã¾ã‚Œã‚‹æ™‚é–“
 	TEasing::easeTimer inholeTimer = 2.0f;
 
-	//ƒp[ƒeƒBƒNƒ‹‚Ì”­¶ƒ^ƒCƒ}[
+	//ãƒ‘ãƒ¼ãƒ†ã‚£ã‚¯ãƒ«ã®ç™ºç”Ÿã‚¿ã‚¤ãƒãƒ¼
 	TEasing::easeTimer particleTimer = 1.0f;
 };

@@ -48,7 +48,7 @@ void SceneChange::Update()
 
 		break;
 	case SceneChange::State::SECOND:
-		//“ü—Í‚ª‚ ‚é‚Ü‚Å‘Ò‹@
+		//å…¥åŠ›ãŒã‚ã‚‹ã¾ã§å¾…æ©Ÿ
 
 		break;
 	case SceneChange::State::THIRD:

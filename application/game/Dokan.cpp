@@ -46,33 +46,33 @@ void Dokan::HitEffect()
 
 void Dokan::HitEffect(Mob* target_)
 {
-	//‚·‚Å‚ÉŠJn‚µ‚Ä‚¢‚é‚È‚çƒXƒLƒbƒv
+	//ã™ã§ã«é–‹å§‹ã—ã¦ã„ã‚‹ãªã‚‰ã‚¹ã‚­ãƒƒãƒ—
 	if (mDokanState != DokanState::None)return;
 
-	//ƒ{ƒ^ƒ““ü—Í‚ª‚ ‚Á‚½‚ç
+	//ãƒœã‚¿ãƒ³å…¥åŠ›ãŒã‚ã£ãŸã‚‰
 	if (Input::Keyboard::TriggerKey(DIK_LSHIFT))
 	{
 		mPreMoveTimer.Start();
 		mDokanState = DokanState::PreMove;
 		mTarget = target_;
-		//ƒ^[ƒQƒbƒg‚Ì“–‚½‚è”»’è‚ğ‚È‚­‚·
+		//ã‚¿ãƒ¼ã‚²ãƒƒãƒˆã®å½“ãŸã‚Šåˆ¤å®šã‚’ãªãã™
 		mTarget->SetNoCollsion(true);
 		mTarget->SetNoGravity(true);
 		mTarget->SetNoMove(true);
 		mSavePos = target_->box.position;
 
-		//ˆÚ“®æ‚Ìî•ñ‚ğƒXƒe[ƒW‚ÖˆÚ‚·
+		//ç§»å‹•å…ˆã®æƒ…å ±ã‚’ã‚¹ãƒ†ãƒ¼ã‚¸ã¸ç§»ã™
 		StageChanger::Get()->saveNextDokanInfo.stageName = nextDokanInfo.stageName;
 		StageChanger::Get()->saveNextDokanInfo.id = nextDokanInfo.id;
 
-		//UI‚ğ“®‚©‚·
+		//UIã‚’å‹•ã‹ã™
 		GameUIManager::Get()->Move(UIMove::END);
 	}
 }
 
 void Dokan::TargetEnter()
 {
-	//•Û‚µ‚½ƒ^[ƒQƒbƒg‚ª‚¢‚é‚È‚ç
+	//ä¿æŒã—ãŸã‚¿ãƒ¼ã‚²ãƒƒãƒˆãŒã„ã‚‹ãªã‚‰
 	if (mTarget != nullptr)
 	{
 		switch (mDokanState)
@@ -81,7 +81,7 @@ void Dokan::TargetEnter()
 			break;
 		case Dokan::DokanState::PreMove:
 
-			//ƒ^[ƒQƒbƒg‚Ì‰ŠúˆÊ’u‚ğ“yŠÇ‚Ì^ã‚ÉˆÚ“®
+			//ã‚¿ãƒ¼ã‚²ãƒƒãƒˆã®åˆæœŸä½ç½®ã‚’åœŸç®¡ã®çœŸä¸Šã«ç§»å‹•
 			mStartPos = { box.position.x ,box.position.y + box.scale.y / 2,box.position.z };
 			mTarget->position = TEasing::InQuad(mSavePos, mStartPos, mPreMoveTimer.GetTimeRate());
 
@@ -93,7 +93,7 @@ void Dokan::TargetEnter()
 
 			break;
 		case Dokan::DokanState::MainMove:
-			//“yŠÇ‚ÌŒ´“_‚Ü‚ÅˆÚ“®‚³‚¹‚é
+			//åœŸç®¡ã®åŸç‚¹ã¾ã§ç§»å‹•ã•ã›ã‚‹
 			mTarget->position.y = TEasing::InQuad(mStartPos.y, box.position.y - scale.y / 2, mMainMoveTimer.GetTimeRate());
 
 			if (mMainMoveTimer.GetEnd())
@@ -103,14 +103,14 @@ void Dokan::TargetEnter()
 
 			break;
 		case Dokan::DokanState::End:
-			//eventtriger‚É‹LÚ‚³‚ê‚½ƒXƒe[ƒW‚ÖˆÚ“®‚·‚é
+			//eventtrigerã«è¨˜è¼‰ã•ã‚ŒãŸã‚¹ãƒ†ãƒ¼ã‚¸ã¸ç§»å‹•ã™ã‚‹
 			std::vector<std::string> split = Util::SplitString(trigerName, "_");
 
 			std::string stagename = "stage_";
 
 			for (auto str : split)
 			{
-				//Š¥Œ‚Ì"stage"‚Å‚È‚¢‚È‚ç•Û‘¶
+				//å† è©ã®"stage"ã§ãªã„ãªã‚‰ä¿å­˜
 				if (!Util::IsNumber(str) && str != "stage")
 				{
 					stagename += str;
@@ -119,10 +119,10 @@ void Dokan::TargetEnter()
 
 			StageChanger::Get()->ChangeLevel(*LevelLoader::Get()->GetData(stagename));
 
-			//”X‚ğŒ³‚É–ß‚·
+			//è«¸ã€…ã‚’å…ƒã«æˆ»ã™
 			mDokanState = DokanState::None;
 
-			//ˆÊ’u‚ğŒÅ’è
+			//ä½ç½®ã‚’å›ºå®š
 			mTarget->position.y = box.position.y - scale.y / 2;
 
 			break;
@@ -168,7 +168,7 @@ void Dokan::UIUpdate()
 
 void Dokan::PopUpUI()
 {
-	//–¢oŒ»ó‘ÔˆÈŠO‚Å“ü‚Á‚½‚çƒXƒLƒbƒv
+	//æœªå‡ºç¾çŠ¶æ…‹ä»¥å¤–ã§å…¥ã£ãŸã‚‰ã‚¹ã‚­ãƒƒãƒ—
 	if (mUIState != UIState::None)return;
 
 	mUIPopUpTimer.Start();
@@ -177,7 +177,7 @@ void Dokan::PopUpUI()
 
 void Dokan::PopOutUI()
 {
-	//oŒ»ó‘ÔˆÈŠO‚Å“ü‚Á‚½‚çƒXƒLƒbƒv
+	//å‡ºç¾çŠ¶æ…‹ä»¥å¤–ã§å…¥ã£ãŸã‚‰ã‚¹ã‚­ãƒƒãƒ—
 	if (mUIState != UIState::Exist)return;
 
 	mUIPopOutTimer.Start();

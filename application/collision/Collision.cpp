@@ -9,7 +9,7 @@ bool Collsions::RayPlaneCollision(const Ray& ray, const Plane& plane)
 
 	float d1 = plane.normal.dot(ray.direction);
 	//float d1 = ray.direction.dot(plane.normal);
-	//ƒŒƒC‚ª•½–Ê‚ÆŒğ‚í‚ç‚È‚¢•ûŒü‚É‚Ì‚Ñ‚Ä‚¢‚é‚È‚ç“–‚½‚ç‚È‚¢‚Ì‚Åfalse
+	//ãƒ¬ã‚¤ãŒå¹³é¢ã¨äº¤ã‚ã‚‰ãªã„æ–¹å‘ã«ã®ã³ã¦ã„ã‚‹ãªã‚‰å½“ãŸã‚‰ãªã„ã®ã§false
 	if (d1 > 0)
 	{
 		return false;
@@ -32,7 +32,7 @@ bool Collsions::RayPlaneCollision(const Ray& ray, const Plane& plane)
 
 Plane CreatePlane(Vector3 leftUp, Vector3 rightDown,Vector3 planeCenterPoint,  Vector3 planeNormal)
 {
-	//“š‚¦
+	//ç­”ãˆ
 	float c = abs(planeNormal.dot(planeCenterPoint));
 
 	Plane plane;
@@ -41,12 +41,12 @@ Plane CreatePlane(Vector3 leftUp, Vector3 rightDown,Vector3 planeCenterPoint,  V
 
 	return plane;
 }
-//‚â‚ë‚¤‚Æv‚Á‚½‚¯‚Çˆê‰ñ’ú‚ß‚æ‚¤‚©‚È....
+//ã‚„ã‚ã†ã¨æ€ã£ãŸã‘ã©ä¸€å›è«¦ã‚ã‚ˆã†ã‹ãª....
 RayCubeColOutput Collsions::RayCubeCollision(const Ray& ray, const Cube& cube)
 {
 	RayCubeColOutput output;
 
-	//XY•½–Ê‚ÌZÀ•Wè‘O‚Ì•½–Ê‚Æ‚Ì“–‚½‚è”»’è
+	//XYå¹³é¢ã®Zåº§æ¨™æ‰‹å‰ã®å¹³é¢ã¨ã®å½“ãŸã‚Šåˆ¤å®š
 	Vector3 leftUp = {
 		cube.position.x - cube.scale.x / 2,
 		cube.position.y + cube.scale.y / 2,
@@ -59,7 +59,7 @@ RayCubeColOutput Collsions::RayCubeCollision(const Ray& ray, const Cube& cube)
 		cube.position.z - cube.scale.z / 2,
 	};
 
-	//•½–Ê‚Ì’†S“_(bƒxƒNƒgƒ‹)
+	//å¹³é¢ã®ä¸­å¿ƒç‚¹(bãƒ™ã‚¯ãƒˆãƒ«)
 	Vector3 planeCenterPoint = {
 		(rightDown.x + leftUp.x) / 2,
 		(rightDown.y + leftUp.y) / 2,
@@ -75,7 +75,7 @@ RayCubeColOutput Collsions::RayCubeCollision(const Ray& ray, const Cube& cube)
 		output.none = false;
 	}
 
-	//XY•½–Ê‚ÌZÀ•W‰œ‚Ì•½–Ê‚Æ‚Ì“–‚½‚è”»’è
+	//XYå¹³é¢ã®Zåº§æ¨™å¥¥ã®å¹³é¢ã¨ã®å½“ãŸã‚Šåˆ¤å®š
 	leftUp = {
 		cube.position.x - cube.scale.x / 2,
 		cube.position.y + cube.scale.y / 2,
@@ -88,7 +88,7 @@ RayCubeColOutput Collsions::RayCubeCollision(const Ray& ray, const Cube& cube)
 		cube.position.z + cube.scale.z / 2,
 	};
 
-	//•½–Ê‚Ì’†S“_(bƒxƒNƒgƒ‹)
+	//å¹³é¢ã®ä¸­å¿ƒç‚¹(bãƒ™ã‚¯ãƒˆãƒ«)
 	planeCenterPoint = {
 		(rightDown.x + leftUp.x) / 2,
 		(rightDown.y + leftUp.y) / 2,
@@ -103,7 +103,7 @@ RayCubeColOutput Collsions::RayCubeCollision(const Ray& ray, const Cube& cube)
 		output.none = false;
 	}
 
-	//XZ•½–Ê‚ÌYÀ•Wã‚Ì•½–Ê‚Æ‚Ì“–‚½‚è”»’è
+	//XZå¹³é¢ã®Yåº§æ¨™ä¸Šã®å¹³é¢ã¨ã®å½“ãŸã‚Šåˆ¤å®š
 	leftUp = {
 		cube.position.x - cube.scale.x / 2,
 		cube.position.y + cube.scale.y / 2,
@@ -116,7 +116,7 @@ RayCubeColOutput Collsions::RayCubeCollision(const Ray& ray, const Cube& cube)
 		cube.position.z - cube.scale.z / 2,
 	};
 
-	//•½–Ê‚Ì’†S“_(bƒxƒNƒgƒ‹)
+	//å¹³é¢ã®ä¸­å¿ƒç‚¹(bãƒ™ã‚¯ãƒˆãƒ«)
 	planeCenterPoint = {
 		(rightDown.x + leftUp.x) / 2,
 		leftUp.y,
@@ -131,7 +131,7 @@ RayCubeColOutput Collsions::RayCubeCollision(const Ray& ray, const Cube& cube)
 		output.none = false;
 	}
 
-	//XZ•½–Ê‚ÌYÀ•W‰º‚Ì•½–Ê‚Æ‚Ì“–‚½‚è”»’è
+	//XZå¹³é¢ã®Yåº§æ¨™ä¸‹ã®å¹³é¢ã¨ã®å½“ãŸã‚Šåˆ¤å®š
 	leftUp = {
 		cube.position.x - cube.scale.x / 2,
 		cube.position.y - cube.scale.y / 2,
@@ -144,7 +144,7 @@ RayCubeColOutput Collsions::RayCubeCollision(const Ray& ray, const Cube& cube)
 		cube.position.z - cube.scale.z / 2,
 	};
 
-	//•½–Ê‚Ì’†S“_(bƒxƒNƒgƒ‹)
+	//å¹³é¢ã®ä¸­å¿ƒç‚¹(bãƒ™ã‚¯ãƒˆãƒ«)
 	planeCenterPoint = {
 		(rightDown.x + leftUp.x) / 2,
 		leftUp.y,
@@ -159,7 +159,7 @@ RayCubeColOutput Collsions::RayCubeCollision(const Ray& ray, const Cube& cube)
 		output.none = false;
 	}
 
-	//YZ•½–Ê‚ÌXÀ•W¶‚Ì•½–Ê‚Æ‚Ì“–‚½‚è”»’è
+	//YZå¹³é¢ã®Xåº§æ¨™å·¦ã®å¹³é¢ã¨ã®å½“ãŸã‚Šåˆ¤å®š
 	leftUp = {
 		cube.position.x - cube.scale.x / 2,
 		cube.position.y + cube.scale.y / 2,
@@ -172,7 +172,7 @@ RayCubeColOutput Collsions::RayCubeCollision(const Ray& ray, const Cube& cube)
 		cube.position.z - cube.scale.z / 2,
 	};
 
-	//•½–Ê‚Ì’†S“_(bƒxƒNƒgƒ‹)
+	//å¹³é¢ã®ä¸­å¿ƒç‚¹(bãƒ™ã‚¯ãƒˆãƒ«)
 	planeCenterPoint = {
 		leftUp.x,
 		(rightDown.y + leftUp.y) / 2,
@@ -187,7 +187,7 @@ RayCubeColOutput Collsions::RayCubeCollision(const Ray& ray, const Cube& cube)
 		output.none = false;
 	}
 
-	//YZ•½–Ê‚ÌXÀ•W‰E‚Ì•½–Ê‚Æ‚Ì“–‚½‚è”»’è
+	//YZå¹³é¢ã®Xåº§æ¨™å³ã®å¹³é¢ã¨ã®å½“ãŸã‚Šåˆ¤å®š
 	leftUp = {
 		cube.position.x + cube.scale.x / 2,
 		cube.position.y + cube.scale.y / 2,
@@ -200,7 +200,7 @@ RayCubeColOutput Collsions::RayCubeCollision(const Ray& ray, const Cube& cube)
 		cube.position.z - cube.scale.z / 2,
 	};
 
-	//•½–Ê‚Ì’†S“_(bƒxƒNƒgƒ‹)
+	//å¹³é¢ã®ä¸­å¿ƒç‚¹(bãƒ™ã‚¯ãƒˆãƒ«)
 	planeCenterPoint = {
 		leftUp.x,
 		(rightDown.y + leftUp.y) / 2,
@@ -240,7 +240,7 @@ Vector3 RayPlaneInter(const Ray& ray, const Plane& plane)
 
 	float d1 = plane.normal.dot(ray.direction);
 	//float d1 = ray.direction.dot(plane.normal);
-	//ƒŒƒC‚ª•½–Ê‚ÆŒğ‚í‚ç‚È‚¢•ûŒü‚É‚Ì‚Ñ‚Ä‚¢‚é‚È‚ç“–‚½‚ç‚È‚¢‚Ì‚Åfalse
+	//ãƒ¬ã‚¤ãŒå¹³é¢ã¨äº¤ã‚ã‚‰ãªã„æ–¹å‘ã«ã®ã³ã¦ã„ã‚‹ãªã‚‰å½“ãŸã‚‰ãªã„ã®ã§false
 	if (d1 > 0)
 	{
 		return {0,0,0};
@@ -312,7 +312,7 @@ bool Collsions::SpherePlaneCollision(const Sphere& sphere, const Plane& plane)
 
 Vector3 Collsions::ClosestPtPoint2Triangle(const Vector3& point, const Triangle& triangle)
 {
-	//point‚ªp0‚ÌŠO‘¤‚É‚ ‚é‚©‚ğƒ`ƒFƒbƒN
+	//pointãŒp0ã®å¤–å´ã«ã‚ã‚‹ã‹ã‚’ãƒã‚§ãƒƒã‚¯
 	Vector3 p0_p1 = triangle.pos1 - triangle.pos0;
 	Vector3 p0_p2 = triangle.pos2 - triangle.pos0;
 	Vector3 p0_pt = point - triangle.pos0;
@@ -325,7 +325,7 @@ Vector3 Collsions::ClosestPtPoint2Triangle(const Vector3& point, const Triangle&
 		return triangle.pos0;
 	}
 
-	//point‚ªp1‚ÌŠO‘¤‚É‚ ‚é‚©‚ğƒ`ƒFƒbƒN
+	//pointãŒp1ã®å¤–å´ã«ã‚ã‚‹ã‹ã‚’ãƒã‚§ãƒƒã‚¯
 	Vector3 p1_pt = point - triangle.pos1;
 
 	float d3 = p0_p1.dot(p1_pt);
@@ -336,7 +336,7 @@ Vector3 Collsions::ClosestPtPoint2Triangle(const Vector3& point, const Triangle&
 		return triangle.pos1;
 	}
 
-	// point‚ªp0_p1‚Ì•Ó—Ìˆæ‚Ì’†‚É‚ ‚é‚©‚Ç‚¤‚©ƒ`ƒFƒbƒN‚µA‚ ‚ê‚Îpoint‚Ìp0_p1ã‚É‘Î‚·‚éË‰e‚ğ•Ô‚·
+	// pointãŒp0_p1ã®è¾ºé ˜åŸŸã®ä¸­ã«ã‚ã‚‹ã‹ã©ã†ã‹ãƒã‚§ãƒƒã‚¯ã—ã€ã‚ã‚Œã°pointã®p0_p1ä¸Šã«å¯¾ã™ã‚‹å°„å½±ã‚’è¿”ã™
 	float vc = d1 * d4 - d3 * d2;
 	if (vc <= 0.0f && d1 >= 0.0f && d3 <= 0.0f)
 	{
@@ -344,7 +344,7 @@ Vector3 Collsions::ClosestPtPoint2Triangle(const Vector3& point, const Triangle&
 		return triangle.pos0 + v * p0_p1;
 	}
 
-	// point‚ªp2‚ÌŠO‘¤‚Ì’¸“_—Ìˆæ‚Ì’†‚É‚ ‚é‚©‚Ç‚¤‚©ƒ`ƒFƒbƒN
+	// pointãŒp2ã®å¤–å´ã®é ‚ç‚¹é ˜åŸŸã®ä¸­ã«ã‚ã‚‹ã‹ã©ã†ã‹ãƒã‚§ãƒƒã‚¯
 	Vector3 p2_pt = point - triangle.pos2;
 
 	float d5 = p0_p1.dot(p2_pt);
@@ -354,7 +354,7 @@ Vector3 Collsions::ClosestPtPoint2Triangle(const Vector3& point, const Triangle&
 		return triangle.pos2;
 	}
 
-	// point‚ªp0_p2‚Ì•Ó—Ìˆæ‚Ì’†‚É‚ ‚é‚©‚Ç‚¤‚©ƒ`ƒFƒbƒN‚µA‚ ‚ê‚Îpoint‚Ìp0_p2ã‚É‘Î‚·‚éË‰e‚ğ•Ô‚·
+	// pointãŒp0_p2ã®è¾ºé ˜åŸŸã®ä¸­ã«ã‚ã‚‹ã‹ã©ã†ã‹ãƒã‚§ãƒƒã‚¯ã—ã€ã‚ã‚Œã°pointã®p0_p2ä¸Šã«å¯¾ã™ã‚‹å°„å½±ã‚’è¿”ã™
 	float vb = d5 * d2 - d1 * d6;
 	if (vb <= 0.0f && d2 >= 0.0f && d6 <= 0.0f)
 	{
@@ -362,7 +362,7 @@ Vector3 Collsions::ClosestPtPoint2Triangle(const Vector3& point, const Triangle&
 		return triangle.pos0 + w * p0_p2;
 	}
 
-	// point‚ªp1_p2‚Ì•Ó—Ìˆæ‚Ì’†‚É‚ ‚é‚©‚Ç‚¤‚©ƒ`ƒFƒbƒN‚µA‚ ‚ê‚Îpoint‚Ìp1_p2ã‚É‘Î‚·‚éË‰e‚ğ•Ô‚·
+	// pointãŒp1_p2ã®è¾ºé ˜åŸŸã®ä¸­ã«ã‚ã‚‹ã‹ã©ã†ã‹ãƒã‚§ãƒƒã‚¯ã—ã€ã‚ã‚Œã°pointã®p1_p2ä¸Šã«å¯¾ã™ã‚‹å°„å½±ã‚’è¿”ã™
 	float va = d3 * d6 - d5 * d4;
 	if (va <= 0.0f && (d4 - d3) >= 0.0f && (d5 - d6) >= 0.0f)
 	{
@@ -379,11 +379,11 @@ Vector3 Collsions::ClosestPtPoint2Triangle(const Vector3& point, const Triangle&
 bool Collsions::CheckSphere2Triangle(const Sphere& sphere, const Triangle& triangle)
 {
 	Vector3 p = Collsions::ClosestPtPoint2Triangle(sphere.center, triangle);
-	//“_p‚Æ‹‰‚Ì’†S‚Ì·•ªƒxƒNƒgƒ‹
+	//ç‚¹pã¨ç´šã®ä¸­å¿ƒã®å·®åˆ†ãƒ™ã‚¯ãƒˆãƒ«
 	Vector3 v = p - sphere.center;
-	//‹——£‚Ì“ñæ‚ğ‹‚ß‚é
+	//è·é›¢ã®äºŒä¹—ã‚’æ±‚ã‚ã‚‹
 	float vDot = v.dot(v);
-	//‹…‚ÆOŠpŒ`‚Ì‹——£‚ª”¼ŒaˆÈ‰º‚È‚ç“–‚½‚Á‚Ä‚¢‚È‚¢
+	//çƒã¨ä¸‰è§’å½¢ã®è·é›¢ãŒåŠå¾„ä»¥ä¸‹ãªã‚‰å½“ãŸã£ã¦ã„ãªã„
 	if (vDot > sphere.radius * sphere.radius)
 	{
 		return false;

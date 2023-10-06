@@ -19,7 +19,7 @@ void Sea::Update()
 	{
 		flowTimer.Start();
 	}
-	//ƒIƒtƒZƒbƒg‚ğ•ÏX‚µ‚Ä…–Ê‚ğ—¬‚·
+	//ã‚ªãƒ•ã‚»ãƒƒãƒˆã‚’å¤‰æ›´ã—ã¦æ°´é¢ã‚’æµã™
 	mOffset.x = flowTimer.GetTimeRate();
 	mOffset.y = flowTimer.GetTimeRate();
 	
@@ -29,7 +29,7 @@ void Sea::Update()
 		updownTimer.Start();
 		updown = !updown;
 	}
-	//ã‰º‚É—h‚ç‚µ‚Ä”g‚Á‚Û‚³‚ğo‚·
+	//ä¸Šä¸‹ã«æºã‚‰ã—ã¦æ³¢ã£ã½ã•ã‚’å‡ºã™
 	if (updown)
 	{
 		position.y = TEasing::lerp(initPos.y - updownRadius, initPos.y + updownRadius,updownTimer.GetTimeRate());

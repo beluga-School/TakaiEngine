@@ -9,16 +9,16 @@
 class EventManager
 {
 public:
-	//ƒCƒxƒ“ƒgŠJn
+	//ã‚¤ãƒ™ãƒ³ãƒˆé–‹å§‹
 	bool Start(const std::string& startEventName);
 
-	//ƒCƒxƒ“ƒg‚ğ‹­§I—¹(nowEvent‚ğ‘¦nullptr‚É‚·‚é)
+	//ã‚¤ãƒ™ãƒ³ãƒˆã‚’å¼·åˆ¶çµ‚äº†(nowEventã‚’å³æ™‚nullptrã«ã™ã‚‹)
 	void ForceEnd();
 
-	//Œ»İÀs’†‚ÌƒCƒxƒ“ƒg‚ğæ“¾
+	//ç¾åœ¨å®Ÿè¡Œä¸­ã®ã‚¤ãƒ™ãƒ³ãƒˆã‚’å–å¾—
 	std::unique_ptr<IEvent>* GetNowEvent();
 
-	//ƒCƒxƒ“ƒg–¼‚©‚çƒCƒxƒ“ƒg‚ğæ“¾
+	//ã‚¤ãƒ™ãƒ³ãƒˆåã‹ã‚‰ã‚¤ãƒ™ãƒ³ãƒˆã‚’å–å¾—
 	std::unique_ptr<IEvent>* GetEvent(const std::string& eventName);
 
 	static EventManager* Get()
@@ -31,10 +31,10 @@ public:
 
 	void Update();
 	
-	//ƒCƒxƒ“ƒg’†—p‚Ìü‚ğ•\¦
+	//ã‚¤ãƒ™ãƒ³ãƒˆä¸­ç”¨ã®ç·šã‚’è¡¨ç¤º
 	void Draw();
 
-	//“o˜^‚³‚ê‚½ƒCƒxƒ“ƒg‚ğƒŠƒZƒbƒg
+	//ç™»éŒ²ã•ã‚ŒãŸã‚¤ãƒ™ãƒ³ãƒˆã‚’ãƒªã‚»ãƒƒãƒˆ
 	void Clear();
 
 	template <class Event> void Register(const std::string& eventName)
@@ -48,7 +48,7 @@ private:
 	EventManager(){};
 	~EventManager(){};
 
-	//ƒCƒxƒ“ƒg‚Ìã‰º•ü‚ğ‚È‚­‚µ‚ÄAendó‘Ô‚ÉˆÚs
+	//ã‚¤ãƒ™ãƒ³ãƒˆã®ä¸Šä¸‹é»’ç·šã‚’ãªãã—ã¦ã€endçŠ¶æ…‹ã«ç§»è¡Œ
 	void End();
 
 	enum class State

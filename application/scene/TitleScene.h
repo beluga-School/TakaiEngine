@@ -24,10 +24,10 @@ private:
 
 	enum class EffectState
 	{
-		None,		//‰½‚à‚È‚¢ó‘Ô
-		Appearance,	//oŒ»
-		ScreenShine,//‰æ–Ê‚ªŒõ‚é
-		End,		//‰‰oI‚í‚Á‚Ä‰æ–Ê‚ª“®‚­
+		None,		//ä½•ã‚‚ãªã„çŠ¶æ…‹
+		Appearance,	//å‡ºç¾
+		ScreenShine,//ç”»é¢ãŒå…‰ã‚‹
+		End,		//æ¼”å‡ºçµ‚ã‚ã£ã¦ç”»é¢ãŒå‹•ã
 	}effectState = EffectState::None;
 
 	struct TitleString
@@ -35,13 +35,13 @@ private:
 		Vector2 position;
 		Sprite sprite;
 
-		//—‰º‚Ü‚Å‚Ìƒ^ƒCƒ}[
+		//è½ä¸‹ã¾ã§ã®ã‚¿ã‚¤ãƒãƒ¼
 		TEasing::easeTimer timer = 0.2f;
 	
 		float startY;
 		float endY;
 
-		//ƒVƒFƒCƒN‚ÉŒ³‚ÌˆÊ’u‚É–ß‚·‚½‚ß‚Ì‚â‚Â
+		//ã‚·ã‚§ã‚¤ã‚¯æ™‚ã«å…ƒã®ä½ç½®ã«æˆ»ã™ãŸã‚ã®ã‚„ã¤
 		Vector2 savePos{};
 
 		void Update();
@@ -50,17 +50,17 @@ private:
 
 	TitleString string[7];
 
-	//ƒzƒ“ƒg‚ÍƒJƒƒ‰‘¤‚ğ—h‚ç‚µ‚½‚¢‚¯‚ÇAƒXƒvƒ‰ƒCƒgˆÈŠO‚à‚¢‚¶‚ç‚È‚¢‚Æ‚¢‚¯‚È‚­‚È‚è‚»‚¤‚È‚Ì‚Å
-	//‚¢‚Á‚½‚ñƒ^ƒCƒgƒ‹‚¾‚¯—h‚ç‚·‹^—ƒVƒFƒCƒN‚ğì‚é
+	//ãƒ›ãƒ³ãƒˆã¯ã‚«ãƒ¡ãƒ©å´ã‚’æºã‚‰ã—ãŸã„ã‘ã©ã€ã‚¹ãƒ—ãƒ©ã‚¤ãƒˆä»¥å¤–ã‚‚ã„ã˜ã‚‰ãªã„ã¨ã„ã‘ãªããªã‚Šãã†ãªã®ã§
+	//ã„ã£ãŸã‚“ã‚¿ã‚¤ãƒˆãƒ«ã ã‘æºã‚‰ã™ç–‘ä¼¼ã‚·ã‚§ã‚¤ã‚¯ã‚’ä½œã‚‹
 	void SetShake(float power, float time);
 	void ShakeUpdate();
 
-	//ƒVƒFƒCƒNŒn•Ï”
+	//ã‚·ã‚§ã‚¤ã‚¯ç³»å¤‰æ•°
 	Vector2 shake{};
 	TEasing::easeTimer shakeTimer;
 	float shakePower = 0.f;
 
-	//ƒXƒNƒŠ[ƒ“‚ğŒõ‚ç‚¹‚éƒ^ƒCƒ}[
+	//ã‚¹ã‚¯ãƒªãƒ¼ãƒ³ã‚’å…‰ã‚‰ã›ã‚‹ã‚¿ã‚¤ãƒãƒ¼
 	TEasing::easeTimer shineTimer = 1.0f;
 	TEasing::easeTimer shineCoolTimer = 0.5f;
 	TEasing::easeTimer shineEndTimer = 0.5f;
