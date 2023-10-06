@@ -4,7 +4,7 @@
 class SceneFactory : public AbstractSceneFactory
 {
 public:
-	//‚±‚ÌƒQ[ƒ€—p‚ÌƒV[ƒ“‚ğ¶¬
+	//ã“ã®ã‚²ãƒ¼ãƒ ç”¨ã®ã‚·ãƒ¼ãƒ³ã‚’ç”Ÿæˆ
 	//IScene* CreateScene(const std::string& sceneName)override;
 };
 

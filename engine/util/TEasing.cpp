@@ -271,7 +271,7 @@ void TEasing::easeTimer::ReverseStart()
 
 void TEasing::easeTimer::Update()
 {
-	//�O�t���[���̌o�ߎ��Ԃ��L�^
+	//前フレームの経過時間を記録
 	mOldElapsedTime = mElapsedTime;
 
 	if (run) {
@@ -280,12 +280,12 @@ void TEasing::easeTimer::Update()
 	if (reverse) {
 		mElapsedTime -= TimeManager::deltaTime;
 	}
-	// �o�ߎ��Ԃ��o�߂���������t���O��܂�
+	// 経過時間が経過しきったらフラグを折る
 	if (GetTimeRate() >= 1.0f && run) {
 		run = false;
 		end = true;
 	}
-	//���r���[�ȂƂ���Ŏ~�܂����Ⴄ���ǁA�Ƃ肠����0.1�ȉ��ɂȂ�����~�߂�
+	//中途半端なところで止まっちゃうけど、とりあえず0.1以下になったら止める
 	if (GetTimeRate() <= 0.001f && reverse) {
 		mElapsedTime = 0.0f;
 		reverse = false;

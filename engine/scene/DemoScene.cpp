@@ -177,7 +177,7 @@ void DemoScene::Draw()
 
 	testplayer.DrawMaterial();
 
-	//ƒXƒvƒ‰ƒCƒg‚Ì‘O•`‰æ(‹¤’ÊƒRƒ}ƒ“ƒh)
+	//ã‚¹ãƒ—ãƒ©ã‚¤ãƒˆã®å‰æç”»(å…±é€šã‚³ãƒžãƒ³ãƒ‰)
 	SpriteCommonBeginDraw();
 
 	mSlime.Draw();
@@ -194,8 +194,8 @@ void DemoScene::SetObject(LevelData& data)
 	itr != particles.end(); itr++*/
 	for (auto objectData = data.mObjects.begin(); objectData != data.mObjects.end(); objectData++)
 	{
-		//ƒXƒ|[ƒ“ƒ|ƒCƒ“ƒg‚ðÝ’è
-		//Žw’è‚³‚ê‚½–¼‘O‚ª“ü‚Á‚Ä‚é‚È‚ç‘Î‰ž‚µ‚½‚â‚Â‚ð“ü‚ê‚é
+		//ã‚¹ãƒãƒ¼ãƒ³ãƒã‚¤ãƒ³ãƒˆã‚’è¨­å®š
+		//æŒ‡å®šã•ã‚ŒãŸåå‰ãŒå…¥ã£ã¦ã‚‹ãªã‚‰å¯¾å¿œã—ãŸã‚„ã¤ã‚’å…¥ã‚Œã‚‹
 		if (objectData->textureName == "player")
 		{
 			testplayer.position = objectData->translation;
@@ -204,57 +204,57 @@ void DemoScene::SetObject(LevelData& data)
 		}
 		else if (objectData->textureName == "enemy")
 		{
-			//‚Æ‚è‚ ‚¦‚¸ƒLƒ…[ƒu‚Å”z’u
+			//ã¨ã‚Šã‚ãˆãšã‚­ãƒ¥ãƒ¼ãƒ–ã§é…ç½®
 			mObj3ds.emplace_back();
 			mObj3ds.back().Initialize();
 
 			mObj3ds.back().SetModel(ModelManager::GetModel("spawnpoint"));
-			//À•W
+			//åº§æ¨™
 			mObj3ds.back().position = objectData->translation;
-			//‰ñ“]Šp
+			//å›žè»¢è§’
 			mObj3ds.back().rotation = {
 					MathF::AngleConvRad(objectData->rotation.x),
 					MathF::AngleConvRad(objectData->rotation.y),
 					MathF::AngleConvRad(objectData->rotation.z)
 			};
-			//‘å‚«‚³
+			//å¤§ãã•
 			mObj3ds.back().scale = objectData->scaling;
 		}
 		else
 		{
-			//‚Æ‚è‚ ‚¦‚¸ƒLƒ…[ƒu‚Å”z’u
-			//TODO:file_name‚©‚ç‹tˆø‚«‚Å‚«‚é‚æ‚¤‚É‚µ‚½‚¢
+			//ã¨ã‚Šã‚ãˆãšã‚­ãƒ¥ãƒ¼ãƒ–ã§é…ç½®
+			//TODO:file_nameã‹ã‚‰é€†å¼•ãã§ãã‚‹ã‚ˆã†ã«ã—ãŸã„
 			mObj3ds.emplace_back();
 			mObj3ds.back().Initialize();
-			//ƒ‚ƒfƒ‹Ý’è
-			//ƒtƒ@ƒCƒ‹ƒl[ƒ€‚ªÝ’è‚³‚ê‚Ä‚é‚È‚ç‚»‚ê‚Å
+			//ãƒ¢ãƒ‡ãƒ«è¨­å®š
+			//ãƒ•ã‚¡ã‚¤ãƒ«ãƒãƒ¼ãƒ ãŒè¨­å®šã•ã‚Œã¦ã‚‹ãªã‚‰ãã‚Œã§
 			if (objectData->fileName != "")
 			{
-				//“Ç‚Ýž‚Ý‚µ‚Ä‚È‚¢‚È‚ç“Ç‚Ýž‚Ý‚às‚¤
+				//èª­ã¿è¾¼ã¿ã—ã¦ãªã„ãªã‚‰èª­ã¿è¾¼ã¿ã‚‚è¡Œã†
 				if (ModelManager::GetModel(objectData->fileName) == nullptr)
 				{
 					ModelManager::LoadModel(objectData->fileName, objectData->fileName);
 				}
 				mObj3ds.back().SetModel(ModelManager::GetModel(objectData->fileName));
 			}
-			//‚È‚¢‚È‚çŽlŠp‚ðƒfƒtƒH‚ÅÝ’è
+			//ãªã„ãªã‚‰å››è§’ã‚’ãƒ‡ãƒ•ã‚©ã§è¨­å®š
 			else
 			{
 				mObj3ds.back().SetModel(ModelManager::GetModel("Cube"));
 			}
 			mObj3ds.back().SetTexture(TextureManager::Get()->GetTexture("white"));
-			//À•W
+			//åº§æ¨™
 			mObj3ds.back().position = objectData->translation;
-			//‰ñ“]Šp
+			//å›žè»¢è§’
 			mObj3ds.back().rotation = {
 					MathF::AngleConvRad(objectData->rotation.x),
 					MathF::AngleConvRad(objectData->rotation.y),
 					MathF::AngleConvRad(objectData->rotation.z)
 			};
-			//‘å‚«‚³
+			//å¤§ãã•
 			mObj3ds.back().scale = objectData->scaling;
 		
-			//“–‚½‚è”»’è‚ðì¬
+			//å½“ãŸã‚Šåˆ¤å®šã‚’ä½œæˆ
 			if (objectData->collider.have)
 			{
 				mObj3ds.emplace_back();

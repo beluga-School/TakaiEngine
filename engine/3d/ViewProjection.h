@@ -11,16 +11,16 @@ class Camera
 {
 public:
 	Matrix4 mMatView;
-	Vector3 mEye;		//‹“_À•W
-	Vector3 mTarget;	//’‹“_À•W
-	Vector3 mUp;		//ã•ûŒüƒxƒNƒgƒ‹
+	Vector3 mEye;		//è¦–ç‚¹åº§æ¨™
+	Vector3 mTarget;	//æ³¨è¦–ç‚¹åº§æ¨™
+	Vector3 mUp;		//ä¸Šæ–¹å‘ãƒ™ã‚¯ãƒˆãƒ«
 
 	float mAspect = Util::WIN_WIDTH / Util::WIN_HEIGHT;
 	float mNearClip = 0.1f;
 	float mFarZ = 10000.0f;
 	float mFovAngle = 90;
 
-	//Ë‰e•ÏŠ·s—ñ(“Š‘“Š‰e)
+	//å°„å½±å¤‰æ›è¡Œåˆ—(æŠ•è³‡æŠ•å½±)
 	Matrix4 mMatProjection;
 
 public:

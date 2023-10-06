@@ -37,7 +37,7 @@ float Quaternion::GetNorm()const
 void Quaternion::Normalize()
 {
 	float leng = GetNorm();
-	//0œZ‘Îô
+	//0é™¤ç®—å¯¾ç­–
 	if (leng == 0)
 	{
 		vector.x = 0;
@@ -60,7 +60,7 @@ Quaternion Quaternion::GetNormalize()
 	q.w = w;
 
 	float leng = GetNorm();
-	//0œZ‘Îô
+	//0é™¤ç®—å¯¾ç­–
 	if (leng == 0)
 	{
 		q.vector.x = 0;
@@ -195,15 +195,15 @@ Quaternion Slerp(const Quaternion& q,const Quaternion& r,const float& t)
 
 	if (dot < 0)
 	{
-		//‚à‚¤•Ğ•û‚Ì‰ñ“]‚ğ—˜—p‚·‚é
+		//ã‚‚ã†ç‰‡æ–¹ã®å›è»¢ã‚’åˆ©ç”¨ã™ã‚‹
 		temp = -temp;
-		dot = -dot;//“àÏ‚à”½“]
+		dot = -dot;//å†…ç©ã‚‚åè»¢
 	}
 
-	//‚È‚·Šp‚ğ‹‚ß‚é
+	//ãªã™è§’ã‚’æ±‚ã‚ã‚‹
 	float theta = std::acos(dot);
 
-	//theta‚Æsin‚ğg‚Á‚Ä•âŠÔŒW”scale0,scale1‚ğ‹‚ß‚é
+	//thetaã¨sinã‚’ä½¿ã£ã¦è£œé–“ä¿‚æ•°scale0,scale1ã‚’æ±‚ã‚ã‚‹
 	float scale0 = sinf((1 - t) * theta) / sinf(theta);
 	float scale1 = sinf(t * theta) / sinf(theta);
 
@@ -213,7 +213,7 @@ Quaternion Slerp(const Quaternion& q,const Quaternion& r,const float& t)
 		return (1.0f - t) * temp + t * r;
 	}
 
-	//‚»‚ê‚¼‚ê‚Ì•âŠÔŒW”‚ğ—˜—p‚µ‚Ä•âŠÔŒã‚ÌQuaternion‚ğ‹‚ß‚é
+	//ãã‚Œãã‚Œã®è£œé–“ä¿‚æ•°ã‚’åˆ©ç”¨ã—ã¦è£œé–“å¾Œã®Quaternionã‚’æ±‚ã‚ã‚‹
 	return scale0 * temp + scale1 * r;
 }
 
@@ -253,7 +253,7 @@ Quaternion DirectionToDirection(const Vector3& u, const Vector3& v)
 
 	float dot = a.dot(b);
 
-	//ŠOÏ
+	//å¤–ç©
 	Vector3 cross = a.GetCross(b);
 	Vector3 axis = cross.GetNormalize();
 

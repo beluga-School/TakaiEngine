@@ -49,11 +49,11 @@ namespace TEasing
 			mMaxTime = maxTime_;
 		}
 
-		float mElapsedTime = 0.0f;	// Œ»İ‚ÌŒo‰ßŠÔ
-		float mMaxTime = 1.0f;		// ‰½•b‚©‚¯‚ÄˆÚ“®‚·‚é‚©
+		float mElapsedTime = 0.0f;	// ç¾åœ¨ã®çµŒéæ™‚é–“
+		float mMaxTime = 1.0f;		// ä½•ç§’ã‹ã‘ã¦ç§»å‹•ã™ã‚‹ã‹
 
 		bool GetRun() { return run; };
-		//ˆê“x‚Å‚à‹N“®‚³‚ê‚½‚çtrue‚É‚È‚éƒtƒ‰ƒO
+		//ä¸€åº¦ã§ã‚‚èµ·å‹•ã•ã‚ŒãŸã‚‰trueã«ãªã‚‹ãƒ•ãƒ©ã‚°
 		bool GetStarted() { return run || end; };
 
 		bool GetEnd() { return end; };
@@ -71,33 +71,33 @@ namespace TEasing
 
 		bool GetReverseStarted() { return reverse || reverseend; };
 
-		//ƒC[ƒWƒ“ƒO‚Í‹N“®‚µ‚È‚¢‚ª‰Šú‰»‚·‚é
+		//ã‚¤ãƒ¼ã‚¸ãƒ³ã‚°ã¯èµ·å‹•ã—ãªã„ãŒåˆæœŸåŒ–ã™ã‚‹
 		void Reset();
 
-		// ŒÄ‚Ño‚µ‚½‚çƒC[ƒWƒ“ƒO‚ª‹N“®Aƒ^ƒCƒ}[‚ğ‰Šú‰»‚·‚é
+		// å‘¼ã³å‡ºã—ãŸã‚‰ã‚¤ãƒ¼ã‚¸ãƒ³ã‚°ãŒèµ·å‹•ã€ã‚¿ã‚¤ãƒãƒ¼ã‚’åˆæœŸåŒ–ã™ã‚‹
 		void Start();
 
-		// ƒ^ƒCƒ}[‚ğ‰Šú‰»‚¹‚¸‚É‹N“®
+		// ã‚¿ã‚¤ãƒãƒ¼ã‚’åˆæœŸåŒ–ã›ãšã«èµ·å‹•
 		void NoInitStart();
 
-		//ƒC[ƒWƒ“ƒO‚ğ‹t•ûŒü‚ÉÄ¶AŒ»İ‚ÌŒo‰ßŠÔ->0•b‚ÉŒü‚©‚Á‚ÄÄ¶‚³‚ê‚é
+		//ã‚¤ãƒ¼ã‚¸ãƒ³ã‚°ã‚’é€†æ–¹å‘ã«å†ç”Ÿã€ç¾åœ¨ã®çµŒéæ™‚é–“->0ç§’ã«å‘ã‹ã£ã¦å†ç”Ÿã•ã‚Œã‚‹
 		void ReverseStart();
 
-		// Œo‰ßŠÔ‚ğXV
+		// çµŒéæ™‚é–“ã‚’æ›´æ–°
 		void Update();
 
-		// Œ»İ‚ªÅ‘å•b”‚Ì‚¤‚¿‚Ç‚ÌŠ„‡‚©‚ğ(0.0f`1.0f)‚Ì’l‚Å•Ô‚·
+		// ç¾åœ¨ãŒæœ€å¤§ç§’æ•°ã®ã†ã¡ã©ã®å‰²åˆã‹ã‚’(0.0fï½1.0f)ã®å€¤ã§è¿”ã™
 		float GetTimeRate();
 
 	private:
-		//‹N“®’†ƒtƒ‰ƒO
+		//èµ·å‹•ä¸­ãƒ•ãƒ©ã‚°
 		bool run = false;
-		//I—¹ƒtƒ‰ƒO
+		//çµ‚äº†ãƒ•ãƒ©ã‚°
 		bool end = false;
 
 		bool reverse = false;
 		bool reverseend = false;
 
-		float mOldElapsedTime = 0.0f;	// 1ƒtƒŒ[ƒ€‘O‚ÌŒo‰ßŠÔ
+		float mOldElapsedTime = 0.0f;	// 1ãƒ•ãƒ¬ãƒ¼ãƒ å‰ã®çµŒéæ™‚é–“
 	};
 };

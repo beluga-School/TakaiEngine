@@ -11,10 +11,10 @@ public:
 
 	void End();
 
-	//Œ»İ‚ÌƒV[ƒ“
+	//ç¾åœ¨ã®ã‚·ãƒ¼ãƒ³
 	std::unique_ptr<IScene> mCurrentscene = nullptr;
 
-	//ƒtƒ@ƒNƒgƒŠ[‚ğg—p‚µ‚½ƒV[ƒ“Ø‚è‘Ö‚¦(ƒoƒO‚ ‚è)
+	//ãƒ•ã‚¡ã‚¯ãƒˆãƒªãƒ¼ã‚’ä½¿ç”¨ã—ãŸã‚·ãƒ¼ãƒ³åˆ‡ã‚Šæ›¿ãˆ(ãƒã‚°ã‚ã‚Š)
 	//void ChangeScene(const std::string& sceneName);
 
 	template <class NextScene> void ChangeScene()

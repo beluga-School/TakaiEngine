@@ -12,9 +12,9 @@ Camera* Camera::sCamera = sDefaultCam.get();
 
 void Camera::Initialize()
 {
-	mEye = { 0, 0, -5 };		//‹“_À•W
-	mTarget = {0, 0, 0};		//’‹“_À•W
-	mUp = { 0, 1, 0 };		//ã•ûŒüƒxƒNƒgƒ‹
+	mEye = { 0, 0, -5 };		//è¦–ç‚¹åº§æ¨™
+	mTarget = {0, 0, 0};		//æ³¨è¦–ç‚¹åº§æ¨™
+	mUp = { 0, 1, 0 };		//ä¸Šæ–¹å‘ãƒ™ã‚¯ãƒˆãƒ«
 	UpdatematView();
 
 	mMatProjection = Matrix4::PerspectiveFovLH(DirectX::XMConvertToRadians(mFovAngle), mNearClip, mFarZ);
@@ -26,7 +26,7 @@ void Camera::UpdatematView()
 
 	mMatProjection = Matrix4::PerspectiveFovLH(DirectX::XMConvertToRadians(mFovAngle), mNearClip, mFarZ);
 
-	////ƒVƒFƒCƒNŒã‚ÉˆÊ’u‚ğŒ³‚É–ß‚·
+	////ã‚·ã‚§ã‚¤ã‚¯å¾Œã«ä½ç½®ã‚’å…ƒã«æˆ»ã™
 	//mEye.x = savePos.x;
 	//mEye.y = savePos.y;
 }

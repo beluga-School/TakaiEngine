@@ -3,7 +3,7 @@
 
 class PointLight
 {
-public://’è”ƒoƒbƒtƒ@‚É‘—‚éƒf[ƒ^
+public://å®šæ•°ãƒãƒƒãƒ•ã‚¡ã«é€ã‚‹ãƒ‡ãƒ¼ã‚¿
 	struct ConstBufferData
 	{
 		Vector3 lightPos;
@@ -13,12 +13,12 @@ public://’è”ƒoƒbƒtƒ@‚É‘—‚éƒf[ƒ^
 		Vector3 lighttAtten;
 		bool active;
 	};
-public://ƒƒ“ƒo•Ï”
-	//ƒ‰ƒCƒgÀ•W
+public://ãƒ¡ãƒ³ãƒå¤‰æ•°
+	//ãƒ©ã‚¤ãƒˆåº§æ¨™
 	Vector3 mLightPos = {0,0,0};
-	//ƒ‰ƒCƒg‚ÌF
+	//ãƒ©ã‚¤ãƒˆã®è‰²
 	Vector3 mLightColor = { 1,1,1 };
-	//ƒ‰ƒCƒg‹——£Œ¸ŠŒW”
+	//ãƒ©ã‚¤ãƒˆè·é›¢æ¸›è¡°ä¿‚æ•°
 	Vector3 mLightAtten = { 1.0f,1.0f,1.0f };
 	
 	bool mActive = false;

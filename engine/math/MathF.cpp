@@ -3,17 +3,17 @@
 
 namespace MathF
 {
-	// ƒ‰ƒ“ƒ_ƒ€‚È’l‚ğæ“¾
+	// ãƒ©ãƒ³ãƒ€ãƒ ãªå€¤ã‚’å–å¾—
 	float GetRand(const float& min,const float& max)
 	{
-		// —”¶¬Ší
+		// ä¹±æ•°ç”Ÿæˆå™¨
 		static std::random_device rd;
 		static std::default_random_engine eng(rd());
 
-		// •ª•z¶¬Ší
+		// åˆ†å¸ƒç”Ÿæˆå™¨
 		std::uniform_real_distribution<float> get_rand_uni_real(min, max);
 
-		// —”‚ğ¶¬
+		// ä¹±æ•°ã‚’ç”Ÿæˆ
 		return get_rand_uni_real(eng);
 	}
 
@@ -34,7 +34,7 @@ namespace MathF
 
 	float Avarage(Vector3 v)
 	{
-		//0œZ‘Îô
+		//0é™¤ç®—å¯¾ç­–
 		if (v.x == 0 && v.y == 0 && v.z == 0)return 0.0f;
 
 		return (v.x + v.y + v.z) / 3;
@@ -42,11 +42,11 @@ namespace MathF
 
 	float Complement(const float& x1,const float& x2,const float& flame)
 	{
-		float distanceX = x2 - x1;//‹——£‚ğo‚·
-		float dividedDistanceX = distanceX / flame;//‹——£‚ğflame‚ÅŠ„‚Á‚½’l
+		float distanceX = x2 - x1;//è·é›¢ã‚’å‡ºã™
+		float dividedDistanceX = distanceX / flame;//è·é›¢ã‚’flameã§å‰²ã£ãŸå€¤
 
 		float temp = 0;
-		temp += dividedDistanceX;//‹——£‚ğflame‚ÅŠ„‚Á‚½’l‚ğ‘«‚·
+		temp += dividedDistanceX;//è·é›¢ã‚’flameã§å‰²ã£ãŸå€¤ã‚’è¶³ã™
 
 		return temp;
 	}

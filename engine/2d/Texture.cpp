@@ -29,13 +29,13 @@ void Texture::CreateWhiteTexture()
 		imageData[i].w = 1.0f;
 	}
 
-	//ƒq[ƒvİ’è
+	//ãƒ’ãƒ¼ãƒ—è¨­å®š
 	D3D12_HEAP_PROPERTIES textureHeapProp{};
 	textureHeapProp.Type = D3D12_HEAP_TYPE_CUSTOM;
 	textureHeapProp.CPUPageProperty =
 		D3D12_CPU_PAGE_PROPERTY_WRITE_BACK;
 	textureHeapProp.MemoryPoolPreference = D3D12_MEMORY_POOL_L0;
-	//ƒŠƒ\[ƒXİ’è
+	//ãƒªã‚½ãƒ¼ã‚¹è¨­å®š
 	D3D12_RESOURCE_DESC textureResourceDesc{};
 	textureResourceDesc.Dimension = D3D12_RESOURCE_DIMENSION_TEXTURE2D;
 	//textureResourceDesc.Format = DXGI_FORMAT_R32G32B32A32_FLOAT;
@@ -46,7 +46,7 @@ void Texture::CreateWhiteTexture()
 	textureResourceDesc.MipLevels = 1;
 	textureResourceDesc.SampleDesc.Count = 1;
 
-	//ƒeƒNƒXƒ`ƒƒƒoƒbƒtƒ@‚Ì¶¬
+	//ãƒ†ã‚¯ã‚¹ãƒãƒ£ãƒãƒƒãƒ•ã‚¡ã®ç”Ÿæˆ
 	sResult = DirectX12::Get()->mDevice->CreateCommittedResource(
 		&textureHeapProp,
 		D3D12_HEAP_FLAG_NONE,
@@ -55,48 +55,48 @@ void Texture::CreateWhiteTexture()
 		nullptr,
 		IID_PPV_ARGS(&mTexBuff));
 
-	//ƒeƒNƒXƒ`ƒƒƒoƒbƒtƒ@‚Éƒf[ƒ^“]‘—
+	//ãƒ†ã‚¯ã‚¹ãƒãƒ£ãƒãƒƒãƒ•ã‚¡ã«ãƒ‡ãƒ¼ã‚¿è»¢é€
 	sResult = mTexBuff->WriteToSubresource(
 		0,
-		nullptr,	//‘S—Ìˆæ‚ÖƒRƒs[
-		imageData.get(),	//Œ³ƒf[ƒ^ƒAƒhƒŒƒX
-		sizeof(XMFLOAT4) * TEXTURE_WIDTH,	//1ƒ‰ƒCƒ“ƒTƒCƒY
-		sizeof(XMFLOAT4) * IMAGE_DATA_COUNT	//‘SƒTƒCƒY
+		nullptr,	//å…¨é ˜åŸŸã¸ã‚³ãƒ”ãƒ¼
+		imageData.get(),	//å…ƒãƒ‡ãƒ¼ã‚¿ã‚¢ãƒ‰ãƒ¬ã‚¹
+		sizeof(XMFLOAT4) * TEXTURE_WIDTH,	//1ãƒ©ã‚¤ãƒ³ã‚µã‚¤ã‚º
+		sizeof(XMFLOAT4) * IMAGE_DATA_COUNT	//å…¨ã‚µã‚¤ã‚º
 	);
 	assert(SUCCEEDED(sResult));
 
 	TextureManager* tManager = TextureManager::Get();
 
-	//ƒnƒ“ƒhƒ‹‚ğæ“¾‚·‚é•”•ª
-	//gpuƒnƒ“ƒhƒ‹‚ğæ“¾
+	//ãƒãƒ³ãƒ‰ãƒ«ã‚’å–å¾—ã™ã‚‹éƒ¨åˆ†
+	//gpuãƒãƒ³ãƒ‰ãƒ«ã‚’å–å¾—
 	mGpuHandle = tManager->mSrvHeap->GetGPUDescriptorHandleForHeapStart();
 
-	//cpuƒnƒ“ƒhƒ‹‚ğæ“¾
+	//cpuãƒãƒ³ãƒ‰ãƒ«ã‚’å–å¾—
 	mCpuHandle = tManager->mSrvHeap->GetCPUDescriptorHandleForHeapStart();
 
-	//‘O‰ñ‚ÌSRVƒq[ƒv‚Ì‘å‚«‚³‚ğ‰ÁZ
+	//å‰å›ã®SRVãƒ’ãƒ¼ãƒ—ã®å¤§ãã•ã‚’åŠ ç®—
 	mCpuHandle.ptr += tManager->mSRVHandleSize;
 
 	mGpuHandle.ptr += tManager->mSRVHandleSize;
 
-	//SRVƒq[ƒv‚Ì‘å‚«‚³‚ğæ“¾
+	//SRVãƒ’ãƒ¼ãƒ—ã®å¤§ãã•ã‚’å–å¾—
 	tManager->mSRVHandleSize += DirectX12::Get()->mDevice->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV);
 
-	//ƒVƒF[ƒ_[ƒŠƒ\[ƒXİ’è
+	//ã‚·ã‚§ãƒ¼ãƒ€ãƒ¼ãƒªã‚½ãƒ¼ã‚¹è¨­å®š
 	mResDesc.Dimension = D3D12_RESOURCE_DIMENSION_BUFFER;
 	mResDesc.DepthOrArraySize = 1;
 	mResDesc.MipLevels = 1;
 	mResDesc.SampleDesc.Count = 1;
 	mResDesc.Layout = D3D12_TEXTURE_LAYOUT_ROW_MAJOR;
 
-	//ƒVƒF[ƒ_ƒŠƒ\[ƒXƒrƒ…[İ’è
+	//ã‚·ã‚§ãƒ¼ãƒ€ãƒªã‚½ãƒ¼ã‚¹ãƒ“ãƒ¥ãƒ¼è¨­å®š
 	mSrvDesc.Format = mResDesc.Format;//RGBA float
 	mSrvDesc.Shader4ComponentMapping =
 		D3D12_DEFAULT_SHADER_4_COMPONENT_MAPPING;
-	mSrvDesc.ViewDimension = D3D12_SRV_DIMENSION_TEXTURE2D;//2DƒeƒNƒXƒ`ƒƒ
+	mSrvDesc.ViewDimension = D3D12_SRV_DIMENSION_TEXTURE2D;//2Dãƒ†ã‚¯ã‚¹ãƒãƒ£
 	mSrvDesc.Texture2D.MipLevels = mResDesc.MipLevels;
 
-	//ƒnƒ“ƒhƒ‹‚Ìw‚·ˆÊ’u‚ÉƒVƒF[ƒ_[ƒŠƒ\[ƒXƒrƒ…[ì¬
+	//ãƒãƒ³ãƒ‰ãƒ«ã®æŒ‡ã™ä½ç½®ã«ã‚·ã‚§ãƒ¼ãƒ€ãƒ¼ãƒªã‚½ãƒ¼ã‚¹ãƒ“ãƒ¥ãƒ¼ä½œæˆ
 	DirectX12::Get()->mDevice->CreateShaderResourceView(mTexBuff.Get(), &mSrvDesc, mCpuHandle);
 
 	mGetResDesc = textureResourceDesc;
@@ -105,12 +105,12 @@ void Texture::CreateWhiteTexture()
 void Texture::Load(const wchar_t& t)
 {
 	sResult = LoadFromWICFile(
-		&t,	//‚±‚±‚É“Ç‚İ‚İ‚½‚¢ƒtƒ@ƒCƒ‹‚ÌƒpƒX‚ğ“ü‚ê‚é
+		&t,	//ã“ã“ã«èª­ã¿è¾¼ã¿ãŸã„ãƒ•ã‚¡ã‚¤ãƒ«ã®ãƒ‘ã‚¹ã‚’å…¥ã‚Œã‚‹
 		WIC_FLAGS_NONE,
 		&mMetadata, mScratchImg
 	);
 
-	//ƒ~ƒbƒvƒ}ƒbƒv¶¬
+	//ãƒŸãƒƒãƒ—ãƒãƒƒãƒ—ç”Ÿæˆ
 	sResult = GenerateMipMaps(
 		mScratchImg.GetImages(), mScratchImg.GetImageCount(), mScratchImg.GetMetadata(),
 		TEX_FILTER_DEFAULT, 0, mMipChain);
@@ -119,16 +119,16 @@ void Texture::Load(const wchar_t& t)
 		mMetadata = mScratchImg.GetMetadata();
 	}
 
-	//“Ç‚İ‚ñ‚¾ƒfƒBƒtƒ…[ƒYƒeƒNƒXƒ`ƒƒ‚ğSRGB‚Æ‚µ‚Äˆµ‚¤
+	//èª­ã¿è¾¼ã‚“ã ãƒ‡ã‚£ãƒ•ãƒ¥ãƒ¼ã‚ºãƒ†ã‚¯ã‚¹ãƒãƒ£ã‚’SRGBã¨ã—ã¦æ‰±ã†
 	mMetadata.format = MakeSRGB(mMetadata.format);
 
-	//ƒq[ƒvİ’è
+	//ãƒ’ãƒ¼ãƒ—è¨­å®š
 	D3D12_HEAP_PROPERTIES textureHeapProp{};
 	textureHeapProp.Type = D3D12_HEAP_TYPE_CUSTOM;
 	textureHeapProp.CPUPageProperty =
 		D3D12_CPU_PAGE_PROPERTY_WRITE_BACK;
 	textureHeapProp.MemoryPoolPreference = D3D12_MEMORY_POOL_L0;
-	//ƒŠƒ\[ƒXİ’è
+	//ãƒªã‚½ãƒ¼ã‚¹è¨­å®š
 	D3D12_RESOURCE_DESC textureResourceDesc{};
 	textureResourceDesc.Dimension = D3D12_RESOURCE_DIMENSION_TEXTURE2D;
 	textureResourceDesc.Format = mMetadata.format;
@@ -138,7 +138,7 @@ void Texture::Load(const wchar_t& t)
 	textureResourceDesc.MipLevels = (UINT16)mMetadata.mipLevels;
 	textureResourceDesc.SampleDesc.Count = 1;
 
-	//ƒeƒNƒXƒ`ƒƒƒoƒbƒtƒ@‚Ì¶¬
+	//ãƒ†ã‚¯ã‚¹ãƒãƒ£ãƒãƒƒãƒ•ã‚¡ã®ç”Ÿæˆ
 	sResult = DirectX12::Get()->mDevice->CreateCommittedResource(
 		&textureHeapProp,
 		D3D12_HEAP_FLAG_NONE,
@@ -149,51 +149,51 @@ void Texture::Load(const wchar_t& t)
 
 	for (SIZE_T j = 0; j < mMetadata.mipLevels; j++)
 	{
-		//ƒ~ƒbƒvƒ}ƒbƒvƒŒƒxƒ‹‚ğw’è‚µ‚ÄƒCƒ[ƒW‚ğæ“¾
+		//ãƒŸãƒƒãƒ—ãƒãƒƒãƒ—ãƒ¬ãƒ™ãƒ«ã‚’æŒ‡å®šã—ã¦ã‚¤ãƒ¡ãƒ¼ã‚¸ã‚’å–å¾—
 		const Image* img = mScratchImg.GetImage(j, 0, 0);
-		//ƒeƒNƒXƒ`ƒƒƒoƒbƒtƒ@‚Éƒf[ƒ^“]‘—
+		//ãƒ†ã‚¯ã‚¹ãƒãƒ£ãƒãƒƒãƒ•ã‚¡ã«ãƒ‡ãƒ¼ã‚¿è»¢é€
 		sResult = mTexBuff->WriteToSubresource(
 			(UINT)j,
-			nullptr,	//‘S—Ìˆæ‚ÖƒRƒs[
-			img->pixels,	//Œ³ƒf[ƒ^ƒAƒhƒŒƒX
-			(UINT)img->rowPitch,	//1ƒ‰ƒCƒ“ƒTƒCƒY
-			(UINT)img->slicePitch	//‘SƒTƒCƒY
+			nullptr,	//å…¨é ˜åŸŸã¸ã‚³ãƒ”ãƒ¼
+			img->pixels,	//å…ƒãƒ‡ãƒ¼ã‚¿ã‚¢ãƒ‰ãƒ¬ã‚¹
+			(UINT)img->rowPitch,	//1ãƒ©ã‚¤ãƒ³ã‚µã‚¤ã‚º
+			(UINT)img->slicePitch	//å…¨ã‚µã‚¤ã‚º
 		);
 		assert(SUCCEEDED(sResult));
 	}
 
 	TextureManager *tManager = TextureManager::Get();
 
-	//ƒnƒ“ƒhƒ‹‚ğæ“¾‚·‚é•”•ª
-	//gpuƒnƒ“ƒhƒ‹‚ğæ“¾
+	//ãƒãƒ³ãƒ‰ãƒ«ã‚’å–å¾—ã™ã‚‹éƒ¨åˆ†
+	//gpuãƒãƒ³ãƒ‰ãƒ«ã‚’å–å¾—
 	mGpuHandle = tManager->mSrvHeap->GetGPUDescriptorHandleForHeapStart();
 
-	//cpuƒnƒ“ƒhƒ‹‚ğæ“¾
+	//cpuãƒãƒ³ãƒ‰ãƒ«ã‚’å–å¾—
 	mCpuHandle = tManager->mSrvHeap->GetCPUDescriptorHandleForHeapStart();
 
-	//SRVƒq[ƒv‚Ì‘å‚«‚³‚ğ‰ÁZ
+	//SRVãƒ’ãƒ¼ãƒ—ã®å¤§ãã•ã‚’åŠ ç®—
 	mCpuHandle.ptr += tManager->mSRVHandleSize;
 
 	mGpuHandle.ptr += tManager->mSRVHandleSize;
 
-	//SRVƒq[ƒv‚Ì‘å‚«‚³‚ğæ“¾
+	//SRVãƒ’ãƒ¼ãƒ—ã®å¤§ãã•ã‚’å–å¾—
 	tManager->mSRVHandleSize += DirectX12::Get()->mDevice->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV);
 
-	//ƒŠƒ\[ƒXİ’è
+	//ãƒªã‚½ãƒ¼ã‚¹è¨­å®š
 	mResDesc.Dimension = D3D12_RESOURCE_DIMENSION_BUFFER;
 	mResDesc.DepthOrArraySize = 1;
 	mResDesc.MipLevels = 1;
 	mResDesc.SampleDesc.Count = 1;
 	mResDesc.Layout = D3D12_TEXTURE_LAYOUT_ROW_MAJOR;
 
-	//ƒVƒF[ƒ_ƒŠƒ\[ƒXƒrƒ…[İ’è
+	//ã‚·ã‚§ãƒ¼ãƒ€ãƒªã‚½ãƒ¼ã‚¹ãƒ“ãƒ¥ãƒ¼è¨­å®š
 	mSrvDesc.Format = mResDesc.Format;//RGBA float
 	mSrvDesc.Shader4ComponentMapping =
 		D3D12_DEFAULT_SHADER_4_COMPONENT_MAPPING;
-	mSrvDesc.ViewDimension = D3D12_SRV_DIMENSION_TEXTURE2D;//2DƒeƒNƒXƒ`ƒƒ
+	mSrvDesc.ViewDimension = D3D12_SRV_DIMENSION_TEXTURE2D;//2Dãƒ†ã‚¯ã‚¹ãƒãƒ£
 	mSrvDesc.Texture2D.MipLevels = mResDesc.MipLevels;
 
-	//ƒnƒ“ƒhƒ‹‚Ìw‚·ˆÊ’u‚ÉƒVƒF[ƒ_[ƒŠƒ\[ƒXƒrƒ…[ì¬
+	//ãƒãƒ³ãƒ‰ãƒ«ã®æŒ‡ã™ä½ç½®ã«ã‚·ã‚§ãƒ¼ãƒ€ãƒ¼ãƒªã‚½ãƒ¼ã‚¹ãƒ“ãƒ¥ãƒ¼ä½œæˆ
 	DirectX12::Get()->mDevice->CreateShaderResourceView(mTexBuff.Get(), &mSrvDesc, mCpuHandle);
 
 	mGetResDesc = textureResourceDesc;
@@ -205,12 +205,12 @@ void TextureManager::Initialize()
 {
 	DirectX12 *dx12 = DirectX12::Get();
 
-	//ƒfƒXƒNƒŠƒvƒ^ƒq[ƒv‚Ìİ’è
+	//ãƒ‡ã‚¹ã‚¯ãƒªãƒ—ã‚¿ãƒ’ãƒ¼ãƒ—ã®è¨­å®š
 	mSrvHeapDesc.Type = D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV;
-	mSrvHeapDesc.Flags = D3D12_DESCRIPTOR_HEAP_FLAG_SHADER_VISIBLE;//ƒVƒF[ƒ_[‚©‚çŒ©‚¦‚é‚æ‚¤‚É
+	mSrvHeapDesc.Flags = D3D12_DESCRIPTOR_HEAP_FLAG_SHADER_VISIBLE;//ã‚·ã‚§ãƒ¼ãƒ€ãƒ¼ã‹ã‚‰è¦‹ãˆã‚‹ã‚ˆã†ã«
 	mSrvHeapDesc.NumDescriptors = K_MAX_SRV_COUNT;
 
-	//İ’è‚ğŒ³‚ÉSRV—pƒfƒXƒNƒŠƒvƒ^ƒq[ƒv‚ğ¶¬
+	//è¨­å®šã‚’å…ƒã«SRVç”¨ãƒ‡ã‚¹ã‚¯ãƒªãƒ—ã‚¿ãƒ’ãƒ¼ãƒ—ã‚’ç”Ÿæˆ
 	sResult = dx12->mDevice->CreateDescriptorHeap(&mSrvHeapDesc, IID_PPV_ARGS(&mSrvHeap));
 	assert(SUCCEEDED(sResult));
 }
@@ -227,7 +227,7 @@ void TextureManager::PreLoad()
 	Load("Resources\\redScreen.png", "redScreen");
 }
 
-//ƒlƒbƒg‚ÅE‚Á‚Ä‚«‚½string->wstring•ÏŠ·
+//ãƒãƒƒãƒˆã§æ‹¾ã£ã¦ããŸstring->wstringå¤‰æ›
 std::wstring convString(const std::string& input)
 {
 	size_t i;

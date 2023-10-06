@@ -17,22 +17,22 @@ void Billboard::Update(const Camera& camera)
 {
 	Matrix4 MatBillboard = Matrix4::Identity();
 	
-	Matrix4 matScale;	//ƒXƒP[ƒŠƒ“ƒOs—ñ
-	Matrix4 matRot;	//‰ñ“]s—ñ
-	Matrix4 matTrans;	//•½sˆÚ“®s—ñ
+	Matrix4 matScale;	//ã‚¹ã‚±ãƒ¼ãƒªãƒ³ã‚°è¡Œåˆ—
+	Matrix4 matRot;	//å›žè»¢è¡Œåˆ—
+	Matrix4 matTrans;	//å¹³è¡Œç§»å‹•è¡Œåˆ—
 
-	//ƒXƒP[ƒ‹‚ðÝ’è
+	//ã‚¹ã‚±ãƒ¼ãƒ«ã‚’è¨­å®š
 	matScale = Matrix4::Identity();
 	matScale = Matrix4::scale(scale);
 
-	//‰ñ“]‚ðÝ’è
+	//å›žè»¢ã‚’è¨­å®š
 	matRot = Matrix4::Identity();
 	matRot = Matrix4::rotateZ(rotation.z) * Matrix4::rotateX(rotation.x) * Matrix4::rotateY(rotation.y);
 
 	matTrans = Matrix4::Identity();
 	matTrans = Matrix4::translate(position);
 
-	//ƒrƒ‹ƒ{[ƒhs—ñ‚ðì¬
+	//ãƒ“ãƒ«ãƒœãƒ¼ãƒ‰è¡Œåˆ—ã‚’ä½œæˆ
 	MatBillboard = 
 		Matrix4::rotateZ(PlayerCamera::Get()->rotation.z) *
 		Matrix4::rotateX(PlayerCamera::Get()->rotation.x) * 
@@ -40,7 +40,7 @@ void Billboard::Update(const Camera& camera)
 
 	matWorld = Matrix4::Identity();
 	matWorld *= matScale;
-	matWorld *= MatBillboard;//ƒrƒ‹ƒ{[ƒh‰ñ“]
+	matWorld *= MatBillboard;//ãƒ“ãƒ«ãƒœãƒ¼ãƒ‰å›žè»¢
 	matWorld *= matRot;
 	matWorld *= matTrans;
 
@@ -77,22 +77,22 @@ void BillboardY::Initialize()
 
 void BillboardY::Update(const Camera& camera)
 {
-	Matrix4 matScale;	//ƒXƒP[ƒŠƒ“ƒOs—ñ
-	Matrix4 matRot;	//‰ñ“]s—ñ
-	Matrix4 matTrans;	//•½sˆÚ“®s—ñ
+	Matrix4 matScale;	//ã‚¹ã‚±ãƒ¼ãƒªãƒ³ã‚°è¡Œåˆ—
+	Matrix4 matRot;	//å›žè»¢è¡Œåˆ—
+	Matrix4 matTrans;	//å¹³è¡Œç§»å‹•è¡Œåˆ—
 
-	//ƒXƒP[ƒ‹‚ðÝ’è
+	//ã‚¹ã‚±ãƒ¼ãƒ«ã‚’è¨­å®š
 	matScale = Matrix4::Identity();
 	matScale = Matrix4::scale(scale);
 
-	//‰ñ“]‚ðÝ’è
+	//å›žè»¢ã‚’è¨­å®š
 	matRot = Matrix4::Identity();
 	matRot = Matrix4::rotateZ(rotation.z) * Matrix4::rotateX(rotation.x) * Matrix4::rotateY(rotation.y);
 
 	matTrans = Matrix4::Identity();
 	matTrans = Matrix4::translate(position);
 
-	//ƒrƒ‹ƒ{[ƒhs—ñ‚ðì¬
+	//ãƒ“ãƒ«ãƒœãƒ¼ãƒ‰è¡Œåˆ—ã‚’ä½œæˆ
 	Matrix4 MatBillboardY = Matrix4::Identity();
 	Vector3 camVecX = PlayerCamera::Get()->matWorld.ExtractAxisX();
 	MatBillboardY.m[0][0] = camVecX.x;
@@ -111,7 +111,7 @@ void BillboardY::Update(const Camera& camera)
 
 	matWorld = Matrix4::Identity();
 	matWorld *= matScale;
-	matWorld *= MatBillboardY;//ƒrƒ‹ƒ{[ƒh‰ñ“]
+	matWorld *= MatBillboardY;//ãƒ“ãƒ«ãƒœãƒ¼ãƒ‰å›žè»¢
 	matWorld *= matRot;
 	matWorld *= matTrans;
 
@@ -132,7 +132,7 @@ void BillboardY::Update(const Camera& camera)
 	constBufferOutLine.mConstBufferData->color = mOutLineColor;
 	constBufferOutLine.mConstBufferData->thickness = mOutLineThickness;
 
-	//ŽÀ‚Í’¸“_ƒVƒF[ƒ_[‚Æ‚©‚Í‹¤’Ê‰»‚µ‚½•û‚ª‚¢‚¢‚ñ‚¶‚á‚È‚¢‚©
+	//å®Ÿã¯é ‚ç‚¹ã‚·ã‚§ãƒ¼ãƒ€ãƒ¼ã¨ã‹ã¯å…±é€šåŒ–ã—ãŸæ–¹ãŒã„ã„ã‚“ã˜ã‚ƒãªã„ã‹
 	cBufferNoise.mConstBufferData->viewproj = camera.mMatView * camera.mMatProjection;
 	cBufferNoise.mConstBufferData->matWorld = matWorld;
 
@@ -141,7 +141,7 @@ void BillboardY::Update(const Camera& camera)
 
 void BillboardY::DrawNoise()
 {
-	//Œ©‚¦‚È‚¢ƒtƒ‰ƒO‚ª—§‚Á‚Ä‚é‚È‚ç•`‰æ‚ðs‚í‚È‚¢
+	//è¦‹ãˆãªã„ãƒ•ãƒ©ã‚°ãŒç«‹ã£ã¦ã‚‹ãªã‚‰æç”»ã‚’è¡Œã‚ãªã„
 	if (mIsVisiable == false)
 	{
 		return;
@@ -150,21 +150,21 @@ void BillboardY::DrawNoise()
 	DirectX12* dx12 = DirectX12::Get();
 	TextureManager* texM = TextureManager::Get();
 
-	//SRVƒq[ƒv‚Ìæ“ª‚©‚ç‡”Ô‚ÉSRV‚ðƒ‹[ƒgƒpƒ‰ƒ[ƒ^1”Ô‚ÉÝ’è
-	//ƒ‹[ƒgƒpƒ‰ƒ[ƒ^1”Ô‚ÍƒeƒNƒXƒ`ƒƒƒoƒbƒtƒ@
+	//SRVãƒ’ãƒ¼ãƒ—ã®å…ˆé ­ã‹ã‚‰é †ç•ªã«SRVã‚’ãƒ«ãƒ¼ãƒˆãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿1ç•ªã«è¨­å®š
+	//ãƒ«ãƒ¼ãƒˆãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿1ç•ªã¯ãƒ†ã‚¯ã‚¹ãƒãƒ£ãƒãƒƒãƒ•ã‚¡
 	//dx12->mCmdList->SetGraphicsRootDescriptorTable(1, TEXTURE->mGpuHandle);
 	//commandList->SetGraphicsRootConstantBufferView(0, constBufferT.buffer->GetGPUVirtualAddress());
 
-	//’¸“_ƒoƒbƒtƒ@‚ÌÝ’è
+	//é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ã®è¨­å®š
 	dx12->mCmdList->IASetVertexBuffers(0, 1, &MODEL->mVbView);
 
-	//ƒCƒ“ƒfƒbƒNƒXƒoƒbƒtƒ@‚ÌÝ’è
+	//ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ãƒãƒƒãƒ•ã‚¡ã®è¨­å®š
 	dx12->mCmdList->IASetIndexBuffer(&MODEL->mIbView);
 
-	//’è”ƒoƒbƒtƒ@ƒrƒ…[(CBV)‚ÌÝ’èƒRƒ}ƒ“ƒh
+	//å®šæ•°ãƒãƒƒãƒ•ã‚¡ãƒ“ãƒ¥ãƒ¼(CBV)ã®è¨­å®šã‚³ãƒžãƒ³ãƒ‰
 	dx12->mCmdList->SetGraphicsRootConstantBufferView(0, constBufferB1.mBuffer->GetGPUVirtualAddress());
 	
-	//•`‰æƒRƒ}ƒ“ƒh
+	//æç”»ã‚³ãƒžãƒ³ãƒ‰
 	dx12->mCmdList->DrawIndexedInstanced((UINT)MODEL->mMesh.indices.size(), 1, 0, 0, 0);
 
 }

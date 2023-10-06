@@ -22,26 +22,26 @@ class ImguiManager
 public:
 
 	/// <summary>
-	/// imgui‚Ì‰Šú‰»
+	/// imguiã®åˆæœŸåŒ–
 	/// </summary>
 	void Initialize();
 
 	void PreUpdate();
 
 	/// <summary>
-	/// imgui‚Ì•`‰æ
+	/// imguiã®æç”»
 	/// </summary>
 	void Draw();
 
 	void PreDraw();
 
 	/// <summary>
-	/// imgui‚ÌI—¹ˆ—
+	/// imguiã®çµ‚äº†å‡¦ç†
 	/// </summary>
 	void Finalize();
 
 	/// <summary>
-	/// ƒCƒ“ƒXƒ^ƒ“ƒX‚ğæ“¾
+	/// ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹ã‚’å–å¾—
 	/// </summary>
 	/// <returns></returns>
 	static ImguiManager* GetInstance();

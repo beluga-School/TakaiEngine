@@ -6,7 +6,7 @@
 
 class DirectionalLight
 {
-public://変数
+public://螟画焚
 	Vector3 mDirection = { 1,0,0 };
 	Vector3 mColor = { 1,1,1 };
 
@@ -18,7 +18,7 @@ public://変数
 		float pad;
 	};
 
-public://関数
+public://髢｢謨ｰ
 
 	void Initialize();
 	void Update();
@@ -31,8 +31,8 @@ public://関数
 
 	bool mActive = false;
 
-private://変数
-	//定数バッファ
+private://螟画焚
+	//螳壽焚繝舌ャ繝輔ぃ
 	ConstBuffer<ConstBufferData> mConstBuff;
 
 	bool mDirty = false;

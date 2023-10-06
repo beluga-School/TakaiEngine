@@ -5,39 +5,39 @@
 
 void SceneManager::Update()
 {
-	//—­‚ßž‚ñ‚¾•`‰æŽÀs‚ð”jŠü
+	//æºœã‚è¾¼ã‚“ã æç”»å®Ÿè¡Œã‚’ç ´æ£„
 	InstantDrawer::DrawInit();
 
-	//Ø‚è‘Ö‚¦‹@\
-	//ŽŸ‚ÌƒV[ƒ“‚Ì—\–ñ‚ª‚ ‚é‚È‚ç
+	//åˆ‡ã‚Šæ›¿ãˆæ©Ÿæ§‹
+	//æ¬¡ã®ã‚·ãƒ¼ãƒ³ã®äºˆç´„ãŒã‚ã‚‹ãªã‚‰
 	if (mNextscene)
 	{
-		//‹ŒƒV[ƒ“‚ÌI—¹
+		//æ—§ã‚·ãƒ¼ãƒ³ã®çµ‚äº†
 		if (mCurrentscene) {
 			mCurrentscene->End();
 		}
 
-		//Ø‚è‘Ö‚¦
+		//åˆ‡ã‚Šæ›¿ãˆ
 		mCurrentscene.swap(mNextscene);
 		mNextscene = nullptr;
 
-		//ƒV[ƒ“ƒ}ƒl[ƒWƒƒ‚ðŒ»ÝƒV[ƒ“‚ÉƒZƒbƒg
+		//ã‚·ãƒ¼ãƒ³ãƒžãƒãƒ¼ã‚¸ãƒ£ã‚’ç¾åœ¨ã‚·ãƒ¼ãƒ³ã«ã‚»ãƒƒãƒˆ
 		mCurrentscene->SetManager(*this);
 		
-		//ƒŠƒ\[ƒX“Ç‚Ýž‚Ý
+		//ãƒªã‚½ãƒ¼ã‚¹èª­ã¿è¾¼ã¿
 		mCurrentscene->LoadResource();
 
-		//ŽŸƒV[ƒ“‚ð‰Šú‰»
+		//æ¬¡ã‚·ãƒ¼ãƒ³ã‚’åˆæœŸåŒ–
 		mCurrentscene->Initialize();
 
-		//ˆÃ“]‚ð‰ðœ
+		//æš—è»¢ã‚’è§£é™¤
 		if (SceneChange::Get()->IsBlackOut())
 		{
 			SceneChange::Get()->Open();
 		}
 	}
 
-	//ŽÀs’†ƒV[ƒ“‚ÌXV
+	//å®Ÿè¡Œä¸­ã‚·ãƒ¼ãƒ³ã®æ›´æ–°
 	mCurrentscene->Update();
 
 	SceneChange::Get()->Update();
@@ -45,16 +45,16 @@ void SceneManager::Update()
 
 void SceneManager::Draw()
 {
-	//ŽÀs’†ƒV[ƒ“‚Ì•`‰æ
+	//å®Ÿè¡Œä¸­ã‚·ãƒ¼ãƒ³ã®æç”»
 	mCurrentscene->Draw();
 
-	//ŠÈˆÕ•`‰æƒNƒ‰ƒX‚Ì–ˆƒtƒŒ[ƒ€XV
+	//ç°¡æ˜“æç”»ã‚¯ãƒ©ã‚¹ã®æ¯Žãƒ•ãƒ¬ãƒ¼ãƒ æ›´æ–°
 	InstantDrawer::AllUpdate();
-	//ŠÈˆÕ•`‰æƒNƒ‰ƒX‚Ì•`‰æ
+	//ç°¡æ˜“æç”»ã‚¯ãƒ©ã‚¹ã®æç”»
 	InstantDrawer::AllDraw3D();
 	InstantDrawer::AllDraw2D();
 
-	//Ø‚è‘Ö‚¦‰‰o‚Ì•`‰æ
+	//åˆ‡ã‚Šæ›¿ãˆæ¼”å‡ºã®æç”»
 	SpriteCommonBeginDraw();
 	SceneChange::Get()->Draw();
 }
@@ -69,6 +69,6 @@ void SceneManager::End()
 //	assert(sceneFactory);
 //	assert(nextscene == nullptr);
 //
-//	//ŽŸ‚ÌƒV[ƒ“‚ð¶¬
+//	//æ¬¡ã®ã‚·ãƒ¼ãƒ³ã‚’ç”Ÿæˆ
 //	nextscene = sceneFactory->CreateScene(sceneName);
 //}

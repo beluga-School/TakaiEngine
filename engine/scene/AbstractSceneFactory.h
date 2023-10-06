@@ -2,13 +2,13 @@
 #include "IScene.h"
 #include <string>
 
-//ƒV[ƒ“Hê
+//ã‚·ãƒ¼ãƒ³å·¥å ´
 class AbstractSceneFactory
 {
 public:
-	//‰¼‘zƒfƒXƒgƒ‰ƒNƒ^
+	//ä»®æƒ³ãƒ‡ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 	virtual ~AbstractSceneFactory() = default;
-	//ƒV[ƒ“¶¬
+	//ã‚·ãƒ¼ãƒ³ç”Ÿæˆ
 	virtual IScene* CreateScene(const std::string& sceneName) = 0;
 };
 

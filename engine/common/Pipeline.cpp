@@ -1,4 +1,4 @@
-﻿#include "Pipeline.h"
+#include "Pipeline.h"
 #include "Shader.h"
 #include "Result.h"
 #include <cassert>

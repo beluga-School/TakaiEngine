@@ -41,7 +41,7 @@ constexpr float Vector2::Dot(const Vector2& other) const
 	return x * other.x + y * other.y;
 }
 
-//©g‚ğ‘‚«Š·‚¦‚È‚¢‚â‚Â‚ç
+//è‡ªèº«ã‚’æ›¸ãæ›ãˆãªã„ã‚„ã¤ã‚‰
 Vector2 Vector2::operator +(const Vector2& other) const
 {
 	Vector2 v;
@@ -106,7 +106,7 @@ Vector2 Vector2::operator /(const float& other) const
 	return v;
 }
 
-//©g‚ğ‘‚«Š·‚¦‚é‚â‚Â‚ç
+//è‡ªèº«ã‚’æ›¸ãæ›ãˆã‚‹ã‚„ã¤ã‚‰
 Vector2 Vector2::operator +=(const Vector2& other)
 {
 	x += other.x;

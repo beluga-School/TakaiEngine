@@ -63,7 +63,7 @@ int32_t Util::GetNumber(const std::string& str, const char* delimiter)
 
     for (auto str : split)
     {
-        //”š‚¾‚¯”²‚«o‚·
+        //æ•°å­—ã ã‘æŠœãå‡ºã™
         if (Util::IsNumber(str))
         {
             return int32_t(atoi(str.c_str()));

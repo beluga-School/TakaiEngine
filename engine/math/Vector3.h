@@ -4,57 +4,57 @@
 class Vector3
 {
 public:
-	float x;	// x¬•ª
-	float y;	// y¬•ª
-	float z;	// z¬•ª
+	float x;	// xæˆåˆ†
+	float y;	// yæˆåˆ†
+	float z;	// zæˆåˆ†
 public:
 	Vector3();
 	Vector3(const float& x,const float& y,const float& z);
 
-	//ƒƒ“ƒoŠÖ”
+	//ãƒ¡ãƒ³ãƒé–¢æ•°
 
 	/// <summary>
-	/// ’·‚³‚ğ•Ô‚·
+	/// é•·ã•ã‚’è¿”ã™
 	/// </summary>
 	float length() const;
 
 	/// <summary>
-	/// ³‹K‰»
-	/// Œ‹‰Ê‚ğreturn‚µA–{‘Ì‚ğ‘‚«Š·‚¦‚È‚¢ –{‘Ì‚ğ‘‚«Š·‚¦‚½‚¢ê‡‚Ínormalize‚ğg—p‚µ‚Ä‚­‚¾‚³‚¢
+	/// æ­£è¦åŒ–
+	/// çµæœã‚’returnã—ã€æœ¬ä½“ã‚’æ›¸ãæ›ãˆãªã„ æœ¬ä½“ã‚’æ›¸ãæ›ãˆãŸã„å ´åˆã¯normalizeã‚’ä½¿ç”¨ã—ã¦ãã ã•ã„
 	/// </summary>
 	/// <param name="v"></param>
 	/// <returns></returns>
 	Vector3 GetNormalize()const;
 	
 	/// <summary>
-	/// ³‹K‰»
-	/// –{‘Ì‚ğ‘‚«Š·‚¦‚é@•Ï”‚É‘ã“ü‚µ‚½‚¢ê‡‚ÍGetNormalize‚ğg—p‚µ‚Ä‚­‚¾‚³‚¢ 
+	/// æ­£è¦åŒ–
+	/// æœ¬ä½“ã‚’æ›¸ãæ›ãˆã‚‹ã€€å¤‰æ•°ã«ä»£å…¥ã—ãŸã„å ´åˆã¯GetNormalizeã‚’ä½¿ç”¨ã—ã¦ãã ã•ã„ 
 	/// </summary>
 	/// <param name="v"></param>
 	/// <returns></returns>
 	void normalize();
 	
 	/// <summary>
-	/// “àÏ
+	/// å†…ç©
 	/// </summary>
 	/// <param name="v"></param>
 	/// <returns></returns>
 	float dot(const Vector3& v)const;
 	
 	/// <summary>
-	/// ŠOÏ
-	/// –{‘Ì‚ğ‘‚«Š·‚¦‚é@•Ï”‚É‘ã“ü‚µ‚½‚¢ê‡‚ÍGetCross‚ğg—p‚µ‚Ä‚­‚¾‚³‚¢
+	/// å¤–ç©
+	/// æœ¬ä½“ã‚’æ›¸ãæ›ãˆã‚‹ã€€å¤‰æ•°ã«ä»£å…¥ã—ãŸã„å ´åˆã¯GetCrossã‚’ä½¿ç”¨ã—ã¦ãã ã•ã„
 	/// </summary>
 	void cross(const Vector3& v);
 	
 	/// <summary>
-	/// ŠOÏ
-	/// Œ‹‰Ê‚ğreturn‚µA–{‘Ì‚ğ‘‚«Š·‚¦‚È‚¢ –{‘Ì‚ğ‘‚«Š·‚¦‚½‚¢ê‡‚Ícross‚ğg—p‚µ‚Ä‚­‚¾‚³‚¢
+	/// å¤–ç©
+	/// çµæœã‚’returnã—ã€æœ¬ä½“ã‚’æ›¸ãæ›ãˆãªã„ æœ¬ä½“ã‚’æ›¸ãæ›ãˆãŸã„å ´åˆã¯crossã‚’ä½¿ç”¨ã—ã¦ãã ã•ã„
 	/// </summary>
 	Vector3 GetCross(const Vector3& v)const;
 
 	/// <summary>
-	/// Wrelfæ¶‚Ì‚â‚ÂŠÛƒpƒN‚èSpline
+	/// Wrelfå…ˆç”Ÿã®ã‚„ã¤ä¸¸ãƒ‘ã‚¯ã‚ŠSpline
 	/// </summary>
 	/// <param name="points"></param>
 	/// <param name="t"></param>
@@ -62,8 +62,8 @@ public:
 	static Vector3 Spline(const std::vector<Vector3>& points, float t);
 
 	/// <summary>
-	/// 2‚Â‚ÌƒxƒNƒgƒ‹‚Ì‚È‚·Šp(Radian)‚ğæ“¾
-	/// Œƒ‚¨‚à‚ç‚µ‚¢‚Ì‚Å‘½—lŒµ‹Ö
+	/// 2ã¤ã®ãƒ™ã‚¯ãƒˆãƒ«ã®ãªã™è§’(Radian)ã‚’å–å¾—
+	/// æ¿€ãŠã‚‚ã‚‰ã—ã„ã®ã§å¤šæ§˜å³ç¦
 	/// </summary>
 	float Radian(const Vector3& a) const;
 

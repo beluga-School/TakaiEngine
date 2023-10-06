@@ -6,10 +6,10 @@
 #include <stdlib.h>
 #include <memory>
 
-//ƒ‰ƒCƒg‚Ì”
+//ãƒ©ã‚¤ãƒˆã®æ•°
 static const int32_t sDIRLIGHT_NUM = 3;
 
-//“_ŒõŒ¹‚Ì”
+//ç‚¹å…‰æºã®æ•°
 static const int32_t sPOINTLIGHT_NUM = 3;
 
 struct LightGroupData
@@ -24,53 +24,53 @@ struct LightGroupData
 
 class LightGroup
 {
-public://•Ï”
+public://å¤‰æ•°
 	
 
-	//‘S‚Ä‚ÌƒIƒuƒWƒFƒNƒg‚Å‹¤’Ê‚Ìƒ‰ƒCƒgƒf[ƒ^
+	//å…¨ã¦ã®ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã§å…±é€šã®ãƒ©ã‚¤ãƒˆãƒ‡ãƒ¼ã‚¿
 	static std::unique_ptr<LightGroup> sLightGroup;
 	/*static void SetLight(std::unique_ptr<LightGroup> light) {
 		lightGroup = light;
 	};*/
 	   
-	//’è”ƒoƒbƒtƒ@
+	//å®šæ•°ãƒãƒƒãƒ•ã‚¡
 	ConstBuffer<LightGroupData> mConstBuff;
 
-public://ŠÖ”
-	//ƒCƒ“ƒXƒ^ƒ“ƒX¶¬
+public://é–¢æ•°
+	//ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹ç”Ÿæˆ
 	static void Create();
 
-	//‰Šú‰»
+	//åˆæœŸåŒ–
 	void Initialize();
-	//XV
+	//æ›´æ–°
 	void Update();
-	//•`‰æƒRƒ}ƒ“ƒh
+	//æç”»ã‚³ãƒãƒ³ãƒ‰
 	void Draw(const UINT& index);
 
-	//’è”ƒoƒbƒtƒ@‚ğ“]‘—
+	//å®šæ•°ãƒãƒƒãƒ•ã‚¡ã‚’è»¢é€
 	void TransferBuffer();
 
-	//•½sŒõŒ¹
-	//ƒ‰ƒCƒg‚ÌF‚ğİ’è
+	//å¹³è¡Œå…‰æº
+	//ãƒ©ã‚¤ãƒˆã®è‰²ã‚’è¨­å®š
 	void SetAmbientColor(const Vector3& color);
 
-	//•½sŒõŒ¹‚Ì—LŒøƒtƒ‰ƒO‚ğƒZƒbƒg
+	//å¹³è¡Œå…‰æºã®æœ‰åŠ¹ãƒ•ãƒ©ã‚°ã‚’ã‚»ãƒƒãƒˆ
 	void SetDirLightActive(const int32_t& index, const bool& active);
 
-	//•½sŒõŒ¹‚Ìƒ‰ƒCƒg•ûŒü‚ğƒZƒbƒg
+	//å¹³è¡Œå…‰æºã®ãƒ©ã‚¤ãƒˆæ–¹å‘ã‚’ã‚»ãƒƒãƒˆ
 	void SetDirLightDir(const int32_t& index, const Vector3& lightdir);
 	
-	//•½sŒõŒ¹‚Ìƒ‰ƒCƒg•ûŒü‚ğƒZƒbƒg
+	//å¹³è¡Œå…‰æºã®ãƒ©ã‚¤ãƒˆæ–¹å‘ã‚’ã‚»ãƒƒãƒˆ
 	void SetDirLightColor(const int32_t& index, const Vector3& lightcolor);
 
-	//“_ŒõŒ¹
+	//ç‚¹å…‰æº
 	
 	void SetPointLightActive(const int32_t& index, const bool& active);
 	void SetPointLightPos(const int32_t& index, const Vector3& pos);
 	void SetPointLightColor(const int32_t& index, const Vector3& color);
 	void SetPointLightAtten(const int32_t& index, const Vector3& atten);
 
-	//•W€‚Ìƒ‰ƒCƒgİ’è
+	//æ¨™æº–ã®ãƒ©ã‚¤ãƒˆè¨­å®š
 	void DefaultLightSet();
 
 	DirectionalLight mDirLights[sDIRLIGHT_NUM];

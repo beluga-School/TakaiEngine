@@ -13,27 +13,27 @@
 
 struct ConstBufferDataB1
 {
-	Vector3 ambient;	//ƒAƒ“ƒrƒGƒ“ƒgŒW”
-	float pad1;			//ƒpƒfƒBƒ“ƒO
-	Vector3 diffuse;	//ƒfƒBƒtƒ…[ƒYŒW”
-	float pad2;			//ƒpƒfƒBƒ“ƒO
-	Vector3 specular;	//ƒXƒyƒLƒ…ƒ‰[ŒW”
+	Vector3 ambient;	//ã‚¢ãƒ³ãƒ“ã‚¨ãƒ³ãƒˆä¿‚æ•°
+	float pad1;			//ãƒ‘ãƒ‡ã‚£ãƒ³ã‚°
+	Vector3 diffuse;	//ãƒ‡ã‚£ãƒ•ãƒ¥ãƒ¼ã‚ºä¿‚æ•°
+	float pad2;			//ãƒ‘ãƒ‡ã‚£ãƒ³ã‚°
+	Vector3 specular;	//ã‚¹ãƒšã‚­ãƒ¥ãƒ©ãƒ¼ä¿‚æ•°
 	float alpha;
 };
 
 struct ConstBufferBrightness
 {
-	Float4 brightness;		//ƒJƒ‰[
+	Float4 brightness;		//ã‚«ãƒ©ãƒ¼
 };
 
 struct ConstBufferDataTransform {
-	//Matrix4 mat;	//3D•ÏŠ·s—ñ
-	Matrix4 viewproj;	//ƒrƒ…[ƒvƒs—ñ
-	Matrix4 world;		//ƒ[ƒ‹ƒhs—ñ
-	Vector3 cameraPos;	//ƒJƒƒ‰À•W(ƒ[ƒ‹ƒhs—ñ)
+	//Matrix4 mat;	//3Då¤‰æ›è¡Œåˆ—
+	Matrix4 viewproj;	//ãƒ“ãƒ¥ãƒ¼ãƒ—ãƒ­è¡Œåˆ—
+	Matrix4 world;		//ãƒ¯ãƒ¼ãƒ«ãƒ‰è¡Œåˆ—
+	Vector3 cameraPos;	//ã‚«ãƒ¡ãƒ©åº§æ¨™(ãƒ¯ãƒ¼ãƒ«ãƒ‰è¡Œåˆ—)
 	float pad1;
-	Vector2 tiling;		//ƒ^ƒCƒŠƒ“ƒO”
-	Vector2 offset;		//ƒIƒtƒZƒbƒg”
+	Vector2 tiling;		//ã‚¿ã‚¤ãƒªãƒ³ã‚°æ•°
+	Vector2 offset;		//ã‚ªãƒ•ã‚»ãƒƒãƒˆæ•°
 };
 
 struct ConstBufferDataOutLine {
@@ -45,7 +45,7 @@ struct ConstBufferDisolve {
 	float value;
 };
 
-//“Áê•`‰æ‚Ì’è”
+//ç‰¹æ®Šæç”»æ™‚ã®å®šæ•°
 namespace SpecialDraw
 {
 	typedef int32_t DISOLVE;
@@ -81,10 +81,10 @@ public:
 
 	const Model* MODEL = nullptr;
 
-	//•`‰æƒtƒ‰ƒO
+	//æç”»ãƒ•ãƒ©ã‚°
 	bool mIsVisiable = true;
 
-	//ƒfƒBƒ]ƒ‹ƒu‚Ìis“x(0`1‚ÅŠÇ—)
+	//ãƒ‡ã‚£ã‚¾ãƒ«ãƒ–ã®é€²è¡Œåº¦(0ï½1ã§ç®¡ç†)
 	float disolveVal = 0;
 
 public:
@@ -98,16 +98,16 @@ public:
 	void Draw();
 	void DrawMaterial();
 
-	///---“Áê•`‰æ
-	//ƒAƒEƒgƒ‰ƒCƒ“‚Åg—p‚·‚é•`‰æ
+	///---ç‰¹æ®Šæç”»
+	//ã‚¢ã‚¦ãƒˆãƒ©ã‚¤ãƒ³ã§ä½¿ç”¨ã™ã‚‹æç”»
 	void DrawOutLine();
 
-	//ƒeƒNƒXƒ`ƒƒƒuƒŒƒ“ƒh‚Åg—p‚·‚é•`‰æ
+	//ãƒ†ã‚¯ã‚¹ãƒãƒ£ãƒ–ãƒ¬ãƒ³ãƒ‰ã§ä½¿ç”¨ã™ã‚‹æç”»
 	void DrawSpecial(SpecialDraw::TEXTUREBLEND drawkey, const Texture& subTex, const Texture& maskTex);
 	void DrawSpecial(SpecialDraw::DISOLVE drawkey, const Texture& maskTex);
 
-	///---‚±‚±‚ç•Ó‚ÍŠÖ”‚ğ‚Ğ‚Æ‚Â‚É‚µ‚ÄA’è”‚ÅU‚é•‘‚¢‚ğ•Ï‚¦‚é‚æ‚¤‚ÈİŒv‚É‚µ‚½‚¢
-	///’è”‚Ì’†g‚ÅƒI[ƒo[ƒ[ƒhæ‚ğ•Ï‚¦‚ê‚éŠ´‚¶‚É‚µ‚½‚¢
+	///---ã“ã“ã‚‰è¾ºã¯é–¢æ•°ã‚’ã²ã¨ã¤ã«ã—ã¦ã€å®šæ•°ã§æŒ¯ã‚‹èˆã„ã‚’å¤‰ãˆã‚‹ã‚ˆã†ãªè¨­è¨ˆã«ã—ãŸã„
+	///å®šæ•°ã®ä¸­èº«ã§ã‚ªãƒ¼ãƒãƒ¼ãƒ­ãƒ¼ãƒ‰å…ˆã‚’å¤‰ãˆã‚Œã‚‹æ„Ÿã˜ã«ã—ãŸã„
 
 	void SetOutLineState(const Float4& color, float thickness);
 	void SetOutLineAlpha(const float& alpha);
@@ -117,7 +117,7 @@ public:
 	Vector2 mTiling = { 1,1 };
 	Vector2 mOffset = { 0,0 };
 protected:
-	//ƒAƒEƒgƒ‰ƒCƒ“ü‚è‚Ìİ’è
+	//ã‚¢ã‚¦ãƒˆãƒ©ã‚¤ãƒ³å‘¨ã‚Šã®è¨­å®š
 	Float4 mOutLineColor = { 0,0,0,1.0f };
 	float mOutLineThickness = 0.0f;
 };

@@ -8,7 +8,7 @@
 #include "SceneManager.h"
 #include "MathF.h"
 
-const float PostEffect::sClearColor[4] = { 0.25f,0.5f,0.1f,1.0f };//—Î‚Á‚Û‚¢F‚ÅƒNƒŠƒA
+const float PostEffect::sClearColor[4] = { 0.25f,0.5f,0.1f,1.0f };//ç·‘ã£ã½ã„è‰²ã§ã‚¯ãƒªã‚¢
 
 std::string PostEffect::pipeLineName = "None";
 
@@ -21,37 +21,37 @@ void PostEffect::Initialize()
 {
 	DirectX12* dx12 = DirectX12::Get();
 
-	//’¸“_ƒoƒbƒtƒ@‚Ìİ’è
-	D3D12_HEAP_PROPERTIES heapProp{};		//ƒq[ƒvİ’è
-	heapProp.Type = D3D12_HEAP_TYPE_UPLOAD;	//GPU‚Ö‚Ì“]‘——p
+	//é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ã®è¨­å®š
+	D3D12_HEAP_PROPERTIES heapProp{};		//ãƒ’ãƒ¼ãƒ—è¨­å®š
+	heapProp.Type = D3D12_HEAP_TYPE_UPLOAD;	//GPUã¸ã®è»¢é€ç”¨
 
 	VertexPosUV vertices[] = {
 		//x      y      z        u    v
-		{{ -1.0f, -1.0f,  0.0f},{0.0f,1.0f}},//¶‰º
-		{{ -1.0f,  1.0f,  0.0f},{0.0f,0.0f}},//¶ã
-		{{  1.0f, -1.0f,  0.0f},{1.0f,1.0f}},//‰E‰º
-		{{  1.0f,  1.0f,  0.0f},{1.0f,0.0f}},//‰Eã
+		{{ -1.0f, -1.0f,  0.0f},{0.0f,1.0f}},//å·¦ä¸‹
+		{{ -1.0f,  1.0f,  0.0f},{0.0f,0.0f}},//å·¦ä¸Š
+		{{  1.0f, -1.0f,  0.0f},{1.0f,1.0f}},//å³ä¸‹
+		{{  1.0f,  1.0f,  0.0f},{1.0f,0.0f}},//å³ä¸Š
 	};
 
 	//VertexPosUV vertices[] = {
 	//	//x      y      z        u    v
-	//	{{ -0.5f, -0.5f,  0.0f},{0.0f,1.0f}},//¶‰º
-	//	{{ -0.5f,  0.5f,  0.0f},{0.0f,0.0f}},//¶ã
-	//	{{  0.5f, -0.5f,  0.0f},{1.0f,1.0f}},//‰E‰º
-	//	{{  0.5f,  0.5f,  0.0f},{1.0f,0.0f}},//‰Eã
+	//	{{ -0.5f, -0.5f,  0.0f},{0.0f,1.0f}},//å·¦ä¸‹
+	//	{{ -0.5f,  0.5f,  0.0f},{0.0f,0.0f}},//å·¦ä¸Š
+	//	{{  0.5f, -0.5f,  0.0f},{1.0f,1.0f}},//å³ä¸‹
+	//	{{  0.5f,  0.5f,  0.0f},{1.0f,0.0f}},//å³ä¸Š
 	//};
 
 	D3D12_RESOURCE_DESC resDesc{};
 	resDesc.Dimension = D3D12_RESOURCE_DIMENSION_BUFFER;
-	//‚±‚±ˆ«‚¢‚©‚à‚µ‚ê‚ñ
-	resDesc.Width = sizeof(vertices);	//’¸“_ƒf[ƒ^‘S‘Ì‚ÌƒTƒCƒY
+	//ã“ã“æ‚ªã„ã‹ã‚‚ã—ã‚Œã‚“
+	resDesc.Width = sizeof(vertices);	//é ‚ç‚¹ãƒ‡ãƒ¼ã‚¿å…¨ä½“ã®ã‚µã‚¤ã‚º
 	resDesc.Height = 1;
 	resDesc.DepthOrArraySize = 1;
 	resDesc.MipLevels = 1;
 	resDesc.SampleDesc.Count = 1;
 	resDesc.Layout = D3D12_TEXTURE_LAYOUT_ROW_MAJOR;
 
-	//’¸“_ƒoƒbƒtƒ@¶¬
+	//é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ç”Ÿæˆ
 	sResult = dx12->mDevice->CreateCommittedResource(
 		&heapProp,
 		D3D12_HEAP_FLAG_NONE,
@@ -85,7 +85,7 @@ void PostEffect::Update()
 	static float t = 0;
 	t = MathF::GetRand(0,0.5f);
 
-	//’è”ƒoƒbƒtƒ@‚Ì“]‘—
+	//å®šæ•°ãƒãƒƒãƒ•ã‚¡ã®è»¢é€
 	sResult = mConstBuffer.mBuffer->Map(0, nullptr, (void**)&mConstBuffer.mConstBufferData);
 	mConstBuffer.mConstBufferData->time = t;
 	mConstBuffer.mBuffer->Unmap(0, nullptr);
@@ -96,18 +96,18 @@ void PostEffect::Draw()
 	DirectX12* dx12 = DirectX12::Get();
 	TextureManager* texM = TextureManager::Get();
 
-	//ƒpƒCƒvƒ‰ƒCƒ“‚ğˆø‚Á’£‚Á‚Ä‚­‚é
-	//ƒ|ƒXƒgƒGƒtƒFƒNƒg‚È‚É‚àŠ|‚¯‚È‚¢
+	//ãƒ‘ã‚¤ãƒ—ãƒ©ã‚¤ãƒ³ã‚’å¼•ã£å¼µã£ã¦ãã‚‹
+	//ãƒã‚¹ãƒˆã‚¨ãƒ•ã‚§ã‚¯ãƒˆãªã«ã‚‚æ›ã‘ãªã„
 	PipelineSet pSet = PipelineManager::GetPipeLine(pipeLineName);
-	//ƒpƒCƒvƒ‰ƒCƒ“ƒXƒe[ƒg‚Ìİ’è
+	//ãƒ‘ã‚¤ãƒ—ãƒ©ã‚¤ãƒ³ã‚¹ãƒ†ãƒ¼ãƒˆã®è¨­å®š
 	dx12->mCmdList->SetPipelineState(pSet.mPipelinestate.Get());
-	//ƒ‹[ƒgƒVƒOƒlƒ`ƒƒ‚Ìİ’è
+	//ãƒ«ãƒ¼ãƒˆã‚·ã‚°ãƒãƒãƒ£ã®è¨­å®š
 	dx12->mCmdList->SetGraphicsRootSignature(pSet.mRootsignature.Get());
 	
-	//ƒvƒŠƒ~ƒeƒBƒuŒ`ó‚ğİ’è
+	//ãƒ—ãƒªãƒŸãƒ†ã‚£ãƒ–å½¢çŠ¶ã‚’è¨­å®š
 	dx12->mCmdList->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP);
 
-	//GetAddressOf‚µ‚È‚¢‚ÆƒoƒO‚è‚Ü‚· ——R‚Í–Y‚ê‚¿‚á‚Á‚½ ComPtr‚¾‚©‚ç‚¾‚Á‚¯H
+	//GetAddressOfã—ãªã„ã¨ãƒã‚°ã‚Šã¾ã™ ç†ç”±ã¯å¿˜ã‚Œã¡ã‚ƒã£ãŸ ComPtrã ã‹ã‚‰ã ã£ã‘ï¼Ÿ
 	dx12->mCmdList->SetDescriptorHeaps(1, mDescHeapSRV.GetAddressOf());
 
 	dx12->mCmdList->IASetVertexBuffers(0, 1, &mVbView);
@@ -129,12 +129,12 @@ void PostEffect::PreDrawScene()
 
 	D3D12_RESOURCE_BARRIER barrierDesc{};
 
-	//ƒeƒNƒXƒ`ƒƒ‚ğA‰æ–Ê‘S‘Ì‚ğ•`‰æ‚·‚é‚Æ‚«‚Æ“¯‚¶‚æ‚¤‚É‘‚«‚Şˆ×‚Ì€”õ
+	//ãƒ†ã‚¯ã‚¹ãƒãƒ£ã‚’ã€ç”»é¢å…¨ä½“ã‚’æç”»ã™ã‚‹ã¨ãã¨åŒã˜ã‚ˆã†ã«æ›¸ãè¾¼ã‚€ç‚ºã®æº–å‚™
 	for (int32_t i = 0; i < 2; i++)
 	{
 		barrierDesc.Transition.pResource = mTexBuff[i].Get();
-		barrierDesc.Transition.StateBefore = D3D12_RESOURCE_STATE_PIXEL_SHADER_RESOURCE;		//•\¦ó‘Ô‚©‚ç
-		barrierDesc.Transition.StateAfter = D3D12_RESOURCE_STATE_RENDER_TARGET;	//•`‰æó‘Ô‚Ö
+		barrierDesc.Transition.StateBefore = D3D12_RESOURCE_STATE_PIXEL_SHADER_RESOURCE;		//è¡¨ç¤ºçŠ¶æ…‹ã‹ã‚‰
+		barrierDesc.Transition.StateAfter = D3D12_RESOURCE_STATE_RENDER_TARGET;	//æç”»çŠ¶æ…‹ã¸
 		dx12->mCmdList->ResourceBarrier(1, &barrierDesc);
 	}
 
@@ -150,7 +150,7 @@ void PostEffect::PreDrawScene()
 	D3D12_CPU_DESCRIPTOR_HANDLE dsvH =
 		mDescHeapDSV->GetCPUDescriptorHandleForHeapStart();
 
-	//ƒŒƒ“ƒ_[ƒ^[ƒQƒbƒg‚ğ2‚Âw’è‚·‚é‚æ‚¤‚É
+	//ãƒ¬ãƒ³ãƒ€ãƒ¼ã‚¿ãƒ¼ã‚²ãƒƒãƒˆã‚’2ã¤æŒ‡å®šã™ã‚‹ã‚ˆã†ã«
 	dx12->mCmdList->OMSetRenderTargets(2, rtvHs, false, &dsvH);
 
 	D3D12_VIEWPORT viewport[2];
@@ -175,13 +175,13 @@ void PostEffect::PreDrawScene()
 	}
 	dx12->mCmdList->RSSetScissorRects(2, scissorRect);
 
-	//‘S‰æ–ÊƒNƒŠƒA
+	//å…¨ç”»é¢ã‚¯ãƒªã‚¢
 	for (int32_t i = 0; i < 2; i++)
 	{
 		dx12->mCmdList->ClearRenderTargetView(rtvHs[i], sClearColor, 0, nullptr);
 	}
 
-	//[“xƒoƒbƒtƒ@‚ÌƒNƒŠƒA
+	//æ·±åº¦ãƒãƒƒãƒ•ã‚¡ã®ã‚¯ãƒªã‚¢
 	dx12->mCmdList->ClearDepthStencilView(dsvH, D3D12_CLEAR_FLAG_DEPTH, 1.0f, 0, 0, nullptr);
 }
 
@@ -190,7 +190,7 @@ void PostEffect::PostDrawScene()
 	DirectX12* dx12 = DirectX12::Get();
 	Screen* screen = Screen::Get();
 
-	//ƒŠƒ\[ƒXƒoƒŠƒA‚Ìó‘Ô‚ğ–ß‚·
+	//ãƒªã‚½ãƒ¼ã‚¹ãƒãƒªã‚¢ã®çŠ¶æ…‹ã‚’æˆ»ã™
 	D3D12_RESOURCE_BARRIER barrierDesc{};
 	for (int32_t i = 0; i < 2; i++)
 	{
@@ -201,7 +201,7 @@ void PostEffect::PostDrawScene()
 		dx12->mCmdList->ResourceBarrier(1, &barrierDesc);
 	}
 
-	//ƒŒƒ“ƒ_[ƒ^[ƒQƒbƒg‚ğ–ß‚·
+	//ãƒ¬ãƒ³ãƒ€ãƒ¼ã‚¿ãƒ¼ã‚²ãƒƒãƒˆã‚’æˆ»ã™
 	UINT bbIndex = dx12->mSwapChain->GetCurrentBackBufferIndex();
 
 	D3D12_CPU_DESCRIPTOR_HANDLE rtvHandle = dx12->mRtvHeap->GetCPUDescriptorHandleForHeapStart();
@@ -216,7 +216,7 @@ void PostEffect::CreateTexture()
 {
 	DirectX12* dx12 = DirectX12::Get();
 
-	//ƒŠƒ\[ƒXİ’è
+	//ãƒªã‚½ãƒ¼ã‚¹è¨­å®š
 	D3D12_RESOURCE_DESC textureResourceDesc{};
 	textureResourceDesc.Dimension = D3D12_RESOURCE_DIMENSION_TEXTURE2D;
 	textureResourceDesc.Format = DXGI_FORMAT_R8G8B8A8_UNORM_SRGB;
@@ -227,7 +227,7 @@ void PostEffect::CreateTexture()
 	textureResourceDesc.SampleDesc.Count = 1;
 	textureResourceDesc.Flags = D3D12_RESOURCE_FLAG_ALLOW_RENDER_TARGET;
 
-	//ƒq[ƒvİ’è
+	//ãƒ’ãƒ¼ãƒ—è¨­å®š
 	D3D12_HEAP_PROPERTIES textureHeapProp{};
 	textureHeapProp.Type = D3D12_HEAP_TYPE_DEFAULT;
 	/*textureHeapProp.CPUPageProperty =
@@ -243,7 +243,7 @@ void PostEffect::CreateTexture()
 
 	for (int32_t i = 0; i < 2; i++)
 	{
-		//ƒeƒNƒXƒ`ƒƒƒoƒbƒtƒ@‚Ì¶¬
+		//ãƒ†ã‚¯ã‚¹ãƒãƒ£ãƒãƒƒãƒ•ã‚¡ã®ç”Ÿæˆ
 		sResult = dx12->mDevice->CreateCommittedResource(
 			&textureHeapProp,
 			D3D12_HEAP_FLAG_NONE,
@@ -259,32 +259,32 @@ void PostEffect::CreateSRV()
 {
 	DirectX12* dx12 = DirectX12::Get();
 
-	///--V‚µ‚¢SRV—pƒfƒXƒNƒŠƒvƒ^ƒq[ƒv‚ğì¬
-	//SRV—pƒfƒXƒNƒŠƒvƒ^ƒq[ƒvİ’è
+	///--æ–°ã—ã„SRVç”¨ãƒ‡ã‚¹ã‚¯ãƒªãƒ—ã‚¿ãƒ’ãƒ¼ãƒ—ã‚’ä½œæˆ
+	//SRVç”¨ãƒ‡ã‚¹ã‚¯ãƒªãƒ—ã‚¿ãƒ’ãƒ¼ãƒ—è¨­å®š
 	D3D12_DESCRIPTOR_HEAP_DESC srvDescHeaoDesc = {};
 
-	//ƒfƒXƒNƒŠƒvƒ^ƒq[ƒv‚Ìİ’è
+	//ãƒ‡ã‚¹ã‚¯ãƒªãƒ—ã‚¿ãƒ’ãƒ¼ãƒ—ã®è¨­å®š
 	srvDescHeaoDesc.Type = D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV;
-	srvDescHeaoDesc.Flags = D3D12_DESCRIPTOR_HEAP_FLAG_SHADER_VISIBLE;//ƒVƒF[ƒ_[‚©‚çŒ©‚¦‚é‚æ‚¤‚É
-	srvDescHeaoDesc.NumDescriptors = 2; //ƒŒƒ“ƒ_[ƒeƒNƒXƒ`ƒƒê—p‚Ìƒq[ƒv‚È‚½‚ßAƒTƒCƒY‚Í1‚Å‚¢‚¢
+	srvDescHeaoDesc.Flags = D3D12_DESCRIPTOR_HEAP_FLAG_SHADER_VISIBLE;//ã‚·ã‚§ãƒ¼ãƒ€ãƒ¼ã‹ã‚‰è¦‹ãˆã‚‹ã‚ˆã†ã«
+	srvDescHeaoDesc.NumDescriptors = 2; //ãƒ¬ãƒ³ãƒ€ãƒ¼ãƒ†ã‚¯ã‚¹ãƒãƒ£å°‚ç”¨ã®ãƒ’ãƒ¼ãƒ—ãªãŸã‚ã€ã‚µã‚¤ã‚ºã¯1ã§ã„ã„
 
-	//İ’è‚ğŒ³‚ÉSRV—pƒfƒXƒNƒŠƒvƒ^ƒq[ƒv‚ğ¶¬
+	//è¨­å®šã‚’å…ƒã«SRVç”¨ãƒ‡ã‚¹ã‚¯ãƒªãƒ—ã‚¿ãƒ’ãƒ¼ãƒ—ã‚’ç”Ÿæˆ
 	sResult = DirectX12::Get()->mDevice->CreateDescriptorHeap(&srvDescHeaoDesc,
 		IID_PPV_ARGS(&mDescHeapSRV));
 	assert(SUCCEEDED(sResult));
 
-	//ƒVƒF[ƒ_ƒŠƒ\[ƒXƒrƒ…[İ’è
+	//ã‚·ã‚§ãƒ¼ãƒ€ãƒªã‚½ãƒ¼ã‚¹ãƒ“ãƒ¥ãƒ¼è¨­å®š
 	D3D12_SHADER_RESOURCE_VIEW_DESC mSrvDesc{};
 	mSrvDesc.Format = DXGI_FORMAT_R8G8B8A8_UNORM_SRGB;
 	mSrvDesc.Shader4ComponentMapping = D3D12_DEFAULT_SHADER_4_COMPONENT_MAPPING;
-	mSrvDesc.ViewDimension = D3D12_SRV_DIMENSION_TEXTURE2D;//2DƒeƒNƒXƒ`ƒƒ
+	mSrvDesc.ViewDimension = D3D12_SRV_DIMENSION_TEXTURE2D;//2Dãƒ†ã‚¯ã‚¹ãƒãƒ£
 	mSrvDesc.Texture2D.MipLevels = 1;
 
 	D3D12_CPU_DESCRIPTOR_HANDLE hoge =
 		mDescHeapSRV->GetCPUDescriptorHandleForHeapStart();
 	for (int32_t i = 0; i < 2; i++)
 	{
-		//ƒnƒ“ƒhƒ‹‚Ìw‚·ˆÊ’u‚ÉƒVƒF[ƒ_[ƒŠƒ\[ƒXƒrƒ…[ì¬
+		//ãƒãƒ³ãƒ‰ãƒ«ã®æŒ‡ã™ä½ç½®ã«ã‚·ã‚§ãƒ¼ãƒ€ãƒ¼ãƒªã‚½ãƒ¼ã‚¹ãƒ“ãƒ¥ãƒ¼ä½œæˆ
 		dx12->mDevice->CreateShaderResourceView(mTexBuff[i].Get(),
 			&mSrvDesc,
 			hoge);
@@ -298,22 +298,22 @@ void PostEffect::CreateRTV()
 {
 	DirectX12* dx12 = DirectX12::Get();
 
-	///--ƒŒƒ“ƒ_[ƒeƒNƒXƒ`ƒƒ‚ğì¬
-	//‰æ–Ê•`‰æ‚Ì‚½‚ß‚ÌƒoƒbƒNƒoƒbƒtƒ@‚Æ“¯‚¶
+	///--ãƒ¬ãƒ³ãƒ€ãƒ¼ãƒ†ã‚¯ã‚¹ãƒãƒ£ã‚’ä½œæˆ
+	//ç”»é¢æç”»ã®ãŸã‚ã®ãƒãƒƒã‚¯ãƒãƒƒãƒ•ã‚¡ã¨åŒã˜
 
-	//RTV—pƒfƒXƒNƒŠƒvƒ^ƒq[ƒvİ’è
+	//RTVç”¨ãƒ‡ã‚¹ã‚¯ãƒªãƒ—ã‚¿ãƒ’ãƒ¼ãƒ—è¨­å®š
 	D3D12_DESCRIPTOR_HEAP_DESC rtvDescHeapDesc{};
 	rtvDescHeapDesc.Type = D3D12_DESCRIPTOR_HEAP_TYPE_RTV;
 	rtvDescHeapDesc.NumDescriptors = 2;
-	//RTV—pƒfƒXƒNƒŠƒvƒ^ƒq[ƒv‚ğ¶¬
+	//RTVç”¨ãƒ‡ã‚¹ã‚¯ãƒªãƒ—ã‚¿ãƒ’ãƒ¼ãƒ—ã‚’ç”Ÿæˆ
 	sResult = dx12->mDevice->CreateDescriptorHeap(
 		&rtvDescHeapDesc,
 		IID_PPV_ARGS(&mDescHeapRTV));
 	assert(SUCCEEDED(sResult));
 
-	//ƒŒƒ“ƒ_[ƒ^[ƒQƒbƒgƒrƒ…[‚Ìİ’è
+	//ãƒ¬ãƒ³ãƒ€ãƒ¼ã‚¿ãƒ¼ã‚²ãƒƒãƒˆãƒ“ãƒ¥ãƒ¼ã®è¨­å®š
 	D3D12_RENDER_TARGET_VIEW_DESC renderTargetViewDesc{};
-	//ƒVƒF[ƒ_[‚ÌŒvZŒ‹‰Ê‚ğSRGB‚É•ÏŠ·‚µ‚Ä‘‚«‚Ş
+	//ã‚·ã‚§ãƒ¼ãƒ€ãƒ¼ã®è¨ˆç®—çµæœã‚’SRGBã«å¤‰æ›ã—ã¦æ›¸ãè¾¼ã‚€
 	renderTargetViewDesc.Format = DXGI_FORMAT_R8G8B8A8_UNORM_SRGB;
 	renderTargetViewDesc.ViewDimension = D3D12_RTV_DIMENSION_TEXTURE2D;
 
@@ -322,7 +322,7 @@ void PostEffect::CreateRTV()
 		mDescHeapRTV->GetCPUDescriptorHandleForHeapStart();
 	for (int32_t i = 0; i < 2; i++)
 	{
-		//ƒfƒXƒNƒŠƒvƒ^ƒq[ƒv‚ÉRTVì¬
+		//ãƒ‡ã‚¹ã‚¯ãƒªãƒ—ã‚¿ãƒ’ãƒ¼ãƒ—ã«RTVä½œæˆ
 		dx12->mDevice->CreateRenderTargetView(
 			mTexBuff[i].Get(),
 			&renderTargetViewDesc,
@@ -337,31 +337,31 @@ void PostEffect::CreateDepthBuff()
 {
 	DirectX12* dx12 = DirectX12::Get();
 
-	//[“xƒoƒbƒtƒ@ƒŠƒ\[ƒXİ’è
+	//æ·±åº¦ãƒãƒƒãƒ•ã‚¡ãƒªã‚½ãƒ¼ã‚¹è¨­å®š
 	D3D12_RESOURCE_DESC depthResourceDesc{};
 	depthResourceDesc.Dimension = D3D12_RESOURCE_DIMENSION_TEXTURE2D;
-	depthResourceDesc.Width = Util::WIN_WIDTH;	//ƒŒƒ“ƒ_[ƒ^[ƒQƒbƒg‚É‡‚í‚¹‚é
-	depthResourceDesc.Height = Util::WIN_HEIGHT;	//ƒŒƒ“ƒ_[ƒ^[ƒQƒbƒg‚É‡‚í‚¹‚é
+	depthResourceDesc.Width = Util::WIN_WIDTH;	//ãƒ¬ãƒ³ãƒ€ãƒ¼ã‚¿ãƒ¼ã‚²ãƒƒãƒˆã«åˆã‚ã›ã‚‹
+	depthResourceDesc.Height = Util::WIN_HEIGHT;	//ãƒ¬ãƒ³ãƒ€ãƒ¼ã‚¿ãƒ¼ã‚²ãƒƒãƒˆã«åˆã‚ã›ã‚‹
 	depthResourceDesc.DepthOrArraySize = 1;
-	depthResourceDesc.Format = DXGI_FORMAT_D32_FLOAT;	//[“x’lƒtƒH[ƒ}ƒbƒg
+	depthResourceDesc.Format = DXGI_FORMAT_D32_FLOAT;	//æ·±åº¦å€¤ãƒ•ã‚©ãƒ¼ãƒãƒƒãƒˆ
 	depthResourceDesc.SampleDesc.Count = 1;
 	depthResourceDesc.Flags = D3D12_RESOURCE_FLAG_ALLOW_DEPTH_STENCIL;
 
-	//[“x’l—pƒq[ƒvƒvƒƒpƒeƒB
+	//æ·±åº¦å€¤ç”¨ãƒ’ãƒ¼ãƒ—ãƒ—ãƒ­ãƒ‘ãƒ†ã‚£
 	D3D12_HEAP_PROPERTIES depthHeapProp{};
 	depthHeapProp.Type = D3D12_HEAP_TYPE_DEFAULT;
 
-	//[“x’l‚ÌƒNƒŠƒAİ’è
+	//æ·±åº¦å€¤ã®ã‚¯ãƒªã‚¢è¨­å®š
 	D3D12_CLEAR_VALUE depthClearValue{};
-	depthClearValue.DepthStencil.Depth = 1.0f;	//[“x’l1.0f(Å‘å’l)‚ÅƒNƒŠƒA
-	depthClearValue.Format = DXGI_FORMAT_D32_FLOAT;	//[“x’lƒtƒH[ƒ}ƒbƒg
+	depthClearValue.DepthStencil.Depth = 1.0f;	//æ·±åº¦å€¤1.0f(æœ€å¤§å€¤)ã§ã‚¯ãƒªã‚¢
+	depthClearValue.Format = DXGI_FORMAT_D32_FLOAT;	//æ·±åº¦å€¤ãƒ•ã‚©ãƒ¼ãƒãƒƒãƒˆ
 
-	//ƒŠƒ\[ƒX¶¬
+	//ãƒªã‚½ãƒ¼ã‚¹ç”Ÿæˆ
 	sResult = dx12->mDevice->CreateCommittedResource(
 		&depthHeapProp,
 		D3D12_HEAP_FLAG_NONE,
 		&depthResourceDesc,
-		D3D12_RESOURCE_STATE_DEPTH_WRITE,	//[“x’l‘‚«‚İ‚Ég—p
+		D3D12_RESOURCE_STATE_DEPTH_WRITE,	//æ·±åº¦å€¤æ›¸ãè¾¼ã¿ã«ä½¿ç”¨
 		&depthClearValue,
 		IID_PPV_ARGS(&mDepthBuff));
 	assert(SUCCEEDED(sResult));
@@ -371,12 +371,12 @@ void PostEffect::CreateDSV()
 {
 	DirectX12* dx12 = DirectX12::Get();
 
-	//DSV—pƒfƒXƒNƒŠƒvƒ^ƒq[ƒvİ’è
+	//DSVç”¨ãƒ‡ã‚¹ã‚¯ãƒªãƒ—ã‚¿ãƒ’ãƒ¼ãƒ—è¨­å®š
 	D3D12_DESCRIPTOR_HEAP_DESC descHeapDesc{};
 	descHeapDesc.Type = D3D12_DESCRIPTOR_HEAP_TYPE_DSV;
 	descHeapDesc.NumDescriptors = 1;
 
-	//DSV—pƒfƒXƒNƒŠƒvƒ^ƒq[ƒv‚ğì¬
+	//DSVç”¨ãƒ‡ã‚¹ã‚¯ãƒªãƒ—ã‚¿ãƒ’ãƒ¼ãƒ—ã‚’ä½œæˆ
 	sResult = dx12->mDevice->CreateDescriptorHeap(
 		&descHeapDesc,
 		IID_PPV_ARGS(&mDescHeapDSV)
@@ -384,9 +384,9 @@ void PostEffect::CreateDSV()
 
 	assert(SUCCEEDED(sResult));
 
-	//[“xƒrƒ…[ì¬
+	//æ·±åº¦ãƒ“ãƒ¥ãƒ¼ä½œæˆ
 	D3D12_DEPTH_STENCIL_VIEW_DESC dsvDesc = {};
-	dsvDesc.Format = DXGI_FORMAT_D32_FLOAT;//[“x’lƒtƒH[ƒ}ƒbƒg
+	dsvDesc.Format = DXGI_FORMAT_D32_FLOAT;//æ·±åº¦å€¤ãƒ•ã‚©ãƒ¼ãƒãƒƒãƒˆ
 	dsvDesc.ViewDimension = D3D12_DSV_DIMENSION_TEXTURE2D;
 	dx12->mDevice->CreateDepthStencilView(
 		mDepthBuff.Get(),

@@ -11,7 +11,7 @@
 #include "Pipeline.h"
 #include "Texture.h"
 
-//ƒeƒNƒXƒ`ƒƒ‚ÌÅ‘å–‡”(¡‚Íèì‹Æ‚ÅƒeƒNƒXƒ`ƒƒ‚Ì•û‚Æ‡‚í‚¹‚Ä‚é)
+//ãƒ†ã‚¯ã‚¹ãƒãƒ£ã®æœ€å¤§æšæ•°(ä»Šã¯æ‰‹ä½œæ¥­ã§ãƒ†ã‚¯ã‚¹ãƒãƒ£ã®æ–¹ã¨åˆã‚ã›ã¦ã‚‹)
 const int32_t SPRITE_SRV_COUNT = 2056;
 
 struct VertexPosUV
@@ -22,8 +22,8 @@ struct VertexPosUV
 
 struct Sprite
 {
-	//‚Æ‚è‚ ‚¦‚¸ƒeƒNƒXƒ`ƒƒ[‚ğ“ü‚ê‚ÄƒXƒvƒ‰ƒCƒg‚ğì‚é
-	//ˆÈ‘Oİ’è‚µ‚Ä‚½ƒtƒŠƒbƒv‚Æ‚©‚Í•Ê‚Åİ’è‚·‚é
+	//ã¨ã‚Šã‚ãˆãšãƒ†ã‚¯ã‚¹ãƒãƒ£ãƒ¼ã‚’å…¥ã‚Œã¦ã‚¹ãƒ—ãƒ©ã‚¤ãƒˆã‚’ä½œã‚‹
+	//ä»¥å‰è¨­å®šã—ã¦ãŸãƒ•ãƒªãƒƒãƒ—ã¨ã‹ã¯åˆ¥ã§è¨­å®šã™ã‚‹
 	Sprite();
 	Sprite(const Texture& tex,const Vector2& anchorpoint = {0.5f,0.5f});
 
@@ -39,20 +39,20 @@ struct Sprite
 	void Update();
 	void Draw();
 
-	//’¸“_ƒoƒbƒtƒ@
+	//é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡
 	Microsoft::WRL::ComPtr<ID3D12Resource> mVertBuff;
-	//’¸“_ƒoƒbƒtƒ@ƒrƒ…[
+	//é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ãƒ“ãƒ¥ãƒ¼
 	D3D12_VERTEX_BUFFER_VIEW mVbView{};
-	//’è”ƒoƒbƒtƒ@
+	//å®šæ•°ãƒãƒƒãƒ•ã‚¡
 	ConstBuffer<ConstBufferDataSprite> mConstBuffer;
 
-	//Z²‰ñ‚è‚Ì‰ñ“]Šp
+	//Zè»¸å›ã‚Šã®å›è»¢è§’
 	float mRotation = 0.0f;
-	//À•W
+	//åº§æ¨™
 	Vector3 mPosition = { 0,0,0 };
-	//ƒ[ƒ‹ƒhs—ñ
+	//ãƒ¯ãƒ¼ãƒ«ãƒ‰è¡Œåˆ—
 	DirectX::XMMATRIX mMatWorld;
-	//F
+	//è‰²
 	Color mColor = { 1,1,1,1 };
 
 	const Texture *mTEXTURE;
@@ -81,7 +81,7 @@ private:
 struct SpriteCommon
 {
 	PipelineSet mPipelineSet;
-	//Ë‰es—ñ
+	//å°„å½±è¡Œåˆ—
 	DirectX::XMMATRIX mMatProjection{};
 
 	static void Initialize();
@@ -89,7 +89,7 @@ struct SpriteCommon
 	static SpriteCommon sSpriteCommon;
 };
 
-//ƒXƒvƒ‰ƒCƒg‹¤’ÊƒOƒ‰ƒtƒBƒbƒNƒRƒ}ƒ“ƒh‚ÌƒZƒbƒg
+//ã‚¹ãƒ—ãƒ©ã‚¤ãƒˆå…±é€šã‚°ãƒ©ãƒ•ã‚£ãƒƒã‚¯ã‚³ãƒãƒ³ãƒ‰ã®ã‚»ãƒƒãƒˆ
 void SpriteCommonBeginDraw();
 
 void SpriteTransferVertexBuffer(const Sprite& sprite);

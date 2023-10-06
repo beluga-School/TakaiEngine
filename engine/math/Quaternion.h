@@ -19,20 +19,20 @@ public:
 		this->w = w;
 	};
 
-	//’PˆÊƒNƒH[ƒ^ƒjƒIƒ“
+	//å˜ä½ã‚¯ã‚©ãƒ¼ã‚¿ãƒ‹ã‚ªãƒ³
 	static Quaternion IdentityQuaternion();
 
 	float Dot(const Quaternion& r);
 
 	/// <summary>
-	/// ‹¤–ğƒNƒH[ƒ^ƒjƒIƒ“
-	/// –{‘Ì‚ğ‘‚«Š·‚¦‚é
+	/// å…±å½¹ã‚¯ã‚©ãƒ¼ã‚¿ãƒ‹ã‚ªãƒ³
+	/// æœ¬ä½“ã‚’æ›¸ãæ›ãˆã‚‹
 	/// </summary>
 	void Conjugate();
 
 	/// <summary>
-	/// ‹¤–ğƒNƒH[ƒ^ƒjƒIƒ“
-	/// ‹¤–ğ‚ğ“üè‚·‚é
+	/// å…±å½¹ã‚¯ã‚©ãƒ¼ã‚¿ãƒ‹ã‚ªãƒ³
+	/// å…±å½¹ã‚’å…¥æ‰‹ã™ã‚‹
 	/// </summary>
 	/// <returns></returns>
 	Quaternion GetConjugate();
@@ -42,7 +42,7 @@ public:
 	void Normalize();
 	Quaternion GetNormalize();
 
-	//ƒNƒH[ƒ^ƒjƒIƒ“‚Æ‚ÌŠ|‚¯Z
+	//ã‚¯ã‚©ãƒ¼ã‚¿ãƒ‹ã‚ªãƒ³ã¨ã®æ›ã‘ç®—
 	Quaternion operator*(const Quaternion& r);
 
 	Quaternion operator+();
@@ -62,7 +62,7 @@ public:
 
 Quaternion MakeAxisAngle(const Vector3& axis,const float& angle);
 
-//‹…–ÊüŒ`•âŠÔ
+//çƒé¢ç·šå½¢è£œé–“
 Quaternion Slerp(const Quaternion& q,const Quaternion& r,const float& t);
 
 const Quaternion operator+(const Quaternion& q, const Quaternion& r);

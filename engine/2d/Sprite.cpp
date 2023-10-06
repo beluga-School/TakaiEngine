@@ -22,7 +22,7 @@ void SpriteTransferVertexBuffer(const Sprite& sprite)
 		{{},{1.0f,0.0f}},
 	};
 
-	//¶‰ºA¶ãA‰E‰ºA‰Eã
+	//å·¦ä¸‹ã€å·¦ä¸Šã€å³ä¸‹ã€å³ä¸Š
 	enum {
 		LB,LT,RB,RT
 	};
@@ -69,7 +69,7 @@ void SpriteTransferVertexBuffer(const Sprite& sprite)
 		vertices[RT].uv = { tex_right,tex_top };
 	}
 
-	//’¸“_ƒoƒbƒtƒ@‚Ö‚Ìƒf[ƒ^“]‘—
+	//é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ã¸ã®ãƒ‡ãƒ¼ã‚¿è»¢é€
 	VertexPosUV* vertMap = nullptr;
 	sResult = sprite.mVertBuff->Map(0, nullptr, (void**)&vertMap);
 	memcpy(vertMap, vertices, sizeof(vertices));
@@ -81,11 +81,11 @@ void SpriteCommonBeginDraw()
 	DirectX12* dx12 = DirectX12::Get();
 	TextureManager* texM = TextureManager::Get();
 
-	//ƒpƒCƒvƒ‰ƒCƒ“ƒXƒe[ƒg‚ÌÝ’è
+	//ãƒ‘ã‚¤ãƒ—ãƒ©ã‚¤ãƒ³ã‚¹ãƒ†ãƒ¼ãƒˆã®è¨­å®š
 	dx12->mCmdList->SetPipelineState(SpriteCommon::sSpriteCommon.mPipelineSet.mPipelinestate.Get());
-	//ƒ‹[ƒgƒVƒOƒlƒ`ƒƒ‚ÌÝ’è
+	//ãƒ«ãƒ¼ãƒˆã‚·ã‚°ãƒãƒãƒ£ã®è¨­å®š
 	dx12->mCmdList->SetGraphicsRootSignature(SpriteCommon::sSpriteCommon.mPipelineSet.mRootsignature.Get());
-	//ƒvƒŠƒ~ƒeƒBƒuŒ`ó‚ðÝ’è
+	//ãƒ—ãƒªãƒŸãƒ†ã‚£ãƒ–å½¢çŠ¶ã‚’è¨­å®š
 	dx12->mCmdList->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP);
 
 	dx12->mCmdList->SetDescriptorHeaps(1, texM->mSrvHeap.GetAddressOf());
@@ -95,13 +95,13 @@ SpriteCommon SpriteCommonCreate()
 {
 	sResult = S_FALSE;
 
-	//ƒXƒvƒ‰ƒCƒg‚Ì‹¤’Êƒf[ƒ^‚ðì¬
+	//ã‚¹ãƒ—ãƒ©ã‚¤ãƒˆã®å…±é€šãƒ‡ãƒ¼ã‚¿ã‚’ä½œæˆ
 	SpriteCommon spriteCommon{};
 
-	//ƒXƒvƒ‰ƒCƒg—p‚ÌƒpƒCƒvƒ‰ƒCƒ“‚ð¶¬
+	//ã‚¹ãƒ—ãƒ©ã‚¤ãƒˆç”¨ã®ãƒ‘ã‚¤ãƒ—ãƒ©ã‚¤ãƒ³ã‚’ç”Ÿæˆ
 	spriteCommon.mPipelineSet = PipelineManager::GetPipeLine("Sprite");
 
-	//•Às“Š‰e‚ÌŽË‰es—ñ¶¬
+	//ä¸¦è¡ŒæŠ•å½±ã®å°„å½±è¡Œåˆ—ç”Ÿæˆ
 	spriteCommon.mMatProjection = XMMatrixOrthographicOffCenterLH(
 		0.0f, (float)Util::WIN_WIDTH, (float)Util::WIN_HEIGHT, 0.0f, 0.0f, 1.0f);
 
@@ -142,7 +142,7 @@ void Sprite::SetTexture(const Texture& tex)
 
 	mCutSize = mSize;
 
-	//ƒfƒtƒHƒ‹ƒg‚Ì‘å‚«‚³‚ð•Û‘¶
+	//ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆã®å¤§ãã•ã‚’ä¿å­˜
 	mInitSize = mSize;
 
 	SpriteTransferVertexBuffer(*this);
@@ -180,14 +180,14 @@ void Sprite::SetSize(const Vector2& size)
 
 void Sprite::Update()
 {
-	//ƒ[ƒ‹ƒhs—ñ‚ÌXV
+	//ãƒ¯ãƒ¼ãƒ«ãƒ‰è¡Œåˆ—ã®æ›´æ–°
 	mMatWorld = XMMatrixIdentity();
-	//ZŽ²‰ñ“]
+	//Zè»¸å›žè»¢
 	mMatWorld *= XMMatrixRotationZ(XMConvertToRadians(mRotation));
-	//•½sˆÚ“®
+	//å¹³è¡Œç§»å‹•
 	mMatWorld *= XMMatrixTranslation(mPosition.x, mPosition.y, mPosition.z);
 
-	//’è”ƒoƒbƒtƒ@‚Ì“]‘—
+	//å®šæ•°ãƒãƒƒãƒ•ã‚¡ã®è»¢é€
 	sResult = mConstBuffer.mBuffer->Map(0, nullptr, (void**)&mConstBuffer.mConstBufferData);
 	mConstBuffer.mConstBufferData->mat = mMatWorld * SpriteCommon::sSpriteCommon.mMatProjection;
 
@@ -229,33 +229,33 @@ void Sprite::Init()
 
 	sResult = S_FALSE;
 
-	//V‹KƒXƒvƒ‰ƒCƒg‚ð¶¬
+	//æ–°è¦ã‚¹ãƒ—ãƒ©ã‚¤ãƒˆã‚’ç”Ÿæˆ
 	//Sprite sprite{};
 
-	//’¸“_ƒf[ƒ^
+	//é ‚ç‚¹ãƒ‡ãƒ¼ã‚¿
 	VertexPosUV vertices[] = {
 		//x      y      z        u    v
-		{{  0.0f,100.0f,  0.0f},{0.0f,1.0f}},//¶‰º
-		{{  0.0f,  0.0f,  0.0f},{0.0f,0.0f}},//¶ã
-		{{100.0f,100.0f,  0.0f},{1.0f,1.0f}},//‰E‰º
-		{{100.0f,  0.0f,  0.0f},{1.0f,0.0f}},//‰Eã
+		{{  0.0f,100.0f,  0.0f},{0.0f,1.0f}},//å·¦ä¸‹
+		{{  0.0f,  0.0f,  0.0f},{0.0f,0.0f}},//å·¦ä¸Š
+		{{100.0f,100.0f,  0.0f},{1.0f,1.0f}},//å³ä¸‹
+		{{100.0f,  0.0f,  0.0f},{1.0f,0.0f}},//å³ä¸Š
 	};
 
-	//’¸“_ƒoƒbƒtƒ@‚ÌÝ’è
-	D3D12_HEAP_PROPERTIES heapProp{};		//ƒq[ƒvÝ’è
-	heapProp.Type = D3D12_HEAP_TYPE_UPLOAD;	//GPU‚Ö‚Ì“]‘——p
+	//é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ã®è¨­å®š
+	D3D12_HEAP_PROPERTIES heapProp{};		//ãƒ’ãƒ¼ãƒ—è¨­å®š
+	heapProp.Type = D3D12_HEAP_TYPE_UPLOAD;	//GPUã¸ã®è»¢é€ç”¨
 
 	D3D12_RESOURCE_DESC resDesc{};
 	resDesc.Dimension = D3D12_RESOURCE_DIMENSION_BUFFER;
-	//‚±‚±ˆ«‚¢‚©‚à‚µ‚ê‚ñ
-	resDesc.Width = sizeof(vertices);	//’¸“_ƒf[ƒ^‘S‘Ì‚ÌƒTƒCƒY
+	//ã“ã“æ‚ªã„ã‹ã‚‚ã—ã‚Œã‚“
+	resDesc.Width = sizeof(vertices);	//é ‚ç‚¹ãƒ‡ãƒ¼ã‚¿å…¨ä½“ã®ã‚µã‚¤ã‚º
 	resDesc.Height = 1;
 	resDesc.DepthOrArraySize = 1;
 	resDesc.MipLevels = 1;
 	resDesc.SampleDesc.Count = 1;
 	resDesc.Layout = D3D12_TEXTURE_LAYOUT_ROW_MAJOR;
 
-	//’¸“_ƒoƒbƒtƒ@¶¬
+	//é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ç”Ÿæˆ
 	sResult = dx12->mDevice->CreateCommittedResource(
 		&heapProp,
 		D3D12_HEAP_FLAG_NONE,
@@ -265,7 +265,7 @@ void Sprite::Init()
 		IID_PPV_ARGS(mVertBuff.GetAddressOf()));
 	assert(SUCCEEDED(sResult));
 
-	//’¸“_ƒoƒbƒtƒ@‚Ö‚Ìƒf[ƒ^“]‘—
+	//é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ã¸ã®ãƒ‡ãƒ¼ã‚¿è»¢é€
 	/*VertexPosUV* vertMap = nullptr;
 	result = sprite.vertBuff->Map(0, nullptr, (void**)&vertMap);
 	memcpy(vertMap, vertices, sizeof(vertices));
@@ -275,13 +275,13 @@ void Sprite::Init()
 	mVbView.SizeInBytes = sizeof(vertices);
 	mVbView.StrideInBytes = sizeof(vertices[0]);
 
-	//’è”ƒoƒbƒtƒ@‚ÌÝ’è
-	//•½s“Š‰es—ñ
+	//å®šæ•°ãƒãƒƒãƒ•ã‚¡ã®è¨­å®š
+	//å¹³è¡ŒæŠ•å½±è¡Œåˆ—
 	mConstBuffer.mConstBufferData->mat =
 		XMMatrixOrthographicOffCenterLH(
 			0.0f, Util::WIN_WIDTH, Util::WIN_HEIGHT, 0.0f, 0.0f, 1.0f);
 
-	//FŽw’è
+	//è‰²æŒ‡å®š
 	mConstBuffer.mConstBufferData->color = XMFLOAT4(1, 1, 1, 1.0f);
 
 	SpriteTransferVertexBuffer(*this);

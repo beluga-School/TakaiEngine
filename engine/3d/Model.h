@@ -14,19 +14,19 @@
 
 struct Mesh
 {
-	std::vector<Vertex> vertices;	//’¸“_ƒf[ƒ^”z—ñ
-	std::vector<uint16_t> indices;	//ƒCƒ“ƒfƒbƒNƒX”z—ñ
-	std::wstring diffuseMap;		//ƒeƒNƒXƒ`ƒƒ‚Ìƒtƒ@ƒCƒ‹
+	std::vector<Vertex> vertices;	//é ‚ç‚¹ãƒ‡ãƒ¼ã‚¿é…åˆ—
+	std::vector<uint16_t> indices;	//ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹é…åˆ—
+	std::wstring diffuseMap;		//ãƒ†ã‚¯ã‚¹ãƒãƒ£ã®ãƒ•ã‚¡ã‚¤ãƒ«
 };
 
 class Model : public VertexData
 {
 public:
-	//TODO:mMeshes‚¾‚¯‚ÅÏ‚Ş‚æ‚¤‚É‰ü‘P‚µ‚½‚¢
-	//Obj—pƒƒbƒVƒ…
+	//TODO:mMeshesã ã‘ã§æ¸ˆã‚€ã‚ˆã†ã«æ”¹å–„ã—ãŸã„
+	//Objç”¨ãƒ¡ãƒƒã‚·ãƒ¥
 	Mesh mMesh;
 
-	//gltf—pƒƒbƒVƒ…
+	//gltfç”¨ãƒ¡ãƒƒã‚·ãƒ¥
 	std::vector<Mesh> mMeshes;
 
 	std::unordered_map<uint16_t, std::vector<uint16_t>> mSmoothData;
@@ -34,13 +34,13 @@ public:
 	Material mMaterial;
 
 	/// <summary>
-	/// ƒvƒƒOƒ‰ƒ€‚Åì¬‚µ‚½ƒ‚ƒfƒ‹‚ğ¶¬‚·‚é—p‚ÌŠÖ”
+	/// ãƒ—ãƒ­ã‚°ãƒ©ãƒ ã§ä½œæˆã—ãŸãƒ¢ãƒ‡ãƒ«ã‚’ç”Ÿæˆã™ã‚‹ç”¨ã®é–¢æ•°
 	/// </summary>
 	/// <param name="dx12_"></param>
 	void CreateDefaultModel();
 
 	/// <summary>
-	/// ƒ‚ƒfƒ‹‚ğ“Ç‚İ‚ñ‚Å¶¬‚·‚éŠÖ”
+	/// ãƒ¢ãƒ‡ãƒ«ã‚’èª­ã¿è¾¼ã‚“ã§ç”Ÿæˆã™ã‚‹é–¢æ•°
 	/// </summary>
 	/// <param name="dx12_"></param>
 	void CreateModel(const std::string modelname,bool smoothing = false);
@@ -49,13 +49,13 @@ public:
 
 	std::string mSaveModelname = "";
 
-	//ƒ[ƒh‚ÌİŒvãAGetModel‚ÅQÆ‚µ‚½‚ÉAƒ[ƒh‚µ‚Ä‚È‚­‚Ä‚à’†g‚ªì‚ç‚ê‚Ä‚µ‚Ü‚¤‚Ì‚ÅA
-	//‚Ü‚¾¶¬‚ªI‚í‚Á‚Ä‚È‚¢ƒ‚ƒfƒ‹‚ğQÆ‚µ‚½‚Énullptr‚ğ•Ô‚·‚½‚ßA¶¬‚µ‚½‚©‚ğ•Û‘¶‚µ‚Ä‚¨‚­
+	//ãƒ­ãƒ¼ãƒ‰ã®è¨­è¨ˆä¸Šã€GetModelã§å‚ç…§ã—ãŸæ™‚ã«ã€ãƒ­ãƒ¼ãƒ‰ã—ã¦ãªãã¦ã‚‚ä¸­èº«ãŒä½œã‚‰ã‚Œã¦ã—ã¾ã†ã®ã§ã€
+	//ã¾ã ç”ŸæˆãŒçµ‚ã‚ã£ã¦ãªã„ãƒ¢ãƒ‡ãƒ«ã‚’å‚ç…§ã—ãŸæ™‚ã«nullptrã‚’è¿”ã™ãŸã‚ã€ç”Ÿæˆã—ãŸã‹ã‚’ä¿å­˜ã—ã¦ãŠã
 	bool mCreated = false;
 
 private:
 	/// <summary>
-	/// ƒ}ƒeƒŠƒAƒ‹“Ç‚İ‚İ
+	/// ãƒãƒ†ãƒªã‚¢ãƒ«èª­ã¿è¾¼ã¿
 	/// </summary>
 	/// <param name="directoryPath"></param>
 	/// <param name="filename"></param>

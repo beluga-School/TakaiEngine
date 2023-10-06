@@ -28,20 +28,20 @@ const uint32_t VERTEX_COUNT = 1000;
 class Particle
 {
 public:
-	//À•W
+	//åº§æ¨™
 	Vector3 mPosition;
-	//•ûŒü
+	//æ–¹å‘
 	Vector3 mVelocity;
-	//‘¬“x
+	//é€Ÿåº¦
 	float mSpeed;
-	//‘å‚«‚³
+	//å¤§ãã•
 	float mScale;
-	//F
+	//è‰²
 	Float4 mColor;
 
 	bool mIsDead = false;
 
-	//¶‘¶ŠÔ(•b’PˆÊ)
+	//ç”Ÿå­˜æ™‚é–“(ç§’å˜ä½)
 	float mLifeTime = 0.0f;
 	float mMaxLifeTime = 0.0f;
 
@@ -59,7 +59,7 @@ public:
 
 	D3D12_RESOURCE_DESC mResDesc{};
 
-	//’¸“_ƒoƒbƒtƒ@ƒrƒ…[‚Ìì¬
+	//é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ãƒ“ãƒ¥ãƒ¼ã®ä½œæˆ
 	D3D12_VERTEX_BUFFER_VIEW mVbView{};
 
 	Microsoft::WRL::ComPtr<ID3D12Resource> mVertBuff;
@@ -94,13 +94,13 @@ public:
 	void Initialize();
 
 	/// <summary>
-	/// ƒGƒ~ƒbƒ^[‚Ìî•ñ‚ğ‘‚«Š·‚¦‚é
+	/// ã‚¨ãƒŸãƒƒã‚¿ãƒ¼ã®æƒ…å ±ã‚’æ›¸ãæ›ãˆã‚‹
 	/// </summary>
-	/// <param name="pos">ƒGƒ~ƒbƒ^[‚ÌÀ•W</param>
-	/// <param name="range">pos‚©‚ç‘S•ûŒü‚ÉL‚ª‚éƒp[ƒeƒBƒNƒ‹‚Ì”­¶‚·‚é”ÍˆÍ</param>
-	/// <param name="scale">ƒp[ƒeƒBƒNƒ‹‚Ì‘å‚«‚³</param>
-	/// <param name="color">ƒp[ƒeƒBƒNƒ‹‚ÌF</param>
-	/// <param name="spawnNum">1•bŠÔ‚É”­¶‚·‚éƒp[ƒeƒBƒNƒ‹‚Ì” Å’á’l‚Í1</param>
+	/// <param name="pos">ã‚¨ãƒŸãƒƒã‚¿ãƒ¼ã®åº§æ¨™</param>
+	/// <param name="range">posã‹ã‚‰å…¨æ–¹å‘ã«åºƒãŒã‚‹ãƒ‘ãƒ¼ãƒ†ã‚£ã‚¯ãƒ«ã®ç™ºç”Ÿã™ã‚‹ç¯„å›²</param>
+	/// <param name="scale">ãƒ‘ãƒ¼ãƒ†ã‚£ã‚¯ãƒ«ã®å¤§ãã•</param>
+	/// <param name="color">ãƒ‘ãƒ¼ãƒ†ã‚£ã‚¯ãƒ«ã®è‰²</param>
+	/// <param name="spawnNum">1ç§’é–“ã«ç™ºç”Ÿã™ã‚‹ãƒ‘ãƒ¼ãƒ†ã‚£ã‚¯ãƒ«ã®æ•° æœ€ä½å€¤ã¯1</param>
 	void SetInfo(const Vector3& pos,const float& range, const float& scale,
 		const Float4& color,const int32_t& spawnNum = 1);
 
@@ -111,7 +111,7 @@ private:
 	float mRange = 10;
 	float mInitScale = 1;
 	Float4 mColor = { 1,1,1,1 };
-	//ˆê•bŠÔ‚É”­¶‚·‚é”
+	//ä¸€ç§’é–“ã«ç™ºç”Ÿã™ã‚‹æ•°
 	int32_t mSpawnNum = 10;
 
 	bool mRedChange = false;

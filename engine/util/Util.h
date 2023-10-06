@@ -7,7 +7,7 @@
 
 namespace Util
 {
-	//ƒEƒBƒ“ƒhƒEƒTƒCƒY
+	//ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã‚µã‚¤ã‚º
 	const uint32_t WIN_WIDTH = 1280;
 	const uint32_t WIN_HEIGHT = 720;
 
@@ -31,30 +31,30 @@ namespace Util
 		return value;
 	}
 
-	//string‚ğw’è‚µ‚½‹æØ‚è•¶š‚Å•ªŠ„‚·‚é
+	//stringã‚’æŒ‡å®šã—ãŸåŒºåˆ‡ã‚Šæ–‡å­—ã§åˆ†å‰²ã™ã‚‹
 	std::vector<std::string> SplitString(const std::string& str, const char* delimiter);
 
-	//•¶š—ñ‚É”’l‚ªŠÜ‚Ü‚ê‚Ä‚¢‚é‚©”»’è‚·‚é
+	//æ–‡å­—åˆ—ã«æ•°å€¤ãŒå«ã¾ã‚Œã¦ã„ã‚‹ã‹åˆ¤å®šã™ã‚‹
 	bool IsNumber(const std::string& str);
 
-	//•¶š—ñ‚Éw’è‚µ‚½•¶š—ñ‚ªŠÜ‚Ü‚ê‚Ä‚¢‚é‚©”»’è‚·‚é
+	//æ–‡å­—åˆ—ã«æŒ‡å®šã—ãŸæ–‡å­—åˆ—ãŒå«ã¾ã‚Œã¦ã„ã‚‹ã‹åˆ¤å®šã™ã‚‹
 	bool CheckString(const std::string& checkStr, const std::string& searchStr);
-	//‚³‚ç‚ÉŒ©‚Â‚¯‚½•¶š—ñ‚ğ•Ô‚·
+	//ã•ã‚‰ã«è¦‹ã¤ã‘ãŸæ–‡å­—åˆ—ã‚’è¿”ã™
 	std::string GetString(const std::string& checkStr, const std::string& searchStr);
 
-	//•¶š—ñ‚ğw’è‚µ‚½‹æØ‚è•¶š‚Å•ªŠ„‚µAˆê”Ôè‘O‚É‚ ‚Á‚½•¶š‚ğ•Ô‚·
+	//æ–‡å­—åˆ—ã‚’æŒ‡å®šã—ãŸåŒºåˆ‡ã‚Šæ–‡å­—ã§åˆ†å‰²ã—ã€ä¸€ç•ªæ‰‹å‰ã«ã‚ã£ãŸæ–‡å­—ã‚’è¿”ã™
 	int32_t GetNumber(const std::string& str, const char* delimiter);
 
-	//‚»‚ÌƒL[‚ªƒ}ƒbƒv“à‚É‘¶İ‚·‚é‚©‚ğŒŸõ‚·‚é
+	//ãã®ã‚­ãƒ¼ãŒãƒãƒƒãƒ—å†…ã«å­˜åœ¨ã™ã‚‹ã‹ã‚’æ¤œç´¢ã™ã‚‹
 	template <class Key, class Value>
 	bool CheckFindEvent(std::unordered_map<Key, Value> map, Key key) {
-		//‘¶İ‚·‚é‚È‚çtrue‚É‚È‚èA‘¶İ‚µ‚È‚¢‚È‚çfalse‚É‚È‚é
+		//å­˜åœ¨ã™ã‚‹ãªã‚‰trueã«ãªã‚Šã€å­˜åœ¨ã—ãªã„ãªã‚‰falseã«ãªã‚‹
 		return !(map.find(key) == map.end());
 	}
 
-	//ƒ}ƒbƒv‚©‚çƒnƒ“ƒhƒ‹‚ğæ“¾‚·‚é
-	//ƒRƒs[‚µ‚Ä‚é‚Ì‚Åˆ—‘¬“xI‚í‚Á‚Ä‚é
-	//ƒ|ƒCƒ“ƒ^‚É‚·‚é‚ÆƒGƒ‰[“f‚¢‚½
+	//ãƒãƒƒãƒ—ã‹ã‚‰ãƒãƒ³ãƒ‰ãƒ«ã‚’å–å¾—ã™ã‚‹
+	//ã‚³ãƒ”ãƒ¼ã—ã¦ã‚‹ã®ã§å‡¦ç†é€Ÿåº¦çµ‚ã‚ã£ã¦ã‚‹
+	//ãƒã‚¤ãƒ³ã‚¿ã«ã™ã‚‹ã¨ã‚¨ãƒ©ãƒ¼åã„ãŸ
 	template <class Key, class Value>
 	std::vector<Key> GetKeys(std::unordered_map<Key, Value> map) {
 		std::vector<Key> temp;

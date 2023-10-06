@@ -7,7 +7,7 @@ void ClearDrawScreen();
 
 void PreDraw();
 
-//���C�g�g�������Ȃ��Ƃ�������̂ŁA���}�����Ń��C�g���g��Ȃ��ݒ�ɂł���悤��
+//ライト使いたくないときもあるので、応急処理でライトを使わない設定にできるように
 void BasicObjectPreDraw(const PipelineSet& objectPipelineSet,bool useLight = true);
 
 void GeometryObjectPreDraw(const PipelineSet& geometryPipelineSet);

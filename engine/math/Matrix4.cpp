@@ -70,7 +70,7 @@ Vector3 Matrix4::ExtractAxisZ() const
 
 Matrix4 Matrix4::RotArbitrary(Vector3& axis,const float& rad)
 {
-	//ƒNƒI[ƒ^ƒjƒIƒ“‚Æ‚¢‚¤‚à‚Ì
+	//ã‚¯ã‚ªãƒ¼ã‚¿ãƒ‹ã‚ªãƒ³ã¨ã„ã†ã‚‚ã®
 	axis.normalize();
 	float sn = (float)sin(rad / 2.f);
 	axis.x *= sn;

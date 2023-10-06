@@ -9,7 +9,7 @@ public:
 	HWND mHwnd;
 	MSG mMsg;
 
-	//ГEГBГУГhГEГNГЙГXВ╠Р▌Тш
+	//уВжуВгуГ│уГЙуВжуВпуГйуВ╣уБошинхоЪ
 	WNDCLASSEX w{};
 
 	static WinAPI* Get();

@@ -18,7 +18,7 @@ public:
 
 	void CreateWhiteTexture();
 
-	//�O������Q�Ƃ���p�̃��\�[�X�ݒ�(���������Ă��e�N�X�`�����ɂ͉e�����Ȃ�)
+	//外部から参照する用のリソース設定(書き換えてもテクスチャ側には影響しない)
 	D3D12_RESOURCE_DESC mGetResDesc;
 
 	Microsoft::WRL::ComPtr<ID3D12Resource> mTexBuff;
@@ -36,9 +36,9 @@ private:
 	DirectX::ScratchImage mScratchImg{};
 	DirectX::ScratchImage mMipChain{};
 
-	//�V�F�[�_���\�[�X�r���[�ݒ�
-	D3D12_SHADER_RESOURCE_VIEW_DESC mSrvDesc{};//�ݒ�\����
-	//���\�[�X�ݒ�
+	//シェーダリソースビュー設定
+	D3D12_SHADER_RESOURCE_VIEW_DESC mSrvDesc{};//設定構造体
+	//リソース設定
 	D3D12_RESOURCE_DESC mResDesc{};
 
 };
@@ -51,12 +51,12 @@ public:
 		return &instance;
 	};
 
-	//�f�X�N���v�^�q�[�v�̐ݒ�
+	//デスクリプタヒープの設定
 	D3D12_DESCRIPTOR_HEAP_DESC mSrvHeapDesc = {};
 
 	Microsoft::WRL::ComPtr<ID3D12DescriptorHeap> mSrvHeap;
 
-	//SRV�q�[�v�̑傫��
+	//SRVヒープの大きさ
 	UINT mSRVHandleSize = 0;
 
 	void Initialize();
@@ -67,7 +67,7 @@ public:
 	static Texture* GetTexture(const std::string &handle);
 
 private:
-	//�e�N�X�`����1���ڂ��A�f�o�b�O�e�L�X�g�̕��ɂȂ�������Ă�o�O������̂ł��������p�̃e�N�X�`��
+	//テクスチャの1枚目が、デバッグテキストの物になっちゃってるバグがあるのでそれを入れる用のテクスチャ
 	Texture bugfix_;
 
 	static std::map<std::string, Texture> sTextures;

@@ -10,16 +10,16 @@ struct aiMaterial;
 
 struct ImportSettings
 {
-	const wchar_t* mFILENAME = nullptr;	//ƒtƒ@ƒCƒ‹ƒpƒX
-	std::vector<Mesh>& mMeshes;			//o—Íæ‚ÌƒƒbƒVƒ…”z—ñ
-	bool mInverseU = false;				//UÀ•W‚ğ”½“]‚³‚¹‚é‚©
-	bool mInverseV = false;				//VÀ•W‚ğ”½“]‚³‚¹‚é‚©
+	const wchar_t* mFILENAME = nullptr;	//ãƒ•ã‚¡ã‚¤ãƒ«ãƒ‘ã‚¹
+	std::vector<Mesh>& mMeshes;			//å‡ºåŠ›å…ˆã®ãƒ¡ãƒƒã‚·ãƒ¥é…åˆ—
+	bool mInverseU = false;				//Uåº§æ¨™ã‚’åè»¢ã•ã›ã‚‹ã‹
+	bool mInverseV = false;				//Våº§æ¨™ã‚’åè»¢ã•ã›ã‚‹ã‹
 };
 
 class AssimpLoader
 {
 public:
-	bool Load(const ImportSettings& setting);	//ƒ‚ƒfƒ‹‚Ìƒ[ƒh
+	bool Load(const ImportSettings& setting);	//ãƒ¢ãƒ‡ãƒ«ã®ãƒ­ãƒ¼ãƒ‰
 
 private:
 	void LoadMesh(Mesh& dst, const aiMesh* src, const bool& inverseU, const bool& inverseV);

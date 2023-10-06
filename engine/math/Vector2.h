@@ -11,37 +11,37 @@ public:
 	Vector2();
 
 	/// <summary>
-	/// ’·‚³‚ğ‹‚ß‚éŠÖ”
+	/// é•·ã•ã‚’æ±‚ã‚ã‚‹é–¢æ•°
 	/// </summary>
-	/// <returns>’·‚³</returns>
+	/// <returns>é•·ã•</returns>
 	float GetLength() const;
 
 	/// <summary>
-	/// ©g‚ğ³‹K‰»‚·‚éŠÖ”
+	/// è‡ªèº«ã‚’æ­£è¦åŒ–ã™ã‚‹é–¢æ•°
 	/// </summary>
 	void Normalized();
 
 	/// <summary>
-	/// ³‹K‰»‚·‚éŠÖ”
+	/// æ­£è¦åŒ–ã™ã‚‹é–¢æ•°
 	/// </summary>
-	/// <returns>Vec2‚Ì³‹K‰»‚³‚ê‚½’l</returns>
+	/// <returns>Vec2ã®æ­£è¦åŒ–ã•ã‚ŒãŸå€¤</returns>
 	Vector2 GetNormalized() const;
 
 	/// <summary>
-	/// ŠOÏ‹‚ß‚éŠÖ”
+	/// å¤–ç©æ±‚ã‚ã‚‹é–¢æ•°
 	/// </summary>
 	/// <param name="other"></param>
 	/// <returns></returns>
 	constexpr float Cross(const Vector2& other) const;
 
 	/// <summary>
-	/// “àÏ‹‚ß‚éŠÖ”
+	/// å†…ç©æ±‚ã‚ã‚‹é–¢æ•°
 	/// </summary>
 	/// <param name="other"></param>
 	/// <returns></returns>
 	constexpr float Dot(const Vector2& other) const;
 
-	//©g‚ğ‘‚«Š·‚¦‚È‚¢‚â‚Â‚ç
+	//è‡ªèº«ã‚’æ›¸ãæ›ãˆãªã„ã‚„ã¤ã‚‰
 	Vector2 operator +(const Vector2& other) const;
 	Vector2 operator -(const Vector2& other) const;
 	Vector2 operator *(const Vector2& other) const;
@@ -53,7 +53,7 @@ public:
 	Vector2 operator *(const float& other) const;
 	Vector2 operator /(const float& other) const;
 
-	//©g‚ğ‘‚«Š·‚¦‚é‚â‚Â‚ç
+	//è‡ªèº«ã‚’æ›¸ãæ›ãˆã‚‹ã‚„ã¤ã‚‰
 	Vector2 operator +=(const Vector2& other);
 	Vector2 operator -=(const Vector2& other);
 	Vector2 operator *=(const Vector2& other);

@@ -20,7 +20,7 @@ public:
 	std::string oldSceneID = "";
 	std::string sceneID = "";
 protected:
-	//シーンマネージャ
+	//繧ｷ繝ｼ繝ｳ繝槭ロ繝ｼ繧ｸ繝｣
 	SceneManager* mSceneManager = nullptr;
 
 };

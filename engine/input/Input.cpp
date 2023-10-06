@@ -47,7 +47,7 @@ bool Keyboard::ReleaseKey(const uint8_t& keys)
 
 void Keyboard::DirectInputInit()
 {
-	//‚±‚ê‚ÍƒL[ƒ{[ƒh‚Ì“ü—Í‚ğ‰Šú‰»‚µ‚Ä‚é‚ñ‚â‚Ë``
+	//ã“ã‚Œã¯ã‚­ãƒ¼ãƒœãƒ¼ãƒ‰ã®å…¥åŠ›ã‚’åˆæœŸåŒ–ã—ã¦ã‚‹ã‚“ã‚„ã­ï½ï½
 	sResult = DirectInput8Create(
 		WinAPI::Get()->w.hInstance, DIRECTINPUT_VERSION, IID_IDirectInput8, (void**)&mDirectInput, nullptr);
 	assert(SUCCEEDED(sResult));
@@ -55,11 +55,11 @@ void Keyboard::DirectInputInit()
 
 void Keyboard::DirectInputCreate()
 {
-	//ƒL[ƒ{[ƒhƒfƒoƒCƒX‚Ì¶¬
+	//ã‚­ãƒ¼ãƒœãƒ¼ãƒ‰ãƒ‡ãƒã‚¤ã‚¹ã®ç”Ÿæˆ
 	sResult = mDirectInput->CreateDevice(GUID_SysKeyboard, &mKeyboard, NULL);
 	assert(SUCCEEDED(sResult));
 
-	sResult = mKeyboard->SetDataFormat(&c_dfDIKeyboard);	//•W€Œ`®
+	sResult = mKeyboard->SetDataFormat(&c_dfDIKeyboard);	//æ¨™æº–å½¢å¼
 	assert(SUCCEEDED(sResult));
 
 	
@@ -275,19 +275,19 @@ bool Pad::ReleaseRT(const bool& hard)
 
 void Keyboard::Initialize()
 {
-	//DirectInput‚Ì‰Šú‰»
+	//DirectInputã®åˆæœŸåŒ–
 	Get()->DirectInputInit();
 
-	//ƒL[ƒ{[ƒhƒfƒoƒCƒX‚Ì¶¬
+	//ã‚­ãƒ¼ãƒœãƒ¼ãƒ‰ãƒ‡ãƒã‚¤ã‚¹ã®ç”Ÿæˆ
 	Get()->DirectInputCreate();
 }
 
 void Keyboard::Update()
 {
-	//ƒL[ƒ{[ƒhî•ñ‚Ìæ“¾ŠJn
+	//ã‚­ãƒ¼ãƒœãƒ¼ãƒ‰æƒ…å ±ã®å–å¾—é–‹å§‹
 	mKeyboard->Acquire();
 
-	//‘SƒL[‚Ì“ü—Íó‘Ô‚ğæ“¾‚·‚é
+	//å…¨ã‚­ãƒ¼ã®å…¥åŠ›çŠ¶æ…‹ã‚’å–å¾—ã™ã‚‹
 	for (int32_t i = 0; i < 256; i++)
 	{
 		sOldkey[i] = sKey[i];
@@ -313,16 +313,16 @@ Vector2 Input::Mouse::GetVelocity()
 
 void Input::Mouse::Initialize()
 {
-	//ƒL[ƒ{[ƒhƒfƒoƒCƒX‚Ì¶¬
+	//ã‚­ãƒ¼ãƒœãƒ¼ãƒ‰ãƒ‡ãƒã‚¤ã‚¹ã®ç”Ÿæˆ
 	sResult = Keyboard::Get()->mDirectInput->CreateDevice(GUID_SysMouse, &Mouse::Get()->mMouse, NULL);
 	assert(SUCCEEDED(sResult));
 
-	//ƒfƒoƒCƒX‚ÌƒtƒH[ƒ}ƒbƒg‚ğİ’è
+	//ãƒ‡ãƒã‚¤ã‚¹ã®ãƒ•ã‚©ãƒ¼ãƒãƒƒãƒˆã‚’è¨­å®š
 	sResult = Mouse::Get()->mMouse->SetDataFormat(&c_dfDIMouse);
 	assert(SUCCEEDED(sResult));
 
-	//ƒEƒBƒ“ƒhƒEŠO‚È‚çƒ}ƒEƒX‚Ìæ“¾‚ğ‚¹‚¸
-	//‘¼‚ÌƒAƒvƒŠƒP[ƒVƒ‡ƒ“‚à‚»‚ÌƒfƒoƒCƒX‚ğæ“¾‚Å‚«‚é‚æ‚¤‚É
+	//ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦å¤–ãªã‚‰ãƒã‚¦ã‚¹ã®å–å¾—ã‚’ã›ãš
+	//ä»–ã®ã‚¢ãƒ—ãƒªã‚±ãƒ¼ã‚·ãƒ§ãƒ³ã‚‚ãã®ãƒ‡ãƒã‚¤ã‚¹ã‚’å–å¾—ã§ãã‚‹ã‚ˆã†ã«
 	sResult = Mouse::Get()->mMouse->SetCooperativeLevel(WinAPI::Get()->mHwnd, DISCL_NONEXCLUSIVE | DISCL_FOREGROUND);
 	assert(SUCCEEDED(sResult));
 
@@ -332,17 +332,17 @@ void Input::Mouse::Initialize()
 void Mouse::Update()
 {
 	Mouse* instance = Mouse::Get();
-	//‘O‰ñƒtƒŒ[ƒ€‚Ì“ü—Í‚ğ•Û‘¶
+	//å‰å›ãƒ•ãƒ¬ãƒ¼ãƒ ã®å…¥åŠ›ã‚’ä¿å­˜
 	instance->mOldState = instance->mState;
 
-	//“ü—ÍƒfƒoƒCƒX‚Ì§Œä‚ğŠJn
+	//å…¥åŠ›ãƒ‡ãƒã‚¤ã‚¹ã®åˆ¶å¾¡ã‚’é–‹å§‹
 	instance->mMouse->Acquire();
 	instance->mMouse->Poll();
 	
-	//ƒfƒoƒCƒX‚Ìó‘Ô‚ğæ“¾
+	//ãƒ‡ãƒã‚¤ã‚¹ã®çŠ¶æ…‹ã‚’å–å¾—
 	instance->mMouse->GetDeviceState(sizeof(DIMOUSESTATE), &instance->mState);
 
-	//ƒ}ƒEƒXÀ•Wæ“¾
+	//ãƒã‚¦ã‚¹åº§æ¨™å–å¾—
 	POINT p;
 	GetCursorPos(&p);
 
@@ -353,10 +353,10 @@ void Mouse::Update()
 	{
 	case CurserLockState::LOCK:
 		
-		//ˆÊ’uŒÅ’è
+		//ä½ç½®å›ºå®š
 		SetCursorPos(Util::WIN_WIDTH / 2, Util::WIN_HEIGHT / 2);
 		
-		//ƒ}ƒEƒX•\¦Ø‚è‘Ö‚¦
+		//ãƒã‚¦ã‚¹è¡¨ç¤ºåˆ‡ã‚Šæ›¿ãˆ
 		if (Mouse::Get()->showincriment <= -1)
 		{
 			break;
@@ -365,7 +365,7 @@ void Mouse::Update()
 
 		break;
 	case CurserLockState::UNLOCK:
-		//ƒ}ƒEƒX•\¦Ø‚è‘Ö‚¦
+		//ãƒã‚¦ã‚¹è¡¨ç¤ºåˆ‡ã‚Šæ›¿ãˆ
 		if (Mouse::Get()->showincriment >= 1)
 		{
 			break;
@@ -419,7 +419,7 @@ void Input::Pad::Update()
 
 	CheckConnectPad();
 
-	//ƒfƒbƒhƒ][ƒ““à‚Ì“ü—Í‚ğ0‚É—}‚¦‚é
+	//ãƒ‡ãƒƒãƒ‰ã‚¾ãƒ¼ãƒ³å†…ã®å…¥åŠ›ã‚’0ã«æŠ‘ãˆã‚‹
 	if ((sPState.Gamepad.sThumbLX < XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE &&
 		sPState.Gamepad.sThumbLX > -XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE) &&
 		(sPState.Gamepad.sThumbLY < XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE &&

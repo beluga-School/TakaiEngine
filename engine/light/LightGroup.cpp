@@ -11,7 +11,7 @@ void LightGroup::Create()
 
 void LightGroup::Initialize()
 {
-	//ƒgƒ‰ƒuƒ‹–h~‚ÌƒfƒtƒHƒ‰ƒCƒg
+	//ãƒˆãƒ©ãƒ–ãƒ«é˜²æ­¢ã®ãƒ‡ãƒ•ã‚©ãƒ©ã‚¤ãƒˆ
 	DefaultLightSet();
 
 	TransferBuffer();
@@ -36,10 +36,10 @@ void LightGroup::TransferBuffer()
 {
 	for (int32_t i = 0; i < sDIRLIGHT_NUM; i++)
 	{
-		//ƒAƒNƒeƒBƒu‚È‚ç
+		//ã‚¢ã‚¯ãƒ†ã‚£ãƒ–ãªã‚‰
 		if (mDirLights[i].mActive)
 		{
-			//’è”ƒoƒbƒtƒ@‚Ìİ’è‚ğ“]‘—
+			//å®šæ•°ãƒãƒƒãƒ•ã‚¡ã®è¨­å®šã‚’è»¢é€
 			mConstBuff.mConstBufferData->mDirLights[i].active = true;
 			mConstBuff.mConstBufferData->mDirLights[i].direction = -mDirLights[i].mDirection;
 			mConstBuff.mConstBufferData->mDirLights[i].color = mDirLights[i].mColor;

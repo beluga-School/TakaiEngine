@@ -10,18 +10,18 @@ void DebugText::Initialize(const Texture& tex)
 
 void DebugText::Print(const SpriteCommon& spritecommon, const std::string& text,float x,float y,float scale)
 {
-	//‘S‚Ä‚Ì•¶š‚É‚Â‚¢‚Ä
+	//å…¨ã¦ã®æ–‡å­—ã«ã¤ã„ã¦
 	for (int32_t i = 0; i < text.size(); i++)
 	{
-		//Å‘å•¶š”’´‰ß
+		//æœ€å¤§æ–‡å­—æ•°è¶…é
 		if (mSpriteIndex >= sMAX_CHAR_COUNT) {
 			break;
 		}
 
-		//1•¶šæ‚èo‚·(*ASCIIƒR[ƒh‚Å‚µ‚©¬‚è—§‚½‚È‚¢)
+		//1æ–‡å­—å–ã‚Šå‡ºã™(*ASCIIã‚³ãƒ¼ãƒ‰ã§ã—ã‹æˆã‚Šç«‹ãŸãªã„)
 		const uint8_t& CHARACTER = text[i];
 
-		//ASCIIƒR[ƒh‚Ì2’i•ª”ò‚Î‚µ‚½”Ô†‚ğŒvZ
+		//ASCIIã‚³ãƒ¼ãƒ‰ã®2æ®µåˆ†é£›ã°ã—ãŸç•ªå·ã‚’è¨ˆç®—
 		int32_t fontIndex = CHARACTER - 32;
 		if (CHARACTER >= 0x7f) {
 			fontIndex = 0;
@@ -30,7 +30,7 @@ void DebugText::Print(const SpriteCommon& spritecommon, const std::string& text,
 		int32_t fontIndexY = fontIndex / sFONT_LINE_COUNT;
 		int32_t fontIndexX = fontIndex % sFONT_LINE_COUNT;
 
-		//À•WŒvZ
+		//åº§æ¨™è¨ˆç®—
 		mSprites[mSpriteIndex].mPosition = { x + sFONT_WIDTH * scale * i,y,0 };
 		mSprites[mSpriteIndex].mTexLeftTop = 
 		{(float)fontIndexX * sFONT_WIDTH,(float)fontIndexY * sFONT_HEIGHT};

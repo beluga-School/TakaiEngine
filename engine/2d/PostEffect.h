@@ -21,44 +21,44 @@ public:
 
 	void PostDrawScene();
 
-	//�p�C�v���C���؂�ւ��p�ɂƂ肠�����u���Ă���
+	//パイプライン切り替え用にとりあえず置いておく
 	static std::string pipeLineName;
 
 private:
-	//��ʃN���A�p�̐F
+	//画面クリア用の色
 	static const float sClearColor[4];
 
-	//�e�N�X�`���o�b�t�@
+	//テクスチャバッファ
 	Microsoft::WRL::ComPtr<ID3D12Resource> mTexBuff[2];
-	//SRV�p�f�X�N���v�^�q�[�v
+	//SRV用デスクリプタヒープ
 	Microsoft::WRL::ComPtr<ID3D12DescriptorHeap> mDescHeapSRV;
-	//�[�x�o�b�t�@
+	//深度バッファ
 	Microsoft::WRL::ComPtr<ID3D12Resource> mDepthBuff;
-	//RTV�p�f�X�N���v�^�q�[�v
+	//RTV用デスクリプタヒープ
 	Microsoft::WRL::ComPtr<ID3D12DescriptorHeap> mDescHeapRTV;
-	//DSV�p�f�X�N���v�^�q�[�v
+	//DSV用デスクリプタヒープ
 	Microsoft::WRL::ComPtr<ID3D12DescriptorHeap> mDescHeapDSV;
 
-	//���_�o�b�t�@
+	//頂点バッファ
 	Microsoft::WRL::ComPtr<ID3D12Resource> mVertBuff;
-	//���_�o�b�t�@�r���[
+	//頂点バッファビュー
 	D3D12_VERTEX_BUFFER_VIEW mVbView{};
-	//�萔�o�b�t�@
+	//定数バッファ
 	ConstBuffer<ConstBufferTime> mConstBuffer;
 
-	//�܂Ƃߊ֐�
-	//�e�N�X�`������(���̉�ʂ���e�N�X�`���𐶐��H)
+	//まとめ関数
+	//テクスチャ生成(今の画面からテクスチャを生成？)
 	void CreateTexture();
 
-	//SRV(�V�F�[�_�[���\�[�X�r���[)�쐬
+	//SRV(シェーダーリソースビュー)作成
 	void CreateSRV();
 
-	//RTV(�����_�[�^�[�Q�b�g�r���[)�쐬
+	//RTV(レンダーターゲットビュー)作成
 	void CreateRTV();
 	
-	//�[�x�o�b�t�@����
+	//深度バッファ生成
 	void CreateDepthBuff();
 
-	//DSV(�f�v�X�X�e���V���r���[)�쐬
+	//DSV(デプスステンシルビュー)作成
 	void CreateDSV();
 };

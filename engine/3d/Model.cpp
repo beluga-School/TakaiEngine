@@ -18,34 +18,34 @@ void Model::CreateDefaultModel()
 
 void Model::LoadMaterial(const std::string& directoryPath, const std::string& filename)
 {
-	//ƒtƒ@ƒCƒ‹ƒXƒgƒŠ[ƒ€
+	//ãƒ•ã‚¡ã‚¤ãƒ«ã‚¹ãƒˆãƒªãƒ¼ãƒ 
 	std::ifstream file;
-	//ƒ}ƒeƒŠƒAƒ‹ƒtƒ@ƒCƒ‹‚ğŠJ‚­
+	//ãƒãƒ†ãƒªã‚¢ãƒ«ãƒ•ã‚¡ã‚¤ãƒ«ã‚’é–‹ã
 	file.open(directoryPath + filename);
 
-	//ƒtƒ@ƒCƒ‹ƒI[ƒvƒ“¸”s‚ğƒ`ƒFƒbƒN
+	//ãƒ•ã‚¡ã‚¤ãƒ«ã‚ªãƒ¼ãƒ—ãƒ³å¤±æ•—ã‚’ãƒã‚§ãƒƒã‚¯
 	if (file.fail())
 	{
 		assert(0);
 	}
 
-	//1s‚¸‚Â“Ç‚İ‚Ş
+	//1è¡Œãšã¤èª­ã¿è¾¼ã‚€
 	string line;
 	while (getline(file, line))
 	{
 		std::istringstream line_stream(line);
-		//”¼ŠpƒXƒy[ƒX‹æØ‚è‚Ås‚Ìæ“ª•¶š—ñ‚ğæ“¾
+		//åŠè§’ã‚¹ãƒšãƒ¼ã‚¹åŒºåˆ‡ã‚Šã§è¡Œã®å…ˆé ­æ–‡å­—åˆ—ã‚’å–å¾—
 		string key;
 		getline(line_stream, key, ' ');
 
-		//æ“ª‚Ìƒ^ƒu•¶š‚Í–³‹‚·‚é
+		//å…ˆé ­ã®ã‚¿ãƒ–æ–‡å­—ã¯ç„¡è¦–ã™ã‚‹
 		if (key[0] == '\t') {
-			key.erase(key.begin());//æ“ª‚Ì•¶š‚ğíœ
+			key.erase(key.begin());//å…ˆé ­ã®æ–‡å­—ã‚’å‰Šé™¤
 		}
 
-		//æ“ª•¶š—ñ‚ªnewmtl‚È‚çƒ}ƒeƒŠƒAƒ‹–¼
+		//å…ˆé ­æ–‡å­—åˆ—ãŒnewmtlãªã‚‰ãƒãƒ†ãƒªã‚¢ãƒ«å
 		if (key == "newmtl") {
-			//ƒ}ƒeƒŠƒAƒ‹–¼
+			//ãƒãƒ†ãƒªã‚¢ãƒ«å
 			line_stream >> mMaterial.mName;
 		}
 
@@ -74,13 +74,13 @@ void Model::LoadMaterial(const std::string& directoryPath, const std::string& fi
 			mMaterial.mTexture->Load(*ConvertStringToWChar(directoryPath + mMaterial.mTextureFilename).c_str());
 		}
 	}
-	//ƒtƒ@ƒCƒ‹‚ğ•Â‚¶‚é
+	//ãƒ•ã‚¡ã‚¤ãƒ«ã‚’é–‰ã˜ã‚‹
 	file.close();
 }
 
 void Model::CreateModel(const std::string modelname, bool smoothing)
 {
-	//objƒtƒ@ƒCƒ‹‚ğŠJ‚­
+	//objãƒ•ã‚¡ã‚¤ãƒ«ã‚’é–‹ã
 	std::ifstream file;
 	const string modelname_ = modelname;
 	const string filename = modelname_ + ".obj";
@@ -89,15 +89,15 @@ void Model::CreateModel(const std::string modelname, bool smoothing)
 
 	mSaveModelname = modelname_;
 
-	//ƒtƒ@ƒCƒ‹ƒI[ƒvƒ“¸”s‚ğƒ`ƒFƒbƒN
+	//ãƒ•ã‚¡ã‚¤ãƒ«ã‚ªãƒ¼ãƒ—ãƒ³å¤±æ•—ã‚’ãƒã‚§ãƒƒã‚¯
 	if (file.fail())
 	{
 		assert(0);
 	}
 
-	vector<Vector3> positions;	//’¸“_ƒf[ƒ^
-	vector<Vector3> normals;	//–@üƒxƒNƒgƒ‹
-	vector<Vector2> texcoords;	//ƒeƒNƒXƒ`ƒƒuv
+	vector<Vector3> positions;	//é ‚ç‚¹ãƒ‡ãƒ¼ã‚¿
+	vector<Vector3> normals;	//æ³•ç·šãƒ™ã‚¯ãƒˆãƒ«
+	vector<Vector2> texcoords;	//ãƒ†ã‚¯ã‚¹ãƒãƒ£uv
 
 
 
@@ -115,44 +115,44 @@ void Model::CreateModel(const std::string modelname, bool smoothing)
 
 		if (key == "mtllib")
 		{
-			//ƒ}ƒeƒŠƒAƒ‹‚Ìƒtƒ@ƒCƒ‹–¼“Ç‚İ‚İ
+			//ãƒãƒ†ãƒªã‚¢ãƒ«ã®ãƒ•ã‚¡ã‚¤ãƒ«åèª­ã¿è¾¼ã¿
 			string filename;
 			line_stream >> filename;
 
-			//ƒ}ƒeƒŠƒAƒ‹“Ç‚İ‚İ
+			//ãƒãƒ†ãƒªã‚¢ãƒ«èª­ã¿è¾¼ã¿
 			LoadMaterial(directoryPath, filename);
 		}
 
 		if (key == "v")
 		{
-			//X,Y,ZÀ•W“Ç‚İ‚İ
+			//X,Y,Zåº§æ¨™èª­ã¿è¾¼ã¿
 			Vector3 position{};
 			line_stream >> position.x;
 			line_stream >> position.y;
 			line_stream >> position.z;
 
-			//À•Wƒf[ƒ^‚É’Ç‰Á
+			//åº§æ¨™ãƒ‡ãƒ¼ã‚¿ã«è¿½åŠ 
 			positions.emplace_back(position);
 		}
 		if (key == "vt")
 		{
-			//U,V¬•ª“Ç‚İ‚İ
+			//U,Væˆåˆ†èª­ã¿è¾¼ã¿
 			Vector2 texcoord{};
 			line_stream >> texcoord.x;
 			line_stream >> texcoord.y;
-			//V•ûŒü”½“]
+			//Væ–¹å‘åè»¢
 			texcoord.y = 1.0f - texcoord.y;
-			//ƒeƒNƒXƒ`ƒƒÀ•Wƒf[ƒ^‚É’Ç‰Á
+			//ãƒ†ã‚¯ã‚¹ãƒãƒ£åº§æ¨™ãƒ‡ãƒ¼ã‚¿ã«è¿½åŠ 
 			texcoords.emplace_back(texcoord);
 		}
 		if (key == "vn")
 		{
-			//X,Y,Z¬•ª“Ç‚İ‚İ
+			//X,Y,Zæˆåˆ†èª­ã¿è¾¼ã¿
 			Vector3 normal{};
 			line_stream >> normal.x;
 			line_stream >> normal.y;
 			line_stream >> normal.z;
-			//–@üƒxƒNƒgƒ‹ƒf[ƒ^‚É’Ç‰Á
+			//æ³•ç·šãƒ™ã‚¯ãƒˆãƒ«ãƒ‡ãƒ¼ã‚¿ã«è¿½åŠ 
 			normals.emplace_back(normal);
 		}
 
@@ -161,13 +161,13 @@ void Model::CreateModel(const std::string modelname, bool smoothing)
 			string index_string;
 			while (getline(line_stream,index_string,' '))
 			{
-				//’¸“_ƒCƒ“ƒfƒbƒNƒX1ŒÂ•ª‚Ì•¶š—ñ‚ğƒXƒgƒŠ[ƒ€‚É•ÏŠ·
+				//é ‚ç‚¹ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹1å€‹åˆ†ã®æ–‡å­—åˆ—ã‚’ã‚¹ãƒˆãƒªãƒ¼ãƒ ã«å¤‰æ›
 				istringstream index_stream(index_string);
 				uint16_t indexPosition, indexTexcoord, indexNormal;
 				index_stream >> indexPosition;
-				index_stream.seekg(1, ios_base::cur);//ƒXƒ‰ƒbƒVƒ…‚ğ”ò‚Î‚·
+				index_stream.seekg(1, ios_base::cur);//ã‚¹ãƒ©ãƒƒã‚·ãƒ¥ã‚’é£›ã°ã™
 				index_stream >> indexTexcoord;
-				index_stream.seekg(1, ios_base::cur);//ƒXƒ‰ƒbƒVƒ…‚ğ”ò‚Î‚·
+				index_stream.seekg(1, ios_base::cur);//ã‚¹ãƒ©ãƒƒã‚·ãƒ¥ã‚’é£›ã°ã™
 				index_stream >> indexNormal;
 
 				Vertex vertex{};
@@ -184,10 +184,10 @@ void Model::CreateModel(const std::string modelname, bool smoothing)
 				
 				mMesh.vertices.emplace_back(vertex);
 
-				//’¸“_ƒCƒ“ƒfƒbƒNƒX‚É’Ç‰Á
+				//é ‚ç‚¹ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ã«è¿½åŠ 
 				mMesh.indices.emplace_back((uint16_t)mMesh.indices.size());
 
-				//‚±‚±‚Åƒf[ƒ^‚ğ•Û
+				//ã“ã“ã§ãƒ‡ãƒ¼ã‚¿ã‚’ä¿æŒ
 				if (smoothing)
 				{
 					mSmoothData[indexPosition].emplace_back((uint16_t)mMesh.vertices.size() - 1);
@@ -198,24 +198,24 @@ void Model::CreateModel(const std::string modelname, bool smoothing)
 	file.close();
 
 	for (int32_t i = 0; i < mMesh.indices.size() / 3; i++)
-	{	//OŠpŒ`1‚Â‚²‚Æ‚ÉŒvZ‚µ‚Ä‚¢‚­
-		//OŠpŒ`‚ÌƒCƒ“ƒfƒbƒNƒX‚ğæ‚èo‚µ‚ÄAˆê“I‚È•Ï”‚É‚¢‚ê‚é
+	{	//ä¸‰è§’å½¢1ã¤ã”ã¨ã«è¨ˆç®—ã—ã¦ã„ã
+		//ä¸‰è§’å½¢ã®ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ã‚’å–ã‚Šå‡ºã—ã¦ã€ä¸€æ™‚çš„ãªå¤‰æ•°ã«ã„ã‚Œã‚‹
 		uint16_t indices0 = mMesh.indices[i * 3 + 0];
 		uint16_t indices1 = mMesh.indices[i * 3 + 1];
 		uint16_t indices2 = mMesh.indices[i * 3 + 2];
-		//OŠpŒ`‚ğ\¬‚·‚é’¸“_À•W‚ğƒxƒNƒgƒ‹‚É‘ã“ü
+		//ä¸‰è§’å½¢ã‚’æ§‹æˆã™ã‚‹é ‚ç‚¹åº§æ¨™ã‚’ãƒ™ã‚¯ãƒˆãƒ«ã«ä»£å…¥
 		XMVECTOR p0 = XMLoadFloat3(&mMesh.vertices[indices0].pos);
 		XMVECTOR p1 = XMLoadFloat3(&mMesh.vertices[indices1].pos);
 		XMVECTOR p2 = XMLoadFloat3(&mMesh.vertices[indices2].pos);
 
-		//p0¨p1ƒxƒNƒgƒ‹Ap0¨p2ƒxƒNƒgƒ‹‚ğŒvZ(ƒxƒNƒgƒ‹‚ÌŒ¸Z)
+		//p0â†’p1ãƒ™ã‚¯ãƒˆãƒ«ã€p0â†’p2ãƒ™ã‚¯ãƒˆãƒ«ã‚’è¨ˆç®—(ãƒ™ã‚¯ãƒˆãƒ«ã®æ¸›ç®—)
 		XMVECTOR v1 = XMVectorSubtract(p1, p0);
 		XMVECTOR v2 = XMVectorSubtract(p2, p0);
-		//ŠOÏ‚Í—¼•û‚©‚ç‚’¼‚ÈƒxƒNƒgƒ‹
+		//å¤–ç©ã¯ä¸¡æ–¹ã‹ã‚‰å‚ç›´ãªãƒ™ã‚¯ãƒˆãƒ«
 		XMVECTOR normal = XMVector3Cross(v1, v2);
-		//³‹K‰»(’·‚³‚ğ1‚É‚·‚é)
+		//æ­£è¦åŒ–(é•·ã•ã‚’1ã«ã™ã‚‹)
 		normal = XMVector3Normalize(normal);
-		//‹‚ß‚½–@ü‚ğ’¸“_ƒf[ƒ^‚É‘ã“ü
+		//æ±‚ã‚ãŸæ³•ç·šã‚’é ‚ç‚¹ãƒ‡ãƒ¼ã‚¿ã«ä»£å…¥
 		XMStoreFloat3(&mMesh.vertices[indices0].normal, normal);
 		XMStoreFloat3(&mMesh.vertices[indices1].normal, normal);
 		XMStoreFloat3(&mMesh.vertices[indices2].normal, normal);
@@ -223,7 +223,7 @@ void Model::CreateModel(const std::string modelname, bool smoothing)
 
 	if (smoothing)
 	{
-		//‚±‚±‚Å•Û‚µ‚½ƒf[ƒ^‚ğg‚Á‚ÄƒXƒ€[ƒWƒ“ƒO‚ğŒvZ
+		//ã“ã“ã§ä¿æŒã—ãŸãƒ‡ãƒ¼ã‚¿ã‚’ä½¿ã£ã¦ã‚¹ãƒ ãƒ¼ã‚¸ãƒ³ã‚°ã‚’è¨ˆç®—
 		for (auto itr = mSmoothData.begin(); itr != mSmoothData.end(); ++itr)
 		{
 			std::vector<uint16_t>& v = itr->second;
@@ -250,7 +250,7 @@ void Model::CreateModel(const std::string modelname, bool smoothing)
 
 void Model::CreateModelAssimp(const std::wstring& filename)
 {
-	//fbx“Ç‚İ‚İ‚ÌŒ`Õ
+	//fbxèª­ã¿è¾¼ã¿ã®å½¢è·¡
 	ImportSettings importSetting =
 	{
 		filename.c_str(),

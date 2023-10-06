@@ -29,7 +29,7 @@ Vector3 Vector3::GetNormalize()const {
 void Vector3::normalize()
 {
 	float leng = length();
-	//0œZ‘Îô
+	//0é™¤ç®—å¯¾ç­–
 	if (leng == 0)
 	{
 		x = 0;
@@ -62,7 +62,7 @@ Vector3 Vector3::GetCross(const Vector3& v)const
 
 Vector3 Vector3::Spline(const std::vector<Vector3>& points, float t)
 {
-	//‚Ğ‚Æ‚Â‚µ‚©“ü‚Á‚Ä‚¢‚È‚¢‚È‚ç‚»‚Ì‚Ü‚Ü•Ô‚·
+	//ã²ã¨ã¤ã—ã‹å…¥ã£ã¦ã„ãªã„ãªã‚‰ãã®ã¾ã¾è¿”ã™
 	if (points.size() <= 1) { return Vector3(points.front()); }
 	t = Util::Clamp(t, 0.f, 1.f);
 
@@ -91,11 +91,11 @@ Vector3 Vector3::Spline(const std::vector<Vector3>& points, float t)
 
 float Vector3::Radian(const Vector3& a) const
 {
-	//‚è‚­‚è‚­‚Ü‚ñ‚ÌƒRƒsƒy
+	//ã‚Šãã‚Šãã¾ã‚“ã®ã‚³ãƒ”ãƒš
 	Vector3 na = this->GetNormalize();
 	Vector3 nb = a.GetNormalize();
-	float dot = na.dot(nb); //’·‚³1“¯m‚ÌƒxƒNƒgƒ‹‚Ì“àÏ‚ÍcosƒÆ‚Æ‚È‚é...
-	return acosf(dot); //sqrt‚æ‚èd‚¢‚Ü‚Å‚ ‚é‚©‚ç‹C‚ğ•t‚¯‚½•û‚ª—Ç‚¢
+	float dot = na.dot(nb); //é•·ã•1åŒå£«ã®ãƒ™ã‚¯ãƒˆãƒ«ã®å†…ç©ã¯cosÎ¸ã¨ãªã‚‹...
+	return acosf(dot); //sqrtã‚ˆã‚Šé‡ã„ã¾ã§ã‚ã‚‹ã‹ã‚‰æ°—ã‚’ä»˜ã‘ãŸæ–¹ãŒè‰¯ã„
 }
 
 float Vector3::dot(const Vector3& v) const
@@ -147,8 +147,8 @@ Vector3& Vector3::operator/=(const float s)
 	return *this;
 }
 
-//Vector2 ƒNƒ‰ƒX‚É‘®‚³‚È‚¢ŠÖ”ŒQ
-//“ñ€‰‰Zq
+//Vector2 ã‚¯ãƒ©ã‚¹ã«å±ã•ãªã„é–¢æ•°ç¾¤
+//äºŒé …æ¼”ç®—å­
 const Vector3 operator+(const Vector3& v1, const Vector3& v2)
 {
 	Vector3 temp(v1);

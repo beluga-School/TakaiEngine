@@ -9,12 +9,12 @@
 #include "DirectXInit.h"
 #include <vector>
 
-//’¸“_ƒf[ƒ^\‘¢‘Ì
+//é ‚ç‚¹ãƒ‡ãƒ¼ã‚¿æ§‹é€ ä½“
 struct Vertex
 {
-	DirectX::XMFLOAT3 pos;	//xyzÀ•W
-	DirectX::XMFLOAT3 normal;	//–@üƒxƒNƒgƒ‹
-	DirectX::XMFLOAT2 uv;	//uvÀ•W
+	DirectX::XMFLOAT3 pos;	//xyzåº§æ¨™
+	DirectX::XMFLOAT3 normal;	//æ³•ç·šãƒ™ã‚¯ãƒˆãƒ«
+	DirectX::XMFLOAT2 uv;	//uvåº§æ¨™
 };
 
 class VertexData
@@ -23,7 +23,7 @@ public:
 	//UINT sizeVB;
 	D3D12_RESOURCE_DESC mResDesc{};
 	D3D12_INDEX_BUFFER_VIEW mIbView{};
-	//’¸“_ƒoƒbƒtƒ@ƒrƒ…[‚Ìì¬
+	//é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ãƒ“ãƒ¥ãƒ¼ã®ä½œæˆ
 	D3D12_VERTEX_BUFFER_VIEW mVbView{};
 
 	void CreateVertex(const std::vector<Vertex> &vertices,const std::vector<uint16_t> &indices);

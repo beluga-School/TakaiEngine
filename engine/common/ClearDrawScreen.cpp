@@ -13,42 +13,42 @@ void CreateDepthView()
 
 	D3D12_RESOURCE_DESC depthResourceDesc{};
 	depthResourceDesc.Dimension = D3D12_RESOURCE_DIMENSION_TEXTURE2D;
-	depthResourceDesc.Width = Util::WIN_WIDTH;	//ƒŒƒ“ƒ_[ƒ^[ƒQƒbƒg‚É‡‚í‚¹‚é
-	depthResourceDesc.Height = Util::WIN_HEIGHT;	//ƒŒƒ“ƒ_[ƒ^[ƒQƒbƒg‚É‡‚í‚¹‚é
+	depthResourceDesc.Width = Util::WIN_WIDTH;	//ãƒ¬ãƒ³ãƒ€ãƒ¼ã‚¿ãƒ¼ã‚²ãƒƒãƒˆã«åˆã‚ã›ã‚‹
+	depthResourceDesc.Height = Util::WIN_HEIGHT;	//ãƒ¬ãƒ³ãƒ€ãƒ¼ã‚¿ãƒ¼ã‚²ãƒƒãƒˆã«åˆã‚ã›ã‚‹
 	depthResourceDesc.DepthOrArraySize = 1;
-	depthResourceDesc.Format = DXGI_FORMAT_D32_FLOAT;	//[“x’lƒtƒH[ƒ}ƒbƒg
+	depthResourceDesc.Format = DXGI_FORMAT_D32_FLOAT;	//æ·±åº¦å€¤ãƒ•ã‚©ãƒ¼ãƒžãƒƒãƒˆ
 	depthResourceDesc.SampleDesc.Count = 1;
 	depthResourceDesc.Flags = D3D12_RESOURCE_FLAG_ALLOW_DEPTH_STENCIL;
 
-	//[“x’l—pƒq[ƒvƒvƒƒpƒeƒB
+	//æ·±åº¦å€¤ç”¨ãƒ’ãƒ¼ãƒ—ãƒ—ãƒ­ãƒ‘ãƒ†ã‚£
 	D3D12_HEAP_PROPERTIES depthHeapProp{};
 	depthHeapProp.Type = D3D12_HEAP_TYPE_DEFAULT;
-	//[“x’l‚ÌƒNƒŠƒAÝ’è
+	//æ·±åº¦å€¤ã®ã‚¯ãƒªã‚¢è¨­å®š
 	D3D12_CLEAR_VALUE depthClearValue{};
-	depthClearValue.DepthStencil.Depth = 1.0f;	//[“x’l1.0f(Å‘å’l)‚ÅƒNƒŠƒA
-	depthClearValue.Format = DXGI_FORMAT_D32_FLOAT;	//[“x’lƒtƒH[ƒ}ƒbƒg
+	depthClearValue.DepthStencil.Depth = 1.0f;	//æ·±åº¦å€¤1.0f(æœ€å¤§å€¤)ã§ã‚¯ãƒªã‚¢
+	depthClearValue.Format = DXGI_FORMAT_D32_FLOAT;	//æ·±åº¦å€¤ãƒ•ã‚©ãƒ¼ãƒžãƒƒãƒˆ
 
-	//ƒŠƒ\[ƒX¶¬
+	//ãƒªã‚½ãƒ¼ã‚¹ç”Ÿæˆ
 	sResult = dx12->mDevice->CreateCommittedResource(
 		&depthHeapProp,
 		D3D12_HEAP_FLAG_NONE,
 		&depthResourceDesc,
-		D3D12_RESOURCE_STATE_DEPTH_WRITE,	//[“x’l‘‚«ž‚Ý‚ÉŽg—p
+		D3D12_RESOURCE_STATE_DEPTH_WRITE,	//æ·±åº¦å€¤æ›¸ãè¾¼ã¿ã«ä½¿ç”¨
 		&depthClearValue,
 		IID_PPV_ARGS(&screen->depthBuff));
 
-	//[“xƒrƒ…[—pƒfƒXƒNƒŠƒvƒ^ƒq[ƒvì¬
+	//æ·±åº¦ãƒ“ãƒ¥ãƒ¼ç”¨ãƒ‡ã‚¹ã‚¯ãƒªãƒ—ã‚¿ãƒ’ãƒ¼ãƒ—ä½œæˆ
 	D3D12_DESCRIPTOR_HEAP_DESC dsvHeapDesc{};
-	dsvHeapDesc.NumDescriptors = 1;	//[“xƒrƒ…[‚Í1‚Â
-	dsvHeapDesc.Type = D3D12_DESCRIPTOR_HEAP_TYPE_DSV;	//ƒfƒvƒXƒXƒeƒ“ƒVƒ‹ƒrƒ…[
+	dsvHeapDesc.NumDescriptors = 1;	//æ·±åº¦ãƒ“ãƒ¥ãƒ¼ã¯1ã¤
+	dsvHeapDesc.Type = D3D12_DESCRIPTOR_HEAP_TYPE_DSV;	//ãƒ‡ãƒ—ã‚¹ã‚¹ãƒ†ãƒ³ã‚·ãƒ«ãƒ“ãƒ¥ãƒ¼
 	
 	sResult = dx12->mDevice->CreateDescriptorHeap(&dsvHeapDesc, IID_PPV_ARGS(&screen->dsvHeap));
 
 	assert(SUCCEEDED(sResult));
 
-	//[“xƒrƒ…[ì¬
+	//æ·±åº¦ãƒ“ãƒ¥ãƒ¼ä½œæˆ
 	D3D12_DEPTH_STENCIL_VIEW_DESC dsvDesc = {};
-	dsvDesc.Format = DXGI_FORMAT_D32_FLOAT;//[“x’lƒtƒH[ƒ}ƒbƒg
+	dsvDesc.Format = DXGI_FORMAT_D32_FLOAT;//æ·±åº¦å€¤ãƒ•ã‚©ãƒ¼ãƒžãƒƒãƒˆ
 	dsvDesc.ViewDimension = D3D12_DSV_DIMENSION_TEXTURE2D;
 	dx12->mDevice->CreateDepthStencilView(
 		screen->depthBuff.Get(),
@@ -65,22 +65,22 @@ void ClearDrawScreen()
 
 	UINT bbIndex = dx12->mSwapChain->GetCurrentBackBufferIndex();
 
-	//1.ƒŠƒ\[ƒXƒoƒŠƒA‚Å‘‚«ž‚Ý‰»‚É•ÏX
+	//1.ãƒªã‚½ãƒ¼ã‚¹ãƒãƒªã‚¢ã§æ›¸ãè¾¼ã¿åŒ–ã«å¤‰æ›´
 	D3D12_RESOURCE_BARRIER barrierDesc{};
-	barrierDesc.Transition.pResource = dx12->mBackBuffers[bbIndex].Get();	//ƒoƒbƒNƒoƒbƒtƒ@‚ðŽw’è
-	barrierDesc.Transition.StateBefore = D3D12_RESOURCE_STATE_PRESENT;	//•\Ž¦ó‘Ô‚©‚ç
-	barrierDesc.Transition.StateAfter = D3D12_RESOURCE_STATE_RENDER_TARGET;		//•`‰æó‘Ô‚Ö
+	barrierDesc.Transition.pResource = dx12->mBackBuffers[bbIndex].Get();	//ãƒãƒƒã‚¯ãƒãƒƒãƒ•ã‚¡ã‚’æŒ‡å®š
+	barrierDesc.Transition.StateBefore = D3D12_RESOURCE_STATE_PRESENT;	//è¡¨ç¤ºçŠ¶æ…‹ã‹ã‚‰
+	barrierDesc.Transition.StateAfter = D3D12_RESOURCE_STATE_RENDER_TARGET;		//æç”»çŠ¶æ…‹ã¸
 	dx12->mCmdList->ResourceBarrier(1, &barrierDesc);
 	
-	//2.•`‰ææ‚Ì•ÏX
-	//ƒŒƒ“ƒ_[ƒ^[ƒQƒbƒgƒrƒ…[‚Ìƒnƒ“ƒhƒ‹‚ðŽæ“¾
+	//2.æç”»å…ˆã®å¤‰æ›´
+	//ãƒ¬ãƒ³ãƒ€ãƒ¼ã‚¿ãƒ¼ã‚²ãƒƒãƒˆãƒ“ãƒ¥ãƒ¼ã®ãƒãƒ³ãƒ‰ãƒ«ã‚’å–å¾—
 	D3D12_CPU_DESCRIPTOR_HANDLE rtvHandle = dx12->mRtvHeap->GetCPUDescriptorHandleForHeapStart();
 	rtvHandle.ptr += bbIndex * static_cast<UINT>(dx12->mDevice->GetDescriptorHandleIncrementSize(dx12->mRtvHeapDesc.Type));
 
 	D3D12_CPU_DESCRIPTOR_HANDLE dsvHandle = screen->dsvHeap->GetCPUDescriptorHandleForHeapStart();
 	dx12->mCmdList->OMSetRenderTargets(1, &rtvHandle, false, &dsvHandle);
 
-	//3.‰æ–ÊƒNƒŠƒA
+	//3.ç”»é¢ã‚¯ãƒªã‚¢
 	dx12->mCmdList->ClearRenderTargetView(rtvHandle, clearColor, 0, nullptr);
 	dx12->mCmdList->ClearDepthStencilView(dsvHandle, D3D12_CLEAR_FLAG_DEPTH, 1.0f, 0, 0, nullptr);
 
@@ -97,15 +97,15 @@ void PreDraw()
 	viewport.TopLeftY = 0;
 	viewport.MinDepth = 0.0f;
 	viewport.MaxDepth = 1.0f;
-	//ƒrƒ…[ƒ|[ƒgÝ’èƒRƒ}ƒ“ƒh‚ðAƒRƒ}ƒ“ƒhƒŠƒXƒg‚ÉÏ‚Þ
+	//ãƒ“ãƒ¥ãƒ¼ãƒãƒ¼ãƒˆè¨­å®šã‚³ãƒžãƒ³ãƒ‰ã‚’ã€ã‚³ãƒžãƒ³ãƒ‰ãƒªã‚¹ãƒˆã«ç©ã‚€
 	dx12->mCmdList->RSSetViewports(1, &viewport);
 
 	D3D12_RECT scissorRect{};
-	scissorRect.left = 0;									//Ø‚è”²‚«À•W¶
-	scissorRect.right = scissorRect.left + Util::WIN_WIDTH;	//Ø‚è”²‚«À•W‰E
-	scissorRect.top = 0;									//Ø‚è”²‚«À•Wã
-	scissorRect.bottom = scissorRect.top + Util::WIN_HEIGHT;	//Ø‚è”²‚«À•W‰º
-	//ƒVƒU[‹éŒ`Ý’èƒRƒ}ƒ“ƒh‚ðAƒRƒ}ƒ“ƒhƒŠƒXƒg‚ÉÏ‚Þ
+	scissorRect.left = 0;									//åˆ‡ã‚ŠæŠœãåº§æ¨™å·¦
+	scissorRect.right = scissorRect.left + Util::WIN_WIDTH;	//åˆ‡ã‚ŠæŠœãåº§æ¨™å³
+	scissorRect.top = 0;									//åˆ‡ã‚ŠæŠœãåº§æ¨™ä¸Š
+	scissorRect.bottom = scissorRect.top + Util::WIN_HEIGHT;	//åˆ‡ã‚ŠæŠœãåº§æ¨™ä¸‹
+	//ã‚·ã‚¶ãƒ¼çŸ©å½¢è¨­å®šã‚³ãƒžãƒ³ãƒ‰ã‚’ã€ã‚³ãƒžãƒ³ãƒ‰ãƒªã‚¹ãƒˆã«ç©ã‚€
 	dx12->mCmdList->RSSetScissorRects(1, &scissorRect);
 }
 
@@ -114,15 +114,15 @@ void BasicObjectPreDraw(const PipelineSet& objectPipelineSet, bool useLight)
 	DirectX12* dx12 = DirectX12::Get();
 	TextureManager* texM = TextureManager::Get();
 
-	//ƒpƒCƒvƒ‰ƒCƒ“ƒXƒe[ƒg‚Æƒ‹[ƒgƒVƒOƒlƒ`ƒƒ‚ÌÝ’èƒRƒ}ƒ“ƒh
-	//ƒXƒvƒ‰ƒCƒg‚¶‚á‚È‚¢•û
+	//ãƒ‘ã‚¤ãƒ—ãƒ©ã‚¤ãƒ³ã‚¹ãƒ†ãƒ¼ãƒˆã¨ãƒ«ãƒ¼ãƒˆã‚·ã‚°ãƒãƒãƒ£ã®è¨­å®šã‚³ãƒžãƒ³ãƒ‰
+	//ã‚¹ãƒ—ãƒ©ã‚¤ãƒˆã˜ã‚ƒãªã„æ–¹
 	dx12->mCmdList->SetPipelineState(objectPipelineSet.mPipelinestate.Get());
 	dx12->mCmdList->SetGraphicsRootSignature(objectPipelineSet.mRootsignature.Get());
 
-	//ƒvƒŠƒ~ƒeƒBƒuŒ`ó‚ÌÝ’èƒRƒ}ƒ“ƒh
+	//ãƒ—ãƒªãƒŸãƒ†ã‚£ãƒ–å½¢çŠ¶ã®è¨­å®šã‚³ãƒžãƒ³ãƒ‰
 	dx12->mCmdList->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 
-	//SRVƒq[ƒv‚ÌÝ’èƒRƒ}ƒ“ƒh
+	//SRVãƒ’ãƒ¼ãƒ—ã®è¨­å®šã‚³ãƒžãƒ³ãƒ‰
 	dx12->mCmdList->SetDescriptorHeaps(1, texM->mSrvHeap.GetAddressOf());
 
 	if (useLight)
@@ -143,25 +143,25 @@ void GeometryObjectPreDraw(const PipelineSet& geometryPipelineSet)
 	viewport.TopLeftY = 0;
 	viewport.MinDepth = 0.0f;
 	viewport.MaxDepth = 1.0f;
-	//ƒrƒ…[ƒ|[ƒgÝ’èƒRƒ}ƒ“ƒh‚ðAƒRƒ}ƒ“ƒhƒŠƒXƒg‚ÉÏ‚Þ
+	//ãƒ“ãƒ¥ãƒ¼ãƒãƒ¼ãƒˆè¨­å®šã‚³ãƒžãƒ³ãƒ‰ã‚’ã€ã‚³ãƒžãƒ³ãƒ‰ãƒªã‚¹ãƒˆã«ç©ã‚€
 	dx12->mCmdList->RSSetViewports(1, &viewport);
 
 	D3D12_RECT scissorRect{};
-	scissorRect.left = 0;									//Ø‚è”²‚«À•W¶
-	scissorRect.right = scissorRect.left + Util::WIN_WIDTH;	//Ø‚è”²‚«À•W‰E
-	scissorRect.top = 0;									//Ø‚è”²‚«À•Wã
-	scissorRect.bottom = scissorRect.top + Util::WIN_HEIGHT;	//Ø‚è”²‚«À•W‰º
-	//ƒVƒU[‹éŒ`Ý’èƒRƒ}ƒ“ƒh‚ðAƒRƒ}ƒ“ƒhƒŠƒXƒg‚ÉÏ‚Þ
+	scissorRect.left = 0;									//åˆ‡ã‚ŠæŠœãåº§æ¨™å·¦
+	scissorRect.right = scissorRect.left + Util::WIN_WIDTH;	//åˆ‡ã‚ŠæŠœãåº§æ¨™å³
+	scissorRect.top = 0;									//åˆ‡ã‚ŠæŠœãåº§æ¨™ä¸Š
+	scissorRect.bottom = scissorRect.top + Util::WIN_HEIGHT;	//åˆ‡ã‚ŠæŠœãåº§æ¨™ä¸‹
+	//ã‚·ã‚¶ãƒ¼çŸ©å½¢è¨­å®šã‚³ãƒžãƒ³ãƒ‰ã‚’ã€ã‚³ãƒžãƒ³ãƒ‰ãƒªã‚¹ãƒˆã«ç©ã‚€
 	dx12->mCmdList->RSSetScissorRects(1, &scissorRect);
 
-	//ƒpƒCƒvƒ‰ƒCƒ“ƒXƒe[ƒg‚Æƒ‹[ƒgƒVƒOƒlƒ`ƒƒ‚ÌÝ’èƒRƒ}ƒ“ƒh
-	//ƒXƒvƒ‰ƒCƒg‚¶‚á‚È‚¢•û
+	//ãƒ‘ã‚¤ãƒ—ãƒ©ã‚¤ãƒ³ã‚¹ãƒ†ãƒ¼ãƒˆã¨ãƒ«ãƒ¼ãƒˆã‚·ã‚°ãƒãƒãƒ£ã®è¨­å®šã‚³ãƒžãƒ³ãƒ‰
+	//ã‚¹ãƒ—ãƒ©ã‚¤ãƒˆã˜ã‚ƒãªã„æ–¹
 	dx12->mCmdList->SetPipelineState(geometryPipelineSet.mPipelinestate.Get());
 	dx12->mCmdList->SetGraphicsRootSignature(geometryPipelineSet.mRootsignature.Get());
 
 	dx12->mCmdList->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_POINTLIST);
 
-	//SRVƒq[ƒv‚ÌÝ’èƒRƒ}ƒ“ƒh
+	//SRVãƒ’ãƒ¼ãƒ—ã®è¨­å®šã‚³ãƒžãƒ³ãƒ‰
 	dx12->mCmdList->SetDescriptorHeaps(1, texM->mSrvHeap.GetAddressOf());
 }
 
@@ -171,26 +171,26 @@ void PostDraw()
 
 	UINT bbIndex = dx12->mSwapChain->GetCurrentBackBufferIndex();
 
-	//5.ƒŠƒ\[ƒXƒoƒŠƒA‚ð–ß‚·
+	//5.ãƒªã‚½ãƒ¼ã‚¹ãƒãƒªã‚¢ã‚’æˆ»ã™
 	D3D12_RESOURCE_BARRIER barrierDesc{};
-	barrierDesc.Transition.pResource = dx12->mBackBuffers[bbIndex].Get();	//ƒoƒbƒNƒoƒbƒtƒ@‚ðŽw’è
-	barrierDesc.Transition.StateBefore = D3D12_RESOURCE_STATE_RENDER_TARGET;	//•`‰æó‘Ô‚©‚ç
-	barrierDesc.Transition.StateAfter = D3D12_RESOURCE_STATE_PRESENT;	//•\Ž¦ó‘Ô‚Ö
+	barrierDesc.Transition.pResource = dx12->mBackBuffers[bbIndex].Get();	//ãƒãƒƒã‚¯ãƒãƒƒãƒ•ã‚¡ã‚’æŒ‡å®š
+	barrierDesc.Transition.StateBefore = D3D12_RESOURCE_STATE_RENDER_TARGET;	//æç”»çŠ¶æ…‹ã‹ã‚‰
+	barrierDesc.Transition.StateAfter = D3D12_RESOURCE_STATE_PRESENT;	//è¡¨ç¤ºçŠ¶æ…‹ã¸
 	dx12->mCmdList->ResourceBarrier(1, &barrierDesc);
 
-	//–½—ß‚ÌƒNƒ[ƒY
+	//å‘½ä»¤ã®ã‚¯ãƒ­ãƒ¼ã‚º
 	sResult = dx12->mCmdList->Close();
 	assert(SUCCEEDED(sResult));
 
-	//ƒRƒ}ƒ“ƒhƒŠƒXƒg‚ÌŽÀs
+	//ã‚³ãƒžãƒ³ãƒ‰ãƒªã‚¹ãƒˆã®å®Ÿè¡Œ
 	ID3D12CommandList* commandLists[] = { dx12->mCmdList.Get() };
 	dx12->mCmdQueue->ExecuteCommandLists(1, commandLists);
 
-	//‰æ–Ê‚É•\Ž¦‚·‚éƒoƒbƒtƒ@‚ðƒtƒŠƒbƒv(— •\‚Ì“ü‚ê‘Ö‚¦)
+	//ç”»é¢ã«è¡¨ç¤ºã™ã‚‹ãƒãƒƒãƒ•ã‚¡ã‚’ãƒ•ãƒªãƒƒãƒ—(è£è¡¨ã®å…¥ã‚Œæ›¿ãˆ)
 	sResult = dx12->mSwapChain->Present(1, 0);
 	assert(SUCCEEDED(sResult));
 
-	//ƒRƒ}ƒ“ƒh‚ÌŽÀsŠ®—¹‚ð‘Ò‚Â
+	//ã‚³ãƒžãƒ³ãƒ‰ã®å®Ÿè¡Œå®Œäº†ã‚’å¾…ã¤
 	dx12->mCmdQueue->Signal(dx12->mFence.Get(), ++dx12->mFenceVal);
 	if (dx12->mFence->GetCompletedValue() != dx12->mFenceVal) {
 		HANDLE event = CreateEvent(nullptr, false, false, nullptr);
@@ -199,11 +199,11 @@ void PostDraw()
 		CloseHandle(event);
 	}
 
-	//ƒLƒ…[‚ðƒNƒŠƒA
+	//ã‚­ãƒ¥ãƒ¼ã‚’ã‚¯ãƒªã‚¢
 	sResult = dx12->mCommandAllocator->Reset();
 	assert(SUCCEEDED(sResult));
 
-	//Ä‚ÑƒRƒ}ƒ“ƒhƒŠƒXƒg‚ð’™‚ß‚é€”õ
+	//å†ã³ã‚³ãƒžãƒ³ãƒ‰ãƒªã‚¹ãƒˆã‚’è²¯ã‚ã‚‹æº–å‚™
 	sResult = dx12->mCmdList->Reset(dx12->mCommandAllocator.Get(), nullptr);
 	assert(SUCCEEDED(sResult));
 }

@@ -6,7 +6,7 @@
 #include <iostream>
 #include <memory>
 
-//©•ª‚ÅƒNƒ‰ƒX‰»‚µ‚½‚â‚Â
+//è‡ªåˆ†ã§ã‚¯ãƒ©ã‚¹åŒ–ã—ãŸã‚„ã¤
 #include "WinAPI.h"
 #include "TimeManager.h"
 
@@ -42,23 +42,23 @@
 #include "ShaderTestScene.h"
 #include "TitleScene.h"
 
-//–½–¼‹K‘¥‚ÍˆÈ‰º‚Ì’Ê‚è
-//ƒƒ“ƒo•Ï”->è‘O‚Ém, m‚ÌŸ‚Í‘å•¶š(—á:mHoge)
-//ƒXƒ^ƒeƒBƒbƒN•Ï”->è‘O‚És, s‚ÌŸ‚Í‘å•¶š(—á:sHoge)
-//’è”->‘S•”‘å•¶šA‹æ•ª‚¯‚µ‚½‚¢‚Æ‚«‚Í_‚ğ•t‚¯‚é(—á:HOGE_HOGE_DANCE)
-//‚»‚Ì‘¼(namespace“à‚È‚Ç)->•’Ê‚ÌƒLƒƒƒƒ‹ƒP[ƒX
+//å‘½åè¦å‰‡ã¯ä»¥ä¸‹ã®é€šã‚Š
+//ãƒ¡ãƒ³ãƒå¤‰æ•°->æ‰‹å‰ã«m, mã®æ¬¡ã¯å¤§æ–‡å­—(ä¾‹:mHoge)
+//ã‚¹ã‚¿ãƒ†ã‚£ãƒƒã‚¯å¤‰æ•°->æ‰‹å‰ã«s, sã®æ¬¡ã¯å¤§æ–‡å­—(ä¾‹:sHoge)
+//å®šæ•°->å…¨éƒ¨å¤§æ–‡å­—ã€åŒºåˆ†ã‘ã—ãŸã„ã¨ãã¯_ã‚’ä»˜ã‘ã‚‹(ä¾‹:HOGE_HOGE_DANCE)
+//ãã®ä»–(namespaceå†…ãªã©)->æ™®é€šã®ã‚­ãƒ£ãƒ¡ãƒ«ã‚±ãƒ¼ã‚¹
 
-//windowsƒAƒvƒŠ‚Å‚ÌƒGƒ“ƒgƒŠ[ƒ|ƒCƒ“ƒg(mainŠÖ”)
+//windowsã‚¢ãƒ—ãƒªã§ã®ã‚¨ãƒ³ãƒˆãƒªãƒ¼ãƒã‚¤ãƒ³ãƒˆ(mainé–¢æ•°)
 int32_t WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_  HINSTANCE hPrevInstance, _In_ LPSTR lpCmdLine, _In_ int32_t nShowCmd)
 {
-	///---DirectX‰Šú‰»ˆ—@‚±‚±‚©‚ç---///
+	///---DirectXåˆæœŸåŒ–å‡¦ç†ã€€ã“ã“ã‹ã‚‰---///
 	
 #ifdef  _DEBUG
-//ƒfƒoƒbƒOƒŒƒCƒ„[‚ğƒIƒ“‚É
+//ãƒ‡ãƒãƒƒã‚°ãƒ¬ã‚¤ãƒ¤ãƒ¼ã‚’ã‚ªãƒ³ã«
 	Microsoft::WRL::ComPtr<ID3D12Debug1> debugController;
 	if (SUCCEEDED(D3D12GetDebugInterface(IID_PPV_ARGS(&debugController)))) {
 		debugController->EnableDebugLayer();
-		//‚±‚ê‚æ‚è‘O‚ÉƒfƒoƒCƒX‚ğ¶¬‚·‚é‚ÆƒfƒoƒCƒX‚ªÁ‚³‚ê‚é‚ç‚µ‚¢
+		//ã“ã‚Œã‚ˆã‚Šå‰ã«ãƒ‡ãƒã‚¤ã‚¹ã‚’ç”Ÿæˆã™ã‚‹ã¨ãƒ‡ãƒã‚¤ã‚¹ãŒæ¶ˆã•ã‚Œã‚‹ã‚‰ã—ã„
 		debugController->SetEnableGPUBasedValidation(TRUE);
 	}
 
@@ -70,9 +70,9 @@ int32_t WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_  HINSTANCE hPrevInstan
 #ifdef  _DEBUG
 	ID3D12InfoQueue* infoQueue;
 	if (SUCCEEDED(DX12->mDevice->QueryInterface(IID_PPV_ARGS(&infoQueue)))) {
-		infoQueue->SetBreakOnSeverity(D3D12_MESSAGE_SEVERITY_CORRUPTION, true);	//ƒ„ƒoƒCƒGƒ‰[‚É‚Æ‚Ü‚Æ
-		infoQueue->SetBreakOnSeverity(D3D12_MESSAGE_SEVERITY_WARNING,true);		//ƒ[ƒjƒ“ƒO‚à‚Æ‚Ü‚Æ
-		infoQueue->SetBreakOnSeverity(D3D12_MESSAGE_SEVERITY_ERROR,true);		//ƒGƒ‰[‚É‚Æ‚Ü‚Æ
+		infoQueue->SetBreakOnSeverity(D3D12_MESSAGE_SEVERITY_CORRUPTION, true);	//ãƒ¤ãƒã‚¤ã‚¨ãƒ©ãƒ¼æ™‚ã«ã¨ã¾ã¨
+		infoQueue->SetBreakOnSeverity(D3D12_MESSAGE_SEVERITY_WARNING,true);		//ãƒ¯ãƒ¼ãƒ‹ãƒ³ã‚°æ™‚ã‚‚ã¨ã¾ã¨
+		infoQueue->SetBreakOnSeverity(D3D12_MESSAGE_SEVERITY_ERROR,true);		//ã‚¨ãƒ©ãƒ¼æ™‚ã«ã¨ã¾ã¨
 		infoQueue->Release();
 	}
 #endif  _DEBUG
@@ -81,75 +81,75 @@ int32_t WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_  HINSTANCE hPrevInstan
 	Input::Mouse::Initialize();
 	Input::Pad::Initialize();
 
-	///---DirectX‰Šú‰»ˆ—@‚±‚±‚Ü‚Å---///
+	///---DirectXåˆæœŸåŒ–å‡¦ç†ã€€ã“ã“ã¾ã§---///
 
 	TimeManager::Init();
 
-#pragma region •`‰æ‰Šú‰»ˆ—
+#pragma region æç”»åˆæœŸåŒ–å‡¦ç†
 
-	//depthŠÖ˜A‚Ìˆ—
+	//depthé–¢é€£ã®å‡¦ç†
 	CreateDepthView();
 
-	//ƒeƒNƒXƒ`ƒƒ‚Ì“Ç‚İ‚İ
+	//ãƒ†ã‚¯ã‚¹ãƒãƒ£ã®èª­ã¿è¾¼ã¿
 	TextureManager* tManager = TextureManager::Get();
 	tManager->Initialize();
 	tManager->PreLoad();
 
-	//imgui‚Ì‰Šú‰»
+	//imguiã®åˆæœŸåŒ–
 	ImguiManager *imguiManager = ImguiManager::GetInstance();
 	imguiManager->Initialize();
 
-	//ƒ‚ƒfƒ‹‚Ì“Ç‚İ‚İ
+	//ãƒ¢ãƒ‡ãƒ«ã®èª­ã¿è¾¼ã¿
 	ModelManager::Get()->PreLoad();
 
-	//ƒ‰ƒCƒeƒBƒ“ƒO‚Ì‰Šú‰»
+	//ãƒ©ã‚¤ãƒ†ã‚£ãƒ³ã‚°ã®åˆæœŸåŒ–
 	LightGroup::Create();
 
-	//ƒ|ƒXƒgƒGƒtƒFƒNƒg‚Ì‰Šú‰»
+	//ãƒã‚¹ãƒˆã‚¨ãƒ•ã‚§ã‚¯ãƒˆã®åˆæœŸåŒ–
 	std::unique_ptr<PostEffect> postEffect;
 	postEffect = std::make_unique<PostEffect>();
 	postEffect->Initialize();
 
-	//‰¹‚Ì‰Šú‰»
+	//éŸ³ã®åˆæœŸåŒ–
 	SoundManager* soundManager = SoundManager::Get();
 	soundManager->Initialize();
 
-	//ƒV[ƒ“Ø‚è‘Ö‚¦‰‰o‚Ì‰Šú‰»
+	//ã‚·ãƒ¼ãƒ³åˆ‡ã‚Šæ›¿ãˆæ¼”å‡ºã®åˆæœŸåŒ–
 	SceneChange::Get()->Initialize();
 
-	//ƒV[ƒ“‚Ì‰Šú‰»
+	//ã‚·ãƒ¼ãƒ³ã®åˆæœŸåŒ–
 	SceneManager *scenemanager = SceneManager::Get();
 	//scenemanager->ChangeScene<GameScene>();
 	//scenemanager->ChangeScene<ShaderTestScene>();
 	scenemanager->ChangeScene<TitleScene>();
 
-#pragma endregion •`‰æ‰Šú‰»ˆ—
+#pragma endregion æç”»åˆæœŸåŒ–å‡¦ç†
 
-	//ƒpƒCƒvƒ‰ƒCƒ“‚Ì‰Šú‰»
+	//ãƒ‘ã‚¤ãƒ—ãƒ©ã‚¤ãƒ³ã®åˆæœŸåŒ–
 	PipelineManager::Get()->Initialize();
 
 	SpriteCommon::sSpriteCommon.Initialize();
 
-	//ƒQ[ƒ€ƒ‹[ƒv
+	//ã‚²ãƒ¼ãƒ ãƒ«ãƒ¼ãƒ—
 	while (true){
 
-#pragma region ƒEƒBƒ“ƒhƒEƒƒbƒZ[ƒW
+#pragma region ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸
 		if (PeekMessage(&winApi->mMsg, nullptr, 0, 0, PM_REMOVE)) {
-			TranslateMessage(&winApi->mMsg);		//ƒL[“ü—ÍƒƒbƒZ[ƒW‚Ìˆ—
-			DispatchMessage(&winApi->mMsg);		//ƒvƒƒV[ƒWƒƒ‚ÉƒƒbƒZ[ƒW‚ğ‘—‚é
+			TranslateMessage(&winApi->mMsg);		//ã‚­ãƒ¼å…¥åŠ›ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ã®å‡¦ç†
+			DispatchMessage(&winApi->mMsg);		//ãƒ—ãƒ­ã‚·ãƒ¼ã‚¸ãƒ£ã«ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ã‚’é€ã‚‹
 		}
 
 		if (winApi->mMsg.message == WM_QUIT) {
 			break;
 		}
-#pragma endregion ƒEƒBƒ“ƒhƒEƒƒbƒZ[ƒW
+#pragma endregion ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸
 
-		///---DirectX–ˆƒtƒŒ[ƒ€ˆ— ‚±‚±‚©‚ç---///
+		///---DirectXæ¯ãƒ•ãƒ¬ãƒ¼ãƒ å‡¦ç† ã“ã“ã‹ã‚‰---///
 		ClearDrawScreen();
 
 		imguiManager->PreUpdate();
 
-		//XVˆ—
+		//æ›´æ–°å‡¦ç†
 		Input::Keyboard::Get()->Update();
 		Input::Mouse::Update();
 		Input::Pad::Update();
@@ -157,11 +157,11 @@ int32_t WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_  HINSTANCE hPrevInstan
 		scenemanager->Update();
 		postEffect->Update();
 
-		///---DirectX–ˆƒtƒŒ[ƒ€ˆ— ‚±‚±‚Ü‚Å---///
+		///---DirectXæ¯ãƒ•ãƒ¬ãƒ¼ãƒ å‡¦ç† ã“ã“ã¾ã§---///
 
-		//--4.•`‰æƒRƒ}ƒ“ƒh‚±‚±‚©‚ç--//
+		//--4.æç”»ã‚³ãƒãƒ³ãƒ‰ã“ã“ã‹ã‚‰--//
 
-#pragma region ƒ|ƒXƒgƒGƒtƒFƒNƒg‘Î‰‚Ì•`‰æ•û®
+#pragma region ãƒã‚¹ãƒˆã‚¨ãƒ•ã‚§ã‚¯ãƒˆå¯¾å¿œã®æç”»æ–¹å¼
 
 		postEffect->PreDrawScene();
 		scenemanager->Draw();
@@ -171,18 +171,18 @@ int32_t WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_  HINSTANCE hPrevInstan
 
 		postEffect->Draw();
 
-		//--4.•`‰æƒRƒ}ƒ“ƒh‚±‚±‚Ü‚Å--//
+		//--4.æç”»ã‚³ãƒãƒ³ãƒ‰ã“ã“ã¾ã§--//
 
-		//--5.‰æ–Ê“ü‚ê‚©‚¦--//
+		//--5.ç”»é¢å…¥ã‚Œã‹ãˆ--//
 		imguiManager->PreDraw();
 
 		imguiManager->Draw();
 
 		PostDraw();
 
-#pragma endregion ƒ|ƒXƒgƒGƒtƒFƒNƒg‘Î‰‚Ì•`‰æ•û®
+#pragma endregion ãƒã‚¹ãƒˆã‚¨ãƒ•ã‚§ã‚¯ãƒˆå¯¾å¿œã®æç”»æ–¹å¼
 
-#pragma region Œ³X‚Ì•`‰æ•û®
+#pragma region å…ƒã€…ã®æç”»æ–¹å¼
 		/*{
 			PreDraw();
 			scenemanager->Draw();
@@ -192,9 +192,9 @@ int32_t WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_  HINSTANCE hPrevInstan
 
 			PostDraw();
 		}*/
-#pragma region Œ³X‚Ì•`‰æ•û®
+#pragma region å…ƒã€…ã®æç”»æ–¹å¼
 
-		//--5.‰æ–Ê“ü‚ê‚©‚¦‚¨‚í‚è--//
+		//--5.ç”»é¢å…¥ã‚Œã‹ãˆãŠã‚ã‚Š--//
 
 		TimeManager::Update();
 
@@ -206,15 +206,15 @@ int32_t WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_  HINSTANCE hPrevInstan
 
 	imguiManager->Finalize();
 
-	//“ü—ÍƒfƒoƒCƒX‚Ì‰ğ•ú
+	//å…¥åŠ›ãƒ‡ãƒã‚¤ã‚¹ã®è§£æ”¾
 	Input::Mouse::Finalize();
 	Input::Keyboard::Get()->Finalize();
 
-	//‰¹ºƒf[ƒ^‚Íæ‚ÉxAudio2‚ğ‰ğ•ú‚µ‚È‚¯‚ê‚Î‚È‚ç‚È‚¢
-	//xAudio2‚Ì‰ğ•ú
+	//éŸ³å£°ãƒ‡ãƒ¼ã‚¿ã¯å…ˆã«xAudio2ã‚’è§£æ”¾ã—ãªã‘ã‚Œã°ãªã‚‰ãªã„
+	//xAudio2ã®è§£æ”¾
 	soundManager->End();
 
-	//ƒEƒBƒ“ƒhƒEƒNƒ‰ƒX‚ğ“o˜^‰ğœ
+	//ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã‚¯ãƒ©ã‚¹ã‚’ç™»éŒ²è§£é™¤
 	UnregisterClass(winApi->w.lpszClassName, winApi->w.hInstance);
 
 	return 0;

@@ -13,7 +13,7 @@ void DebugCamera::Initialize()
 
 void DebugCamera::Update()
 {
-	//ƒ}ƒEƒXŒÅ’è‚ð‰ðœ
+	//ãƒžã‚¦ã‚¹å›ºå®šã‚’è§£é™¤
 	Mouse::CurserLock(CurserLockState::UNLOCK);
 
 	mCenterVec = matWorld.ExtractAxisZ();
@@ -30,7 +30,7 @@ void DebugCamera::Update()
 	position.y += inputSide * mSideVec.y * MOVE_SPEED;
 	position.z += inputSide * mSideVec.z * MOVE_SPEED;
 	
-	//À•W‚Ì’Ç]
+	//åº§æ¨™ã®è¿½å¾“
 	Camera::sCamera->mEye = position + (mCenterVec * mRadius);
 	Camera::sCamera->mTarget = position;
 
@@ -49,13 +49,13 @@ void DebugCamera::Update()
 
 	mRadius = Util::Clamp(mRadius, 1.0f, 100.f);
 
-	//‰ñ“]‚³‚¹‚éˆ—
+	//å›žè»¢ã•ã›ã‚‹å‡¦ç†
 	if (Mouse::Down(Click::MIDDLE))
 	{
 		mVerticalRad += MathF::AngleConvRad(Mouse::GetVelocity().y);
 		mHorizontalRad += MathF::AngleConvRad(Mouse::GetVelocity().x);
 
-		//ŒÀŠE’l‚ð’´‚¦‚È‚¢ˆ—
+		//é™ç•Œå€¤ã‚’è¶…ãˆãªã„å‡¦ç†
 		if (mVerticalRad > MathF::PIf / 2 - MathF::AngleConvRad(1.0f)) mVerticalRad = MathF::PIf / 2 - MathF::AngleConvRad(1.0f);
 		if (mVerticalRad < -MathF::PIf / 2 + MathF::AngleConvRad(1.0f)) mVerticalRad = -MathF::PIf / 2 + MathF::AngleConvRad(1.0f);
 

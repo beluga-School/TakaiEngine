@@ -24,7 +24,7 @@ void TimeManager::Update()
 		return;
 	}
 
-	//ˆ—’¼‘O‚ÌŠÔ‚ğZo
+	//å‡¦ç†ç›´å‰ã®æ™‚é–“ã‚’ç®—å‡º
 	QueryPerformanceCounter(&endTime);
 
 	{
@@ -43,7 +43,7 @@ void TimeManager::Update()
 		QueryPerformanceCounter(&endTime);
 	}
 
-	//ˆ—ŠÔ‚ğŒvZ
+	//å‡¦ç†æ™‚é–“ã‚’è¨ˆç®—
 	deltaTime = (float)(endTime.QuadPart - startTime.QuadPart) / (float)nowTimeFreq.QuadPart;
 
 	if (deltaTime > 0)
@@ -51,6 +51,6 @@ void TimeManager::Update()
 		fps = (fps * 0.99f) + (0.01f / deltaTime);
 	}
 	
-	//Ÿ‚Ìˆ—’¼‘O‚ÌŠÔ‚ğ‘ã“ü
+	//æ¬¡ã®å‡¦ç†ç›´å‰ã®æ™‚é–“ã‚’ä»£å…¥
 	startTime = endTime;
 }

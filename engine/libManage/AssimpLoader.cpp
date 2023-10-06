@@ -37,7 +37,7 @@ std::wstring ToWideString(const std::string& str)
 
 bool AssimpLoader::Load(const ImportSettings& settings)
 {
-	//‘‚¢‚Ä‚È‚¢‚È‚çƒXƒLƒbƒv
+	//æ›¸ã„ã¦ãªã„ãªã‚‰ã‚¹ã‚­ãƒƒãƒ—
 	if (settings.mFILENAME == nullptr)
 	{
 		return false;
@@ -62,13 +62,13 @@ bool AssimpLoader::Load(const ImportSettings& settings)
 			
 	if (mScene == nullptr)
 	{
-		//ƒGƒ‰[‚ª‚Å‚½‚ç•\¦
+		//ã‚¨ãƒ©ãƒ¼ãŒã§ãŸã‚‰è¡¨ç¤º
 		OutputDebugStringA(importer.GetErrorString());
 		//assert(0);
 		return false;
 	}
 
-	//“Ç‚İ‚ñ‚¾ƒf[ƒ^‚ğMesh‚É•Û‘¶
+	//èª­ã¿è¾¼ã‚“ã ãƒ‡ãƒ¼ã‚¿ã‚’Meshã«ä¿å­˜
 	meshs.clear();
 	meshs.resize(mScene->mNumMeshes);
 	for (size_t i = 0; i < meshs.size(); i++)
@@ -132,7 +132,7 @@ void AssimpLoader::LoadTexture(const wchar_t* filename, Mesh& dst, const aiMater
 	aiString path;
 	if (src->Get(AI_MATKEY_TEXTURE_DIFFUSE(0), path) == AI_SUCCESS)
 	{
-		//‘Š‘ÎƒpƒX‚ÌƒeƒNƒXƒ`ƒƒ‚ğAƒtƒ@ƒCƒ‹‚ÌêŠ‚Æ‚­‚Á‚Â‚¯‚é
+		//ç›¸å¯¾ãƒ‘ã‚¹ã®ãƒ†ã‚¯ã‚¹ãƒãƒ£ã‚’ã€ãƒ•ã‚¡ã‚¤ãƒ«ã®å ´æ‰€ã¨ãã£ã¤ã‘ã‚‹
 		auto directoryPath = "Resources/" + ConvertWCharToString(filename) + "/";
 		auto wdir = ConvertStringToWChar(directoryPath);
 		

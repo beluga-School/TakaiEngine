@@ -27,52 +27,52 @@ struct ShaderName
 
 struct PipelineSet
 {
-	//ƒpƒCƒvƒ‰ƒCƒ“ƒXƒe[ƒg
+	//ãƒ‘ã‚¤ãƒ—ãƒ©ã‚¤ãƒ³ã‚¹ãƒ†ãƒ¼ãƒˆ
 	Microsoft::WRL::ComPtr<ID3D12PipelineState> mPipelinestate{};
-	//ƒ‹[ƒgƒVƒOƒlƒ`ƒƒ
+	//ãƒ«ãƒ¼ãƒˆã‚·ã‚°ãƒãƒãƒ£
 	Microsoft::WRL::ComPtr<ID3D12RootSignature> mRootsignature{};
 
-	//--İ’è—p•Ï”ŒQ(‚±‚Ì•Ï”‚ğ–‘O‚É‘‚«Š·‚¦‚Ä‚©‚çCreate()‚ğŒÄ‚Ño‚·)
-	//ƒVƒF[ƒ_[–¼
+	//--è¨­å®šç”¨å¤‰æ•°ç¾¤(ã“ã®å¤‰æ•°ã‚’äº‹å‰ã«æ›¸ãæ›ãˆã¦ã‹ã‚‰Create()ã‚’å‘¼ã³å‡ºã™)
+	//ã‚·ã‚§ãƒ¼ãƒ€ãƒ¼å
 	ShaderName vs = { "",ShaderName::ShaderType::VS };
 	ShaderName ps = { "",ShaderName::ShaderType::PS };
 	ShaderName gs = { "",ShaderName::ShaderType::GS };
 
-	//ƒOƒ‰ƒtƒBƒbƒNƒXƒpƒCƒvƒ‰ƒCƒ“İ’è
+	//ã‚°ãƒ©ãƒ•ã‚£ãƒƒã‚¯ã‚¹ãƒ‘ã‚¤ãƒ—ãƒ©ã‚¤ãƒ³è¨­å®š
 	D3D12_GRAPHICS_PIPELINE_STATE_DESC pipelineDesc{};
 
-	//ƒuƒŒƒ“ƒhİ’è
+	//ãƒ–ãƒ¬ãƒ³ãƒ‰è¨­å®š
 	D3D12_RENDER_TARGET_BLEND_DESC blenddesc;
 
-	//ƒCƒ“ƒvƒbƒgƒŒƒCƒAƒEƒg
+	//ã‚¤ãƒ³ãƒ—ãƒƒãƒˆãƒ¬ã‚¤ã‚¢ã‚¦ãƒˆ
 	std::vector<D3D12_INPUT_ELEMENT_DESC> inputLayout;
 
-	//ƒfƒXƒNƒŠƒvƒ^ƒŒƒ“ƒW
+	//ãƒ‡ã‚¹ã‚¯ãƒªãƒ—ã‚¿ãƒ¬ãƒ³ã‚¸
 	D3D12_DESCRIPTOR_RANGE descriptorRange{};
 
-	//ƒ‹[ƒgƒpƒ‰ƒ[ƒ^
+	//ãƒ«ãƒ¼ãƒˆãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿
 	std::vector<D3D12_ROOT_PARAMETER> rootParams;
 	int32_t paramSize = 2;
 
-	//ƒTƒ“ƒvƒ‰[İ’è
+	//ã‚µãƒ³ãƒ—ãƒ©ãƒ¼è¨­å®š
 	D3D12_STATIC_SAMPLER_DESC samplerDesc{};
 
-	//ƒ‹[ƒgƒVƒOƒlƒ`ƒƒİ’è
+	//ãƒ«ãƒ¼ãƒˆã‚·ã‚°ãƒãƒãƒ£è¨­å®š
 	D3D12_ROOT_SIGNATURE_DESC rootSignatureDesc{};
 
 	int32_t blendMode = ALPHA;
 
-	//¶¬‚³‚ê‚½‚çƒfƒtƒH‚Ìİ’è‚ª“ü‚é‚æ‚¤‚É
+	//ç”Ÿæˆã•ã‚ŒãŸã‚‰ãƒ‡ãƒ•ã‚©ã®è¨­å®šãŒå…¥ã‚‹ã‚ˆã†ã«
 	PipelineSet();
 
-	//İ’è‚ğŒ³‚ÉƒpƒCƒvƒ‰ƒCƒ“‚ğ¶¬
+	//è¨­å®šã‚’å…ƒã«ãƒ‘ã‚¤ãƒ—ãƒ©ã‚¤ãƒ³ã‚’ç”Ÿæˆ
 	void Create();
 };
 
 class PipelineManager
 {
 public:
-	//•¶š—ñ‚ÅƒpƒCƒvƒ‰ƒCƒ“‚ğæ“¾
+	//æ–‡å­—åˆ—ã§ãƒ‘ã‚¤ãƒ—ãƒ©ã‚¤ãƒ³ã‚’å–å¾—
 	static PipelineSet GetPipeLine(const std::string& name);
 
 	static PipelineManager* Get() {
@@ -80,70 +80,70 @@ public:
 		return &instance;
 	};
 
-	//ƒpƒCƒvƒ‰ƒCƒ“‚ğæ‚É¶¬‚µ‚Ä‚¨‚­
+	//ãƒ‘ã‚¤ãƒ—ãƒ©ã‚¤ãƒ³ã‚’å…ˆã«ç”Ÿæˆã—ã¦ãŠã
 	void Initialize();
 
 private:
 	static std::map<std::string, PipelineSet> sPipelines;
 
-	//3DƒIƒuƒWƒFƒNƒg—pƒpƒCƒvƒ‰ƒCƒ“
+	//3Dã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆç”¨ãƒ‘ã‚¤ãƒ—ãƒ©ã‚¤ãƒ³
 	void Object3DPipeLine();
 
-	//ƒXƒvƒ‰ƒCƒg—pƒpƒCƒvƒ‰ƒCƒ“
+	//ã‚¹ãƒ—ãƒ©ã‚¤ãƒˆç”¨ãƒ‘ã‚¤ãƒ—ãƒ©ã‚¤ãƒ³
 	void SpritePipeLine();
 
-	//ƒ|ƒXƒgƒGƒtƒFƒNƒgŠ|‚¯‚Ä‚È‚¢‚Æ‚«‚ÌƒpƒCƒvƒ‰ƒCƒ“
+	//ãƒã‚¹ãƒˆã‚¨ãƒ•ã‚§ã‚¯ãƒˆæ›ã‘ã¦ãªã„ã¨ãã®ãƒ‘ã‚¤ãƒ—ãƒ©ã‚¤ãƒ³
 	void NonePostEffectPipeLine();
 
-	//ƒ}ƒ‹ƒ`ƒŒƒ“ƒ_[ƒpƒCƒvƒ‰ƒCƒ“
+	//ãƒãƒ«ãƒãƒ¬ãƒ³ãƒ€ãƒ¼ãƒ‘ã‚¤ãƒ—ãƒ©ã‚¤ãƒ³
 	void MultiRenderPipeLine();
 
-	//ƒKƒEƒVƒAƒ“ƒuƒ‰[—pƒpƒCƒvƒ‰ƒCƒ“
+	//ã‚¬ã‚¦ã‚·ã‚¢ãƒ³ãƒ–ãƒ©ãƒ¼ç”¨ãƒ‘ã‚¤ãƒ—ãƒ©ã‚¤ãƒ³
 	void GaussianBlurPipeLine();
 
-	//ƒVƒtƒgƒuƒ‰[—pƒpƒCƒvƒ‰ƒCƒ“
+	//ã‚·ãƒ•ãƒˆãƒ–ãƒ©ãƒ¼ç”¨ãƒ‘ã‚¤ãƒ—ãƒ©ã‚¤ãƒ³
 	void ShiftBlurPipeLine();
 
-	//CG4•]‰¿‰Û‘è—pƒpƒCƒvƒ‰ƒCƒ“
+	//CG4è©•ä¾¡èª²é¡Œç”¨ãƒ‘ã‚¤ãƒ—ãƒ©ã‚¤ãƒ³
 	void CG4PipeLine();
 
-	//phongƒVƒF[ƒ_[
+	//phongã‚·ã‚§ãƒ¼ãƒ€ãƒ¼
 	void PhongPipeLine();
 
-	//’PFƒVƒF[ƒ_[
+	//å˜è‰²ã‚·ã‚§ãƒ¼ãƒ€ãƒ¼
 	void SingleColorPipeLine();
 
-	//ƒgƒD[ƒ“ƒVƒF[ƒ_[
+	//ãƒˆã‚¥ãƒ¼ãƒ³ã‚·ã‚§ãƒ¼ãƒ€ãƒ¼
 	void ToonPipeLine();
 	
-	//•Ç‚ª“§‚¯‚é‚Æ‚«‚ÉØ‚è‘Ö‚¦‚é—p‚ÌƒpƒCƒvƒ‰ƒCƒ“/
+	//å£ãŒé€ã‘ã‚‹ã¨ãã«åˆ‡ã‚Šæ›¿ãˆã‚‹ç”¨ã®ãƒ‘ã‚¤ãƒ—ãƒ©ã‚¤ãƒ³/
 	void ToonNoDepthWritePipeLine();
 
-	//ƒAƒEƒgƒ‰ƒCƒ“ƒVƒF[ƒ_[
+	//ã‚¢ã‚¦ãƒˆãƒ©ã‚¤ãƒ³ã‚·ã‚§ãƒ¼ãƒ€ãƒ¼
 	void OutLinePipeLine();
 
-	//ƒXƒJƒCƒh[ƒ€—p(‚È‚ñ‚Ì‰e‹¿‚àó‚¯‚È‚¢)ƒVƒF[ƒ_[
+	//ã‚¹ã‚«ã‚¤ãƒ‰ãƒ¼ãƒ ç”¨(ãªã‚“ã®å½±éŸ¿ã‚‚å—ã‘ãªã„)ã‚·ã‚§ãƒ¼ãƒ€ãƒ¼
 	void SkydomePipeLine();
 
-	//’n–Ê—pƒgƒD[ƒ“ƒVƒF[ƒ_[
+	//åœ°é¢ç”¨ãƒˆã‚¥ãƒ¼ãƒ³ã‚·ã‚§ãƒ¼ãƒ€ãƒ¼
 	void GroundToonPipeLine();
 	
-	//•Ç‚ª“§‚¯‚é‚Æ‚«‚ÉØ‚è‘Ö‚¦‚é—p‚ÌƒpƒCƒvƒ‰ƒCƒ“
+	//å£ãŒé€ã‘ã‚‹ã¨ãã«åˆ‡ã‚Šæ›¿ãˆã‚‹ç”¨ã®ãƒ‘ã‚¤ãƒ—ãƒ©ã‚¤ãƒ³
 	void GroundToonNoDepthWritePipeLine();
 
-	//ƒƒCƒ„[ƒtƒŒ[ƒ€—pƒpƒCƒvƒ‰ƒCƒ“
+	//ãƒ¯ã‚¤ãƒ¤ãƒ¼ãƒ•ãƒ¬ãƒ¼ãƒ ç”¨ãƒ‘ã‚¤ãƒ—ãƒ©ã‚¤ãƒ³
 	void WireFramePipeLine();
 
-	//ƒp[ƒŠƒ“ƒmƒCƒYÀ‘•‚Ég‚Á‚½ƒpƒCƒvƒ‰ƒCƒ“(‚Ü‚¾À‘HŒü‚¯‚¶‚á‚È‚¢	)
+	//ãƒ‘ãƒ¼ãƒªãƒ³ãƒã‚¤ã‚ºå®Ÿè£…æ™‚ã«ä½¿ã£ãŸãƒ‘ã‚¤ãƒ—ãƒ©ã‚¤ãƒ³(ã¾ã å®Ÿè·µå‘ã‘ã˜ã‚ƒãªã„	)
 	void PerlinNoisePipeLine();
 
-	//ƒeƒNƒXƒ`ƒƒƒuƒŒƒ“ƒh—pƒpƒCƒvƒ‰ƒCƒ“
+	//ãƒ†ã‚¯ã‚¹ãƒãƒ£ãƒ–ãƒ¬ãƒ³ãƒ‰ç”¨ãƒ‘ã‚¤ãƒ—ãƒ©ã‚¤ãƒ³
 	void TextureBlendPipeLine();
 
-	//ƒfƒBƒ]ƒ‹ƒu—pƒpƒCƒvƒ‰ƒCƒ“
+	//ãƒ‡ã‚£ã‚¾ãƒ«ãƒ–ç”¨ãƒ‘ã‚¤ãƒ—ãƒ©ã‚¤ãƒ³
 	void DisolvePipeLine();
 
-	//ƒp[ƒŠƒ“ƒmƒCƒY‚ğƒ|ƒXƒgƒGƒtƒFƒNƒg‚Æ‚µ‚Äg‚¤ƒpƒCƒvƒ‰ƒCƒ“
+	//ãƒ‘ãƒ¼ãƒªãƒ³ãƒã‚¤ã‚ºã‚’ãƒã‚¹ãƒˆã‚¨ãƒ•ã‚§ã‚¯ãƒˆã¨ã—ã¦ä½¿ã†ãƒ‘ã‚¤ãƒ—ãƒ©ã‚¤ãƒ³
 	void PerlinNoisePostEffectPipeLine();
 
 	PipelineManager(){};

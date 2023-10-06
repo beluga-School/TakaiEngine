@@ -3,84 +3,84 @@
 
 void VertexData::CreateVertex(const std::vector<Vertex> &vertices,const std::vector<uint16_t> &indices)
 {
-	//’¸“_ƒf[ƒ^‘S‘Ì‚ÌƒTƒCƒY = ’¸“_ƒf[ƒ^ˆê‚Â•ª‚ÌƒTƒCƒY * ’¸“_ƒf[ƒ^‚Ì—v‘f”
+	//é ‚ç‚¹ãƒ‡ãƒ¼ã‚¿å…¨ä½“ã®ã‚µã‚¤ã‚º = é ‚ç‚¹ãƒ‡ãƒ¼ã‚¿ä¸€ã¤åˆ†ã®ã‚µã‚¤ã‚º * é ‚ç‚¹ãƒ‡ãƒ¼ã‚¿ã®è¦ç´ æ•°
 	UINT sizeVB = static_cast<UINT>(sizeof(vertices[0]) * vertices.size());
 
-	//’¸“_ƒoƒbƒtƒ@‚Ìİ’è
-	D3D12_HEAP_PROPERTIES heapProp{};		//ƒq[ƒvİ’è
-	heapProp.Type = D3D12_HEAP_TYPE_UPLOAD;	//GPU‚Ö‚Ì“]‘——p
+	//é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ã®è¨­å®š
+	D3D12_HEAP_PROPERTIES heapProp{};		//ãƒ’ãƒ¼ãƒ—è¨­å®š
+	heapProp.Type = D3D12_HEAP_TYPE_UPLOAD;	//GPUã¸ã®è»¢é€ç”¨
 
-	//ƒŠƒ\[ƒXİ’è
+	//ãƒªã‚½ãƒ¼ã‚¹è¨­å®š
 	mResDesc.Dimension = D3D12_RESOURCE_DIMENSION_BUFFER;
-	mResDesc.Width = sizeVB;	//’¸“_ƒf[ƒ^‘S‘Ì‚ÌƒTƒCƒY
+	mResDesc.Width = sizeVB;	//é ‚ç‚¹ãƒ‡ãƒ¼ã‚¿å…¨ä½“ã®ã‚µã‚¤ã‚º
 	mResDesc.Height = 1;
 	mResDesc.DepthOrArraySize = 1;
 	mResDesc.MipLevels = 1;
 	mResDesc.SampleDesc.Count = 1;
 	mResDesc.Layout = D3D12_TEXTURE_LAYOUT_ROW_MAJOR;
 
-	//’¸“_ƒoƒbƒtƒ@‚Ì¶¬
-	//ComPtr‚É‚µ‚½‚çƒ_ƒ‚¾‚Á‚½ ƒ}ƒbƒvˆ—‚Ég‚Á‚Ä‚é‚©‚çH
+	//é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ã®ç”Ÿæˆ
+	//ComPtrã«ã—ãŸã‚‰ãƒ€ãƒ¡ã ã£ãŸ ãƒãƒƒãƒ—å‡¦ç†ã«ä½¿ã£ã¦ã‚‹ã‹ã‚‰ï¼Ÿ
 	sResult = DirectX12::Get()->mDevice->CreateCommittedResource(
-		&heapProp,	//ƒq[ƒvİ’è
+		&heapProp,	//ãƒ’ãƒ¼ãƒ—è¨­å®š
 		D3D12_HEAP_FLAG_NONE,
-		&mResDesc,	//ƒŠƒ\[ƒXİ’è
+		&mResDesc,	//ãƒªã‚½ãƒ¼ã‚¹è¨­å®š
 		D3D12_RESOURCE_STATE_GENERIC_READ,
 		nullptr,
 		IID_PPV_ARGS(mVertBuff.GetAddressOf()));
 	assert(SUCCEEDED(sResult));
 
-	//GPUó‚Ìƒoƒbƒtƒ@‚É‘Î‰‚µ‚½‰¼‘zƒƒ‚ƒŠ(ƒƒCƒ“ƒƒ‚ƒŠã)‚ğæ“¾
+	//GPUçŠ¶ã®ãƒãƒƒãƒ•ã‚¡ã«å¯¾å¿œã—ãŸä»®æƒ³ãƒ¡ãƒ¢ãƒª(ãƒ¡ã‚¤ãƒ³ãƒ¡ãƒ¢ãƒªä¸Š)ã‚’å–å¾—
 	Vertex* vertMap = nullptr;
 	sResult = mVertBuff->Map(0, nullptr, (void**)&vertMap);
 	assert(SUCCEEDED(sResult));
-	//‘S’¸“_‚É‘Î‚µ‚Ä
+	//å…¨é ‚ç‚¹ã«å¯¾ã—ã¦
 	for (int32_t i = 0; i < vertices.size(); i++) {
-		vertMap[i] = vertices[i];	//	À•W‚ğƒRƒs[
+		vertMap[i] = vertices[i];	//	åº§æ¨™ã‚’ã‚³ãƒ”ãƒ¼
 	}
-	//Œq‚ª‚è‚ğ‰ğœ
+	//ç¹‹ãŒã‚Šã‚’è§£é™¤
 	mVertBuff->Unmap(0, nullptr);
 
-	//GPU‰¼‘zƒAƒhƒŒƒX
+	//GPUä»®æƒ³ã‚¢ãƒ‰ãƒ¬ã‚¹
 	mVbView.BufferLocation = mVertBuff->GetGPUVirtualAddress();
-	//’¸“_ƒoƒbƒtƒ@‚ÌƒTƒCƒY
+	//é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ã®ã‚µã‚¤ã‚º
 	mVbView.SizeInBytes = sizeVB;
-	//’¸“_1‚Â•ª‚Ìƒf[ƒ^ƒTƒCƒY
+	//é ‚ç‚¹1ã¤åˆ†ã®ãƒ‡ãƒ¼ã‚¿ã‚µã‚¤ã‚º
 	mVbView.StrideInBytes = sizeof(vertices[0]);
 
-	//ƒCƒ“ƒfƒbƒNƒXƒf[ƒ^‘S‘Ì‚ÌƒTƒCƒY
-	//ComPtr‚É‚µ‚½‚çƒ_ƒ‚¾‚Á‚½ ƒ}ƒbƒvˆ—‚Ég‚Á‚Ä‚é‚©‚çH
+	//ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ãƒ‡ãƒ¼ã‚¿å…¨ä½“ã®ã‚µã‚¤ã‚º
+	//ComPtrã«ã—ãŸã‚‰ãƒ€ãƒ¡ã ã£ãŸ ãƒãƒƒãƒ—å‡¦ç†ã«ä½¿ã£ã¦ã‚‹ã‹ã‚‰ï¼Ÿ
 	UINT sizeIB = static_cast<UINT>(sizeof(uint16_t) * indices.size());
 
-	//ƒŠƒ\[ƒXİ’è
+	//ãƒªã‚½ãƒ¼ã‚¹è¨­å®š
 	mResDesc.Dimension = D3D12_RESOURCE_DIMENSION_BUFFER;
-	mResDesc.Width = sizeIB;	//ƒCƒ“ƒfƒbƒNƒXî•ñ‚ª“ü‚é•ª‚ÌƒTƒCƒY
+	mResDesc.Width = sizeIB;	//ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹æƒ…å ±ãŒå…¥ã‚‹åˆ†ã®ã‚µã‚¤ã‚º
 	mResDesc.Height = 1;
 	mResDesc.DepthOrArraySize = 1;
 	mResDesc.MipLevels = 1;
 	mResDesc.SampleDesc.Count = 1;
 	mResDesc.Layout = D3D12_TEXTURE_LAYOUT_ROW_MAJOR;
 
-	//ƒCƒ“ƒfƒbƒNƒXƒoƒbƒtƒ@‚Ì¶¬
+	//ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ãƒãƒƒãƒ•ã‚¡ã®ç”Ÿæˆ
 	sResult = DirectX12::Get()->mDevice->CreateCommittedResource(
-		&heapProp,	//ƒq[ƒvİ’è
+		&heapProp,	//ãƒ’ãƒ¼ãƒ—è¨­å®š
 		D3D12_HEAP_FLAG_NONE,
-		&mResDesc,	//ƒŠƒ\[ƒXİ’è
+		&mResDesc,	//ãƒªã‚½ãƒ¼ã‚¹è¨­å®š
 		D3D12_RESOURCE_STATE_GENERIC_READ,
 		nullptr,
 		IID_PPV_ARGS(mIndexBuff.GetAddressOf()));
 
-	//ƒCƒ“ƒfƒbƒNƒXƒoƒbƒtƒ@‚ğƒ}ƒbƒsƒ“ƒO
+	//ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ãƒãƒƒãƒ•ã‚¡ã‚’ãƒãƒƒãƒ”ãƒ³ã‚°
 	uint16_t* indexMap = nullptr;
 	sResult = mIndexBuff->Map(0, nullptr, (void**)&indexMap);
-	//‘SƒCƒ“ƒfƒbƒNƒX‚É‘Î‚µ‚Ä
+	//å…¨ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ã«å¯¾ã—ã¦
 	for (int32_t i = 0; i < indices.size(); i++) {
-		indexMap[i] = indices[i];	//ƒCƒ“ƒfƒbƒNƒX‚ğƒRƒs[
+		indexMap[i] = indices[i];	//ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ã‚’ã‚³ãƒ”ãƒ¼
 	}
-	//ƒ}ƒbƒsƒ“ƒO‰ğœ
+	//ãƒãƒƒãƒ”ãƒ³ã‚°è§£é™¤
 	mIndexBuff->Unmap(0, nullptr);
 
-	//ƒCƒ“ƒfƒbƒNƒXƒoƒbƒtƒ@ƒrƒ…[‚Ìì¬
+	//ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ãƒãƒƒãƒ•ã‚¡ãƒ“ãƒ¥ãƒ¼ã®ä½œæˆ
 	mIbView.BufferLocation = mIndexBuff->GetGPUVirtualAddress();
 	mIbView.Format = DXGI_FORMAT_R16_UINT;
 	mIbView.SizeInBytes = sizeIB;

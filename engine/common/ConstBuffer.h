@@ -7,12 +7,12 @@
 #include "Matrix4.h"
 
 struct ConstBufferDataMaterial {
-	DirectX::XMFLOAT4 color;	//�F(RGBA)
+	DirectX::XMFLOAT4 color;	//色(RGBA)
 };
 
 struct ConstBufferDataSprite {
-	DirectX::XMFLOAT4 color;	//�F(RGBA)
-	DirectX::XMMATRIX mat;	//3D�ϊ��s��
+	DirectX::XMFLOAT4 color;	//色(RGBA)
+	DirectX::XMMATRIX mat;	//3D変換行列
 };
 
 template <class Format>
@@ -42,7 +42,7 @@ inline ConstBuffer<Format>::ConstBuffer()
 	resdesc.SampleDesc.Count = 1;
 	resdesc.Layout = D3D12_TEXTURE_LAYOUT_ROW_MAJOR;
 
-	//�萔�o�b�t�@�̐���
+	//定数バッファの生成
 	sResult = DirectX12::Get()->mDevice->CreateCommittedResource(
 		&heapProp,
 		D3D12_HEAP_FLAG_NONE,

@@ -22,15 +22,15 @@ void Obj3d::Initialize()
 
 void Obj3d::Update(const Camera& camera)
 {
-	Matrix4 matScale;	//ƒXƒP[ƒŠƒ“ƒOs—ñ
-	Matrix4 matRot;	//‰ñ“]s—ñ
-	Matrix4 matTrans;	//•½sˆÚ“®s—ñ
+	Matrix4 matScale;	//ã‚¹ã‚±ãƒ¼ãƒªãƒ³ã‚°è¡Œåˆ—
+	Matrix4 matRot;	//å›žè»¢è¡Œåˆ—
+	Matrix4 matTrans;	//å¹³è¡Œç§»å‹•è¡Œåˆ—
 
-	//ƒXƒP[ƒ‹‚ðÝ’è
+	//ã‚¹ã‚±ãƒ¼ãƒ«ã‚’è¨­å®š
 	matScale = Matrix4::Identity();
 	matScale = Matrix4::scale(scale);
 
-	//‰ñ“]‚ðÝ’è
+	//å›žè»¢ã‚’è¨­å®š
 	matRot = Matrix4::Identity();
 	matRot = Matrix4::rotateZ(rotation.z) * Matrix4::rotateX(rotation.x) * Matrix4::rotateY(rotation.y);
 
@@ -78,7 +78,7 @@ Vector3 Obj3d::GetWorldTrans()
 
 void Obj3d::Draw() {
 
-	//Œ©‚¦‚È‚¢ƒtƒ‰ƒO‚ª—§‚Á‚Ä‚é‚È‚ç•`‰æ‚ðs‚í‚È‚¢
+	//è¦‹ãˆãªã„ãƒ•ãƒ©ã‚°ãŒç«‹ã£ã¦ã‚‹ãªã‚‰æç”»ã‚’è¡Œã‚ãªã„
 	if (mIsVisiable == false)
 	{
 		return;
@@ -87,29 +87,29 @@ void Obj3d::Draw() {
 	DirectX12* dx12 = DirectX12::Get();
 	TextureManager* texM = TextureManager::Get();
 	
-	//SRVƒq[ƒv‚Ìæ“ª‚©‚ç‡”Ô‚ÉSRV‚ðƒ‹[ƒgƒpƒ‰ƒ[ƒ^1”Ô‚ÉÝ’è
-	//ƒ‹[ƒgƒpƒ‰ƒ[ƒ^1”Ô‚ÍƒeƒNƒXƒ`ƒƒƒoƒbƒtƒ@
+	//SRVãƒ’ãƒ¼ãƒ—ã®å…ˆé ­ã‹ã‚‰é †ç•ªã«SRVã‚’ãƒ«ãƒ¼ãƒˆãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿1ç•ªã«è¨­å®š
+	//ãƒ«ãƒ¼ãƒˆãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿1ç•ªã¯ãƒ†ã‚¯ã‚¹ãƒãƒ£ãƒãƒƒãƒ•ã‚¡
 	dx12->mCmdList->SetGraphicsRootDescriptorTable(1, TEXTURE->mGpuHandle);
 	
-	//’¸“_ƒoƒbƒtƒ@‚ÌÝ’è
+	//é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ã®è¨­å®š
 	dx12->mCmdList->IASetVertexBuffers(0, 1, &MODEL->mVbView);
 
-	//ƒCƒ“ƒfƒbƒNƒXƒoƒbƒtƒ@‚ÌÝ’è
+	//ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ãƒãƒƒãƒ•ã‚¡ã®è¨­å®š
 	dx12->mCmdList->IASetIndexBuffer(&MODEL->mIbView);
 	
-	//’è”ƒoƒbƒtƒ@ƒrƒ…[(CBV)‚ÌÝ’èƒRƒ}ƒ“ƒh
+	//å®šæ•°ãƒãƒƒãƒ•ã‚¡ãƒ“ãƒ¥ãƒ¼(CBV)ã®è¨­å®šã‚³ãƒžãƒ³ãƒ‰
 	dx12->mCmdList->SetGraphicsRootConstantBufferView(0, constBufferB1.mBuffer->GetGPUVirtualAddress());
 	
 	dx12->mCmdList->SetGraphicsRootConstantBufferView(2, constBufferT.mBuffer->GetGPUVirtualAddress());
 	
 	dx12->mCmdList->SetGraphicsRootConstantBufferView(3, constBufferB.mBuffer->GetGPUVirtualAddress());
 
-	//•`‰æƒRƒ}ƒ“ƒh
+	//æç”»ã‚³ãƒžãƒ³ãƒ‰
 	dx12->mCmdList->DrawIndexedInstanced((UINT)MODEL->mMesh.indices.size() , 1, 0, 0, 0);
 }
 
 void Obj3d::DrawMaterial() {
-	//Œ©‚¦‚È‚¢ƒtƒ‰ƒO‚ª—§‚Á‚Ä‚é‚È‚ç•`‰æ‚ðs‚í‚È‚¢
+	//è¦‹ãˆãªã„ãƒ•ãƒ©ã‚°ãŒç«‹ã£ã¦ã‚‹ãªã‚‰æç”»ã‚’è¡Œã‚ãªã„
 	if (mIsVisiable == false)
 	{
 		return;
@@ -118,8 +118,8 @@ void Obj3d::DrawMaterial() {
 	DirectX12* dx12 = DirectX12::Get();
 	TextureManager* texM = TextureManager::Get();
 
-	//SRVƒq[ƒv‚Ìæ“ª‚©‚ç‡”Ô‚ÉSRV‚ðƒ‹[ƒgƒpƒ‰ƒ[ƒ^1”Ô‚ÉÝ’è
-	//ƒ‹[ƒgƒpƒ‰ƒ[ƒ^1”Ô‚ÍƒeƒNƒXƒ`ƒƒƒoƒbƒtƒ@
+	//SRVãƒ’ãƒ¼ãƒ—ã®å…ˆé ­ã‹ã‚‰é †ç•ªã«SRVã‚’ãƒ«ãƒ¼ãƒˆãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿1ç•ªã«è¨­å®š
+	//ãƒ«ãƒ¼ãƒˆãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿1ç•ªã¯ãƒ†ã‚¯ã‚¹ãƒãƒ£ãƒãƒƒãƒ•ã‚¡
 	if (MODEL->mMaterial.mTexture->mTexBuff != nullptr)
 	{
 		dx12->mCmdList->SetGraphicsRootDescriptorTable(1, MODEL->mMaterial.mTexture->mGpuHandle);
@@ -129,26 +129,26 @@ void Obj3d::DrawMaterial() {
 		dx12->mCmdList->SetGraphicsRootDescriptorTable(1, TEXTURE->mGpuHandle);
 	}
 	
-	//’¸“_ƒoƒbƒtƒ@‚ÌÝ’è
+	//é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ã®è¨­å®š
 	dx12->mCmdList->IASetVertexBuffers(0, 1, &MODEL->mVbView);
 
-	//ƒCƒ“ƒfƒbƒNƒXƒoƒbƒtƒ@‚ÌÝ’è
+	//ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ãƒãƒƒãƒ•ã‚¡ã®è¨­å®š
 	dx12->mCmdList->IASetIndexBuffer(&MODEL->mIbView);
 
-	//’è”ƒoƒbƒtƒ@ƒrƒ…[(CBV)‚ÌÝ’èƒRƒ}ƒ“ƒh
+	//å®šæ•°ãƒãƒƒãƒ•ã‚¡ãƒ“ãƒ¥ãƒ¼(CBV)ã®è¨­å®šã‚³ãƒžãƒ³ãƒ‰
 	dx12->mCmdList->SetGraphicsRootConstantBufferView(0, constBufferB1.mBuffer->GetGPUVirtualAddress());
 
 	dx12->mCmdList->SetGraphicsRootConstantBufferView(2, constBufferT.mBuffer->GetGPUVirtualAddress());
 
 	dx12->mCmdList->SetGraphicsRootConstantBufferView(3, constBufferB.mBuffer->GetGPUVirtualAddress());
 
-	//•`‰æƒRƒ}ƒ“ƒh
+	//æç”»ã‚³ãƒžãƒ³ãƒ‰
 	dx12->mCmdList->DrawIndexedInstanced((UINT)MODEL->mMesh.indices.size(), 1, 0, 0, 0);
 }
 
 void Obj3d::DrawOutLine()
 {
-	//Œ©‚¦‚È‚¢ƒtƒ‰ƒO‚ª—§‚Á‚Ä‚é‚È‚ç•`‰æ‚ðs‚í‚È‚¢
+	//è¦‹ãˆãªã„ãƒ•ãƒ©ã‚°ãŒç«‹ã£ã¦ã‚‹ãªã‚‰æç”»ã‚’è¡Œã‚ãªã„
 	if (mIsVisiable == false)
 	{
 		return;
@@ -156,25 +156,25 @@ void Obj3d::DrawOutLine()
 
 	DirectX12* dx12 = DirectX12::Get();
 	
-	//’¸“_ƒoƒbƒtƒ@‚ÌÝ’è
+	//é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ã®è¨­å®š
 	dx12->mCmdList->IASetVertexBuffers(0, 1, &MODEL->mVbView);
 
-	//ƒCƒ“ƒfƒbƒNƒXƒoƒbƒtƒ@‚ÌÝ’è
+	//ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ãƒãƒƒãƒ•ã‚¡ã®è¨­å®š
 	dx12->mCmdList->IASetIndexBuffer(&MODEL->mIbView);
 
-	//’è”ƒoƒbƒtƒ@ƒrƒ…[(CBV)‚ÌÝ’èƒRƒ}ƒ“ƒh
+	//å®šæ•°ãƒãƒƒãƒ•ã‚¡ãƒ“ãƒ¥ãƒ¼(CBV)ã®è¨­å®šã‚³ãƒžãƒ³ãƒ‰
 	dx12->mCmdList->SetGraphicsRootConstantBufferView(0, constBufferOutLine.mBuffer->GetGPUVirtualAddress());
 
 	dx12->mCmdList->SetGraphicsRootConstantBufferView(1, constBufferT.mBuffer->GetGPUVirtualAddress());
 
-	//•`‰æƒRƒ}ƒ“ƒh
+	//æç”»ã‚³ãƒžãƒ³ãƒ‰
 	dx12->mCmdList->DrawIndexedInstanced((UINT)MODEL->mMesh.indices.size(), 1, 0, 0, 0);
 
 }
 
 void Obj3d::DrawSpecial(SpecialDraw::TEXTUREBLEND drawkey, const Texture& subTex, const Texture& maskTex)
 {
-	//Œ©‚¦‚È‚¢ƒtƒ‰ƒO‚ª—§‚Á‚Ä‚é‚È‚ç•`‰æ‚ðs‚í‚È‚¢
+	//è¦‹ãˆãªã„ãƒ•ãƒ©ã‚°ãŒç«‹ã£ã¦ã‚‹ãªã‚‰æç”»ã‚’è¡Œã‚ãªã„
 	if (mIsVisiable == false)
 	{
 		return;
@@ -183,59 +183,59 @@ void Obj3d::DrawSpecial(SpecialDraw::TEXTUREBLEND drawkey, const Texture& subTex
 	DirectX12* dx12 = DirectX12::Get();
 	TextureManager* texM = TextureManager::Get();
 
-	//SRVƒq[ƒv‚Ìæ“ª‚©‚ç‡”Ô‚ÉSRV‚ðƒ‹[ƒgƒpƒ‰ƒ[ƒ^1”Ô‚ÉÝ’è
-	//ƒ‹[ƒgƒpƒ‰ƒ[ƒ^1”Ô‚ÍƒeƒNƒXƒ`ƒƒƒoƒbƒtƒ@
+	//SRVãƒ’ãƒ¼ãƒ—ã®å…ˆé ­ã‹ã‚‰é †ç•ªã«SRVã‚’ãƒ«ãƒ¼ãƒˆãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿1ç•ªã«è¨­å®š
+	//ãƒ«ãƒ¼ãƒˆãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿1ç•ªã¯ãƒ†ã‚¯ã‚¹ãƒãƒ£ãƒãƒƒãƒ•ã‚¡
 	dx12->mCmdList->SetGraphicsRootDescriptorTable(1, TEXTURE->mGpuHandle);
 	
-	//ƒTƒuƒeƒNƒXƒ`ƒƒ‚Æƒ}ƒXƒNƒeƒNƒXƒ`ƒƒ‚ðˆø”‚©‚çŽæ“¾
+	//ã‚µãƒ–ãƒ†ã‚¯ã‚¹ãƒãƒ£ã¨ãƒžã‚¹ã‚¯ãƒ†ã‚¯ã‚¹ãƒãƒ£ã‚’å¼•æ•°ã‹ã‚‰å–å¾—
 	dx12->mCmdList->SetGraphicsRootDescriptorTable(5, subTex.mGpuHandle);
 	dx12->mCmdList->SetGraphicsRootDescriptorTable(6, maskTex.mGpuHandle);
 	
-	//’¸“_ƒoƒbƒtƒ@‚ÌÝ’è
+	//é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ã®è¨­å®š
 	dx12->mCmdList->IASetVertexBuffers(0, 1, &MODEL->mVbView);
 
-	//ƒCƒ“ƒfƒbƒNƒXƒoƒbƒtƒ@‚ÌÝ’è
+	//ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ãƒãƒƒãƒ•ã‚¡ã®è¨­å®š
 	dx12->mCmdList->IASetIndexBuffer(&MODEL->mIbView);
 
-	//’è”ƒoƒbƒtƒ@ƒrƒ…[(CBV)‚ÌÝ’èƒRƒ}ƒ“ƒh
+	//å®šæ•°ãƒãƒƒãƒ•ã‚¡ãƒ“ãƒ¥ãƒ¼(CBV)ã®è¨­å®šã‚³ãƒžãƒ³ãƒ‰
 	dx12->mCmdList->SetGraphicsRootConstantBufferView(0, constBufferB1.mBuffer->GetGPUVirtualAddress());
 	
 	dx12->mCmdList->SetGraphicsRootConstantBufferView(2, constBufferT.mBuffer->GetGPUVirtualAddress());
 
 	dx12->mCmdList->SetGraphicsRootConstantBufferView(3, constBufferB.mBuffer->GetGPUVirtualAddress());
 	
-	//•`‰æƒRƒ}ƒ“ƒh
+	//æç”»ã‚³ãƒžãƒ³ãƒ‰
 	dx12->mCmdList->DrawIndexedInstanced((UINT)MODEL->mMesh.indices.size(), 1, 0, 0, 0);
 }
 
 void Obj3d::DrawSpecial(SpecialDraw::DISOLVE drawkey, const Texture& maskTex)
 {
-	//Œ©‚¦‚È‚¢ƒtƒ‰ƒO‚ª—§‚Á‚Ä‚é‚È‚ç•`‰æ‚ðs‚í‚È‚¢
+	//è¦‹ãˆãªã„ãƒ•ãƒ©ã‚°ãŒç«‹ã£ã¦ã‚‹ãªã‚‰æç”»ã‚’è¡Œã‚ãªã„
 	if (mIsVisiable == false)
 	{
 		return;
 	}
 
-	//‚±‚±‚Å‚µ‚©Žg‚í‚È‚¢ƒf[ƒ^‚È‚Ì‚ÅA‚±‚±‚Å‘—‚Á‚¿‚á‚¤
+	//ã“ã“ã§ã—ã‹ä½¿ã‚ãªã„ãƒ‡ãƒ¼ã‚¿ãªã®ã§ã€ã“ã“ã§é€ã£ã¡ã‚ƒã†
 	constBufferDisolve.mConstBufferData->value = disolveVal;
 
 	DirectX12* dx12 = DirectX12::Get();
 	TextureManager* texM = TextureManager::Get();
 
-	//SRVƒq[ƒv‚Ìæ“ª‚©‚ç‡”Ô‚ÉSRV‚ðƒ‹[ƒgƒpƒ‰ƒ[ƒ^1”Ô‚ÉÝ’è
-	//ƒ‹[ƒgƒpƒ‰ƒ[ƒ^1”Ô‚ÍƒeƒNƒXƒ`ƒƒƒoƒbƒtƒ@
+	//SRVãƒ’ãƒ¼ãƒ—ã®å…ˆé ­ã‹ã‚‰é †ç•ªã«SRVã‚’ãƒ«ãƒ¼ãƒˆãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿1ç•ªã«è¨­å®š
+	//ãƒ«ãƒ¼ãƒˆãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿1ç•ªã¯ãƒ†ã‚¯ã‚¹ãƒãƒ£ãƒãƒƒãƒ•ã‚¡
 	dx12->mCmdList->SetGraphicsRootDescriptorTable(1, TEXTURE->mGpuHandle);
 
-	//ƒTƒuƒeƒNƒXƒ`ƒƒ‚Æƒ}ƒXƒNƒeƒNƒXƒ`ƒƒ‚ðˆø”‚©‚çŽæ“¾
+	//ã‚µãƒ–ãƒ†ã‚¯ã‚¹ãƒãƒ£ã¨ãƒžã‚¹ã‚¯ãƒ†ã‚¯ã‚¹ãƒãƒ£ã‚’å¼•æ•°ã‹ã‚‰å–å¾—
 	dx12->mCmdList->SetGraphicsRootDescriptorTable(6, maskTex.mGpuHandle);
 
-	//’¸“_ƒoƒbƒtƒ@‚ÌÝ’è
+	//é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ã®è¨­å®š
 	dx12->mCmdList->IASetVertexBuffers(0, 1, &MODEL->mVbView);
 
-	//ƒCƒ“ƒfƒbƒNƒXƒoƒbƒtƒ@‚ÌÝ’è
+	//ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ãƒãƒƒãƒ•ã‚¡ã®è¨­å®š
 	dx12->mCmdList->IASetIndexBuffer(&MODEL->mIbView);
 
-	//’è”ƒoƒbƒtƒ@ƒrƒ…[(CBV)‚ÌÝ’èƒRƒ}ƒ“ƒh
+	//å®šæ•°ãƒãƒƒãƒ•ã‚¡ãƒ“ãƒ¥ãƒ¼(CBV)ã®è¨­å®šã‚³ãƒžãƒ³ãƒ‰
 	dx12->mCmdList->SetGraphicsRootConstantBufferView(0, constBufferB1.mBuffer->GetGPUVirtualAddress());
 
 	dx12->mCmdList->SetGraphicsRootConstantBufferView(2, constBufferT.mBuffer->GetGPUVirtualAddress());
@@ -244,7 +244,7 @@ void Obj3d::DrawSpecial(SpecialDraw::DISOLVE drawkey, const Texture& maskTex)
 
 	dx12->mCmdList->SetGraphicsRootConstantBufferView(5, constBufferDisolve.mBuffer->GetGPUVirtualAddress());
 
-	//•`‰æƒRƒ}ƒ“ƒh
+	//æç”»ã‚³ãƒžãƒ³ãƒ‰
 	dx12->mCmdList->DrawIndexedInstanced((UINT)MODEL->mMesh.indices.size(), 1, 0, 0, 0);
 }
 

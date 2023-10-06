@@ -15,16 +15,16 @@ void GParticleManager::Initialize()
 {
 	DirectX12 *dx12 = DirectX12::Get();
 
-	//’¸“_ƒf[ƒ^‘S‘Ì‚ÌƒTƒCƒY = ’¸“_ƒf[ƒ^ˆê‚Â•ª‚ÌƒTƒCƒY * ’¸“_ƒf[ƒ^‚Ì—v‘f”
+	//é ‚ç‚¹ãƒ‡ãƒ¼ã‚¿å…¨ä½“ã®ã‚µã‚¤ã‚º = é ‚ç‚¹ãƒ‡ãƒ¼ã‚¿ä¸€ã¤åˆ†ã®ã‚µã‚¤ã‚º * é ‚ç‚¹ãƒ‡ãƒ¼ã‚¿ã®è¦ç´ æ•°
 	UINT sizeVB = static_cast<UINT>(VERTEX_COUNT * sizeof(VertexPos));
 
-	//’¸“_ƒoƒbƒtƒ@‚Ìİ’è
-	D3D12_HEAP_PROPERTIES heapProp{};		//ƒq[ƒvİ’è
-	heapProp.Type = D3D12_HEAP_TYPE_UPLOAD;	//GPU‚Ö‚Ì“]‘——p
+	//é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ã®è¨­å®š
+	D3D12_HEAP_PROPERTIES heapProp{};		//ãƒ’ãƒ¼ãƒ—è¨­å®š
+	heapProp.Type = D3D12_HEAP_TYPE_UPLOAD;	//GPUã¸ã®è»¢é€ç”¨
 
-	//ƒŠƒ\[ƒXİ’è
+	//ãƒªã‚½ãƒ¼ã‚¹è¨­å®š
 	mResDesc.Dimension = D3D12_RESOURCE_DIMENSION_BUFFER;
-	//’¸“_ƒf[ƒ^‘S‘Ì‚ÌƒTƒCƒY
+	//é ‚ç‚¹ãƒ‡ãƒ¼ã‚¿å…¨ä½“ã®ã‚µã‚¤ã‚º
 	mResDesc.Width = sizeVB;
 	mResDesc.Height = 1;
 	mResDesc.DepthOrArraySize = 1;
@@ -32,23 +32,23 @@ void GParticleManager::Initialize()
 	mResDesc.SampleDesc.Count = 1;
 	mResDesc.Layout = D3D12_TEXTURE_LAYOUT_ROW_MAJOR;
 
-	//’¸“_ƒoƒbƒtƒ@‚Ì¶¬
-	//ComPtr‚É‚µ‚½‚çƒ_ƒ‚¾‚Á‚½ ƒ}ƒbƒvˆ—‚Ég‚Á‚Ä‚é‚©‚çH
+	//é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ã®ç”Ÿæˆ
+	//ComPtrã«ã—ãŸã‚‰ãƒ€ãƒ¡ã ã£ãŸ ãƒãƒƒãƒ—å‡¦ç†ã«ä½¿ã£ã¦ã‚‹ã‹ã‚‰ï¼Ÿ
 	//ID3D12Resource* vertBuff;
 	sResult = dx12->mDevice->CreateCommittedResource(
-		&heapProp,	//ƒq[ƒvİ’è
+		&heapProp,	//ãƒ’ãƒ¼ãƒ—è¨­å®š
 		D3D12_HEAP_FLAG_NONE,
-		&mResDesc,	//ƒŠƒ\[ƒXİ’è
+		&mResDesc,	//ãƒªã‚½ãƒ¼ã‚¹è¨­å®š
 		D3D12_RESOURCE_STATE_GENERIC_READ,
 		nullptr,
 		IID_PPV_ARGS(&mVertBuff));
 	assert(SUCCEEDED(sResult));
 
-	//GPU‰¼‘zƒAƒhƒŒƒX
+	//GPUä»®æƒ³ã‚¢ãƒ‰ãƒ¬ã‚¹
 	mVbView.BufferLocation = mVertBuff->GetGPUVirtualAddress();
-	//’¸“_ƒoƒbƒtƒ@‚ÌƒTƒCƒY
+	//é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ã®ã‚µã‚¤ã‚º
 	mVbView.SizeInBytes = sizeVB;
-	//’¸“_1‚Â•ª‚Ìƒf[ƒ^ƒTƒCƒY
+	//é ‚ç‚¹1ã¤åˆ†ã®ãƒ‡ãƒ¼ã‚¿ã‚µã‚¤ã‚º
 	mVbView.StrideInBytes = sizeof(VertexPos);
 }
 
@@ -75,16 +75,16 @@ void GParticleManager::Update(DirectX::XMMATRIX& matView, DirectX::XMMATRIX& mat
 	VertexPos* vertMap = nullptr;
 	sResult = mVertBuff->Map(0, nullptr, (void**)&vertMap);
 	assert(SUCCEEDED(sResult));
-	//‘S’¸“_‚É‘Î‚µ‚Ä
+	//å…¨é ‚ç‚¹ã«å¯¾ã—ã¦
 	size_t index = 0;
 	for (Particle& particle : mParticles) {
-		vertMap[index].pos = particle.mPosition;	//	À•W‚ğƒRƒs[
-		vertMap[index].scale = particle.mScale;	//	ƒXƒP[ƒ‹‚ğƒRƒs[
-		vertMap[index].color = particle.mColor;	//	ƒJƒ‰[‚ğƒRƒs[
+		vertMap[index].pos = particle.mPosition;	//	åº§æ¨™ã‚’ã‚³ãƒ”ãƒ¼
+		vertMap[index].scale = particle.mScale;	//	ã‚¹ã‚±ãƒ¼ãƒ«ã‚’ã‚³ãƒ”ãƒ¼
+		vertMap[index].color = particle.mColor;	//	ã‚«ãƒ©ãƒ¼ã‚’ã‚³ãƒ”ãƒ¼
 		index++;
 		if (index > VERTEX_COUNT)break;
 	}
-	//Œq‚ª‚è‚ğ‰ğœ
+	//ç¹‹ãŒã‚Šã‚’è§£é™¤
 	mVertBuff->Unmap(0, nullptr);
 
 }
@@ -94,20 +94,20 @@ void GParticleManager::Draw(Texture* texture)
 	DirectX12* dx12 = DirectX12::Get();
 	TextureManager* texM = TextureManager::Get();
 
-	//SRVƒq[ƒv‚Ìæ“ª‚©‚ç‡”Ô‚ÉSRV‚ğƒ‹[ƒgƒpƒ‰ƒ[ƒ^1”Ô‚Éİ’è
-	//ƒ‹[ƒgƒpƒ‰ƒ[ƒ^1”Ô‚ÍƒeƒNƒXƒ`ƒƒƒoƒbƒtƒ@
+	//SRVãƒ’ãƒ¼ãƒ—ã®å…ˆé ­ã‹ã‚‰é †ç•ªã«SRVã‚’ãƒ«ãƒ¼ãƒˆãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿1ç•ªã«è¨­å®š
+	//ãƒ«ãƒ¼ãƒˆãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿1ç•ªã¯ãƒ†ã‚¯ã‚¹ãƒãƒ£ãƒãƒƒãƒ•ã‚¡
 	dx12->mCmdList->SetGraphicsRootDescriptorTable(1, texture->mGpuHandle);
 
-	//’¸“_ƒoƒbƒtƒ@‚Ìİ’è
+	//é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ã®è¨­å®š
 	dx12->mCmdList->IASetVertexBuffers(0, 1, &mVbView);
 
-	//’è”ƒoƒbƒtƒ@ƒrƒ…[(CBV)‚Ìİ’èƒRƒ}ƒ“ƒh
+	//å®šæ•°ãƒãƒƒãƒ•ã‚¡ãƒ“ãƒ¥ãƒ¼(CBV)ã®è¨­å®šã‚³ãƒãƒ³ãƒ‰
 	//dx12->commandList->SetGraphicsRootConstantBufferView(0, constBufferMaterial.buffer->GetGPUVirtualAddress());
 	//commandList->SetGraphicsRootConstantBufferView(0, constBufferM.buffer->GetGPUVirtualAddress());
 
 	dx12->mCmdList->SetGraphicsRootConstantBufferView(0, mConstBufferParticle.mBuffer->GetGPUVirtualAddress());
 
-	//•`‰æƒRƒ}ƒ“ƒh
+	//æç”»ã‚³ãƒãƒ³ãƒ‰
 	dx12->mCmdList->DrawInstanced(min((UINT)mParticles.size(),VERTEX_COUNT), 1, 0, 0);
 }
 

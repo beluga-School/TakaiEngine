@@ -3,7 +3,7 @@
 #include <ViewProjection.h>
 #include "TEasing.h"
 
-//ƒfƒoƒbƒOƒJƒƒ‰—p‚Ì3dƒIƒuƒWƒFƒNƒg ‚±‚ê‚ÌˆÊ’u‚â‰ñ“]‚ğ“®‚©‚µA’Ç]‚³‚¹‚éİŒv
+//ãƒ‡ãƒãƒƒã‚°ã‚«ãƒ¡ãƒ©ç”¨ã®3dã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ ã“ã‚Œã®ä½ç½®ã‚„å›è»¢ã‚’å‹•ã‹ã—ã€è¿½å¾“ã•ã›ã‚‹è¨­è¨ˆ
 class DebugCamera : public Obj3d
 {
 public:

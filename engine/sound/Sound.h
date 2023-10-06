@@ -33,13 +33,13 @@ class SoundManager
 {
 public:
 	void Initialize();
-	//‰¹º“Ç‚İ‚İ
+	//éŸ³å£°èª­ã¿è¾¼ã¿
 	static void Load(const char* filename,const std::string& handle);
-	//‰¹ºÄ¶
+	//éŸ³å£°å†ç”Ÿ
 	void Play(const std::string& handle,const bool& loopFlag = false,const float& volume = 0.1f);
-	//‰¹º‰ğ•ú
+	//éŸ³å£°è§£æ”¾
 	void SoundUnload(SoundData* soundData);
-	//xAudio2‚Ì‰ğ•ú
+	//xAudio2ã®è§£æ”¾
 	void End();
 
 	static SoundData* GetSound(const std::string& handle);

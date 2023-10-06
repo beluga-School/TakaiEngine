@@ -5,13 +5,13 @@
 #include "WinAPI.h"
 #include <vector>
 #include <string>
-//‚±‚±‚É’u‚¢‚Æ‚­‚ÆŠë‚È‚¢‚ñ‚¶‚á‚È‚¢H
+//ã“ã“ã«ç½®ã„ã¨ãã¨å±ãªã„ã‚“ã˜ã‚ƒãªã„ï¼Ÿ
 #include<wrl.h>
 
-//ƒAƒ_ƒvƒ^[‚Ì—ñ‹“—p
+//ã‚¢ãƒ€ãƒ—ã‚¿ãƒ¼ã®åˆ—æŒ™ç”¨
 static std::vector<Microsoft::WRL::ComPtr<IDXGIAdapter4>> sAdapters;
 
-//‚±‚±‚É“Á’è‚Ì–¼‘O‚ğ‚à‚ÂƒAƒ_ƒvƒ^[ƒIƒuƒWƒFƒNƒg‚ª“ü‚é
+//ã“ã“ã«ç‰¹å®šã®åå‰ã‚’ã‚‚ã¤ã‚¢ãƒ€ãƒ—ã‚¿ãƒ¼ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆãŒå…¥ã‚‹
 static IDXGIAdapter4* sTmpAdapter = nullptr;
 
 class DirectX12
@@ -36,7 +36,7 @@ public:
 	static DirectX12* Get();
 
 private:
-	//‹N“®‚Ìˆê˜A‚Ì—¬‚ê‚ğÀs
+	//èµ·å‹•æ™‚ã®ä¸€é€£ã®æµã‚Œã‚’å®Ÿè¡Œ
 	void Execution();
 
 	void AdapterSort();

@@ -10,7 +10,7 @@ std::string ConvertWCharToString(const wchar_t* t)
 {
     wstring wString(t);
 
-    //wstring ¨ SJIS
+    //wstring â†’ SJIS
     int32_t iBufferSize = WideCharToMultiByte(
         CP_OEMCP,
         0,
@@ -22,10 +22,10 @@ std::string ConvertWCharToString(const wchar_t* t)
         NULL
     );
 
-    //ƒoƒbƒtƒ@‚Ìæ“¾
+    //ãƒãƒƒãƒ•ã‚¡ã®å–å¾—
     CHAR* cpMultiByte = new CHAR[iBufferSize];
 
-    //wstring ¨ SJIS
+    //wstring â†’ SJIS
     WideCharToMultiByte(
         CP_OEMCP,
         0,
@@ -37,13 +37,13 @@ std::string ConvertWCharToString(const wchar_t* t)
         NULL
     );
 
-    //string‚Ì¶¬
+    //stringã®ç”Ÿæˆ
     string oRet(cpMultiByte, cpMultiByte + iBufferSize - 1);
 
-    //ƒoƒbƒtƒ@‚Ì”jŠü
+    //ãƒãƒƒãƒ•ã‚¡ã®ç ´æ£„
     delete[] cpMultiByte;
 
-    //•ÏŠ·Œ‹‰Ê‚ğ•Ô‚·
+    //å¤‰æ›çµæœã‚’è¿”ã™
     return (oRet);
 }
 
@@ -51,7 +51,7 @@ wstring ConvertStringToWChar(const std::string& str)
 {
     string wString(str);
 
-    //wstring ¨ SJIS
+    //wstring â†’ SJIS
     int32_t iBufferSize = MultiByteToWideChar(
         CP_OEMCP,
         0,
@@ -61,10 +61,10 @@ wstring ConvertStringToWChar(const std::string& str)
         0
     );
 
-    //ƒoƒbƒtƒ@‚Ìæ“¾
+    //ãƒãƒƒãƒ•ã‚¡ã®å–å¾—
     WCHAR* cpMultiByte = new WCHAR[iBufferSize];
 
-    //wstring ¨ SJIS
+    //wstring â†’ SJIS
     MultiByteToWideChar(
         CP_OEMCP,
         0,
@@ -74,12 +74,12 @@ wstring ConvertStringToWChar(const std::string& str)
         iBufferSize
     );
 
-    //string‚Ì¶¬
+    //stringã®ç”Ÿæˆ
     wstring oRet(cpMultiByte, cpMultiByte + iBufferSize - 1);
 
-    //ƒoƒbƒtƒ@‚Ì”jŠü
+    //ãƒãƒƒãƒ•ã‚¡ã®ç ´æ£„
     delete[] cpMultiByte;
 
-    //•ÏŠ·Œ‹‰Ê‚ğ•Ô‚·
+    //å¤‰æ›çµæœã‚’è¿”ã™
     return (oRet);
 }

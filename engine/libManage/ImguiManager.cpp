@@ -36,7 +36,7 @@ void ImguiManager::Initialize()
 
 	io.Fonts->AddFontDefault();
 
-	//imgui‚ÌF‚ðÝ’è
+	//imguiã®è‰²ã‚’è¨­å®š
 	ImGui::StyleColorsDark();
 
 	static int32_t const sNUM_FRAMES_IN_FLIGHT = 3;
@@ -44,7 +44,7 @@ void ImguiManager::Initialize()
 	ImGui_ImplWin32_Init(winapi->mHwnd);
 	ImGui_ImplDX12_Init(dx12->mDevice.Get(),
 		sNUM_FRAMES_IN_FLIGHT,
-		//SRGB‚ª‚Â‚¢‚Ä‚È‚©‚Á‚½‚º™
+		//SRGBãŒã¤ã„ã¦ãªã‹ã£ãŸãœâ˜†
 		DXGI_FORMAT_R8G8B8A8_UNORM_SRGB,
 		tManager->mSrvHeap.Get(),
 		tManager->mSrvHeap.Get()->GetCPUDescriptorHandleForHeapStart(),

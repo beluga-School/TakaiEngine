@@ -7,40 +7,40 @@ namespace MathF
 	const float PIf = 3.141592654f;
 
 	/// <summary>
-	/// ƒ‰ƒ“ƒ_ƒ€‚È’l‚ğæ“¾(floatŒ^)
+	/// ãƒ©ãƒ³ãƒ€ãƒ ãªå€¤ã‚’å–å¾—(floatå‹)
 	/// </summary>
-	/// <param name="min">Å¬’l</param>
-	/// <param name="max">Å‘å’l</param>
+	/// <param name="min">æœ€å°å€¤</param>
+	/// <param name="max">æœ€å¤§å€¤</param>
 	float GetRand(const float& min,const float& max);
 
 	/// <summary>
-	/// ’PU“®‚ğ‚µ‚½’l‚ğ•Ô‚·
+	/// å˜æŒ¯å‹•ã‚’ã—ãŸå€¤ã‚’è¿”ã™
 	/// </summary>
-	/// <param name="time">Œo‰ßŠÔ</param>
-	/// <param name="amplitude">U•</param>
-	/// <param name="period">üŠú</param>
+	/// <param name="time">çµŒéæ™‚é–“</param>
+	/// <param name="amplitude">æŒ¯å¹…</param>
+	/// <param name="period">å‘¨æœŸ</param>
 	/// <returns></returns>
 	float SimpleHarmonicMotion(const float& time,const float& amplitude = 10.0f,const float& period = 60.0f);
 
 	/// <summary>
-	/// ‰~‰^“®‚ğ‚µ‚½’l‚ğ•Ô‚·(•¡‘f””Å)
+	/// å††é‹å‹•ã‚’ã—ãŸå€¤ã‚’è¿”ã™(è¤‡ç´ æ•°ç‰ˆ)
 	/// </summary>
-	/// <param name="CenterPoint">’†S“_</param>
-	/// <param name="radius">’†S“_‚©‚ç‚Ì”¼Œa</param>
-	/// <param name="angle">Šp“x</param>
+	/// <param name="CenterPoint">ä¸­å¿ƒç‚¹</param>
+	/// <param name="radius">ä¸­å¿ƒç‚¹ã‹ã‚‰ã®åŠå¾„</param>
+	/// <param name="angle">è§’åº¦</param>
 	/// <returns></returns>
 	Vector2 CircularMotion(const Vector2& CenterPoint,const float& radius,const float& angle);
 
-	//“ü‚Á‚Ä‚«‚½—v‘f‚Ì•½‹Ï‚ğ•Ô‚· —v‘f‘S‚Ä‚ª0‚¾‚Á‚½‚ç0‚ğ•Ô‚·
+	//å…¥ã£ã¦ããŸè¦ç´ ã®å¹³å‡ã‚’è¿”ã™ è¦ç´ å…¨ã¦ãŒ0ã ã£ãŸã‚‰0ã‚’è¿”ã™
 	float Avarage(Vector3 v);
 
 	/// <summary>
-	/// •âŠ®(“™‘¬)
+	/// è£œå®Œ(ç­‰é€Ÿ)
 	/// </summary>
-	/// <param name="x1">ˆÚ“®‚µ‚½‚¢•Ï”</param>
-	/// <param name="x2">ˆÚ“®‚µ‚½‚¢‹——£</param>
-	/// <param name="flame">ŠÔ</param>
-	/// <returns>•âŠ®Œã‚Ì’l</returns>
+	/// <param name="x1">ç§»å‹•ã—ãŸã„å¤‰æ•°</param>
+	/// <param name="x2">ç§»å‹•ã—ãŸã„è·é›¢</param>
+	/// <param name="flame">æ™‚é–“</param>
+	/// <returns>è£œå®Œå¾Œã®å€¤</returns>
 	float Complement(const float& x1,const float& x2,const float& flame);
 
 	float GetAngleBetweenTwoLine(const Vector3& vec1,const Vector3& vec2);

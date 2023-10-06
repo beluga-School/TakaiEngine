@@ -9,7 +9,7 @@ public:
 	static const int32_t COL = 4;
 	float m[ROW][COL];
 
-	Matrix4();	//’PˆÊs—ñ‚ğ‘ã“ü
+	Matrix4();	//å˜ä½è¡Œåˆ—ã‚’ä»£å…¥
 
 	Matrix4(
 		const float& x00,const float& x01,const float& x02,const float& x03,
@@ -27,16 +27,16 @@ public:
 	static Matrix4 translate(const Vector3& t);
 	static Vector3 transform(const Vector3& v, const Matrix4& m);
 
-	//¶èŒn‚Ìƒp[ƒXƒyƒNƒeƒBƒuË‰e•ÏŠ·s—ñ‚ğ‹‚ß‚é
+	//å·¦æ‰‹ç³»ã®ãƒ‘ãƒ¼ã‚¹ãƒšã‚¯ãƒ†ã‚£ãƒ–å°„å½±å¤‰æ›è¡Œåˆ—ã‚’æ±‚ã‚ã‚‹
 	static Matrix4 PerspectiveFovLH(const float& fovAngleY,const float& nearZ,const float& farZ);
-	//¶èŒn‚Ìƒrƒ…[•ÏŠ·s—ñ‚ğ‹‚ß‚é
+	//å·¦æ‰‹ç³»ã®ãƒ“ãƒ¥ãƒ¼å¤‰æ›è¡Œåˆ—ã‚’æ±‚ã‚ã‚‹
 	static Matrix4 LookAtLH(const Vector3& eye,const Vector3& target,const Vector3& up);
 
-	//‰¡ƒxƒNƒgƒ‹‚ğ’Šo‚·‚é
+	//æ¨ªãƒ™ã‚¯ãƒˆãƒ«ã‚’æŠ½å‡ºã™ã‚‹
 	Vector3 ExtractAxisX()const;
-	//ã•ûŒüƒxƒNƒgƒ‹‚ğ’Šo‚·‚é
+	//ä¸Šæ–¹å‘ãƒ™ã‚¯ãƒˆãƒ«ã‚’æŠ½å‡ºã™ã‚‹
 	Vector3 ExtractAxisY()const;
-	//³–ÊƒxƒNƒgƒ‹‚ğ’Šo‚·‚é
+	//æ­£é¢ãƒ™ã‚¯ãƒˆãƒ«ã‚’æŠ½å‡ºã™ã‚‹
 	Vector3 ExtractAxisZ()const;
 
 	static Matrix4 RotArbitrary(Vector3& axis,const float& rad);

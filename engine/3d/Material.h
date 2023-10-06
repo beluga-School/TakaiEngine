@@ -6,13 +6,13 @@
 
 struct Material
 {
-	std::string mName;			//ƒ}ƒeƒŠƒAƒ‹‚Ì–¼‘O
-	Vector3 mAmbient;			//ƒAƒ“ƒrƒGƒ“ƒg‰e‹¿“x
-	Vector3 mDiffuse;			//ƒfƒBƒtƒ…[ƒY
-	Vector3 mSpecular;			//ƒXƒyƒLƒ…ƒ‰[‰e‹¿“x
-	float mAlpha;				//ƒAƒ‹ƒtƒ@
+	std::string mName;			//ãƒãƒ†ãƒªã‚¢ãƒ«ã®åå‰
+	Vector3 mAmbient;			//ã‚¢ãƒ³ãƒ“ã‚¨ãƒ³ãƒˆå½±éŸ¿åº¦
+	Vector3 mDiffuse;			//ãƒ‡ã‚£ãƒ•ãƒ¥ãƒ¼ã‚º
+	Vector3 mSpecular;			//ã‚¹ãƒšã‚­ãƒ¥ãƒ©ãƒ¼å½±éŸ¿åº¦
+	float mAlpha;				//ã‚¢ãƒ«ãƒ•ã‚¡
 	Vector3 mColor;
-	std::string mTextureFilename;//ƒeƒNƒXƒ`ƒƒƒtƒ@ƒCƒ‹–¼
+	std::string mTextureFilename;//ãƒ†ã‚¯ã‚¹ãƒãƒ£ãƒ•ã‚¡ã‚¤ãƒ«å
 	std::unique_ptr<Texture> mTexture = std::make_unique<Texture>();
 
 	Material() {
