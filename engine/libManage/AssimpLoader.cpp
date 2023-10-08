@@ -1,4 +1,4 @@
-#include "AssimpLoader.h"
+﻿#include "AssimpLoader.h"
 #include <assimp/Importer.hpp>
 #include <assimp/scene.h>
 #include <assimp/postprocess.h> 
@@ -30,8 +30,12 @@ std::wstring ToWideString(const std::string& str)
 	wstr.resize(num1);
 
 	auto num2 = MultiByteToWideChar(CP_ACP, MB_PRECOMPOSED | MB_ERR_INVALID_CHARS, str.c_str(), -1, &wstr[0], num1);
-
+	
 	assert(num1 == num2);
+
+	//Release時に参照されない警告が出るため追記
+	static_cast<void>(num2);
+
 	return wstr;
 }
 
@@ -121,9 +125,9 @@ void AssimpLoader::LoadMesh(Mesh& dst, const aiMesh* src, const bool& inverseU, 
 	{
 		const aiFace& face = src->mFaces[i];
 
-		dst.indices[i * 3 + 0] = face.mIndices[0];
-		dst.indices[i * 3 + 1] = face.mIndices[1];
-		dst.indices[i * 3 + 2] = face.mIndices[2];
+		dst.indices[i * 3 + 0] = (uint16_t)face.mIndices[0];
+		dst.indices[i * 3 + 1] = (uint16_t)face.mIndices[1];
+		dst.indices[i * 3 + 2] = (uint16_t)face.mIndices[2];
 	}
 }
 

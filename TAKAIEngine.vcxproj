@@ -160,7 +160,6 @@
     <ClCompile Include="engine\light\DirectionalLight.cpp" />
     <ClCompile Include="engine\light\LightGroup.cpp" />
     <ClCompile Include="application\particle\ObjParticle.cpp" />
-    <ClCompile Include="engine\particle\Particle.cpp" />
     <ClCompile Include="engine\input\Input.cpp" />
     <ClCompile Include="engine\main.cpp" />
     <ClCompile Include="engine\3d\Material.cpp" />
@@ -260,7 +259,6 @@
     <ClInclude Include="engine\light\DirectionalLight.h" />
     <ClInclude Include="engine\light\LightGroup.h" />
     <ClInclude Include="application\particle\ObjParticle.h" />
-    <ClInclude Include="engine\particle\Particle.h" />
     <ClInclude Include="engine\input\Input.h" />
     <ClInclude Include="engine\3d\Material.h" />
     <ClInclude Include="engine\math\MathF.h" />

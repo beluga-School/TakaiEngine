@@ -1,4 +1,4 @@
-#include "DebugText.h"	
+﻿#include "DebugText.h"	
 
 void DebugText::Initialize(const Texture& tex)
 {
@@ -8,7 +8,7 @@ void DebugText::Initialize(const Texture& tex)
 	}
 }
 
-void DebugText::Print(const SpriteCommon& spritecommon, const std::string& text,float x,float y,float scale)
+void DebugText::Print(const std::string& text,float x,float y,float scale)
 {
 	//全ての文字について
 	for (int32_t i = 0; i < text.size(); i++)
@@ -39,8 +39,7 @@ void DebugText::Print(const SpriteCommon& spritecommon, const std::string& text,
 
 		SpriteTransferVertexBuffer(mSprites[mSpriteIndex]);
 
-		mSprites[mSpriteIndex].Update();//SpriteUpdate(sprites[spriteIndex], spritecommon);
-
+		mSprites[mSpriteIndex].Update();
 		mSpriteIndex++;
 	}
 }

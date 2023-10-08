@@ -1,4 +1,4 @@
-#include "Obj.h"
+﻿#include "Obj.h"
 #include "Result.h"
 
 SpecialDraw::DISOLVE DISOLVE_ = 0;
@@ -85,7 +85,6 @@ void Obj3d::Draw() {
 	}
 
 	DirectX12* dx12 = DirectX12::Get();
-	TextureManager* texM = TextureManager::Get();
 	
 	//SRVヒープの先頭から順番にSRVをルートパラメータ1番に設定
 	//ルートパラメータ1番はテクスチャバッファ
@@ -116,8 +115,7 @@ void Obj3d::DrawMaterial() {
 	}
 
 	DirectX12* dx12 = DirectX12::Get();
-	TextureManager* texM = TextureManager::Get();
-
+	
 	//SRVヒープの先頭から順番にSRVをルートパラメータ1番に設定
 	//ルートパラメータ1番はテクスチャバッファ
 	if (MODEL->mMaterial.mTexture->mTexBuff != nullptr)
@@ -174,6 +172,8 @@ void Obj3d::DrawOutLine()
 
 void Obj3d::DrawSpecial(SpecialDraw::TEXTUREBLEND drawkey, const Texture& subTex, const Texture& maskTex)
 {
+	drawkey;
+
 	//見えないフラグが立ってるなら描画を行わない
 	if (mIsVisiable == false)
 	{
@@ -181,8 +181,7 @@ void Obj3d::DrawSpecial(SpecialDraw::TEXTUREBLEND drawkey, const Texture& subTex
 	}
 
 	DirectX12* dx12 = DirectX12::Get();
-	TextureManager* texM = TextureManager::Get();
-
+	
 	//SRVヒープの先頭から順番にSRVをルートパラメータ1番に設定
 	//ルートパラメータ1番はテクスチャバッファ
 	dx12->mCmdList->SetGraphicsRootDescriptorTable(1, TEXTURE->mGpuHandle);
@@ -210,6 +209,8 @@ void Obj3d::DrawSpecial(SpecialDraw::TEXTUREBLEND drawkey, const Texture& subTex
 
 void Obj3d::DrawSpecial(SpecialDraw::DISOLVE drawkey, const Texture& maskTex)
 {
+	drawkey;
+
 	//見えないフラグが立ってるなら描画を行わない
 	if (mIsVisiable == false)
 	{
@@ -220,8 +221,7 @@ void Obj3d::DrawSpecial(SpecialDraw::DISOLVE drawkey, const Texture& maskTex)
 	constBufferDisolve.mConstBufferData->value = disolveVal;
 
 	DirectX12* dx12 = DirectX12::Get();
-	TextureManager* texM = TextureManager::Get();
-
+	
 	//SRVヒープの先頭から順番にSRVをルートパラメータ1番に設定
 	//ルートパラメータ1番はテクスチャバッファ
 	dx12->mCmdList->SetGraphicsRootDescriptorTable(1, TEXTURE->mGpuHandle);

@@ -1,4 +1,4 @@
-#include "Texture.h"
+﻿#include "Texture.h"
 #include "Result.h"
 #include "DirectXInit.h"
 #include <memory>
@@ -134,7 +134,7 @@ void Texture::Load(const wchar_t& t)
 	textureResourceDesc.Format = mMetadata.format;
 	textureResourceDesc.Width = mMetadata.width;
 	textureResourceDesc.Height = (UINT)mMetadata.height;
-	textureResourceDesc.DepthOrArraySize = (UINT)mMetadata.arraySize;
+	textureResourceDesc.DepthOrArraySize = (UINT16)mMetadata.arraySize;
 	textureResourceDesc.MipLevels = (UINT16)mMetadata.mipLevels;
 	textureResourceDesc.SampleDesc.Count = 1;
 

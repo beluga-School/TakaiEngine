@@ -69,9 +69,10 @@ int32_t WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_  HINSTANCE hPrevInstan
 #endif _DEBUG
 
 	WinAPI* winApi = WinAPI::Get();
-	DirectX12* DX12 = DirectX12::Get();
 
 #ifdef  _DEBUG
+	DirectX12* DX12 = DirectX12::Get();
+
 	ID3D12InfoQueue* infoQueue;
 	if (SUCCEEDED(DX12->mDevice->QueryInterface(IID_PPV_ARGS(&infoQueue)))) {
 		infoQueue->SetBreakOnSeverity(D3D12_MESSAGE_SEVERITY_CORRUPTION, true);	//ヤバイエラー時にとまと

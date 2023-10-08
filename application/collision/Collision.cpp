@@ -1,11 +1,11 @@
-#include "Collision.h"
+﻿#include "Collision.h"
 #include "Vector2.h"
 #include "MathF.h"
 #include <math.h>
 
 bool Collsions::RayPlaneCollision(const Ray& ray, const Plane& plane)
 {
-	const float EPSILON = 1.0e-5f;
+	//const float EPSILON = 1.0e-5f;
 
 	float d1 = plane.normal.dot(ray.direction);
 	//float d1 = ray.direction.dot(plane.normal);
@@ -30,7 +30,7 @@ bool Collsions::RayPlaneCollision(const Ray& ray, const Plane& plane)
 	return true;
 }
 
-Plane CreatePlane(Vector3 leftUp, Vector3 rightDown,Vector3 planeCenterPoint,  Vector3 planeNormal)
+Plane CreatePlane(Vector3 planeCenterPoint,  Vector3 planeNormal)
 {
 	//答え
 	float c = abs(planeNormal.dot(planeCenterPoint));
@@ -66,7 +66,7 @@ RayCubeColOutput Collsions::RayCubeCollision(const Ray& ray, const Cube& cube)
 		leftUp.z
 	};
 
-	Plane frontXY = CreatePlane(leftUp, rightDown, planeCenterPoint,{ 0,0,-1 });
+	Plane frontXY = CreatePlane(planeCenterPoint,{ 0,0,-1 });
 
 	
 	if (Collsions::RayPlaneCollision(ray, frontXY))
@@ -95,7 +95,7 @@ RayCubeColOutput Collsions::RayCubeCollision(const Ray& ray, const Cube& cube)
 		leftUp.z
 	};
 
-	Plane backXY = CreatePlane(leftUp, rightDown, planeCenterPoint,{0,0,1});
+	Plane backXY = CreatePlane(planeCenterPoint,{0,0,1});
 
 	if (Collsions::RayPlaneCollision(ray, backXY))
 	{
@@ -123,7 +123,7 @@ RayCubeColOutput Collsions::RayCubeCollision(const Ray& ray, const Cube& cube)
 		(rightDown.z + leftUp.z) / 2,
 	};
 
-	Plane upXZ = CreatePlane(leftUp, rightDown, planeCenterPoint,{ 0,1,0 });
+	Plane upXZ = CreatePlane(planeCenterPoint,{ 0,1,0 });
 
 	if (Collsions::RayPlaneCollision(ray, upXZ))
 	{
@@ -151,7 +151,7 @@ RayCubeColOutput Collsions::RayCubeCollision(const Ray& ray, const Cube& cube)
 		(rightDown.z + leftUp.z) / 2,
 	};
 
-	Plane downXZ = CreatePlane(leftUp, rightDown, planeCenterPoint,{ 0,-1,0 });
+	Plane downXZ = CreatePlane(planeCenterPoint,{ 0,-1,0 });
 
 	if (Collsions::RayPlaneCollision(ray, downXZ))
 	{
@@ -179,7 +179,7 @@ RayCubeColOutput Collsions::RayCubeCollision(const Ray& ray, const Cube& cube)
 		(rightDown.z + leftUp.z) / 2,
 	};
 
-	Plane leftYZ = CreatePlane(leftUp, rightDown, planeCenterPoint,{ -1,0,0 });
+	Plane leftYZ = CreatePlane(planeCenterPoint,{ -1,0,0 });
 
 	if (Collsions::RayPlaneCollision(ray, leftYZ))
 	{
@@ -207,7 +207,7 @@ RayCubeColOutput Collsions::RayCubeCollision(const Ray& ray, const Cube& cube)
 		(rightDown.z + leftUp.z) / 2,
 	};
 
-	Plane rightYZ = CreatePlane(leftUp, rightDown, planeCenterPoint,{ 1,0,0 });
+	Plane rightYZ = CreatePlane(planeCenterPoint,{ 1,0,0 });
 
 	if (Collsions::RayPlaneCollision(ray, rightYZ))
 	{

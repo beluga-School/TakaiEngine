@@ -1,4 +1,4 @@
-#include "Sprite.h"
+﻿#include "Sprite.h"
 #include "Result.h"
 #include "Util.h"
 
@@ -202,8 +202,7 @@ void Sprite::Update()
 void Sprite::Draw()
 {
 	DirectX12* dx12 = DirectX12::Get();
-	TextureManager* texM = TextureManager::Get();
-
+	
 	if (mIsInvisible)
 	{
 		return;

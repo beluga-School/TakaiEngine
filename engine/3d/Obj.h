@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #include <DirectXMath.h>
 #include <d3dcompiler.h>
 #include "DirectXInit.h"
@@ -103,6 +103,7 @@ public:
 	void DrawOutLine();
 
 	//テクスチャブレンドで使用する描画
+	//namespaceを使っている理由は、同じ名前で引数の数を変えて運用するために、最初に書いた引数のクラスの形で判別できるようにしている
 	void DrawSpecial(SpecialDraw::TEXTUREBLEND drawkey, const Texture& subTex, const Texture& maskTex);
 	void DrawSpecial(SpecialDraw::DISOLVE drawkey, const Texture& maskTex);
 

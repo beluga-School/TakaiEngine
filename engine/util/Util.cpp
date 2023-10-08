@@ -1,4 +1,4 @@
-#include "Util.h"
+﻿#include "Util.h"
 using namespace std;
 
 bool Util::OutOfScreen(const Vector2& pos)
@@ -61,12 +61,12 @@ int32_t Util::GetNumber(const std::string& str, const char* delimiter)
 {
     std::vector<std::string> split = Util::SplitString(str, delimiter);
 
-    for (auto str : split)
+    for (auto number : split)
     {
         //数字だけ抜き出す
-        if (Util::IsNumber(str))
+        if (Util::IsNumber(number))
         {
-            return int32_t(atoi(str.c_str()));
+            return int32_t(atoi(number.c_str()));
         }
     }
 

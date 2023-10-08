@@ -1,4 +1,4 @@
-#include "LightGroup.h"
+﻿#include "LightGroup.h"
 #include "DirectXInit.h"
 
 std::unique_ptr<LightGroup> LightGroup::sLightGroup = nullptr;
@@ -62,11 +62,6 @@ void LightGroup::TransferBuffer()
 			mConstBuff.mConstBufferData->mPointLights[i].active = false;
 		}
 	}
-}
-
-void LightGroup::SetAmbientColor(const Vector3& color)
-{
-	mDirty = true;
 }
 
 void LightGroup::SetDirLightActive(const int32_t& index, const bool& active)

@@ -471,9 +471,6 @@
     <ClCompile Include="engine\3d\Obj.cpp">
       <Filter>Engine\3D\Obj</Filter>
     </ClCompile>
-    <ClCompile Include="engine\particle\Particle.cpp">
-      <Filter>Engine\Particle</Filter>
-    </ClCompile>
     <ClCompile Include="engine\3d\Vertex.cpp">
       <Filter>Engine\3D\Vertex</Filter>
     </ClCompile>
@@ -766,9 +763,6 @@
     </ClInclude>
     <ClInclude Include="engine\3d\Obj.h">
       <Filter>Engine\3D\Obj</Filter>
-    </ClInclude>
-    <ClInclude Include="engine\particle\Particle.h">
-      <Filter>Engine\Particle</Filter>
     </ClInclude>
     <ClInclude Include="engine\3d\Vertex.h">
       <Filter>Engine\3D\Vertex</Filter>

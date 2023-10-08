@@ -1,4 +1,4 @@
-#include "Pipeline.h"
+﻿#include "Pipeline.h"
 #include "Shader.h"
 #include "Result.h"
 #include <cassert>
@@ -484,8 +484,6 @@ void PipelineManager::Object3DPipeLine()
 
 void PipelineManager::SpritePipeLine()
 {
-	DirectX12* dx12 = DirectX12::Get();
-
 	PipelineSet pSet;
 
 	//シェーダー設定

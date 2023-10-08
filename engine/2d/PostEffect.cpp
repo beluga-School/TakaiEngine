@@ -1,4 +1,4 @@
-#include "PostEffect.h"
+﻿#include "PostEffect.h"
 #include "util.h"
 #include "Result.h"
 #include <memory>
@@ -94,8 +94,7 @@ void PostEffect::Update()
 void PostEffect::Draw()
 {
 	DirectX12* dx12 = DirectX12::Get();
-	TextureManager* texM = TextureManager::Get();
-
+	
 	//パイプラインを引っ張ってくる
 	//ポストエフェクトなにも掛けない
 	PipelineSet pSet = PipelineManager::GetPipeLine(pipeLineName);

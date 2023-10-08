@@ -1,4 +1,4 @@
-#include "Quaternion.h"
+﻿#include "Quaternion.h"
 #include <math.h>
 #include "MathF.h"
 #include <cmath>
@@ -88,10 +88,10 @@ Quaternion Quaternion::GetInverse()
 	return temp;
 }
 
-Vector3 Quaternion::RotateVector(const Vector3& vector)
+Vector3 Quaternion::RotateVector(const Vector3& vector_)
 {
 	Quaternion temp;
-	temp.vector = vector;
+	temp.vector = vector_;
 	temp.w = 0;
 
 	Quaternion tempConju;

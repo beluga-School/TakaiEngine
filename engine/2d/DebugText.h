@@ -1,11 +1,11 @@
-#pragma once
+﻿#pragma once
 #include "Sprite.h"
 
 class DebugText
 {
 public:
 	void Initialize(const Texture& tex);
-	void Print(const SpriteCommon& spritecommon, const std::string& text, float x,float y,float scale = 1.0f);
+	void Print(const std::string& text, float x,float y,float scale = 1.0f);
 
 	void DrawAll();
 

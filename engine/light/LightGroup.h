@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #include "DirectionalLight.h"
 #include "Vector3.h"
 #include "ConstBuffer.h"
@@ -51,9 +51,6 @@ public://関数
 	void TransferBuffer();
 
 	//平行光源
-	//ライトの色を設定
-	void SetAmbientColor(const Vector3& color);
-
 	//平行光源の有効フラグをセット
 	void SetDirLightActive(const int32_t& index, const bool& active);
 

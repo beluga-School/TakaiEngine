@@ -1,4 +1,4 @@
-#include "Model.h"
+﻿#include "Model.h"
 #include "StringUtil.h"
 #include <Vector2.h>
 #include <assimp/Importer.hpp>
@@ -99,8 +99,6 @@ void Model::CreateModel(const std::string modelname, bool smoothing)
 	vector<Vector3> normals;	//法線ベクトル
 	vector<Vector2> texcoords;	//テクスチャuv
 
-
-
 	string line;
 	while (getline(file, line))
 	{
@@ -116,11 +114,11 @@ void Model::CreateModel(const std::string modelname, bool smoothing)
 		if (key == "mtllib")
 		{
 			//マテリアルのファイル名読み込み
-			string filename;
-			line_stream >> filename;
+			string matfilename;
+			line_stream >> matfilename;
 
 			//マテリアル読み込み
-			LoadMaterial(directoryPath, filename);
+			LoadMaterial(directoryPath, matfilename);
 		}
 
 		if (key == "v")
@@ -185,12 +183,12 @@ void Model::CreateModel(const std::string modelname, bool smoothing)
 				mMesh.vertices.emplace_back(vertex);
 
 				//頂点インデックスに追加
-				mMesh.indices.emplace_back((uint16_t)mMesh.indices.size());
+				mMesh.indices.emplace_back(static_cast<uint16_t>(mMesh.indices.size()));
 
 				//ここでデータを保持
 				if (smoothing)
 				{
-					mSmoothData[indexPosition].emplace_back((uint16_t)mMesh.vertices.size() - 1);
+					mSmoothData[indexPosition].emplace_back(static_cast<uint16_t>(mMesh.vertices.size() - 1));
 				}
 			}
 		}
@@ -238,7 +236,11 @@ void Model::CreateModel(const std::string modelname, bool smoothing)
 
 			for (uint16_t index : v)
 			{
-				mMesh.vertices[index].normal = { normal.m128_f32[0],normal.m128_f32[1] ,normal.m128_f32[2] };
+				mMesh.vertices[index].normal = { 
+					normal.m128_f32[0],
+					normal.m128_f32[1],
+					normal.m128_f32[2] 
+				};
 			}
 		}
 	}

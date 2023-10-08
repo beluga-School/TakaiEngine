@@ -1,4 +1,4 @@
-#include "Billboard.h"
+﻿#include "Billboard.h"
 #include "DirectXInit.h"
 #include "PlayerCamera.h"
 
@@ -148,8 +148,7 @@ void BillboardY::DrawNoise()
 	}
 
 	DirectX12* dx12 = DirectX12::Get();
-	TextureManager* texM = TextureManager::Get();
-
+	
 	//SRVヒープの先頭から順番にSRVをルートパラメータ1番に設定
 	//ルートパラメータ1番はテクスチャバッファ
 	//dx12->mCmdList->SetGraphicsRootDescriptorTable(1, TEXTURE->mGpuHandle);
