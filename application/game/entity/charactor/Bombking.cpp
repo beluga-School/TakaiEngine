@@ -1,4 +1,4 @@
-#include "Bombking.h"
+﻿#include "Bombking.h"
 #include "Player.h"
 #include "MathF.h"
 #include "TimeManager.h"
@@ -72,7 +72,7 @@ void Bombking::Tracking()
 {
 	pVec = Enemy::TargetVector(*Player::Get());
 
-	Enemy::TargetTurn(*Player::Get(),pVec);
+	Enemy::TargetTurn(pVec);
 
 	position += pVec * mSpeed * TimeManager::deltaTime;
 }

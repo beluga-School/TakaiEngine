@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #include "Obj.h"
 #include "Collision.h"
 #include "Mob.h"
@@ -29,6 +29,7 @@ public:
 	virtual void HitEffect() = 0;
 
 	virtual void Encount() = 0;
+	virtual ~Enemy() {};
 
 	/// <summary>
 	/// 現在のテーブルが引数と一致しているならtrueを返す
@@ -61,7 +62,7 @@ protected:
 	/// 今のプログラムだと絶対に正面を向くので、向きを変えるのに時間かかる感じのプログラムにしたい
 	/// </summary>
 	/// <param name="target"></param>
-	void TargetTurn(const Mob& target,const Vector3& tVec);
+	void TargetTurn(const Vector3& tVec);
 
 	void EncountSphereInitialize();
 	void EncountSphereUpdate();

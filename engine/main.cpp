@@ -1,4 +1,4 @@
-#include <Windows.h>
+﻿#include <Windows.h>
 #include <d3d12.h>
 #include <dxgi1_6.h>
 #include <DirectXMath.h>
@@ -51,6 +51,10 @@
 //windowsアプリでのエントリーポイント(main関数)
 int32_t WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_  HINSTANCE hPrevInstance, _In_ LPSTR lpCmdLine, _In_ int32_t nShowCmd)
 {
+	hInstance; 
+	lpCmdLine;
+	nShowCmd;
+	hPrevInstance;
 	///---DirectX初期化処理　ここから---///
 	
 #ifdef  _DEBUG

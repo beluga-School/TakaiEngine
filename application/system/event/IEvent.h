@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #include <string>
 #include "EventCamera.h"
 #include <list>
@@ -13,6 +13,7 @@ public:
 
 	//終了条件
 	virtual bool End() = 0;
+	virtual ~IEvent(){};
 
 	//実行済みなら立つ
 	bool isExecuted = false;

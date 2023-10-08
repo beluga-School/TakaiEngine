@@ -312,9 +312,6 @@
     <Filter Include="Engine\Skydome">
       <UniqueIdentifier>{b0687ccb-5436-42b5-8034-0c8022f3fea5}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Application\Charactor\Enemy\Skelton">
-      <UniqueIdentifier>{707b5be6-4406-4b09-b275-af0134f7154d}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Application\Camera">
       <UniqueIdentifier>{6e53dda4-7081-40f6-9507-9f6b735bbdde}</UniqueIdentifier>
     </Filter>
@@ -377,9 +374,6 @@
     </Filter>
     <Filter Include="Application\Event\EventTriggers">
       <UniqueIdentifier>{f405bb6d-add4-4de0-9bdc-70b658844f26}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Application\Event\CamMoveEvent">
-      <UniqueIdentifier>{9c1d6142-b4b8-445a-bc93-2f2a2abf85f9}</UniqueIdentifier>
     </Filter>
     <Filter Include="ソース ファイル">
       <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>

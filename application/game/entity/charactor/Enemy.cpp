@@ -1,4 +1,4 @@
-#include "Enemy.h"
+﻿#include "Enemy.h"
 #include "MathF.h"
 #include "ClearDrawScreen.h"
 
@@ -20,7 +20,7 @@ Vector3 Enemy::TargetVector(const Mob& target)
 	return tVec;
 }
 
-void Enemy::TargetTurn(const Mob& target, const Vector3& tVec)
+void Enemy::TargetTurn(const Vector3& tVec)
 {
 	Vector3 standardRotaVec = { MathF::PIf / 2,0,0 };
 

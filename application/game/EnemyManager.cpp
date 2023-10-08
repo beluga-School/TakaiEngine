@@ -1,4 +1,4 @@
-#include "EnemyManager.h"
+﻿#include "EnemyManager.h"
 #include "MathF.h"
 #include "GEnemy.h"
 #include "ClearDrawScreen.h"

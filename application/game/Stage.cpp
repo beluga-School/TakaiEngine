@@ -1,4 +1,4 @@
-#include "Stage.h"
+﻿#include "Stage.h"
 #include "Model.h"
 #include "MathF.h"
 #include "EnemyManager.h"
@@ -829,24 +829,24 @@ void StageChanger::ChangeUpdate()
 		if (cannon != nullptr)
 		{
 			//通った場合は、事前に保管しておいた制御点の一覧から
-			for (auto itr = mCannonPoints.begin(); itr != mCannonPoints.end(); itr++)
+			for (auto itr2 = mCannonPoints.begin(); itr2 != mCannonPoints.end(); itr2++)
 			{
 				//中間点と
-				if (itr->key.find("inter") != std::string::npos)
+				if (itr2->key.find("inter") != std::string::npos)
 				{
 					//idが一致した場合は入れる
-					if (itr->key.find(cannon->id) != std::string::npos)
+					if (itr2->key.find(cannon->id) != std::string::npos)
 					{
-						cannon->interPos = itr->points;
+						cannon->interPos = itr2->points;
 					}
 				}
 				//最終点を判別する
-				if (itr->key.find("end") != std::string::npos)
+				if (itr2->key.find("end") != std::string::npos)
 				{
 					//idが一致した場合は入れる
-					if (itr->key.find(cannon->id) != std::string::npos)
+					if (itr2->key.find(cannon->id) != std::string::npos)
 					{
-						cannon->endPos = itr->points;
+						cannon->endPos = itr2->points;
 					}
 				}
 			}
@@ -857,12 +857,12 @@ void StageChanger::ChangeUpdate()
 		if (moveBlock != nullptr)
 		{
 			//通った場合は、事前に保管しておいた制御点の一覧から
-			for (auto itr = mMoveBlockEndPoints.begin(); itr != mMoveBlockEndPoints.end(); itr++)
+			for (auto itr3 = mMoveBlockEndPoints.begin(); itr3 != mMoveBlockEndPoints.end(); itr3++)
 			{
 				//idが一致した場合は入れる
-				if (itr->key.find(moveBlock->id) != std::string::npos)
+				if (itr3->key.find(moveBlock->id) != std::string::npos)
 				{
-					moveBlock->endpos = itr->points;
+					moveBlock->endpos = itr3->points;
 				}
 			}
 		}
