@@ -1,4 +1,4 @@
-﻿#include "InterfaceUI.h"
+#include "InterfaceUI.h"
 
 void InterfaceUI::InitPos(const Vector2& start, const Vector2& end)
 {
@@ -10,6 +10,12 @@ void InterfaceUI::InitScale(const Vector2& min, const Vector2& max)
 {
 	minScale = min;
 	maxScale = max;
+}
+
+void InterfaceUI::Initialize()
+{
+	moveTimer.Reset();
+	scalingTimer.Reset();
 }
 
 void InterfaceUI::Move(UIMove move_)

@@ -6,6 +6,14 @@ void NoEffectEvent::Start()
 	
 }
 
+void NoEffectEvent::End()
+{
+}
+
+void NoEffectEvent::Initialize()
+{
+}
+
 void NoEffectEvent::Update()
 {
 
@@ -15,7 +23,7 @@ void NoEffectEvent::Draw()
 {
 }
 
-bool NoEffectEvent::End()
+bool NoEffectEvent::EndFlag()
 {
 	return EventCameraManager::Get()->GetEventEnd();
 }

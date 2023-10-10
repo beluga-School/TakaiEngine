@@ -403,11 +403,11 @@
     <Filter Include="Application\UI\StageTitleUI">
       <UniqueIdentifier>{b24b72f9-59b1-4ff8-9937-a28061c7a015}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Application\UI\TutorialUI">
-      <UniqueIdentifier>{4f3f7b7d-ce1e-4064-8521-29ee7f7fedfd}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Application\Event\EventTriggerBox">
+    <Filter Include="Application\Entity\EventBlock\EventTriggerBox">
       <UniqueIdentifier>{7fbfc7a2-db8e-42f9-a13e-5698d84e617c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Application\Event\TutorialUI_1">
+      <UniqueIdentifier>{02783ad3-acb6-42a5-82b3-d490d9c42ee9}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -690,9 +690,6 @@
     <ClCompile Include="engine\util\InstantDrawer.cpp">
       <Filter>Engine\Util\InstantDrawer</Filter>
     </ClCompile>
-    <ClCompile Include="application\ui\TutorialUI.cpp">
-      <Filter>Application\UI\TutorialUI</Filter>
-    </ClCompile>
     <ClCompile Include="application\camera\EventCameraManager.cpp">
       <Filter>Application\Event\EventCameraManager</Filter>
     </ClCompile>
@@ -700,7 +697,10 @@
       <Filter>Application\Entity\Sea</Filter>
     </ClCompile>
     <ClCompile Include="application\event\EventTriggerBox.cpp">
-      <Filter>Application\Event\EventTriggerBox</Filter>
+      <Filter>Application\Entity\EventBlock\EventTriggerBox</Filter>
+    </ClCompile>
+    <ClCompile Include="TutorialUI_1.cpp">
+      <Filter>Application\Event\TutorialUI_1</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -995,9 +995,6 @@
     <ClInclude Include="engine\util\InstantDrawer.h">
       <Filter>Engine\Util\InstantDrawer</Filter>
     </ClInclude>
-    <ClInclude Include="application\ui\TutorialUI.h">
-      <Filter>Application\UI\TutorialUI</Filter>
-    </ClInclude>
     <ClInclude Include="application\camera\EventCameraManager.h">
       <Filter>Application\Event\EventCameraManager</Filter>
     </ClInclude>
@@ -1008,7 +1005,10 @@
       <Filter>Application\Charactor</Filter>
     </ClInclude>
     <ClInclude Include="application\event\EventTriggerBox.h">
-      <Filter>Application\Event\EventTriggerBox</Filter>
+      <Filter>Application\Entity\EventBlock\EventTriggerBox</Filter>
+    </ClInclude>
+    <ClInclude Include="TutorialUI_1.h">
+      <Filter>Application\Event\TutorialUI_1</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

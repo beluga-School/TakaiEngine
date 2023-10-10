@@ -102,7 +102,7 @@ public:
 
 	//モデルの配列
 	//Entityのポインタで保存した方が便利に使えるかもしれない
-	std::list<Entity> mEntitys;
+	std::list<std::unique_ptr<Entity>> mEntitys;
 
 	//イベントオブジェクト配列
 	std::list<std::unique_ptr<EventBlock>> mEventObjects;
@@ -110,7 +110,7 @@ public:
 	//ゴールオブジェクト配列
 	std::list<std::unique_ptr<Goal>> mGoals;
 
-	//大砲の制御点を一時的に保存する用配列
+	//大砲の制御点を一時的に保存する配列
 	std::vector<CannonPoint> mCannonPoints;
 
 	//移動床の最終地点を一時的に保存する配列
@@ -160,6 +160,9 @@ private:
 
 	//ステージ切り替えの更新
 	void ChangeUpdate();
+
+	//内部で指定したイベント名が入ったら対応したクラスをイベント登録する
+	void RegisterEvent(const std::string& eventname);
 
 	void SetPlayer(const LevelData::ObjectData& data);
 

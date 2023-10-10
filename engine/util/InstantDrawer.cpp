@@ -36,6 +36,26 @@ void InstantDrawer::DrawBox(const float& x, const float& y, const float& width, 
 	}
 }
 
+void InstantDrawer::DrawGraph(const float& x, const float& y, float sizerateX, float sizerateY, const std::string& handle, const Anchor& anchor)
+{
+	sSprites.emplace_back();
+	sSprites.back().SetTexture(*TextureManager::GetTexture(handle));
+	sSprites.back().SetPos({ x,y });
+	sSprites.back().SetSizeRate({ sizerateX, sizerateY });
+	switch (anchor)
+	{
+	case InstantDrawer::Anchor::LEFT:
+		sSprites.back().SetAnchor({ 0,0.5f });
+		break;
+	case InstantDrawer::Anchor::CENTER:
+		sSprites.back().SetAnchor({ 0.5f,0.5f });
+		break;
+	case InstantDrawer::Anchor::RIGHT:
+		sSprites.back().SetAnchor({ 1.0f,0.5f });
+		break;
+	}
+}
+
 void InstantDrawer::DrawGraph3D(const Vector3& pos, float width, float height, const std::string& handle)
 {
 	//includeで説明した通りイベント実行中なら消す

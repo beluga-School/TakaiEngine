@@ -1,10 +1,16 @@
 #pragma once
 #include "IEvent.h"
 #include "TEasing.h"
+#include "UI.h"
 
-class Clear1 : public IEvent
+class TutorialUI_1 : public IEvent
 {
 public:
+	TutorialUI_1() : IEvent()
+	{
+		isUseEventLine = false;
+	}
+
 	void Initialize()override;
 	void Update()override;
 	void Draw()override;
@@ -14,7 +20,7 @@ public:
 
 	bool EndFlag()override;
 
-	TEasing::easeTimer timer = 2.0f;
-	bool setFlag = false;
+private:
+	
 };
 

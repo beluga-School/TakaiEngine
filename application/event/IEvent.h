@@ -1,4 +1,4 @@
-﻿#pragma once
+#pragma once
 #include <string>
 #include "EventCamera.h"
 #include <list>
@@ -7,12 +7,19 @@
 class IEvent
 {
 public:
-	virtual void Start() = 0;
+	virtual void Initialize() = 0;
 	virtual void Update() = 0;
 	virtual void Draw() = 0;
 
+	//開始時に実行されるもの
+	virtual void Start() = 0;
+	
+	//終了時に実行されるもの
+	virtual void End() = 0;
+
 	//終了条件
-	virtual bool End() = 0;
+	virtual bool EndFlag() = 0;
+
 	virtual ~IEvent(){};
 
 	//実行済みなら立つ
@@ -24,5 +31,7 @@ public:
 	bool isUseCamera = false;
 
 	//プレイヤーを動けなくするか
-
+	
+	//黒線が出るか
+	bool isUseEventLine = true;
 };

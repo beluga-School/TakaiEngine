@@ -10,6 +10,7 @@
 #include "WarpBlock.h"
 #include "Dokan.h"
 #include "MoveBlock.h"
+#include "EventTriggerBox.h"
 
 bool CollideManager::CheckDirections(const Cube& check, const Cube& collide, const CheckDirection& CD)
 {
@@ -136,6 +137,22 @@ void CollideManager::CheckCollide(Entity* check, Entity* collide)
 			else
 			{
 				dokan->PopOutUI();
+			}
+		}
+
+		if (collide->CheckTag(TagTable::EventTriggerBox))
+		{
+			//collideがEventTriggerBoxであることは確定しているので、変換してデータを持ってくる
+			EventTriggerBox* etb = static_cast<EventTriggerBox*>(collide);
+			//当たっているならイベント実行
+			if (Collsions::CubeCollision(player->box.cubecol, etb->box.cubecol))
+			{
+				etb->EventStart();
+			}
+			//当たらなくなったらイベント終了
+			else
+			{
+				etb->EventEnd();
 			}
 		}
 	}

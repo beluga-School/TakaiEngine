@@ -1,22 +1,23 @@
 #include "UI.h"
+#include <ClearDrawScreen.h>
 
 void UI::SetTexture(const std::string& handle)
 {
-	sprite.SetTexture(*TextureManager::GetTexture(handle));
-	
+	sprite.SetTexture(*TextureManager::GetTexture(handle));	
 }
 
 void UI::Update()
 {
 	InterFaceUpdate();
 
-	sprite.mPosition = { pos.x,pos.y,0};
 	SetSize(scale);
+	sprite.mPosition = { pos.x,pos.y,0};
 	sprite.Update();
 }
 
 void UI::Draw()
 {
+	SpriteCommonBeginDraw();
 	sprite.Draw();
 }
 

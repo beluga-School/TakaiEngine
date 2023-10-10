@@ -22,6 +22,8 @@
 #include "NoEffectEvent.h"
 #include <GameUIManager.h>
 #include <EventCameraManager.h>
+#include <EventTriggerBox.h>
+#include <TutorialUI_1.h>
 
 void StageChanger::LoadResource()
 {
@@ -78,8 +80,8 @@ void StageChanger::Update()
 
 	for (auto& obj : mEntitys)
 	{
-		obj.Update(*Camera::sCamera);
-		obj.box.Update(*Camera::sCamera);
+		obj->Update(*Camera::sCamera);
+		obj->box.Update(*Camera::sCamera);
 	}
 	for (auto& obj : mEventObjects)
 	{
@@ -161,18 +163,18 @@ void StageChanger::Reset()
 void StageChanger::NormalObjectSet(const LevelData::ObjectData& data)
 {
 	mEntitys.emplace_back();
-	mEntitys.back().Initialize();
-	mEntitys.back().SetTag(TagTable::Block);
+	mEntitys.back() = std::make_unique<Block>();
+	mEntitys.back()->Initialize();
 
 	//コリジョン目的で配置したならオブジェクト配置を行わない
 	if (data.fileName == "collision")
 	{
-		mEntitys.back().SetTag(TagTable::NoDraw);
+		mEntitys.back()->SetTag(TagTable::NoDraw);
 		return;
 	}
 
 	//アウトライン設定
-	mEntitys.back().SetOutLineState({ 0,0,0,1.0f }, 0.05f);
+	mEntitys.back()->SetOutLineState({ 0,0,0,1.0f }, 0.05f);
 
 	//モデル設定
 	//ファイルネームが設定されてるならそれで
@@ -183,29 +185,29 @@ void StageChanger::NormalObjectSet(const LevelData::ObjectData& data)
 		{
 			ModelManager::LoadModel(data.fileName, data.fileName,true);
 		}
-		mEntitys.back().SetModel(ModelManager::GetModel(data.fileName));
+		mEntitys.back()->SetModel(ModelManager::GetModel(data.fileName));
 	}
 	//ないなら四角をデフォで設定
 	else
 	{
-		mEntitys.back().SetModel(ModelManager::GetModel("Cube"));
+		mEntitys.back()->SetModel(ModelManager::GetModel("Cube"));
 	}
 
 	//バグらないように白テクスチャを入れる
-	mEntitys.back().SetTexture(TextureManager::Get()->GetTexture("white"));
+	mEntitys.back()->SetTexture(TextureManager::Get()->GetTexture("white"));
 	
 	if (data.textureName != "")
 	{
 		//指定テクスチャがあるならそっちを使う
-		mEntitys.back().SetTexture(TextureManager::Get()->GetTexture(data.textureName));
-		mEntitys.back().isTexDraw = true;
+		mEntitys.back()->SetTexture(TextureManager::Get()->GetTexture(data.textureName));
+		mEntitys.back()->isTexDraw = true;
 	}
 
 	//タイリングの設定
-	mEntitys.back().mTiling = data.tiling;
+	mEntitys.back()->mTiling = data.tiling;
 	
 	//オブジェクトの配置
-	LevelDataExchanger::SetObjectData(mEntitys.back(), data);
+	LevelDataExchanger::SetObjectData(*mEntitys.back(), data);
 
 	//当たり判定を作成
 	if (data.collider.have)
@@ -217,34 +219,35 @@ void StageChanger::NormalObjectSet(const LevelData::ObjectData& data)
 void StageChanger::CollisionSet(const LevelData::ObjectData& data)
 {
 	//当たり判定を表示するオブジェクト
-	mEntitys.back().box.Initialize();
+	mEntitys.back()->box.Initialize();
 
 	//エンティティリストで参照されたくないので、コリジョンのタグを付ける
-	mEntitys.back().SetTag(TagTable::Collsion);
+	mEntitys.back()->SetTag(TagTable::Collsion);
 	
-	mEntitys.back().box.SetModel(ModelManager::GetModel("BlankCube"));
-	mEntitys.back().box.SetTexture(TextureManager::Get()->GetTexture("white"));
+	mEntitys.back()->box.SetModel(ModelManager::GetModel("BlankCube"));
+	mEntitys.back()->box.SetTexture(TextureManager::Get()->GetTexture("white"));
 
-	mEntitys.back().box.position = data.translation + data.collider.center;
-	mEntitys.back().box.scale = {
+	mEntitys.back()->box.position = data.translation + data.collider.center;
+	mEntitys.back()->box.scale = {
 		data.scaling.x * data.collider.size.x,
 		data.scaling.y * data.collider.size.y,
 		data.scaling.z * data.collider.size.z
 	};
-	mEntitys.back().box.rotation = {
+	mEntitys.back()->box.rotation = {
 		MathF::AngleConvRad(data.rotation.x),
 		MathF::AngleConvRad(data.rotation.y),
 		MathF::AngleConvRad(data.rotation.z)
 	};
 
-	mEntitys.back().box.cubecol.position = mEntitys.back().box.position;
-	mEntitys.back().box.cubecol.scale = mEntitys.back().box.scale;
+	mEntitys.back()->box.cubecol.position = mEntitys.back()->box.position;
+	mEntitys.back()->box.cubecol.scale = mEntitys.back()->box.scale;
 	//当たり判定だけマネージャーに登録
-	mEntitys.back().Register();
+	mEntitys.back()->Register();
 }
 
 void StageChanger::CollisionSetEvent(const LevelData::ObjectData& data)
 {
+
 	//当たり判定を表示するオブジェクト
 	mEventObjects.back()->box.Initialize();
 
@@ -266,8 +269,8 @@ void StageChanger::CollisionSetEvent(const LevelData::ObjectData& data)
 		MathF::AngleConvRad(data.rotation.z)
 	};
 
-	mEventObjects.back()->box.cubecol.position = mEntitys.back().box.position;
-	mEventObjects.back()->box.cubecol.scale = mEntitys.back().box.scale;
+	mEventObjects.back()->box.cubecol.position = mEntitys.back()->box.position;
+	mEventObjects.back()->box.cubecol.scale = mEntitys.back()->box.scale;
 	//当たり判定だけマネージャーに登録
 	mEventObjects.back()->Register();
 }
@@ -602,6 +605,7 @@ void StageChanger::ChangeUpdate()
 			continue;
 		}
 
+		//移動ブロックの配置
 		if (objectData->setObjectName.find("moveBlock") != std::string::npos)
 		{
 			std::string saveID = "";
@@ -763,13 +767,14 @@ void StageChanger::ChangeUpdate()
 			continue;
 		}
 
+		//看板設置
 		if (objectData->setObjectName == "boardpicture")
 		{
 			//そのままモデルの配置
 			NormalObjectSet(*objectData);
 
-			mEntitys.back().SetModel(ModelManager::GetModel("plate"));
-			mEntitys.back().rotation += { 
+			mEntitys.back()->SetModel(ModelManager::GetModel("plate"));
+			mEntitys.back()->rotation += {
 				0,
 				MathF::AngleConvRad(-180.f),
 				MathF::AngleConvRad(-90.f),
@@ -783,7 +788,7 @@ void StageChanger::ChangeUpdate()
 				filename = filename + objectData->eventtrigerName + ".png";
 				TextureManager::Load(filename, objectData->eventtrigerName);
 			}
-			mEntitys.back().SetTexture(TextureManager::GetTexture(objectData->eventtrigerName));
+			mEntitys.back()->SetTexture(TextureManager::GetTexture(objectData->eventtrigerName));
 
 			//当たり判定を作成
 			if (objectData->collider.have)
@@ -794,7 +799,33 @@ void StageChanger::ChangeUpdate()
 			continue;
 		}
 
-		//イベントオブジェクトなら設置
+		//イベント実施オブジェクトの配置
+		if (Util::CheckString(objectData->setObjectName, "triggerBox"))
+		{
+			mEntitys.emplace_back();
+			mEntitys.back() = std::make_unique<EventTriggerBox>();
+			mEntitys.back()->Initialize();
+			
+			//コリジョン目的で配置したならオブジェクト配置を行わない
+			mEntitys.back()->SetTag(TagTable::NoDraw);
+			
+			//実行したいイベント名を保持
+			EventTriggerBox* etb = static_cast<EventTriggerBox*>(mEntitys.back().get());
+			etb->eventName_ = objectData->eventtrigerName;
+			
+			//イベントマネージャーにも登録
+			RegisterEvent(etb->eventName_);
+
+			//当たり判定を作成
+			if (objectData->collider.have)
+			{
+				CollisionSet(*objectData);
+			}
+
+			continue;
+		}
+
+		//イベントオブジェクトなら設置(旧実装)
 		if (objectData->eventtrigerName != "")
 		{
 			//中でさらに分類わけして配置している
@@ -957,12 +988,12 @@ void StageChanger::DrawModel()
 	for (auto& obj : mEntitys)
 	{
 		//コリジョン用に配置したオブジェクトならスキップ
-		if (obj.CheckTag(TagTable::NoDraw))continue;
+		if (obj->CheckTag(TagTable::NoDraw))continue;
 		
 		BasicObjectPreDraw(PipelineManager::GetPipeLine("OutLine"), false);
-		obj.DrawOutLine();
+		obj->DrawOutLine();
 		//アルファが1未満になるなら透明用描画パイプラインに切り替える
-		if (obj.color_.w < 1.0f)
+		if (obj->color_.w < 1.0f)
 		{
 			BasicObjectPreDraw(PipelineManager::GetPipeLine("GroundToonNDW"));
 		}
@@ -970,17 +1001,20 @@ void StageChanger::DrawModel()
 		{
 			BasicObjectPreDraw(PipelineManager::GetPipeLine("GroundToon"));
 		}
-		if (obj.isTexDraw)
+		if (obj->isTexDraw)
 		{
-			obj.Draw();
+			obj->Draw();
 		}
 		else
 		{
-			obj.DrawMaterial();
+			obj->DrawMaterial();
 		}
 	}
 	for (auto& obj : mEventObjects)
 	{
+		//コリジョン用に配置したオブジェクトならスキップ
+		if (obj->CheckTag(TagTable::NoDraw))continue;
+
 		BasicObjectPreDraw(PipelineManager::GetPipeLine("OutLine"),false);
 		obj->DrawOutLine();
 		//アルファが1未満になるなら透明用描画パイプラインに切り替える
@@ -1021,9 +1055,9 @@ void StageChanger::DrawCollider()
 	if (mShowCollider == false) return;
 	for (auto& obj : mEntitys)
 	{
-		if (!obj.CheckTag(TagTable::Collsion))continue;
+		if (!obj->CheckTag(TagTable::Collsion))continue;
 
-		obj.box.Draw();
+		obj->box.Draw();
 	}
 	for (auto& obj : mEventObjects)
 	{
@@ -1045,6 +1079,14 @@ void StageChanger::EventNameUniquePush(const std::string& eventname)
 
 	//そうでないなら入れる
 	eventCameraNames.push_back(eventname);
+}
+
+void StageChanger::RegisterEvent(const std::string& eventname)
+{
+	if (eventname == "tutorialUI_1")
+	{
+		EventManager::Get()->Register<TutorialUI_1>(eventname);
+	}
 }
 
 void StageChanger::ResetRevise(int32_t stageNumber, int32_t starID, int32_t starnum)

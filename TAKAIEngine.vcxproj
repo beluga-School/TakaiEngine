@@ -201,7 +201,7 @@
     <ClCompile Include="application\ui\GameUIManager.cpp" />
     <ClCompile Include="application\ui\InterfaceUI.cpp" />
     <ClCompile Include="application\ui\StarUI.cpp" />
-    <ClCompile Include="application\ui\TutorialUI.cpp" />
+    <ClCompile Include="TutorialUI_1.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="application\collision\CollideManager.h" />
@@ -305,7 +305,7 @@
     <ClInclude Include="resource.h" />
     <ClInclude Include="application\ui\StarUI.h" />
     <ClInclude Include="application\ui\UI.h" />
-    <ClInclude Include="application\ui\TutorialUI.h" />
+    <ClInclude Include="TutorialUI_1.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="External\imgui\imgui.ini" />

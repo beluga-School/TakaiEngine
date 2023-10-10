@@ -1,38 +1,43 @@
 #include "GameUIManager.h"
+#include "Util.h"
 
 void GameUIManager::LoadResource()
 {
-	StarUI::LoadResource();
 	StageTitleUI::LoadResource();
+	TextureManager::Load("Resources\\ui\\eyeMoveUI.png", "eyeMoveUI");
 }
 
-void GameUIManager::Move(UIMove uimove)
+void GameUIManager::Move(UIMove uimove, const std::string& handle)
 {
-	switch (uimove)
+	if (handle == "StageTitle")
 	{
-	case UIMove::START:
 		stageTitleUI.Start();
-		break;
-	case UIMove::END:
-		break;
 	}
-	starUI.Move(uimove);
+	if (handle == "TutorialJump")
+	{
+		tutorial1.Move(uimove);
+	}
 }
 
 void GameUIManager::Initialize()
 {
-	starUI.Initialize();
 	stageTitleUI.Initialize();
+
+	tutorial1.SetTexture("eyeMoveUI");
+	tutorial1.Initialize();
+	tutorial1.InitPos({ (float)Util::CenterX(),Util::WIN_HEIGHT + 200 },{ (float)Util::CenterX(),Util::WIN_HEIGHT });
+	tutorial1.InitScale({ 0.5f,0.5f }, { 0.5f,0.5f });
+	tutorial1.SetSize({ 0.5f,0.5f });
 }
 
 void GameUIManager::Update()
 {
-	starUI.Update();
 	stageTitleUI.Update();
+	tutorial1.Update();
 }
 
 void GameUIManager::Draw()
 {
-	starUI.Draw();
 	stageTitleUI.Draw();
+	tutorial1.Draw();
 }

@@ -8,6 +8,14 @@ void Clear1::Start()
 	timer.Start();
 }
 
+void Clear1::End()
+{
+}
+
+void Clear1::Initialize()
+{
+}
+
 void Clear1::Update()
 {
 	timer.Update();
@@ -26,7 +34,7 @@ void Clear1::Draw()
 {
 }
 
-bool Clear1::End()
+bool Clear1::EndFlag()
 {
 	return timer.GetEnd();
 }

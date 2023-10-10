@@ -45,6 +45,8 @@ void GameScene::LoadResource()
 	TextureManager::Load("Resources\\rockTex.png", "rockTex");
 
 	GameUIManager::LoadResource();
+
+	EventManager::LoadResource();
 }
 
 void GameScene::Initialize()
@@ -162,8 +164,6 @@ void GameScene::Update()
 
 	player->Update();
 
-	EventManager::Get()->Update();
-
 	//カメラ更新
 	//イベント中ならカメラ変更
 	if (EventManager::Get()->GetNowEvent() != nullptr && 
@@ -185,6 +185,8 @@ void GameScene::Update()
 
 	//コリジョンを付けたオブジェクトより前に呼ばれると怖い
 	CollideManager::Get()->CollideUpdate();
+
+	EventManager::Get()->Update();
 
 	pCamera->BackTransparent();
 

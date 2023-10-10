@@ -1,4 +1,4 @@
-﻿#pragma once
+#pragma once
 #include <DirectXMath.h>
 #pragma warning (push)
 #pragma warning( disable : 26813 )
@@ -20,7 +20,7 @@ public:
 	void CreateWhiteTexture();
 
 	//外部から参照する用のリソース設定(書き換えてもテクスチャ側には影響しない)
-	D3D12_RESOURCE_DESC mGetResDesc;
+	D3D12_RESOURCE_DESC mGetResDesc{};
 
 	Microsoft::WRL::ComPtr<ID3D12Resource> mTexBuff;
 	

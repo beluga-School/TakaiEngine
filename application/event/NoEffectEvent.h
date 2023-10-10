@@ -6,10 +6,13 @@
 class NoEffectEvent :public IEvent
 {
 public:
-	void Start()override;
+	void Initialize()override;
 	void Update()override;
 	void Draw()override;
 
-	bool End()override;
+	void Start()override;
+	void End()override;
+
+	bool EndFlag()override;
 };
 

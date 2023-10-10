@@ -75,10 +75,10 @@ void PlayerCamera::BackTransparent()
 	for (auto& obj : StageChanger::Get()->mEntitys)
 	{
 		//ブロック以外なら次へ
-		if (!obj.CheckTag(TagTable::Block))continue;
+		if (!obj->CheckTag(TagTable::Block))continue;
 		
 		//ブロックなのが確定したのでブロック型に変換
-		Block* block = static_cast<Block*>(&obj);
+		Block* block = static_cast<Block*>(obj.get());
 
 		//当たってたら消える
 		if (Collsions::BoxColAABB(block->box, transparentObj))

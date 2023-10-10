@@ -9,11 +9,17 @@
 class EventManager
 {
 public:
+	static void LoadResource();
+
 	//イベント開始
 	bool Start(const std::string& startEventName);
 
 	//イベントを強制終了(nowEventを即時nullptrにする)
-	void ForceEnd();
+	//イベント名が指定されている場合、現在実行中のイベント名と一致した場合のみ終了処理を行う
+	void ForceEnd(const std::string endEventName = "");
+
+	//イベントの上下黒線をなくして、end状態に移行
+	void End(const std::string endEventName = "");
 
 	//現在実行中のイベントを取得
 	std::unique_ptr<IEvent>* GetNowEvent();
@@ -47,9 +53,6 @@ public:
 private:
 	EventManager(){};
 	~EventManager(){};
-
-	//イベントの上下黒線をなくして、end状態に移行
-	void End();
 
 	enum class State
 	{

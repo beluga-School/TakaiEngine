@@ -46,7 +46,7 @@ void Player::Update()
 			ChangeMode(PlayerState::Normal);
 			
 			//ここら辺システム側の処理だから、別の場所に移したい
-			GameUIManager::Get()->Move(UIMove::START);
+			GameUIManager::Get()->Move(UIMove::START,"StageTitle");
 		}
 	}
 

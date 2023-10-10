@@ -1,4 +1,4 @@
-﻿#include "Sprite.h"
+#include "Sprite.h"
 #include "Result.h"
 #include "Util.h"
 
@@ -175,6 +175,12 @@ void Sprite::SetColor(const Color& color)
 void Sprite::SetSize(const Vector2& size)
 {
 	mSize = size;
+	SpriteTransferVertexBuffer(*this);
+}
+
+void Sprite::SetSizeRate(const Vector2& sizeRate)
+{
+	mSize = GetInitSize() * sizeRate;
 	SpriteTransferVertexBuffer(*this);
 }
 

@@ -66,7 +66,7 @@ void Dokan::HitEffect(Mob* target_)
 		StageChanger::Get()->saveNextDokanInfo.id = nextDokanInfo.id;
 
 		//UIを動かす
-		GameUIManager::Get()->Move(UIMove::END);
+		GameUIManager::Get()->Move(UIMove::END,"StageTitle");
 	}
 }
 

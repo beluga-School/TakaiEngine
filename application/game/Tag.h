@@ -20,4 +20,5 @@ enum class TagTable
 	Dokan = 10,
 	NoDraw = 11,
 	MoveBlock = 12,
+	EventTriggerBox = 13,
 };

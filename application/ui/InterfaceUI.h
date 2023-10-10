@@ -25,6 +25,8 @@ public:
 	/// <param name="end"></param>
 	void InitScale(const Vector2& min, const Vector2& max);
 
+	void Initialize();
+
 	virtual void Update() = 0;
 	virtual void Draw() = 0;
 

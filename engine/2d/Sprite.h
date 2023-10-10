@@ -34,7 +34,11 @@ struct Sprite
 	void SetRotation(const float& rotation);
 	void SetColor(const Color& color);
 
+	//サイズを直接書き換える
 	void SetSize(const Vector2& size);
+
+	//元の大きさを基準にサイズを割合で変える
+	void SetSizeRate(const Vector2& sizeRate);
 
 	void Update();
 	void Draw();

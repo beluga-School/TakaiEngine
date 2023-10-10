@@ -6,6 +6,13 @@
 #include "GoalSystem.h"
 #include <EventCameraManager.h>
 
+#include <TutorialUI_1.h>
+
+void EventManager::LoadResource()
+{
+	
+}
+
 bool EventManager::Start(const std::string& startEventName)
 {
 	//イベントが入っていれば成功で返す
@@ -20,6 +27,7 @@ bool EventManager::Start(const std::string& startEventName)
 			state = State::Start;
 			
 			nowEvent = &Event;
+			Event->Initialize();
 			
 			bool result = EventCameraManager::Get()->SetEventCamera(Event->eventName);
 
@@ -37,8 +45,16 @@ bool EventManager::Start(const std::string& startEventName)
 	return false;
 }
 
-void EventManager::ForceEnd()
+void EventManager::ForceEnd(const std::string endEventName)
 {
+	//イベント名が指定されているなら、現在実行中イベントを確認する
+	if (endEventName != "")
+	{
+		if (GetNowEvent() == nullptr)return;
+		//イベント名が一致しないなら通さない
+		if (GetNowEvent()->get()->eventName != endEventName)return;
+	}
+
 	state = State::None;
 	nowEvent->get()->isExecuted = true;
 	nowEvent = nullptr;
@@ -47,10 +63,19 @@ void EventManager::ForceEnd()
 	downpos.x = Util::WIN_WIDTH;
 }
 
-void EventManager::End()
+void EventManager::End(const std::string endEventName)
 {
+	//イベント名が指定されているなら、現在実行中イベントを確認する
+	if (endEventName != "")
+	{
+		if (GetNowEvent() == nullptr)return;
+		//イベント名が一致しないなら通さない
+		if (GetNowEvent()->get()->eventName != endEventName)return;
+	}
+
 	endTimer.Start();
 	state = State::End;
+	nowEvent->get()->End();
 }
 
 std::unique_ptr<IEvent>* EventManager::GetNowEvent()
@@ -105,7 +130,7 @@ void EventManager::Update()
 		nowEvent->get()->Update();
 
 		//イベント終了
-		if(nowEvent->get()->End())
+		if(nowEvent->get()->EndFlag())
 		{
 			End();
 		}
@@ -125,10 +150,20 @@ void EventManager::Update()
 
 void EventManager::Draw()
 {
-	InstantDrawer::DrawBox(uppos.x, uppos.y, Util::WIN_WIDTH,100,Color(0,0,0,1),
-		InstantDrawer::Anchor::RIGHT);
-	InstantDrawer::DrawBox(downpos.x, downpos.y, Util::WIN_WIDTH,100,Color(0,0,0,1), 
-		InstantDrawer::Anchor::LEFT);
+	if (nowEvent != nullptr)
+	{
+		if (nowEvent->get()->isUseEventLine)
+		{
+			InstantDrawer::DrawBox(uppos.x, uppos.y, Util::WIN_WIDTH, 100, Color(0, 0, 0, 1),
+				InstantDrawer::Anchor::RIGHT);
+			InstantDrawer::DrawBox(downpos.x, downpos.y, Util::WIN_WIDTH, 100, Color(0, 0, 0, 1),
+				InstantDrawer::Anchor::LEFT);
+		}
+		if (state == State::RunEvent)
+		{
+			nowEvent->get()->Draw();
+		}
+	}
 }
 
 void EventManager::Clear()

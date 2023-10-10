@@ -2,7 +2,6 @@
 #include "Obj.h"
 #include "Block.h"
 
-//ワープさせるブロック
 class EventBlock : public Block
 {
 public:

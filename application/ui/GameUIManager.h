@@ -1,6 +1,6 @@
 #pragma once
-#include <StarUI.h>
 #include <StageTitleUI.h>
+#include <UI.h>
 
 //ゲーム画面上に出てくる2DUIを管理するマネージャー
 class GameUIManager
@@ -13,7 +13,7 @@ public:
 
 	static void LoadResource();
 
-	void Move(UIMove uimove);
+	void Move(UIMove uimove,const std::string& handle);
 
 	void Initialize();
 	void Update();
@@ -28,7 +28,8 @@ private:
 	GameUIManager() {};
 	~GameUIManager() {};
 
-	StarUI starUI;
 	StageTitleUI stageTitleUI;
+
+	UI tutorial1;
 };
 
