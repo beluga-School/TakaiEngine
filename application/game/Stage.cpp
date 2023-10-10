@@ -1,4 +1,4 @@
-﻿#include "Stage.h"
+#include "Stage.h"
 #include "Model.h"
 #include "MathF.h"
 #include "EnemyManager.h"
@@ -898,6 +898,16 @@ void StageChanger::ChangeUpdate()
 				datas.target = itr2->target;
 				break;
 			}
+		}
+
+		//一旦手打ち　Blenderのカスタムプロパティが個別対応に使いやすそうだったので、それから読み込む仕組みに後で変える
+		if (*itr == "startCamera")
+		{
+			datas.SetTimersInfo(10.0f, 3.0f, 3.0f);
+		}
+		if (*itr == "goalCamera")
+		{
+			datas.SetTimersInfo(3.0f, 1.0f, 1.0f);
 		}
 
 		//イベント名と並び替えたカメラデータが入る

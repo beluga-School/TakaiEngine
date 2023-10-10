@@ -62,6 +62,7 @@ private:
 	std::list<std::unique_ptr<IEvent>> allEvents;
 	std::unique_ptr<IEvent>* nowEvent = nullptr;
 
+	//上下の線が出現/消滅する時間
 	TEasing::easeTimer startTimer = 0.5f;
 	TEasing::easeTimer endTimer = 0.5f;
 

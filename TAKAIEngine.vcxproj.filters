@@ -129,9 +129,6 @@
     <Filter Include="Engine\Math\Vector3">
       <UniqueIdentifier>{35d44464-e06b-462e-a880-6e0837e38fe5}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Engine\Particle">
-      <UniqueIdentifier>{d642889e-bca8-45d5-baa5-92fd2d3be3bb}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Engine\Shader">
       <UniqueIdentifier>{50eb1d78-ff15-44ab-9049-1e691ba58985}</UniqueIdentifier>
     </Filter>

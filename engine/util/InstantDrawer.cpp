@@ -2,6 +2,9 @@
 #include "ClearDrawScreen.h"
 #include "MathF.h"
 #include <minmax.h>
+//ビルボードがプレイヤーカメラ依存の設計になってるので、違和感消しのためにイベント中はビルボード表示をなくす用にする
+//現在カメラ依存に修正できたら消していい
+#include <EventManager.h>
 
 std::list<Sprite> InstantDrawer::sSprites;
 std::list<Billboard> InstantDrawer::sBillboards;
@@ -35,6 +38,9 @@ void InstantDrawer::DrawBox(const float& x, const float& y, const float& width, 
 
 void InstantDrawer::DrawGraph3D(const Vector3& pos, float width, float height, const std::string& handle)
 {
+	//includeで説明した通りイベント実行中なら消す
+	if (EventManager::Get()->GetNowEvent() != nullptr) return;
+
 	sBillboards.emplace_back();
 	sBillboards.back().SetTexture(TextureManager::GetTexture(handle));
 	sBillboards.back().position = pos;

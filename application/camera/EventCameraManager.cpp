@@ -12,8 +12,10 @@ bool EventCameraManager::SetEventCamera(const std::string& eventname)
 	//イベント名を保持
 	eventname_ = eventname;
 
+	nowCamEvent = &eventCameraDatas[eventname];
+
 	//カメラが複数あるなら
-	if (eventCameraDatas[eventname].datas.size() > 1)
+	if (nowCamEvent->datas.size() > 1)
 	{
 		itrNumber = 1;
 	}
@@ -25,20 +27,20 @@ bool EventCameraManager::SetEventCamera(const std::string& eventname)
 	}
 
 	//番号が若い二つをセットする
-	frontCamera = &eventCameraDatas[eventname].datas.front();
-	backCamera = &eventCameraDatas[eventname].datas.front() + itrNumber;
+	frontCamera = &nowCamEvent->datas.front();
+	backCamera = &nowCamEvent->datas.front() + itrNumber;
 
 	eventPositions.clear();
-	for (auto& camdata : eventCameraDatas[eventname].datas)
+	for (auto& camdata : nowCamEvent->datas)
 	{
 		eventPositions.push_back(camdata.pos);
 	}
 
 	//ターゲットデータが何かしら入っているなら
-	if (eventCameraDatas[eventname].InTargetData())
+	if (nowCamEvent->InTargetData())
 	{
 		//ターゲットデータをセット
-		eventCamera.SetTarget(eventCameraDatas[eventname_].target);
+		eventCamera.SetTarget(nowCamEvent->target);
 	}
 
 	return true;
@@ -46,81 +48,120 @@ bool EventCameraManager::SetEventCamera(const std::string& eventname)
 
 bool EventCameraManager::GetEventEnd()
 {
-	if (!eventCameraDatas[eventname_].InTargetData())
+	if (!nowCamEvent->InTargetData())
 	{
-		return moveTimer.GetEnd() &&  itrNumber >= eventCameraDatas[eventname_].datas.size() - 1;
+		return nowCamEvent->endStandbyTimer.GetEnd() &&  itrNumber >= nowCamEvent->datas.size() - 1;
 	}
 	else
 	{
-		return moveTimer.GetEnd();
+		return nowCamEvent->endStandbyTimer.GetEnd();
 	}
 }
 
 void EventCameraManager::Start()
 {
-	moveTimer.Start();
+	if (nowCamEvent == nullptr)return;
 
-	rotaTimer.Start();
-	rotaTimer.mMaxTime = moveTimer.mMaxTime / eventCameraDatas[eventname_].datas.size();
+	nowCamEvent->Start();
 }
 
 void EventCameraManager::Update()
 {
-	moveTimer.Update();
+	nowCamEvent->Update();
 
-	eventCamera.SetPos(Vector3::Spline(eventPositions, moveTimer.GetTimeRate()));
+	eventCamera.SetPos(Vector3::Spline(eventPositions, nowCamEvent->moveTimer.GetTimeRate()));
 	
 	eventCamera.Update();
 
-	if (!eventCameraDatas[eventname_].InTargetData())
+	if (!nowCamEvent->InTargetData())
 	{
-		rotaTimer.Update();
+		nowCamEvent->rotaTimer.Update();
 		
-		eventCamera.SetRotation(TEasing::InQuad(frontCamera->rotation, backCamera->rotation, rotaTimer.GetTimeRate()));
-		if (rotaTimer.GetEnd())
+		eventCamera.SetRotation(TEasing::InQuad(frontCamera->rotation, backCamera->rotation,
+			nowCamEvent->rotaTimer.GetTimeRate()));
+		if (nowCamEvent->rotaTimer.GetEnd())
 		{
 			//管理番号が全体のサイズより小さいなら
-			if (itrNumber < eventCameraDatas[eventname_].datas.size() - 1)
+			if (itrNumber < nowCamEvent->datas.size() - 1)
 			{
 				//番号を増やして
 				itrNumber++;
 				frontCamera = backCamera;
-				backCamera = &eventCameraDatas[eventname_].datas.front() + itrNumber;
-				rotaTimer.Start();
+				backCamera = &nowCamEvent->datas.front() + itrNumber;
+				nowCamEvent->rotaTimer.Start();
 			}
 		}
 	}
 
-	DebugGUI();
+	//DebugGUI();
 }
 
-void EventCameraManager::Register(std::string string, EventCamManageData datas, float movetime)
+void EventCameraManager::Register(std::string string, EventCamManageData datas)
 {
 	eventCameraDatas[string] = datas;
-	moveTimer.mMaxTime = movetime;
 }
 
 void EventCameraManager::DebugGUI()
 {
+	if (nowCamEvent == nullptr)return;
+
 	hoge.Begin({200,200},{500,300});
 	ImGui::Text("frontCamera pos.x:%f,y:%f,z:%f", frontCamera->pos.x, frontCamera->pos.y, frontCamera->pos.z);
 	ImGui::Text("backCamera pos.x:%f,y:%f,z:%f", backCamera->pos.x, backCamera->pos.y, backCamera->pos.z);
 	ImGui::Text("eventCameraDatas.size:%d", (int32_t)eventCameraDatas.size());
-	ImGui::Text("moveTimer:%f", moveTimer.GetTimeRate());
+	ImGui::Text("moveTimer:%f", nowCamEvent->moveTimer.GetTimeRate());
 	hoge.End();
 }
 
 void EventCameraManager::Reset()
 {
+	if (nowCamEvent == nullptr)return;
+
 	frontCamera = nullptr;
 	backCamera = nullptr;
 	eventCameraDatas.clear();
-	moveTimer.Reset();
-	rotaTimer.Reset();
+	nowCamEvent->moveTimer.Reset();
+	nowCamEvent->rotaTimer.Reset();
 }
 
 bool EventCamManageData::InTargetData()
 {
 	//ターゲットの値が初期値でないなら入っていると判定
 	return target.x != -1000 &&target.y != -1000 && target.z != -1000;
+}
+
+void EventCamManageData::SetTimersInfo(float moveMax, float startStandbyMax, float endStandbyMax)
+{
+	moveTimer.mMaxTime = moveMax;
+	startStandbyTimer.mMaxTime = startStandbyMax;
+	endStandbyTimer.mMaxTime = endStandbyMax;
+}
+
+void EventCamManageData::Start()
+{
+	startStandbyTimer.Start();
+
+	endStandbyTimer.Reset();
+
+	moveTimer.Reset();
+	
+	rotaTimer.Reset();
+	rotaTimer.mMaxTime = moveTimer.mMaxTime / datas.size();
+}
+
+void EventCamManageData::Update()
+{
+	moveTimer.Update();
+	startStandbyTimer.Update();
+	endStandbyTimer.Update();
+
+	if (startStandbyTimer.GetEnd())
+	{
+		if(!moveTimer.GetStarted())	moveTimer.Start();
+		if(!rotaTimer.GetStarted())	rotaTimer.Start();
+	}
+	if (moveTimer.GetEnd())
+	{
+		if (!endStandbyTimer.GetStarted())endStandbyTimer.Start();
+	}
 }

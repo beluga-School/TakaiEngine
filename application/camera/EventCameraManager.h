@@ -12,8 +12,22 @@ struct EventCamManageData
 	std::vector<EventCamData> datas;
 	Vector3 target = { -1000,-1000,-1000 };
 
+	//移動時間を管理するタイマー(合計値)
+	TEasing::easeTimer moveTimer = 3.0f;
+	TEasing::easeTimer rotaTimer = 1.0f;
+
+	//最初と最後の待機時間を管理するタイマー
+	TEasing::easeTimer startStandbyTimer = 2.0f;
+	TEasing::easeTimer endStandbyTimer = 2.0f;
+
 	//ターゲットデータに情報が入っているならtrueを返す
 	bool InTargetData();
+
+	//タイマーの時間を設定する
+	void SetTimersInfo(float moveMax,float startStandbyMax, float endStandbyMax);
+
+	void Start();
+	void Update();
 };
 
 class EventCameraManager
@@ -37,7 +51,7 @@ public:
 
 	void Update();
 
-	void Register(std::string string, EventCamManageData datas,float movetime = 2.5f);
+	void Register(std::string string, EventCamManageData datas);
 
 	void Reset();
 
@@ -59,8 +73,10 @@ private:
 	EventCameraManager() {};
 	~EventCameraManager() {};
 
-	TEasing::easeTimer moveTimer = 5.0f;
-	TEasing::easeTimer rotaTimer = 1.0f;
+	EventCamManageData *nowCamEvent = nullptr;
+
+	//TEasing::easeTimer moveTimer = 5.0f;
+	//TEasing::easeTimer rotaTimer = 1.0f;
 
 	GUI hoge = { "hogeDebug" };
 
