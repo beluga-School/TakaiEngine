@@ -369,9 +369,6 @@
     <Filter Include="Application\Event\IEvent">
       <UniqueIdentifier>{ecdccc2d-73a5-4a72-91dd-9c5309f8478d}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Application\Event\EventTriggers">
-      <UniqueIdentifier>{f405bb6d-add4-4de0-9bdc-70b658844f26}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ソース ファイル">
       <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
       <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
@@ -408,6 +405,9 @@
     </Filter>
     <Filter Include="Application\UI\TutorialUI">
       <UniqueIdentifier>{4f3f7b7d-ce1e-4064-8521-29ee7f7fedfd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Application\Event\EventTriggerBox">
+      <UniqueIdentifier>{7fbfc7a2-db8e-42f9-a13e-5698d84e617c}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -645,7 +645,7 @@
     <ClCompile Include="application\collision\Collision.cpp">
       <Filter>Application\Collision</Filter>
     </ClCompile>
-    <ClCompile Include="application\system\event\Clear1.cpp">
+    <ClCompile Include="application\event\Clear1.cpp">
       <Filter>Application\Event\Clear1</Filter>
     </ClCompile>
     <ClCompile Include="application\game\entity\Block.cpp">
@@ -675,17 +675,14 @@
     <ClCompile Include="application\camera\EventCamera.cpp">
       <Filter>Application\Camera\EventCamera</Filter>
     </ClCompile>
-    <ClCompile Include="application\system\event\EventManager.cpp">
+    <ClCompile Include="application\event\EventManager.cpp">
       <Filter>Application\Event\EventManager</Filter>
     </ClCompile>
-    <ClCompile Include="application\system\event\IEvent.cpp">
+    <ClCompile Include="application\event\IEvent.cpp">
       <Filter>Application\Event\IEvent</Filter>
     </ClCompile>
-    <ClCompile Include="application\system\event\NoEffectEvent.cpp">
+    <ClCompile Include="application\event\NoEffectEvent.cpp">
       <Filter>Application\Event\NoEffectEvent</Filter>
-    </ClCompile>
-    <ClCompile Include="application\system\event\EventTriggers.cpp">
-      <Filter>Application\Event\EventTriggers</Filter>
     </ClCompile>
     <ClCompile Include="application\game\entity\eventBlock\MoveBlock.cpp">
       <Filter>Application\Entity\EventBlock\MoveBlock</Filter>
@@ -701,6 +698,9 @@
     </ClCompile>
     <ClCompile Include="application\game\entity\eventBlock\Sea.cpp">
       <Filter>Application\Entity\Sea</Filter>
+    </ClCompile>
+    <ClCompile Include="application\event\EventTriggerBox.cpp">
+      <Filter>Application\Event\EventTriggerBox</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -950,7 +950,7 @@
     <ClInclude Include="application\collision\Collision.h">
       <Filter>Application\Collision</Filter>
     </ClInclude>
-    <ClInclude Include="application\system\event\Clear1.h">
+    <ClInclude Include="application\event\Clear1.h">
       <Filter>Application\Event\Clear1</Filter>
     </ClInclude>
     <ClInclude Include="application\game\entity\Block.h">
@@ -980,17 +980,14 @@
     <ClInclude Include="application\camera\EventCamera.h">
       <Filter>Application\Camera\EventCamera</Filter>
     </ClInclude>
-    <ClInclude Include="application\system\event\EventManager.h">
+    <ClInclude Include="application\event\EventManager.h">
       <Filter>Application\Event\EventManager</Filter>
     </ClInclude>
-    <ClInclude Include="application\system\event\IEvent.h">
+    <ClInclude Include="application\event\IEvent.h">
       <Filter>Application\Event\IEvent</Filter>
     </ClInclude>
-    <ClInclude Include="application\system\event\NoEffectEvent.h">
+    <ClInclude Include="application\event\NoEffectEvent.h">
       <Filter>Application\Event\NoEffectEvent</Filter>
-    </ClInclude>
-    <ClInclude Include="application\system\event\EventTriggers.h">
-      <Filter>Application\Event\EventTriggers</Filter>
     </ClInclude>
     <ClInclude Include="application\game\entity\eventBlock\MoveBlock.h">
       <Filter>Application\Entity\EventBlock\MoveBlock</Filter>
@@ -1009,6 +1006,9 @@
     </ClInclude>
     <ClInclude Include="application\game\Tag.h">
       <Filter>Application\Charactor</Filter>
+    </ClInclude>
+    <ClInclude Include="application\event\EventTriggerBox.h">
+      <Filter>Application\Event\EventTriggerBox</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

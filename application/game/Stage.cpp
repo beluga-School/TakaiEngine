@@ -62,7 +62,7 @@ void StageChanger::Update()
 		SceneChange::Get()->Open();
 	}
 
-	//ステージごとに実行されるイベントがあればここで実行
+	//ステージ切り替え時に実行されるイベントがあればここで実行
 	if (GetNowStageHandle() == "stage_stageselect" &&
 		LevelLoader::Get()->GetData("stage_mountain")->isClear &&
 		EventManager::Get()->GetEvent("nextCamera")->get()->isExecuted == false)
