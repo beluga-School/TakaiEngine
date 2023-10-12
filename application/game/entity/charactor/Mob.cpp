@@ -185,7 +185,6 @@ void Mob::JumpUpdate()
 				}
 			}
 		}
-
 		if (position.y > hitFeetMax)
 		{
 			jumpState = JumpState::Down;
@@ -194,6 +193,7 @@ void Mob::JumpUpdate()
 		{
 			//地面に立っている状態にする
 			gravity = 0;
+			position.y = hitFeetMax - 0.01f;
 		}
 
 		break;

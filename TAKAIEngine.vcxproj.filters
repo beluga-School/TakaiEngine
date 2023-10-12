@@ -406,8 +406,14 @@
     <Filter Include="Application\Entity\EventBlock\EventTriggerBox">
       <UniqueIdentifier>{7fbfc7a2-db8e-42f9-a13e-5698d84e617c}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Application\Event\TutorialUI_1">
+    <Filter Include="Application\Event\TutorialUIJump">
+      <UniqueIdentifier>{25215a7c-896a-4c23-9b5d-4351de91f018}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Application\Event\TutorialUIEyeMove">
       <UniqueIdentifier>{02783ad3-acb6-42a5-82b3-d490d9c42ee9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Application\Event\TutorialUIMove">
+      <UniqueIdentifier>{34311dd3-6451-4197-b509-75d648fdb769}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -699,8 +705,14 @@
     <ClCompile Include="application\event\EventTriggerBox.cpp">
       <Filter>Application\Entity\EventBlock\EventTriggerBox</Filter>
     </ClCompile>
-    <ClCompile Include="TutorialUI_1.cpp">
-      <Filter>Application\Event\TutorialUI_1</Filter>
+    <ClCompile Include="TutorialUIEyeMove.cpp">
+      <Filter>Application\Event\TutorialUIEyeMove</Filter>
+    </ClCompile>
+    <ClCompile Include="TutorialUIJump.cpp">
+      <Filter>Application\Event\TutorialUIJump</Filter>
+    </ClCompile>
+    <ClCompile Include="TutorialUIMove.cpp">
+      <Filter>Application\Event\TutorialUIMove</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1007,8 +1019,14 @@
     <ClInclude Include="application\event\EventTriggerBox.h">
       <Filter>Application\Entity\EventBlock\EventTriggerBox</Filter>
     </ClInclude>
-    <ClInclude Include="TutorialUI_1.h">
-      <Filter>Application\Event\TutorialUI_1</Filter>
+    <ClInclude Include="TutorialUIEyeMove.h">
+      <Filter>Application\Event\TutorialUIEyeMove</Filter>
+    </ClInclude>
+    <ClInclude Include="TutorialUIJump.h">
+      <Filter>Application\Event\TutorialUIJump</Filter>
+    </ClInclude>
+    <ClInclude Include="TutorialUIMove.h">
+      <Filter>Application\Event\TutorialUIMove</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

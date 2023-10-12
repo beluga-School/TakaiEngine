@@ -23,7 +23,9 @@
 #include <GameUIManager.h>
 #include <EventCameraManager.h>
 #include <EventTriggerBox.h>
-#include <TutorialUI_1.h>
+#include <TutorialUIEyeMove.h>
+#include <TutorialUIJump.h>
+#include <TutorialUIMove.h>
 
 void StageChanger::LoadResource()
 {
@@ -153,6 +155,7 @@ void StageChanger::Reset()
 	IDdCube::ResetID();
 
 	EventManager::Get()->Clear();
+	GameUIManager::Get()->Reset();
 
 	eventCameraNames.clear();
 	loadCamDatas.clear();
@@ -974,12 +977,17 @@ void StageChanger::SetPlayer(const LevelData::ObjectData& data)
 	Player::Get()->position = data.translation;
 	Player::Get()->rotation = data.rotation;
 
+	Player::Get()->box.SetTexture(TextureManager::GetTexture("white"));
+	Player::Get()->box.SetModel(ModelManager::GetModel("BlankCube"));
+
 	Player::Get()->box.position = Player::Get()->position;
 	Player::Get()->box.scale = Player::Get()->scale;
 	Player::Get()->box.cubecol.position = Player::Get()->position;
 	Player::Get()->box.cubecol.scale = Player::Get()->scale;
 
 	Player::Get()->mDokanApparrance = true;
+
+	Player::Get()->Register();
 }
 
 void StageChanger::DrawModel()
@@ -1046,6 +1054,7 @@ void StageChanger::DrawModel()
 		obj->Draw();
 	}
 
+	Player::Get()->Draw();
 	BasicObjectPreDraw(PipelineManager::GetPipeLine("GroundToon"));
 	seaObject->Draw();
 }
@@ -1053,7 +1062,7 @@ void StageChanger::DrawModel()
 void StageChanger::DrawCollider()
 {
 	if (mShowCollider == false) return;
-	for (auto& obj : mEntitys)
+	/*for (auto& obj : mEntitys)
 	{
 		if (!obj->CheckTag(TagTable::Collsion))continue;
 
@@ -1064,7 +1073,15 @@ void StageChanger::DrawCollider()
 		if (!obj->CheckTag(TagTable::Collsion))continue;
 
 		obj->box.Draw();
+	}*/
+	for (auto& obj : CollideManager::Get()->allCols)
+	{
+		if (!obj->CheckTag(TagTable::Collsion))continue;
+
+		obj->box.Draw();
 	}
+	Player::Get()->DrawCollider();
+
 }
 
 void StageChanger::EventNameUniquePush(const std::string& eventname)
@@ -1083,9 +1100,17 @@ void StageChanger::EventNameUniquePush(const std::string& eventname)
 
 void StageChanger::RegisterEvent(const std::string& eventname)
 {
-	if (eventname == "tutorialUI_1")
+	if (eventname == "tutorialUI_EyeMove")
 	{
-		EventManager::Get()->Register<TutorialUI_1>(eventname);
+		EventManager::Get()->Register<TutorialUIEyeMove>(eventname);
+	}
+	if (eventname == "tutorialUI_Jump")
+	{
+		EventManager::Get()->Register<TutorialUIJump>(eventname);
+	}
+	if (eventname == "tutorialUI_Move")
+	{
+		EventManager::Get()->Register<TutorialUIMove>(eventname);
 	}
 }
 

@@ -14,6 +14,7 @@ public:
 	static void LoadResource();
 
 	void Move(UIMove uimove,const std::string& handle);
+	void Reset();
 
 	void Initialize();
 	void Update();
@@ -30,6 +31,8 @@ private:
 
 	StageTitleUI stageTitleUI;
 
-	UI tutorial1;
+	UI tutorialEyeMove;
+	UI tutorialJump;
+	UI tutorialMove;
 };
 

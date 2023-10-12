@@ -5,8 +5,7 @@
 #include "Clear1.h"
 #include "GoalSystem.h"
 #include <EventCameraManager.h>
-
-#include <TutorialUI_1.h>
+#include <GameUIManager.h>
 
 void EventManager::LoadResource()
 {
@@ -106,6 +105,8 @@ void EventManager::Initialize()
 
 void EventManager::Update()
 {
+	if (nowEvent == nullptr)return;
+
 	startTimer.Update();
 	endTimer.Update();
 
@@ -169,4 +170,6 @@ void EventManager::Draw()
 void EventManager::Clear()
 {
 	EventManager::Get()->allEvents.clear();
+	EventManager::Get()->nowEvent = nullptr;
+	GameUIManager::Get()->Reset();
 }

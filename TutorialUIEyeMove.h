@@ -3,10 +3,10 @@
 #include "TEasing.h"
 #include "UI.h"
 
-class TutorialUI_1 : public IEvent
+class TutorialUIEyeMove : public IEvent
 {
 public:
-	TutorialUI_1() : IEvent()
+	TutorialUIEyeMove() : IEvent()
 	{
 		isUseEventLine = false;
 	}

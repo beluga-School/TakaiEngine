@@ -13,6 +13,7 @@ public:
 	void Initialize();
 	void Update();
 	void Draw();
+	void DrawCollider();
 
 	void DrawUI();
 

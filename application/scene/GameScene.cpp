@@ -204,9 +204,6 @@ void GameScene::Draw()
 	//地面用シェーダーを中で呼んでる
 	StageChanger::Get()->Draw();
 
-	BasicObjectPreDraw(PipelineManager::GetPipeLine("Toon"));
-	player->Draw();
-
 	EnemyManager::Get()->Draw();
 
 	ParticleManager::GetInstance()->Draw();

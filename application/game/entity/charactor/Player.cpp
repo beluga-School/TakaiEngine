@@ -16,7 +16,7 @@ using namespace Input;
 
 void Player::LoadResource()
 {
-	//starUI.LoadResource();
+	
 }
 
 void Player::Initialize()
@@ -125,10 +125,12 @@ void Player::Update()
 
 	//Player特有の当たり判定更新(CollideManagerに移す)
 	//ここ置き換えるまでは今日やる
-	ColUpdate();
-
+	
 	//Mob側の更新
 	Mob::CollsionUpdate();
+
+	ColUpdate();
+
 
 	//当たり判定
 	///--敵当たり判定
@@ -158,11 +160,14 @@ void Player::Draw()
 	BasicObjectPreDraw(PipelineManager::GetPipeLine("OutLine"), false);
 	Obj3d::DrawOutLine();
 	
-	/*BasicObjectPreDraw(PipelineManager::GetPipeLine("WireFrame"));
-	colDrawer.Draw();*/
-
 	BasicObjectPreDraw(PipelineManager::GetPipeLine("Toon"));
 	Obj3d::DrawMaterial();
+}
+
+void Player::DrawCollider()
+{
+	BasicObjectPreDraw(PipelineManager::GetPipeLine("Toon"));
+	box.Draw();
 }
 
 void Player::DrawUI()
@@ -262,9 +267,9 @@ void Player::ColUpdate()
 {
 	///--地面当たり判定
 	Cube pCol;
-	pCol.position = position;
+	pCol.position = box.position;
 	//無理やりちょっと大きく
-	pCol.scale = scale;
+	pCol.scale = box.scale;
 
 	pCol.position += moveValue;
 
@@ -276,7 +281,7 @@ void Player::ColUpdate()
 		Cube goalCol;
 		goalCol.position = goal->position + goal->goalBlock.position;
 
-		//なんか判定が小さかったので2倍に そしたらぴったりだったので、どっかで半分にする処理が挟まってる
+		//スケール参照なので、大きさが1固定になっちゃってる
 		goalCol.scale = goal->goalBlock.scale * 2;
 
 		if (Collsions::CubeCollision(goalCol, pCol))
