@@ -267,9 +267,9 @@ void Player::ColUpdate()
 {
 	///--地面当たり判定
 	Cube pCol;
-	pCol.position = box.position;
+	pCol.position = position;
 	//無理やりちょっと大きく
-	pCol.scale = box.scale;
+	pCol.scale = scale;
 
 	pCol.position += moveValue;
 
