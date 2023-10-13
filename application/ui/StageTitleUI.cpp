@@ -1,4 +1,4 @@
-#include "StageTitleUI.h"
+﻿#include "StageTitleUI.h"
 #include "Util.h"
 
 void StageTitleUI::ChangeHandle(int32_t stagenum)
@@ -33,7 +33,7 @@ void StageTitleUI::Initialize()
 	stageHandles.push_back("stageTitle_1");
 	stageHandles.push_back("stageTitle_2");
 
-	stageTitle.SetPos({Util::WIN_WIDTH / 2,Util::WIN_HEIGHT / 2});
+	stageTitle.mPosition = { Util::WIN_WIDTH / 2,Util::WIN_HEIGHT / 2 };
 	stageTitle.mColor.f4.w = 0.0f;
 }
 

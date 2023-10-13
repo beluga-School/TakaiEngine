@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #include "IScene.h"
 #include "Skydome.h"
 #include "DebugCamera.h"
@@ -27,5 +27,9 @@ private:
 	//シーン切り替え用
 	std::string output = "";
 	std::vector<std::string> handles;
+
+	void GameSceneDebugGUI();
+
+	bool debugCam = false;
 };
 

@@ -1,4 +1,4 @@
-#include "TitleScene.h"
+﻿#include "TitleScene.h"
 #include "Input.h"
 #include "SceneChange.h"
 #include "SceneManager.h"
@@ -34,7 +34,7 @@ void TitleScene::LoadResource()
 void TitleScene::Initialize()
 {
 	mStart.SetTexture(*TextureManager::GetTexture("space"));
-	mStart.SetPos({ Util::WIN_WIDTH / 2,Util::WIN_HEIGHT - 100 });
+	mStart.mPosition = { Util::WIN_WIDTH / 2,Util::WIN_HEIGHT - 100 };
 
 	sceneID = "Title";
 
@@ -53,7 +53,7 @@ void TitleScene::Initialize()
 	const float invideX = 600 / 5;
 	for (int32_t i = 0; i < 7; i++)
 	{
-		string[i].sprite.SetPos({ -114514, -114514 });
+		string[i].sprite.mPosition = { -114514, -114514 };
 		string[i].position.x = (invideX * i) + sideX;
 		string[i].startY = -100.f;
 		string[i].endY = Util::WIN_HEIGHT / 2 - 50.f;
@@ -76,12 +76,12 @@ void TitleScene::Initialize()
 			string[i].endY
 		};
 	}
-	whiteOut.SetPos({ Util::WIN_WIDTH / 2,Util::WIN_HEIGHT / 2 });
+	whiteOut.mPosition = { Util::WIN_WIDTH / 2,Util::WIN_HEIGHT / 2 };
 	whiteOut.SetTexture(*TextureManager::GetTexture("white"));
 	whiteOut.SetSize({ Util::WIN_WIDTH,Util::WIN_HEIGHT});
 	whiteOut.mColor.f4.w = 0.0f;
 
-	backHexagon.SetPos({ Util::WIN_WIDTH / 2,Util::WIN_HEIGHT / 2 });
+	backHexagon.mPosition = { Util::WIN_WIDTH / 2,Util::WIN_HEIGHT / 2 };
 	backHexagon.SetSize({ Util::WIN_WIDTH + 100,Util::WIN_HEIGHT + 100 });
 	backHexagon.SetTexture(*TextureManager::GetTexture("hexagon_big"));
 	backHexagon.mColor = {0, 1, 0, 1};
@@ -317,7 +317,7 @@ void TitleScene::TitleString::Update()
 
 	position.y = TEasing::OutQuad(startY, endY, timer.GetTimeRate());
 
-	sprite.SetPos(position);
+	sprite.mPosition = position;
 	sprite.Update();
 }
 

@@ -1,4 +1,4 @@
-#include "InstantDrawer.h"
+﻿#include "InstantDrawer.h"
 #include "ClearDrawScreen.h"
 #include "MathF.h"
 #include <minmax.h>
@@ -19,9 +19,9 @@ void InstantDrawer::DrawBox(const float& x, const float& y, const float& width, 
 {
 	sSprites.emplace_back();
 	sSprites.back().SetTexture(*TextureManager::GetTexture("white"));
-	sSprites.back().SetPos({ x,y });
+	sSprites.back().mPosition = { x,y };
 	sSprites.back().SetSize({ width, height });
-	sSprites.back().SetColor(color);
+	sSprites.back().mColor = color;
 	switch (anchor)
 	{
 	case InstantDrawer::Anchor::LEFT:
@@ -40,7 +40,7 @@ void InstantDrawer::DrawGraph(const float& x, const float& y, float sizerateX, f
 {
 	sSprites.emplace_back();
 	sSprites.back().SetTexture(*TextureManager::GetTexture(handle));
-	sSprites.back().SetPos({ x,y });
+	sSprites.back().mPosition = { x,y };
 	sSprites.back().SetSizeRate({ sizerateX, sizerateY });
 	switch (anchor)
 	{

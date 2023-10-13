@@ -1,4 +1,4 @@
-#include "HPGauge.h"
+﻿#include "HPGauge.h"
 #include "MathF.h"
 #include "Util.h"
 
@@ -14,24 +14,24 @@ void Gauge::Initialize()
 {
 	mFlontGauge.SetTexture(*TextureManager::GetTexture("white"));
 	mFlontGauge.SetAnchor({ 0,0.5f });
-	mFlontGauge.SetPos(mPos);
-	mFlontGauge.SetColor(mFlontColor);
+	mFlontGauge.mPosition = mPos;
+	mFlontGauge.mColor = (mFlontColor);
 
 	mBackGauge.SetTexture(*TextureManager::GetTexture("white"));
 	mBackGauge.SetAnchor({ 0,0.5f });
-	mBackGauge.SetPos(mPos);
-	mBackGauge.SetColor(mBackColor);
+	mBackGauge.mPosition = mPos;
+	mBackGauge.mColor = (mBackColor);
 
 	mInner.SetTexture(*TextureManager::GetTexture("white"));
 	mInner.SetAnchor({ 0,0.5f });
-	mInner.SetPos(mPos);
-	mInner.SetColor(mInnerColor);
+	mInner.mPosition = mPos;
+	mInner.mColor = (mInnerColor);
 
 	mFrameGauge.SetTexture(*TextureManager::GetTexture("white"));
 	mFrameGauge.SetAnchor({ 0.5f,0.5f });
 	Vector2 framePos = { mPos.x + GAUGE_MAX_SIZEX / 2,mPos.y };
-	mFrameGauge.SetPos(framePos);
-	mFrameGauge.SetColor(mFrameColor);
+	mFrameGauge.mPosition = { framePos };
+	mFrameGauge.mColor = (mFrameColor);
 	
 	SetGaugeSize(mInitGaugeMax);
 }
@@ -111,11 +111,11 @@ void Gauge::SetGaugeSize(int32_t separetNum, bool maxChange)
 		(mGaugeSizeX * separetNum) * mFrameSize.x,
 		mGaugeSizeY * mFrameSize.y });
 
-	mFlontStart = mFlontGauge.mSize.x;
-	mFlontEnd = mFlontGauge.mSize.x;
+	mFlontStart = mFlontGauge.GetSize().x;
+	mFlontEnd = mFlontGauge.GetSize().x;
 
-	mBackStart = mBackGauge.mSize.x;
-	mBackEnd = mBackGauge.mSize.x;
+	mBackStart = mBackGauge.GetSize().x;
+	mBackEnd = mBackGauge.GetSize().x;
 }
 
 void Gauge::Addition(int32_t value)
@@ -124,13 +124,13 @@ void Gauge::Addition(int32_t value)
 	//下限と上限を超えないように
 	mGaugeNum.mCurrent = Util::Clamp(mGaugeNum.mCurrent, 0, mInitGaugeMax);
 
-	mFlontStart = mFlontGauge.mSize.x;
+	mFlontStart = mFlontGauge.GetSize().x;
 	mFlontEnd = mGaugeSizeX * (mGaugeNum.mCurrent);
 
 	mFlontStart = Util::Clamp(mFlontStart, 0.f, GAUGE_MAX_SIZEX);
 	mFlontEnd = Util::Clamp(mFlontEnd, 0.f, GAUGE_MAX_SIZEX);
 
-	mBackStart = mBackGauge.mSize.x;
+	mBackStart = mBackGauge.GetSize().x;
 	mBackEnd = mGaugeSizeX * (mGaugeNum.mCurrent);
 
 	mBackStart = Util::Clamp(mBackStart, 0.f, GAUGE_MAX_SIZEX);
@@ -152,9 +152,9 @@ void Gauge::GaugeMove()
 	mBackGauge.SetSize({ gaugeX,mGaugeSizeY });
 
 	//表のゲージが裏のゲージより大きくなったら
-	if (mBackGauge.mSize.x < mFlontGauge.mSize.x)
+	if (mBackGauge.GetSize().x < mFlontGauge.GetSize().x)
 	{
 		//裏のゲージの大きさを表ゲージに合わせる
-		mBackGauge.mSize.x = mFlontGauge.mSize.x;
+		mBackGauge.SetSize({ mFlontGauge.GetSize().x,mBackGauge.GetSize().y});
 	}
 }

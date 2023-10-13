@@ -1,4 +1,4 @@
-#include "GoalSystem.h"
+﻿#include "GoalSystem.h"
 #include "Util.h"
 #include "Stage.h"
 #include "EventManager.h"
@@ -76,7 +76,7 @@ void GoalSystem::GoalAnimetion()
 void GoalSystem::Initialize()
 {
 	mClearSprite.SetTexture(*TextureManager::GetTexture("goal"));
-	mClearSprite.mPosition = { Util::WIN_WIDTH / 2,100,0 };
+	mClearSprite.mPosition = { Util::WIN_WIDTH / 2,100};
 	mClearSprite.SetSize({ 176 * 2,32 * 2 });
 }
 

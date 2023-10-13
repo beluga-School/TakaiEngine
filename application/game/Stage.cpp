@@ -1,4 +1,4 @@
-#include "Stage.h"
+﻿#include "Stage.h"
 #include "Model.h"
 #include "MathF.h"
 #include "EnemyManager.h"
@@ -352,7 +352,6 @@ void StageChanger::EvenyObjectSet(const LevelData::ObjectData& data)
 		);
 		
 		//当たり判定を作成
-		//starManagerにわけんな一意に定義出来ねえだろ！！！！！!!!!!!1
 		if (data.collider.have)
 		{
 			//当たり判定を表示するオブジェクト
@@ -485,6 +484,7 @@ void StageChanger::ChangeUpdate()
 			CameraLoader<Clear1>(*objectData,"nextCamera");
 			CameraLoader<NoEffectEvent>(*objectData,"goalCamera");
 			CameraLoader<NoEffectEvent>(*objectData,"startCamera");
+			CameraLoader<NoEffectEvent>(*objectData, "lockbackCam");
 
 			continue;
 		}

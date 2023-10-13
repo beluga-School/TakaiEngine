@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #include "Vector3.h"
 #include "Vector2.h"
 #include "Matrix4.h"
@@ -20,28 +20,58 @@ struct VertexPosUV
 	DirectX::XMFLOAT2 uv;
 };
 
-struct Sprite
+/*! Sprite
+	テクスチャを2D描画するクラス
+*/
+class Sprite
 {
-	//とりあえずテクスチャーを入れてスプライトを作る
-	//以前設定してたフリップとかは別で設定する
+public:
+	//引数無しコンストラクタ デフォルトテクスチャを代入しデータを初期化
 	Sprite();
+
+	//引数有りコンストラクタ 指定されたテクスチャで生成
 	Sprite(const Texture& tex,const Vector2& anchorpoint = {0.5f,0.5f});
 
+	//テクスチャを設定
 	void SetTexture(const Texture& tex);
-	void SetAnchor(const Vector2& anchorpoint);
 
-	void SetPos(const Vector2& pos);
-	void SetRotation(const float& rotation);
-	void SetColor(const Color& color);
-
-	//サイズを直接書き換える
-	void SetSize(const Vector2& size);
-
-	//元の大きさを基準にサイズを割合で変える
+	//元の大きさを基準にサイズを割合で変えて頂点バッファを送りなおす
 	void SetSizeRate(const Vector2& sizeRate);
 
+	//頂点バッファを送りなおす必要があるものはセッターとゲッターを使用する
+	///セッター
+
+	//アンカーポイントを決定
+	void SetAnchor(const Vector2& anchorpoint);
+
+	//サイズを書き換える
+	void SetSize(const Vector2& size);
+
+	///ゲッター
+	Vector2 GetSize();
+
+	//テクスチャの元の大きさを取得
+	//拡縮処理などを書くときに使用する
+	Vector2 GetInitSize();
+
+	//初期化
+	void Init();
+
+	//更新
 	void Update();
+	
+	//描画
 	void Draw();
+
+	//頂点バッファへデータを送信
+	void SpriteTransferVertexBuffer();
+
+	//座標
+	Vector2 mPosition = { 0,0 };
+	//Z軸回りの回転角
+	float mRotation = 0.0f;
+	//色
+	Color mColor = { 1,1,1,1 };
 
 	//頂点バッファ
 	Microsoft::WRL::ComPtr<ID3D12Resource> mVertBuff;
@@ -50,36 +80,26 @@ struct Sprite
 	//定数バッファ
 	ConstBuffer<ConstBufferDataSprite> mConstBuffer;
 
-	//Z軸回りの回転角
-	float mRotation = 0.0f;
-	//座標
-	Vector3 mPosition = { 0,0,0 };
 	//ワールド行列
 	DirectX::XMMATRIX mMatWorld;
-	//色
-	Color mColor = { 1,1,1,1 };
-
-	const Texture *mTEXTURE;
-
-	Vector2 mAnchorpoint = { 0.5f,0.5f };
-
+	
 	bool mIsFlipX = false;
 	bool mIsFlipY = false;
 
-	Vector2 mTexLeftTop = {0,0};
-	Vector2 mCutSize;
+	Vector2 mCutSize{};
 
+protected:
 	bool mIsInvisible = false;
+
+	Vector2 mInitSize = {};
 
 	Vector2 mSize = { 0.f,0.f };
 
-	Vector2 GetInitSize();
-protected:
-	void Init();
-	
-	Vector2 mInitSize = {};
+	Vector2 mAnchorpoint = { 0.5f,0.5f };
 
-private:
+	Vector2 mTexLeftTop = { 0,0 };
+
+	const Texture* mTEXTURE;
 };
 
 struct SpriteCommon
@@ -95,7 +115,5 @@ struct SpriteCommon
 
 //スプライト共通グラフィックコマンドのセット
 void SpriteCommonBeginDraw();
-
-void SpriteTransferVertexBuffer(const Sprite& sprite);
 
 SpriteCommon SpriteCommonCreate();

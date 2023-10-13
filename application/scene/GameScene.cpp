@@ -1,4 +1,4 @@
-#include "GameScene.h"
+﻿#include "GameScene.h"
 #include "ClearDrawScreen.h"
 #include "LevelLoader.h"
 #include "Stage.h"
@@ -77,17 +77,10 @@ GUI sceneChangeGUI("operator");
 
 void GameScene::Update()
 {
-	if (Input::Keyboard::TriggerKey(DIK_V))
-	{
-		EventManager::Get()->Start("startCamera");
-	}
-
 	//ステータスの更新
 	StatusManager::Update();
 
 	CollideManager::Get()->StatusUpdate();
-
-	static bool debugCam = false;
 
 	//リロードする際の条件たち
 	//プレイヤーの位置が海の座標より下になったらリロード
@@ -96,71 +89,11 @@ void GameScene::Update()
 		StageChanger::Get()->Reload();
 	}
 
+	GameSceneDebugGUI();
+
 	mSkydome.Update();
 
 	StageChanger::Get()->Update();
-
-	sceneChangeGUI.Begin({ 100,100 }, { 300,350 });
-
-	ImGui::Text("fps %f", TimeManager::fps);
-
-	if (ImGui::Button("ShowModel"))
-	{
-		StageChanger::Get()->mShowModel = !StageChanger::Get()->mShowModel;
-	}
-	if (ImGui::Button("ShowCollider"))
-	{
-		StageChanger::Get()->mShowCollider = !StageChanger::Get()->mShowCollider;
-	}
-	if (ImGui::Button("debugCam"))
-	{
-		debugCam = !debugCam;
-	}
-	if (ImGui::Button("CheckEncountSphere"))
-	{
-		EnemyManager::Get()->mIsDrawEncountSphere = !EnemyManager::Get()->mIsDrawEncountSphere;
-	}
-	
-	//ハンドルが空でなければ
-	if (!handles.empty())
-	{
-		//ハンドルの一覧をプルダウンで表示
-		std::vector<const char*> temp;
-		for (size_t i = 0; i < handles.size(); i++)
-		{
-			temp.push_back(handles[i].c_str());
-		}
-		static int32_t select = 0;
-		ImGui::Combo("StageSelect", &select, &temp[0], (int32_t)handles.size());
-
-		//切り替え用の名前に保存
-		output = handles[select];
-	}
-
-	if (ImGui::Button("changeScene"))
-	{
-		StageChanger::Get()->ChangeLevel(*LevelLoader::Get()->
-			GetData(output));
-	}
-
-	ImGui::Text("n:mouseLock Lock/UnLock change");
-	std::string mouseLockStates = "nowMouseLock:";
-	if (pCamera->mouseLockChange)
-	{
-		mouseLockStates += "true";
-	}
-	else
-	{
-		mouseLockStates += "false";
-	}
-	ImGui::Text(mouseLockStates.c_str());
-
-	ImGui::Text("mouseR %f", PlayerCamera::Get()->GetRadius());
-
-	ImGui::Text("position x:%f y:%f z:%f", 
-		player->position.x, player->position.y, player->position.z);
-
-	sceneChangeGUI.End();
 
 	player->Update();
 
@@ -228,4 +161,69 @@ void GameScene::Draw()
 void GameScene::End()
 {
 	ParticleManager::GetInstance()->AllDelete();
+}
+
+void GameScene::GameSceneDebugGUI()
+{
+	sceneChangeGUI.Begin({ 100,100 }, { 300,350 });
+
+	ImGui::Text("fps %f", TimeManager::fps);
+
+	if (ImGui::Button("ShowModel"))
+	{
+		StageChanger::Get()->mShowModel = !StageChanger::Get()->mShowModel;
+	}
+	if (ImGui::Button("ShowCollider"))
+	{
+		StageChanger::Get()->mShowCollider = !StageChanger::Get()->mShowCollider;
+	}
+	if (ImGui::Button("debugCam"))
+	{
+		debugCam = !debugCam;
+	}
+	if (ImGui::Button("CheckEncountSphere"))
+	{
+		EnemyManager::Get()->mIsDrawEncountSphere = !EnemyManager::Get()->mIsDrawEncountSphere;
+	}
+
+	//ハンドルが空でなければ
+	if (!handles.empty())
+	{
+		//ハンドルの一覧をプルダウンで表示
+		std::vector<const char*> temp;
+		for (size_t i = 0; i < handles.size(); i++)
+		{
+			temp.push_back(handles[i].c_str());
+		}
+		static int32_t select = 0;
+		ImGui::Combo("StageSelect", &select, &temp[0], (int32_t)handles.size());
+
+		//切り替え用の名前に保存
+		output = handles[select];
+	}
+
+	if (ImGui::Button("changeScene"))
+	{
+		StageChanger::Get()->ChangeLevel(*LevelLoader::Get()->
+			GetData(output));
+	}
+
+	ImGui::Text("n:mouseLock Lock/UnLock change");
+	std::string mouseLockStates = "nowMouseLock:";
+	if (pCamera->mouseLockChange)
+	{
+		mouseLockStates += "true";
+	}
+	else
+	{
+		mouseLockStates += "false";
+	}
+	ImGui::Text(mouseLockStates.c_str());
+
+	ImGui::Text("mouseR %f", PlayerCamera::Get()->GetRadius());
+
+	ImGui::Text("position x:%f y:%f z:%f",
+		player->position.x, player->position.y, player->position.z);
+
+	sceneChangeGUI.End();
 }

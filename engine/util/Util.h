@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #include <stdint.h>
 #include "Vector2.h"
 #include <vector>
@@ -30,6 +30,8 @@ namespace Util
 		if (value < 0)value *= -1;
 		return value;
 	}
+
+	void ChangeDebug();
 
 	//stringを指定した区切り文字で分割する
 	std::vector<std::string> SplitString(const std::string& str, const char* delimiter);

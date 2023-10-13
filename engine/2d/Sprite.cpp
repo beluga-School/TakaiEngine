@@ -1,4 +1,4 @@
-#include "Sprite.h"
+﻿#include "Sprite.h"
 #include "Result.h"
 #include "Util.h"
 
@@ -9,71 +9,6 @@ SpriteCommon SpriteCommon::sSpriteCommon;
 void SpriteCommon::Initialize()
 {
 	sSpriteCommon = SpriteCommonCreate();
-}
-
-void SpriteTransferVertexBuffer(const Sprite& sprite)
-{
-	sResult = S_FALSE;
-
-	VertexPosUV vertices[] = {
-		{{},{0.0f,1.0f}},
-		{{},{0.0f,0.0f}},
-		{{},{1.0f,1.0f}},
-		{{},{1.0f,0.0f}},
-	};
-
-	//左下、左上、右下、右上
-	enum {
-		LB,LT,RB,RT
-	};
-
-	vertices[LB].pos = { 0.0f,	sprite.mSize.y,	0.0f };
-	vertices[LT].pos = { 0.0f,	0.0f,	0.0f };
-	vertices[RB].pos = { sprite.mSize.x,	sprite.mSize.y,	0.0f };
-	vertices[RT].pos = { sprite.mSize.x,	0.0f,	0.0f };
-
-	float left =	(0.0f - sprite.mAnchorpoint.x) * sprite.mSize.x;
-	float right =	(1.0f - sprite.mAnchorpoint.x) * sprite.mSize.x;
-	float top =		(0.0f - sprite.mAnchorpoint.y) * sprite.mSize.y;
-	float bottom =	(1.0f - sprite.mAnchorpoint.y) * sprite.mSize.y;
-
-	if (sprite.mIsFlipX)
-	{
-		left = -left;
-		right = -right;
-	}
-
-	if (sprite.mIsFlipY)
-	{
-		top = -top;
-		bottom = -bottom;
-	}
-
-	vertices[LB].pos = { left,	bottom,	0.0f };
-	vertices[LT].pos = { left,	top,	0.0f };
-	vertices[RB].pos = { right,	bottom,	0.0f };
-	vertices[RT].pos = { right,	top,	0.0f };
-
-	if (sprite.mTEXTURE->mTexBuff)
-	{
-		D3D12_RESOURCE_DESC resDesc = sprite.mTEXTURE->mGetResDesc;
-
-		float tex_left = sprite.mTexLeftTop.x / resDesc.Width;
-		float tex_right = (sprite.mTexLeftTop.x + sprite.mCutSize.x) / resDesc.Width;
-		float tex_top = sprite.mTexLeftTop.y / resDesc.Height;
-		float tex_bottom = (sprite.mTexLeftTop.y + sprite.mCutSize.y) / resDesc.Height;
-
-		vertices[LB].uv = { tex_left,tex_bottom };
-		vertices[LT].uv = { tex_left,tex_top };
-		vertices[RB].uv = { tex_right,tex_bottom };
-		vertices[RT].uv = { tex_right,tex_top };
-	}
-
-	//頂点バッファへのデータ転送
-	VertexPosUV* vertMap = nullptr;
-	sResult = sprite.mVertBuff->Map(0, nullptr, (void**)&vertMap);
-	memcpy(vertMap, vertices, sizeof(vertices));
-	sprite.mVertBuff->Unmap(0, nullptr);
 }
 
 void SpriteCommonBeginDraw()
@@ -114,7 +49,6 @@ Sprite::Sprite()
 
 	mPosition.x = 0;
 	mPosition.y = 0;
-	mPosition.z = 0;
 	mRotation = 0;
 	mColor = {1,1,1,1};
 
@@ -145,43 +79,31 @@ void Sprite::SetTexture(const Texture& tex)
 	//デフォルトの大きさを保存
 	mInitSize = mSize;
 
-	SpriteTransferVertexBuffer(*this);
+	SpriteTransferVertexBuffer();
 }
 
 void Sprite::SetAnchor(const Vector2& anchorpoint)
 {
 	this->mAnchorpoint = { anchorpoint.x,anchorpoint.y };
 
-	SpriteTransferVertexBuffer(*this);
-}
-
-void Sprite::SetPos(const Vector2& pos)
-{
-	mPosition.x = pos.x;
-	mPosition.y = pos.y;
-	mPosition.z = 0;
-}
-
-void Sprite::SetRotation(const float& rotation)
-{
-	mRotation = rotation;
-}
-
-void Sprite::SetColor(const Color& color)
-{
-	mColor = color;
+	SpriteTransferVertexBuffer();
 }
 
 void Sprite::SetSize(const Vector2& size)
 {
 	mSize = size;
-	SpriteTransferVertexBuffer(*this);
+	SpriteTransferVertexBuffer();
 }
 
 void Sprite::SetSizeRate(const Vector2& sizeRate)
 {
 	mSize = GetInitSize() * sizeRate;
-	SpriteTransferVertexBuffer(*this);
+	SpriteTransferVertexBuffer();
+}
+
+Vector2 Sprite::GetSize()
+{
+	return mSize;
 }
 
 void Sprite::Update()
@@ -191,7 +113,7 @@ void Sprite::Update()
 	//Z軸回転
 	mMatWorld *= XMMatrixRotationZ(XMConvertToRadians(mRotation));
 	//平行移動
-	mMatWorld *= XMMatrixTranslation(mPosition.x, mPosition.y, mPosition.z);
+	mMatWorld *= XMMatrixTranslation(mPosition.x, mPosition.y, 0);
 
 	//定数バッファの転送
 	sResult = mConstBuffer.mBuffer->Map(0, nullptr, (void**)&mConstBuffer.mConstBufferData);
@@ -226,6 +148,71 @@ void Sprite::Draw()
 Vector2 Sprite::GetInitSize()
 {
 	return mInitSize;
+}
+
+void Sprite::SpriteTransferVertexBuffer()
+{
+	sResult = S_FALSE;
+
+	VertexPosUV vertices[] = {
+		{{},{0.0f,1.0f}},
+		{{},{0.0f,0.0f}},
+		{{},{1.0f,1.0f}},
+		{{},{1.0f,0.0f}},
+	};
+
+	//左下、左上、右下、右上
+	enum {
+		LB, LT, RB, RT
+	};
+
+	vertices[LB].pos = { 0.0f,	mSize.y,	0.0f };
+	vertices[LT].pos = { 0.0f,	0.0f,	0.0f };
+	vertices[RB].pos = { mSize.x,	mSize.y,	0.0f };
+	vertices[RT].pos = { mSize.x,	0.0f,	0.0f };
+
+	float left = (0.0f - mAnchorpoint.x) * mSize.x;
+	float right = (1.0f - mAnchorpoint.x) * mSize.x;
+	float top = (0.0f - mAnchorpoint.y) * mSize.y;
+	float bottom = (1.0f - mAnchorpoint.y) * mSize.y;
+
+	if (mIsFlipX)
+	{
+		left = -left;
+		right = -right;
+	}
+
+	if (mIsFlipY)
+	{
+		top = -top;
+		bottom = -bottom;
+	}
+
+	vertices[LB].pos = { left,	bottom,	0.0f };
+	vertices[LT].pos = { left,	top,	0.0f };
+	vertices[RB].pos = { right,	bottom,	0.0f };
+	vertices[RT].pos = { right,	top,	0.0f };
+
+	if (mTEXTURE->mTexBuff)
+	{
+		D3D12_RESOURCE_DESC resDesc = mTEXTURE->mGetResDesc;
+
+		float tex_left = mTexLeftTop.x / resDesc.Width;
+		float tex_right = (mTexLeftTop.x + mCutSize.x) / resDesc.Width;
+		float tex_top = mTexLeftTop.y / resDesc.Height;
+		float tex_bottom = (mTexLeftTop.y + mCutSize.y) / resDesc.Height;
+
+		vertices[LB].uv = { tex_left,tex_bottom };
+		vertices[LT].uv = { tex_left,tex_top };
+		vertices[RB].uv = { tex_right,tex_bottom };
+		vertices[RT].uv = { tex_right,tex_top };
+	}
+
+	//頂点バッファへのデータ転送
+	VertexPosUV* vertMap = nullptr;
+	sResult = mVertBuff->Map(0, nullptr, (void**)&vertMap);
+	memcpy(vertMap, vertices, sizeof(vertices));
+	mVertBuff->Unmap(0, nullptr);
 }
 
 void Sprite::Init()
@@ -289,5 +276,5 @@ void Sprite::Init()
 	//色指定
 	mConstBuffer.mConstBufferData->color = XMFLOAT4(1, 1, 1, 1.0f);
 
-	SpriteTransferVertexBuffer(*this);
+	SpriteTransferVertexBuffer();
 }

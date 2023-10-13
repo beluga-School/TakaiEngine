@@ -1,4 +1,4 @@
-#include "DemoScene.h"
+﻿#include "DemoScene.h"
 #include <ClearDrawScreen.h>
 #include <Sprite.h>
 #include <SceneManager.h>
@@ -29,7 +29,7 @@ void DemoScene::Initialize()
 	ModelManager::LoadModel("boss","boss");
 	
 	mSlime.SetTexture(*TextureManager::GetTexture("slime"));
-	mSlime.mPosition = { 0,0,0 };
+	mSlime.mPosition = { 0,0 };
 
 	testplayer.Initialize();
 	testplayer.SetModel(ModelManager::Get()->GetModel("firewisp"));

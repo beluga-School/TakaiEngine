@@ -1,4 +1,4 @@
-#include "UI.h"
+﻿#include "UI.h"
 #include <ClearDrawScreen.h>
 
 void UI::SetTexture(const std::string& handle)
@@ -11,7 +11,7 @@ void UI::Update()
 	InterFaceUpdate();
 
 	SetSize(scale);
-	sprite.mPosition = { pos.x,pos.y,0};
+	sprite.mPosition = pos;
 	sprite.Update();
 }
 
@@ -31,5 +31,5 @@ void UI::SetSize(const Vector2& size)
 
 void UI::SetColor(const Color& color)
 {
-	sprite.SetColor(color);
+	sprite.mColor = color;
 }
