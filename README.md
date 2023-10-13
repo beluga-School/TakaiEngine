@@ -20,4 +20,5 @@ WindowsSDK:10.0.22000.0
 ## 使用した外部ライブラリ
 - Assimp
 - DirectxTex
-- Dear ImGui
+- Dear ImGui  
+- nlohmann-json
