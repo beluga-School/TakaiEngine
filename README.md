@@ -1,6 +1,6 @@
 # TakaiEngine
 
-DirectX12
+DirectX12  
 WindowsSDK:10.0.22000.0
 
 ## 基本機能  
