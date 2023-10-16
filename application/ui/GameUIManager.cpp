@@ -1,4 +1,4 @@
-#include "GameUIManager.h"
+﻿#include "GameUIManager.h"
 #include "Util.h"
 
 void GameUIManager::LoadResource()
@@ -52,6 +52,7 @@ void GameUIManager::Initialize()
 	tutorialJump.InitScale({ 0.5f,0.5f }, { 0.5f,0.5f });
 	tutorialJump.SetSize({ 0.5f,0.5f });
 	
+
 	tutorialMove.SetTexture("moveUI");
 	tutorialMove.InitPos({ (float)Util::CenterX(),Util::WIN_HEIGHT + 200 }, { (float)Util::CenterX(),Util::WIN_HEIGHT });
 	tutorialMove.InitScale({ 0.5f,0.5f }, { 0.5f,0.5f });

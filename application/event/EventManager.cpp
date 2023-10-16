@@ -1,4 +1,4 @@
-#include "EventManager.h"
+﻿#include "EventManager.h"
 #include "InstantDrawer.h"
 #include "Util.h"
 #include "Input.h"
@@ -171,5 +171,5 @@ void EventManager::Clear()
 {
 	EventManager::Get()->allEvents.clear();
 	EventManager::Get()->nowEvent = nullptr;
-	GameUIManager::Get()->Reset();
+	GameUIManager::Get()->Initialize();
 }

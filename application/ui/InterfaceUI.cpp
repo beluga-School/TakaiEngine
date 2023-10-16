@@ -1,9 +1,11 @@
-#include "InterfaceUI.h"
+﻿#include "InterfaceUI.h"
 
 void InterfaceUI::InitPos(const Vector2& start, const Vector2& end)
 {
 	saveStartPos = start;
 	saveEndPos = end;
+
+	pos = { -1000,-1000 };
 }
 
 void InterfaceUI::InitScale(const Vector2& min, const Vector2& max)
@@ -16,6 +18,8 @@ void InterfaceUI::Initialize()
 {
 	moveTimer.Reset();
 	scalingTimer.Reset();
+
+	move = UIMove::NONE;
 }
 
 void InterfaceUI::Move(UIMove move_)
@@ -27,7 +31,7 @@ void InterfaceUI::Move(UIMove move_)
 	endPos = saveEndPos;
 
 	//位置が初期でないなら
-	if (pos.x != -1000 && pos.y != -1000)
+	if (!GetNowInitPos())
 	{
 		//始まる位置を自身の位置に上書き
 		switch (move)
@@ -65,6 +69,11 @@ bool InterfaceUI::GetScaleEnd(UIMove scale_)
 	//もし現在挙動と異なる方を確認したいと来たら失敗
 	if (scaling != scale_)return false;
 	return scalingTimer.GetEnd();
+}
+
+bool InterfaceUI::GetNowInitPos()
+{
+	return pos.x == -1000 && pos.y == -1000;
 }
 
 void InterfaceUI::InterFaceUpdate()

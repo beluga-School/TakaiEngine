@@ -21,6 +21,12 @@ void UI::Draw()
 	sprite.Draw();
 }
 
+void UI::SetPos(const Vector2& pos_)
+{
+	pos = pos_;
+	sprite.mPosition = pos_;
+}
+
 void UI::SetSize(const Vector2& size)
 {
 	sprite.SetSize({

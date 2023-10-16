@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #include <InterfaceUI.h>
 #include <Sprite.h>
 #include <Texture.h>
@@ -11,6 +11,8 @@ public:
 
 	void Update()override;
 	void Draw()override;
+
+	void SetPos(const Vector2 &pos);
 
 	void SetSize(const Vector2& size);
 

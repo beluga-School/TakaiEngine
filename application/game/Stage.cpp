@@ -155,7 +155,7 @@ void StageChanger::Reset()
 	IDdCube::ResetID();
 
 	EventManager::Get()->Clear();
-	GameUIManager::Get()->Reset();
+	GameUIManager::Get()->Initialize();
 
 	eventCameraNames.clear();
 	loadCamDatas.clear();

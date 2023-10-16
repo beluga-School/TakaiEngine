@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #include <StageTitleUI.h>
 #include <UI.h>
 
@@ -14,6 +14,7 @@ public:
 	static void LoadResource();
 
 	void Move(UIMove uimove,const std::string& handle);
+
 	void Reset();
 
 	void Initialize();

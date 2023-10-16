@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #include <TEasing.h>
 #include <Vector2.h>
 
@@ -6,6 +6,7 @@ enum class UIMove
 {
 	START,
 	END,
+	NONE,
 };
 
 class InterfaceUI
@@ -56,6 +57,12 @@ public:
 	bool GetMoveEnd(UIMove move_);
 
 	bool GetScaleEnd(UIMove scale_);
+
+	/// <summary>
+	/// 現在初期位置にいるかどうか
+	/// </summary>
+	/// <returns></returns>
+	bool GetNowInitPos();
 
 protected:
 	/// <summary>
