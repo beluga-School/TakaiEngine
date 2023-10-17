@@ -1,4 +1,4 @@
-﻿#include "InterfaceUI.h"
+#include "InterfaceUI.h"
 
 void InterfaceUI::InitPos(const Vector2& start, const Vector2& end)
 {
@@ -24,6 +24,11 @@ void InterfaceUI::Initialize()
 
 void InterfaceUI::Move(UIMove move_)
 {
+	if (move == UIMove::NONE && move_ == UIMove::END)
+	{
+		return;
+	}
+
 	move = move_;
 	moveTimer.Start();
 
