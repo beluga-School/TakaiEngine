@@ -297,7 +297,6 @@ void ModelManager::PreLoad()
 	LoadModel("BlankSphere", "BlankSphere", true);
 	LoadModel("ICOSphere", "ICOSphere");
 	LoadModel("targetMark", "targetMark");
-	LoadModel("plate", "plate",true);
 	LoadModel("GoalPaul", "GoalPaul",true);
 	LoadModel("GoalFrag", "GoalFrag",true);
 	LoadModel("star", "star",true);

@@ -1,4 +1,4 @@
-﻿#pragma once
+#pragma once
 #include <StageTitleUI.h>
 #include <UI.h>
 
@@ -35,5 +35,6 @@ private:
 	UI tutorialEyeMove;
 	UI tutorialJump;
 	UI tutorialMove;
+	UI selectTitleUIMountain;
 };
 

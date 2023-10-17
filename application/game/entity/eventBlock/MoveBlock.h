@@ -23,12 +23,6 @@ public:
 	/// <param name="mob"></param>
 	void OnCollide(Mob* mob);
 
-	/// <summary>
-	/// 当たっていない時に読まれる関数
-	/// </summary>
-	/// <param name="mob"></param>
-	void NotCollide(Mob* mob);
-
 	Vector3 startpos{};
 	Vector3 endpos{};
 

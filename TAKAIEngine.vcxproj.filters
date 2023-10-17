@@ -415,6 +415,12 @@
     <Filter Include="Application\Event\TutorialUIMove">
       <UniqueIdentifier>{34311dd3-6451-4197-b509-75d648fdb769}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Application\Entity\EventBlock\SignBoard">
+      <UniqueIdentifier>{8de8169e-5f54-4b01-9f0d-e652962c75c7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Application\Event\StageTitleUIMountain">
+      <UniqueIdentifier>{f729ecd8-dbfe-499f-b0c5-62724f38c281}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="engine\input\Input.cpp">
@@ -705,14 +711,20 @@
     <ClCompile Include="application\event\EventTriggerBox.cpp">
       <Filter>Application\Entity\EventBlock\EventTriggerBox</Filter>
     </ClCompile>
-    <ClCompile Include="TutorialUIEyeMove.cpp">
+    <ClCompile Include="application\ui\TutorialUIEyeMove.cpp">
       <Filter>Application\Event\TutorialUIEyeMove</Filter>
     </ClCompile>
-    <ClCompile Include="TutorialUIJump.cpp">
+    <ClCompile Include="application\ui\TutorialUIJump.cpp">
       <Filter>Application\Event\TutorialUIJump</Filter>
     </ClCompile>
-    <ClCompile Include="TutorialUIMove.cpp">
+    <ClCompile Include="application\ui\TutorialUIMove.cpp">
       <Filter>Application\Event\TutorialUIMove</Filter>
+    </ClCompile>
+    <ClCompile Include="application\game\entity\eventBlock\Signboard.cpp">
+      <Filter>Application\Entity\EventBlock\SignBoard</Filter>
+    </ClCompile>
+    <ClCompile Include="StageTitleUIMountain.cpp">
+      <Filter>Application\Event\StageTitleUIMountain</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1019,14 +1031,20 @@
     <ClInclude Include="application\event\EventTriggerBox.h">
       <Filter>Application\Entity\EventBlock\EventTriggerBox</Filter>
     </ClInclude>
-    <ClInclude Include="TutorialUIEyeMove.h">
+    <ClInclude Include="application\ui\TutorialUIEyeMove.h">
       <Filter>Application\Event\TutorialUIEyeMove</Filter>
     </ClInclude>
-    <ClInclude Include="TutorialUIJump.h">
+    <ClInclude Include="application\ui\TutorialUIJump.h">
       <Filter>Application\Event\TutorialUIJump</Filter>
     </ClInclude>
-    <ClInclude Include="TutorialUIMove.h">
+    <ClInclude Include="application\ui\TutorialUIMove.h">
       <Filter>Application\Event\TutorialUIMove</Filter>
+    </ClInclude>
+    <ClInclude Include="application\game\entity\eventBlock\Signboard.h">
+      <Filter>Application\Entity\EventBlock\SignBoard</Filter>
+    </ClInclude>
+    <ClInclude Include="StageTitleUIMountain.h">
+      <Filter>Application\Event\StageTitleUIMountain</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

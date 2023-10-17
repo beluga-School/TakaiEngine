@@ -1,4 +1,4 @@
-﻿#include "Stage.h"
+#include "Stage.h"
 #include "Model.h"
 #include "MathF.h"
 #include "EnemyManager.h"
@@ -26,11 +26,14 @@
 #include <TutorialUIEyeMove.h>
 #include <TutorialUIJump.h>
 #include <TutorialUIMove.h>
+#include <StageTitleUIMountain.h>
+#include "Signboard.h"
 
 void StageChanger::LoadResource()
 {
 	StageChanger::Get()->goalSystem.LoadResource();
 	Dokan::LoadResource();
+	Signboard::LoadResource();
 }
 
 void StageChanger::ChangeLevel(LevelData& data)
@@ -718,7 +721,7 @@ void StageChanger::ChangeUpdate()
 			//自身の情報を設定する
 			std::vector<std::string> split = Util::SplitString(objectData->eventtrigerName, "_");
 
-			Dokan* dokan = dynamic_cast<Dokan*>(mEventObjects.back().get());
+			Dokan* dokan = static_cast<Dokan*>(mEventObjects.back().get());
 			for (auto str : split)
 			{
 				//移動先の土管IDを取り出す
@@ -797,6 +800,29 @@ void StageChanger::ChangeUpdate()
 			if (objectData->collider.have)
 			{
 				CollisionSet(*objectData);
+			}
+
+			continue;
+		}
+
+		if (objectData->setObjectName == "signboard")
+		{
+			mEventObjects.emplace_back();
+			mEventObjects.back() = std::make_unique<Signboard>();
+			
+			Signboard* signboard = static_cast<Signboard*>(mEventObjects.back().get());
+
+			signboard->Initialize();
+			signboard->SetPicture(objectData->textureName);
+			signboard->SetOutLineState({ 0,0,0,1.0f }, 0.1f);
+
+			//オブジェクトの配置
+			LevelDataExchanger::SetObjectData(*mEventObjects.back(), *objectData);
+
+			//当たり判定を作成
+			if (objectData->collider.have)
+			{
+				CollisionSetEvent(*objectData);
 			}
 
 			continue;
@@ -1111,6 +1137,10 @@ void StageChanger::RegisterEvent(const std::string& eventname)
 	if (eventname == "tutorialUI_Move")
 	{
 		EventManager::Get()->Register<TutorialUIMove>(eventname);
+	}
+	if (eventname == "stageTitleUI_mountain")
+	{
+		EventManager::Get()->Register<StageTitleUIMountain>(eventname);
 	}
 }
 

@@ -1,4 +1,4 @@
-﻿#include "GameUIManager.h"
+#include "GameUIManager.h"
 #include "Util.h"
 
 void GameUIManager::LoadResource()
@@ -7,6 +7,8 @@ void GameUIManager::LoadResource()
 	TextureManager::Load("Resources\\ui\\eyeMoveUI.png", "eyeMoveUI");
 	TextureManager::Load("Resources\\ui\\jumpUI.png", "jumpUI");
 	TextureManager::Load("Resources\\ui\\moveUI.png", "moveUI");
+	TextureManager::Load("Resources\\ui\\moveUI.png", "moveUI");
+	TextureManager::Load("Resources\\stagename_1.png", "stageTitle_1");
 }
 
 void GameUIManager::Move(UIMove uimove, const std::string& handle)
@@ -27,6 +29,10 @@ void GameUIManager::Move(UIMove uimove, const std::string& handle)
 	{
 		tutorialMove.Move(uimove);
 	}
+	if (handle == "stageTitleUI_mountain")
+	{
+		selectTitleUIMountain.Move(uimove);
+	}
 }
 
 void GameUIManager::Reset()
@@ -34,6 +40,7 @@ void GameUIManager::Reset()
 	tutorialEyeMove.Initialize();
 	tutorialJump.Initialize();
 	tutorialMove.Initialize();
+	selectTitleUIMountain.Initialize();
 }
 
 void GameUIManager::Initialize()
@@ -52,11 +59,15 @@ void GameUIManager::Initialize()
 	tutorialJump.InitScale({ 0.5f,0.5f }, { 0.5f,0.5f });
 	tutorialJump.SetSize({ 0.5f,0.5f });
 	
-
 	tutorialMove.SetTexture("moveUI");
 	tutorialMove.InitPos({ (float)Util::CenterX(),Util::WIN_HEIGHT + 200 }, { (float)Util::CenterX(),Util::WIN_HEIGHT });
 	tutorialMove.InitScale({ 0.5f,0.5f }, { 0.5f,0.5f });
 	tutorialMove.SetSize({ 0.5f,0.5f });
+	
+	selectTitleUIMountain.SetTexture("stageTitle_1");
+	selectTitleUIMountain.InitPos({ (float)Util::CenterX(),-200 }, { (float)Util::CenterX(),50 });
+	selectTitleUIMountain.InitScale({ 1,1 }, { 1,1 });
+	selectTitleUIMountain.SetSize({ 1,1 });
 }
 
 void GameUIManager::Update()
@@ -65,6 +76,7 @@ void GameUIManager::Update()
 	tutorialEyeMove.Update();
 	tutorialJump.Update();
 	tutorialMove.Update();
+	selectTitleUIMountain.Update();
 }
 
 void GameUIManager::Draw()
@@ -73,4 +85,5 @@ void GameUIManager::Draw()
 	tutorialEyeMove.Draw();
 	tutorialJump.Draw();
 	tutorialMove.Draw();
+	selectTitleUIMountain.Draw();
 }
