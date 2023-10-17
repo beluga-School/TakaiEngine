@@ -60,9 +60,6 @@ void Player::Update()
 	switch (playerState)
 	{
 	case Player::PlayerState::Normal:
-		SetNoCollsion(false);
-		SetNoGravity(false);
-		SetNoMove(false);
 
 		SideMoveUpdate();
 
@@ -84,15 +81,9 @@ void Player::Update()
 
 		break;
 	case Player::PlayerState::Apparrance:
-		SetNoCollsion(true);
-		SetNoGravity(true);
-		SetNoMove(true);
 
 		break;
 	case Player::PlayerState::Debug:
-		SetNoCollsion(false);
-		SetNoGravity(true);
-		SetNoMove(false);
 
 		SideMoveUpdate();
 
@@ -125,12 +116,14 @@ void Player::Update()
 
 	//Player特有の当たり判定更新(CollideManagerに移す)
 	//ここ置き換えるまでは今日やる
-	
+
 	//Mob側の更新
 	Mob::CollsionUpdate();
 
-	ColUpdate();
+	box.ColDrawerUpdate(position, box.scale);
+	box.CreateCol(position, box.scale);
 
+	ColUpdate();
 
 	//当たり判定
 	///--敵当たり判定
@@ -272,9 +265,6 @@ void Player::ColUpdate()
 	pCol.scale = scale;
 
 	pCol.position += moveValue;
-
-	box.ColDrawerUpdate(pCol.position, pCol.scale);
-	box.CreateCol(pCol.position, pCol.scale);
 
 	for (auto& goal : StageChanger::Get()->mGoals)
 	{
@@ -423,6 +413,24 @@ void Player::HPOverFlow(int32_t value)
 void Player::ChangeMode(const PlayerState& pState)
 {
 	playerState = pState;
+	if (playerState == PlayerState::Normal)
+	{
+		SetNoCollsion(false);
+		SetNoGravity(false);
+		SetNoMove(false);
+	}
+	if (playerState == PlayerState::Apparrance)
+	{
+		SetNoCollsion(true);
+		SetNoGravity(true);
+		SetNoMove(true);
+	}
+	if (playerState == PlayerState::Debug)
+	{
+		SetNoCollsion(false);
+		SetNoGravity(true);
+		SetNoMove(false);
+	}
 }
 
 void Player::Jump()

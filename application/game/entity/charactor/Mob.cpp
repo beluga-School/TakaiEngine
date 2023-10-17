@@ -168,6 +168,8 @@ void Mob::CalcNearestHitLists()
 
 void Mob::JumpUpdate()
 {
+	if (mNoCollision)return;
+
 	jumpManageTimer.Update();
 	stayManageTimer.Update();
 
