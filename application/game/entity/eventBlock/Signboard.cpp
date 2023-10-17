@@ -5,6 +5,7 @@ void Signboard::LoadResource()
 {
 	ModelManager::LoadModel("signboard", "signboard");
 	ModelManager::LoadModel("plate", "plate", true);
+	TextureManager::Load("Resources\\ui\\mountain.png", "mountain");
 }
 
 void Signboard::Initialize()

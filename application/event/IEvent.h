@@ -34,4 +34,16 @@ public:
 	
 	//黒線が出るか
 	bool isUseEventLine = true;
+
+	bool isDead = false;
+
+	enum class EventState
+	{
+		None,
+		Start,
+		RunEvent,
+		End,
+	};
+
+	EventState state = EventState::None;
 };

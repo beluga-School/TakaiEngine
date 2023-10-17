@@ -21,11 +21,17 @@ public:
 	//イベントの上下黒線をなくして、end状態に移行
 	void End(const std::string endEventName = "");
 
-	//現在実行中のイベントを取得
-	std::unique_ptr<IEvent>* GetNowEvent();
+	//線イベント(上下線が出て、それの実行中は他の上下線が出るイベントが実行されない)を検索して返す
+	std::unique_ptr<IEvent>* GetLineEvent();
 
-	//イベント名からイベントを取得
-	std::unique_ptr<IEvent>* GetEvent(const std::string& eventName);
+	//ステージにそのイベントが存在するならそのイベントを取得
+	std::unique_ptr<IEvent>* CheckExestEvent(const std::string& eventName);
+
+	//現在実行中イベントにそのイベントがあればそのイベントを取得
+	std::unique_ptr<IEvent>* GetRunEvent(const std::string& eventName);
+
+	//現在実行中イベントにそのイベントがあればそのイベントを削除
+	void DeleteRunEvent(const std::string& eventName);
 
 	static EventManager* Get()
 	{
@@ -54,16 +60,9 @@ private:
 	EventManager(){};
 	~EventManager(){};
 
-	enum class State
-	{
-		None,
-		Start,
-		RunEvent,
-		End,
-	};
-	
 	std::list<std::unique_ptr<IEvent>> allEvents;
-	std::unique_ptr<IEvent>* nowEvent = nullptr;
+	
+	std::list<std::unique_ptr<IEvent>*> runEvents;
 
 	//上下の線が出現/消滅する時間
 	TEasing::easeTimer startTimer = 0.5f;
@@ -71,7 +70,5 @@ private:
 
 	Vector2 uppos{};
 	Vector2 downpos{};
-
-	State state = State::None;
 };
 

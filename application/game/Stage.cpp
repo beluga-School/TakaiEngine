@@ -72,13 +72,13 @@ void StageChanger::Update()
 	//ステージ切り替え時に実行されるイベントがあればここで実行
 	if (GetNowStageHandle() == "stage_stageselect" &&
 		LevelLoader::Get()->GetData("stage_mountain")->isClear &&
-		EventManager::Get()->GetEvent("nextCamera")->get()->isExecuted == false)
+		EventManager::Get()->CheckExestEvent("nextCamera")->get()->isExecuted == false)
 	{
 		EventManager::Get()->Start("nextCamera");
 	}
 
 	if (GetNowStageHandle() == "stage_mountain" &&
-		EventManager::Get()->GetEvent("startCamera")->get()->isExecuted == false)
+		EventManager::Get()->CheckExestEvent("startCamera")->get()->isExecuted == false)
 	{
 		EventManager::Get()->Start("startCamera");
 	}
@@ -813,6 +813,12 @@ void StageChanger::ChangeUpdate()
 			Signboard* signboard = static_cast<Signboard*>(mEventObjects.back().get());
 
 			signboard->Initialize();
+			//読み込みしてないなら読み込みも行う
+			if (TextureManager::GetTexture(objectData->textureName) == nullptr)
+			{
+				TextureManager::Load(objectData->textureName, objectData->textureName);
+			}
+			
 			signboard->SetPicture(objectData->textureName);
 			signboard->SetOutLineState({ 0,0,0,1.0f }, 0.1f);
 

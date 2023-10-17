@@ -1,4 +1,4 @@
-﻿#include "GameScene.h"
+#include "GameScene.h"
 #include "ClearDrawScreen.h"
 #include "LevelLoader.h"
 #include "Stage.h"
@@ -99,8 +99,8 @@ void GameScene::Update()
 
 	//カメラ更新
 	//イベント中ならカメラ変更
-	if (EventManager::Get()->GetNowEvent() != nullptr && 
-		EventManager::Get()->GetNowEvent()->get()->isUseCamera)
+	if (EventManager::Get()->GetLineEvent() != nullptr &&
+		EventManager::Get()->GetLineEvent()->get()->isUseCamera)
 	{
 		EventCameraManager::Get()->Update();
 	}
@@ -141,10 +141,7 @@ void GameScene::Draw()
 
 	ParticleManager::GetInstance()->Draw();
 
-	if (EventManager::Get()->GetNowEvent() != nullptr)
-	{
-		EventManager::Get()->Draw();
-	}
+	EventManager::Get()->Draw();
 
 	BasicObjectPreDraw(PipelineManager::GetPipeLine("PerlinNoise"));
 
