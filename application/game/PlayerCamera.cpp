@@ -1,4 +1,4 @@
-#include "PlayerCamera.h"
+﻿#include "PlayerCamera.h"
 #include "Player.h"
 #include "MathF.h"
 #include "Input.h"
@@ -110,7 +110,7 @@ void PlayerCamera::BackTransparent()
 			block->SetOutLineAlpha(1.0f);
 		}
 		//段々薄くしたり濃くしたりする
-		block->color_.w = 1.0f - block->transparentTimer.GetTimeRate();
+		//block->color_.w = 1.0f - block->transparentTimer.GetTimeRate();
 	}
 }
 

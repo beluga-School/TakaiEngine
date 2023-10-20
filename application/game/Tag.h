@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 //当たり判定を持つなら、他の当たり判定オブジェクト全てと判定をとる
 //->判定取るよリストに入れる
@@ -21,4 +21,5 @@ enum class TagTable
 	NoDraw = 11,
 	MoveBlock = 12,
 	EventTriggerBox = 13,
+	EventCollision = 14,
 };

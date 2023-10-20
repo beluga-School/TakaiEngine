@@ -1,4 +1,4 @@
-#include "Stage.h"
+﻿#include "Stage.h"
 #include "Model.h"
 #include "MathF.h"
 #include "EnemyManager.h"
@@ -857,6 +857,27 @@ void StageChanger::ChangeUpdate()
 				CollisionSet(*objectData);
 			}
 
+			//透明の当たり判定表示オブジェクトを作成
+			mEntitys.emplace_back();
+			mEntitys.back() = std::make_unique<Block>();
+			mEntitys.back()->Initialize();
+			mEntitys.back()->SetModel(ModelManager::GetModel("Cube"));
+			mEntitys.back()->SetTexture(TextureManager::GetTexture("white"));
+			mEntitys.back()->color_ = { 155.f / 255.f,1,1,0.5f};
+			mEntitys.back()->SetTag(TagTable::EventCollision);
+			mEntitys.back()->SetTag(TagTable::NoDraw);
+			mEntitys.back()->position = objectData->translation + objectData->collider.center;
+			mEntitys.back()->scale = {
+				objectData->scaling.x * objectData->collider.size.x,
+				objectData->scaling.y * objectData->collider.size.y,
+				objectData->scaling.z * objectData->collider.size.z
+			};
+			mEntitys.back()->rotation = {
+				MathF::AngleConvRad(objectData->rotation.x),
+				MathF::AngleConvRad(objectData->rotation.y),
+				MathF::AngleConvRad(objectData->rotation.z)
+			};
+
 			continue;
 		}
 
@@ -1094,18 +1115,6 @@ void StageChanger::DrawModel()
 void StageChanger::DrawCollider()
 {
 	if (mShowCollider == false) return;
-	/*for (auto& obj : mEntitys)
-	{
-		if (!obj->CheckTag(TagTable::Collsion))continue;
-
-		obj->box.Draw();
-	}
-	for (auto& obj : mEventObjects)
-	{
-		if (!obj->CheckTag(TagTable::Collsion))continue;
-
-		obj->box.Draw();
-	}*/
 	for (auto& obj : CollideManager::Get()->allCols)
 	{
 		if (!obj->CheckTag(TagTable::Collsion))continue;
@@ -1113,7 +1122,15 @@ void StageChanger::DrawCollider()
 		obj->box.Draw();
 	}
 	Player::Get()->DrawCollider();
-
+	
+	//半透明デバッグオブジェクトの描画
+	for (auto& obj : mEntitys)
+	{
+		if (!obj->CheckTag(TagTable::EventCollision))continue;
+		
+		BasicObjectPreDraw(PipelineManager::GetPipeLine("GroundToonNDW"));
+		obj->Draw();
+	}
 }
 
 void StageChanger::EventNameUniquePush(const std::string& eventname)
