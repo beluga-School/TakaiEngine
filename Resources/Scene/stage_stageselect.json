@@ -839,7 +839,7 @@
                     2.0
                 ]
             },
-            "event_trigger": "stageTitleUI_mountain",
+            "event_trigger": "nextcamera",
             "setObject": "triggerBox"
         },
         {
@@ -1679,6 +1679,42 @@
             },
             "event_trigger": "stage_grasslands_1",
             "setObject": "dokan_2"
+        },
+        {
+            "type": "MESH",
+            "name": "立方体_立方体.005",
+            "transform": {
+                "translation": [
+                    1.4088106155395508,
+                    -7.018617630004883,
+                    4.1233649253845215
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    8.559972763061523,
+                    9.059905052185059,
+                    4.870754718780518
+                ]
+            },
+            "collider": {
+                "type": "BOX",
+                "center": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "size": [
+                    2.0,
+                    2.0,
+                    2.0
+                ]
+            },
+            "event_trigger": "nextCamera_1",
+            "setObject": "triggerBox"
         }
     ]
 }

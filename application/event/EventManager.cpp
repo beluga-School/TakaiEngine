@@ -39,6 +39,17 @@ bool EventManager::Start(const std::string& startEventName)
 				stage1CamFlag = true;
 			}
 		}
+		if (Event->eventName == "nextCamera")
+		{
+			if (next1CamFlag)
+			{
+				break;
+			}
+			if (StageChanger::Get()->GetNowStageHandle() == "stage_stageselect")
+			{
+				next1CamFlag = true;
+			}
+		}
 
 		//イベントがあれば実行
 		if (Event->eventName == startEventName)
@@ -267,4 +278,5 @@ void EventManager::Clear()
 void EventManager::CamFlagReset()
 {
 	stage1CamFlag = false;
+	next1CamFlag = false;
 }

@@ -74,5 +74,6 @@ private:
 	Vector2 downpos{};
 
 	bool stage1CamFlag = false;
+	bool next1CamFlag = false;
 };
 
