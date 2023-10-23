@@ -2,6 +2,27 @@
     "name": "scene",
     "objects": [
         {
+            "type": "CURVE",
+            "name": "Curve",
+            "transform": {
+                "translation": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            }
+        },
+        {
             "type": "LIGHT",
             "name": "Light",
             "transform": {
@@ -868,7 +889,7 @@
             "transform": {
                 "translation": [
                     75.82356262207031,
-                    -40.48556137084961,
+                    -40.746421813964844,
                     -14.232345581054688
                 ],
                 "rotation": [
@@ -944,7 +965,7 @@
             "name": "Cube.020",
             "transform": {
                 "translation": [
-                    75.6202392578125,
+                    76.16817474365234,
                     -7.182326793670654,
                     -14.232345581054688
                 ],
@@ -1619,7 +1640,7 @@
                     2.0
                 ]
             },
-            "event_trigger": "stage_mountain_0",
+            "event_trigger": "stage_mountain_1",
             "setObject": "dokan_1"
         },
         {
@@ -1656,8 +1677,8 @@
                     2.0
                 ]
             },
-            "event_trigger": "stage_grasslands_0",
-            "setObject": "dokan_1"
+            "event_trigger": "stage_grasslands_1",
+            "setObject": "dokan_2"
         }
     ]
 }
