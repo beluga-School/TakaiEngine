@@ -1,4 +1,4 @@
-﻿#include "Stage.h"
+#include "Stage.h"
 #include "Model.h"
 #include "MathF.h"
 #include "EnemyManager.h"
@@ -75,12 +75,6 @@ void StageChanger::Update()
 		EventManager::Get()->CheckExestEvent("nextCamera")->get()->isExecuted == false)
 	{
 		EventManager::Get()->Start("nextCamera");
-	}
-
-	if (GetNowStageHandle() == "stage_mountain" &&
-		EventManager::Get()->CheckExestEvent("startCamera")->get()->isExecuted == false)
-	{
-		EventManager::Get()->Start("startCamera");
 	}
 
 	for (auto& obj : mEntitys)
@@ -164,6 +158,13 @@ void StageChanger::Reset()
 	loadCamDatas.clear();
 	loadTargetDatas.clear();
 	EventCameraManager::Get()->Reset();
+
+	//入ったときのステージ名がステージセレクト以外なら
+	if (!(GetNowStageHandle() == "stage_stageselect"))
+	{
+		//カメライベントの実行フラグを戻す
+		EventManager::Get()->CamFlagReset();
+	}
 }
 
 void StageChanger::NormalObjectSet(const LevelData::ObjectData& data)

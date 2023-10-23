@@ -1,4 +1,4 @@
-﻿#include "PlayerCamera.h"
+#include "PlayerCamera.h"
 #include "Player.h"
 #include "MathF.h"
 #include "Input.h"
@@ -55,6 +55,8 @@ void PlayerCamera::Update()
 void PlayerCamera::Draw()
 {
 	Obj3d::Draw();
+
+	transparentObj.Draw();
 }
 
 void PlayerCamera::BackTransparent()
@@ -72,45 +74,32 @@ void PlayerCamera::BackTransparent()
 	transparentObj.Update(*Camera::sCamera);
 
 	//当たったオブジェクトの描画フラグを折る
-	for (auto& obj : StageChanger::Get()->mEntitys)
+	for (auto& obj : CollideManager::Get()->allCols)
 	{
 		//ブロック以外なら次へ
 		if (!obj->CheckTag(TagTable::Block))continue;
 		
-		//ブロックなのが確定したのでブロック型に変換
-		Block* block = static_cast<Block*>(obj.get());
+		//タイマー式じゃなくてプレイヤーとの位置関係で透けさせる？
 
 		//当たってたら消える
-		if (Collsions::BoxColAABB(block->box, transparentObj))
+		if (Collsions::BoxColAABB(obj->box, transparentObj))
 		{
 			//地面が透けてほしくないので、地面の座標がプレイヤーの足元より下なら
 			//当たってても透ける処理をスキップする
-			if (block->box.position.y + block->box.scale.y / 2 <= player->GetFeet())
+			if (obj->box.position.y + obj->box.scale.y / 2 <= player->GetFeet())
 			{
 				continue;
 			}
-
-			if (block->transparentTimer.GetStarted() == false)
-			{
-				block->transparentTimer.Start();
-			}
-			else if (block->transparentTimer.GetReverseStarted())
-			{
-				block->transparentTimer.Reset();
-			}
-			//アウトラインはすぐに消す
-			block->SetOutLineAlpha(0.0f);
+			obj->transports = Util::Saturate(Camera::sCamera->mEye.z - obj->position.z,10);
+			//obj->transports = Camera::sCamera->mEye.z;
 		}
 		//当たってないなら段々濃くする
 		else
 		{
-			//タイマーのTimeRateが0.0~1.0の範囲で動くので、その値を反転させたものをAlphaとして扱う
-			block->transparentTimer.ReverseStart();
-			//アウトラインはすぐに戻す
-			block->SetOutLineAlpha(1.0f);
+			obj->transports = 0.0f;
 		}
 		//段々薄くしたり濃くしたりする
-		//block->color_.w = 1.0f - block->transparentTimer.GetTimeRate();
+		obj->color_.w = 1.0f - obj->transports;
 	}
 }
 

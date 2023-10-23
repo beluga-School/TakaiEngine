@@ -56,6 +56,8 @@ public:
 		allEvents.back()->eventName = eventName;
 	}
 
+	void CamFlagReset();
+
 private:
 	EventManager(){};
 	~EventManager(){};
@@ -70,5 +72,7 @@ private:
 
 	Vector2 uppos{};
 	Vector2 downpos{};
+
+	bool stage1CamFlag = false;
 };
 

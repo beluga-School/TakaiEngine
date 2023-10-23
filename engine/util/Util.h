@@ -1,4 +1,4 @@
-﻿#pragma once
+#pragma once
 #include <stdint.h>
 #include "Vector2.h"
 #include <vector>
@@ -31,7 +31,8 @@ namespace Util
 		return value;
 	}
 
-	void ChangeDebug();
+	//0~1の範囲に縮小する
+	float Saturate(float value, float max_);
 
 	//stringを指定した区切り文字で分割する
 	std::vector<std::string> SplitString(const std::string& str, const char* delimiter);

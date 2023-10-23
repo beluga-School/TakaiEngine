@@ -1,4 +1,4 @@
-﻿#pragma once
+#pragma once
 #include <DirectXMath.h>
 #include <d3dcompiler.h>
 #include "DirectXInit.h"
@@ -113,7 +113,7 @@ public:
 	void SetOutLineState(const Float4& color, float thickness);
 	void SetOutLineAlpha(const float& alpha);
 
-	TEasing::easeTimer transparentTimer = 0.5f;
+	float transports = 0.0f;
 
 	Vector2 mTiling = { 1,1 };
 	Vector2 mOffset = { 0,0 };

@@ -1,4 +1,7 @@
-﻿#include "Util.h"
+#include "Util.h"
+#include <math.h>
+#include <minmax.h>
+
 using namespace std;
 
 bool Util::OutOfScreen(const Vector2& pos)
@@ -16,6 +19,12 @@ uint32_t Util::CenterX()
 uint32_t Util::CenterY()
 {
     return WIN_HEIGHT / 2;
+}
+
+float Util::Saturate(float value,float max_)
+{
+    value = Util::Abs(value);
+    return min(value / max_, 1.0f);
 }
 
 vector<string> Util::SplitString(const string& str, const char* delimiter)

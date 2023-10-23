@@ -6,6 +6,7 @@
 #include "GoalSystem.h"
 #include <EventCameraManager.h>
 #include <GameUIManager.h>
+#include <Stage.h>
 
 void EventManager::LoadResource()
 {
@@ -23,6 +24,19 @@ bool EventManager::Start(const std::string& startEventName)
 			{
 				//新しく入ってきた方は拒否
 				if (GetLineEvent()->get()->isUseEventLine)return false;
+			}
+		}
+
+		//イベントカメラなら複数実行を防ぐためのフラグを立てる
+		if (Event->eventName == "startCamera")
+		{
+			if (stage1CamFlag)
+			{
+				break;
+			}
+			if (StageChanger::Get()->GetNowStageHandle() == "stage_mountain")
+			{
+				stage1CamFlag = true;
 			}
 		}
 
@@ -169,6 +183,8 @@ void EventManager::Update()
 
 	for (auto& Event : runEvents)
 	{
+		if (runEvents.size() <= 0)break;
+
 		switch (Event->get()->state)
 		{
 		case IEvent::EventState::None:
@@ -246,4 +262,9 @@ void EventManager::Clear()
 	EventManager::Get()->runEvents.clear();
 	EventManager::Get()->allEvents.clear();
 	GameUIManager::Get()->Initialize();
+}
+
+void EventManager::CamFlagReset()
+{
+	stage1CamFlag = false;
 }

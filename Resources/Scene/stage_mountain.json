@@ -2037,7 +2037,7 @@
             "transform": {
                 "translation": [
                     -0.7662361860275269,
-                    -23.288619995117188,
+                    -13.183051109313965,
                     7.512589454650879
                 ],
                 "rotation": [
@@ -2925,44 +2925,6 @@
         },
         {
             "type": "MESH",
-            "name": "円柱.001",
-            "transform": {
-                "translation": [
-                    2.43133544921875,
-                    -29.447147369384766,
-                    2.02778697013855
-                ],
-                "rotation": [
-                    0.0,
-                    -0.0,
-                    0.0
-                ],
-                "scaling": [
-                    2.0,
-                    2.0,
-                    2.0
-                ]
-            },
-            "file_name": "dokan",
-            "collider": {
-                "type": "BOX",
-                "center": [
-                    0.0,
-                    0.0,
-                    1.0
-                ],
-                "size": [
-                    2.0,
-                    2.0,
-                    2.0
-                ]
-            },
-            "texture": "",
-            "event_trigger": "stage_stageselect_0",
-            "setObject": "dokan_0"
-        },
-        {
-            "type": "MESH",
             "name": "立方体.010",
             "transform": {
                 "translation": [
@@ -3380,6 +3342,79 @@
                     ]
                 }
             ]
+        },
+        {
+            "type": "MESH",
+            "name": "立方体_立方体.002",
+            "transform": {
+                "translation": [
+                    2.522463321685791,
+                    -29.234556198120117,
+                    6.983936309814453
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    5.128872871398926,
+                    5.135135650634766,
+                    4.870754718780518
+                ]
+            },
+            "collider": {
+                "type": "BOX",
+                "center": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "size": [
+                    2.0,
+                    2.0,
+                    2.0
+                ]
+            },
+            "event_trigger": "startCamera",
+            "setObject": "triggerBox"
+        },
+        {
+            "type": "MESH",
+            "name": "土管",
+            "transform": {
+                "translation": [
+                    2.8580875396728516,
+                    -29.460119247436523,
+                    2.1751208305358887
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    2.0,
+                    2.0,
+                    2.0
+                ]
+            },
+            "file_name": "dokan",
+            "collider": {
+                "type": "BOX",
+                "center": [
+                    0.0,
+                    0.0,
+                    1.0
+                ],
+                "size": [
+                    2.0,
+                    2.0,
+                    2.0
+                ]
+            },
+            "event_trigger": "stage_stageselect_1",
+            "setObject": "dokan_1"
         }
     ]
 }

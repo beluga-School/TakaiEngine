@@ -1,4 +1,4 @@
-﻿#include "Billboard.h"
+#include "Billboard.h"
 #include "DirectXInit.h"
 #include "PlayerCamera.h"
 
@@ -60,8 +60,6 @@ void Billboard::Update(const Camera& camera)
 
 	constBufferOutLine.mConstBufferData->color = mOutLineColor;
 	constBufferOutLine.mConstBufferData->thickness = mOutLineThickness;
-
-	transparentTimer.Update();
 }
 
 BillboardY::BillboardY()
@@ -135,8 +133,6 @@ void BillboardY::Update(const Camera& camera)
 	//実は頂点シェーダーとかは共通化した方がいいんじゃないか
 	cBufferNoise.mConstBufferData->viewproj = camera.mMatView * camera.mMatProjection;
 	cBufferNoise.mConstBufferData->matWorld = matWorld;
-
-	transparentTimer.Update();
 }
 
 void BillboardY::DrawNoise()

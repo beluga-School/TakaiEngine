@@ -1,4 +1,4 @@
-﻿#include "Obj.h"
+#include "Obj.h"
 #include "Result.h"
 
 SpecialDraw::DISOLVE DISOLVE_ = 0;
@@ -62,8 +62,6 @@ void Obj3d::Update(const Camera& camera)
 
 	constBufferOutLine.mConstBufferData->color = mOutLineColor;
 	constBufferOutLine.mConstBufferData->thickness = mOutLineThickness;
-
-	transparentTimer.Update();
 }
 
 Vector3 Obj3d::GetWorldTrans()
