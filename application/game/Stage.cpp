@@ -65,17 +65,17 @@ void StageChanger::Update()
 		//切り替え開始(同期処理)
 		ChangeUpdate();
 
+		//ステージ切り替え時に実行されるイベントがあればここで実行
+		if (GetNowStageHandle() == "stage_stageselect" &&
+			LevelLoader::Get()->GetData("stage_mountain")->isClear &&
+			EventManager::Get()->CheckExestEvent("nextCamera")->get()->isExecuted == false)
+		{
+			EventManager::Get()->Start("nextCamera");
+		}
+
 		//切り替えが終わったら暗転を解除
 		SceneChange::Get()->Open();
 	}
-
-	////ステージ切り替え時に実行されるイベントがあればここで実行
-	//if (GetNowStageHandle() == "stage_stageselect" &&
-	//	LevelLoader::Get()->GetData("stage_mountain")->isClear &&
-	//	EventManager::Get()->CheckExestEvent("nextCamera")->get()->isExecuted == false)
-	//{
-	//	EventManager::Get()->Start("nextCamera");
-	//}
 
 	for (auto& obj : mEntitys)
 	{
@@ -667,6 +667,9 @@ void StageChanger::ChangeUpdate()
 
 			//オブジェクトの配置
 			LevelDataExchanger::SetObjectData(*mEventObjects.back(), *objectData);
+
+			//タイリングの設定.
+			mEventObjects.back()->mTiling = objectData->tiling;
 
 			//当たり判定を作成
 			if (objectData->collider.have)
