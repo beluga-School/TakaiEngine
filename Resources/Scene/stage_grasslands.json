@@ -331,7 +331,7 @@
                 ]
             },
             "event_trigger": "stage_stageselect_2",
-            "setObject": "dokan_0"
+            "setObject": "dokan_1"
         },
         {
             "type": "MESH",
