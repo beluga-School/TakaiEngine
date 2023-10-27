@@ -1,6 +1,9 @@
 #pragma once
 #include <vector>
 
+/*! Vector3
+	3Dベクトル
+*/
 class Vector3
 {
 public:

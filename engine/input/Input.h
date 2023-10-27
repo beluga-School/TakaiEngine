@@ -44,6 +44,9 @@ enum class PadButton
 
 namespace Input
 {
+	/*! Mouse
+		マウスの入力を取得するクラス
+	*/
 	class Mouse
 	{
 	public:
@@ -81,6 +84,9 @@ namespace Input
 		DIMOUSESTATE mOldState{};
 	};
 
+	/*! Pad
+		ゲームパッドの入力を取得するクラス
+	*/
 	class Pad
 	{
 	public:
@@ -192,7 +198,10 @@ namespace Input
 		static XINPUT_STATE sPState;
 		static XINPUT_STATE sOldpState;
 	};
-
+	
+	/*! Keyboard
+		キーボードの入力を取得するクラス
+	*/
 	class Keyboard
 	{
 	public:
@@ -235,5 +244,3 @@ namespace Input
 		Keyboard& operator=(const Keyboard&) = delete;
 	};
 }
-
-//キーボード、パッド、マウスでクラスわけして、namespaceでまとめる形にする

@@ -4,6 +4,9 @@
 #include <list>
 #include <Billboard.h>
 
+/*! InstantDrawer
+	DxLibライクな描画関数を利用できるクラス
+*/
 class InstantDrawer
 {
 public:

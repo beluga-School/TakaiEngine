@@ -5,6 +5,9 @@
 #include "Vector2.h"
 #include <string>
 
+/*! GUI
+	ImGuiのGUIを生成するクラス
+*/
 class GUI
 {
 public:
@@ -17,6 +20,9 @@ private:
 	bool mSetPosFlag = false;
 };
 
+/*! ImguiManager
+	ImGuiの初期化などをまとめたクラス
+*/
 class ImguiManager
 {
 public:

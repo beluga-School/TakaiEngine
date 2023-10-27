@@ -2,6 +2,9 @@
 #include <Windows.h>
 #include <mmsystem.h>
 
+/* TimeManager
+	FPSの管理やデルタタイムの管理を行うクラス
+*/
 namespace TimeManager
 {
 	extern float deltaTime;

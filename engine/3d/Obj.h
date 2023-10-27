@@ -55,6 +55,9 @@ namespace SpecialDraw
 	static TEXTUREBLEND TEXTUREBLEND_;
 }
 
+/*! Obj3d
+	3Dオブジェクト
+*/
 class Obj3d
 {
 public:

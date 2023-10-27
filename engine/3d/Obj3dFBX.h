@@ -1,6 +1,9 @@
 #pragma once
 #include "Obj.h"
 
+/*! Obj3dFBX
+	FBX描画用3Dオブジェクト
+*/
 class Obj3dFBX
 {
 public:

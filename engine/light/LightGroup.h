@@ -1,4 +1,4 @@
-﻿#pragma once
+#pragma once
 #include "DirectionalLight.h"
 #include "Vector3.h"
 #include "ConstBuffer.h"
@@ -22,6 +22,9 @@ struct LightGroupData
 	PointLight::ConstBufferData mPointLights[sPOINTLIGHT_NUM];
 };
 
+/*! LightGroup
+	ライトデータを管理するクラス
+*/
 class LightGroup
 {
 public://変数
@@ -29,9 +32,6 @@ public://変数
 
 	//全てのオブジェクトで共通のライトデータ
 	static std::unique_ptr<LightGroup> sLightGroup;
-	/*static void SetLight(std::unique_ptr<LightGroup> light) {
-		lightGroup = light;
-	};*/
 	   
 	//定数バッファ
 	ConstBuffer<LightGroupData> mConstBuff;

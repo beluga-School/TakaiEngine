@@ -1,6 +1,9 @@
-﻿#pragma once
+#pragma once
 #include "Sprite.h"
 
+/*! DebugText
+	デバッグテキストクラス(ImGuiの導入以降未使用)
+*/
 class DebugText
 {
 public:

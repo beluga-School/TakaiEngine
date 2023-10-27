@@ -3,7 +3,10 @@
 #include <Camera.h>
 #include "TEasing.h"
 
-//デバッグカメラ用の3dオブジェクト これの位置や回転を動かし、追従させる設計
+/*! DebugCamera
+	デバッグカメラ用の3dオブジェクト 
+	これの位置や回転を動かし、追従させる設計
+*/
 class DebugCamera : public Obj3d
 {
 public:

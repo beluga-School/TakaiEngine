@@ -3,6 +3,9 @@
 #include "AbstractSceneFactory.h"
 #include <memory>
 
+/*! SceneManager
+	シーンを管理し、切り替えるクラス
+*/
 class SceneManager
 {
 public:
@@ -13,9 +16,6 @@ public:
 
 	//現在のシーン
 	std::unique_ptr<IScene> mCurrentscene = nullptr;
-
-	//ファクトリーを使用したシーン切り替え(バグあり)
-	//void ChangeScene(const std::string& sceneName);
 
 	template <class NextScene> void ChangeScene()
 	{

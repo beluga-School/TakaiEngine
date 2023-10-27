@@ -3,6 +3,9 @@
 #include "Matrix4.h"
 #include <math.h>
 
+/*! Quaternion
+	クオータニオン
+*/
 class Quaternion
 {
 public:

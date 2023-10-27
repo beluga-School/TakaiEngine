@@ -1,40 +1,20 @@
-﻿#include <Windows.h>
+#include <Windows.h>
 #include <d3d12.h>
 #include <dxgi1_6.h>
 #include <DirectXMath.h>
 #include <d3dcompiler.h>
-#include <iostream>
-#include <memory>
-
-//自分でクラス化したやつ
 #include "WinAPI.h"
 #include "TimeManager.h"
-
-#include "Result.h"
 #include "Input.h"
 #include "DirectXInit.h"
-#include "Vertex.h"
-
-#include "ViewProjection.h"
+#include "Camera.h"
 #include "Texture.h"
-
 #include "Sprite.h"
 #include "Pipeline.h"
 #include "ClearDrawScreen.h"
-#include "Billboard.h"
-
-#include "SceneFactory.h"
 #include "SceneManager.h"
-
 #include "Sound.h"
-#include "DebugText.h"
-
-#include "Particle.h"
-#include "MathF.h"
-
 #include "ImguiManager.h"
-#include <string>
-
 #include "PostEffect.h"
 
 #include "GameScene.h"
@@ -124,8 +104,6 @@ int32_t WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_  HINSTANCE hPrevInstan
 
 	//シーンの初期化
 	SceneManager *scenemanager = SceneManager::Get();
-	//scenemanager->ChangeScene<GameScene>();
-	//scenemanager->ChangeScene<ShaderTestScene>();
 	scenemanager->ChangeScene<TitleScene>();
 
 #pragma endregion 描画初期化処理
@@ -186,18 +164,6 @@ int32_t WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_  HINSTANCE hPrevInstan
 		PostDraw();
 
 #pragma endregion ポストエフェクト対応の描画方式
-
-#pragma region 元々の描画方式
-		/*{
-			PreDraw();
-			scenemanager->Draw();
-
-			imguiManager->PreDraw();
-			imguiManager->Draw();
-
-			PostDraw();
-		}*/
-#pragma region 元々の描画方式
 
 		//--5.画面入れかえおわり--//
 

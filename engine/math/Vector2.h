@@ -1,6 +1,9 @@
 #pragma once
 #include <stdint.h>
 
+/*! Vector2
+	2Dベクトル
+*/
 class Vector2
 {
 public:

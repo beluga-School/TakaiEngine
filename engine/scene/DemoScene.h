@@ -1,6 +1,6 @@
 #pragma once
 #include "Pipeline.h"
-#include "ViewProjection.h"
+#include "Camera.h"
 #include "Obj.h"
 #include "IScene.h"
 #include "Input.h"

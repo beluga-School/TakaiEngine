@@ -4,6 +4,9 @@
 #include "Float4.h"
 #include "ConstBuffer.h"
 
+/*! DirectionalLight
+	ディレクショナルライト
+*/
 class DirectionalLight
 {
 public://変数

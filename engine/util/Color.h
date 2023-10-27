@@ -1,6 +1,9 @@
 #pragma once
 #include "Float4.h"
 
+/*! Color
+	色情報
+*/
 class Color
 {
 public:

@@ -19,10 +19,13 @@ struct Mesh
 	std::wstring diffuseMap;		//テクスチャのファイル
 };
 
+/*! Model
+	3Dオブジェクトに使用するモデル
+*/
 class Model : public VertexData
 {
 public:
-	//TODO:mMeshesだけで済むように改善したい
+	
 	//Obj用メッシュ
 	Mesh mMesh;
 

@@ -16,6 +16,9 @@ struct ImportSettings
 	bool mInverseV = false;				//V座標を反転させるか
 };
 
+/*! AssimpLoader
+	Assimpでの読み込みを行うクラス
+*/
 class AssimpLoader
 {
 public:

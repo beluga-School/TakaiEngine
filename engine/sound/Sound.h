@@ -29,6 +29,9 @@ struct SoundData
 	uint32_t bufferSize;
 };
 
+/*! SoundManager
+	音声を管理し、ハンドルで呼び出すクラス
+*/
 class SoundManager
 {
 public:

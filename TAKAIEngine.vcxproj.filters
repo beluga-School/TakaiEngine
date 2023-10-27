@@ -294,9 +294,6 @@
     <Filter Include="Engine\Particle2D\IParticle2D">
       <UniqueIdentifier>{2b2f2d23-579e-4ea8-8278-ef6f77dff9d0}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Engine\Particle2D\Particle2DEmitter">
-      <UniqueIdentifier>{139ac01f-15af-4ad8-bfe9-73df1389fc92}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Application\Scene\TitleScene">
       <UniqueIdentifier>{126ea705-ae9c-4d2c-998f-b10a66c42174}</UniqueIdentifier>
     </Filter>

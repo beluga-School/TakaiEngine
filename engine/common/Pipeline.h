@@ -69,6 +69,10 @@ struct PipelineSet
 	void Create();
 };
 
+/*! PipelineManager
+	パイプラインを管理するクラス
+	Initializeで先にパイプラインを登録し、文字列で使用するパイプラインを切り変える
+*/
 class PipelineManager
 {
 public:

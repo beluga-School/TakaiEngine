@@ -1,6 +1,9 @@
 #pragma once
 #include "Vector3.h"
 
+/* TEasing
+	イージング挙動を利用できる関数群
+*/
 namespace TEasing
 {
 	float lerp(const float& start, const float& end, const float& timeRate);
@@ -43,6 +46,9 @@ namespace TEasing
 	float OutExpo(const float& timeRate);
 	float OutExpo(const float& start, const float& end, const float& timeRate);
 
+	/* easeTimer
+		イージング挙動を管理するタイマー構造体
+	*/
 	struct easeTimer
 	{
 		easeTimer(const float& maxTime_ = 1.0f) {

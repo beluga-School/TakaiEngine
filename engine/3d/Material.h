@@ -4,6 +4,9 @@
 #include "Vector3.h"
 #include "Texture.h"
 
+/*! Material
+	3Dオブジェクトに使用するマテリアル
+*/
 struct Material
 {
 	std::string mName;			//マテリアルの名前

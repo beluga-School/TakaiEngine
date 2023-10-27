@@ -1,6 +1,9 @@
 #pragma once
 #include <Windows.h>
 
+/*! WinAPI
+	ウィンドウを生成するクラス
+*/
 class WinAPI
 {
 public:

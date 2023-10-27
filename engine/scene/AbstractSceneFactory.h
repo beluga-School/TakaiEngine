@@ -2,7 +2,9 @@
 #include "IScene.h"
 #include <string>
 
-//シーン工場
+/*! AbstractSceneFactory
+	シーン工場(未実装)
+*/
 class AbstractSceneFactory
 {
 public:

@@ -2,6 +2,9 @@
 #include "Vector3.h"
 #include <stdint.h>
 
+/*! Matrix4
+	行列
+*/
 class Matrix4
 {
 public:

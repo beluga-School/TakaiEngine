@@ -17,6 +17,9 @@ struct ConstBufferDataSprite {
 
 template <class Format>
 
+/*! ConstBuffer
+	定数バッファ
+*/
 class ConstBuffer
 {
 public:

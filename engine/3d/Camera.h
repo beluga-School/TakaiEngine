@@ -5,8 +5,12 @@
 #include <memory>
 #include "Matrix4.h"
 
+//前方宣言
 class Obj3d;
 
+/*! Camera
+	3D空間上に配置するカメラ
+*/
 class Camera
 {
 public:
@@ -39,7 +43,5 @@ public:
 private:
 	float mDebugAngleX = 0;
 	float mDebugAngleY = 0;
-
-	//Vector2 savePos = { 0,0 };
 };
 

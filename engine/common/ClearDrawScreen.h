@@ -14,14 +14,16 @@ void GeometryObjectPreDraw(const PipelineSet& geometryPipelineSet);
 
 void PostDraw();
 
+/*! Screen
+	デプスバッファを管理するクラス
+	名前適切ではないかも
+*/
 class Screen
 {
 public:
 	Microsoft::WRL::ComPtr<ID3D12DescriptorHeap> dsvHeap = nullptr;
 
 	Microsoft::WRL::ComPtr<ID3D12Resource> depthBuff;
-
-	//D3D12_RESOURCE_BARRIER barrierDesc{};
 
 	static Screen* Get() {
 		static Screen instance;

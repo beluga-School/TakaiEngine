@@ -5,6 +5,9 @@
 #include <string>
 #include <unordered_map>
 
+/* Util
+	便利関数群
+*/
 namespace Util
 {
 	//ウィンドウサイズ

@@ -3,6 +3,9 @@
 #include "TEasing.h"
 #include "Billboard.h"
 
+/*! IParticle2D
+	2Dパーティクルの基底クラス
+*/
 class IParticle2D
 {
 public:

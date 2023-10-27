@@ -1,6 +1,9 @@
 #pragma once
 #include "Vector3.h"
 
+/*! PointLight
+	点光源
+*/
 class PointLight
 {
 public://定数バッファに送るデータ

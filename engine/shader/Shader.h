@@ -2,6 +2,10 @@
 #include <d3dcompiler.h>
 #include <wrl.h>
 
+/*! Shader
+	シェーダーコンパイルに必要なものを持ち、
+	コンパイルの機能も持つ
+*/
 class Shader
 {
 public:

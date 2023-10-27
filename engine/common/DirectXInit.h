@@ -14,6 +14,9 @@ static std::vector<Microsoft::WRL::ComPtr<IDXGIAdapter4>> sAdapters;
 //ここに特定の名前をもつアダプターオブジェクトが入る
 static IDXGIAdapter4* sTmpAdapter = nullptr;
 
+/*! DirectX12
+	DirectX12の機能を管理するクラス
+*/
 class DirectX12
 {
 public:

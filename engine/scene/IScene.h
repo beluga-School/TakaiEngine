@@ -1,7 +1,12 @@
 #pragma once
 #include <string>
 
+//前方宣言
 class SceneManager;
+
+/*! IScene
+	シーンのインターフェース
+*/
 class IScene
 {
 public:
