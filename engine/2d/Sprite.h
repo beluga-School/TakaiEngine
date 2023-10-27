@@ -1,4 +1,4 @@
-﻿#pragma once
+#pragma once
 #include "Vector3.h"
 #include "Vector2.h"
 #include "Matrix4.h"
@@ -83,6 +83,7 @@ public:
 	//ワールド行列
 	DirectX::XMMATRIX mMatWorld;
 	
+	//反転
 	bool mIsFlipX = false;
 	bool mIsFlipY = false;
 

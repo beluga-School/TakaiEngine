@@ -1,5 +1,5 @@
 #include "EventCameraManager.h"
-#include "ViewProjection.h"
+#include "Camera.h"
 #include <EventManager.h>
 
 bool EventCameraManager::SetEventCamera(const std::string& eventname)

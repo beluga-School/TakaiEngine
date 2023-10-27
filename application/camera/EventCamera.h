@@ -1,5 +1,5 @@
 #pragma once
-#include "ViewProjection.h"
+#include "Camera.h"
 #include <list>
 #include "Obj.h"
 

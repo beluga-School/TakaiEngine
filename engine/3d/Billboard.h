@@ -1,6 +1,6 @@
 #pragma once
 #include "Obj.h"
-#include "ViewProjection.h"
+#include "Camera.h"
 #include "Matrix4.h"
 
 struct ConstBufferPerlinNoise
@@ -9,6 +9,9 @@ struct ConstBufferPerlinNoise
 	Matrix4 matWorld;
 };
 
+/*! Billboard
+	ビルボード描画の3Dオブジェクト
+*/
 class Billboard : public Obj3d
 {
 public:
@@ -18,6 +21,9 @@ public:
 	void Update(const Camera &camera);
 };
 
+/*! Billboard
+	ビルボード描画の3Dオブジェクト(Y軸が正面を向く)
+*/
 class BillboardY : public Obj3d
 {
 public:

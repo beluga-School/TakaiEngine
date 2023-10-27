@@ -7,7 +7,7 @@
 #include <memory>
 #include "Matrix4.h"
 #include "LightGroup.h"
-#include "ViewProjection.h"
+#include "Camera.h"
 #include "Pipeline.h"
 #include "TEasing.h"
 

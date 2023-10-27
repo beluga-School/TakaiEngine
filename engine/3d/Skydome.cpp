@@ -1,5 +1,5 @@
 #include "Skydome.h"
-#include "ViewProjection.h"
+#include "Camera.h"
 
 void Skydome::Initialize()
 {

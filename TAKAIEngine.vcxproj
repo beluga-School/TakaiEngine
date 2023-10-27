@@ -187,7 +187,7 @@
     <ClCompile Include="engine\math\Vector3.cpp" />
     <ClCompile Include="engine\math\Float4.cpp" />
     <ClCompile Include="engine\3d\Vertex.cpp" />
-    <ClCompile Include="engine\3d\ViewProjection.cpp" />
+    <ClCompile Include="engine\3d\Camera.cpp" />
     <ClCompile Include="engine\3d\WinAPI.cpp" />
     <ClCompile Include="application\camera\EventCameraManager.cpp" />
     <ClCompile Include="application\event\EventTriggerBox.cpp" />
@@ -291,7 +291,7 @@
     <ClInclude Include="engine\math\Vector3.h" />
     <ClInclude Include="engine\math\Float4.h" />
     <ClInclude Include="engine\3d\Vertex.h" />
-    <ClInclude Include="engine\3d\ViewProjection.h" />
+    <ClInclude Include="engine\3d\Camera.h" />
     <ClInclude Include="engine\common\WinAPI.h" />
     <ClInclude Include="application\camera\EventCameraManager.h" />
     <ClInclude Include="application\event\EventTriggerBox.h" />

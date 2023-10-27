@@ -1,7 +1,7 @@
 #include "ObjParticle.h"
 #include "MathF.h"
 #include "TimeManager.h"
-#include "ViewProjection.h"
+#include "Camera.h"
 #include "ClearDrawScreen.h"
 
 using namespace std;

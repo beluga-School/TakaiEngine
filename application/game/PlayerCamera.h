@@ -1,5 +1,5 @@
 #pragma once
-#include "ViewProjection.h"
+#include "Camera.h"
 #include "TEasing.h"
 #include "Obj.h"
 #include "Collision.h"

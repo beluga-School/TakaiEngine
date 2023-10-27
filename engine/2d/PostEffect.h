@@ -6,6 +6,9 @@ struct ConstBufferTime
 	float time;
 };
 
+/*! PostEffect
+	ポストエフェクト用の事前描画と描画後処理を持つクラス
+*/
 class PostEffect 
 {
 public:
