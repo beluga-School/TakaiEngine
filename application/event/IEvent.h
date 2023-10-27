@@ -3,7 +3,9 @@
 #include "EventCamera.h"
 #include <list>
 
-//イベントのインターフェース
+/*! IEvent
+	イベントのインターフェース
+*/
 class IEvent
 {
 public:

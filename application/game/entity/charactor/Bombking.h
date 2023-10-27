@@ -1,6 +1,9 @@
 #pragma once
 #include "Enemy.h"
 
+/*! Bombking
+	ボムキング型の敵を配置するクラス(AI未実装)
+*/
 class Bombking : public Enemy
 {
 public:
@@ -15,16 +18,6 @@ public:
 	void Encount()override;
 
 private:
-	////ここも後でActTableに置き換える
-	//enum class BossState
-	//{
-	//	None,
-	//	Encount,
-	//	Tracking,
-	//	Punch,
-	//	HipDrop,
-	//	CoolTime,
-	//}state = BossState::None;
 
 	void Tracking();
 

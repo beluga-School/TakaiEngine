@@ -2,6 +2,9 @@
 #include "Obj.h"
 #include "Block.h"
 
+/*! EventBlock
+	土管や大砲など、他のものと当たり判定をしたいオブジェクトが継承するクラスステージ間を移動できる土管クラス
+*/
 class EventBlock : public Block
 {
 public:

@@ -4,6 +4,9 @@
 #include "TEasing.h"
 #include "ImguiManager.h"
 
+/*! TitleScene
+	タイトルシーンクラス
+*/
 class TitleScene : public IScene
 {
 public:
@@ -14,8 +17,7 @@ public:
 	void End()override;
 
 private:
-	//Sprite titleUI;
-
+	
 	Sprite whiteOut;
 	Sprite backHexagon;
 	Sprite mStart;

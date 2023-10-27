@@ -1,6 +1,9 @@
 #pragma once
 #include "IEvent.h"
 
+/*! StageTitleUIMountain
+	ステージ1のUIを呼び出すイベント
+*/
 class StageTitleUIMountain : public IEvent
 {
 public:

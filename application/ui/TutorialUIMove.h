@@ -3,6 +3,9 @@
 #include "TEasing.h"
 #include "UI.h"
 
+/*! TutorialUIMove
+	左右移動の操作チュートリアルを表示するイベント
+*/
 class TutorialUIMove : public IEvent
 {
 public:

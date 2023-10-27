@@ -1,4 +1,4 @@
-﻿#pragma once
+#pragma once
 #include <TEasing.h>
 #include <Vector2.h>
 
@@ -9,6 +9,9 @@ enum class UIMove
 	NONE,
 };
 
+/*! InterfaceUI
+	UIのインターフェース
+*/
 class InterfaceUI
 {
 public:

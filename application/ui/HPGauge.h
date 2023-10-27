@@ -4,6 +4,9 @@
 #include "Status.h"
 #include "TEasing.h"
 
+/*! Gauge
+	ゲージを作りやすくするクラス
+*/
 class Gauge
 {
 public:

@@ -57,6 +57,9 @@ struct RayCubeColOutput
 	bool none = true;
 };
 
+/*! Collsions
+	オブジェクト同士の衝突判定関数のまとめ
+*/
 namespace Collsions
 {
 	//レイと平面の当たり判定

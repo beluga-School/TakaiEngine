@@ -3,6 +3,9 @@
 #include <list>
 #include <string>
 
+/*! Status
+	減少、上昇などをトリガーで取得できるステータス用構造体
+*/
 struct Status
 {
 public:

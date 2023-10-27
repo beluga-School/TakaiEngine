@@ -4,6 +4,9 @@
 #include "EventBlock.h"
 #include "ImguiManager.h"
 
+/*! Goal
+	ゴールオブジェクト
+*/
 class Goal : public EventBlock
 {
 public:

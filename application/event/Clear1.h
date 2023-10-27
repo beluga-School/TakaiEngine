@@ -2,6 +2,9 @@
 #include "IEvent.h"
 #include "TEasing.h"
 
+/*! Clear1
+	ステージ1クリア後のイベント
+*/
 class Clear1 : public IEvent
 {
 public:

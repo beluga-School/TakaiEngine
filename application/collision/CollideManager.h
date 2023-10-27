@@ -14,6 +14,9 @@ void UniqueObjectPushBack(std::list<IDdCube>& list, const IDdCube& col);
 //リストの中に同じオブジェクトがあれば、そのオブジェクトを削除する
 void UniqueObjectErase(std::list<IDdCube>& list, const IDdCube& col);
 
+/*! CollideManager
+	オブジェクト同士の衝突判定を行うクラス
+*/
 class CollideManager
 {
 public:

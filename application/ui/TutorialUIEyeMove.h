@@ -3,6 +3,9 @@
 #include "TEasing.h"
 #include "UI.h"
 
+/*! TutorialUIEyeMove
+	視点移動の操作チュートリアルを表示するイベント
+*/
 class TutorialUIEyeMove : public IEvent
 {
 public:

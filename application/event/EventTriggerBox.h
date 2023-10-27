@@ -1,6 +1,9 @@
 #pragma once
 #include <Entity.h>
 
+/*! EventTriggerBox
+	触れるとイベントを発生させるクラス
+*/
 class EventTriggerBox : public Entity
 {
 public:

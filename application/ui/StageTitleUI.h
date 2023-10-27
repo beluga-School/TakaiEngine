@@ -2,6 +2,9 @@
 #include "Sprite.h"
 #include "TEasing.h"
 
+/*! StageTitleUI
+	ステージのタイトルを表示するUI
+*/
 class StageTitleUI
 {
 public:

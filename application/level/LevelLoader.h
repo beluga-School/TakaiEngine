@@ -12,6 +12,9 @@
 #include <json.hpp>
 #pragma warning (pop)
 
+/*! LevelLoader
+	blenderアドオンから出力したjsonファイルからステージ情報を読み取り、LevelDataに保存するクラス
+*/
 class LevelLoader
 {
 public:

@@ -4,7 +4,9 @@
 #include "Tag.h"
 #include <vector>
 
-//3d描画される全てのオブジェクト
+/*! Entity
+	ゲーム内で3d描画される全てのオブジェクトが継承するクラス
+*/
 class Entity : public Obj3d
 {
 public:

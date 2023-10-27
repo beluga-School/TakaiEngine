@@ -14,8 +14,8 @@ enum class CheckDirection
 	CD_RIGHT,
 };
 
+//前方宣言
 class Entity;
-
 //当たり判定用に、ID識別ができるようにしたCube
 struct IDdCube : public Cube
 {
@@ -48,7 +48,9 @@ private:
 	static uint32_t sMasterIDCount;
 };
 
-//四角で判定をとるオブジェクトの共通項だけ取り出したクラス
+/*! Box
+	四角で判定をとるオブジェクトの共通項だけ取り出したクラス
+*/
 class Box : public Obj3d
 {
 public:

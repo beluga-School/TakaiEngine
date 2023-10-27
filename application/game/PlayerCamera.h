@@ -4,7 +4,9 @@
 #include "Obj.h"
 #include "Collision.h"
 
-//プレイヤーのポインタを取得し、それにsCameraを追従させる
+/*! PlayerCamera
+	プレイヤーのポインタを取得し、それにsCameraを追従させる
+*/
 class PlayerCamera : public Obj3d
 {
 public:

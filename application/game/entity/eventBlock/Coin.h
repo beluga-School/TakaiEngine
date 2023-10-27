@@ -1,6 +1,9 @@
 #pragma once
 #include "EventBlock.h"
 
+/*! Coin
+	コインオブジェクト(未使用)
+*/
 class Coin final : public EventBlock
 {
 public:

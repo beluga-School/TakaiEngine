@@ -8,6 +8,9 @@
 #include <Sprite.h>
 #include <DebugCamera.h>
 
+/*! DemoScene
+	デモシーン
+*/
 class DemoScene : public IScene
 {
 public:

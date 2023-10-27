@@ -4,6 +4,9 @@
 #include <Sprite.h>
 #include <Util.h>
 
+/*! SceneChange
+	シーン切り替え時の暗転を行うクラス
+*/
 class SceneChange
 {
 public:

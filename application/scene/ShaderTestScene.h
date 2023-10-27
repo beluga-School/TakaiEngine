@@ -5,6 +5,9 @@
 #include "Billboard.h"
 #include "ImguiManager.h"
 
+/*! ShaderTestScene
+    シェーダーテストクラス
+*/
 class ShaderTestScene :
     public IScene
 {

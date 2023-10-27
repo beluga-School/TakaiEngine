@@ -2,7 +2,9 @@
 #include <StageTitleUI.h>
 #include <UI.h>
 
-//ゲーム画面上に出てくる2DUIを管理するマネージャー
+/*! GameUIManager
+	ゲーム画面上に出てくる2DUIを管理するマネージャー
+*/
 class GameUIManager
 {
 public:

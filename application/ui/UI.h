@@ -1,9 +1,11 @@
-﻿#pragma once
+#pragma once
 #include <InterfaceUI.h>
 #include <Sprite.h>
 #include <Texture.h>
 
-//テクスチャベタ貼りのUIを作れるクラス
+/*! UI
+	テクスチャベタ貼りのUIを作れるクラス
+*/
 class UI : public InterfaceUI
 {
 public:

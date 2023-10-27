@@ -2,6 +2,10 @@
 #include "Obj.h"
 #include "TEasing.h"
 
+/*! Sea
+	海
+	プレイヤーが落ちるとリセットになる
+*/
 class Sea final : protected Obj3d
 {
 public:

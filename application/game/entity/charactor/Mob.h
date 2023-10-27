@@ -2,6 +2,9 @@
 #include "Entity.h"
 #include "Box.h"
 
+/*! Mob
+	敵味方問わず、ブロックと当たり判定を持つ生き物が継承するクラス
+*/
 class Mob : public Entity
 {
 public:

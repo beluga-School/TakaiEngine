@@ -1,4 +1,4 @@
-﻿#pragma once
+#pragma once
 #include "Obj.h"
 #include "Collision.h"
 #include "Mob.h"
@@ -15,6 +15,9 @@ enum class ActTable
 	Dead,		//死亡状態
 };
 
+/*! Enemy
+	敵の共通項を取り出したクラス
+*/
 class Enemy : public Mob
 {
 public:

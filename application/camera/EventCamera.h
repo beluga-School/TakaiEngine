@@ -9,6 +9,9 @@ struct EventCamData
 	Vector3 rotation{};
 };
 
+/*! EventCamera
+	イベント時に使用するカメラの情報を3Dオブジェクトに保存して管理するクラス
+*/
 class EventCamera
 {
 public:

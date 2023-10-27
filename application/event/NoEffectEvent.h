@@ -2,7 +2,9 @@
 #include "IEvent.h"
 #include "TEasing.h"
 
-//特に効果がないイベント　カメラで演出したいときに使う
+/*! NoEffectEvent
+	特に効果がないイベント　カメラで演出したいときに使う
+*/
 class NoEffectEvent :public IEvent
 {
 public:

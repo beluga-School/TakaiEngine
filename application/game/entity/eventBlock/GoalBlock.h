@@ -3,6 +3,9 @@
 #include "GoalSystem.h"
 #include "TEasing.h"
 
+/*! GoalBlock
+	触れるとゴール処理が入るクラス
+*/
 class GoalBlock : public EventBlock
 {
 public:

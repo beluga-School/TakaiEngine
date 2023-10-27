@@ -4,6 +4,9 @@
 #include <string>
 #include <list>
 
+/*! LevelData
+	blenderアドオンから出力したjsonファイルからステージ情報
+*/
 struct LevelData
 {
 	struct ColliderData {

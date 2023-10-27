@@ -1,6 +1,9 @@
 #pragma once
 #include "UI.h"
 
+/*! StarUI
+	スター取得の状況を表示するクラス(未使用)
+*/
 class StarUI
 {
 public:

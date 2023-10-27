@@ -3,6 +3,9 @@
 #include "Enemy.h"
 #include "ImguiManager.h"
 
+/*! EnemyManager
+	エネミーを管理するクラス
+*/
 class EnemyManager
 {
 public:

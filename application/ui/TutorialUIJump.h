@@ -3,6 +3,9 @@
 #include "TEasing.h"
 #include "UI.h"
 
+/*! TutorialUIJump
+	ジャンプの操作チュートリアルを表示するイベント
+*/
 class TutorialUIJump : public IEvent
 {
 public:

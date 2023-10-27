@@ -2,6 +2,9 @@
 #include "EventBlock.h"
 #include "Mob.h"
 
+/*! Cannon
+	モブが当たると飛んでいく大砲クラス
+*/
 class Cannon : public EventBlock
 {
 public:

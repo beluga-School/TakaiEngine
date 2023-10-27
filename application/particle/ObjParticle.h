@@ -3,6 +3,9 @@
 #include <list>
 #include "Obj.h"
 
+/*! CubeParticle
+	3Dオブジェクトパーティクルのインターフェース
+*/
 class IParticle
 {
 public:
@@ -19,7 +22,9 @@ public:
 	bool isdead = true;
 };
 
-
+/*! CubeParticle
+	四角3Dオブジェクトを使用したパーティクル
+*/
 class CubeParticle : public IParticle
 {
 public:
@@ -42,6 +47,9 @@ private:
 	Vector3 rotateSpeed = { 0,0,0 };
 };
 
+/*! ParticleManager
+	3Dオブジェクトパーティクルを生成、管理するクラス
+*/
 class ParticleManager
 {
 public:

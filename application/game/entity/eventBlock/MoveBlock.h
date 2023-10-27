@@ -3,6 +3,9 @@
 #include "TEasing.h"
 #include "Mob.h"
 
+/*! MoveBlock
+	2点間を移動するブロックのクラス
+*/
 class MoveBlock : public EventBlock
 {
 public:

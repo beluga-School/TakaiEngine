@@ -11,6 +11,9 @@ struct DokanInfo
 	std::string stageName = "";
 };
 
+/*! Dokan
+	ステージ間を移動できる土管クラス
+*/
 class Dokan : public EventBlock
 {
 private:

@@ -2,6 +2,9 @@
 #include "Sprite.h"
 #include "TEasing.h"
 
+/*! ClearManage
+	クリア状況の管理を行うクラス
+*/
 class ClearManage
 {
 public:
@@ -18,9 +21,9 @@ private:
 	ClearManage(){};
 };
 
-//ゴール後の処理を進めるクラス
-//今はスプライト出すだけ
-//今後ステージに持たせて、1ステージ=1ゴールをもつ、という形にしたい
+/*! Goal
+	ゴール後の処理を行うクラス
+*/
 class GoalSystem
 {
 public:

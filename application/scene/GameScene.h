@@ -1,4 +1,4 @@
-﻿#pragma once
+#pragma once
 #include "IScene.h"
 #include "Skydome.h"
 #include "DebugCamera.h"
@@ -8,6 +8,9 @@
 #include "Billboard.h"
 #include "SceneChange.h"
 
+/*! GameScene
+	ゲームシーン
+*/
 class GameScene : public IScene
 {
 public:

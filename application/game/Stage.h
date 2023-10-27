@@ -45,7 +45,9 @@ enum CameraNumber
 	Target = -2,
 };
 
-//イベントカメラデータをまとめて読み込む用のデータ配列
+/*! LoadCamData
+	イベントカメラデータをまとめて読み込む用の構造体
+*/
 struct LoadCamData
 {
 	LoadCamData(int32_t eventnumber_, EventCamData camData_) 
@@ -60,6 +62,9 @@ struct LoadCamData
 	EventCamData camData{};
 };
 
+/*! LoadTargetData
+	イベントカメラのターゲット情報を一時保存するための構造体
+*/
 struct LoadTargetData
 {
 	LoadTargetData(std::string& eventname_,const Vector3& target_)
@@ -73,6 +78,9 @@ struct LoadTargetData
 	Vector3 target = {};
 };
 
+/*! StageChanger
+	ステージを読み込み生成するクラス
+*/
 class StageChanger
 {
 public:

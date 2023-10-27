@@ -6,6 +6,9 @@
 #include "IEvent.h"
 #include <memory>
 
+/*! EventManager
+	各イベントを登録し、文字列で呼び出すクラス
+*/
 class EventManager
 {
 public:

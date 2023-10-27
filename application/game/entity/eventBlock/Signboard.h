@@ -4,6 +4,9 @@
 #include "Mob.h"
 #include "Obj.h"
 
+/*! Signboard
+	テクスチャを貼れる看板クラス
+*/
 class Signboard : public EventBlock
 {
 public:

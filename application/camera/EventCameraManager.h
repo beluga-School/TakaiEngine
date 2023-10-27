@@ -30,6 +30,9 @@ struct EventCamManageData
 	void Update();
 };
 
+/*! EventCameraManager
+	イベントカメラを管理し、文字列で呼び出すクラス
+*/
 class EventCameraManager
 {
 public:

@@ -5,6 +5,9 @@
 #include "TEasing.h"
 #include "MathF.h"
 
+/*! GEnemy
+	地面に立つエネミーのクラス(スライム)
+*/
 class GEnemy : public Enemy
 {
 public:

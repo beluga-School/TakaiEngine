@@ -1,6 +1,9 @@
 #pragma once
 #include "EventBlock.h"
 
+/*! Star
+	プレイヤーが取得できるスターのクラス
+*/
 class Star final : public EventBlock
 {
 public:

@@ -5,6 +5,9 @@
 #include "Mob.h"
 #include "ImguiManager.h"
 
+/*! Player
+	プレイヤークラス
+*/
 class Player final : public Mob
 {
 public:
