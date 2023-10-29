@@ -29,7 +29,7 @@ public:
 		float sizerateX,float sizerateY,
 		const std::string& handle, const Anchor& anchor = Anchor::CENTER);
 	static void DrawGraph3D(const Vector3& pos,float width,float height,const std::string& handle);
-
+	
 	static void AllUpdate();
 	static void AllDraw2D();
 	static void AllDraw3D();

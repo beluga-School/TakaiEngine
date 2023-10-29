@@ -54,12 +54,6 @@
     <Filter Include="Engine\3D\Camera">
       <UniqueIdentifier>{86e85785-ec94-4f7e-a2e0-3ebb2544837c}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Application\Scene">
-      <UniqueIdentifier>{2c6ff3ad-9765-446e-9ab0-ff9007a90aba}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Application\Scene\DemoScene">
-      <UniqueIdentifier>{3dd87bb2-25f3-4e33-bd37-68681c1108df}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Engine\Scene">
       <UniqueIdentifier>{a0bad2f0-43a5-48c4-b1c9-91412c61f0a7}</UniqueIdentifier>
     </Filter>
@@ -207,9 +201,6 @@
     <Filter Include="Engine\Common\DebugCamera">
       <UniqueIdentifier>{70ef922a-4056-48e4-82e5-51b904fd5cd2}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Application\Scene\GameScene">
-      <UniqueIdentifier>{ce4cfff0-1968-40c3-ba1f-e331b0cf73d7}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Application\Charactor">
       <UniqueIdentifier>{3dc3946a-e343-4223-9cad-c16ebeddf8c8}</UniqueIdentifier>
     </Filter>
@@ -245,9 +236,6 @@
     </Filter>
     <Filter Include="シェーダー\OutLine">
       <UniqueIdentifier>{3a999208-4231-44d7-a413-3bbd4485369e}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Application\Scene\ShaderTestScene">
-      <UniqueIdentifier>{9c532383-23be-4611-a497-7bc868e0295a}</UniqueIdentifier>
     </Filter>
     <Filter Include="シェーダー\Skydome">
       <UniqueIdentifier>{3375785c-d162-4aba-9511-095e8576d516}</UniqueIdentifier>
@@ -290,9 +278,6 @@
     </Filter>
     <Filter Include="Engine\Particle2D\IParticle2D">
       <UniqueIdentifier>{2b2f2d23-579e-4ea8-8278-ef6f77dff9d0}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Application\Scene\TitleScene">
-      <UniqueIdentifier>{126ea705-ae9c-4d2c-998f-b10a66c42174}</UniqueIdentifier>
     </Filter>
     <Filter Include="Application\Entity">
       <UniqueIdentifier>{1594da5a-a29e-4cf2-ac1c-40929b166ee2}</UniqueIdentifier>
@@ -418,6 +403,21 @@
     <Filter Include="Application\StageChanger">
       <UniqueIdentifier>{6349d7e7-a1d1-4114-aa41-235be1768fa3}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Application\Scene">
+      <UniqueIdentifier>{2c6ff3ad-9765-446e-9ab0-ff9007a90aba}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Application\Scene\GameScene">
+      <UniqueIdentifier>{ce4cfff0-1968-40c3-ba1f-e331b0cf73d7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Application\Scene\ShaderTestScene">
+      <UniqueIdentifier>{9c532383-23be-4611-a497-7bc868e0295a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Application\Scene\TitleScene">
+      <UniqueIdentifier>{126ea705-ae9c-4d2c-998f-b10a66c42174}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Application\Scene\DemoScene">
+      <UniqueIdentifier>{da1d0167-9c1a-4b76-b57c-8b4c7f9fe5ac}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="engine\input\Input.cpp">
@@ -449,9 +449,6 @@
     </ClCompile>
     <ClCompile Include="External\imgui\imgui_widgets.cpp">
       <Filter>Engine\External\ImGui</Filter>
-    </ClCompile>
-    <ClCompile Include="engine\scene\DemoScene.cpp">
-      <Filter>Application\Scene\DemoScene</Filter>
     </ClCompile>
     <ClCompile Include="engine\scene\IScene.cpp">
       <Filter>Engine\Scene\IScene</Filter>
@@ -639,7 +636,7 @@
     <ClCompile Include="application\scene\SceneChange.cpp">
       <Filter>Application\SceneChange</Filter>
     </ClCompile>
-    <ClCompile Include="application\game\StageChanger.cpp">
+    <ClCompile Include="application\stage\StageChanger.cpp">
       <Filter>Application\StageChanger</Filter>
     </ClCompile>
     <ClCompile Include="application\game\Status.cpp">
@@ -720,8 +717,11 @@
     <ClCompile Include="application\game\entity\eventBlock\Signboard.cpp">
       <Filter>Application\Entity\EventBlock\SignBoard</Filter>
     </ClCompile>
-    <ClCompile Include="StageTitleUIMountain.cpp">
+    <ClCompile Include="application\event\StageTitleUIMountain.cpp">
       <Filter>Application\Event\StageTitleUIMountain</Filter>
+    </ClCompile>
+    <ClCompile Include="DemoScene.cpp">
+      <Filter>Application\Scene\DemoScene</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -754,9 +754,6 @@
     </ClInclude>
     <ClInclude Include="engine\scene\IScene.h">
       <Filter>Engine\Scene\IScene</Filter>
-    </ClInclude>
-    <ClInclude Include="engine\scene\DemoScene.h">
-      <Filter>Application\Scene\DemoScene</Filter>
     </ClInclude>
     <ClInclude Include="application\level\LevelLoader.h">
       <Filter>Application\LevelLoader</Filter>
@@ -953,7 +950,7 @@
     <ClInclude Include="application\scene\SceneChange.h">
       <Filter>Application\SceneChange</Filter>
     </ClInclude>
-    <ClInclude Include="application\game\StageChanger.h">
+    <ClInclude Include="application\stage\StageChanger.h">
       <Filter>Application\StageChanger</Filter>
     </ClInclude>
     <ClInclude Include="application\game\Status.h">
@@ -1040,8 +1037,11 @@
     <ClInclude Include="application\game\entity\eventBlock\Signboard.h">
       <Filter>Application\Entity\EventBlock\SignBoard</Filter>
     </ClInclude>
-    <ClInclude Include="StageTitleUIMountain.h">
+    <ClInclude Include="application\event\StageTitleUIMountain.h">
       <Filter>Application\Event\StageTitleUIMountain</Filter>
+    </ClInclude>
+    <ClInclude Include="DemoScene.h">
+      <Filter>Application\Scene\DemoScene</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

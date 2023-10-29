@@ -1,5 +1,5 @@
 #include "Clear1.h"
-#include "Stage.h"
+#include "StageChanger.h"
 #include "GoalSystem.h"
 
 void Clear1::Start()

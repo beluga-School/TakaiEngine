@@ -231,7 +231,7 @@ void StageChanger::CollisionSet(const LevelData::ObjectData& data)
 	//エンティティリストで参照されたくないので、コリジョンのタグを付ける
 	mEntitys.back()->SetTag(TagTable::Collsion);
 	
-	mEntitys.back()->box.SetModel(ModelManager::GetModel("BlankCube"));
+	mEntitys.back()->box.SetModel(ModelManager::GetModel("Cube"));
 	mEntitys.back()->box.SetTexture(TextureManager::Get()->GetTexture("white"));
 
 	mEntitys.back()->box.position = data.translation + data.collider.center;
@@ -261,7 +261,7 @@ void StageChanger::CollisionSetEvent(const LevelData::ObjectData& data)
 	//コリジョンオンリー描画で使うため、コリジョンのタグを付ける
 	mEventObjects.back()->SetTag(TagTable::Collsion);
 
-	mEventObjects.back()->box.SetModel(ModelManager::GetModel("BlankCube"));
+	mEventObjects.back()->box.SetModel(ModelManager::GetModel("Cube"));
 	mEventObjects.back()->box.SetTexture(TextureManager::Get()->GetTexture("white"));
 
 	mEventObjects.back()->box.position = data.translation + data.collider.center;
@@ -366,7 +366,7 @@ void StageChanger::EvenyObjectSet(const LevelData::ObjectData& data)
 			//ブロックのタグを外す
 			mEventObjects.back()->DeleteTag(TagTable::Block);
 
-			mEventObjects.back()->box.SetModel(ModelManager::GetModel("BlankCube"));
+			mEventObjects.back()->box.SetModel(ModelManager::GetModel("Cube"));
 			mEventObjects.back()->box.SetTexture(TextureManager::Get()->GetTexture("white"));
 
 			mEventObjects.back()->box.position = data.translation + data.collider.center;
@@ -533,7 +533,7 @@ void StageChanger::ChangeUpdate()
 				//エンティティリストで参照されたくないので、コリジョンのタグを付ける
 				EnemyManager::Get()->enemyList.back()->SetTag(TagTable::Collsion);
 
-				EnemyManager::Get()->enemyList.back()->box.SetModel(ModelManager::GetModel("BlankCube"));
+				EnemyManager::Get()->enemyList.back()->box.SetModel(ModelManager::GetModel("Cube"));
 				EnemyManager::Get()->enemyList.back()->box.SetTexture(TextureManager::Get()->GetTexture("white"));
 
 				//中心位置をずらす情報を保存
@@ -585,7 +585,7 @@ void StageChanger::ChangeUpdate()
 				//エンティティリストで参照されたくないので、コリジョンのタグを付ける
 				EnemyManager::Get()->enemyList.back()->SetTag(TagTable::Collsion);
 
-				EnemyManager::Get()->enemyList.back()->box.SetModel(ModelManager::GetModel("BlankCube"));
+				EnemyManager::Get()->enemyList.back()->box.SetModel(ModelManager::GetModel("Cube"));
 				EnemyManager::Get()->enemyList.back()->box.SetTexture(TextureManager::Get()->GetTexture("white"));
 
 				//中心位置をずらす情報を保存
@@ -703,7 +703,7 @@ void StageChanger::ChangeUpdate()
 				//コリジョンオンリー描画で使うため、コリジョンのタグを付ける
 				mEventObjects.back()->SetTag(TagTable::Collsion);
 
-				mEventObjects.back()->box.SetModel(ModelManager::GetModel("BlankCube"));
+				mEventObjects.back()->box.SetModel(ModelManager::GetModel("Cube"));
 				mEventObjects.back()->box.SetTexture(TextureManager::Get()->GetTexture("white"));
 
 				mEventObjects.back()->box.position = objectData->translation + objectData->collider.center;
@@ -1035,7 +1035,7 @@ void StageChanger::SetPlayer(const LevelData::ObjectData& data)
 	Player::Get()->rotation = data.rotation;
 
 	Player::Get()->box.SetTexture(TextureManager::GetTexture("white"));
-	Player::Get()->box.SetModel(ModelManager::GetModel("BlankCube"));
+	Player::Get()->box.SetModel(ModelManager::GetModel("Cube"));
 
 	Player::Get()->box.position = Player::Get()->position;
 	Player::Get()->box.scale = Player::Get()->scale;
@@ -1123,6 +1123,7 @@ void StageChanger::DrawCollider()
 	{
 		if (!obj->CheckTag(TagTable::Collsion))continue;
 
+		BasicObjectPreDraw("WireFrame");
 		obj->box.Draw();
 	}
 	Player::Get()->DrawCollider();

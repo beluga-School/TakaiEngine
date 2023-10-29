@@ -150,6 +150,9 @@ private:
 	//パーリンノイズをポストエフェクトとして使うパイプライン
 	void PerlinNoisePostEffectPipeLine();
 
+	//ライン描画パイプライン
+	void LinePipeLine();
+
 	PipelineManager(){};
 	~PipelineManager(){};
 };

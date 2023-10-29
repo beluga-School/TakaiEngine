@@ -4,7 +4,7 @@
 #include "Input.h"
 #include "Util.h"
 #include "ImguiManager.h"
-#include "Stage.h"
+#include "StageChanger.h"
 #include "Star.h"
 #include "EventManager.h"
 

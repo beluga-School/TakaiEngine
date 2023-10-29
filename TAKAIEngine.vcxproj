@@ -65,7 +65,7 @@
       <PreprocessorDefinitions>_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
-      <AdditionalIncludeDirectories>$(ProjectDir)engine\2d;$(ProjectDir)engine\3d;$(ProjectDir)engine\common;$(ProjectDir)engine\input;$(ProjectDir)engine\libManage;$(ProjectDir)engine\light;$(ProjectDir)engine\math;$(ProjectDir)engine\shader;$(ProjectDir)engine\sound;$(ProjectDir)engine\util;$(ProjectDir)application\particle;$(ProjectDir)application\game;$(ProjectDir)engine\imgui;$(ProjectDir)engine;$(ProjectDir)application;$(ProjectDir)External;$(ProjectDir);$(ProjectDir)engine\scene;$(ProjectDir)application\game\entity;$(ProjectDir)application\game\entity\charactor;$(ProjectDir)application\game\entity\eventBlock;$(ProjectDir)application\scene;$(ProjectDir)application\ui;$(ProjectDir)application\system;$(ProjectDir)engine\particle;$(ProjectDir)application\event;$(ProjectDir)application\collision;$(ProjectDir)application\camera;$(ProjectDir)application\level;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)engine\2d;$(ProjectDir)engine\3d;$(ProjectDir)engine\common;$(ProjectDir)engine\input;$(ProjectDir)engine\libManage;$(ProjectDir)engine\light;$(ProjectDir)engine\math;$(ProjectDir)engine\shader;$(ProjectDir)engine\sound;$(ProjectDir)engine\util;$(ProjectDir)application\particle;$(ProjectDir)application\game;$(ProjectDir)engine\imgui;$(ProjectDir)engine;$(ProjectDir)application;$(ProjectDir)External;$(ProjectDir);$(ProjectDir)engine\scene;$(ProjectDir)application\game\entity;$(ProjectDir)application\game\entity\charactor;$(ProjectDir)application\game\entity\eventBlock;$(ProjectDir)application\scene;$(ProjectDir)application\ui;$(ProjectDir)application\system;$(ProjectDir)engine\particle;$(ProjectDir)application\event;$(ProjectDir)application\collision;$(ProjectDir)application\camera;$(ProjectDir)application\level;$(ProjectDir)application\stage</AdditionalIncludeDirectories>
       <TreatWarningAsError>true</TreatWarningAsError>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <LanguageStandard>stdcpp20</LanguageStandard>
@@ -130,6 +130,7 @@
     <ClCompile Include="application\event\NoEffectEvent.cpp" />
     <ClCompile Include="application\event\IEvent.cpp" />
     <ClCompile Include="APPLICATION\UI\UI.cpp" />
+    <ClCompile Include="DemoScene.cpp" />
     <ClCompile Include="engine\util\InstantDrawer.cpp" />
     <ClCompile Include="application\level\LevelData.cpp" />
     <ClCompile Include="application\game\entity\eventBlock\MoveBlock.cpp" />
@@ -138,7 +139,7 @@
     <ClCompile Include="application\scene\ShaderTestScene.cpp" />
     <ClCompile Include="application\scene\TitleScene.cpp" />
     <ClCompile Include="application\game\entity\eventBlock\Sea.cpp" />
-    <ClCompile Include="application\game\StageChanger.cpp" />
+    <ClCompile Include="application\stage\StageChanger.cpp" />
     <ClCompile Include="application\ui\StageTitleUI.cpp" />
     <ClCompile Include="application\game\Status.cpp" />
     <ClCompile Include="application\event\Clear1.cpp" />
@@ -170,7 +171,6 @@
     <ClCompile Include="engine\light\PointLight.cpp" />
     <ClCompile Include="engine\math\Quaternion.cpp" />
     <ClCompile Include="engine\particle\IParticle2D.cpp" />
-    <ClCompile Include="engine\scene\DemoScene.cpp" />
     <ClCompile Include="engine\scene\IScene.cpp" />
     <ClCompile Include="engine\scene\SceneFactory.cpp" />
     <ClCompile Include="engine\scene\SceneManager.cpp" />
@@ -205,7 +205,7 @@
     <ClCompile Include="application\ui\TutorialUIJump.cpp" />
     <ClCompile Include="application\ui\TutorialUIEyeMove.cpp" />
     <ClCompile Include="application\ui\TutorialUIMove.cpp" />
-    <ClCompile Include="StageTitleUIMountain.cpp" />
+    <ClCompile Include="application\event\StageTitleUIMountain.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="application\collision\CollideManager.h" />
@@ -232,6 +232,7 @@
     <ClInclude Include="application\game\PlayerCamera.h" />
     <ClInclude Include="application\event\NoEffectEvent.h" />
     <ClInclude Include="application\event\IEvent.h" />
+    <ClInclude Include="DemoScene.h" />
     <ClInclude Include="engine\util\InstantDrawer.h" />
     <ClInclude Include="application\level\LevelData.h" />
     <ClInclude Include="application\game\entity\eventBlock\MoveBlock.h" />
@@ -240,7 +241,7 @@
     <ClInclude Include="application\scene\ShaderTestScene.h" />
     <ClInclude Include="application\scene\TitleScene.h" />
     <ClInclude Include="application\game\entity\eventBlock\Sea.h" />
-    <ClInclude Include="application\game\StageChanger.h" />
+    <ClInclude Include="application\stage\StageChanger.h" />
     <ClInclude Include="application\ui\StageTitleUI.h" />
     <ClInclude Include="application\game\Status.h" />
     <ClInclude Include="application\event\Clear1.h" />
@@ -274,7 +275,6 @@
     <ClInclude Include="engine\common\Result.h" />
     <ClInclude Include="engine\particle\IParticle2D.h" />
     <ClInclude Include="engine\scene\AbstractSceneFactory.h" />
-    <ClInclude Include="engine\scene\DemoScene.h" />
     <ClInclude Include="engine\scene\IScene.h" />
     <ClInclude Include="engine\scene\SceneFactory.h" />
     <ClInclude Include="engine\scene\SceneManager.h" />
@@ -313,7 +313,7 @@
     <ClInclude Include="application\ui\TutorialUIJump.h" />
     <ClInclude Include="application\ui\TutorialUIEyeMove.h" />
     <ClInclude Include="application\ui\TutorialUIMove.h" />
-    <ClInclude Include="StageTitleUIMountain.h" />
+    <ClInclude Include="application\event\StageTitleUIMountain.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="External\imgui\imgui.ini" />
