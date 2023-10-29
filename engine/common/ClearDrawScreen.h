@@ -8,9 +8,9 @@ void ClearDrawScreen();
 void PreDraw();
 
 //ライト使いたくないときもあるので、応急処理でライトを使わない設定にできるように
-void BasicObjectPreDraw(const PipelineSet& objectPipelineSet,bool useLight = true);
+void BasicObjectPreDraw(const std::string& pipelineName,bool useLight = true);
 
-void GeometryObjectPreDraw(const PipelineSet& geometryPipelineSet);
+void GeometryObjectPreDraw(const std::string& pipelineName);
 
 void PostDraw();
 

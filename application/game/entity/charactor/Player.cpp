@@ -1,7 +1,7 @@
 #include "Player.h"
 #include "Input.h"
 #include "TimeManager.h"
-#include "Stage.h"
+#include "StageChanger.h"
 #include "ImguiManager.h"
 #include "MathF.h"
 #include "PlayerCamera.h"
@@ -150,16 +150,16 @@ void Player::Update()
 
 void Player::Draw()
 {
-	BasicObjectPreDraw(PipelineManager::GetPipeLine("OutLine"), false);
+	BasicObjectPreDraw("OutLine", false);
 	Obj3d::DrawOutLine();
 	
-	BasicObjectPreDraw(PipelineManager::GetPipeLine("Toon"));
+	BasicObjectPreDraw("Toon");
 	Obj3d::DrawMaterial();
 }
 
 void Player::DrawCollider()
 {
-	BasicObjectPreDraw(PipelineManager::GetPipeLine("Toon"));
+	BasicObjectPreDraw("Toon");
 	box.Draw();
 }
 

@@ -110,7 +110,7 @@ void InstantDrawer::AllDraw2D()
 
 void InstantDrawer::AllDraw3D()
 {
-	BasicObjectPreDraw(PipelineManager::GetPipeLine("GroundToon"));
+	BasicObjectPreDraw("GroundToon");
 
 	for (auto& billboard : sBillboards)
 	{

@@ -219,9 +219,6 @@
     <Filter Include="Application\Collision">
       <UniqueIdentifier>{921fc882-a1c8-46bd-a451-bd0c04bdebcf}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Application\Stage">
-      <UniqueIdentifier>{6349d7e7-a1d1-4114-aa41-235be1768fa3}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Application\Charactor\Enemy">
       <UniqueIdentifier>{e46da77e-f434-44e8-a38d-981d3fdb64f9}</UniqueIdentifier>
     </Filter>
@@ -417,6 +414,9 @@
     </Filter>
     <Filter Include="Application\Event\StageTitleUIMountain">
       <UniqueIdentifier>{f729ecd8-dbfe-499f-b0c5-62724f38c281}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Application\StageChanger">
+      <UniqueIdentifier>{6349d7e7-a1d1-4114-aa41-235be1768fa3}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -639,8 +639,8 @@
     <ClCompile Include="application\scene\SceneChange.cpp">
       <Filter>Application\SceneChange</Filter>
     </ClCompile>
-    <ClCompile Include="application\game\Stage.cpp">
-      <Filter>Application\Stage</Filter>
+    <ClCompile Include="application\game\StageChanger.cpp">
+      <Filter>Application\StageChanger</Filter>
     </ClCompile>
     <ClCompile Include="application\game\Status.cpp">
       <Filter>Application\Status</Filter>
@@ -953,8 +953,8 @@
     <ClInclude Include="application\scene\SceneChange.h">
       <Filter>Application\SceneChange</Filter>
     </ClInclude>
-    <ClInclude Include="application\game\Stage.h">
-      <Filter>Application\Stage</Filter>
+    <ClInclude Include="application\game\StageChanger.h">
+      <Filter>Application\StageChanger</Filter>
     </ClInclude>
     <ClInclude Include="application\game\Status.h">
       <Filter>Application\Status</Filter>

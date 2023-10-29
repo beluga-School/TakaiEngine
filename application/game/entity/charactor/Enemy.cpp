@@ -1,4 +1,4 @@
-﻿#include "Enemy.h"
+#include "Enemy.h"
 #include "MathF.h"
 #include "ClearDrawScreen.h"
 
@@ -52,8 +52,8 @@ void Enemy::EncountSphereUpdate()
 
 void Enemy::EncountSphereDraw(const std::string& oldPipeline)
 {
-	BasicObjectPreDraw(PipelineManager::GetPipeLine("WireFrame"));
+	BasicObjectPreDraw("WireFrame");
 	encountSphere.Draw();
 	
-	BasicObjectPreDraw(PipelineManager::GetPipeLine(oldPipeline));
+	BasicObjectPreDraw(oldPipeline);
 }

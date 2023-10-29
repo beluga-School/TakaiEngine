@@ -10,8 +10,11 @@
 class Entity : public Obj3d
 {
 public:
-	bool IsDead() const {
-		return isDead;
+	Entity()
+	{
+		SetTag(TagTable::Box);
+
+		box.cubecol.parentEntity = this;
 	}
 
 	/// <summary>
@@ -37,21 +40,18 @@ public:
 
 	void Register();
 
-	//Entityは必ず四角の当たり判定を持つ
-	Box box;
-
-	Entity()
-	{
-		SetTag(TagTable::Box);
-
-		box.cubecol.parentEntity = this;
-	}
-
 	/// <summary>
 	/// 当たり判定に付与された、オブジェクトごとに一意に定義されているIDを返す
 	/// </summary>
 	/// <returns></returns>
 	uint32_t GetID()const;
+
+	bool IsDead() const {
+		return isDead;
+	}
+
+	//Entityは必ず四角の当たり判定を持つ
+	Box box;
 
 	bool isTexDraw = false;
 

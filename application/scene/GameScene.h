@@ -2,7 +2,7 @@
 #include "IScene.h"
 #include "Skydome.h"
 #include "DebugCamera.h"
-#include "Stage.h"
+#include "StageChanger.h"
 #include "Player.h"
 #include "PlayerCamera.h"
 #include "Billboard.h"

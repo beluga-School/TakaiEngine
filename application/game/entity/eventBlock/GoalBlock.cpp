@@ -1,5 +1,5 @@
 #include "GoalBlock.h"
-#include "Stage.h"
+#include "StageChanger.h"
 
 void GoalBlock::Initialize()
 {

@@ -1,4 +1,4 @@
-﻿#include "SceneChange.h"
+#include "SceneChange.h"
 #include "Util.h"
 
 SceneChange::State SceneChange::mState = State::NONE;
@@ -15,7 +15,7 @@ void SceneChange::Reset()
 
 void SceneChange::Start()
 {
-	mState = State::FIRST;
+	mState = State::MOVE_IN;
 	mFirstTimer.Start();
 
 	mSizeX = 0;
@@ -39,19 +39,19 @@ void SceneChange::Update()
 	
 	switch (mState)
 	{
-	case SceneChange::State::FIRST:
+	case SceneChange::State::MOVE_IN:
 		mSizeX = TEasing::OutQuad(mRight, mLeft, mFirstTimer.GetTimeRate());
 		if (mFirstTimer.GetEnd())
 		{
-			mState = State::SECOND;
+			mState = State::INPUTSTANDBY;
 		}
 
 		break;
-	case SceneChange::State::SECOND:
+	case SceneChange::State::INPUTSTANDBY:
 		//入力があるまで待機
 
 		break;
-	case SceneChange::State::THIRD:
+	case SceneChange::State::MOVE_OUT:
 		mPosX = TEasing::InQuad(mRight, mLeft, mSecondTimer.GetTimeRate());
 		if (mSecondTimer.GetEnd())
 		{

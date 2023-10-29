@@ -1,6 +1,6 @@
-﻿#include "GoalSystem.h"
+#include "GoalSystem.h"
 #include "Util.h"
-#include "Stage.h"
+#include "StageChanger.h"
 #include "EventManager.h"
 #include "EventCameraManager.h"
 

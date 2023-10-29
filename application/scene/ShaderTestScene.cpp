@@ -106,22 +106,21 @@ void ShaderTestScene::Update()
 
 void ShaderTestScene::Draw()
 {
-	BasicObjectPreDraw(PipelineManager::GetPipeLine("Skydome"));
-	//BasicObjectPreDraw(PipelineManager::GetPipeLine("MultiRender"));
+	BasicObjectPreDraw("Skydome");
 	skydome.Draw();
 
 	switch (mode)
 	{
 	case ShaderTestScene::DrawMode::TextureBlend:
-		BasicObjectPreDraw(PipelineManager::GetPipeLine("TextureBlend"));
+		BasicObjectPreDraw("TextureBlend");
 		testObj.DrawSpecial(SpecialDraw::TEXTUREBLEND_,*sub, *blendMask);
 		break;
 	case ShaderTestScene::DrawMode::Disolve:
-		BasicObjectPreDraw(PipelineManager::GetPipeLine("Disolve"));
+		BasicObjectPreDraw("Disolve");
 		testObj.DrawSpecial(SpecialDraw::DISOLVE_ ,*disolveMask);
 		break;
 	case ShaderTestScene::DrawMode::Noise:
-		BasicObjectPreDraw(PipelineManager::GetPipeLine("PerlinNoise"), false);
+		BasicObjectPreDraw("PerlinNoise", false);
 		billboard.Draw();
 		break;
 	default:

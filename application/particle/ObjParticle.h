@@ -71,4 +71,6 @@ private:
 
 	ParticleManager(const ParticleManager& a) = delete;
 	ParticleManager& operator=(const ParticleManager&) = delete;
+
+	int32_t maxPool = 200;
 };

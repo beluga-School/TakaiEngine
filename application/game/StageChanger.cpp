@@ -1,4 +1,4 @@
-#include "Stage.h"
+#include "StageChanger.h"
 #include "Model.h"
 #include "MathF.h"
 #include "EnemyManager.h"
@@ -104,7 +104,7 @@ void StageChanger::Draw()
 {
 	//物によってマテリアル描画とテクスチャ描画が混在してるのに
 	//分ける方法を作ってないので作る
-	BasicObjectPreDraw(PipelineManager::GetPipeLine("Toon"));
+	BasicObjectPreDraw("Toon");
 	DrawCollider();
 
 	DrawModel();
@@ -1055,16 +1055,16 @@ void StageChanger::DrawModel()
 		//コリジョン用に配置したオブジェクトならスキップ
 		if (obj->CheckTag(TagTable::NoDraw))continue;
 		
-		BasicObjectPreDraw(PipelineManager::GetPipeLine("OutLine"), false);
+		BasicObjectPreDraw("OutLine", false);
 		obj->DrawOutLine();
 		//アルファが1未満になるなら透明用描画パイプラインに切り替える
 		if (obj->color_.w < 1.0f)
 		{
-			BasicObjectPreDraw(PipelineManager::GetPipeLine("GroundToonNDW"));
+			BasicObjectPreDraw("GroundToonNDW");
 		}
 		else
 		{
-			BasicObjectPreDraw(PipelineManager::GetPipeLine("GroundToon"));
+			BasicObjectPreDraw("GroundToon");
 		}
 		if (obj->isTexDraw)
 		{
@@ -1080,16 +1080,16 @@ void StageChanger::DrawModel()
 		//コリジョン用に配置したオブジェクトならスキップ
 		if (obj->CheckTag(TagTable::NoDraw))continue;
 
-		BasicObjectPreDraw(PipelineManager::GetPipeLine("OutLine"),false);
+		BasicObjectPreDraw("OutLine",false);
 		obj->DrawOutLine();
 		//アルファが1未満になるなら透明用描画パイプラインに切り替える
 		if (obj->color_.w < 1.0f)
 		{
-			BasicObjectPreDraw(PipelineManager::GetPipeLine("GroundToonNDW"));
+			BasicObjectPreDraw("GroundToonNDW");
 		}
 		else
 		{
-			BasicObjectPreDraw(PipelineManager::GetPipeLine("GroundToon"));
+			BasicObjectPreDraw("GroundToon");
 		}
 
 		obj->Draw();
@@ -1097,22 +1097,22 @@ void StageChanger::DrawModel()
 
 	for (auto& obj : mGoals)
 	{
-		BasicObjectPreDraw(PipelineManager::GetPipeLine("OutLine"), false);
+		BasicObjectPreDraw("OutLine", false);
 		obj->DrawOutLine();
 		//アルファが1未満になるなら透明用描画パイプラインに切り替える
 		if (obj->color_.w < 1.0f)
 		{
-			BasicObjectPreDraw(PipelineManager::GetPipeLine("ToonNDW"));
+			BasicObjectPreDraw("ToonNDW");
 		}
 		else
 		{
-			BasicObjectPreDraw(PipelineManager::GetPipeLine("Toon"));
+			BasicObjectPreDraw("Toon");
 		}
 		obj->Draw();
 	}
 
 	Player::Get()->Draw();
-	BasicObjectPreDraw(PipelineManager::GetPipeLine("GroundToon"));
+	BasicObjectPreDraw("GroundToon");
 	seaObject->Draw();
 }
 
@@ -1132,7 +1132,7 @@ void StageChanger::DrawCollider()
 	{
 		if (!obj->CheckTag(TagTable::EventCollision))continue;
 		
-		BasicObjectPreDraw(PipelineManager::GetPipeLine("GroundToonNDW"));
+		BasicObjectPreDraw("GroundToonNDW");
 		obj->Draw();
 	}
 }

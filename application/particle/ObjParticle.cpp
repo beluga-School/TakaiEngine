@@ -14,7 +14,6 @@ ParticleManager* ParticleManager::GetInstance()
 
 void ParticleManager::CreatePool()
 {
-	float maxPool = 200;
 	for (int32_t i = 0; i < maxPool; i++)
 	{
 		cubePool.emplace_back(std::make_unique<CubeParticle>());
@@ -52,14 +51,14 @@ void ParticleManager::Update()
 
 void ParticleManager::Draw()
 {
-	BasicObjectPreDraw(PipelineManager::GetPipeLine("OutLine"),false);
+	BasicObjectPreDraw("OutLine",false);
 	for (unique_ptr<CubeParticle>& pat : cubePool) {
 		if (!pat->isdead) {
 			pat->cube.DrawOutLine();
 		}
 	}
 	
-	BasicObjectPreDraw(PipelineManager::GetPipeLine("Toon"));
+	BasicObjectPreDraw("Toon");
 	for (unique_ptr<CubeParticle>& pat : cubePool) {
 		if (!pat->isdead) {
 			pat->Draw();

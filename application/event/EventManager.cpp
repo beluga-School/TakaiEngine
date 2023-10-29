@@ -6,7 +6,7 @@
 #include "GoalSystem.h"
 #include <EventCameraManager.h>
 #include <GameUIManager.h>
-#include <Stage.h>
+#include <StageChanger.h>
 
 void EventManager::LoadResource()
 {

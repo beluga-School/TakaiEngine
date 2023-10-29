@@ -1,6 +1,6 @@
 #include "Dokan.h"
 #include "Input.h"
-#include "Stage.h"
+#include "StageChanger.h"
 #include "SceneChange.h"
 #include <GameUIManager.h>
 #include <InstantDrawer.h>

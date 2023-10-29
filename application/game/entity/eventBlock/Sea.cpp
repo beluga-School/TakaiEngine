@@ -44,7 +44,7 @@ void Sea::Update()
 
 void Sea::Draw()
 {
-	BasicObjectPreDraw(PipelineManager::GetPipeLine("GroundToon"));
+	BasicObjectPreDraw("GroundToon");
 	Obj3d::Draw();
 }
 

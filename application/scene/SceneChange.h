@@ -31,15 +31,15 @@ public:
 
 	static bool IsBlackOut()
 	{
-		return mState == State::SECOND;
+		return mState == State::INPUTSTANDBY;
 	}
 
 	void Open()
 	{
-		if (mState == State::SECOND)
+		if (mState == State::INPUTSTANDBY)
 		{
 			mSecondTimer.Start();
-			mState = State::THIRD;
+			mState = State::MOVE_OUT;
 		}
 	}
 
@@ -55,9 +55,9 @@ private:
 	enum class State
 	{
 		NONE,
-		FIRST,
-		SECOND,
-		THIRD,
+		MOVE_IN,
+		INPUTSTANDBY,
+		MOVE_OUT,
 		END,
 	};
 	static State mState;

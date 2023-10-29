@@ -1,4 +1,4 @@
-﻿#include "DemoScene.h"
+#include "DemoScene.h"
 #include <ClearDrawScreen.h>
 #include <Sprite.h>
 #include <SceneManager.h>
@@ -155,8 +155,7 @@ void DemoScene::Update()
 
 void DemoScene::Draw()
 {
-	//BasicObjectPreDraw(PipelineManager::GetPipeLine("MultiRender"));
-	BasicObjectPreDraw(PipelineManager::GetPipeLine(pipeline));
+	BasicObjectPreDraw(pipeline);
 
 	if (showSkydome)
 	{

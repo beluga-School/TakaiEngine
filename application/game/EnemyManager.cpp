@@ -4,7 +4,7 @@
 #include "ClearDrawScreen.h"
 #include "Player.h"
 #include "CollideManager.h"
-#include "Stage.h"
+#include "StageChanger.h"
 
 void EnemyManager::Load(const LevelData::ObjectData& data)
 {
@@ -39,10 +39,10 @@ void EnemyManager::Draw()
 {
 	for (auto& enemy : enemyList)
 	{
-		BasicObjectPreDraw(PipelineManager::GetPipeLine("OutLine"), false);
+		BasicObjectPreDraw("OutLine", false);
 		enemy->DrawOutLine();
 
-		BasicObjectPreDraw(PipelineManager::GetPipeLine("Toon"));
+		BasicObjectPreDraw("Toon");
 		enemy->Draw();
 
 		if (mIsDrawEncountSphere)

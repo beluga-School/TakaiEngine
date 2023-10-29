@@ -1,7 +1,7 @@
 #include "GameScene.h"
 #include "ClearDrawScreen.h"
 #include "LevelLoader.h"
-#include "Stage.h"
+#include "StageChanger.h"
 #include "ImguiManager.h"
 #include "EnemyManager.h"
 #include "Input.h"
@@ -129,7 +129,7 @@ void GameScene::Update()
 
 void GameScene::Draw()
 {
-	BasicObjectPreDraw(PipelineManager::GetPipeLine("Skydome"));
+	BasicObjectPreDraw("Skydome");
 	mSkydome.Draw();
 	
 	//地面用シェーダーを中で呼んでる

@@ -109,15 +109,17 @@ void PreDraw()
 	dx12->mCmdList->RSSetScissorRects(1, &scissorRect);
 }
 
-void BasicObjectPreDraw(const PipelineSet& objectPipelineSet, bool useLight)
+void BasicObjectPreDraw(const std::string& pipelineName, bool useLight)
 {
 	DirectX12* dx12 = DirectX12::Get();
 	TextureManager* texM = TextureManager::Get();
 
+	PipelineSet pipelineSet = PipelineManager::GetPipeLine(pipelineName);
+
 	//パイプラインステートとルートシグネチャの設定コマンド
 	//スプライトじゃない方
-	dx12->mCmdList->SetPipelineState(objectPipelineSet.mPipelinestate.Get());
-	dx12->mCmdList->SetGraphicsRootSignature(objectPipelineSet.mRootsignature.Get());
+	dx12->mCmdList->SetPipelineState(pipelineSet.mPipelinestate.Get());
+	dx12->mCmdList->SetGraphicsRootSignature(pipelineSet.mRootsignature.Get());
 
 	//プリミティブ形状の設定コマンド
 	dx12->mCmdList->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
@@ -131,10 +133,12 @@ void BasicObjectPreDraw(const PipelineSet& objectPipelineSet, bool useLight)
 	}
 }
 
-void GeometryObjectPreDraw(const PipelineSet& geometryPipelineSet)
+void GeometryObjectPreDraw(const std::string& pipelineName)
 {
 	DirectX12* dx12 = DirectX12::Get();
 	TextureManager* texM = TextureManager::Get();
+
+	PipelineSet pipelineSet = PipelineManager::GetPipeLine(pipelineName);
 
 	D3D12_VIEWPORT viewport{};
 	viewport.Width = Util::WIN_WIDTH;
@@ -156,8 +160,8 @@ void GeometryObjectPreDraw(const PipelineSet& geometryPipelineSet)
 
 	//パイプラインステートとルートシグネチャの設定コマンド
 	//スプライトじゃない方
-	dx12->mCmdList->SetPipelineState(geometryPipelineSet.mPipelinestate.Get());
-	dx12->mCmdList->SetGraphicsRootSignature(geometryPipelineSet.mRootsignature.Get());
+	dx12->mCmdList->SetPipelineState(pipelineSet.mPipelinestate.Get());
+	dx12->mCmdList->SetGraphicsRootSignature(pipelineSet.mRootsignature.Get());
 
 	dx12->mCmdList->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_POINTLIST);
 
