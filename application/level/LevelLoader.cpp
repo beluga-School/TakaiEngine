@@ -105,6 +105,16 @@ void LevelLoader::ObjectLoad(LevelData& levelData,nlohmann::json& object)
 			objectData.tiling.y = 1.0f;
 		}
 
+		// JSONデータを文字列に変換
+		std::string jsonStr = object.dump();
+
+		// 検索対象の文字列
+		std::string searchString = "point_";
+		// 文字列を検索
+		if (jsonStr.find(searchString) != std::string::npos) {
+			
+		}
+
 		//パラメータ読み込み
 		nlohmann::json& transform = object["transform"];
 
