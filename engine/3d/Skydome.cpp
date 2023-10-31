@@ -1,5 +1,6 @@
 #include "Skydome.h"
 #include "Camera.h"
+#include "ClearDrawScreen.h"
 
 void Skydome::Initialize()
 {
@@ -16,5 +17,6 @@ void Skydome::Update()
 
 void Skydome::Draw()
 {
+	BasicObjectPreDraw("Skydome");
 	Obj3d::DrawMaterial();
 }

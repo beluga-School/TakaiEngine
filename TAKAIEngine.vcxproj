@@ -206,6 +206,7 @@
     <ClCompile Include="application\ui\TutorialUIEyeMove.cpp" />
     <ClCompile Include="application\ui\TutorialUIMove.cpp" />
     <ClCompile Include="application\event\StageTitleUIMountain.cpp" />
+    <ClCompile Include="Line.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="application\collision\CollideManager.h" />
@@ -306,6 +307,7 @@
     <ClInclude Include="External\json.hpp" />
     <ClInclude Include="application\ui\GameUIManager.h" />
     <ClInclude Include="application\ui\InterfaceUI.h" />
+    <ClInclude Include="Line.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="application\ui\StarUI.h" />
     <ClInclude Include="application\ui\UI.h" />
@@ -321,6 +323,7 @@
     <None Include="Resources\Shader\Billboard.hlsli" />
     <None Include="Resources\Shader\CG4.hlsli" />
     <None Include="Resources\Shader\Disolve\Disolve.hlsli" />
+    <None Include="Resources\Shader\DT.hlsli" />
     <None Include="Resources\Shader\GeometryHeader.hlsli" />
     <None Include="Resources\Shader\Ground\Ground.hlsli" />
     <None Include="Resources\Shader\Lambert.hlsli" />
@@ -388,6 +391,18 @@
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">5.0</ShaderModel>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">5.0</ShaderModel>
+    </FxCompile>
+    <FxCompile Include="Resources\Shader\DTPS.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">5.0</ShaderModel>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">5.0</ShaderModel>
+    </FxCompile>
+    <FxCompile Include="Resources\Shader\DTVS.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">5.0</ShaderModel>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">5.0</ShaderModel>
     </FxCompile>
     <FxCompile Include="Resources\Shader\GeometryGS.hlsl">

@@ -2,6 +2,7 @@
 #include "IScene.h"
 #include "Obj.h"
 #include "DebugCamera.h"
+#include "Skydome.h"
 
 class DemoScene : public IScene
 {
@@ -14,5 +15,6 @@ public:
 
 	Obj3d demoline;
 	DebugCamera mDebugCamera;
+	Skydome skydome;
 };
 

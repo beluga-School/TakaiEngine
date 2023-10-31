@@ -30,6 +30,8 @@ private:
     Texture* blendMask;
     Texture* disolveMask;
 
+    Texture* bayerMatrix;
+
     BillboardY billboard;
 
     enum class DrawMode
@@ -37,7 +39,8 @@ private:
         TextureBlend,
         Disolve,
         Noise,
-    }mode = DrawMode::Disolve;
+        bayerMatrix,
+    }mode = DrawMode::bayerMatrix;
 
     std::vector<std::string> handles;
     std::string output = "";

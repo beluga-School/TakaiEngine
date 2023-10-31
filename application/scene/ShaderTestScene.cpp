@@ -26,6 +26,7 @@ void ShaderTestScene::Initialize()
 	TextureManager::Load("Resources\\09_AlphaMask_Resources\\FirldMask.png", "FirldMask");
 	TextureManager::Load("Resources\\09_AlphaMask_Resources\\Grass.png", "Grass");
 	TextureManager::Load("Resources\\09_AlphaMask_Resources\\DissolveMap.png", "DissolveMap");
+	TextureManager::Load("Resources\\ShaderTex\\bayerMatrix.png", "bayerMatrix");
 
 	testObj.Initialize();
 	testObj.SetTexture(TextureManager::GetTexture("Grass"));
@@ -35,9 +36,12 @@ void ShaderTestScene::Initialize()
 	blendMask = TextureManager::GetTexture("FirldMask");
 	disolveMask = TextureManager::GetTexture("DissolveMap");
 
+	bayerMatrix = TextureManager::GetTexture("bayerMatrix");
+
 	handles.push_back("TextureBlend");
 	handles.push_back("Disolve");
 	handles.push_back("Noise");
+	handles.push_back("bayerMatrix");
 
 	debugCamera.SetRadius(4.f);
 }
@@ -84,6 +88,11 @@ void ShaderTestScene::Update()
 	{
 		mode = DrawMode::Noise;
 	}
+	if (output == "bayerMatrix")
+	{
+		ImGui::SliderFloat ("disolveValue", &testObj.disolveVal, 0.0f, 100.0f);
+		mode = DrawMode::bayerMatrix;
+	}
 
 	//ノイズエフェクト切り替え
 	static bool hoge = false;
@@ -122,6 +131,10 @@ void ShaderTestScene::Draw()
 	case ShaderTestScene::DrawMode::Noise:
 		BasicObjectPreDraw("PerlinNoise", false);
 		billboard.Draw();
+		break;
+	case ShaderTestScene::DrawMode::bayerMatrix:
+		BasicObjectPreDraw("DitherTransparent");
+		testObj.DrawSpecial(SpecialDraw::DISOLVE_, *bayerMatrix);
 		break;
 	default:
 		break;

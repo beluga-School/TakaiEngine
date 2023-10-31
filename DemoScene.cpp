@@ -4,7 +4,6 @@
 
 void DemoScene::LoadResource()
 {
-
 }
 
 void DemoScene::Initialize()
@@ -13,17 +12,22 @@ void DemoScene::Initialize()
 	demoline.SetTexture(TextureManager::GetTexture("white"));
 
 	mDebugCamera.Initialize();
+	skydome.Initialize();
 }
 
 void DemoScene::Update()
 {
 	mDebugCamera.Update();
 	demoline.Update(*Camera::sCamera);
+
+	skydome.Update();
 }
 
 void DemoScene::Draw()
 {
-	BasicObjectPreDraw("WireFrame");
+	skydome.Draw();
+
+	BasicObjectPreDraw("Toon");
 	demoline.Draw();
 }
 

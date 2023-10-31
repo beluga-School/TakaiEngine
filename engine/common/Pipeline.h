@@ -153,6 +153,9 @@ private:
 	//ライン描画パイプライン
 	void LinePipeLine();
 
+	//ディザ抜きパイプライン
+	void DitherTransparentPipeLine();
+
 	PipelineManager(){};
 	~PipelineManager(){};
 };
