@@ -32,6 +32,7 @@ float4 main(VSOutput input) : SV_TARGET
     float clamp_length = saturate(camlength / 100);//ここの100は適当な閾値
     
     clip(clamp_length - clamp_dither); //閾値が0以下なら描画しない
+    //ここをカメラとキャラが重なってたらにしたい
     
     float4 shadecolor = { 0, 0, 0, 1 };
     

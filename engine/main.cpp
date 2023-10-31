@@ -105,6 +105,7 @@ int32_t WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_  HINSTANCE hPrevInstan
 	//シーンの初期化
 	SceneManager *scenemanager = SceneManager::Get();
 	scenemanager->ChangeScene<TitleScene>();
+	//scenemanager->ChangeScene<ShaderTestScene>();
 
 #pragma endregion 描画初期化処理
 

@@ -46,6 +46,11 @@ cbuffer cbuff3 : register(b3)
     PointLight pointLights[POINTLIGHT_NUM];
 };
 
+cbuffer cbuff4 : register(b4)
+{
+    float3 playerPos;
+};
+
 struct VSOutput
 {
     float4 svpos : SV_POSITION;

@@ -79,7 +79,15 @@ void StageChanger::Update()
 
 	for (auto& obj : mEntitys)
 	{
-		obj->Update(*Camera::sCamera);
+		if (obj->CheckTag(TagTable::Block))
+		{
+			Block* block = static_cast<Block*>(obj.get());
+			block->Update();
+		}
+		else
+		{
+			obj->Update(*Camera::sCamera);
+		}
 		obj->box.Update(*Camera::sCamera);
 	}
 	for (auto& obj : mEventObjects)
@@ -900,9 +908,6 @@ void StageChanger::ChangeUpdate()
 		//なにも無かったら
 		{
 			//ここまで何もかいてなければ地形の配置として扱う
-			//本来はBlock型に変換して入れたいが、ポインタで保持する形になってないのでBlock型にできない
-			//なのでTagを内部でBlockを入れる形にして何とかしている
-
 			//そのままモデルの配置
 			NormalObjectSet(*objectData);
 
@@ -1068,11 +1073,27 @@ void StageChanger::DrawModel()
 		}
 		if (obj->isTexDraw)
 		{
-			obj->Draw();
+			if (obj->CheckTag(TagTable::Block))
+			{
+				Block* block = static_cast<Block*>(obj.get());
+				block->Draw();
+			}
+			else
+			{
+				obj->Draw();
+			}
 		}
 		else
 		{
-			obj->DrawMaterial();
+			if (obj->CheckTag(TagTable::Block))
+			{
+				Block* block = static_cast<Block*>(obj.get());
+				block->DrawMaterial();
+			}
+			else
+			{
+				obj->DrawMaterial();
+			}
 		}
 	}
 	for (auto& obj : mEventObjects)
