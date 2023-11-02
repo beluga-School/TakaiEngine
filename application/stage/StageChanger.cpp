@@ -1062,26 +1062,13 @@ void StageChanger::DrawModel()
 		
 		BasicObjectPreDraw("OutLine", false);
 		obj->DrawOutLine();
+		
+		BasicObjectPreDraw("GroundToon");
 		//アルファが1未満になるなら透明用描画パイプラインに切り替える
-		if (obj->color_.w < 1.0f)
-		{
-			BasicObjectPreDraw("GroundToonNDW");
-		}
-		else
-		{
-			BasicObjectPreDraw("GroundToon");
-		}
 		if (obj->isTexDraw)
 		{
-			if (obj->CheckTag(TagTable::Block))
-			{
-				Block* block = static_cast<Block*>(obj.get());
-				block->Draw();
-			}
-			else
-			{
-				obj->Draw();
-			}
+			
+			obj->Draw();
 		}
 		else
 		{
@@ -1091,7 +1078,7 @@ void StageChanger::DrawModel()
 				block->DrawMaterial();
 			}
 			else
-			{
+			{	
 				obj->DrawMaterial();
 			}
 		}
@@ -1103,16 +1090,8 @@ void StageChanger::DrawModel()
 
 		BasicObjectPreDraw("OutLine",false);
 		obj->DrawOutLine();
-		//アルファが1未満になるなら透明用描画パイプラインに切り替える
-		if (obj->color_.w < 1.0f)
-		{
-			BasicObjectPreDraw("GroundToonNDW");
-		}
-		else
-		{
-			BasicObjectPreDraw("GroundToon");
-		}
-
+		
+		BasicObjectPreDraw("GroundToon");
 		obj->Draw();
 	}
 

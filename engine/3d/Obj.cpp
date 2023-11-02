@@ -45,6 +45,7 @@ void Obj3d::Update(const Camera& camera)
 		matWorld = matWorld * parent->matWorld;
 	}
 
+	constBufferT.mConstBufferData->view = camera.mMatView;
 	constBufferT.mConstBufferData->viewproj = camera.mMatView * camera.mMatProjection;
 	constBufferT.mConstBufferData->world = matWorld;
 	constBufferT.mConstBufferData->cameraPos = camera.mEye;

@@ -146,6 +146,8 @@ void Player::Update()
 	DamageUpdate();
 
 	hpGauge.Update();
+
+	constBufferPlayerPos.mConstBufferData->pos = Player::Get()->position;
 }
 
 void Player::Draw()

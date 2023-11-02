@@ -1,4 +1,4 @@
-﻿#include "Texture.h"
+#include "Texture.h"
 #include "Result.h"
 #include "DirectXInit.h"
 #include <memory>
@@ -100,6 +100,37 @@ void Texture::CreateWhiteTexture()
 	DirectX12::Get()->mDevice->CreateShaderResourceView(mTexBuff.Get(), &mSrvDesc, mCpuHandle);
 
 	mGetResDesc = textureResourceDesc;
+}
+
+void Texture::CreateDepthTexture(ID3D12Resource* depthBuff, const D3D12_RESOURCE_DESC& depthResourceDesc)
+{
+	TextureManager* tManager = TextureManager::Get();
+
+	//ハンドルを取得する部分
+	//gpuハンドルを取得
+	mGpuHandle = tManager->mSrvHeap->GetGPUDescriptorHandleForHeapStart();
+
+	//cpuハンドルを取得
+	mCpuHandle = tManager->mSrvHeap->GetCPUDescriptorHandleForHeapStart();
+
+	//前回のSRVヒープの大きさを加算
+	mCpuHandle.ptr += tManager->mSRVHandleSize;
+
+	mGpuHandle.ptr += tManager->mSRVHandleSize;
+
+	//SRVヒープの大きさを取得
+	tManager->mSRVHandleSize += DirectX12::Get()->mDevice->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV);
+
+	//シェーダリソースビュー設定 (シェーダーに教える場所)
+	mSrvDesc.Format = DXGI_FORMAT_R32_FLOAT;//R32 float
+	mSrvDesc.Shader4ComponentMapping = D3D12_DEFAULT_SHADER_4_COMPONENT_MAPPING;
+	mSrvDesc.ViewDimension = D3D12_SRV_DIMENSION_TEXTURE2D;//2Dテクスチャ
+	mSrvDesc.Texture2D.MipLevels = depthResourceDesc.MipLevels;
+	
+	//ハンドルの指す位置にシェーダーリソースビュー作成
+	DirectX12::Get()->mDevice->CreateShaderResourceView(depthBuff, &mSrvDesc, mCpuHandle);
+
+	mCreated = true;
 }
 
 void Texture::Load(const wchar_t& t)
@@ -250,4 +281,9 @@ Texture* TextureManager::GetTexture(const std::string &handle)
 		return nullptr;
 	}
 	return &sTextures[handle];
+}
+
+void TextureManager::DepthRegister(ID3D12Resource* depthBuff, const D3D12_RESOURCE_DESC& depthResourceDesc)
+{
+	sTextures["Depth"].CreateDepthTexture(depthBuff,depthResourceDesc);
 }

@@ -25,40 +25,4 @@ void Camera::UpdatematView()
 	mMatView = Matrix4::LookAtLH(mEye, mTarget, mUp);
 
 	mMatProjection = Matrix4::PerspectiveFovLH(DirectX::XMConvertToRadians(mFovAngle), mNearClip, mFarZ);
-
-	////シェイク後に位置を元に戻す
-	//mEye.x = savePos.x;
-	//mEye.y = savePos.y;
 }
-
-//void Camera::CameraShake(float power)
-//{
-//	Vector2 randomVec = {
-//		MathF::GetRand(-1,1),
-//		MathF::GetRand(-1,1)
-//	};
-//
-//	Vector2 shakePos = {
-//		mEye.x + randomVec.x * power,
-//		mEye.y + randomVec.y * power
-//	};
-//
-//	savePos = { mEye.x,mEye.y};
-//
-//	mEye.x = shakePos.x;
-//	mEye.y = shakePos.y;
-//}
-
-//void Camera::SetEye(Vector3 eye)
-//{
-//	this->eye = eye;
-//	UpdatematView();
-//}
-//
-//void Camera::SetEyeXMF(XMFLOAT3 eye)
-//{
-//	this->eye.x = eye.x;
-//	this->eye.y = eye.y;
-//	this->eye.z = eye.z;
-//	UpdatematView();
-//}

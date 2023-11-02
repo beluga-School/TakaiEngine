@@ -1,4 +1,4 @@
-﻿#pragma once
+#pragma once
 #include <DirectXMath.h>
 #pragma warning (push)
 #pragma warning( disable : 26813 )
@@ -23,6 +23,8 @@ public:
 
 	//白テクスチャ生成
 	void CreateWhiteTexture();
+
+	void CreateDepthTexture(ID3D12Resource* depthBuff, const D3D12_RESOURCE_DESC& depthResourceDesc);
 
 	//外部から参照する用のリソース設定(書き換えてもテクスチャ側には影響しない)
 	D3D12_RESOURCE_DESC mGetResDesc{};
@@ -90,6 +92,8 @@ public:
 	/// <param name="handle">読み込み時のリソースハンドル</param>
 	/// <returns></returns>
 	static Texture* GetTexture(const std::string &handle);
+
+	void DepthRegister(ID3D12Resource* depthBuff,const D3D12_RESOURCE_DESC& depthResourceDesc);
 
 private:
 	//テクスチャの1枚目が、デバッグテキストの物になっちゃってるバグがあるのでそれを入れる用のテクスチャ

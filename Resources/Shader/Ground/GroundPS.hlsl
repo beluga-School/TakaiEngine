@@ -1,6 +1,7 @@
 #include "Ground.hlsli"
 
 Texture2D<float4> tex : register(t0);
+Texture2D<float> depthTex : register(t1); //1番スロットに設定されたテクスチャ
 SamplerState smp : register(s0);
 
 static const int pattern[16] =
@@ -19,20 +20,25 @@ float3 magnitude(float3 v)
 float4 main(VSOutput input) : SV_TARGET
 {
     float4 texcolor = tex.Sample(smp, input.uv * tiling + offset);
-    
-    clip(m_alpha);
+    float maskTexcolor = depthTex.Sample(smp, input.uv * tiling + offset);
     
     int ditherUV_x = (int) fmod(input.svpos.x, 4.0f); //パターンの大きさで割ったときの余りを求める
     int ditherUV_y = (int) fmod(input.svpos.y, 4.0f); //今回のパターンサイズは4x4なので4で除算
     float dither = pattern[ditherUV_x + ditherUV_y * 4]; //求めた余りからパターン値を取得
     
-    float camlength = magnitude(cameraPos - input.worldPos.xyz);
+    //bool checkPZ = input.camWorldPos.z > input.camPlayerPos.z;
+    //if (input.camWorldPos.z < input.camPlayerPos.z)
+    //{
+    //    discard;   
+    //}
     
-    float clamp_dither = saturate(dither / 16);//ここの16はpatternの最大値
-    float clamp_length = saturate(camlength / 100);//ここの100は適当な閾値
+    float camlength = magnitude(playerpos - input.worldPos.xyz);
+    
+    float clamp_dither = saturate(dither / 16);
+    float clamp_length = saturate(camlength / 200);
     
     clip(clamp_length - clamp_dither); //閾値が0以下なら描画しない
-    //ここをカメラとキャラが重なってたらにしたい
+    //clip(1 - checkPZ);
     
     float4 shadecolor = { 0, 0, 0, 1 };
     
@@ -56,4 +62,5 @@ float4 main(VSOutput input) : SV_TARGET
     }
     
     return float4(shadecolor.rgb * color.rgb, color.a * texcolor.a);
+    //return float4(maskTexcolor, 0, 0, 1);
 }

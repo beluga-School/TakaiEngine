@@ -31,7 +31,7 @@ float4 main(VSOutput input) : SV_TARGET
     float camlength = magnitude(cameraPos - input.worldPos.xyz);
     
     float clamp_dither = saturate(dither / 16);
-    float clamp_length = saturate(camlength / disolve);
+    float clamp_length = saturate(camlength / 20);
     
     clip(clamp_length - clamp_dither); //è‡’l‚ª0ˆÈ‰º‚È‚ç•`‰æ‚µ‚È‚¢
     

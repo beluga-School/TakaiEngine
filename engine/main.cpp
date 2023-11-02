@@ -72,13 +72,13 @@ int32_t WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_  HINSTANCE hPrevInstan
 
 #pragma region 描画初期化処理
 
-	//depth関連の処理
-	CreateDepthView();
-
 	//テクスチャの読み込み
 	TextureManager* tManager = TextureManager::Get();
 	tManager->Initialize();
 	tManager->PreLoad();
+
+	//depth関連の処理
+	CreateDepthView();
 
 	//imguiの初期化
 	ImguiManager *imguiManager = ImguiManager::GetInstance();

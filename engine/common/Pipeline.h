@@ -108,9 +108,6 @@ private:
 	//シフトブラー用パイプライン
 	void ShiftBlurPipeLine();
 
-	//CG4評価課題用パイプライン
-	void CG4PipeLine();
-
 	//phongシェーダー
 	void PhongPipeLine();
 
@@ -133,7 +130,7 @@ private:
 	void GroundToonPipeLine();
 	
 	//壁が透けるときに切り替える用のパイプライン
-	void GroundToonNoDepthWritePipeLine();
+	//void GroundToonNoDepthWritePipeLine();
 
 	//ワイヤーフレーム用パイプライン
 	void WireFramePipeLine();

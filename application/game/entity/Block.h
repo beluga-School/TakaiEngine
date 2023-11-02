@@ -1,10 +1,7 @@
 #pragma once
 #include "Entity.h"
 #include "Box.h"
-
-struct ConstBufferPlayerPos {
-	Vector3 value;
-};
+#include "Vector3.h"
 
 class Block : public Entity
 {
@@ -17,6 +14,4 @@ public:
 	void Update();
 	void Draw();
 	void DrawMaterial();
-
-	ConstBuffer<ConstBufferPlayerPos> constBufferPlayerPos;
 };

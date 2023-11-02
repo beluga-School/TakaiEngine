@@ -44,7 +44,8 @@ void Billboard::Update(const Camera& camera)
 	matWorld *= matRot;
 	matWorld *= matTrans;
 
-	constBufferT.mConstBufferData->viewproj = camera.mMatView * camera.mMatProjection;
+	constBufferT.mConstBufferData->view = camera.mMatView;
+	constBufferT.mConstBufferData->viewproj = camera.mMatProjection;
 	constBufferT.mConstBufferData->world = matWorld;
 	constBufferT.mConstBufferData->cameraPos = camera.mEye;
 	constBufferT.mConstBufferData->tiling = mTiling;
@@ -113,7 +114,8 @@ void BillboardY::Update(const Camera& camera)
 	matWorld *= matRot;
 	matWorld *= matTrans;
 
-	constBufferT.mConstBufferData->viewproj = camera.mMatView * camera.mMatProjection;
+	constBufferT.mConstBufferData->view = camera.mMatView;
+	constBufferT.mConstBufferData->viewproj = camera.mMatProjection;
 	constBufferT.mConstBufferData->world = matWorld;
 	constBufferT.mConstBufferData->cameraPos = camera.mEye;
 	constBufferT.mConstBufferData->tiling = mTiling;

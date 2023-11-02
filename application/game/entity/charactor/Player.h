@@ -5,6 +5,10 @@
 #include "Mob.h"
 #include "ImguiManager.h"
 
+struct ConstBufferPlayerPos {
+	Vector3 pos;
+};
+
 /*! Player
 	プレイヤークラス
 */
@@ -56,6 +60,8 @@ public:
 	void ApparranceMove(const Vector3& dokanPos, const Vector3& dokanScale);
 
 	bool GetApparanceEnd();
+
+	ConstBuffer<ConstBufferPlayerPos> constBufferPlayerPos;
 
 private:
 	//ここら辺の状態管理は統一したいし、Apparranceがここにいると色々不都合がありそう

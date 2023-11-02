@@ -201,35 +201,17 @@
     <Filter Include="Engine\Common\DebugCamera">
       <UniqueIdentifier>{70ef922a-4056-48e4-82e5-51b904fd5cd2}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Application\Charactor">
-      <UniqueIdentifier>{3dc3946a-e343-4223-9cad-c16ebeddf8c8}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Application\Charactor\Player">
-      <UniqueIdentifier>{d1fb1bf1-7d0a-4bc0-bc3a-9bdb8eb76bd5}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Application\Collision">
       <UniqueIdentifier>{921fc882-a1c8-46bd-a451-bd0c04bdebcf}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Application\Charactor\Enemy">
-      <UniqueIdentifier>{e46da77e-f434-44e8-a38d-981d3fdb64f9}</UniqueIdentifier>
-    </Filter>
     <Filter Include="シェーダー\Toon">
       <UniqueIdentifier>{fc37acf7-e514-49f2-94bb-842ba4c4fe9d}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Application\Charactor\Enemy\EnemyManager">
-      <UniqueIdentifier>{4a1c0f97-a5fe-4cce-a633-5de90a38ede8}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Application\Charactor\Enemy\GEnemy">
-      <UniqueIdentifier>{2b0e9669-3383-42af-834c-1079df58a241}</UniqueIdentifier>
     </Filter>
     <Filter Include="Application\System">
       <UniqueIdentifier>{6886546f-0922-478c-90cd-17a63328ee64}</UniqueIdentifier>
     </Filter>
     <Filter Include="Application\System\Goal">
       <UniqueIdentifier>{b4113e9c-284b-49c0-9ff0-26ccaa642dc4}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Application\Charactor\Mob">
-      <UniqueIdentifier>{302d9139-7d01-43bd-a83a-73a487d23e1a}</UniqueIdentifier>
     </Filter>
     <Filter Include="Application\LevelLoader">
       <UniqueIdentifier>{79740857-baa7-4cfd-8300-7973b9ea94c2}</UniqueIdentifier>
@@ -255,9 +237,6 @@
     <Filter Include="Application\CollideManager">
       <UniqueIdentifier>{8b7ae840-9ed9-434c-82b0-4ac48770cf23}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Application\Charactor\Box">
-      <UniqueIdentifier>{f18195f4-70bb-44f8-adf6-2b9ea029a90f}</UniqueIdentifier>
-    </Filter>
     <Filter Include="シェーダー\TextureBlend">
       <UniqueIdentifier>{32931717-993b-4561-a3c8-460d11203f2e}</UniqueIdentifier>
     </Filter>
@@ -269,9 +248,6 @@
     </Filter>
     <Filter Include="シェーダー\PerlinNoisePE">
       <UniqueIdentifier>{d961cf0c-520f-449d-9e6a-bdaf3f70f313}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Application\Charactor\Bombking">
-      <UniqueIdentifier>{78cc1e19-54eb-4c7e-9efa-687c2f3bd240}</UniqueIdentifier>
     </Filter>
     <Filter Include="Engine\Particle2D">
       <UniqueIdentifier>{a4cb542a-92e5-43f3-90e8-c79f8f43db1c}</UniqueIdentifier>
@@ -287,15 +263,6 @@
     </Filter>
     <Filter Include="Engine\Skydome">
       <UniqueIdentifier>{b0687ccb-5436-42b5-8034-0c8022f3fea5}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Application\Camera">
-      <UniqueIdentifier>{6e53dda4-7081-40f6-9507-9f6b735bbdde}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Application\Camera\PlayerCamera">
-      <UniqueIdentifier>{5b388bcc-558d-41e8-80d7-ab24a44fe4fe}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Application\Camera\EventCamera">
-      <UniqueIdentifier>{bdaef200-6035-4459-96b4-42c65e42d7ed}</UniqueIdentifier>
     </Filter>
     <Filter Include="Application\Entity\EventBlock">
       <UniqueIdentifier>{6095ec17-b870-4246-9122-9b4a2b397af5}</UniqueIdentifier>
@@ -423,6 +390,39 @@
     </Filter>
     <Filter Include="シェーダー\DitherTransparent">
       <UniqueIdentifier>{7258347b-32d5-4f92-8ef0-f63147029b87}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Application\Camera">
+      <UniqueIdentifier>{6e53dda4-7081-40f6-9507-9f6b735bbdde}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Application\Camera\PlayerCamera">
+      <UniqueIdentifier>{5b388bcc-558d-41e8-80d7-ab24a44fe4fe}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Application\Camera\EventCamera">
+      <UniqueIdentifier>{bdaef200-6035-4459-96b4-42c65e42d7ed}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Application\Entity\Charactor">
+      <UniqueIdentifier>{3dc3946a-e343-4223-9cad-c16ebeddf8c8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Application\Entity\Charactor\Player">
+      <UniqueIdentifier>{d1fb1bf1-7d0a-4bc0-bc3a-9bdb8eb76bd5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Application\Entity\Charactor\Enemy">
+      <UniqueIdentifier>{e46da77e-f434-44e8-a38d-981d3fdb64f9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Application\Entity\Charactor\Enemy\EnemyManager">
+      <UniqueIdentifier>{4a1c0f97-a5fe-4cce-a633-5de90a38ede8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Application\Entity\Charactor\Enemy\GEnemy">
+      <UniqueIdentifier>{2b0e9669-3383-42af-834c-1079df58a241}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Application\Entity\Charactor\Mob">
+      <UniqueIdentifier>{302d9139-7d01-43bd-a83a-73a487d23e1a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Application\Entity\Charactor\Box">
+      <UniqueIdentifier>{f18195f4-70bb-44f8-adf6-2b9ea029a90f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Application\Entity\Charactor\Bombking">
+      <UniqueIdentifier>{78cc1e19-54eb-4c7e-9efa-687c2f3bd240}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -577,10 +577,10 @@
       <Filter>Application\Entity</Filter>
     </ClCompile>
     <ClCompile Include="application\game\Entity\Charactor\Bombking.cpp">
-      <Filter>Application\Charactor\Bombking</Filter>
+      <Filter>Application\Entity\Charactor\Bombking</Filter>
     </ClCompile>
     <ClCompile Include="application\game\Entity\Charactor\Player.cpp">
-      <Filter>Application\Charactor\Player</Filter>
+      <Filter>Application\Entity\Charactor\Player</Filter>
     </ClCompile>
     <ClCompile Include="application\game\Entity\EventBlock\GoalBlock.cpp">
       <Filter>Application\Entity\EventBlock\GoalBlock</Filter>
@@ -592,10 +592,10 @@
       <Filter>Application\Entity\EventBlock\WarpBlock</Filter>
     </ClCompile>
     <ClCompile Include="application\game\Entity\Charactor\GEnemy.cpp">
-      <Filter>Application\Charactor\Enemy\GEnemy</Filter>
+      <Filter>Application\Entity\Charactor\Enemy\GEnemy</Filter>
     </ClCompile>
     <ClCompile Include="application\game\Entity\Charactor\Enemy.cpp">
-      <Filter>Application\Charactor\Enemy</Filter>
+      <Filter>Application\Entity\Charactor\Enemy</Filter>
     </ClCompile>
     <ClCompile Include="application\game\Entity\EventBlock\Cannon.cpp">
       <Filter>Application\Entity\EventBlock\Cannon</Filter>
@@ -607,7 +607,7 @@
       <Filter>Application\System\Goal</Filter>
     </ClCompile>
     <ClCompile Include="application\game\Entity\Charactor\Mob.cpp">
-      <Filter>Application\Charactor\Mob</Filter>
+      <Filter>Application\Entity\Charactor\Mob</Filter>
     </ClCompile>
     <ClCompile Include="engine\3d\Skydome.cpp">
       <Filter>Engine\Skydome</Filter>
@@ -619,10 +619,10 @@
       <Filter>Application\Camera\PlayerCamera</Filter>
     </ClCompile>
     <ClCompile Include="application\game\Box.cpp">
-      <Filter>Application\Charactor\Box</Filter>
+      <Filter>Application\Entity\Charactor\Box</Filter>
     </ClCompile>
     <ClCompile Include="application\game\EnemyManager.cpp">
-      <Filter>Application\Charactor\Enemy\EnemyManager</Filter>
+      <Filter>Application\Entity\Charactor\Enemy\EnemyManager</Filter>
     </ClCompile>
     <ClCompile Include="application\scene\TitleScene.cpp">
       <Filter>Application\Scene\TitleScene</Filter>
@@ -894,10 +894,10 @@
       <Filter>Application\Entity</Filter>
     </ClInclude>
     <ClInclude Include="application\game\Entity\Charactor\Bombking.h">
-      <Filter>Application\Charactor\Bombking</Filter>
+      <Filter>Application\Entity\Charactor\Bombking</Filter>
     </ClInclude>
     <ClInclude Include="application\game\Entity\Charactor\Player.h">
-      <Filter>Application\Charactor\Player</Filter>
+      <Filter>Application\Entity\Charactor\Player</Filter>
     </ClInclude>
     <ClInclude Include="application\game\Entity\EventBlock\GoalBlock.h">
       <Filter>Application\Entity\EventBlock\GoalBlock</Filter>
@@ -909,10 +909,10 @@
       <Filter>Application\Entity\EventBlock\WarpBlock</Filter>
     </ClInclude>
     <ClInclude Include="application\game\Entity\Charactor\GEnemy.h">
-      <Filter>Application\Charactor\Enemy\GEnemy</Filter>
+      <Filter>Application\Entity\Charactor\Enemy\GEnemy</Filter>
     </ClInclude>
     <ClInclude Include="application\game\Entity\Charactor\Enemy.h">
-      <Filter>Application\Charactor\Enemy</Filter>
+      <Filter>Application\Entity\Charactor\Enemy</Filter>
     </ClInclude>
     <ClInclude Include="application\game\Entity\EventBlock\Cannon.h">
       <Filter>Application\Entity\EventBlock\Cannon</Filter>
@@ -924,7 +924,7 @@
       <Filter>Application\System\Goal</Filter>
     </ClInclude>
     <ClInclude Include="application\game\Entity\Charactor\Mob.h">
-      <Filter>Application\Charactor\Mob</Filter>
+      <Filter>Application\Entity\Charactor\Mob</Filter>
     </ClInclude>
     <ClInclude Include="engine\3d\Skydome.h">
       <Filter>Engine\Skydome</Filter>
@@ -936,10 +936,10 @@
       <Filter>Application\Camera\PlayerCamera</Filter>
     </ClInclude>
     <ClInclude Include="application\game\Box.h">
-      <Filter>Application\Charactor\Box</Filter>
+      <Filter>Application\Entity\Charactor\Box</Filter>
     </ClInclude>
     <ClInclude Include="application\game\EnemyManager.h">
-      <Filter>Application\Charactor\Enemy\EnemyManager</Filter>
+      <Filter>Application\Entity\Charactor\Enemy\EnemyManager</Filter>
     </ClInclude>
     <ClInclude Include="application\scene\TitleScene.h">
       <Filter>Application\Scene\TitleScene</Filter>
@@ -1029,7 +1029,7 @@
       <Filter>Application\Entity\Sea</Filter>
     </ClInclude>
     <ClInclude Include="application\game\Tag.h">
-      <Filter>Application\Charactor</Filter>
+      <Filter>Application\Entity\Charactor</Filter>
     </ClInclude>
     <ClInclude Include="application\event\EventTriggerBox.h">
       <Filter>Application\Entity\EventBlock\EventTriggerBox</Filter>
@@ -1124,11 +1124,11 @@
     <None Include="Resources\Shader\Billboard.hlsli">
       <Filter>シェーダー\Billboard</Filter>
     </None>
-    <None Include="Resources\Shader\CG4.hlsli">
-      <Filter>シェーダー\CG4</Filter>
-    </None>
     <None Include="Resources\Shader\DT.hlsli">
       <Filter>シェーダー\DitherTransparent</Filter>
+    </None>
+    <None Include="Resources\Shader\BasicConstBuffer.hlsli">
+      <Filter>シェーダー</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>
@@ -1269,12 +1269,6 @@
     </FxCompile>
     <FxCompile Include="Resources\Shader\BillboardPS.hlsl">
       <Filter>シェーダー\Billboard</Filter>
-    </FxCompile>
-    <FxCompile Include="Resources\Shader\CG4PS.hlsl">
-      <Filter>シェーダー\CG4</Filter>
-    </FxCompile>
-    <FxCompile Include="Resources\Shader\CG4VS.hlsl">
-      <Filter>シェーダー\CG4</Filter>
     </FxCompile>
     <FxCompile Include="Resources\Shader\DTPS.hlsl">
       <Filter>シェーダー\DitherTransparent</Filter>

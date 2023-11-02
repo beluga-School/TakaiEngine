@@ -5,6 +5,7 @@
 #include "Texture.h"
 #include "LightGroup.h"
 #include "Obj.h"
+#include "Player.h"
 
 void CreateDepthView()
 {
@@ -16,9 +17,10 @@ void CreateDepthView()
 	depthResourceDesc.Width = Util::WIN_WIDTH;	//レンダーターゲットに合わせる
 	depthResourceDesc.Height = Util::WIN_HEIGHT;	//レンダーターゲットに合わせる
 	depthResourceDesc.DepthOrArraySize = 1;
-	depthResourceDesc.Format = DXGI_FORMAT_D32_FLOAT;	//深度値フォーマット
+	depthResourceDesc.Format = DXGI_FORMAT_R32_TYPELESS;	//深度テクスチャ用
 	depthResourceDesc.SampleDesc.Count = 1;
 	depthResourceDesc.Flags = D3D12_RESOURCE_FLAG_ALLOW_DEPTH_STENCIL;
+	depthResourceDesc.MipLevels = 1;
 
 	//深度値用ヒーププロパティ
 	D3D12_HEAP_PROPERTIES depthHeapProp{};
@@ -54,6 +56,8 @@ void CreateDepthView()
 		screen->depthBuff.Get(),
 		&dsvDesc,
 		screen->dsvHeap->GetCPUDescriptorHandleForHeapStart());
+
+	TextureManager::Get()->DepthRegister(screen->depthBuff.Get(), depthResourceDesc);
 }
 
 void ClearDrawScreen()
@@ -110,7 +114,7 @@ void PreDraw()
 }
 
 void BasicObjectPreDraw(const std::string& pipelineName, bool useLight)
-{
+ {
 	DirectX12* dx12 = DirectX12::Get();
 	TextureManager* texM = TextureManager::Get();
 
@@ -130,6 +134,12 @@ void BasicObjectPreDraw(const std::string& pipelineName, bool useLight)
 	if (useLight)
 	{
 		LightGroup::sLightGroup->Draw(4);
+	}
+	if (pipelineName == "GroundToon")
+	{
+		dx12->mCmdList->SetGraphicsRootConstantBufferView(5, Player::Get()->constBufferPlayerPos.mBuffer->GetGPUVirtualAddress());
+		//デプステクスチャ送信
+		dx12->mCmdList->SetGraphicsRootDescriptorTable(6, TextureManager::GetTexture("Depth")->mGpuHandle);
 	}
 }
 
