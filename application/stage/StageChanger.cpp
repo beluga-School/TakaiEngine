@@ -206,6 +206,11 @@ void StageChanger::NormalObjectSet(const LevelData::ObjectData& data)
 	if (data.textureName != "")
 	{
 		//指定テクスチャがあるならそっちを使う
+		if (TextureManager::GetTexture(data.textureName) == nullptr)
+		{
+			std::string loadstr = "Resources\\" + data.textureName + ".png";
+			TextureManager::Load(loadstr, data.textureName);
+		}
 		mEntitys.back()->SetTexture(TextureManager::Get()->GetTexture(data.textureName));
 		mEntitys.back()->isTexDraw = true;
 	}
@@ -655,6 +660,7 @@ void StageChanger::ChangeUpdate()
 			mEventObjects.back()->Initialize();
 			mEventObjects.back()->SetOutLineState({ 0,0,0,1.0f }, 0.1f);
 
+			//ここら辺の読み込み処理は共通化する
 			if (objectData->fileName != "")
 			{
 				//読み込みしてないなら読み込みも行う
@@ -663,6 +669,17 @@ void StageChanger::ChangeUpdate()
 					ModelManager::LoadModel(objectData->fileName, objectData->fileName, true);
 				}
 				mEventObjects.back()->SetModel(ModelManager::GetModel(objectData->fileName));
+			}
+			if (objectData->textureName != "")
+			{
+				//指定テクスチャがあるならそっちを使う
+				if (TextureManager::GetTexture(objectData->textureName) == nullptr)
+				{
+					std::string loadstr = "Resources\\" + objectData->textureName + ".png";
+					TextureManager::Load(loadstr, objectData->textureName);
+				}
+				mEventObjects.back()->SetTexture(TextureManager::Get()->GetTexture(objectData->textureName));
+				mEventObjects.back()->isTexDraw = true;
 			}
 
 			//オブジェクトの配置

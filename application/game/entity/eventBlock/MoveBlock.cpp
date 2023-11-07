@@ -41,7 +41,14 @@ void MoveBlock::Update()
 
 void MoveBlock::Draw()
 {
-	Obj3d::DrawMaterial();
+	if (isTexDraw)
+	{
+		Obj3d::Draw();
+	}
+	else
+	{
+		Obj3d::DrawMaterial();
+	}
 }
 
 void MoveBlock::HitEffect()
