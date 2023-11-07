@@ -418,6 +418,9 @@
     <Filter Include="Application\Scene\DemoScene">
       <UniqueIdentifier>{da1d0167-9c1a-4b76-b57c-8b4c7f9fe5ac}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Engine\Light\CircleShadow">
+      <UniqueIdentifier>{866ddfe1-a629-434c-a86b-875c60a0cb0e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="engine\input\Input.cpp">
@@ -722,6 +725,9 @@
     </ClCompile>
     <ClCompile Include="DemoScene.cpp">
       <Filter>Application\Scene\DemoScene</Filter>
+    </ClCompile>
+    <ClCompile Include="CircleShadow.cpp">
+      <Filter>Engine\Light\CircleShadow</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1042,6 +1048,9 @@
     </ClInclude>
     <ClInclude Include="DemoScene.h">
       <Filter>Application\Scene\DemoScene</Filter>
+    </ClInclude>
+    <ClInclude Include="CircleShadow.h">
+      <Filter>Engine\Light\CircleShadow</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

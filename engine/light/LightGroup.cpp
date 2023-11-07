@@ -1,13 +1,6 @@
-﻿#include "LightGroup.h"
+#include "LightGroup.h"
 #include "DirectXInit.h"
-
-std::unique_ptr<LightGroup> LightGroup::sLightGroup = nullptr;
-
-void LightGroup::Create()
-{
-	sLightGroup = std::make_unique<LightGroup>();
-	sLightGroup->Initialize();
-}
+#include "Player.h"
 
 void LightGroup::Initialize()
 {
@@ -52,14 +45,13 @@ void LightGroup::TransferBuffer()
 	for (int32_t i = 0; i < sPOINTLIGHT_NUM; i++)
 	{
 		if (mPointLights[i].mActive) {
-			mConstBuff.mConstBufferData->mPointLights[i].active = true;
 			mConstBuff.mConstBufferData->mPointLights[i].lightPos = mPointLights[i].mLightPos;
-			mConstBuff.mConstBufferData->mPointLights[i].lightColor = mPointLights[i].mLightColor;
-			mConstBuff.mConstBufferData->mPointLights[i].lighttAtten = mPointLights[i].mLightAtten;
+			mConstBuff.mConstBufferData->mPointLights[i].lightColor = { mPointLights[i].mLightColor.x,mPointLights[i].mLightColor .y,mPointLights[i].mLightColor .z,1};
+			mConstBuff.mConstBufferData->mPointLights[i].intensity = mPointLights[i].intensity;
 		}
 		else
 		{
-			mConstBuff.mConstBufferData->mPointLights[i].active = false;
+			//mConstBuff.mConstBufferData->mPointLights[i].active = false;
 		}
 	}
 }
@@ -117,18 +109,6 @@ void LightGroup::SetPointLightAtten(const int32_t& index, const Vector3& atten)
 
 void LightGroup::DefaultLightSet()
 {
-	/*mDirLights[0].mActive = true;
-	mDirLights[0].mColor = { 1.0f,0.0f,0.0f };
-	mDirLights[0].mDirection = { 0.0f,-1.0f,0.0f };
-	
-	mDirLights[1].mActive = true;
-	mDirLights[1].mColor = { 0.0f,1.0f,0.0f };
-	mDirLights[1].mDirection = { 0.5f,0.1f,0.2f };
-	
-	mDirLights[2].mActive = true;
-	mDirLights[2].mColor = { 0.0f,0.0f,1.0f };
-	mDirLights[2].mDirection = { -0.5f,0.1f,-0.2f };*/
-
 	mDirLights[0].mActive = true;
 	mDirLights[0].mColor = { 1.0f,1.0f,1.0f };
 	mDirLights[0].mDirection = { 0.0f,-0.8f,0.0f };
@@ -140,4 +120,27 @@ void LightGroup::DefaultLightSet()
 	mDirLights[2].mActive = false;
 	mDirLights[2].mColor = { 1.0f,1.0f,1.0f };
 	mDirLights[2].mDirection = { -0.5f,0.1f,-0.2f };
+
+	mPointLights[0].mActive = true;
+	mPointLights[0].mLightColor = {1.0f,1.0f,1.0f};
+	mPointLights[0].mLightAtten = { 1.0f ,1.0f,1.0f};
+}
+
+void LightGroup::LightDebugGUI()
+{
+	lightGui.Begin({800,100},{200,200});
+	ImGui::SliderFloat("pointLight:intensity", &mPointLights[0].intensity,0,1.0f);
+	ImGui::SliderFloat("pointLight:pos.x", &mPointLights[0].mLightPos.x,-200.f,200.0f);
+	ImGui::SliderFloat("pointLight:pos.y", &mPointLights[0].mLightPos.y,-200.f,200.0f);
+	ImGui::SliderFloat("pointLight:pos.z", &mPointLights[0].mLightPos.z,-200.f,200.0f);
+	
+	if (ImGui::Button("LightPlayerSet"))
+	{
+		LightGroup::Get()->SetPointLightPos(0, Player::Get()->position);
+	}
+	
+	lightGui.End();
+
+	//重い処理なんで避ける工夫を
+	TransferBuffer();
 }

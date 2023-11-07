@@ -1,20 +1,19 @@
 #pragma once
 #include "Vector3.h"
+#include "Float4.h"
 
 /*! PointLight
 	点光源
 */
+
 class PointLight
 {
-public://定数バッファに送るデータ
+public:
 	struct ConstBufferData
 	{
+		Float4 lightColor;
 		Vector3 lightPos;
-		float pad1;
-		Vector3 lightColor;
-		float pad2;
-		Vector3 lighttAtten;
-		bool active;
+		float intensity;
 	};
 public://メンバ変数
 	//ライト座標
@@ -24,5 +23,7 @@ public://メンバ変数
 	//ライト距離減衰係数
 	Vector3 mLightAtten = { 1.0f,1.0f,1.0f };
 	
+	float intensity = 0;
+
 	bool mActive = false;
 };

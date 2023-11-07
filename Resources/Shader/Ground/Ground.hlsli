@@ -33,10 +33,9 @@ static const int POINTLIGHT_NUM = 3;
 
 struct PointLight
 {
+    float4 lightcolor;
     float3 lightpos;
-    float3 lightcolor;
-    float3 lightatten;
-    uint active;
+    float intensity;
 };
 
 cbuffer cbuff3 : register(b3)
