@@ -25,31 +25,22 @@ float4 main(VSOutput input) : SV_TARGET
             
             float3 diffuse = difColor * intensity * dirLights[i].lightcolor;
  
-            //shadecolor.rgb += (ambient + diffuse);
-            //shadecolor.a += 1;
+            shadecolor.rgb += (ambient + diffuse);
+            shadecolor.a += 1;
         }
     }
     
     for (i = 0; i < POINTLIGHT_NUM; i++)
     {
-        //ライトへのベクトル
-
-        float3 lightv = pointLights[i].lightpos - input.worldPos.xyz;
-        lightv = normalize(lightv);
         //ベクトルの長さ
-        float d = length(lightv);
+        float distance = length(pointLights[i].lightpos - input.worldPos.xyz);
+        float factor = pow(saturate(-distance / pointLights[i].radius + 1.0f),pointLights[i].decay);
         
-        float3 pointColor = pointLights[i].lightcolor.rgb * pointLights[i].intensity;
-        
-        float3 dotlightnormal = dot(lightv, input.normal);
+        float3 pointColor = pointLights[i].lightcolor.rgb * pointLights[i].intensity * factor;
             
-        float3 reflect = normalize(-lightv + 2 * dotlightnormal * input.normal);
-  
-        float3 diffuse = pointColor * dotlightnormal * m_diffuse;
-    
-        //float3 eyeDir = normalize(cameraPos - input.worldPos.xyz);
+        float3 diffuse = pointColor * m_diffuse;
         
-        float3 specular = pointColor * m_specular;
+        float3 specular = pointColor * float3(1.0f,1.0f,1.0f);
             
         shadecolor.rgb += (diffuse + specular);
     }

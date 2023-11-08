@@ -36,6 +36,8 @@ struct PointLight
     float4 lightcolor;
     float3 lightpos;
     float intensity;
+    float radius;
+    float decay;
 };
 
 cbuffer cbuff3 : register(b3)

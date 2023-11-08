@@ -48,6 +48,8 @@ void LightGroup::TransferBuffer()
 			mConstBuff.mConstBufferData->mPointLights[i].lightPos = mPointLights[i].mLightPos;
 			mConstBuff.mConstBufferData->mPointLights[i].lightColor = { mPointLights[i].mLightColor.x,mPointLights[i].mLightColor .y,mPointLights[i].mLightColor .z,1};
 			mConstBuff.mConstBufferData->mPointLights[i].intensity = mPointLights[i].intensity;
+			mConstBuff.mConstBufferData->mPointLights[i].decay = mPointLights[i].decay;
+			mConstBuff.mConstBufferData->mPointLights[i].radius = mPointLights[i].radius;
 		}
 		else
 		{
@@ -133,6 +135,8 @@ void LightGroup::LightDebugGUI()
 	ImGui::SliderFloat("pointLight:pos.x", &mPointLights[0].mLightPos.x,-200.f,200.0f);
 	ImGui::SliderFloat("pointLight:pos.y", &mPointLights[0].mLightPos.y,-200.f,200.0f);
 	ImGui::SliderFloat("pointLight:pos.z", &mPointLights[0].mLightPos.z,-200.f,200.0f);
+	ImGui::SliderFloat("pointLight:radius", &mPointLights[0].radius,0.0f,100.0f);
+	ImGui::SliderFloat("pointLight:decay", &mPointLights[0].decay,0.0f, 100.0f);
 	
 	if (ImGui::Button("LightPlayerSet"))
 	{

@@ -14,6 +14,9 @@ public:
 		Float4 lightColor;
 		Vector3 lightPos;
 		float intensity;
+		float radius;
+		float decay;
+		float padding[2];
 	};
 public://メンバ変数
 	//ライト座標
@@ -24,6 +27,8 @@ public://メンバ変数
 	Vector3 mLightAtten = { 1.0f,1.0f,1.0f };
 	
 	float intensity = 0;
+	float radius = 1.0f;
+	float decay = 1.0f;
 
 	bool mActive = false;
 };
