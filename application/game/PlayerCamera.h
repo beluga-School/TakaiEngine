@@ -16,12 +16,39 @@ public:
 
 	//カメラの後ろにあるオブジェクトを透けさせる処理
 	void BackTransparent();
+	
+	void RadiusChange();
 
 	static PlayerCamera* Get() {
 		static PlayerCamera instance;
 		return &instance;
 	}
 
+	float GetRadius() {
+		return mRadius;
+	};
+
+	bool CamChangeEnd() {
+		return radiusMoveTimer.GetEnd();
+	};
+
+	//Imguiに表示するステータスだけ関数にまとめた
+	void CheckDebug();
+
+private:
+	PlayerCamera() {};
+	~PlayerCamera() {};
+
+	//通常の際のカメラ制御
+	void NormalUpdate();
+
+	//カメラの当たり判定を作成
+	void CreateCamCol();
+
+	//カメラがプレイヤーに後から追従する動きのまとめ
+	void PlayerFollow();
+
+public:
 	//カメラの座標を保存
 	Cube cameraCol;
 
@@ -41,24 +68,7 @@ public:
 
 	bool mouseLockChange = true;
 
-	float GetRadius() {
-		return mRadius;
-	};
-
-	bool CamChangeEnd() {
-		return radiusMoveTimer.GetEnd();
-	};
-
 private:
-	PlayerCamera(){};
-	~PlayerCamera(){};
-
-	//通常の際のカメラ制御
-	void NormalUpdate();
-
-	//カメラの当たり判定を作成
-	void CreateCamCol();
-
 	//初期のカメラ距離
 	float mRadius = 8.0f;
 
@@ -74,9 +84,14 @@ private:
 	Vector3 starGetCamPosE{};
 
 	//カメラを動かすタイマー
-	TEasing::easeTimer camMoveTimer = 1.0f;
+	TEasing::easeTimer camRotaYTimer = 0.75f;
 
 	//ラディウスを動かすタイマー
 	TEasing::easeTimer radiusMoveTimer = 0.5f;
+
+	float camMoveRotaCheck = 0.0f;
+	float camMoveRotaCheckOffset = 1.0f;
+	float oldCamRota = 0.0f;
+	float startCamRota = 0.0f;
 };
 

@@ -19,8 +19,9 @@ public:
 		Dash,
 		Apparrance,
 		Debug,
-	}playerState = PlayerState::Normal;
-
+	};
+	PlayerState playerState = PlayerState::Normal;
+	
 public:
 	void LoadResource();
 
@@ -56,6 +57,8 @@ public:
 	bool GetApparanceEnd();
 
 	PlayerState GetState();
+	
+	bool IsMove();
 
 private:
 	Player() : Mob()
@@ -67,8 +70,6 @@ private:
 	//プレイヤーのモードを変える(0,通常,1,デバッグモード)
 	void ChangeMode(const PlayerState& pState);
 	
-	bool IsMove();
-
 	void MoveUpdate();
 
 	void ColUpdate();
@@ -92,6 +93,8 @@ public:
 
 	//敵との当たり判定用スフィア
 	Sphere mEncountCol;
+
+	bool hoge = 0;
 
 private:
 
@@ -121,12 +124,6 @@ private:
 	//ダッシュ時の移動速度
 	const float DASH_SPEED = 15.0f;
 
-	//最大値になるまでの加速時間
-	TEasing::easeTimer accelerationTimer = 0.25f;
-
-	//最大値から減るまでの減速時間
-	TEasing::easeTimer decelerationTimer = 0.25f;
-
 	//移動終わった時の速度
 	float mSaveSpeed = 0.0f;
 
@@ -155,4 +152,11 @@ private:
 
 	Vector3 saveDokanPos{};
 	Vector3 saveDokanScale{};
+
+	TEasing::easeTimer rotaTimer = 0.25f;
+	float rotaStart = 0.0f;
+	float targetRota = 0.0f;
+	float oldTargetRota = 0.0f;
+
+	
 };

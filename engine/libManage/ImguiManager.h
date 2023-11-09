@@ -50,7 +50,7 @@ public:
 	/// インスタンスを取得
 	/// </summary>
 	/// <returns></returns>
-	static ImguiManager* GetInstance();
+	static ImguiManager* Get();
 
 private:
 	ImguiManager(){};

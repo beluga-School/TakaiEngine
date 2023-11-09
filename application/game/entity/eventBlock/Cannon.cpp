@@ -31,7 +31,7 @@ void Cannon::Update()
 			target->position = Vector3::Spline(inters, timer.GetTimeRate());
 
 			//毎フレーム煙っぽくパーティクル生成
-			ParticleManager::GetInstance()->CreateCubeParticle(target->position, { 1,1,1 }, 1, { 0.1f,0.1f,0.1f,1 });
+			ParticleManager::Get()->CreateCubeParticle(target->position, { 1,1,1 }, 1, { 0.1f,0.1f,0.1f,1 });
 
 			if (timer.GetEnd())
 			{
@@ -44,7 +44,7 @@ void Cannon::Update()
 				//着地時にパーティクル
 				for (int32_t i = 0; i < 10; i++)
 				{
-					ParticleManager::GetInstance()->CreateCubeParticle(target->position, { 3,3,3 }, 10, { 1,1,0.1f,1 });
+					ParticleManager::Get()->CreateCubeParticle(target->position, { 3,3,3 }, 10, { 1,1,0.1f,1 });
 				}
 
 				//移動させ終わったので、ターゲットの保持を解除
@@ -91,7 +91,7 @@ void Cannon::OnCollide(Mob& mob)
 
 	for (int i = 0; i < 10; i++)
 	{
-		ParticleManager::GetInstance()->CreateCubeParticle(target->position, { 5,5,5 }, 10, { 0.1f,0.1f,0.1f,1 });
+		ParticleManager::Get()->CreateCubeParticle(target->position, { 5,5,5 }, 10, { 0.1f,0.1f,0.1f,1 });
 	}
 }
 

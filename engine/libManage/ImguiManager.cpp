@@ -81,7 +81,7 @@ void ImguiManager::Finalize()
 	ImGui::DestroyContext();
 }
 
-ImguiManager* ImguiManager::GetInstance()
+ImguiManager* ImguiManager::Get()
 {
 	static ImguiManager instance;
 	return &instance;

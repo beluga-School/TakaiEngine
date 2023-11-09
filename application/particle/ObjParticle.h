@@ -53,7 +53,7 @@ private:
 class ParticleManager
 {
 public:
-	static ParticleManager* GetInstance();
+	static ParticleManager* Get();
 
 	void CreatePool();
 	void AllDelete();

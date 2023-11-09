@@ -95,15 +95,11 @@ void PlayerCamera::BackTransparent()
 	}
 }
 
-void PlayerCamera::NormalUpdate()
+void PlayerCamera::RadiusChange()
 {
-	Player* player = Player::Get();
+	//Player* player = Player::Get();
 
-	mCenterVec = matWorld.ExtractAxisZ();
-	position = player->position;
-
-	Camera::sCamera->mEye = position - (mCenterVec * mRadius);
-	Camera::sCamera->mTarget = position;
+	radiusMoveTimer.Update();
 
 	//ラディウス変更(消してもいいかも)
 	if (Mouse::Wheel() < 0)
@@ -115,16 +111,20 @@ void PlayerCamera::NormalUpdate()
 		mRadius -= 2.0f;
 	}
 
-	if (player->GetState() == Player::PlayerState::Dash)
-	{
-		mRadius = 6.0f;
-	}
-	else
-	{
-		mRadius = 8.0f;
-	}
-
 	mRadius = Util::Clamp(mRadius, 1.0f, 30.f);
+}
+
+void PlayerCamera::NormalUpdate()
+{
+	Player* player = Player::Get();
+
+	mCenterVec = matWorld.ExtractAxisZ();
+	position = player->position;
+
+	Camera::sCamera->mEye = position - (mCenterVec * mRadius);
+	Camera::sCamera->mTarget = position;
+
+	RadiusChange();
 
 	//回転させる処理
 	if (Input::Pad::CheckConnectPad())
@@ -146,14 +146,11 @@ void PlayerCamera::NormalUpdate()
 		mHorizontalRad += MathF::AngleConvRad(Mouse::GetVelocity().x) * mMouseSensitivity;
 	}
 
-	//後で両方同時に動かしたときに加速しないようにclampする
-
 	//限界値を超えない処理
 	if (mVerticalRad > MathF::PIf / 2 - MathF::AngleConvRad(1.0f)) mVerticalRad = MathF::PIf / 2 - MathF::AngleConvRad(1.0f);
 	if (mVerticalRad < -MathF::PIf / 2 + MathF::AngleConvRad(1.0f)) mVerticalRad = -MathF::PIf / 2 + MathF::AngleConvRad(1.0f);
 
-	rotation.x = mVerticalRad;
-	rotation.y = mHorizontalRad;
+	PlayerFollow();
 }
 
 void PlayerCamera::CreateCamCol()
@@ -175,4 +172,41 @@ void PlayerCamera::CreateCamCol()
 		player->scale.z };
 
 	cameraCol.scale.y = Util::Clamp(cameraCol.scale.y, player->scale.y, 9999.f);
+}
+
+void PlayerCamera::PlayerFollow()
+{
+	//yの処理
+	//更新用タイマー
+	//camRotaYTimer.Update();
+	//
+	////正面と比較して、一定の割合を超えたら適用する
+	//camMoveRotaCheck = Util::Abs(rotation.y) - Util::Abs(mHorizontalRad);
+	//camMoveRotaCheck = Util::Abs(camMoveRotaCheck);
+
+	////キャラクターが動いたら、カメラが正面になるように
+
+	////動かすたびにstartさせて、止まったらカメラだけスッと追従する感じの動きに
+	//if (oldCamRota != mHorizontalRad)
+	//{
+	//	camRotaYTimer.Start();
+	//	startCamRota = rotation.y;
+	//}
+	//if (Player::Get()->IsMove())
+	//{
+	//	rotation.y = TEasing::OutQuad(startCamRota, mHorizontalRad, camRotaYTimer.GetTimeRate());
+	//}
+
+	////ひとつ前を保存
+	//oldCamRota = mHorizontalRad;
+
+	rotation.y = mHorizontalRad;
+	//xの処理
+	rotation.x = mVerticalRad;
+}
+
+void PlayerCamera::CheckDebug()
+{
+	ImGui::Text("camMoveRotaCheck %f", camMoveRotaCheck);
+	ImGui::SliderFloat("camMoveRotaCheckOffset %f", &camMoveRotaCheckOffset,0.0f,3.0f);
 }

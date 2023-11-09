@@ -59,7 +59,7 @@ void GameScene::Initialize()
 
 	StageChanger::Get()->goalSystem.Initialize();
 
-	ParticleManager::GetInstance()->CreatePool();
+	ParticleManager::Get()->CreatePool();
 
 	//初期ステージを決定
 	output = "stage_stageselect";
@@ -121,7 +121,7 @@ void GameScene::Update()
 
 	pCamera->BackTransparent();
 
-	ParticleManager::GetInstance()->Update();
+	ParticleManager::Get()->Update();
 
 	//UI更新
 	GameUIManager::Get()->Update();
@@ -137,7 +137,7 @@ void GameScene::Draw()
 
 	EnemyManager::Get()->Draw();
 
-	ParticleManager::GetInstance()->Draw();
+	ParticleManager::Get()->Draw();
 
 	EventManager::Get()->Draw();
 
@@ -155,7 +155,7 @@ void GameScene::Draw()
 
 void GameScene::End()
 {
-	ParticleManager::GetInstance()->AllDelete();
+	ParticleManager::Get()->AllDelete();
 }
 
 void GameScene::GameSceneDebugGUI()
@@ -220,13 +220,10 @@ void GameScene::GameSceneDebugGUI()
 	ImGui::Text("position x:%f y:%f z:%f",
 		player->position.x, player->position.y, player->position.z);
 
-	for (auto& hoge : player->hitListDown)
-	{
-		ImGui::Text("rotation x:%f y:%f z:%f",
-			hoge.rotation.x, hoge.rotation.y, hoge.rotation.z);
-	}
+	ImGui::Text("rota y:%f",player->rotation.y);
+	ImGui::Text("hoge %d",player->hoge);
 
-	ImGui::Text("checkray %d",player->checkray);
+	PlayerCamera::Get()->CheckDebug();
 
 	sceneChangeGUI.End();
 }

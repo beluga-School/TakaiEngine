@@ -57,6 +57,9 @@ void Player::Update()
 	mCenterVec = matWorld.ExtractAxisZ();
 	mSideVec = matWorld.ExtractAxisX();
 
+	Vector3 playerBack{};
+	Vector3 playerFeetPos{};
+	
 	switch (playerState)
 	{
 	case Player::PlayerState::Normal:
@@ -77,6 +80,18 @@ void Player::Update()
 	case Player::PlayerState::Dash:
 		mSpeed = DASH_SPEED;
 		MoveUpdate();
+
+		//プレイヤーの少し後ろの足元座標を算出
+		playerBack =  -matWorld.ExtractAxisZ() * (scale.z / 2);
+		playerFeetPos = Vector3( position.x,position.y - (scale.y / 2),position.z ) + playerBack;
+
+
+		ParticleManager::Get()->CreateCubeParticle(
+			playerFeetPos,
+			{0.5f ,0.5f ,0.5f}, 
+			1.0f, 
+			{1.0f,1.0f,1.0f,1.0f}
+		);
 
 		if (!Input::Keyboard::PushKey(DIK_LSHIFT))
 		{
@@ -202,9 +217,17 @@ void Player::MoveUpdate()
 		moveValue += mSideVec * Input::Pad::GetLStickMove().x * mSpeed * TimeManager::deltaTime;
 	}
 
-	if (Input::Keyboard::PushKey(DIK_W))
+	if (Input::Keyboard::PushKey(DIK_W) || 
+		Input::Keyboard::PushKey(DIK_S) ||
+		Input::Keyboard::PushKey(DIK_D) ||
+		Input::Keyboard::PushKey(DIK_A))
 	{
 		moveValue += mCenterVec * mSpeed * TimeManager::deltaTime;
+	}
+
+	/*if (Input::Keyboard::PushKey(DIK_W))
+	{
+		
 	}
 	if (Input::Keyboard::PushKey(DIK_S))
 	{
@@ -217,7 +240,7 @@ void Player::MoveUpdate()
 	if (Input::Keyboard::PushKey(DIK_A))
 	{
 		moveValue -= mSideVec * mSpeed * TimeManager::deltaTime;
-	}
+	}*/
 
 	//あとで移動速度の加算に上限付ける
 }
@@ -249,10 +272,80 @@ void Player::ColUpdate()
 	}
 }
 
+float RotaComparison(float now, float target)
+{
+	float one = target - now;
+	
+	float invTarget = Util::Abs(target - 360);
+	
+	float two = now + invTarget;
+
+	return one > two;
+}
+
 void Player::RotaUpdate()
 {
-	//回転させる処理
-	rotation.y = PlayerCamera::Get()->mHorizontalRad;
+	//回転させる最終位置
+	//上下の入力があるか
+	if (Input::Keyboard::PushKey(DIK_W) || 
+		Input::Keyboard::PushKey(DIK_S))
+	{
+		if (Input::Keyboard::PushKey(DIK_W)) {
+			targetRota = 0;
+			if (Input::Keyboard::PushKey(DIK_D)) {
+				targetRota = 4;
+			}
+			if (Input::Keyboard::PushKey(DIK_A)) {
+				targetRota = 315;
+			}
+		}
+		if (Input::Keyboard::PushKey(DIK_S)) {
+			targetRota = 180;
+			if (Input::Keyboard::PushKey(DIK_D)) {
+				targetRota = 135;
+			}
+			if (Input::Keyboard::PushKey(DIK_A)) {
+				targetRota = 225;
+			}
+		}
+	}
+	//ないなら
+	else
+	{
+		if (Input::Keyboard::PushKey(DIK_D))
+		{
+			targetRota = 90;
+		}
+		if (Input::Keyboard::PushKey(DIK_A))
+		{
+			targetRota = 270;
+		}
+	}
+
+	rotaTimer.Update();
+
+	//入力があった瞬間
+	if (targetRota != oldTargetRota)
+	{
+		//回転タイマーを初期化し、現在位置を初めの回転に保存
+		rotaTimer.Start();
+		rotaStart = oldTargetRota;
+
+		hoge = RotaComparison(rotaStart, targetRota);
+		if (hoge)
+		{
+			targetRota -= 360;
+			//問題点、ここを通りと328行目のif文でtargetRota と oldTargetRotaの値が異なってしまうので
+			//もう一度このif文を通り、rotaTimerが動いてしまう。
+			//ので、上のif文を再度通らないような仕組みに仕様
+		}
+	}
+
+	//初めの回転から最後の回転までをタイマーで動かす
+	float check = MathF::AngleConvRad(TEasing::OutQuad(rotaStart, targetRota, rotaTimer.GetTimeRate()));
+	rotation.y = PlayerCamera::Get()->mHorizontalRad + check;
+
+	oldTargetRota = targetRota;
 }
 
 void Player::Fly()
@@ -303,7 +396,7 @@ void Player::DamageUpdate()
 		//エフェクト出す
 		for (int i = 0; i < 3; i++)
 		{
-			ParticleManager::GetInstance()->CreateCubeParticle(position,
+			ParticleManager::Get()->CreateCubeParticle(position,
 				{ 3,3,3 }, 10, { 1,0,0,1 });
 		}
 	}

@@ -30,7 +30,7 @@ void Star::Update()
 			particleTimer.Start();
 			for (int i = 0; i < 3; i++)
 			{
-				ParticleManager::GetInstance()->CreateCubeParticle(position, { 1.5f,1.5f,1.5f }, 2.0f, { 1.0f,1.0f,0.0f,1 });
+				ParticleManager::Get()->CreateCubeParticle(position, { 1.5f,1.5f,1.5f }, 2.0f, { 1.0f,1.0f,0.0f,1 });
 			}
 		}
 
@@ -73,7 +73,7 @@ void Star::Update()
 			for (int i = 0; i < 10; i++)
 			{
 				randScale = MathF::GetRand(1.5f,2.0f);
-				ParticleManager::GetInstance()->CreateCubeParticle(position, { randScale,randScale,randScale }, 10.0f, { 1.0f,1.0f,0.0f,1 });
+				ParticleManager::Get()->CreateCubeParticle(position, { randScale,randScale,randScale }, 10.0f, { 1.0f,1.0f,0.0f,1 });
 			}
 		}
 

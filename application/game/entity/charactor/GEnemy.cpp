@@ -128,7 +128,7 @@ void GEnemy::Update()
 			partnum = Util::Clamp(partnum, 3, 50);
 			for (int32_t i = 0; i < partnum; i++)
 			{
-				ParticleManager::GetInstance()->CreateCubeParticle(position,
+				ParticleManager::Get()->CreateCubeParticle(position,
 					{ partscale,partscale,partscale }, partdistance, { 0,1,0,0.5f });
 			}
 		}

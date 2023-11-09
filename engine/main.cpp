@@ -81,7 +81,7 @@ int32_t WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_  HINSTANCE hPrevInstan
 	tManager->PreLoad();
 
 	//imguiの初期化
-	ImguiManager *imguiManager = ImguiManager::GetInstance();
+	ImguiManager *imguiManager = ImguiManager::Get();
 	imguiManager->Initialize();
 
 	//モデルの読み込み

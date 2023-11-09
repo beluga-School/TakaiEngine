@@ -6,7 +6,7 @@
 
 using namespace std;
 
-ParticleManager* ParticleManager::GetInstance()
+ParticleManager* ParticleManager::Get()
 {
     static ParticleManager instance;
     return &instance;
