@@ -1,4 +1,4 @@
-﻿#include "Model.h"
+#include "Model.h"
 #include "StringUtil.h"
 #include <Vector2.h>
 #include <assimp/Importer.hpp>

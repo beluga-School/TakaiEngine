@@ -23,6 +23,7 @@ struct Cube
 {
 	Vector3 position;
 	Vector3 scale;
+	Vector3 rotation;
 	
 	bool operator==(const Cube& cube)const;
 };
@@ -81,4 +82,7 @@ namespace Collsions
 	bool CheckSphere2Triangle(const Sphere& sphere, const Triangle& triangle);
 
 	bool SphereCollsion(const Sphere& sphere1, const Sphere& sphere2);
+
+	//レイと三角形の当たり判定すればええんか
+	bool RayTriangleCollision(const Ray& ray, const Triangle& triangle);
 }

@@ -57,7 +57,7 @@ public:
 	IDdCube cubecol;
 
 	//自身の当たり判定を作成(更新)
-	void CreateCol(const Vector3& pos, const Vector3& scale);
+	void CreateCol(const Vector3& pos, const Vector3& scale, const Vector3& rota_);
 
 	//自身の描画オブジェクトを更新
 	void ColDrawerUpdate(const Vector3& pos, const Vector3& scale);

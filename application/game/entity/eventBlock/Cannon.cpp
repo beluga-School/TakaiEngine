@@ -16,7 +16,7 @@ void Cannon::Initialize()
 
 void Cannon::Update()
 {
-	box.CreateCol(position,scale);
+	box.CreateCol(position,scale, rotation);
 	timer.Update();
 	//ターゲットに何か入ったなら
 	if (target != nullptr)

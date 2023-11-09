@@ -21,7 +21,7 @@
                     1.4731981754302979
                 ]
             },
-            "file_name": "IronBar",
+            "file_name": "SideIronBar",
             "collider": {
                 "type": "BOX",
                 "center": [
@@ -236,9 +236,9 @@
             "name": "立方体_立方体.004",
             "transform": {
                 "translation": [
-                    30.952728271484375,
-                    -40.89852523803711,
-                    42.43122100830078
+                    -73.58154296875,
+                    -4.378076553344727,
+                    17.51274299621582
                 ],
                 "rotation": [
                     0.0,
@@ -799,7 +799,7 @@
             "name": "Cube.007",
             "transform": {
                 "translation": [
-                    -57.02494812011719,
+                    -72.47679901123047,
                     6.740184783935547,
                     5.993997097015381
                 ],
@@ -1124,7 +1124,7 @@
                     1.4731981754302979
                 ]
             },
-            "file_name": "IronBar",
+            "file_name": "SideIronBar",
             "collider": {
                 "type": "BOX",
                 "center": [
@@ -1793,7 +1793,7 @@
                     1.4731981754302979
                 ]
             },
-            "file_name": "IronBar",
+            "file_name": "SideIronBar",
             "collider": {
                 "type": "BOX",
                 "center": [
@@ -1863,7 +1863,7 @@
                     1.4731981754302979
                 ]
             },
-            "file_name": "IronBar",
+            "file_name": "SideIronBar",
             "collider": {
                 "type": "BOX",
                 "center": [
@@ -1898,7 +1898,7 @@
                     1.4731981754302979
                 ]
             },
-            "file_name": "IronBar",
+            "file_name": "SideIronBar",
             "collider": {
                 "type": "BOX",
                 "center": [
@@ -1933,7 +1933,7 @@
                     1.4731981754302979
                 ]
             },
-            "file_name": "IronBar",
+            "file_name": "SideIronBar",
             "collider": {
                 "type": "BOX",
                 "center": [
@@ -1968,7 +1968,7 @@
                     1.4731981754302979
                 ]
             },
-            "file_name": "IronBar",
+            "file_name": "SideIronBar",
             "collider": {
                 "type": "BOX",
                 "center": [
@@ -2003,7 +2003,7 @@
                     1.4731981754302979
                 ]
             },
-            "file_name": "IronBar",
+            "file_name": "SideIronBar",
             "collider": {
                 "type": "BOX",
                 "center": [
@@ -2038,7 +2038,7 @@
                     1.4731981754302979
                 ]
             },
-            "file_name": "IronBar",
+            "file_name": "SideIronBar",
             "collider": {
                 "type": "BOX",
                 "center": [
@@ -2283,7 +2283,7 @@
                     10.0
                 ]
             },
-            "file_name": "IronBar",
+            "file_name": "SideIronBar",
             "collider": {
                 "type": "BOX",
                 "center": [
@@ -2318,7 +2318,7 @@
                     10.0
                 ]
             },
-            "file_name": "IronBar",
+            "file_name": "SideIronBar",
             "collider": {
                 "type": "BOX",
                 "center": [
@@ -2353,7 +2353,7 @@
                     10.0
                 ]
             },
-            "file_name": "IronBar",
+            "file_name": "SideIronBar",
             "collider": {
                 "type": "BOX",
                 "center": [
@@ -2388,7 +2388,7 @@
                     10.0
                 ]
             },
-            "file_name": "IronBar",
+            "file_name": "SideIronBar",
             "collider": {
                 "type": "BOX",
                 "center": [
@@ -2735,7 +2735,7 @@
         },
         {
             "type": "MESH",
-            "name": "中間点",
+            "name": "中間点.002",
             "transform": {
                 "translation": [
                     -189.2191925048828,
@@ -3502,7 +3502,7 @@
             "name": "Cube.112",
             "transform": {
                 "translation": [
-                    3.307788848876953,
+                    3.1782591342926025,
                     -74.06637573242188,
                     23.280899047851562
                 ],
@@ -3544,7 +3544,7 @@
             "name": "Cube.113",
             "transform": {
                 "translation": [
-                    3.307788848876953,
+                    3.1782591342926025,
                     -74.06637573242188,
                     13.325079917907715
                 ],
@@ -5767,7 +5767,7 @@
                     10.0
                 ]
             },
-            "file_name": "IronBar",
+            "file_name": "SideIronBar",
             "collider": {
                 "type": "BOX",
                 "center": [
@@ -6241,9 +6241,9 @@
                     0.0
                 ],
                 "scaling": [
-                    2.0,
-                    2.0,
-                    2.0
+                    1.0,
+                    1.0,
+                    1.0
                 ]
             },
             "file_name": "slime",
@@ -6277,9 +6277,9 @@
                     0.0
                 ],
                 "scaling": [
-                    2.0,
-                    2.0,
-                    2.0
+                    1.0,
+                    1.0,
+                    1.0
                 ]
             },
             "file_name": "slime",
@@ -6313,9 +6313,9 @@
                     0.0
                 ],
                 "scaling": [
-                    2.0,
-                    2.0,
-                    2.0
+                    1.0,
+                    1.0,
+                    1.0
                 ]
             },
             "file_name": "slime",
@@ -6349,9 +6349,9 @@
                     0.0
                 ],
                 "scaling": [
-                    2.0,
-                    2.0,
-                    2.0
+                    1.0,
+                    1.0,
+                    1.0
                 ]
             },
             "file_name": "slime",
@@ -6427,9 +6427,9 @@
                     0.0
                 ],
                 "scaling": [
-                    2.0,
-                    2.0,
-                    2.0
+                    1.0,
+                    1.0,
+                    1.0
                 ]
             },
             "file_name": "slime",
@@ -6463,9 +6463,9 @@
                     0.0
                 ],
                 "scaling": [
-                    2.0,
-                    2.0,
-                    2.0
+                    1.0,
+                    1.0,
+                    1.0
                 ]
             },
             "file_name": "slime",

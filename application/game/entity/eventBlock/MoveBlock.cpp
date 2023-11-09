@@ -30,7 +30,7 @@ void MoveBlock::Update()
 
 	moveValue = position - oldPos;
 
-	box.CreateCol(position, box.scale);
+	box.CreateCol(position, box.scale, rotation);
 	box.ColDrawerUpdate(position, box.scale);
 
 	Obj3d::Update(*Camera::sCamera);

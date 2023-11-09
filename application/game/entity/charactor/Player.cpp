@@ -61,22 +61,26 @@ void Player::Update()
 	{
 	case Player::PlayerState::Normal:
 
-		SideMoveUpdate();
-
-		//縦移動更新(重力落下含む)
-		//ジャンプしていない状態で入力があったらジャンプ
-		if (jumpState == JumpState::None)
-		{
-			if (Input::Keyboard::TriggerKey(DIK_SPACE) ||
-				Pad::TriggerPadButton(PadButton::A))
-			{
-				Jump();
-			}
-		}
+		mSpeed = NORMAL_SPEED;
+		MoveUpdate();
 
 		if (Input::Keyboard::TriggerKey(DIK_1))
 		{
 			ChangeMode(PlayerState::Debug);
+		}
+		if (Input::Keyboard::PushKey(DIK_LSHIFT))
+		{
+			ChangeMode(PlayerState::Dash);
+		}
+
+		break;
+	case Player::PlayerState::Dash:
+		mSpeed = DASH_SPEED;
+		MoveUpdate();
+
+		if (!Input::Keyboard::PushKey(DIK_LSHIFT))
+		{
+			ChangeMode(PlayerState::Normal);
 		}
 
 		break;
@@ -85,7 +89,7 @@ void Player::Update()
 		break;
 	case Player::PlayerState::Debug:
 
-		SideMoveUpdate();
+		MoveUpdate();
 
 		Fly();
 
@@ -121,7 +125,7 @@ void Player::Update()
 	Mob::CollsionUpdate();
 
 	box.ColDrawerUpdate(position, box.scale);
-	box.CreateCol(position, box.scale);
+	box.CreateCol(position, box.scale, rotation);
 
 	ColUpdate();
 
@@ -179,55 +183,17 @@ void Player::Reset()
 	hitListLeft.clear();
 }
 
-void Player::SideMoveUpdate()
+void Player::MoveUpdate()
 {
-	accelerationTimer.Update();
-	decelerationTimer.Update();
-
-	//入力があったら、タイマーが増えていき、
-	//入力がなかったら、タイマーが減っていく
-
-	//移動量を取得、加算
-	if ((Pad::GetLStickMove().GetLength() != 0 || 
-		Pad::GetRStickMove().GetLength() != 0) ||
-		(Input::Keyboard::PushKey(DIK_W) || 
-		Input::Keyboard::PushKey(DIK_S) || 
-		Input::Keyboard::PushKey(DIK_A) || 
-		Input::Keyboard::PushKey(DIK_D)))
+	//縦移動更新(重力落下含む)
+	//ジャンプしていない状態で入力があったらジャンプ
+	if (jumpState == JumpState::None)
 	{
-		if (accelerationTimer.GetStarted() == false)
+		if (Input::Keyboard::TriggerKey(DIK_SPACE) ||
+			Pad::TriggerPadButton(PadButton::A))
 		{
-			accelerationTimer.Start();
+			Jump();
 		}
-		decelerationTimer.Reset();
-	
-		//加速を速度に反映
-		mSpeed = TEasing::InQuad(0.0f, MAX_SPEED, accelerationTimer.GetTimeRate());
-	
-		//前回の移動方向を記録(キーボードのみ)
-		oldMoveVec += mCenterVec * static_cast<float>((Input::Keyboard::PushKey(DIK_W) - Input::Keyboard::PushKey(DIK_S)));
-		oldMoveVec += mSideVec * static_cast<float>((Input::Keyboard::PushKey(DIK_D) - Input::Keyboard::PushKey(DIK_A)));
-
-		oldMoveVec.normalize();
-	}
-	else if(oldMoveVec.length() != 0)//前フレームでキーボード入力があったら(パッドなら減速なし)
-	{
-		if (decelerationTimer.GetStarted() == false)
-		{
-			decelerationTimer.Start();
-			//速度を保存
-			mSaveSpeed = mSpeed;
-		}
-		accelerationTimer.Reset();
-
-		//加速を速度に反映
-		mSpeed = TEasing::InQuad(mSaveSpeed,0.0f, decelerationTimer.GetTimeRate());
-	}
-
-	//減速中の移動
-	if (decelerationTimer.GetRun())
-	{
-		moveValue += oldMoveVec * mSpeed * TimeManager::deltaTime;
 	}
 
 	if (Input::Pad::CheckConnectPad())
@@ -399,6 +365,11 @@ bool Player::GetApparanceEnd()
 	return apparranceTimer.GetEnd();
 }
 
+Player::PlayerState Player::GetState()
+{
+	return playerState;
+}
+
 void Player::HPOverFlow(int32_t value)
 {
 	hp.mCurrent = value;
@@ -414,6 +385,12 @@ void Player::ChangeMode(const PlayerState& pState)
 {
 	playerState = pState;
 	if (playerState == PlayerState::Normal)
+	{
+		SetNoCollsion(false);
+		SetNoGravity(false);
+		SetNoMove(false);
+	}
+	if (playerState == PlayerState::Dash)
 	{
 		SetNoCollsion(false);
 		SetNoGravity(false);

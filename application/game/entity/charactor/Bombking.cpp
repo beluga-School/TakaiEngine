@@ -1,4 +1,4 @@
-﻿#include "Bombking.h"
+#include "Bombking.h"
 #include "Player.h"
 #include "MathF.h"
 #include "TimeManager.h"
@@ -44,7 +44,7 @@ void Bombking::Update()
 	}
 
 	//ずらした分を加算する
-	box.CreateCol(position + saveColCenter, box.scale);
+	box.CreateCol(position + saveColCenter, box.scale, rotation);
 	box.ColDrawerUpdate(position + saveColCenter, box.scale);
 
 	CollsionUpdate();

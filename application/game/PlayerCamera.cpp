@@ -36,15 +36,7 @@ void PlayerCamera::Update()
 		Mouse::CurserLock(CurserLockState::UNLOCK);
 	}
 
-	switch (camMode)
-	{
-	case PlayerCamera::CamMode::Normal:
-		NormalUpdate();
-		break;
-	case PlayerCamera::CamMode::StarGet:
-		StarGetUpdate();
-		break;
-	}
+	NormalUpdate();
 
 	Camera::sCamera->UpdatematView();
 	Obj3d::Update(*Camera::sCamera);
@@ -103,63 +95,6 @@ void PlayerCamera::BackTransparent()
 	}
 }
 
-void PlayerCamera::ChangeNormalMode()
-{
-	camMode = CamMode::Normal;
-
-	camMoveTimer.Reset();
-	mRadius = saveRadius;
-}
-
-void PlayerCamera::ChangeStarGetMode()
-{
-	//すでに開始されてるならスキップ
-	if (camMode == CamMode::StarGet)return;
-
-	Player* player = Player::Get();
-
-	camMode = CamMode::StarGet;
-	camMoveTimer.Start();
-	radiusMoveTimer.Reset();
-
-	//現在位置を始点に
-	starGetCamPosS = Camera::sCamera->mEye;
-
-	//プレイヤーの正面座標を算出
-	mCenterVec = Player::Get()->matWorld.ExtractAxisZ();
-	//y方向を反対にして上に行くように
-	mCenterVec.y = 0.25f;
-
-	position = player->position;
-
-	//プレイヤーの正面座標を終点に
-	starGetCamPosE = position + (mCenterVec * mRadius);
-
-	saveRadius = mRadius;
-};
-
-void PlayerCamera::StarGetUpdate()
-{
-	Player* player = Player::Get();
-
-	camMoveTimer.Update();
-	radiusMoveTimer.Update();
-
-	Camera::sCamera->mTarget = position;
-
-	Camera::sCamera->mEye = TEasing::InQuad(starGetCamPosS, starGetCamPosE, camMoveTimer.GetTimeRate());
-
-	if (camMoveTimer.GetEnd())
-	{
-		if(radiusMoveTimer.GetStarted() == false)radiusMoveTimer.Start();
-		mRadius = TEasing::InQuad(saveRadius,4.0f, radiusMoveTimer.GetTimeRate());
-
-		position = player->position;
-
-		Camera::sCamera->mEye = position + (mCenterVec * mRadius);
-	}
-}
-
 void PlayerCamera::NormalUpdate()
 {
 	Player* player = Player::Get();
@@ -178,6 +113,15 @@ void PlayerCamera::NormalUpdate()
 	if (Mouse::Wheel() > 0)
 	{
 		mRadius -= 2.0f;
+	}
+
+	if (player->GetState() == Player::PlayerState::Dash)
+	{
+		mRadius = 6.0f;
+	}
+	else
+	{
+		mRadius = 8.0f;
 	}
 
 	mRadius = Util::Clamp(mRadius, 1.0f, 30.f);

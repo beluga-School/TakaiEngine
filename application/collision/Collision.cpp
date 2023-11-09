@@ -1,14 +1,12 @@
-﻿#include "Collision.h"
+#include "Collision.h"
 #include "Vector2.h"
 #include "MathF.h"
 #include <math.h>
 
 bool Collsions::RayPlaneCollision(const Ray& ray, const Plane& plane)
 {
-	//const float EPSILON = 1.0e-5f;
-
+	
 	float d1 = plane.normal.dot(ray.direction);
-	//float d1 = ray.direction.dot(plane.normal);
 	//レイが平面と交わらない方向にのびているなら当たらないのでfalse
 	if (d1 > 0)
 	{
@@ -16,8 +14,7 @@ bool Collsions::RayPlaneCollision(const Ray& ray, const Plane& plane)
 	}
 
 	float d2 = plane.normal.dot(ray.start);
-	//float d2 = ray.start.dot(plane.normal);
-
+	
 	float distance = d2 - plane.distance;
 
 	float t = distance / -d1;
@@ -41,6 +38,7 @@ Plane CreatePlane(Vector3 planeCenterPoint,  Vector3 planeNormal)
 
 	return plane;
 }
+
 //やろうと思ったけど一回諦めようかな....
 RayCubeColOutput Collsions::RayCubeCollision(const Ray& ray, const Cube& cube)
 {

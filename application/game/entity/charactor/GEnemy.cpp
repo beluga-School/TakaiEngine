@@ -136,7 +136,7 @@ void GEnemy::Update()
 		break;
 	}
 	//ずらした分を加算する
-	box.CreateCol(position + saveColCenter, box.scale);
+	box.CreateCol(position + saveColCenter, box.scale, rotation);
 	box.ColDrawerUpdate(position + saveColCenter, box.scale);
 
 	CollsionUpdate();

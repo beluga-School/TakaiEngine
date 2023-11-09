@@ -3,10 +3,11 @@
 
 uint32_t IDdCube::sMasterIDCount = 0;
 
-void Box::CreateCol(const Vector3& pos_, const Vector3& scale_)
+void Box::CreateCol(const Vector3& pos_, const Vector3& scale_,const Vector3& rota_)
 {
 	cubecol.position = pos_;
 	cubecol.scale = scale_;
+	cubecol.rotation = rota_;
 }
 
 void Box::ColDrawerUpdate(const Vector3& pos, const Vector3& scale_)

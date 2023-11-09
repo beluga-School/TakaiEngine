@@ -74,12 +74,11 @@ void Mob::CalcNearestHitLists()
 		//初期値でなく、前の値より高い位置にあるなら
 		if (maxDownY >= preDownY)
 		{
-			//一番高い座標を算出
 			//少しだけ浮かせて、ブロックの切れ目に引っかからないように
-			feet = hit.position.y + hit.scale.y / 2;
+			feet = hit.position.y + hit.scale.y / 2;//ここを交点の位置をもらう形にする
 			//Q,ここのスケール/2いらなくね
 			//A,ここのスケール/2は、判定壁の太さみたいなものなので、固定の太さを持たせればいいと思います
-			hitFeetMax = feet + scale.y / 2 + 0.01f;
+			hitFeetMax = feet + scale.y / 2 + hitOffset;
 		}
 		preDownY = hit.position.y;
 	}
@@ -183,7 +182,7 @@ void Mob::JumpUpdate()
 			{
 				if (moveBlockPosition.y <= 0.001)
 				{
-					position.y = hitFeetMax - 0.01f;
+					position.y = hitFeetMax;
 				}
 			}
 		}
@@ -195,7 +194,7 @@ void Mob::JumpUpdate()
 		{
 			//地面に立っている状態にする
 			gravity = 0;
-			position.y = hitFeetMax - 0.01f;
+			position.y = hitFeetMax;
 		}
 
 		break;

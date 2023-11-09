@@ -220,5 +220,13 @@ void GameScene::GameSceneDebugGUI()
 	ImGui::Text("position x:%f y:%f z:%f",
 		player->position.x, player->position.y, player->position.z);
 
+	for (auto& hoge : player->hitListDown)
+	{
+		ImGui::Text("rotation x:%f y:%f z:%f",
+			hoge.rotation.x, hoge.rotation.y, hoge.rotation.z);
+	}
+
+	ImGui::Text("checkray %d",player->checkray);
+
 	sceneChangeGUI.End();
 }

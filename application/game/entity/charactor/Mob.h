@@ -59,7 +59,11 @@ public:
 
 	bool moveBlockHit = false;
 
+	bool checkray = false;
+
 protected:
+	void CollsionUpdate();
+
 	bool noGravity = false;
 
 	//当たり判定を行わないようにする
@@ -67,8 +71,6 @@ protected:
 
 	//移動を行えないようにする
 	bool mNoMove = false;
-
-	void CollsionUpdate();
 
 	///---縦移動
 	JumpState jumpState = JumpState::None;
@@ -90,6 +92,9 @@ protected:
 	float gravity = 0.0f;
 	//重力加速度
 	const float gravityAdd = 1.5f;
+
+	//床に引っかからないように掛ける補正値
+	const float hitOffset = 0.1f;
 
 public:
 	//リストの中でもっとも近い座標を保存する変数

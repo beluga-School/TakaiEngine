@@ -81,6 +81,7 @@ void StageChanger::Update()
 	{
 		obj->Update(*Camera::sCamera);
 		obj->box.Update(*Camera::sCamera);
+		obj->box.CreateCol(obj->box.position, obj->box.scale, obj->box.rotation);
 	}
 	for (auto& obj : mEventObjects)
 	{
@@ -357,7 +358,8 @@ void StageChanger::EvenyObjectSet(const LevelData::ObjectData& data)
 		mEventObjects.back()->trigerName = data.eventtrigerName;
 		mEventObjects.back()->box.CreateCol(
 			mEventObjects.back()->position,
-			mEventObjects.back()->scale
+			mEventObjects.back()->scale,
+			mEventObjects.back()->rotation
 		);
 		
 		//当たり判定を作成
@@ -1144,15 +1146,6 @@ void StageChanger::DrawCollider()
 		obj->box.Draw();
 	}
 	Player::Get()->DrawCollider();
-	
-	//半透明デバッグオブジェクトの描画
-	for (auto& obj : mEntitys)
-	{
-		if (!obj->CheckTag(TagTable::EventCollision))continue;
-		
-		BasicObjectPreDraw("GroundToonNDW");
-		obj->Draw();
-	}
 }
 
 void StageChanger::EventNameUniquePush(const std::string& eventname)
