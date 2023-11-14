@@ -238,15 +238,6 @@ void CollideManager::CheckStatus(Entity* check, Entity* collide)
 				star->HitEffect();
 			}
 		}
-		if (collide->CheckTag(TagTable::WarpBlock))
-		{
-			////collideがWarpであることは確定しているので、Warp型に変換してデータを持ってくる
-			//WarpBlock* warpBlock = static_cast<WarpBlock*>(collide);
-			//if (Collsions::CubeCollision(player->box.cubecol, warpBlock->box.cubecol))
-			//{
-			//	warpBlock->HitEffect();
-			//}
-		}
 	}
 }
 

@@ -22,13 +22,10 @@
 #include <GameUIManager.h>
 #include <EventCameraManager.h>
 #include <EventTriggerBox.h>
-#include <TutorialUIEyeMove.h>
-#include <TutorialUIJump.h>
-#include <TutorialUIMove.h>
 #include <StageTitleUIMountain.h>
 #include "Signboard.h"
 #include <EnemyDokan.h>
-#include <TutorialUIEnemyDown.h>
+#include "SummonUI.h"
 
 void StageChanger::LoadResource()
 {
@@ -283,8 +280,9 @@ void StageChanger::CollisionSetEvent(const LevelData::ObjectData& data)
 		MathF::AngleConvRad(data.rotation.z)
 	};
 
-	mEventObjects.back()->box.cubecol.position = mEntitys.back()->box.position;
-	mEventObjects.back()->box.cubecol.scale = mEntitys.back()->box.scale;
+	mEventObjects.back()->box.cubecol.position = mEventObjects.back()->box.position;
+	mEventObjects.back()->box.cubecol.scale = mEventObjects.back()->box.scale;
+
 	//当たり判定だけマネージャーに登録
 	mEventObjects.back()->Register();
 }
@@ -718,61 +716,6 @@ void StageChanger::ChangeUpdate()
 		//		mEventObjects.back()->box.cubecol.position = mEventObjects.back()->box.position;
 		//		mEventObjects.back()->box.cubecol.scale = mEventObjects.back()->box.scale;
 		//	}
-
-		//	//自身の情報を設定する
-		//	std::vector<std::string> split = Util::SplitString(objectData->eventtrigerName, "_");
-
-		//	Dokan* dokan = static_cast<Dokan*>(mEventObjects.back().get());
-		//	for (auto str : split)
-		//	{
-		//		//移動先の土管IDを取り出す
-		//		if (Util::IsNumber(str))
-		//		{
-		//			dokan->nextDokanInfo.id = atoi(str.c_str());
-		//		}
-		//		//移動先のステージ名を取り出す
-		//		else
-		//		{
-		//			dokan->nextDokanInfo.stageName = str;
-		//		}
-		//	}
-
-		//	split = Util::SplitString(objectData->setObjectName, "_");
-		//	for (auto str : split)
-		//	{
-		//		//自身の土管IDを取り出す
-		//		if (Util::IsNumber(str))
-		//		{
-		//			dokan->dokanInfo.id = atoi(str.c_str());
-		//		}
-		//	}
-		//	//現在のステージハンドル(ステージ名)を保存して、自身の情報とする
-		//	split = Util::SplitString(currentHandle, "_");
-
-		//	for (auto str : split)
-		//	{
-		//		//文字列から冠詞の"stage"を取り除いた者を保存
-		//		if (str != "stage")
-		//		{
-		//			dokan->dokanInfo.stageName = str;
-		//		}
-		//	}
-
-		//	//移動前の土管が持っていた情報と一致する土管が合ったら
-		//	if (saveNextDokanInfo.stageName == dokan->dokanInfo.stageName &&
-		//		saveNextDokanInfo.id == dokan->dokanInfo.id)
-		//	{
-		//		//プレイヤーの情報を記録
-		//		playerData.data = *objectData;
-		//		//優先フラグを立てる
-		//		playerData.dokanPriority = true;
-
-		//		//ステージ名をUIに記録
-		//		GameUIManager::Get()->GetStageTitleUI()->ChangeHandle(StageChanger::Get()->currentData->mStageNum);
-		//	}
-
-		//	continue;
-		//}
 
 		if (SetDokan(*objectData))
 		{
@@ -1242,26 +1185,13 @@ void StageChanger::EventNameUniquePush(const std::string& eventname)
 
 void StageChanger::RegisterEvent(const std::string& eventname)
 {
-	//名前から特定のイベントを呼び出す(いちいち登録するのめんどくさいから改善したい)
-	if (eventname == "tutorialUI_EyeMove")
+	if(Util::CheckString(eventname, "tutorialUI_"))
 	{
-		EventManager::Get()->Register<TutorialUIEyeMove>(eventname);
-	}
-	if (eventname == "tutorialUI_Jump")
-	{
-		EventManager::Get()->Register<TutorialUIJump>(eventname);
-	}
-	if (eventname == "tutorialUI_Move")
-	{
-		EventManager::Get()->Register<TutorialUIMove>(eventname);
+		EventManager::Get()->Register<SummonUI>(eventname);
 	}
 	if (eventname == "stageTitleUI_mountain")
 	{
 		EventManager::Get()->Register<StageTitleUIMountain>(eventname);
-	}
-	if (eventname == "tutorialUI_EnemyDown")
-	{
-		EventManager::Get()->Register<TutorialUIEnemyDown>(eventname);
 	}
 }
 

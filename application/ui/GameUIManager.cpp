@@ -10,6 +10,8 @@ void GameUIManager::LoadResource()
 	TextureManager::Load("Resources\\ui\\moveUI.png", "moveUI");
 	TextureManager::Load("Resources\\stagename_1.png", "stageTitle_1");
 	TextureManager::Load("Resources\\ui\\enemyDownUI.png", "enemyDownUI");
+	TextureManager::Load("Resources\\ui\\getstarUI.png", "getstarUI");
+	TextureManager::Load("Resources\\ui\\inDokanUI.png", "inDokanUI");
 }
 
 void GameUIManager::Move(UIMove uimove, const std::string& handle)
@@ -18,15 +20,15 @@ void GameUIManager::Move(UIMove uimove, const std::string& handle)
 	{
 		stageTitleUI.Start();
 	}
-	if (handle == "TutorialEyeMove")
+	if (handle == "tutorialUI_EyeMove")
 	{
 		tutorialEyeMove.Move(uimove);
 	}
-	if (handle == "TutorialJump")
+	if (handle == "tutorialUI_Jump")
 	{
 		tutorialJump.Move(uimove);
 	}
-	if (handle == "TutorialMove")
+	if (handle == "tutorialUI_Move")
 	{
 		tutorialMove.Move(uimove);
 	}
@@ -34,9 +36,17 @@ void GameUIManager::Move(UIMove uimove, const std::string& handle)
 	{
 		selectTitleUIMountain.Move(uimove);
 	}
-	if (handle == "TutorialEnemyDown")
+	if (handle == "tutorialUI_EnemyDown")
 	{
 		tutorialEnemyDown.Move(uimove);
+	}
+	if (handle == "tutorialUI_GetStar")
+	{
+		tutorialGetStar.Move(uimove);
+	}
+	if (handle == "tutorialUI_InDokan")
+	{
+		tutorialInDokan.Move(uimove);
 	}
 }
 
@@ -46,6 +56,9 @@ void GameUIManager::Reset()
 	tutorialJump.Initialize();
 	tutorialMove.Initialize();
 	selectTitleUIMountain.Initialize();
+	tutorialEnemyDown.Initialize();
+	tutorialGetStar.Initialize();
+	tutorialInDokan.Initialize();
 }
 
 void GameUIManager::Initialize()
@@ -78,6 +91,16 @@ void GameUIManager::Initialize()
 	tutorialEnemyDown.InitPos({ 300,-300 }, { 300,200 });
 	tutorialEnemyDown.InitScale({ 1,1 }, { 1,1 });
 	tutorialEnemyDown.SetSize({ 1,1 });
+	
+	tutorialGetStar.SetTexture("getstarUI");
+	tutorialGetStar.InitPos({ 300,-300 }, { 300,200 });
+	tutorialGetStar.InitScale({ 1,1 }, { 1,1 });
+	tutorialGetStar.SetSize({ 1,1 });
+	
+	tutorialInDokan.SetTexture("inDokanUI");
+	tutorialInDokan.InitPos({(float)Util::CenterX()+ 300,-300 }, { (float)Util::CenterX() + 300,200 });
+	tutorialInDokan.InitScale({ 1,1 }, { 1,1 });
+	tutorialInDokan.SetSize({ 1,1 });
 }
 
 void GameUIManager::Update()
@@ -88,6 +111,8 @@ void GameUIManager::Update()
 	tutorialMove.Update();
 	selectTitleUIMountain.Update();
 	tutorialEnemyDown.Update();
+	tutorialGetStar.Update();
+	tutorialInDokan.Update();
 }
 
 void GameUIManager::Draw()
@@ -98,4 +123,6 @@ void GameUIManager::Draw()
 	tutorialMove.Draw();
 	selectTitleUIMountain.Draw();
 	tutorialEnemyDown.Draw();
+	tutorialGetStar.Draw();
+	tutorialInDokan.Draw();
 }

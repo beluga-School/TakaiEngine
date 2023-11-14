@@ -39,5 +39,7 @@ private:
 	UI tutorialMove;
 	UI selectTitleUIMountain;
 	UI tutorialEnemyDown;
+	UI tutorialGetStar;
+	UI tutorialInDokan;
 };
 

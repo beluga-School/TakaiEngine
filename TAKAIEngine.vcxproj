@@ -202,11 +202,8 @@
     <ClCompile Include="application\ui\InterfaceUI.cpp" />
     <ClCompile Include="application\ui\StarUI.cpp" />
     <ClCompile Include="application\game\entity\eventBlock\Signboard.cpp" />
-    <ClCompile Include="application\ui\TutorialUIJump.cpp" />
-    <ClCompile Include="application\ui\TutorialUIEyeMove.cpp" />
-    <ClCompile Include="application\ui\TutorialUIMove.cpp" />
     <ClCompile Include="application\event\StageTitleUIMountain.cpp" />
-    <ClCompile Include="TutorialUIEnemyDown.cpp" />
+    <ClCompile Include="SummonUI.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="application\collision\CollideManager.h" />
@@ -311,11 +308,8 @@
     <ClInclude Include="application\ui\StarUI.h" />
     <ClInclude Include="application\ui\UI.h" />
     <ClInclude Include="application\game\entity\eventBlock\Signboard.h" />
-    <ClInclude Include="application\ui\TutorialUIJump.h" />
-    <ClInclude Include="application\ui\TutorialUIEyeMove.h" />
-    <ClInclude Include="application\ui\TutorialUIMove.h" />
     <ClInclude Include="application\event\StageTitleUIMountain.h" />
-    <ClInclude Include="TutorialUIEnemyDown.h" />
+    <ClInclude Include="SummonUI.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="External\imgui\imgui.ini" />
