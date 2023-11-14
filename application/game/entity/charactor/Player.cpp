@@ -102,6 +102,9 @@ void Player::Update()
 	case Player::PlayerState::Apparrance:
 
 		break;
+	case Player::PlayerState::InDokan:
+
+		break;
 	case Player::PlayerState::Debug:
 
 		MoveUpdate();
@@ -490,6 +493,12 @@ void Player::ChangeMode(const PlayerState& pState)
 		SetNoMove(false);
 	}
 	if (playerState == PlayerState::Apparrance)
+	{
+		SetNoCollsion(true);
+		SetNoGravity(true);
+		SetNoMove(true);
+	}	
+	if (playerState == PlayerState::InDokan)
 	{
 		SetNoCollsion(true);
 		SetNoGravity(true);

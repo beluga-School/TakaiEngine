@@ -18,6 +18,7 @@ public:
 		Normal,
 		Dash,
 		Apparrance,
+		InDokan,
 		Debug,
 	};
 	PlayerState playerState = PlayerState::Normal;
@@ -58,6 +59,9 @@ public:
 
 	PlayerState GetState();
 	
+	//プレイヤーのモードを変える(0,通常,1,デバッグモード)
+	void ChangeMode(const PlayerState& pState);
+
 	bool IsMove();
 
 private:
@@ -67,9 +71,6 @@ private:
 	};
 	~Player() {};
 
-	//プレイヤーのモードを変える(0,通常,1,デバッグモード)
-	void ChangeMode(const PlayerState& pState);
-	
 	void MoveUpdate();
 
 	void ColUpdate();
