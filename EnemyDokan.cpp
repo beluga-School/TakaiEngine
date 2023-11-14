@@ -10,16 +10,13 @@ void EnemyDokan::LoadResource()
 void EnemyDokan::Initialize()
 {
 	SetModel(ModelManager::GetModel("red_dokan"));
+	popEnemyCol.center = position;
 }
 
 void EnemyDokan::Update()
 {
-	popCool.Update();
-	if (!popCool.GetRun())
-	{
-		popCool.Start();
-		EnemyManager::Get()->PopEnemy<Slime>(position,{0,0,0},{1,1,1});
-	}
+	popEnemyCol.center = position;
+
 	Obj3d::Update(*Camera::sCamera);
 }
 
@@ -31,4 +28,23 @@ void EnemyDokan::Draw()
 void EnemyDokan::HitEffect()
 {
 	
+}
+
+void EnemyDokan::PopEnemy()
+{
+	//すでに湧いているなら飛ばす
+	if (spawnedEnemy != nullptr)
+	{
+		//死んでるなら戻す
+		if (spawnedEnemy->IsDead())
+		{
+			spawnedEnemy = nullptr;
+		}
+		return;
+	}
+	//空きがあるなら出現
+	if (spawnedEnemy == nullptr)
+	{
+		spawnedEnemy = EnemyManager::Get()->PopEnemy<Slime>(position, { 0,0,0 }, { 1,1,1 });
+	}
 }

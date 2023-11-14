@@ -19,4 +19,5 @@ enum class TagTable
 	MoveBlock = 12,
 	EventTriggerBox = 13,
 	EventCollision = 14,
+	EnemyDokan = 15,
 };

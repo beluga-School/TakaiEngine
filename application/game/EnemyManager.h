@@ -22,7 +22,7 @@ public:
 	void Update();
 	void Draw();
 
-	template <class TEnemy> void PopEnemy(const Vector3& posision, const Vector3& rotation, const Vector3& scale);
+	template <class TEnemy> Enemy* PopEnemy(const Vector3& posision, const Vector3& rotation, const Vector3& scale);
 
 	std::list<std::unique_ptr<Enemy>> enemyList;
 
@@ -32,7 +32,7 @@ private:
 };
 
 template<class TEnemy>
-inline void EnemyManager::PopEnemy(const Vector3& position, const Vector3& rotation, const Vector3& scale)
+inline Enemy* EnemyManager::PopEnemy(const Vector3& position, const Vector3& rotation, const Vector3& scale)
 {
 	enemyList.emplace_back();
 	enemyList.back() = std::make_unique<TEnemy>();
@@ -48,4 +48,6 @@ inline void EnemyManager::PopEnemy(const Vector3& position, const Vector3& rotat
 	};
 	//大きさ
 	enemyList.back()->scale = scale;
+
+	return enemyList.back().get();
 }

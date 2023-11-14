@@ -300,30 +300,7 @@ void StageChanger::EvenyObjectSet(const LevelData::ObjectData& data)
 		}
 		tFilename = data.fileName;
 	}
-	
-	//stage の文字列が含まれてるなら
-	//if (data.eventtrigerName.find("stage") != std::string::npos)
-	//{
-	//	mEventObjects.emplace_back();
-	//	//mEventObjects.back() = std::make_unique<WarpBlock>();
-	//	mEventObjects.back()->Initialize();
-	//	//ファイルネームがあるなら
-	//	if (tFilename != "")
-	//	{
-	//		mEventObjects.back()->SetModel(ModelManager::GetModel(tFilename));
-	//	}
 
-	//	mEventObjects.back()->SetOutLineState({ 1,0,0,1.0f }, 0.05f);
-
-	//	mEventObjects.back()->trigerName = data.eventtrigerName;
-	//	//バグらないように白テクスチャを入れる
-	//	mEventObjects.back()->SetTexture(TextureManager::Get()->GetTexture("white"));
-
-	//	//オブジェクトの配置
-	//	LevelDataExchanger::SetObjectData(*mEventObjects.back(), data);
-
-	//	return;
-	//}
 	//goal の文字列が含まれてるなら
 	if (data.eventtrigerName == "goal")
 	{
@@ -1264,6 +1241,7 @@ void StageChanger::EventNameUniquePush(const std::string& eventname)
 
 void StageChanger::RegisterEvent(const std::string& eventname)
 {
+	//名前から特定のイベントを呼び出す(いちいち登録するのめんどくさいから改善したい)
 	if (eventname == "tutorialUI_EyeMove")
 	{
 		EventManager::Get()->Register<TutorialUIEyeMove>(eventname);

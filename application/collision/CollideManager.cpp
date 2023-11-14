@@ -10,6 +10,7 @@
 #include "Dokan.h"
 #include "MoveBlock.h"
 #include "EventTriggerBox.h"
+#include "EnemyDokan.h"
 
 bool CollideManager::CheckDirections(const Cube& check, const Cube& collide, const CheckDirection& CD)
 {
@@ -43,8 +44,6 @@ bool CheckIsDead(Entity* box)
 	return box->IsDead();
 }
 
-//TODO:線形探索でやってる上に死亡確認2回呼んでさらに2重for分2回呼んでるからもうまじであほあほあほあほ
-//うるせ～～～～～しらね～～～～～～～～～～
 void CollideManager::CollideUpdate()
 {
 	//死んでいるなら削除する
@@ -95,7 +94,7 @@ void CollideManager::StatusUpdate()
 
 void CollideManager::CheckCollide(Entity* check, Entity* collide)
 {
-	//同じなら判定しないぜ
+	//同じなら判定しない
 	if (check == collide)
 	{
 		return;
@@ -152,6 +151,16 @@ void CollideManager::CheckCollide(Entity* check, Entity* collide)
 			else
 			{
 				etb->EventEnd();
+			}
+		}
+
+		if (collide->CheckTag(TagTable::EnemyDokan))
+		{
+			//collideがEnemyDokanであることは確定しているので、EnemyDokan型に変換してデータを持ってくる
+			EnemyDokan* enemyDokan = static_cast<EnemyDokan*>(collide);
+			if (Collsions::SphereCollsion(player->mEncountCol, enemyDokan->popEnemyCol))
+			{
+				enemyDokan->PopEnemy();
 			}
 		}
 	}
