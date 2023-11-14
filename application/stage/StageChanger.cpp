@@ -318,142 +318,85 @@ void StageChanger::EvenyObjectSet(const LevelData::ObjectData& data)
 	}
 
 	//star の文字列が完全一致するなら
-	if (data.eventtrigerName == "star")
+	if (SetStar(data))
 	{
-		mEventObjects.emplace_back();
-		mEventObjects.back() = std::make_unique<Star>();
-		mEventObjects.back()->Initialize();
-		//ファイルネームがあるなら
-		if (tFilename != "")
-		{
-			mEventObjects.back()->SetModel(ModelManager::GetModel(tFilename));
-		}
-
-		mEventObjects.back()->SetOutLineState({ 0,0,0,1.0f }, 0.1f);
-
-		mEventObjects.back()->trigerName = data.eventtrigerName;
-		mEventObjects.back()->box.CreateCol(
-			mEventObjects.back()->position,
-			mEventObjects.back()->scale,
-			mEventObjects.back()->rotation
-		);
-		
-		//当たり判定を作成
-		if (data.collider.have)
-		{
-			//当たり判定を表示するオブジェクト
-			mEventObjects.back()->box.Initialize();
-
-			//コリジョンオンリー描画で使うため、コリジョンのタグを付ける
-			mEventObjects.back()->SetTag(TagTable::Collsion);
-			//ブロックのタグを外す
-			mEventObjects.back()->DeleteTag(TagTable::Block);
-
-			mEventObjects.back()->box.SetModel(ModelManager::GetModel("Cube"));
-			mEventObjects.back()->box.SetTexture(TextureManager::Get()->GetTexture("white"));
-
-			mEventObjects.back()->box.position = data.translation + data.collider.center;
-			mEventObjects.back()->box.scale = {
-				data.scaling.x * data.collider.size.x,
-				data.scaling.y * data.collider.size.y,
-				data.scaling.z * data.collider.size.z
-			};
-			mEventObjects.back()->box.rotation = {
-				MathF::AngleConvRad(data.rotation.x),
-				MathF::AngleConvRad(data.rotation.y),
-				MathF::AngleConvRad(data.rotation.z)
-			};
-
-			//ここEntitysから引っ張ってきてるけど合ってるのかな
-			mEventObjects.back()->box.cubecol.position = mEventObjects.back()->box.position;
-			mEventObjects.back()->box.cubecol.scale = mEventObjects.back()->box.scale;
-			//当たり判定だけマネージャーに登録
-			mEventObjects.back()->Register();
-		}
-
-		//オブジェクトの配置
-		LevelDataExchanger::SetObjectData(*mEventObjects.back(), data);
-
-		Star* star = static_cast<Star*>(mEventObjects.back().get());
-
-		star->id = atoi(data.setObjectName.c_str());
-
-		mTempStarSaves.push_back(star);
-
 		return;
 	}
-	//coin の文字列が完全一致するなら
-	if (data.eventtrigerName == "coin")
-	{
-		mEventObjects.emplace_back();
-		mEventObjects.back() = std::make_unique<Coin>();
-		mEventObjects.back()->Initialize();
-		//ファイルネームがあるなら
-		if (tFilename != "")
-		{
-			mEventObjects.back()->SetModel(ModelManager::GetModel(tFilename));
-		}
+	////coin の文字列が完全一致するなら(未使用)
+	//if (data.eventtrigerName == "coin")
+	//{
+	//	mEventObjects.emplace_back();
+	//	mEventObjects.back() = std::make_unique<Coin>();
+	//	mEventObjects.back()->Initialize();
+	//	//ファイルネームがあるなら
+	//	if (tFilename != "")
+	//	{
+	//		mEventObjects.back()->SetModel(ModelManager::GetModel(tFilename));
+	//	}
 
-		mEventObjects.back()->SetOutLineState({ 0,0,0,1.0f }, 0.1f);
+	//	mEventObjects.back()->SetOutLineState({ 0,0,0,1.0f }, 0.1f);
 
-		mEventObjects.back()->trigerName = data.eventtrigerName;
+	//	mEventObjects.back()->trigerName = data.eventtrigerName;
 
-		//当たり判定を作成
-		if (data.collider.have)
-		{
-			CollisionSetEvent(data);
-		}
+	//	//当たり判定を作成
+	//	if (data.collider.have)
+	//	{
+	//		CollisionSetEvent(data);
+	//	}
 
-		//オブジェクトの配置
-		LevelDataExchanger::SetObjectData(*mEventObjects.back(), data);
+	//	//オブジェクトの配置
+	//	LevelDataExchanger::SetObjectData(*mEventObjects.back(), data);
 
-		return;
-	}
+	//	return;
+	//}
 	//Cannon の文字列が含まれてるなら
-	if (data.eventtrigerName.find("Cannon") != std::string::npos)
+	if (SetCannon(data))
 	{
-		if (data.eventtrigerName.find("start") != std::string::npos)
-		{
-			std::stringstream ss;
-
-			mEventObjects.emplace_back();
-			mEventObjects.back() = std::make_unique<Cannon>();
-			mEventObjects.back()->Initialize();
-			
-			std::vector<std::string> split = Util::SplitString(data.eventtrigerName, "_");
-
-			//イベントトリガー名をstringstreamに代入
-			for (auto str : split)
-			{
-				//数字だけ抜き出す
-				if(Util::IsNumber(str)) ss << str;
-			}
-
-			Cannon* cannon = static_cast<Cannon*>(mEventObjects.back().get());
-			
-			//int32_t型に出力する
-			//この際、文字列から数値のみが出力される
-			ss >> cannon->id;
-			cannon->startPos = data.translation;
-
-			//オブジェクトの配置
-			LevelDataExchanger::SetObjectData(*mEventObjects.back(), data);
-		}
-		//全てのオブジェクト配置後、制御点と大砲のみで比較しなおすため、
-		//値を一時的に保存しておく
-		if (data.eventtrigerName.find("inter") != std::string::npos)
-		{	
-			CannonPoint point = { data.eventtrigerName, data.translation };
-			mCannonPoints.push_back(point);
-		}
-		if (data.eventtrigerName.find("end") != std::string::npos)
-		{
-			CannonPoint point = { data.eventtrigerName, data.translation };
-			mCannonPoints.push_back(point);
-		}
-
 		return;
 	}
+	//{
+	//	if (data.eventtrigerName.find("start") != std::string::npos)
+	//	{
+	//		std::stringstream ss;
+
+	//		mEventObjects.emplace_back();
+	//		mEventObjects.back() = std::make_unique<Cannon>();
+	//		mEventObjects.back()->Initialize();
+	//		
+	//		std::vector<std::string> split = Util::SplitString(data.eventtrigerName, "_");
+
+	//		//イベントトリガー名をstringstreamに代入
+	//		for (auto str : split)
+	//		{
+	//			//数字だけ抜き出す
+	//			if(Util::IsNumber(str)) ss << str;
+	//		}
+
+	//		Cannon* cannon = static_cast<Cannon*>(mEventObjects.back().get());
+	//		
+	//		//int32_t型に出力する
+	//		//この際、文字列から数値のみが出力される
+	//		ss >> cannon->id;
+	//		cannon->startPos = data.translation;
+
+	//		//オブジェクトの配置
+	//		LevelDataExchanger::SetObjectData(*mEventObjects.back(), data);
+	//	}
+	//	//全てのオブジェクト配置後、制御点と大砲のみで比較しなおすため、
+	//	//値を一時的に保存しておく
+	//	if (data.eventtrigerName.find("inter") != std::string::npos)
+	//	{	
+	//		CannonPoint point = { data.eventtrigerName, data.translation };
+	//		mCannonPoints.push_back(point);
+	//	}
+	//	if (data.eventtrigerName.find("end") != std::string::npos)
+	//	{
+	//		CannonPoint point = { data.eventtrigerName, data.translation };
+	//		mCannonPoints.push_back(point);
+	//	}
+
+	//	return;
+	//}
 }
 
 void StageChanger::ChangeUpdate()
@@ -676,51 +619,11 @@ void StageChanger::ChangeUpdate()
 		}
 
 		//土管を配置
-		//if (objectData->setObjectName.find("dokan") != std::string::npos)
-		//{
-		//	mEventObjects.emplace_back();
-		//	mEventObjects.back() = std::make_unique<Dokan>();
-
-		//	mEventObjects.back()->Initialize();
-
-		//	mEventObjects.back()->trigerName = objectData->eventtrigerName;
-
-		//	mEventObjects.back()->SetOutLineState({ 0,0,0,1 }, 0.05f);
-
-		//	//オブジェクトの配置
-		//	LevelDataExchanger::SetObjectData(*mEventObjects.back(), *objectData);
-
-		//	if (objectData->collider.have)
-		//	{
-		//		//当たり判定を表示するオブジェクト
-		//		mEventObjects.back()->box.Initialize();
-
-		//		//コリジョンオンリー描画で使うため、コリジョンのタグを付ける
-		//		mEventObjects.back()->SetTag(TagTable::Collsion);
-
-		//		mEventObjects.back()->box.SetModel(ModelManager::GetModel("Cube"));
-		//		mEventObjects.back()->box.SetTexture(TextureManager::Get()->GetTexture("white"));
-
-		//		mEventObjects.back()->box.position = objectData->translation + objectData->collider.center;
-		//		mEventObjects.back()->box.scale = {
-		//			objectData->scaling.x * objectData->collider.size.x,
-		//			objectData->scaling.y * objectData->collider.size.y,
-		//			objectData->scaling.z * objectData->collider.size.z
-		//		};
-		//		mEventObjects.back()->box.rotation = {
-		//			MathF::AngleConvRad(objectData->rotation.x),
-		//			MathF::AngleConvRad(objectData->rotation.y),
-		//			MathF::AngleConvRad(objectData->rotation.z)
-		//		};
-
-		//		mEventObjects.back()->box.cubecol.position = mEventObjects.back()->box.position;
-		//		mEventObjects.back()->box.cubecol.scale = mEventObjects.back()->box.scale;
-		//	}
-
 		if (SetDokan(*objectData))
 		{
 			continue;
 		}
+		//敵が出てくる土管を配置
 		if (SetEnemyDokan(*objectData))
 		{
 			continue;
@@ -1082,6 +985,81 @@ bool StageChanger::SetEnemyDokan(const LevelData::ObjectData& data)
 		{
 			CollisionSet(data);
 		}
+		return true;
+	}
+	return false;
+}
+
+bool StageChanger::SetStar(const LevelData::ObjectData& data)
+{
+	//star の文字列が完全一致するなら
+	if (data.eventtrigerName == "star")
+	{
+		SetEventBlock<Star>(data);
+
+		//当たり判定を作成
+		if (data.collider.have)
+		{
+			CollisionSetEvent(data);
+		}
+
+		Star* star = static_cast<Star*>(mEventObjects.back().get());
+
+		star->id = atoi(data.setObjectName.c_str());
+
+		mTempStarSaves.push_back(star);
+
+		GameUIManager::Get()->starUI.CountUp();
+
+		return true;
+	}
+	return false;
+}
+
+bool StageChanger::SetCannon(const LevelData::ObjectData& data)
+{
+	if (data.eventtrigerName.find("Cannon") != std::string::npos)
+	{
+		if (data.eventtrigerName.find("start") != std::string::npos)
+		{
+			std::stringstream ss;
+
+			mEventObjects.emplace_back();
+			mEventObjects.back() = std::make_unique<Cannon>();
+			mEventObjects.back()->Initialize();
+
+			std::vector<std::string> split = Util::SplitString(data.eventtrigerName, "_");
+
+			//イベントトリガー名をstringstreamに代入
+			for (auto str : split)
+			{
+				//数字だけ抜き出す
+				if (Util::IsNumber(str)) ss << str;
+			}
+
+			Cannon* cannon = static_cast<Cannon*>(mEventObjects.back().get());
+
+			//int32_t型に出力する
+			//この際、文字列から数値のみが出力される
+			ss >> cannon->id;
+			cannon->startPos = data.translation;
+
+			//オブジェクトの配置
+			LevelDataExchanger::SetObjectData(*mEventObjects.back(), data);
+		}
+		//全てのオブジェクト配置後、制御点と大砲のみで比較しなおすため、
+		//値を一時的に保存しておく
+		if (data.eventtrigerName.find("inter") != std::string::npos)
+		{
+			CannonPoint point = { data.eventtrigerName, data.translation };
+			mCannonPoints.push_back(point);
+		}
+		if (data.eventtrigerName.find("end") != std::string::npos)
+		{
+			CannonPoint point = { data.eventtrigerName, data.translation };
+			mCannonPoints.push_back(point);
+		}
+
 		return true;
 	}
 	return false;

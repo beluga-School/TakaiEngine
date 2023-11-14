@@ -4,6 +4,7 @@
 #include "TimeManager.h"
 #include "MathF.h"
 #include "ObjParticle.h"
+#include "GameUIManager.h"
 
 void Star::Initialize()
 {
@@ -69,7 +70,7 @@ void Star::Update()
 
 		if (inholeTimer.GetEnd())
 		{
-			starState = StarState::CountUp;
+			starState = StarState::CountDown;
 			for (int i = 0; i < 10; i++)
 			{
 				randScale = MathF::GetRand(1.5f,2.0f);
@@ -78,7 +79,9 @@ void Star::Update()
 		}
 
 		break;
-	case Star::StarState::CountUp:
+	case Star::StarState::CountDown:
+		GameUIManager::Get()->starUI.CountDown();
+		starState = StarState::End;
 		break;
 	case Star::StarState::End:
 	
@@ -116,7 +119,7 @@ void Star::HitEffect()
 
 void Star::StateEnd()
 {
-	if (starState == StarState::CountUp)
+	if (starState == StarState::CountDown)
 	{
 		starState = StarState::End;
 	}

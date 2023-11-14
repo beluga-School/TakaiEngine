@@ -4,6 +4,7 @@
 void GameUIManager::LoadResource()
 {
 	StageTitleUI::LoadResource();
+	StarUI::LoadResource();
 	TextureManager::Load("Resources\\ui\\eyeMoveUI.png", "eyeMoveUI");
 	TextureManager::Load("Resources\\ui\\jumpUI.png", "jumpUI");
 	TextureManager::Load("Resources\\ui\\moveUI.png", "moveUI");
@@ -43,6 +44,10 @@ void GameUIManager::Move(UIMove uimove, const std::string& handle)
 	if (handle == "tutorialUI_GetStar")
 	{
 		tutorialGetStar.Move(uimove);
+		//スター取得チュートリアルが出たら一緒にスターのUIも出す
+		starUI.Move(UIMove::START);
+		//出っぱなしフラグを立てる
+		starUI.uiAppearance = true;
 	}
 	if (handle == "tutorialUI_InDokan")
 	{
@@ -64,6 +69,7 @@ void GameUIManager::Reset()
 void GameUIManager::Initialize()
 {
 	stageTitleUI.Initialize();
+	starUI.Initialize();
 
 	Reset();
 
@@ -98,7 +104,7 @@ void GameUIManager::Initialize()
 	tutorialGetStar.SetSize({ 1,1 });
 	
 	tutorialInDokan.SetTexture("inDokanUI");
-	tutorialInDokan.InitPos({(float)Util::CenterX()+ 300,-300 }, { (float)Util::CenterX() + 300,200 });
+	tutorialInDokan.InitPos({ 300,-300 }, { 300,200 });
 	tutorialInDokan.InitScale({ 1,1 }, { 1,1 });
 	tutorialInDokan.SetSize({ 1,1 });
 }
@@ -106,6 +112,8 @@ void GameUIManager::Initialize()
 void GameUIManager::Update()
 {
 	stageTitleUI.Update();
+	starUI.Update();
+
 	tutorialEyeMove.Update();
 	tutorialJump.Update();
 	tutorialMove.Update();
@@ -118,6 +126,8 @@ void GameUIManager::Update()
 void GameUIManager::Draw()
 {
 	stageTitleUI.Draw();
+	starUI.Draw();
+
 	tutorialEyeMove.Draw();
 	tutorialJump.Draw();
 	tutorialMove.Draw();

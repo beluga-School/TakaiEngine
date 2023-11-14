@@ -87,7 +87,10 @@ void GameScene::Update()
 		StageChanger::Get()->Reload();
 	}
 
-	GameSceneDebugGUI();
+	if (player->playerState == Player::PlayerState::Debug)
+	{
+		GameSceneDebugGUI();
+	}
 
 	mSkydome.Update();
 

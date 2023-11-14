@@ -196,6 +196,10 @@ private:
 	bool SetDokan(const LevelData::ObjectData& data);
 	//敵土管
 	bool SetEnemyDokan(const LevelData::ObjectData& data);
+	//星
+	bool SetStar(const LevelData::ObjectData& data);
+	//大砲
+	bool SetCannon(const LevelData::ObjectData& data);
 
 	void DrawModel();
 	void DrawCollider();

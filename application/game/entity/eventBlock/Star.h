@@ -17,7 +17,6 @@ public:
 	void Draw()override;
 	void HitEffect()override;
 
-	//ステートがCountUpまで到達していたら、Endに変更する
 	void StateEnd();
 
 	bool InHoleEnd();
@@ -27,7 +26,7 @@ public:
 		None,
 		jumpUp,
 		Inhole,
-		CountUp,
+		CountDown,
 		End,
 	};
 

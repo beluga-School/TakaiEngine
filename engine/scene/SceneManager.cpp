@@ -51,8 +51,9 @@ void SceneManager::Draw()
 	//簡易描画クラスの毎フレーム更新
 	InstantDrawer::AllUpdate();
 	//簡易描画クラスの描画
-	InstantDrawer::AllDraw3D();
 	InstantDrawer::AllDraw2D();
+	//ビルボードが手前に来るように
+	InstantDrawer::AllDraw3D();
 
 	//切り替え演出の描画
 	SpriteCommonBeginDraw();
