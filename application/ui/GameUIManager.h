@@ -38,5 +38,6 @@ private:
 	UI tutorialJump;
 	UI tutorialMove;
 	UI selectTitleUIMountain;
+	UI tutorialEnemyDown;
 };
 

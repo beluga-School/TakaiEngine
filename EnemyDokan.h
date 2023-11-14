@@ -29,7 +29,7 @@ public:
 
 	int32_t countEnemy = 0;
 
-	Sphere popEnemyCol = { {0,0,0} ,20.0f };
+	Sphere popEnemyCol = { {0,0,0} ,40.0f };
 
 	//出現させたエネミーのポインタ
 	Enemy* spawnedEnemy = nullptr;

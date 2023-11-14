@@ -179,6 +179,7 @@ void GameScene::GameSceneDebugGUI()
 	if (ImGui::Button("CheckEncountSphere"))
 	{
 		EnemyManager::Get()->mIsDrawEncountSphere = !EnemyManager::Get()->mIsDrawEncountSphere;
+		//EnemyManager::Get()->mIsDrawEncountSphere = !EnemyManager::Get()->mIsDrawEncountSphere;
 	}
 
 	//ハンドルが空でなければ

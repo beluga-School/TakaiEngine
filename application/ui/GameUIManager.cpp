@@ -9,6 +9,7 @@ void GameUIManager::LoadResource()
 	TextureManager::Load("Resources\\ui\\moveUI.png", "moveUI");
 	TextureManager::Load("Resources\\ui\\moveUI.png", "moveUI");
 	TextureManager::Load("Resources\\stagename_1.png", "stageTitle_1");
+	TextureManager::Load("Resources\\ui\\enemyDownUI.png", "enemyDownUI");
 }
 
 void GameUIManager::Move(UIMove uimove, const std::string& handle)
@@ -32,6 +33,10 @@ void GameUIManager::Move(UIMove uimove, const std::string& handle)
 	if (handle == "stageTitleUI_mountain")
 	{
 		selectTitleUIMountain.Move(uimove);
+	}
+	if (handle == "TutorialEnemyDown")
+	{
+		tutorialEnemyDown.Move(uimove);
 	}
 }
 
@@ -68,6 +73,11 @@ void GameUIManager::Initialize()
 	selectTitleUIMountain.InitPos({ (float)Util::CenterX(),-200 }, { (float)Util::CenterX(),50 });
 	selectTitleUIMountain.InitScale({ 1,1 }, { 1,1 });
 	selectTitleUIMountain.SetSize({ 1,1 });
+
+	tutorialEnemyDown.SetTexture("enemyDownUI");
+	tutorialEnemyDown.InitPos({ 300,-300 }, { 300,200 });
+	tutorialEnemyDown.InitScale({ 1,1 }, { 1,1 });
+	tutorialEnemyDown.SetSize({ 1,1 });
 }
 
 void GameUIManager::Update()
@@ -77,6 +87,7 @@ void GameUIManager::Update()
 	tutorialJump.Update();
 	tutorialMove.Update();
 	selectTitleUIMountain.Update();
+	tutorialEnemyDown.Update();
 }
 
 void GameUIManager::Draw()
@@ -86,4 +97,5 @@ void GameUIManager::Draw()
 	tutorialJump.Draw();
 	tutorialMove.Draw();
 	selectTitleUIMountain.Draw();
+	tutorialEnemyDown.Draw();
 }

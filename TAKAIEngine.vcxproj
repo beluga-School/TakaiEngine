@@ -206,6 +206,7 @@
     <ClCompile Include="application\ui\TutorialUIEyeMove.cpp" />
     <ClCompile Include="application\ui\TutorialUIMove.cpp" />
     <ClCompile Include="application\event\StageTitleUIMountain.cpp" />
+    <ClCompile Include="TutorialUIEnemyDown.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="application\collision\CollideManager.h" />
@@ -314,6 +315,7 @@
     <ClInclude Include="application\ui\TutorialUIEyeMove.h" />
     <ClInclude Include="application\ui\TutorialUIMove.h" />
     <ClInclude Include="application\event\StageTitleUIMountain.h" />
+    <ClInclude Include="TutorialUIEnemyDown.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="External\imgui\imgui.ini" />

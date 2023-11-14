@@ -28,6 +28,7 @@
 #include <StageTitleUIMountain.h>
 #include "Signboard.h"
 #include <EnemyDokan.h>
+#include <TutorialUIEnemyDown.h>
 
 void StageChanger::LoadResource()
 {
@@ -1257,6 +1258,10 @@ void StageChanger::RegisterEvent(const std::string& eventname)
 	if (eventname == "stageTitleUI_mountain")
 	{
 		EventManager::Get()->Register<StageTitleUIMountain>(eventname);
+	}
+	if (eventname == "tutorialUI_EnemyDown")
+	{
+		EventManager::Get()->Register<TutorialUIEnemyDown>(eventname);
 	}
 }
 

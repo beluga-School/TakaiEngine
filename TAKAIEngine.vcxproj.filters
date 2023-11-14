@@ -418,6 +418,9 @@
     <Filter Include="Application\Entity\EventBlock\EnemyDokan">
       <UniqueIdentifier>{bcaa3691-4137-4481-a11c-60a170c03d91}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Application\Event\TutorialUIEnemyDown">
+      <UniqueIdentifier>{1c8d0a17-3550-4048-9509-ea557c50d40d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="engine\input\Input.cpp">
@@ -722,6 +725,9 @@
     </ClCompile>
     <ClCompile Include="EnemyDokan.cpp">
       <Filter>Application\Entity\EventBlock\EnemyDokan</Filter>
+    </ClCompile>
+    <ClCompile Include="TutorialUIEnemyDown.cpp">
+      <Filter>Application\Event\TutorialUIEnemyDown</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1042,6 +1048,9 @@
     </ClInclude>
     <ClInclude Include="EnemyDokan.h">
       <Filter>Application\Entity\EventBlock\EnemyDokan</Filter>
+    </ClInclude>
+    <ClInclude Include="TutorialUIEnemyDown.h">
+      <Filter>Application\Event\TutorialUIEnemyDown</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
