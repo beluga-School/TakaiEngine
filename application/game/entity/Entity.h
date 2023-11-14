@@ -17,6 +17,12 @@ public:
 		box.cubecol.parentEntity = this;
 	}
 
+	virtual void Initialize() = 0;
+	virtual void Update() = 0;
+	virtual void Draw() = 0;
+
+	virtual ~Entity() {};
+
 	/// <summary>
 	/// 指定したタグがあるか確認する
 	/// </summary>
@@ -38,6 +44,9 @@ public:
 	/// <returns>タグの削除に成功でtrue タグが見つからない場合false</returns>
 	bool DeleteTag(TagTable check);
 
+	/// <summary>
+	/// 当たり判定をマネージャーに登録する
+	/// </summary>
 	void Register();
 
 	/// <summary>
@@ -54,6 +63,9 @@ public:
 	Box box;
 
 	bool isTexDraw = false;
+
+	//イベント名を保持
+	std::string eventName_ = "";
 
 protected:
 	bool isDead = false;

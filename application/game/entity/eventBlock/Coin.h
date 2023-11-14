@@ -1,13 +1,13 @@
 #pragma once
-#include "EventBlock.h"
+#include "Entity.h"
 
 /*! Coin
 	コインオブジェクト(未使用)
 */
-class Coin final : public EventBlock
+class Coin final : public Entity
 {
 public:
-	Coin() : EventBlock()
+	Coin() : Entity()
 	{
 		SetTag(TagTable::Coin);
 	}
@@ -15,5 +15,7 @@ public:
 	void Initialize()override;
 	void Update()override;
 	void Draw()override;
-	void HitEffect()override;
+	void HitEffect();
+private:
+	bool hit = false;
 };

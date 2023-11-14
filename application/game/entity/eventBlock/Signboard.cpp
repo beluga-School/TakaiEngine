@@ -34,11 +34,6 @@ void Signboard::Draw()
 	pictureObj.Draw();
 }
 
-void Signboard::HitEffect()
-{
-
-}
-
 void Signboard::SetPicture(const std::string& texHandle_)
 {
 	pictureObj.SetTexture(TextureManager::GetTexture(texHandle_));

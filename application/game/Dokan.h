@@ -1,5 +1,5 @@
 #pragma once
-#include "EventBlock.h"
+#include "Entity.h"
 #include "Box.h"
 #include "Mob.h"
 #include "ImguiManager.h"
@@ -14,7 +14,7 @@ struct DokanInfo
 /*! Dokan
 	ステージ間を移動できる土管クラス
 */
-class Dokan : public EventBlock
+class Dokan : public Entity
 {
 private:
 	enum class DokanState
@@ -36,7 +36,7 @@ private:
 public:
 	static void LoadResource();
 
-	Dokan() : EventBlock()
+	Dokan() : Entity()
 	{
 		SetTag(TagTable::Dokan);
 	};

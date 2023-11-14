@@ -103,7 +103,7 @@ void Dokan::TargetEnter()
 			break;
 		case Dokan::DokanState::End:
 			//eventtrigerに記載されたステージへ移動する
-			std::vector<std::string> split = Util::SplitString(trigerName, "_");
+			std::vector<std::string> split = Util::SplitString(eventName_, "_");
 
 			std::string stagename = "stage_";
 

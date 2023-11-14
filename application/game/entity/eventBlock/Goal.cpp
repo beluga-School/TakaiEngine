@@ -10,6 +10,8 @@ void Goal::Initialize()
 	mInitFragPos = true;
 
 	goalBlock.parent = this;
+
+	MODEL;
 }
 
 void Goal::Update()

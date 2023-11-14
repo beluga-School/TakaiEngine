@@ -1,13 +1,13 @@
 #pragma once
-#include "EventBlock.h"
+#include "Entity.h"
 
 /*! Star
 	プレイヤーが取得できるスターのクラス
 */
-class Star final : public EventBlock
+class Star final : public Entity
 {
 public:
-	Star() : EventBlock()
+	Star() : Entity()
 	{
 		SetTag(TagTable::Star);
 	}
@@ -15,7 +15,7 @@ public:
 	void Initialize()override;
 	void Update()override;
 	void Draw()override;
-	void HitEffect()override;
+	void HitEffect();
 
 	void StateEnd();
 
@@ -36,9 +36,14 @@ public:
 	//すでに取得済みの場合に、状態を取得後に変化させる処理
 	void SetCorrected();
 
+private:
+
+public:
 	int32_t id = -1;
 
 private:
+	bool hit = false;
+
 	StarState starState = StarState::None;
 
 	//入手時に保存するスケール

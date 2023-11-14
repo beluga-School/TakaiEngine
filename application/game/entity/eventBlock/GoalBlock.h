@@ -1,12 +1,12 @@
 #pragma once
-#include "EventBlock.h"
+#include "Entity.h"
 #include "GoalSystem.h"
 #include "TEasing.h"
 
 /*! GoalBlock
 	触れるとゴール処理が入るクラス
 */
-class GoalBlock : public EventBlock
+class GoalBlock : public Entity
 {
 public:
 	void Initialize()override;
@@ -15,7 +15,7 @@ public:
 
 	void Draw()override;
 
-	void HitEffect()override;
+	void HitEffect();
 
 private:
 	TEasing::easeTimer goalAnimetionTimer = 2.0f;

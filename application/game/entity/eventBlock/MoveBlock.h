@@ -1,15 +1,15 @@
 #pragma once
-#include "EventBlock.h"
+#include "Entity.h"
 #include "TEasing.h"
 #include "Mob.h"
 
 /*! MoveBlock
 	2点間を移動するブロックのクラス
 */
-class MoveBlock : public EventBlock
+class MoveBlock : public Entity
 {
 public:
-	MoveBlock() : EventBlock()
+	MoveBlock() : Entity()
 	{
 		SetTag(TagTable::MoveBlock);
 	};
@@ -18,7 +18,7 @@ public:
 	void Update()override;
 	void Draw()override;
 
-	void HitEffect()override;
+	void HitEffect();
 
 	/// <summary>
 	/// 当たっている時に読まれる関数

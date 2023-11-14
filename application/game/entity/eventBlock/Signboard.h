@@ -1,5 +1,5 @@
 #pragma once
-#include "EventBlock.h"
+#include "Entity.h"
 #include "TEasing.h"
 #include "Mob.h"
 #include "Obj.h"
@@ -7,10 +7,10 @@
 /*! Signboard
 	テクスチャを貼れる看板クラス
 */
-class Signboard : public EventBlock
+class Signboard : public Entity
 {
 public:
-	Signboard() : EventBlock()
+	Signboard() : Entity()
 	{
 	};
 
@@ -20,7 +20,7 @@ public:
 	void Update()override;
 	void Draw()override;
 
-	void HitEffect()override;
+	//void HitEffect()override;
 
 	void SetPicture(const std::string& texHandle);
 

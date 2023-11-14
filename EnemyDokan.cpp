@@ -25,11 +25,6 @@ void EnemyDokan::Draw()
 	Obj3d::DrawMaterial();
 }
 
-void EnemyDokan::HitEffect()
-{
-	
-}
-
 void EnemyDokan::PopEnemy()
 {
 	//すでに湧いているなら飛ばす

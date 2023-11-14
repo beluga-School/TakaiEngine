@@ -12,11 +12,15 @@ public:
 		SetTag(TagTable::EventTriggerBox);
 	}
 
+	void Initialize()override;
+	void Update()override;
+	void Draw()override;
+
 	void EventStart();
 
 	void EventEnd();
 
-	std::string eventName_ = "";
+	//std::string eventName_ = "";
 
 private:
 	bool trigger = false;

@@ -633,9 +633,6 @@
     <ClCompile Include="application\game\Status.cpp">
       <Filter>Application\Status</Filter>
     </ClCompile>
-    <ClCompile Include="application\game\entity\eventBlock\EventBlock.cpp">
-      <Filter>Application\Entity\EventBlock\EventBlock</Filter>
-    </ClCompile>
     <ClCompile Include="application\collision\CollideManager.cpp">
       <Filter>Application\CollideManager</Filter>
     </ClCompile>
@@ -940,9 +937,6 @@
     </ClInclude>
     <ClInclude Include="application\game\Status.h">
       <Filter>Application\Status</Filter>
-    </ClInclude>
-    <ClInclude Include="application\game\entity\eventBlock\EventBlock.h">
-      <Filter>Application\Entity\EventBlock\EventBlock</Filter>
     </ClInclude>
     <ClInclude Include="resource.h">
       <Filter>ヘッダー ファイル</Filter>

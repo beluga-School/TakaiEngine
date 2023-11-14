@@ -64,6 +64,9 @@ void GameUIManager::Reset()
 	tutorialEnemyDown.Initialize();
 	tutorialGetStar.Initialize();
 	tutorialInDokan.Initialize();
+
+	//スターが置かれるたびにカウントアップするのでここで初期化
+	starUI.Substitution(0);
 }
 
 void GameUIManager::Initialize()

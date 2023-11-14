@@ -85,7 +85,7 @@ void Player::Update()
 		playerBack =  -matWorld.ExtractAxisZ() * (scale.z / 2);
 		playerFeetPos = Vector3( position.x,position.y - (scale.y / 2),position.z ) + playerBack;
 
-
+		//パーティクル配置
 		ParticleManager::Get()->CreateCubeParticle(
 			playerFeetPos,
 			{0.5f ,0.5f ,0.5f}, 
@@ -135,9 +135,6 @@ void Player::Update()
 
 		break;
 	}
-
-	//Player特有の当たり判定更新(CollideManagerに移す)
-	//ここ置き換えるまでは今日やる
 
 	//Mob側の更新
 	Mob::CollsionUpdate();
@@ -258,19 +255,23 @@ void Player::ColUpdate()
 
 	pCol.position += moveValue;
 
-	for (auto& goal : StageChanger::Get()->mGoals)
+	for (auto& obj : StageChanger::Get()->mEntitys)
 	{
-		Cube goalCol;
-		goalCol.position = goal->position + goal->goalBlock.position;
-
-		//スケール参照なので、大きさが1固定になっちゃってる
-		goalCol.scale = goal->goalBlock.scale * 2;
-
-		if (Collsions::CubeCollision(goalCol, pCol))
+		Goal* goal = dynamic_cast<Goal*>(obj.get());
+		if (goal != nullptr)
 		{
-			goal->HitEffect();
+			Cube goalCol;
+			goalCol.position = goal->position + goal->goalBlock.position;
 
-			break;
+			//スケール参照なので、大きさが1固定になっちゃってる
+			goalCol.scale = goal->goalBlock.scale * 2;
+
+			if (Collsions::CubeCollision(goalCol, pCol))
+			{
+				goal->HitEffect();
+
+				break;
+			}
 		}
 	}
 }

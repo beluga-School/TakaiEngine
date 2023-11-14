@@ -1,14 +1,14 @@
 #pragma once
-#include "EventBlock.h"
+#include "Entity.h"
 #include "Mob.h"
 
 /*! Cannon
 	モブが当たると飛んでいく大砲クラス
 */
-class Cannon : public EventBlock
+class Cannon : public Entity
 {
 public:
-	Cannon() : EventBlock() {
+	Cannon() : Entity() {
 		SetTag(TagTable::Cannon);
 	};
 

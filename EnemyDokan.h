@@ -1,12 +1,12 @@
 #pragma once
-#include "EventBlock.h"
+#include "Entity.h"
 #include "TEasing.h"
 #include "Enemy.h"
 
-class EnemyDokan : public EventBlock
+class EnemyDokan : public Entity
 {
 public:
-	EnemyDokan() :EventBlock()
+	EnemyDokan() :Entity()
 	{
 		SetTag(TagTable::EnemyDokan);
 	};
@@ -18,8 +18,6 @@ public:
 	void Update()override;
 
 	void Draw()override;
-
-	void HitEffect()override;
 
 	void PopEnemy();
 

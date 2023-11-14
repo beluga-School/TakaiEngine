@@ -2,7 +2,7 @@
 #include "LevelLoader.h"
 #include "Obj.h"
 #include "Collision.h"
-#include "EventBlock.h"
+#include "Entity.h"
 #include "GoalSystem.h"
 #include "Goal.h"
 #include "Star.h"
@@ -13,12 +13,6 @@
 #include "EventCamera.h"
 #include <vector>
 #include "EventManager.h"
-
-class ColEventObj : public Obj3d
-{
-public:
-	EventBlock* collideObj = nullptr;
-};
 
 struct CannonPoint
 {
@@ -116,34 +110,62 @@ public:
 	bool LoadStarCorrect(int32_t stageNumber, int32_t starID);
 
 	//通常のオブジェクト配置
-	void NormalObjectSet(const LevelData::ObjectData& data);
+	bool SetBlock(const LevelData::ObjectData& data);
 
 	//イベントオブジェクト配置
-	template <class T> void SetEventBlock(const LevelData::ObjectData& data)
+	template <class T> void SetObject(const LevelData::ObjectData& data)
 	{
-		mEventObjects.emplace_back();
-		mEventObjects.back() = std::make_unique<T>();
-		mEventObjects.back()->Initialize();
+		mEntitys.emplace_back();
+		mEntitys.back() = std::make_unique<T>();
+		mEntitys.back()->Initialize();
 
-		mEventObjects.back()->SetOutLineState({ 0,0,0,1.0f }, 0.05f);
+		//コリジョン目的で配置したならオブジェクト配置を行わない
+		if (data.fileName == "collision")
+		{
+			mEntitys.back()->SetTag(TagTable::NoDraw);
+			return;
+		}
 
-		mEventObjects.back()->trigerName = data.eventtrigerName;
+		//アウトライン設定
+		mEntitys.back()->SetOutLineState({ 0,0,0,1.0f }, 0.05f);
+
+		//モデル設定
+		//ファイルネームが設定されてるならそれで
+		if (data.fileName != "")
+		{
+			//読み込みしてないなら読み込みも行う
+			if (ModelManager::GetModel(data.fileName) == nullptr)
+			{
+				ModelManager::LoadModel(data.fileName, data.fileName, true);
+			}
+			mEntitys.back()->SetModel(ModelManager::GetModel(data.fileName));
+		}
+
 		//バグらないように白テクスチャを入れる
-		mEventObjects.back()->SetTexture(TextureManager::Get()->GetTexture("white"));
+		mEntitys.back()->SetTexture(TextureManager::Get()->GetTexture("white"));
 
+		if (data.textureName != "")
+		{
+			//指定テクスチャがあるならそっちを使う
+			if (TextureManager::GetTexture(data.textureName) == nullptr)
+			{
+				std::string loadstr = "Resources\\" + data.textureName + ".png";
+				TextureManager::Load(loadstr, data.textureName);
+			}
+			mEntitys.back()->SetTexture(TextureManager::Get()->GetTexture(data.textureName));
+			mEntitys.back()->isTexDraw = true;
+		}
+
+		//タイリングの設定
+		mEntitys.back()->mTiling = data.tiling;
+		//イベント名を保持
+		mEntitys.back()->eventName_ = data.eventtrigerName;
 		//オブジェクトの配置
-		LevelDataExchanger::SetObjectData(*mEventObjects.back(), data);
+		LevelDataExchanger::SetObjectData(*mEntitys.back(), data);
 	}
 
 	//モデルの配列
-	//Entityのポインタで保存した方が便利に使えるかもしれない
 	std::list<std::unique_ptr<Entity>> mEntitys;
-
-	//イベントオブジェクト配列
-	std::list<std::unique_ptr<EventBlock>> mEventObjects;
-
-	//ゴールオブジェクト配列
-	std::list<std::unique_ptr<Goal>> mGoals;
 
 	//大砲の制御点を一時的に保存する配列
 	std::vector<CannonPoint> mCannonPoints;
@@ -177,12 +199,6 @@ private:
 	//当たり判定配置
 	void CollisionSet(const LevelData::ObjectData& data);
 
-	//イベントオブジェクト用当たり判定配置(今後mEntityで一括管理したい)
-	void CollisionSetEvent(const LevelData::ObjectData& data);
-
-	//イベントオブジェクト(ブロック置き直し)
-	void EvenyObjectSet(const LevelData::ObjectData& data);
-
 	//ステージ切り替えの更新
 	void ChangeUpdate();
 
@@ -200,6 +216,14 @@ private:
 	bool SetStar(const LevelData::ObjectData& data);
 	//大砲
 	bool SetCannon(const LevelData::ObjectData& data);
+	//移動ブロック
+	bool SetMoveBlock(const LevelData::ObjectData& data);
+	//イベントトリガー
+	bool SetEventTrigger(const LevelData::ObjectData& data);
+	//看板
+	bool SetSignBoard(const LevelData::ObjectData& data);
+	//ゴール
+	bool SetGoal(const LevelData::ObjectData& data);
 
 	void DrawModel();
 	void DrawCollider();

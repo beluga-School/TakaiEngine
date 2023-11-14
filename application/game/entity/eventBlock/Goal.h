@@ -1,13 +1,13 @@
 #pragma once
 #include "Obj.h"
 #include "GoalBlock.h"
-#include "EventBlock.h"
+#include "Entity.h"
 #include "ImguiManager.h"
 
 /*! Goal
 	ゴールオブジェクト
 */
-class Goal : public EventBlock
+class Goal : public Entity
 {
 public:
 	GoalBlock goalBlock;
@@ -16,7 +16,8 @@ public:
 	void Update()override;
 	void Draw()override;
 
-	void HitEffect()override;
+	void HitEffect();
+
 private:
 
 	//初期位置を配置しなおすフラグ

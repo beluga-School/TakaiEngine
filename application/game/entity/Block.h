@@ -9,4 +9,8 @@ public:
 		SetTag(TagTable::Block);
 		Register();
 	};
+
+	void Initialize()override;
+	void Update()override;
+	void Draw()override;
 };

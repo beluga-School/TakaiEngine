@@ -24,7 +24,7 @@ void Clear1::Update()
 	{
 		for (auto& objectData : LevelLoader::Get()->GetData("clear1")->mObjects)
 		{
-			StageChanger::Get()->NormalObjectSet(objectData);
+			StageChanger::Get()->SetBlock(objectData);
 		};
 		setFlag = true;
 	}
