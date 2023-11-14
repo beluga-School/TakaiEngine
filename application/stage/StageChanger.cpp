@@ -3,7 +3,6 @@
 #include "MathF.h"
 #include "EnemyManager.h"
 #include "Player.h"
-#include "WarpBlock.h"
 #include "ClearDrawScreen.h"
 #include "Star.h"
 #include "SceneChange.h"
@@ -28,11 +27,13 @@
 #include <TutorialUIMove.h>
 #include <StageTitleUIMountain.h>
 #include "Signboard.h"
+#include <EnemyDokan.h>
 
 void StageChanger::LoadResource()
 {
 	StageChanger::Get()->goalSystem.LoadResource();
 	Dokan::LoadResource();
+	EnemyDokan::LoadResource();
 	Signboard::LoadResource();
 }
 
@@ -260,7 +261,6 @@ void StageChanger::CollisionSet(const LevelData::ObjectData& data)
 
 void StageChanger::CollisionSetEvent(const LevelData::ObjectData& data)
 {
-
 	//当たり判定を表示するオブジェクト
 	mEventObjects.back()->box.Initialize();
 
@@ -302,28 +302,28 @@ void StageChanger::EvenyObjectSet(const LevelData::ObjectData& data)
 	}
 	
 	//stage の文字列が含まれてるなら
-	if (data.eventtrigerName.find("stage") != std::string::npos)
-	{
-		mEventObjects.emplace_back();
-		mEventObjects.back() = std::make_unique<WarpBlock>();
-		mEventObjects.back()->Initialize();
-		//ファイルネームがあるなら
-		if (tFilename != "")
-		{
-			mEventObjects.back()->SetModel(ModelManager::GetModel(tFilename));
-		}
+	//if (data.eventtrigerName.find("stage") != std::string::npos)
+	//{
+	//	mEventObjects.emplace_back();
+	//	//mEventObjects.back() = std::make_unique<WarpBlock>();
+	//	mEventObjects.back()->Initialize();
+	//	//ファイルネームがあるなら
+	//	if (tFilename != "")
+	//	{
+	//		mEventObjects.back()->SetModel(ModelManager::GetModel(tFilename));
+	//	}
 
-		mEventObjects.back()->SetOutLineState({ 1,0,0,1.0f }, 0.05f);
+	//	mEventObjects.back()->SetOutLineState({ 1,0,0,1.0f }, 0.05f);
 
-		mEventObjects.back()->trigerName = data.eventtrigerName;
-		//バグらないように白テクスチャを入れる
-		mEventObjects.back()->SetTexture(TextureManager::Get()->GetTexture("white"));
+	//	mEventObjects.back()->trigerName = data.eventtrigerName;
+	//	//バグらないように白テクスチャを入れる
+	//	mEventObjects.back()->SetTexture(TextureManager::Get()->GetTexture("white"));
 
-		//オブジェクトの配置
-		LevelDataExchanger::SetObjectData(*mEventObjects.back(), data);
+	//	//オブジェクトの配置
+	//	LevelDataExchanger::SetObjectData(*mEventObjects.back(), data);
 
-		return;
-	}
+	//	return;
+	//}
 	//goal の文字列が含まれてるなら
 	if (data.eventtrigerName == "goal")
 	{
@@ -700,99 +700,108 @@ void StageChanger::ChangeUpdate()
 		}
 
 		//土管を配置
-		if (objectData->setObjectName.find("dokan") != std::string::npos)
+		//if (objectData->setObjectName.find("dokan") != std::string::npos)
+		//{
+		//	mEventObjects.emplace_back();
+		//	mEventObjects.back() = std::make_unique<Dokan>();
+
+		//	mEventObjects.back()->Initialize();
+
+		//	mEventObjects.back()->trigerName = objectData->eventtrigerName;
+
+		//	mEventObjects.back()->SetOutLineState({ 0,0,0,1 }, 0.05f);
+
+		//	//オブジェクトの配置
+		//	LevelDataExchanger::SetObjectData(*mEventObjects.back(), *objectData);
+
+		//	if (objectData->collider.have)
+		//	{
+		//		//当たり判定を表示するオブジェクト
+		//		mEventObjects.back()->box.Initialize();
+
+		//		//コリジョンオンリー描画で使うため、コリジョンのタグを付ける
+		//		mEventObjects.back()->SetTag(TagTable::Collsion);
+
+		//		mEventObjects.back()->box.SetModel(ModelManager::GetModel("Cube"));
+		//		mEventObjects.back()->box.SetTexture(TextureManager::Get()->GetTexture("white"));
+
+		//		mEventObjects.back()->box.position = objectData->translation + objectData->collider.center;
+		//		mEventObjects.back()->box.scale = {
+		//			objectData->scaling.x * objectData->collider.size.x,
+		//			objectData->scaling.y * objectData->collider.size.y,
+		//			objectData->scaling.z * objectData->collider.size.z
+		//		};
+		//		mEventObjects.back()->box.rotation = {
+		//			MathF::AngleConvRad(objectData->rotation.x),
+		//			MathF::AngleConvRad(objectData->rotation.y),
+		//			MathF::AngleConvRad(objectData->rotation.z)
+		//		};
+
+		//		mEventObjects.back()->box.cubecol.position = mEventObjects.back()->box.position;
+		//		mEventObjects.back()->box.cubecol.scale = mEventObjects.back()->box.scale;
+		//	}
+
+		//	//自身の情報を設定する
+		//	std::vector<std::string> split = Util::SplitString(objectData->eventtrigerName, "_");
+
+		//	Dokan* dokan = static_cast<Dokan*>(mEventObjects.back().get());
+		//	for (auto str : split)
+		//	{
+		//		//移動先の土管IDを取り出す
+		//		if (Util::IsNumber(str))
+		//		{
+		//			dokan->nextDokanInfo.id = atoi(str.c_str());
+		//		}
+		//		//移動先のステージ名を取り出す
+		//		else
+		//		{
+		//			dokan->nextDokanInfo.stageName = str;
+		//		}
+		//	}
+
+		//	split = Util::SplitString(objectData->setObjectName, "_");
+		//	for (auto str : split)
+		//	{
+		//		//自身の土管IDを取り出す
+		//		if (Util::IsNumber(str))
+		//		{
+		//			dokan->dokanInfo.id = atoi(str.c_str());
+		//		}
+		//	}
+		//	//現在のステージハンドル(ステージ名)を保存して、自身の情報とする
+		//	split = Util::SplitString(currentHandle, "_");
+
+		//	for (auto str : split)
+		//	{
+		//		//文字列から冠詞の"stage"を取り除いた者を保存
+		//		if (str != "stage")
+		//		{
+		//			dokan->dokanInfo.stageName = str;
+		//		}
+		//	}
+
+		//	//移動前の土管が持っていた情報と一致する土管が合ったら
+		//	if (saveNextDokanInfo.stageName == dokan->dokanInfo.stageName &&
+		//		saveNextDokanInfo.id == dokan->dokanInfo.id)
+		//	{
+		//		//プレイヤーの情報を記録
+		//		playerData.data = *objectData;
+		//		//優先フラグを立てる
+		//		playerData.dokanPriority = true;
+
+		//		//ステージ名をUIに記録
+		//		GameUIManager::Get()->GetStageTitleUI()->ChangeHandle(StageChanger::Get()->currentData->mStageNum);
+		//	}
+
+		//	continue;
+		//}
+
+		if (SetDokan(*objectData))
 		{
-			mEventObjects.emplace_back();
-			mEventObjects.back() = std::make_unique<Dokan>();
-
-			mEventObjects.back()->Initialize();
-
-			mEventObjects.back()->trigerName = objectData->eventtrigerName;
-
-			mEventObjects.back()->SetOutLineState({ 0,0,0,1 }, 0.05f);
-
-			//オブジェクトの配置
-			LevelDataExchanger::SetObjectData(*mEventObjects.back(), *objectData);
-
-			if (objectData->collider.have)
-			{
-				//当たり判定を表示するオブジェクト
-				mEventObjects.back()->box.Initialize();
-
-				//コリジョンオンリー描画で使うため、コリジョンのタグを付ける
-				mEventObjects.back()->SetTag(TagTable::Collsion);
-
-				mEventObjects.back()->box.SetModel(ModelManager::GetModel("Cube"));
-				mEventObjects.back()->box.SetTexture(TextureManager::Get()->GetTexture("white"));
-
-				mEventObjects.back()->box.position = objectData->translation + objectData->collider.center;
-				mEventObjects.back()->box.scale = {
-					objectData->scaling.x * objectData->collider.size.x,
-					objectData->scaling.y * objectData->collider.size.y,
-					objectData->scaling.z * objectData->collider.size.z
-				};
-				mEventObjects.back()->box.rotation = {
-					MathF::AngleConvRad(objectData->rotation.x),
-					MathF::AngleConvRad(objectData->rotation.y),
-					MathF::AngleConvRad(objectData->rotation.z)
-				};
-
-				mEventObjects.back()->box.cubecol.position = mEventObjects.back()->box.position;
-				mEventObjects.back()->box.cubecol.scale = mEventObjects.back()->box.scale;
-			}
-
-			//自身の情報を設定する
-			std::vector<std::string> split = Util::SplitString(objectData->eventtrigerName, "_");
-
-			Dokan* dokan = static_cast<Dokan*>(mEventObjects.back().get());
-			for (auto str : split)
-			{
-				//移動先の土管IDを取り出す
-				if (Util::IsNumber(str))
-				{
-					dokan->nextDokanInfo.id = atoi(str.c_str());
-				}
-				//移動先のステージ名を取り出す
-				else
-				{
-					dokan->nextDokanInfo.stageName = str;
-				}
-			}
-
-			split = Util::SplitString(objectData->setObjectName, "_");
-			for (auto str : split)
-			{
-				//自身の土管IDを取り出す
-				if (Util::IsNumber(str))
-				{
-					dokan->dokanInfo.id = atoi(str.c_str());
-				}
-			}
-			//現在のステージハンドル(ステージ名)を保存して、自身の情報とする
-			split = Util::SplitString(currentHandle, "_");
-
-			for (auto str : split)
-			{
-				//文字列から冠詞の"stage"を取り除いた者を保存
-				if (str != "stage")
-				{
-					dokan->dokanInfo.stageName = str;
-				}
-			}
-
-			//移動前の土管が持っていた情報と一致する土管が合ったら
-			if (saveNextDokanInfo.stageName == dokan->dokanInfo.stageName &&
-				saveNextDokanInfo.id == dokan->dokanInfo.id)
-			{
-				//プレイヤーの情報を記録
-				playerData.data = *objectData;
-				//優先フラグを立てる
-				playerData.dokanPriority = true;
-
-				//ステージ名をUIに記録
-				GameUIManager::Get()->GetStageTitleUI()->ChangeHandle(StageChanger::Get()->currentData->mStageNum);
-			}
-
+			continue;
+		}
+		if (SetEnemyDokan(*objectData))
+		{
 			continue;
 		}
 
@@ -1064,6 +1073,97 @@ void StageChanger::SetPlayer(const LevelData::ObjectData& data)
 	Player::Get()->mDokanApparrance = true;
 
 	Player::Get()->Register();
+}
+
+bool StageChanger::SetDokan(const LevelData::ObjectData& data)
+{
+	if (Util::CheckString(data.setObjectName, "dokan"))
+	{
+		SetEventBlock<Dokan>(data);
+
+		if (data.collider.have)
+		{
+			CollisionSetEvent(data);
+		}
+
+		//自身の情報を設定する
+		std::vector<std::string> split = Util::SplitString(data.eventtrigerName, "_");
+
+		Dokan* dokan = static_cast<Dokan*>(mEventObjects.back().get());
+		for (auto str : split)
+		{
+			//移動先の土管IDを取り出す
+			if (Util::IsNumber(str))
+			{
+				dokan->nextDokanInfo.id = atoi(str.c_str());
+			}
+			//移動先のステージ名を取り出す
+			else
+			{
+				dokan->nextDokanInfo.stageName = str;
+			}
+		}
+
+		split = Util::SplitString(data.setObjectName, "_");
+		for (auto str : split)
+		{
+			//自身の土管IDを取り出す
+			if (Util::IsNumber(str))
+			{
+				dokan->dokanInfo.id = atoi(str.c_str());
+			}
+		}
+		//現在のステージハンドル(ステージ名)を保存して、自身の情報とする
+		split = Util::SplitString(currentHandle, "_");
+
+		for (auto str : split)
+		{
+			//文字列から冠詞の"stage"を取り除いた者を保存
+			if (str != "stage")
+			{
+				dokan->dokanInfo.stageName = str;
+			}
+		}
+
+		//移動前の土管が持っていた情報と一致する土管が合ったら
+		if (saveNextDokanInfo.stageName == dokan->dokanInfo.stageName &&
+			saveNextDokanInfo.id == dokan->dokanInfo.id)
+		{
+			//プレイヤーの情報を記録
+			playerData.data = data;
+			//優先フラグを立てる
+			playerData.dokanPriority = true;
+
+			//ステージ名をUIに記録
+			GameUIManager::Get()->GetStageTitleUI()->ChangeHandle(StageChanger::Get()->currentData->mStageNum);
+		}
+
+		return true;
+	}
+	return false;
+}
+
+bool StageChanger::SetEnemyDokan(const LevelData::ObjectData& data)
+{
+	
+	if (Util::CheckString(data.setObjectName, "enemy_spawnpoint"))
+	{
+		SetEventBlock<EnemyDokan>(data);
+
+		//今はエネミーが一種類なのでこれで済ませるが、後々エネミーの種類を管理するマネージャーから名前検索をする形で取得する
+		if (data.eventtrigerName == "slime")
+		{
+
+		}
+
+		//当たり判定を作成
+		if (data.collider.have)
+		{
+			CollisionSet(data);
+		}
+		return true;
+	}
+	return false;
 }
 
 void StageChanger::DrawModel()

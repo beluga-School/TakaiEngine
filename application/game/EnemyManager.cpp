@@ -9,7 +9,7 @@
 void EnemyManager::Load(const LevelData::ObjectData& data)
 {
 	enemyList.emplace_back();
-	enemyList.back() = std::make_unique<GEnemy>();
+	enemyList.back() = std::make_unique<Slime>();
 	enemyList.back()->Initialize();
 	enemyList.back()->SetModel(ModelManager::GetModel(data.fileName));
 

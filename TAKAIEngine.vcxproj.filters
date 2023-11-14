@@ -306,9 +306,6 @@
     <Filter Include="Application\Entity\EventBlock\EventBlock">
       <UniqueIdentifier>{b571a83b-7bd6-423f-9e0b-9870427ee5b1}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Application\Entity\EventBlock\WarpBlock">
-      <UniqueIdentifier>{db5f74d3-d1ec-493a-b286-b3edd3031475}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Application\Entity\EventBlock\Star">
       <UniqueIdentifier>{e234e327-a9e5-4832-8606-eb3701863442}</UniqueIdentifier>
     </Filter>
@@ -417,6 +414,9 @@
     </Filter>
     <Filter Include="Application\Scene\DemoScene">
       <UniqueIdentifier>{da1d0167-9c1a-4b76-b57c-8b4c7f9fe5ac}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Application\Entity\EventBlock\EnemyDokan">
+      <UniqueIdentifier>{bcaa3691-4137-4481-a11c-60a170c03d91}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -582,9 +582,6 @@
     <ClCompile Include="application\game\Entity\EventBlock\Star.cpp">
       <Filter>Application\Entity\EventBlock\Star</Filter>
     </ClCompile>
-    <ClCompile Include="application\game\Entity\EventBlock\WarpBlock.cpp">
-      <Filter>Application\Entity\EventBlock\WarpBlock</Filter>
-    </ClCompile>
     <ClCompile Include="application\game\Entity\Charactor\GEnemy.cpp">
       <Filter>Application\Charactor\Enemy\GEnemy</Filter>
     </ClCompile>
@@ -722,6 +719,9 @@
     </ClCompile>
     <ClCompile Include="DemoScene.cpp">
       <Filter>Application\Scene\DemoScene</Filter>
+    </ClCompile>
+    <ClCompile Include="EnemyDokan.cpp">
+      <Filter>Application\Entity\EventBlock\EnemyDokan</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -896,9 +896,6 @@
     <ClInclude Include="application\game\Entity\EventBlock\Star.h">
       <Filter>Application\Entity\EventBlock\Star</Filter>
     </ClInclude>
-    <ClInclude Include="application\game\Entity\EventBlock\WarpBlock.h">
-      <Filter>Application\Entity\EventBlock\WarpBlock</Filter>
-    </ClInclude>
     <ClInclude Include="application\game\Entity\Charactor\GEnemy.h">
       <Filter>Application\Charactor\Enemy\GEnemy</Filter>
     </ClInclude>
@@ -1042,6 +1039,9 @@
     </ClInclude>
     <ClInclude Include="DemoScene.h">
       <Filter>Application\Scene\DemoScene</Filter>
+    </ClInclude>
+    <ClInclude Include="EnemyDokan.h">
+      <Filter>Application\Entity\EventBlock\EnemyDokan</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

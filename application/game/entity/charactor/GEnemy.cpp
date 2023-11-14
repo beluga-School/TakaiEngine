@@ -5,10 +5,10 @@
 #include "MathF.h"
 #include "ObjParticle.h"
 
-void GEnemy::Initialize()
+void Slime::Initialize()
 {
 	Obj3d::Initialize();
-	SetModel(ModelManager::GetModel("firewisp"));
+	SetModel(ModelManager::GetModel("slime"));
 	SetTexture(TextureManager::GetTexture("white"));
 	SetOutLineState({0,0,0,1},0.05f);
 
@@ -19,7 +19,7 @@ void GEnemy::Initialize()
 	initScale = scale;
 }
 
-void GEnemy::Update()
+void Slime::Update()
 {
 	stayTimer.Update();
 	metronomeTimer.Update();
@@ -146,12 +146,12 @@ void GEnemy::Update()
 	Obj3d::Update(*Camera::sCamera);
 }
 
-void GEnemy::Draw()
+void Slime::Draw()
 {
 	Obj3d::DrawMaterial();
 }
 
-void GEnemy::HitEffect()
+void Slime::HitEffect()
 {
 	//すでに死亡済みならスキップ
 	if (IsDead())return;
@@ -176,7 +176,7 @@ void GEnemy::HitEffect()
 	deadTimer.Start();
 }
 
-void GEnemy::Encount()
+void Slime::Encount()
 {
 	//ステートがNoneならエンカウントに以降
 	if (mActTable != ActTable::None)return;

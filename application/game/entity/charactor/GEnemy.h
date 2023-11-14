@@ -8,10 +8,10 @@
 /*! GEnemy
 	地面に立つエネミーのクラス(スライム)
 */
-class GEnemy : public Enemy
+class Slime : public Enemy
 {
 public:
-	GEnemy() : Enemy()
+	Slime() : Enemy()
 	{
 
 	}

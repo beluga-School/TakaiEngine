@@ -7,7 +7,6 @@
 #include "Player.h"
 #include "Enemy.h"
 #include "Star.h"
-#include "WarpBlock.h"
 #include "Dokan.h"
 #include "MoveBlock.h"
 #include "EventTriggerBox.h"
@@ -232,12 +231,12 @@ void CollideManager::CheckStatus(Entity* check, Entity* collide)
 		}
 		if (collide->CheckTag(TagTable::WarpBlock))
 		{
-			//collideがWarpであることは確定しているので、Warp型に変換してデータを持ってくる
-			WarpBlock* warpBlock = static_cast<WarpBlock*>(collide);
-			if (Collsions::CubeCollision(player->box.cubecol, warpBlock->box.cubecol))
-			{
-				warpBlock->HitEffect();
-			}
+			////collideがWarpであることは確定しているので、Warp型に変換してデータを持ってくる
+			//WarpBlock* warpBlock = static_cast<WarpBlock*>(collide);
+			//if (Collsions::CubeCollision(player->box.cubecol, warpBlock->box.cubecol))
+			//{
+			//	warpBlock->HitEffect();
+			//}
 		}
 	}
 }

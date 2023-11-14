@@ -108,6 +108,33 @@ public:
 		return &instance;
 	}
 
+	//取得状況を初期化する
+	void ResetRevise(int32_t stageNumber, int32_t starID, int32_t starnum);
+	//取得状況を取得状態にする
+	void CorrectedRevise(int32_t stageNumber, int32_t starID, int32_t starnum);
+	//取得状態を読み取って、boolで返す
+	bool LoadStarCorrect(int32_t stageNumber, int32_t starID);
+
+	//通常のオブジェクト配置
+	void NormalObjectSet(const LevelData::ObjectData& data);
+
+	//イベントオブジェクト配置
+	template <class T> void SetEventBlock(const LevelData::ObjectData& data)
+	{
+		mEventObjects.emplace_back();
+		mEventObjects.back() = std::make_unique<T>();
+		mEventObjects.back()->Initialize();
+
+		mEventObjects.back()->SetOutLineState({ 0,0,0,1.0f }, 0.05f);
+
+		mEventObjects.back()->trigerName = data.eventtrigerName;
+		//バグらないように白テクスチャを入れる
+		mEventObjects.back()->SetTexture(TextureManager::Get()->GetTexture("white"));
+
+		//オブジェクトの配置
+		LevelDataExchanger::SetObjectData(*mEventObjects.back(), data);
+	}
+
 	//モデルの配列
 	//Entityのポインタで保存した方が便利に使えるかもしれない
 	std::list<std::unique_ptr<Entity>> mEntitys;
@@ -140,16 +167,6 @@ public:
 
 	DokanInfo saveNextDokanInfo;
 
-	//取得状況を初期化する
-	void ResetRevise(int32_t stageNumber, int32_t starID,int32_t starnum);
-	//取得状況を取得状態にする
-	void CorrectedRevise(int32_t stageNumber, int32_t starID,int32_t starnum);
-	//取得状態を読み取って、boolで返す
-	bool LoadStarCorrect(int32_t stageNumber, int32_t starID);
-
-	//通常のオブジェクト配置
-	void NormalObjectSet(const LevelData::ObjectData& data);
-
 private:
 	StageChanger(){};
 	~StageChanger(){};
@@ -172,7 +189,13 @@ private:
 	//内部で指定したイベント名が入ったら対応したクラスをイベント登録する
 	void RegisterEvent(const std::string& eventname);
 
+	//オブジェクトごとの設置処理
+	//プレイヤー
 	void SetPlayer(const LevelData::ObjectData& data);
+	//土管
+	bool SetDokan(const LevelData::ObjectData& data);
+	//敵土管
+	bool SetEnemyDokan(const LevelData::ObjectData& data);
 
 	void DrawModel();
 	void DrawCollider();
