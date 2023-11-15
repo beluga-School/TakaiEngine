@@ -32,10 +32,10 @@ float4 main(VSOutput input) : SV_TARGET
     //    discard;   
     //}
     
-    float camlength = magnitude(playerpos - input.worldPos.xyz);
+    float camlength = magnitude(cameraPos - input.worldPos.xyz);
     
     float clamp_dither = saturate(dither / 16);
-    float clamp_length = saturate(camlength / 200);
+    float clamp_length = saturate(camlength / 50);
     
     clip(clamp_length - clamp_dither); //è‡’l‚ª0ˆÈ‰º‚È‚ç•`‰æ‚µ‚È‚¢
     //clip(1 - checkPZ);
