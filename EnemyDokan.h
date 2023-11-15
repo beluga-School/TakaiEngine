@@ -6,7 +6,7 @@
 class EnemyDokan : public Entity
 {
 public:
-	EnemyDokan() :Entity()
+	EnemyDokan() : Entity()
 	{
 		SetTag(TagTable::EnemyDokan);
 	};

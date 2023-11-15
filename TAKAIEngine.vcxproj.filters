@@ -303,9 +303,6 @@
     <Filter Include="Application\Entity\EventBlock\GoalBlock">
       <UniqueIdentifier>{a52e176c-a13d-4d73-92ab-eb92512e6e93}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Application\Entity\EventBlock\EventBlock">
-      <UniqueIdentifier>{b571a83b-7bd6-423f-9e0b-9870427ee5b1}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Application\Entity\EventBlock\Star">
       <UniqueIdentifier>{e234e327-a9e5-4832-8606-eb3701863442}</UniqueIdentifier>
     </Filter>

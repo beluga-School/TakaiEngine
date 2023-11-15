@@ -599,6 +599,8 @@ bool StageChanger::SetEnemyDokan(const LevelData::ObjectData& data)
 	{
 		SetObject<EnemyDokan>(data);
 
+		mEntitys.back()->Register();
+
 		//今はエネミーが一種類なのでこれで済ませるが、後々エネミーの種類を管理するマネージャーから名前検索をする形で取得する
 		if (data.eventtrigerName == "slime")
 		{

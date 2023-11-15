@@ -64,11 +64,11 @@ void GameScene::Initialize()
 	//初期ステージを決定
 	output = "stage_stageselect";
 
-	StageChanger::Get()->Initialize(*LevelLoader::Get()->GetData(output));
-
 	EventManager::Get()->Initialize();
 
 	GameUIManager::Get()->Initialize();
+
+	StageChanger::Get()->Initialize(*LevelLoader::Get()->GetData(output));
 }
 
 GUI sceneChangeGUI("operator");
