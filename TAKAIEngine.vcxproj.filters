@@ -409,6 +409,9 @@
     <Filter Include="Application\Charactor\Enemy\Slime">
       <UniqueIdentifier>{2b0e9669-3383-42af-834c-1079df58a241}</UniqueIdentifier>
     </Filter>
+    <Filter Include="シェーダー\DitherTransparent">
+      <UniqueIdentifier>{1c5f0fcb-d9fb-4e72-9845-e7a29d5670f7}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="engine\input\Input.cpp">
@@ -1088,6 +1091,9 @@
     <None Include="Resources\Shader\CG4.hlsli">
       <Filter>シェーダー\CG4</Filter>
     </None>
+    <None Include="Resources\Shader\DitherTransparent.hlsli">
+      <Filter>シェーダー\DitherTransparent</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Resources\Shader\GeometryGS.hlsl">
@@ -1233,6 +1239,12 @@
     </FxCompile>
     <FxCompile Include="Resources\Shader\CG4VS.hlsl">
       <Filter>シェーダー\CG4</Filter>
+    </FxCompile>
+    <FxCompile Include="Resources\Shader\DitherTransparentPS.hlsl">
+      <Filter>シェーダー\DitherTransparent</Filter>
+    </FxCompile>
+    <FxCompile Include="Resources\Shader\DitherTransparentVS.hlsl">
+      <Filter>シェーダー\DitherTransparent</Filter>
     </FxCompile>
   </ItemGroup>
   <ItemGroup>
