@@ -224,14 +224,14 @@ void Player::MoveUpdate()
 	}
 	if (CanWallKick())
 	{
-		if (Input::Keyboard::TriggerKey(DIK_SPACE) ||
-			Pad::TriggerPadButton(PadButton::A))
-		{
-			Jump();
-			//反対方向に飛ぶ
-			wallKickTimer.Start();
-			wallKickVec = matWorld.ExtractAxisZ();
-		}
+		//if (Input::Keyboard::TriggerKey(DIK_SPACE) ||
+		//	Pad::TriggerPadButton(PadButton::A))
+		//{
+		//	Jump();
+		//	//反対方向に飛ぶ
+		//	wallKickTimer.Start();
+		//	wallKickVec = matWorld.ExtractAxisZ();
+		//}
 	}
 
 	if (Input::Pad::CheckConnectPad())
