@@ -105,10 +105,6 @@ void Slime::Update()
 
 		break;
 	case ActTable::Dead:
-		//position.x = TEasing::InQuad(deadEasingS.x, deadEasingE.x, deadTimer.GetTimeRate());
-		//position.y = TEasing::InQuad(deadEasingS.y, deadEasingE.y, deadTimer.GetTimeRate());
-		//position.z = TEasing::InQuad(deadEasingS.z, deadEasingE.z, deadTimer.GetTimeRate());
-
 		//縦はつぶす
 		scale.y = TEasing::OutQuad(deadEasingS.y, deadEasingE.y,deadTimer.GetTimeRate());
 		
@@ -119,9 +115,6 @@ void Slime::Update()
 		//yを0に
 		rotation.x = 0;
 		rotation.y = 0;
-
-		//回転を加算
-		//rotation.z += deadRoring * TimeManager::deltaTime;
 
 		if (deadTimer.GetEnd())
 		{

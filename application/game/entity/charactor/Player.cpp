@@ -210,14 +210,27 @@ void Player::Reset()
 
 void Player::MoveUpdate()
 {
+	wallKickTimer.Update();
 	//縦移動更新(重力落下含む)
 	//ジャンプしていない状態で入力があったらジャンプ
 	if (jumpState == JumpState::None)
+	{
+		
+		if (Input::Keyboard::TriggerKey(DIK_SPACE) ||
+			Pad::TriggerPadButton(PadButton::A))
+		{
+			Jump();
+		}
+	}
+	if (CanWallKick())
 	{
 		if (Input::Keyboard::TriggerKey(DIK_SPACE) ||
 			Pad::TriggerPadButton(PadButton::A))
 		{
 			Jump();
+			//反対方向に飛ぶ
+			wallKickTimer.Start();
+			wallKickVec = matWorld.ExtractAxisZ();
 		}
 	}
 
@@ -234,6 +247,13 @@ void Player::MoveUpdate()
 	{
 		moveValue += mCenterVec * mSpeed * TimeManager::deltaTime;
 	}
+
+	//壁キックタイマーが動いてるなら壁キック入力があったときの逆進行方向を足し続ける
+	if (wallKickTimer.GetRun())
+	{
+		//斜め上に飛ばしたい
+		moveValue -= wallKickVec * 0.5f;
+	}
 }
 
 void Player::ColUpdate()
@@ -246,6 +266,7 @@ void Player::ColUpdate()
 
 	pCol.position += moveValue;
 
+	//ゴールとの判定
 	for (auto& obj : StageChanger::Get()->mEntitys)
 	{
 		Goal* goal = dynamic_cast<Goal*>(obj.get());
@@ -340,28 +361,33 @@ void Player::RotaUpdate()
 
 	oldTargetRota = targetRota;
 
+	if (wallKickTimer.GetRun())
+	{
+		
+	}
+
 	//ジャンプ中なら
 	if (IsJump())
 	{
 		if (jumpCount == 2)
 		{
-			plusRotaX -= 20.0f;
+			jumpPlusRotaX -= 20.0f;
 			//カメラ引きたい
 		}
 		else if (jumpCount >= 3)
 		{
-			plusRotaX += 40.0f;
+			jumpPlusRotaX += 40.0f;
 		}
 	}
 
 	//着地してるなら取り消す
 	if (!IsJump())
 	{
-		plusRotaX = 0;
+		jumpPlusRotaX = 0;
 		PlayerCamera::Get()->InitRadius();
 	}
 
-	drawerObject.rotation.x = MathF::AngleConvRad(plusRotaX);
+	drawerObject.rotation.x = MathF::AngleConvRad(jumpPlusRotaX);
 }
 
 void Player::Fly()
@@ -487,6 +513,48 @@ void Player::HPOverFlow(int32_t value)
 	}
 }
 
+bool Player::CanWallKick()
+{
+	//ジャンプ中でないなら不可
+	if (jumpState != JumpState::Down)return false;
+
+	//正面ベクトルにちょい足しした位置の四角と当たり判定して当たってるなら壁キックできる
+	Cube cube;
+	cube.position = position + (matWorld.ExtractAxisZ() * 5.0f);
+	cube.scale = scale;
+	cube.rotation = rotation;
+
+	for (auto& hit : hitListCenter)
+	{
+		if (Collsions::CubeCollision(hit, cube))
+		{
+			return true;
+		}
+	}
+	for (auto& hit : hitListBack)
+	{
+		if (Collsions::CubeCollision(hit, cube))
+		{
+			return true;
+		}
+	}
+	for (auto& hit : hitListRight)
+	{
+		if (Collsions::CubeCollision(hit, cube))
+		{
+			return true;
+		}
+	}
+	for (auto& hit : hitListLeft)
+	{
+		if (Collsions::CubeCollision(hit, cube))
+		{
+			return true;
+		}
+	}
+	return false;
+}
+
 void Player::ChangeMode(const PlayerState& pState)
 {
 	playerState = pState;
@@ -524,7 +592,11 @@ void Player::ChangeMode(const PlayerState& pState)
 
 void Player::Jump()
 {
-	jumpCount++;
+	//ダッシュ状態ならカウント加算してジャンプ力上げる
+	if (playerState == PlayerState::Dash)
+	{
+		jumpCount++;
+	}
 
 	jumpCount = Util::Clamp(jumpCount, 0, 3);
 

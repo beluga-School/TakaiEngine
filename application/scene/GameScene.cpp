@@ -225,7 +225,7 @@ void GameScene::GameSceneDebugGUI()
 		player->position.x, player->position.y, player->position.z);
 
 	ImGui::Text("rota y:%f",player->rotation.y);
-	ImGui::Text("hoge %d",player->hoge);
+	ImGui::Text("CanWallKick %d",player->CanWallKick());
 
 	PlayerCamera::Get()->CheckDebug();
 

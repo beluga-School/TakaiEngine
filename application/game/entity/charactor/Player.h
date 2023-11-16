@@ -66,6 +66,8 @@ public:
 
 	bool IsJump();
 
+	bool CanWallKick();
+
 private:
 	Player() : Mob()
 	{
@@ -83,6 +85,9 @@ private:
 	//HPをその値に書きかえる 最大値より大きい場合、最大値を書き換える
 	void HPOverFlow(int32_t value);
 
+	//指定した向きまで現在位置から指定した秒数で回転する
+	void ToRota(Vector3 rota,float time);
+
 public:
 	//プレイヤーの回転を管理する変数
 	float mVerticalRad = 0;
@@ -99,12 +104,7 @@ public:
 
 	bool hoge = 0;
 
-	int32_t jumpCount = 0;
-
-	float plusRotaX = 0;
-
 private:
-
 	//hpの最大値　ステータスの最大値は外から変えられるようにしたい
 	int32_t MAX_HP = 8;
 
@@ -146,10 +146,11 @@ private:
 	Vector3 mCenterVec = {0,0,0};
 	Vector3 mSideVec = {0,0,0};
 
+	///---当たり判定用の別オブジェクト群
 	//敵との当たり判定用スフィアの描画
 	Obj3d colDrawer;
 
-	//描画オブジェクトの回転を別で管理
+	//描画オブジェクトを別で管理
 	Obj3d drawerObject;
 
 	//収集物関係
@@ -163,8 +164,21 @@ private:
 	Vector3 saveDokanPos{};
 	Vector3 saveDokanScale{};
 
+	//横回転の変数群
 	TEasing::easeTimer rotaTimer = 0.25f;
 	float rotaStart = 0.0f;
 	float targetRota = 0.0f;
 	float oldTargetRota = 0.0f;
+
+	//ジャンプ回数
+	int32_t jumpCount = 0;
+
+	//ジャンプ時に足される回転
+	float jumpPlusRotaX = 0;
+
+	//壁キック変数群
+	//この時間だけ反対方向に飛ぶ
+	TEasing::easeTimer wallKickTimer = 0.1f;
+	//壁キックの進行方向
+	Vector3 wallKickVec = {};
 };
