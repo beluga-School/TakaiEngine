@@ -119,17 +119,11 @@ void Slime::Update()
 		if (deadTimer.GetEnd())
 		{
 			isDead = true;
-			//パーティクル出したい
-			//サイズが大きくなるにつれて発生量が増える
-			int32_t partnum = static_cast<int32_t>(scale.x + scale.y + scale.z) / 3 * 3;
-			float partscale = (scale.x + scale.y + scale.z) / 9;
-			float partdistance = (scale.x + scale.y + scale.z) / 3 * 10;
-			//一応発生数制限を付ける
-			partnum = Util::Clamp(partnum, 3, 50);
-			for (int32_t i = 0; i < partnum; i++)
+			//パーティクル出す
+			for (int32_t i = 0; i < 50; i++)
 			{
 				ParticleManager::Get()->CreateCubeParticle(position,
-					{ partscale,partscale,partscale }, partdistance, { 0,1,0,0.5f });
+					{ 1.0f,1.0f,1.0f }, 10, { 0,1,0,0.5f });
 			}
 		}
 
