@@ -105,16 +105,23 @@ void Slime::Update()
 
 		break;
 	case ActTable::Dead:
-		position.x = TEasing::InQuad(deadEasingS.x, deadEasingE.x, deadTimer.GetTimeRate());
-		position.y = TEasing::InQuad(deadEasingS.y, deadEasingE.y, deadTimer.GetTimeRate());
-		position.z = TEasing::InQuad(deadEasingS.z, deadEasingE.z, deadTimer.GetTimeRate());
+		//position.x = TEasing::InQuad(deadEasingS.x, deadEasingE.x, deadTimer.GetTimeRate());
+		//position.y = TEasing::InQuad(deadEasingS.y, deadEasingE.y, deadTimer.GetTimeRate());
+		//position.z = TEasing::InQuad(deadEasingS.z, deadEasingE.z, deadTimer.GetTimeRate());
+
+		//縦はつぶす
+		scale.y = TEasing::OutQuad(deadEasingS.y, deadEasingE.y,deadTimer.GetTimeRate());
+		
+		//横は伸ばす
+		scale.x = TEasing::OutQuad(deadEasingS.x, deadEasingE.x,deadTimer.GetTimeRate());
+		scale.z = TEasing::OutQuad(deadEasingS.z, deadEasingE.z,deadTimer.GetTimeRate());
 
 		//yを0に
 		rotation.x = 0;
 		rotation.y = 0;
 
 		//回転を加算
-		rotation.z += deadRoring * TimeManager::deltaTime;
+		//rotation.z += deadRoring * TimeManager::deltaTime;
 
 		if (deadTimer.GetEnd())
 		{
@@ -156,24 +163,29 @@ void Slime::HitEffect()
 	//すでに死亡済みならスキップ
 	if (IsDead())return;
 	mActTable = ActTable::Dead;
-	
-	//死亡時のプレイヤーが向いていた方向を保存
-	deadDirection = Player::Get()->matWorld.ExtractAxisZ();
-	
-	//斜め上に吹っ飛んでいくように
-	float rand = MathF::GetRand(6.0f, 6.5f);
 
-	deadDirection.y = MathF::PIf / rand;
-
-	deadEasingS = position;
-
-	//スケール分より遠くに吹っ飛ぶように
-	float scaledistance = (scale.x + scale.y + scale.z) / 3 * 0.5f;
-
-	//正面に向かって吹っ飛ばされるように終点を設定
-	deadEasingE = position + deadDirection * 7.0f * scaledistance;
-
+	//潰れるようにしたい
 	deadTimer.Start();
+
+	deadEasingS = scale;
+	deadEasingE = {scale.x * 1.5f,0.1f ,scale.z * 1.5f};
+	
+	////死亡時のプレイヤーが向いていた方向を保存
+	//deadDirection = Player::Get()->matWorld.ExtractAxisZ();
+	//
+	////斜め上に吹っ飛んでいくように
+	//float rand = MathF::GetRand(6.0f, 6.5f);
+
+	//deadDirection.y = MathF::PIf / rand;
+
+	//deadEasingS = position;
+
+	////スケール分より遠くに吹っ飛ぶように
+	//float scaledistance = (scale.x + scale.y + scale.z) / 3 * 0.5f;
+
+	////正面に向かって吹っ飛ばされるように終点を設定
+	//deadEasingE = position + deadDirection * 7.0f * scaledistance;
+
 }
 
 void Slime::Encount()
