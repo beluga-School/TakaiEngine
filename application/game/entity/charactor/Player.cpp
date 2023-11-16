@@ -22,11 +22,14 @@ void Player::LoadResource()
 void Player::Initialize()
 {
 	Obj3d::Initialize();
-	SetModel(ModelManager::GetModel("beetle"));
+	SetModel(ModelManager::GetModel("Cube"));
 
 	colDrawer.Initialize();
 	colDrawer.SetModel(ModelManager::GetModel("ICOSphere"));
 	colDrawer.SetTexture(TextureManager::GetTexture("white"));
+
+	drawerObject.Initialize();
+	drawerObject.SetModel(ModelManager::GetModel("beetle"));
 
 	SetOutLineState({ 0.1f,0.1f,0.1f,1.0f }, 0.05f);
 
@@ -64,6 +67,7 @@ void Player::Update()
 	{
 	case Player::PlayerState::Normal:
 
+		jumpCount = 0;
 		mSpeed = NORMAL_SPEED;
 		MoveUpdate();
 
@@ -165,15 +169,21 @@ void Player::Update()
 	DamageUpdate();
 
 	hpGauge.Update();
+
+	//描画用オブジェクトの更新
+	drawerObject.position = position;
+	drawerObject.scale = scale;
+	drawerObject.Update(*Camera::sCamera);
 }
 
 void Player::Draw()
 {
 	BasicObjectPreDraw("OutLine", false);
-	Obj3d::DrawOutLine();
+	drawerObject.DrawOutLine();
 	
 	BasicObjectPreDraw("Toon");
-	Obj3d::DrawMaterial();
+	drawerObject.DrawMaterial();
+	//Obj3d::DrawMaterial();
 }
 
 void Player::DrawCollider()
@@ -224,25 +234,6 @@ void Player::MoveUpdate()
 	{
 		moveValue += mCenterVec * mSpeed * TimeManager::deltaTime;
 	}
-
-	/*if (Input::Keyboard::PushKey(DIK_W))
-	{
-		
-	}
-	if (Input::Keyboard::PushKey(DIK_S))
-	{
-		moveValue -= mCenterVec * mSpeed * TimeManager::deltaTime;
-	}
-	if (Input::Keyboard::PushKey(DIK_D))
-	{
-		moveValue += mSideVec * mSpeed * TimeManager::deltaTime;
-	}
-	if (Input::Keyboard::PushKey(DIK_A))
-	{
-		moveValue -= mSideVec * mSpeed * TimeManager::deltaTime;
-	}*/
-
-	//あとで移動速度の加算に上限付ける
 }
 
 void Player::ColUpdate()
@@ -339,17 +330,38 @@ void Player::RotaUpdate()
 		if (hoge)
 		{
 			targetRota -= 360;
-			//問題点、ここを通りと328行目のif文でtargetRota と oldTargetRotaの値が異なってしまうので
-			//もう一度このif文を通り、rotaTimerが動いてしまう。
-			//ので、上のif文を再度通らないような仕組みに仕様
 		}
 	}
 
 	//初めの回転から最後の回転までをタイマーで動かす
 	float check = MathF::AngleConvRad(TEasing::OutQuad(rotaStart, targetRota, rotaTimer.GetTimeRate()));
 	rotation.y = PlayerCamera::Get()->mHorizontalRad + check;
+	drawerObject.rotation.y = rotation.y;
 
 	oldTargetRota = targetRota;
+
+	//ジャンプ中なら
+	if (IsJump())
+	{
+		if (jumpCount == 2)
+		{
+			plusRotaX -= 20.0f;
+			//カメラ引きたい
+		}
+		else if (jumpCount >= 3)
+		{
+			plusRotaX += 40.0f;
+		}
+	}
+
+	//着地してるなら取り消す
+	if (!IsJump())
+	{
+		plusRotaX = 0;
+		PlayerCamera::Get()->InitRadius();
+	}
+
+	drawerObject.rotation.x = MathF::AngleConvRad(plusRotaX);
 }
 
 void Player::Fly()
@@ -404,14 +416,6 @@ void Player::DamageUpdate()
 				{ 3,3,3 }, 10, { 1,0,0,1 });
 		}
 	}
-	//0になったら墓場へいく
-	//いったんいらないので消す 今後別の形で再利用
-	if (hp.mCurrent <= 0)
-	{
-		//hp.mCurrent = MAX_HP;
-		//hpGauge.SetGaugeSize(hp.mCurrent, true);
-		//StageChanger::Get()->ChangeLevel(*LevelLoader::Get()->GetData("stage_graveyard"));
-	}
 
 	//hpゲージの色を変える処理
 	int32_t changeIndex = 0;
@@ -435,6 +439,11 @@ void Player::DamageUpdate()
 bool Player::IsMove()
 {
 	return moveValue.x != 0 || moveValue.y != 0 || moveValue.z != 0;
+}
+
+bool Player::IsJump()
+{
+	return (jumpState == JumpState::Up || jumpState == JumpState::Down);
 }
 
 void Player::DamageEffect(int32_t damage)
@@ -515,6 +524,28 @@ void Player::ChangeMode(const PlayerState& pState)
 
 void Player::Jump()
 {
+	jumpCount++;
+
+	jumpCount = Util::Clamp(jumpCount, 0, 3);
+
+	if (jumpCount == 1)
+	{
+		jumpPower = 5.0f;
+	}
+
+	if (jumpCount == 2)
+	{
+		jumpPower = 7.5f;
+		//カメラをちょい引く(もっと放してもいいかも)
+		PlayerCamera::Get()->ChangeRadius(1.0f, 0.5f);
+	}
+
+	if (jumpCount == 3)
+	{
+		jumpPower = 10.0f;
+		PlayerCamera::Get()->ChangeRadius(2.0f, 0.5f);
+	}
+
 	//値を指定
 	upJumpS = position.y;
 	upJumpE = position.y + jumpPower;

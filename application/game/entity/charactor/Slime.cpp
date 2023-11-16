@@ -1,4 +1,4 @@
-#include "GEnemy.h"
+#include "Slime.h"
 #include "Player.h"
 #include "TimeManager.h"
 #include "ClearDrawScreen.h"

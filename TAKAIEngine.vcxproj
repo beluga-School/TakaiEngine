@@ -115,7 +115,7 @@
     <ClCompile Include="application\game\entity\Block.cpp" />
     <ClCompile Include="application\game\Entity\Charactor\Bombking.cpp" />
     <ClCompile Include="application\game\Entity\Charactor\Enemy.cpp" />
-    <ClCompile Include="application\game\Entity\Charactor\GEnemy.cpp" />
+    <ClCompile Include="application\game\Entity\Charactor\Slime.cpp" />
     <ClCompile Include="application\game\Entity\Charactor\Mob.cpp" />
     <ClCompile Include="application\game\Entity\Charactor\Player.cpp" />
     <ClCompile Include="application\game\Entity\Entity.cpp" />
@@ -215,7 +215,7 @@
     <ClInclude Include="application\game\entity\Block.h" />
     <ClInclude Include="application\game\Entity\Charactor\Bombking.h" />
     <ClInclude Include="application\game\Entity\Charactor\Enemy.h" />
-    <ClInclude Include="application\game\Entity\Charactor\GEnemy.h" />
+    <ClInclude Include="application\game\Entity\Charactor\Slime.h" />
     <ClInclude Include="application\game\Entity\Charactor\Mob.h" />
     <ClInclude Include="application\game\Entity\Charactor\Player.h" />
     <ClInclude Include="application\game\Entity\Entity.h" />

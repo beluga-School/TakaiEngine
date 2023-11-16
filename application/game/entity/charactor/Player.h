@@ -64,6 +64,8 @@ public:
 
 	bool IsMove();
 
+	bool IsJump();
+
 private:
 	Player() : Mob()
 	{
@@ -96,6 +98,10 @@ public:
 	Sphere mEncountCol;
 
 	bool hoge = 0;
+
+	int32_t jumpCount = 0;
+
+	float plusRotaX = 0;
 
 private:
 
@@ -143,6 +149,9 @@ private:
 	//敵との当たり判定用スフィアの描画
 	Obj3d colDrawer;
 
+	//描画オブジェクトの回転を別で管理
+	Obj3d drawerObject;
+
 	//収集物関係
 	//スターの取得数
 	Status starCorrectNum = 0;
@@ -158,6 +167,4 @@ private:
 	float rotaStart = 0.0f;
 	float targetRota = 0.0f;
 	float oldTargetRota = 0.0f;
-
-	
 };

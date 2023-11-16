@@ -80,7 +80,7 @@ protected:
 	float upJumpE = 0;
 
 	//ジャンプ力
-	const float jumpPower = 5.0f;
+	float jumpPower = 5.0f;
 
 	//上昇管理タイマー
 	TEasing::easeTimer jumpManageTimer = 0.5f;

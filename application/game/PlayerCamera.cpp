@@ -97,18 +97,24 @@ void PlayerCamera::BackTransparent()
 
 void PlayerCamera::RadiusChange()
 {
-	//Player* player = Player::Get();
-
 	radiusMoveTimer.Update();
 
-	//ラディウス変更(消してもいいかも)
-	if (Mouse::Wheel() < 0)
+	if (radiusMoveTimer.GetRun())
 	{
-		mRadius += 2.0f;
+		mRadius = TEasing::InQuad(startRadius, endRadius, radiusMoveTimer.GetTimeRate());
 	}
-	if (Mouse::Wheel() > 0)
+
+	if (Player::Get()->GetState() == Player::PlayerState::Debug)
 	{
-		mRadius -= 2.0f;
+		//ラディウス変更(消してもいいかも)
+		if (Mouse::Wheel() < 0)
+		{
+			mRadius += 2.0f;
+		}
+		if (Mouse::Wheel() > 0)
+		{
+			mRadius -= 2.0f;
+		}
 	}
 
 	mRadius = Util::Clamp(mRadius, 1.0f, 30.f);
@@ -209,4 +215,28 @@ void PlayerCamera::CheckDebug()
 {
 	ImGui::Text("camMoveRotaCheck %f", camMoveRotaCheck);
 	ImGui::SliderFloat("camMoveRotaCheckOffset %f", &camMoveRotaCheckOffset,0.0f,3.0f);
+}
+
+void PlayerCamera::ChangeRadius(float radius, float time)
+{
+	startRadius = mRadius;
+	endRadius = mRadius + radius;
+
+	radiusMoveTimer.mMaxTime = time;
+	if (!radiusMoveTimer.GetRun())
+	{
+		radiusMoveTimer.Start();
+	}
+}
+
+void PlayerCamera::InitRadius()
+{
+	startRadius = mRadius;
+	endRadius = DEFAULT_RADIUS;
+
+	radiusMoveTimer.mMaxTime = 0.5f;
+	if (!radiusMoveTimer.GetRun())
+	{
+		radiusMoveTimer.Start();
+	}
 }

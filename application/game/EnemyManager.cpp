@@ -1,6 +1,6 @@
 #include "EnemyManager.h"
 #include "MathF.h"
-#include "GEnemy.h"
+#include "Slime.h"
 #include "ClearDrawScreen.h"
 #include "Player.h"
 #include "CollideManager.h"

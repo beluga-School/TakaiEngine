@@ -243,8 +243,6 @@ void CollideManager::CheckStatus(Entity* check, Entity* collide)
 
 void CollideManager::Osimodosi(Mob& check, const Block& collide)
 {
-	
-
 	//そのオブジェクトより
 	//上にいるか
 	bool up = CheckDirections(check.box.cubecol, collide.box.cubecol, CheckDirection::CD_UP);
@@ -395,10 +393,6 @@ void UniqueObjectPushBack(std::list<IDdCube>& list, const IDdCube& col)
 			list.erase(itr);
 			break;
 		}
-		//if (*itr == col)
-		//{
-		//	return;
-		//}
 		////回しきれたら同じ要素がない
 	}
 	

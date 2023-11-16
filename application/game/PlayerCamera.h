@@ -17,8 +17,6 @@ public:
 	//カメラの後ろにあるオブジェクトを透けさせる処理
 	void BackTransparent();
 	
-	void RadiusChange();
-
 	static PlayerCamera* Get() {
 		static PlayerCamera instance;
 		return &instance;
@@ -35,6 +33,11 @@ public:
 	//Imguiに表示するステータスだけ関数にまとめた
 	void CheckDebug();
 
+	//現時点のラディウスから固定の値を何秒かけて引く
+	void ChangeRadius(float radius,float time);
+
+	void InitRadius();
+
 private:
 	PlayerCamera() {};
 	~PlayerCamera() {};
@@ -47,6 +50,9 @@ private:
 
 	//カメラがプレイヤーに後から追従する動きのまとめ
 	void PlayerFollow();
+
+	//ラディウス変更の更新
+	void RadiusChange();
 
 public:
 	//カメラの座標を保存
@@ -69,8 +75,11 @@ public:
 	bool mouseLockChange = true;
 
 private:
+	//初期のカメラ距離を保存
+	const float DEFAULT_RADIUS = 8.0f;
 	//初期のカメラ距離
-	float mRadius = 8.0f;
+	float mRadius = DEFAULT_RADIUS;
+
 
 	//このオブジェクトと当たったオブジェクトを透けさせる
 	Obj3d transparentObj;
@@ -86,12 +95,15 @@ private:
 	//カメラを動かすタイマー
 	TEasing::easeTimer camRotaYTimer = 0.75f;
 
-	//ラディウスを動かすタイマー
-	TEasing::easeTimer radiusMoveTimer = 0.5f;
-
 	float camMoveRotaCheck = 0.0f;
 	float camMoveRotaCheckOffset = 1.0f;
 	float oldCamRota = 0.0f;
 	float startCamRota = 0.0f;
+
+	float startRadius = 0;
+	float endRadius = 0;
+	//ラディウスを動かすタイマー
+	TEasing::easeTimer radiusMoveTimer = 0.5f;
+
 };
 

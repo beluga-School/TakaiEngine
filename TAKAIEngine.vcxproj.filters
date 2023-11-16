@@ -219,9 +219,6 @@
     <Filter Include="Application\Charactor\Enemy\EnemyManager">
       <UniqueIdentifier>{4a1c0f97-a5fe-4cce-a633-5de90a38ede8}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Application\Charactor\Enemy\GEnemy">
-      <UniqueIdentifier>{2b0e9669-3383-42af-834c-1079df58a241}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Application\System">
       <UniqueIdentifier>{6886546f-0922-478c-90cd-17a63328ee64}</UniqueIdentifier>
     </Filter>
@@ -409,6 +406,9 @@
     <Filter Include="Application\Event\SummonUI">
       <UniqueIdentifier>{1de720c6-d4d6-4c6d-aaad-13fcacfcfdea}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Application\Charactor\Enemy\Slime">
+      <UniqueIdentifier>{2b0e9669-3383-42af-834c-1079df58a241}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="engine\input\Input.cpp">
@@ -573,8 +573,8 @@
     <ClCompile Include="application\game\Entity\EventBlock\Star.cpp">
       <Filter>Application\Entity\EventBlock\Star</Filter>
     </ClCompile>
-    <ClCompile Include="application\game\Entity\Charactor\GEnemy.cpp">
-      <Filter>Application\Charactor\Enemy\GEnemy</Filter>
+    <ClCompile Include="application\game\Entity\Charactor\Slime.cpp">
+      <Filter>Application\Charactor\Enemy\Slime</Filter>
     </ClCompile>
     <ClCompile Include="application\game\Entity\Charactor\Enemy.cpp">
       <Filter>Application\Charactor\Enemy</Filter>
@@ -878,8 +878,8 @@
     <ClInclude Include="application\game\Entity\EventBlock\Star.h">
       <Filter>Application\Entity\EventBlock\Star</Filter>
     </ClInclude>
-    <ClInclude Include="application\game\Entity\Charactor\GEnemy.h">
-      <Filter>Application\Charactor\Enemy\GEnemy</Filter>
+    <ClInclude Include="application\game\Entity\Charactor\Slime.h">
+      <Filter>Application\Charactor\Enemy\Slime</Filter>
     </ClInclude>
     <ClInclude Include="application\game\Entity\Charactor\Enemy.h">
       <Filter>Application\Charactor\Enemy</Filter>

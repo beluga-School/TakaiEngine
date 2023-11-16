@@ -1,6 +1,6 @@
 #include "EnemyDokan.h"
 #include "EnemyManager.h"
-#include "GEnemy.h"
+#include "Slime.h"
 
 void EnemyDokan::LoadResource()
 {
