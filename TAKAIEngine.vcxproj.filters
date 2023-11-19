@@ -645,7 +645,7 @@
     <ClCompile Include="application\game\entity\Block.cpp">
       <Filter>Application\Entity\Block</Filter>
     </ClCompile>
-    <ClCompile Include="application\game\Dokan.cpp">
+    <ClCompile Include="application\game\entity\Dokan.cpp">
       <Filter>Application\Entity\EventBlock\Dokan</Filter>
     </ClCompile>
     <ClCompile Include="application\ui\StageTitleUI.cpp">
@@ -699,13 +699,10 @@
     <ClCompile Include="application\event\StageTitleUIMountain.cpp">
       <Filter>Application\Event\StageTitleUIMountain</Filter>
     </ClCompile>
-    <ClCompile Include="DemoScene.cpp">
-      <Filter>Application\Scene\DemoScene</Filter>
-    </ClCompile>
-    <ClCompile Include="EnemyDokan.cpp">
+    <ClCompile Include="application\game\entity\EnemyDokan.cpp">
       <Filter>Application\Entity\EventBlock\EnemyDokan</Filter>
     </ClCompile>
-    <ClCompile Include="SummonUI.cpp">
+    <ClCompile Include="application\ui\SummonUI.cpp">
       <Filter>Application\Event\SummonUI</Filter>
     </ClCompile>
   </ItemGroup>
@@ -953,7 +950,7 @@
     <ClInclude Include="application\game\entity\Block.h">
       <Filter>Application\Entity\Block</Filter>
     </ClInclude>
-    <ClInclude Include="application\game\Dokan.h">
+    <ClInclude Include="application\game\entity\Dokan.h">
       <Filter>Application\Entity\EventBlock\Dokan</Filter>
     </ClInclude>
     <ClInclude Include="application\ui\StageTitleUI.h">
@@ -1010,13 +1007,10 @@
     <ClInclude Include="application\event\StageTitleUIMountain.h">
       <Filter>Application\Event\StageTitleUIMountain</Filter>
     </ClInclude>
-    <ClInclude Include="DemoScene.h">
-      <Filter>Application\Scene\DemoScene</Filter>
-    </ClInclude>
-    <ClInclude Include="EnemyDokan.h">
+    <ClInclude Include="application\game\entity\EnemyDokan.h">
       <Filter>Application\Entity\EventBlock\EnemyDokan</Filter>
     </ClInclude>
-    <ClInclude Include="SummonUI.h">
+    <ClInclude Include="application\ui\SummonUI.h">
       <Filter>Application\Event\SummonUI</Filter>
     </ClInclude>
   </ItemGroup>
