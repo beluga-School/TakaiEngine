@@ -38,6 +38,8 @@ struct IDdCube : public Cube
 	/// </summary>
 	static void ResetID();
 
+	static uint32_t GetMasterID();
+
 	Entity* parentEntity = nullptr;
 
 private:

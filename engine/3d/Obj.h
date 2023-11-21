@@ -10,6 +10,7 @@
 #include "Camera.h"
 #include "Pipeline.h"
 #include "TEasing.h"
+#include "Quaternion.h"
 
 struct ConstBufferDataB1
 {
@@ -62,6 +63,14 @@ class Obj3d
 {
 public:
 
+	enum class RotMode
+	{
+		Eular,
+		Quaternion,
+	};
+
+	RotMode rotmode = RotMode::Eular;
+
 	ConstBuffer<ConstBufferDataTransform> constBufferT;
 	ConstBuffer<ConstBufferBrightness> constBufferB;
 
@@ -73,6 +82,8 @@ public:
 	Vector3 scale = { 1.0f,1.0f,1.0f };
 	Vector3 rotation = { 0,0,0 };
 	Vector3 position = { 0,0,0 };
+
+	Quaternion quaternion = Quaternion::IdentityQuaternion();
 
 	Float4 color_ = { 1.0f,1.0f,1.0f,1.0f };
 

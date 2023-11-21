@@ -31,9 +31,17 @@ void Obj3d::Update(const Camera& camera)
 	matScale = Matrix4::scale(scale);
 
 	//回転を設定
-	matRot = Matrix4::Identity();
-	matRot = Matrix4::rotateZ(rotation.z) * Matrix4::rotateX(rotation.x) * Matrix4::rotateY(rotation.y);
-
+	switch (rotmode)
+	{
+	case Obj3d::RotMode::Eular:
+		matRot = Matrix4::Identity();
+		matRot = Matrix4::rotateZ(rotation.z) * Matrix4::rotateX(rotation.x) * Matrix4::rotateY(rotation.y);
+		break;
+	case Obj3d::RotMode::Quaternion:
+		matRot = quaternion.MakeRotateMatrix();
+		break;
+	}
+	
 	matTrans = Matrix4::Identity();
 	matTrans = Matrix4::translate(position);
 

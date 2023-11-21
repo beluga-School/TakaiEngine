@@ -105,12 +105,12 @@ void EventCameraManager::DebugGUI()
 {
 	if (nowCamEvent == nullptr)return;
 
-	hoge.Begin({200,200},{500,300});
+	rotCheck.Begin({200,200},{500,300});
 	ImGui::Text("frontCamera pos.x:%f,y:%f,z:%f", frontCamera->pos.x, frontCamera->pos.y, frontCamera->pos.z);
 	ImGui::Text("backCamera pos.x:%f,y:%f,z:%f", backCamera->pos.x, backCamera->pos.y, backCamera->pos.z);
 	ImGui::Text("eventCameraDatas.size:%d", (int32_t)eventCameraDatas.size());
 	ImGui::Text("moveTimer:%f", nowCamEvent->moveTimer.GetTimeRate());
-	hoge.End();
+	rotCheck.End();
 }
 
 void EventCameraManager::Reset()

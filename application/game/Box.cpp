@@ -27,3 +27,8 @@ void IDdCube::ResetID()
 {
 	sMasterIDCount = 0;
 }
+
+uint32_t IDdCube::GetMasterID()
+{
+	return sMasterIDCount;
+}

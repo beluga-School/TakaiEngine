@@ -81,7 +81,7 @@ private:
 	//TEasing::easeTimer moveTimer = 5.0f;
 	//TEasing::easeTimer rotaTimer = 1.0f;
 
-	GUI hoge = { "hogeDebug" };
+	GUI rotCheck = { "hogeDebug" };
 
 	std::string eventname_ = "";
 

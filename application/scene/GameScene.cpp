@@ -220,12 +220,7 @@ void GameScene::GameSceneDebugGUI()
 	ImGui::Text(mouseLockStates.c_str());
 
 	ImGui::Text("mouseR %f", PlayerCamera::Get()->GetRadius());
-
-	ImGui::Text("position x:%f y:%f z:%f",
-		player->position.x, player->position.y, player->position.z);
-
-	ImGui::Text("rota y:%f",player->rotation.y);
-	ImGui::Text("CanWallKick %d",player->CanWallKick());
+	player->DebugGUI();
 
 	PlayerCamera::Get()->CheckDebug();
 

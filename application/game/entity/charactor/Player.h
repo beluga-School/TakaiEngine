@@ -68,6 +68,8 @@ public:
 
 	bool CanWallKick();
 
+	void DebugGUI();
+
 private:
 	Player() : Mob()
 	{
@@ -85,8 +87,8 @@ private:
 	//HPをその値に書きかえる 最大値より大きい場合、最大値を書き換える
 	void HPOverFlow(int32_t value);
 
-	//指定した向きまで現在位置から指定した秒数で回転する
-	void ToRota(Vector3 rota,float time);
+	//同じ壁を2連続で蹴っていないか確認する
+	bool CheckContinuanceKick(IDdCube* check);
 
 public:
 	//プレイヤーの回転を管理する変数
@@ -102,7 +104,7 @@ public:
 	//敵との当たり判定用スフィア
 	Sphere mEncountCol;
 
-	bool hoge = 0;
+	bool rotCheck = 0;
 
 private:
 	//hpの最大値　ステータスの最大値は外から変えられるようにしたい
@@ -181,4 +183,21 @@ private:
 	TEasing::easeTimer wallKickTimer = 0.1f;
 	//壁キックの進行方向
 	Vector3 wallKickVec = {};
+
+	//一度壁キックした壁を保存し、連続でキックできないようにする
+	IDdCube *saveKickWall = nullptr;
+
+	bool flyMode = false;
+
+	
+	Quaternion hoge;
+	Quaternion hoge2;
+
+	TEasing::easeTimer rotTime = 0.5f;
+
+	Vector2 pCamVec2D;
+	Quaternion endQ;
+	Vector3 endRota;
+	Quaternion startQ;
+	Quaternion culQ;
 };

@@ -45,6 +45,9 @@ namespace MathF
 
 	float GetAngleBetweenTwoLine(const Vector3& vec1,const Vector3& vec2);
 
+	//2軸の画面で見たときにvec1からvec2までの間の角度をAngleで返す
+	float GetAngleBetweenTwoLine2D(const Vector2 & vec1, const Vector2& vec2);
+	
 	float AngleConvRad(const float& angle);
 
 	float RadConvAngle(const float& rad);

@@ -240,7 +240,7 @@ private:
 	std::vector<LoadTargetData> loadTargetDatas;
 	std::list<std::string> eventCameraNames;
 
-	GUI hoge = { "hoge" };
+	GUI rotCheck = { "hoge" };
 
 	template <class TEventCamera> void CameraLoader(const LevelData::ObjectData& data, const std::string& eventname)
 	{

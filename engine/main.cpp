@@ -18,7 +18,6 @@
 #include "PostEffect.h"
 
 #include "GameScene.h"
-#include "DemoScene.h"
 #include "ShaderTestScene.h"
 #include "TitleScene.h"
 

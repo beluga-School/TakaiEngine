@@ -34,6 +34,11 @@ void Player::Initialize()
 	SetOutLineState({ 0.1f,0.1f,0.1f,1.0f }, 0.05f);
 
 	hpGauge.Initialize();
+
+	rotmode = RotMode::Quaternion;
+	drawerObject.rotmode = RotMode::Quaternion;
+
+	quaternion = DirectionToDirection({0,0,0},{0,0,1});
 }
 
 void Player::Update()
@@ -113,7 +118,10 @@ void Player::Update()
 
 		MoveUpdate();
 
-		Fly();
+		if (flyMode)
+		{
+			Fly();
+		}
 
 		//ダメージ処理テスト
 		if (Input::Keyboard::TriggerKey(DIK_T))
@@ -224,14 +232,14 @@ void Player::MoveUpdate()
 	}
 	if (CanWallKick())
 	{
-		//if (Input::Keyboard::TriggerKey(DIK_SPACE) ||
-		//	Pad::TriggerPadButton(PadButton::A))
-		//{
-		//	Jump();
-		//	//反対方向に飛ぶ
-		//	wallKickTimer.Start();
-		//	wallKickVec = matWorld.ExtractAxisZ();
-		//}
+		if (Input::Keyboard::TriggerKey(DIK_SPACE) ||
+			Pad::TriggerPadButton(PadButton::A))
+		{
+			Jump();
+			//反対方向に飛ぶ
+			wallKickTimer.Start();
+			wallKickVec = matWorld.ExtractAxisZ();
+		}
 	}
 
 	if (Input::Pad::CheckConnectPad())
@@ -240,19 +248,20 @@ void Player::MoveUpdate()
 		moveValue += mSideVec * Input::Pad::GetLStickMove().x * mSpeed * TimeManager::deltaTime;
 	}
 
-	if (Input::Keyboard::PushKey(DIK_W) || 
+	/*if (Input::Keyboard::PushKey(DIK_W) || 
 		Input::Keyboard::PushKey(DIK_S) ||
 		Input::Keyboard::PushKey(DIK_D) ||
 		Input::Keyboard::PushKey(DIK_A))
 	{
 		moveValue += mCenterVec * mSpeed * TimeManager::deltaTime;
-	}
+	}*/
 
 	//壁キックタイマーが動いてるなら壁キック入力があったときの逆進行方向を足し続ける
 	if (wallKickTimer.GetRun())
 	{
+		moveValue = { 0,0,0 };
 		//斜め上に飛ばしたい
-		moveValue -= wallKickVec * 0.5f;
+		moveValue -= wallKickVec;
 	}
 }
 
@@ -301,93 +310,153 @@ float RotaComparison(float now, float target)
 
 void Player::RotaUpdate()
 {
-	//回転させる最終位置
-	//上下の入力があるか
-	if (Input::Keyboard::PushKey(DIK_W) || 
-		Input::Keyboard::PushKey(DIK_S))
+	////回転させる最終位置
+	////上下の入力があるか
+	//if (Input::Keyboard::PushKey(DIK_W) || 
+	//	Input::Keyboard::PushKey(DIK_S))
+	//{
+	//	if (Input::Keyboard::PushKey(DIK_W)) {
+	//		targetRota = 0;
+	//		if (Input::Keyboard::PushKey(DIK_D)) {
+	//			targetRota = 45;
+	//		}
+	//		if (Input::Keyboard::PushKey(DIK_A)) {
+	//			targetRota = 315;
+	//		}
+	//	}
+	//	if (Input::Keyboard::PushKey(DIK_S)) {
+	//		targetRota = 180;
+	//		if (Input::Keyboard::PushKey(DIK_D)) {
+	//			targetRota = 135;
+	//		}
+	//		if (Input::Keyboard::PushKey(DIK_A)) {
+	//			targetRota = 225;
+	//		}
+	//	}
+	//}
+	////ないなら
+	//else
+	//{
+	//	if (Input::Keyboard::PushKey(DIK_D))
+	//	{
+	//		targetRota = 90;
+	//	}
+	//	if (Input::Keyboard::PushKey(DIK_A))
+	//	{
+	//		targetRota = 270;
+	//	}
+	//}
+
+	//rotaTimer.Update();
+
+	////入力があった瞬間
+	//if (targetRota != oldTargetRota)
+	//{
+	//	//回転タイマーを初期化し、現在位置を初めの回転に保存
+	//	rotaTimer.Start();
+	//	rotaStart = oldTargetRota;
+
+	//	rotCheck = RotaComparison(rotaStart, targetRota);
+	//	if (rotCheck)
+	//	{
+	//		targetRota -= 360;
+	//	}
+	//}
+
+	////初めの回転から最後の回転までをタイマーで動かす
+	//float check = MathF::AngleConvRad(TEasing::OutQuad(rotaStart, targetRota, rotaTimer.GetTimeRate()));
+	//rotation.y = PlayerCamera::Get()->mHorizontalRad + check;
+	//drawerObject.rotation.y = rotation.y;
+
+	//oldTargetRota = targetRota;
+
+	/*Vector3 pCamVec = position - Camera::sCamera->mEye;
+	
+	pCamVec2D = { pCamVec.x,pCamVec.z };
+
+	rotTime.Update();
+	rotTime.mMaxTime = 0.5f;
+	
+	float rota2D = MathF::GetAngleBetweenTwoLine2D({ 0,0 }, pCamVec2D);
+
+	if (Input::Keyboard::TriggerKey(DIK_D))
 	{
-		if (Input::Keyboard::PushKey(DIK_W)) {
-			targetRota = 0;
-			if (Input::Keyboard::PushKey(DIK_D)) {
-				targetRota = 4;
-			}
-			if (Input::Keyboard::PushKey(DIK_A)) {
-				targetRota = 315;
-			}
-		}
-		if (Input::Keyboard::PushKey(DIK_S)) {
-			targetRota = 180;
-			if (Input::Keyboard::PushKey(DIK_D)) {
-				targetRota = 135;
-			}
-			if (Input::Keyboard::PushKey(DIK_A)) {
-				targetRota = 225;
-			}
-		}
+		hoge = MakeAxisAngle({0,1,0}, 0);
+		hoge2 = MakeAxisAngle({ 0,1,0 }, MathF::AngleConvRad(rota2D));
+		rotTime.Start();
 	}
-	//ないなら
-	else
+	if (Input::Keyboard::TriggerKey(DIK_A))
 	{
-		if (Input::Keyboard::PushKey(DIK_D))
-		{
-			targetRota = 90;
-		}
-		if (Input::Keyboard::PushKey(DIK_A))
-		{
-			targetRota = 270;
-		}
+		hoge = MakeAxisAngle({ 0,1,0 },0);
+		hoge2 = MakeAxisAngle({ 0,1,0 }, MathF::AngleConvRad(rota2D));
+		rotTime.Start();
 	}
 
-	rotaTimer.Update();
-
-	//入力があった瞬間
-	if (targetRota != oldTargetRota)
-	{
-		//回転タイマーを初期化し、現在位置を初めの回転に保存
-		rotaTimer.Start();
-		rotaStart = oldTargetRota;
-
-		hoge = RotaComparison(rotaStart, targetRota);
-		if (hoge)
-		{
-			targetRota -= 360;
-		}
-	}
-
-	//初めの回転から最後の回転までをタイマーで動かす
-	float check = MathF::AngleConvRad(TEasing::OutQuad(rotaStart, targetRota, rotaTimer.GetTimeRate()));
-	rotation.y = PlayerCamera::Get()->mHorizontalRad + check;
-	drawerObject.rotation.y = rotation.y;
-
-	oldTargetRota = targetRota;
-
-	if (wallKickTimer.GetRun())
-	{
-		
-	}
+	quaternion = Slerp(hoge, hoge2, rotTime.GetTimeRate());
+	drawerObject.quaternion = quaternion;*/
 
 	//ジャンプ中なら
-	if (IsJump())
-	{
-		if (jumpCount == 2)
-		{
-			jumpPlusRotaX -= 20.0f;
-			//カメラ引きたい
-		}
-		else if (jumpCount >= 3)
-		{
-			jumpPlusRotaX += 40.0f;
-		}
-	}
+	//if (IsJump())
+	//{
+	//	if (jumpCount == 2)
+	//	{
+	//		jumpPlusRotaX -= 20.0f;
+	//		//カメラ引きたい
+	//	}
+	//	else if (jumpCount >= 3)
+	//	{
+	//		jumpPlusRotaX += 40.0f;
+	//	}
+	//}
+	
+	//if (wallKickTimer.GetEnd())
+	//{
+	//	jumpPlusRotaX += 20.0f;
+	//}
+	
+	////着地してるなら取り消す
+	//if (!IsJump())
+	//{
+	//	jumpPlusRotaX = 0;
+	//	PlayerCamera::Get()->InitRadius();
+	//}
+	
+	//drawerObject.rotation.x = MathF::AngleConvRad(jumpPlusRotaX);
 
-	//着地してるなら取り消す
-	if (!IsJump())
-	{
-		jumpPlusRotaX = 0;
-		PlayerCamera::Get()->InitRadius();
-	}
+	//⑴終点になるプレイヤーの向きたい方向をクオータニオンで取得する
+	//入力方向をいい感じに取る
+	Vector3 center = { 0,0,1 };
+	Vector3 back = { 0,0,-1 };
+	Vector3 right = { 1,0,0 };
+	Vector3 left = { -1,0,0 };
 
-	drawerObject.rotation.x = MathF::AngleConvRad(jumpPlusRotaX);
+	endRota = {0,0,0};
+
+	if (Input::Keyboard::PushKey(DIK_W))endRota += center;
+	if (Input::Keyboard::PushKey(DIK_S))endRota += back;
+	if (Input::Keyboard::PushKey(DIK_D))endRota += right;
+	if (Input::Keyboard::PushKey(DIK_A))endRota += left;
+
+	
+	endQ = DirectionToDirection({ 0,0,1 }, endRota);
+
+	//⑵始点になる今のプレイヤーの向きをクオータニオンで取得する
+	Vector3 startRota;
+	//回転を打ち消した始点のベクトルを作成
+	startRota = drawerObject.matWorld.ExtractAxisZ();
+	startRota.y = 0;
+
+	startQ = DirectionToDirection({ 0,0,1 }, startRota);
+
+	//⑶(終点Q - 始点Q)を求める
+	culQ = endQ - startQ;
+	
+	//quaternion = Quaternion::IdentityQuaternion();
+	//drawerObject.quaternion = Quaternion::IdentityQuaternion();
+
+	//④現在のプレイヤーの向き(Q)に足しまくる
+	quaternion = endQ;
+	drawerObject.quaternion = quaternion;
 }
 
 void Player::Fly()
@@ -513,6 +582,24 @@ void Player::HPOverFlow(int32_t value)
 	}
 }
 
+bool Player::CheckContinuanceKick(IDdCube* check)
+{
+	//ひとつ前のセーブした壁とIDが同じならtrueを返す
+	if (saveKickWall != nullptr)
+	{
+		if (saveKickWall->GetID() == check->GetID())
+		{
+			return true;
+		}
+	}
+	//IDが不正な物でなければ
+	if (saveKickWall == nullptr)
+	{
+ 		saveKickWall = check;
+	}
+	return false;
+}
+
 bool Player::CanWallKick()
 {
 	//ジャンプ中でないなら不可
@@ -528,6 +615,11 @@ bool Player::CanWallKick()
 	{
 		if (Collsions::CubeCollision(hit, cube))
 		{
+			//ひとつ前のセーブした壁とIDが同じなら失敗判定にする
+			if (CheckContinuanceKick(&hit))
+			{
+				return false;
+			}
 			return true;
 		}
 	}
@@ -535,6 +627,11 @@ bool Player::CanWallKick()
 	{
 		if (Collsions::CubeCollision(hit, cube))
 		{
+			//ひとつ前のセーブした壁とIDが同じなら失敗判定にする
+			if (CheckContinuanceKick(&hit))
+			{
+				return false;
+			}
 			return true;
 		}
 	}
@@ -542,6 +639,11 @@ bool Player::CanWallKick()
 	{
 		if (Collsions::CubeCollision(hit, cube))
 		{
+			//ひとつ前のセーブした壁とIDが同じなら失敗判定にする
+			if (CheckContinuanceKick(&hit))
+			{
+				return false;
+			}
 			return true;
 		}
 	}
@@ -549,10 +651,44 @@ bool Player::CanWallKick()
 	{
 		if (Collsions::CubeCollision(hit, cube))
 		{
+			//ひとつ前のセーブした壁とIDが同じなら失敗判定にする
+			if (CheckContinuanceKick(&hit))
+			{
+				return false;
+			}
 			return true;
 		}
 	}
 	return false;
+}
+
+void Player::DebugGUI()
+{
+	ImGui::Text("position x:%f y:%f z:%f",
+		position.x, position.y, position.z);
+
+	ImGui::Text("rotation x:%f y:%f z:%f", rotation.x, rotation.y, rotation.z);
+	//ImGui::Text("CanWallKick %d", CanWallKick());
+	if (saveKickWall != nullptr)
+	{
+		ImGui::Text("wallID %d", saveKickWall->GetID());
+	}
+	if (ImGui::Button("FlyChange"))
+	{
+		flyMode = !flyMode;
+		if(flyMode)SetNoGravity(true);
+		if(!flyMode)SetNoGravity(false);
+	}
+	ImGui::Text("flyMode %d", flyMode);
+	ImGui::Text("Angle %f", MathF::GetAngleBetweenTwoLine2D({0,0}, pCamVec2D));
+	ImGui::Text("quaternion x:%f y:%f z:%f w:%f", quaternion.vector.x, quaternion.vector.y, quaternion.vector.z, quaternion.w);
+	ImGui::Text("endRota x:%f y:%f z:%f", endRota.x, endRota.y, endRota.z);
+	ImGui::Text("startQ x:%f y:%f z:%f w:%f", startQ.vector.x, startQ.vector.y, startQ.vector.z, startQ.w);
+	ImGui::Text("endQ x:%f y:%f z:%f w:%f", endQ.vector.x, endQ.vector.y, endQ.vector.z, endQ.w);
+	ImGui::Text("culQ x:%f y:%f z:%f w:%f", culQ.vector.x, culQ.vector.y, culQ.vector.z, culQ.w);
+	//Vector3 testRota;
+	//Quaternion test = DirectionToDirection({ 0,0,0 }, {});
+	//ImGui::Text("test x:%f y:%f z:%f w:%f", test.vector.x, test.vector.y, test.vector.z, test.w);
 }
 
 void Player::ChangeMode(const PlayerState& pState)
@@ -585,7 +721,7 @@ void Player::ChangeMode(const PlayerState& pState)
 	if (playerState == PlayerState::Debug)
 	{
 		SetNoCollsion(false);
-		SetNoGravity(true);
+		SetNoGravity(false);
 		SetNoMove(false);
 	}
 }

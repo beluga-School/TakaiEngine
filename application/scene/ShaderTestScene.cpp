@@ -86,12 +86,12 @@ void ShaderTestScene::Update()
 	}
 
 	//ノイズエフェクト切り替え
-	static bool hoge = false;
+	static bool rotCheck = false;
 	if (ImGui::Button("NoiseEffect"))
 	{
-		hoge = !hoge;
+		rotCheck = !rotCheck;
 	}
-	if (hoge)
+	if (rotCheck)
 	{
 		PostEffect::pipeLineName = "PerlinNoisePE";
 	}

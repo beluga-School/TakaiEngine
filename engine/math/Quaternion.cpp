@@ -1,7 +1,8 @@
-﻿#include "Quaternion.h"
+#include "Quaternion.h"
 #include <math.h>
 #include "MathF.h"
 #include <cmath>
+#include <Float4.h>
 
 Quaternion Quaternion::IdentityQuaternion()
 {
@@ -105,19 +106,26 @@ Vector3 Quaternion::RotateVector(const Vector3& vector_)
 
 Matrix4 Quaternion::MakeRotateMatrix()
 {
+	Float4 X = { vector.x * vector.x ,vector.x * vector.y,vector.x * vector.z,vector.x * w };
+	Vector3 Y = { vector.y * w,vector.y * vector.y,vector.y * vector.z };
+	Vector2 Z = { vector.z * vector.z,vector.z * w};
+	
 	return Matrix4(
-		w * w + vector.x * vector.x - vector.y * vector.y - vector.z * vector.z,
-		2 * (vector.x * vector.y + w * vector.z),
-		2 * (vector.x * vector.z - w * vector.y),
+		1 - 2 * Y.y - 2 * Z.x,
+		2 * X.y + 2 * Z.y,
+		2 * X.z - 2 * Y.x,
 		0,
-		2 * (vector.x * vector.y - w * vector.z),
-		w * w - vector.x * vector.x + vector.y * vector.y - vector.z * vector.z,
-		2 * (vector.y * vector.z + w * vector.x),
+
+		2 * X.y - 2 * Z.y,
+		1 - 2 * X.x - 2 * Z.x,
+		2 * Y.z + 2 * X.w,
 		0,
-		2 * (vector.x * vector.z + w * vector.y),
-		2 * (vector.y - vector.z - w * vector.x),
-		w * w - vector.x * vector.x - vector.y * vector.y + vector.z * vector.z,
+
+		2 * X.z + 2 * Y.x,
+		2 * Y.z - 2 * X.w,
+		1 - 2 * X.x - 2 * Y.y, 
 		0,
+		
 		0,0,0,1
 	);
 }
@@ -177,18 +185,18 @@ Quaternion& Quaternion::operator/=(const float& s)
 	return *this;
 }
 
-Quaternion MakeAxisAngle(const Vector3& axis,const float& angle)
+Quaternion MakeAxisAngle(const Vector3& axis, float radian)
 {
 	Vector3 axis2 = axis;
 	axis2.normalize();
 	Quaternion q;
-	q.w = cosf(angle / 2);
-	q.vector = axis * sinf(angle / 2);
+	q.w = cosf(radian / 2);
+	q.vector = axis * sinf(radian / 2);
 
 	return q;
 }
 
-Quaternion Slerp(const Quaternion& q,const Quaternion& r,const float& t)
+Quaternion Slerp(const Quaternion& q,const Quaternion& r, float t)
 {
 	Quaternion temp = q;
 	float dot = Dot(temp,r);
@@ -256,10 +264,129 @@ Quaternion DirectionToDirection(const Vector3& u, const Vector3& v)
 	//外積
 	Vector3 cross = a.GetCross(b);
 	Vector3 axis = cross.GetNormalize();
+	
+	//反対に向けないのでそれの対策
+	if (cross.length() == 0)
+	{
+		if (u != v)
+		{
+			float theta = std::acos(dot);
+
+			return MakeAxisAngle(axis, theta);
+		}
+	}
 
 	float theta = std::acos(dot);
 
 	return MakeAxisAngle(axis,theta);
+}
+
+Quaternion LookAt(const Vector3& target)
+{
+	Vector3 upVec = { 0,1,0 };
+
+	//targetをZ軸にした3軸を定義する
+	Vector3 z = target.GetNormalize();
+	
+	if (z.length() == 0)
+	{
+		z = { 0,0,1 };
+	}
+	
+	Vector3 x = upVec;
+
+	x.cross(z);
+	x.normalize();
+	
+	Vector3 y = z;
+	y.cross(x);
+	y.normalize();
+
+	//3軸から回転行列を生成する
+	Matrix4 m = Matrix4::Identity();
+	m[0][0] = x.x;
+	m[1][0] = x.y;
+	m[2][0] = x.z;
+
+	m[0][1] = y.x;
+	m[1][1] = y.y;
+	m[2][1] = y.z;
+
+	m[0][2] = z.x;
+	m[1][2] = z.y;
+	m[2][2] = z.z;
+
+	/*m[0][0] = x.x;
+	m[1][0] = y.x;
+	m[2][0] = z.x;
+
+	m[0][1] = x.y;
+	m[1][1] = y.y;
+	m[2][1] = z.y;
+
+	m[0][2] = x.z;
+	m[1][2] = y.z;
+	m[2][2] = z.z;*/
+
+	//回転行列からクォータニオンに変換する
+	Quaternion rot = GetRotation(m);
+	
+	return rot;
+}
+
+Quaternion GetRotation(const Matrix4& m)
+{
+	float elem[4];
+	elem[0] = m.m[0][0] - m.m[1][1] - m.m[2][2] + 1.0f;
+	elem[1] = -m.m[0][0] + m.m[1][1] - m.m[2][2] + 1.0f;
+	elem[2] = -m.m[0][0] - m.m[1][1] + m.m[2][2] + 1.0f;
+	elem[3] = m.m[0][0] + m.m[1][1] + m.m[2][2] + 1.0f;
+
+	int32_t biggestIdx = 0;
+	for (int32_t i = 0; i < 4; i++)
+	{
+		if (elem[i] > elem[biggestIdx])
+		{
+			biggestIdx = i;
+		}
+	}
+
+	//何してるのかいまいち分かんないけど、長すぎるのが来たら止めてるのかな
+	if (elem[biggestIdx] < 0)
+	{
+		return Quaternion::IdentityQuaternion();
+	}
+
+	float q[4];
+	float v = sqrt(elem[biggestIdx]) * 0.5f;
+	q[biggestIdx] = v;
+	float mult = 0.25f / v;
+
+	switch (biggestIdx)
+	{
+	case 0:
+		q[1] = (m.m[0][1] + m.m[1][0]) * mult;
+		q[2] = (m.m[2][0] + m.m[0][2]) * mult;
+		q[3] = (m.m[1][2] - m.m[2][1]) * mult;
+		break;
+	case 1:
+		q[0] = (m.m[0][1] + m.m[1][0]) * mult;
+		q[2] = (m.m[1][2] + m.m[2][1]) * mult;
+		q[3] = (m.m[2][0] - m.m[0][2]) * mult;
+		break;
+	case 2:
+		q[0] = (m.m[2][0] + m.m[0][2]) * mult;
+		q[1] = (m.m[1][2] + m.m[2][1]) * mult;
+		q[3] = (m.m[0][1] - m.m[1][0]) * mult;
+		break;
+	case 3:
+		q[0] = (m.m[1][2] - m.m[2][1]) * mult;
+		q[1] = (m.m[2][0] - m.m[0][2]) * mult;
+		q[2] = (m.m[0][1] - m.m[1][0]) * mult;
+		break;
+	}
+
+	return Quaternion(q[0], q[1], q[2], q[3]);
 }
 
 float Dot(const Quaternion& q, const Quaternion& r)

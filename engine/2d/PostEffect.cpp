@@ -111,11 +111,11 @@ void PostEffect::Draw()
 
 	dx12->mCmdList->IASetVertexBuffers(0, 1, &mVbView);
 
-	D3D12_GPU_DESCRIPTOR_HANDLE hoge = mDescHeapSRV->GetGPUDescriptorHandleForHeapStart();
-	dx12->mCmdList->SetGraphicsRootDescriptorTable(1, hoge);
+	D3D12_GPU_DESCRIPTOR_HANDLE rotCheck = mDescHeapSRV->GetGPUDescriptorHandleForHeapStart();
+	dx12->mCmdList->SetGraphicsRootDescriptorTable(1, rotCheck);
 
-	hoge.ptr += dx12->mDevice->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV);
-	dx12->mCmdList->SetGraphicsRootDescriptorTable(2, hoge);
+	rotCheck.ptr += dx12->mDevice->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV);
+	dx12->mCmdList->SetGraphicsRootDescriptorTable(2, rotCheck);
 
 	dx12->mCmdList->SetGraphicsRootConstantBufferView(0, mConstBuffer.mBuffer->GetGPUVirtualAddress());
 
@@ -138,12 +138,12 @@ void PostEffect::PreDrawScene()
 	}
 
 	D3D12_CPU_DESCRIPTOR_HANDLE rtvHs[2];
-	D3D12_CPU_DESCRIPTOR_HANDLE hoge = mDescHeapRTV->GetCPUDescriptorHandleForHeapStart();
+	D3D12_CPU_DESCRIPTOR_HANDLE rotCheck = mDescHeapRTV->GetCPUDescriptorHandleForHeapStart();
 	for (int32_t i = 0; i < 2; i++)
 	{
-		rtvHs[i] = hoge;
+		rtvHs[i] = rotCheck;
 
-		hoge.ptr += dx12->mDevice->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_RTV);
+		rotCheck.ptr += dx12->mDevice->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_RTV);
 	}
 
 	D3D12_CPU_DESCRIPTOR_HANDLE dsvH =
@@ -279,16 +279,16 @@ void PostEffect::CreateSRV()
 	mSrvDesc.ViewDimension = D3D12_SRV_DIMENSION_TEXTURE2D;//2Dテクスチャ
 	mSrvDesc.Texture2D.MipLevels = 1;
 
-	D3D12_CPU_DESCRIPTOR_HANDLE hoge =
+	D3D12_CPU_DESCRIPTOR_HANDLE rotCheck =
 		mDescHeapSRV->GetCPUDescriptorHandleForHeapStart();
 	for (int32_t i = 0; i < 2; i++)
 	{
 		//ハンドルの指す位置にシェーダーリソースビュー作成
 		dx12->mDevice->CreateShaderResourceView(mTexBuff[i].Get(),
 			&mSrvDesc,
-			hoge);
+			rotCheck);
 
-		hoge.ptr += dx12->mDevice->GetDescriptorHandleIncrementSize(
+		rotCheck.ptr += dx12->mDevice->GetDescriptorHandleIncrementSize(
 			D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV);
 	}
 }
@@ -317,7 +317,7 @@ void PostEffect::CreateRTV()
 	renderTargetViewDesc.ViewDimension = D3D12_RTV_DIMENSION_TEXTURE2D;
 
 
-	D3D12_CPU_DESCRIPTOR_HANDLE hoge =
+	D3D12_CPU_DESCRIPTOR_HANDLE rotCheck =
 		mDescHeapRTV->GetCPUDescriptorHandleForHeapStart();
 	for (int32_t i = 0; i < 2; i++)
 	{
@@ -325,10 +325,10 @@ void PostEffect::CreateRTV()
 		dx12->mDevice->CreateRenderTargetView(
 			mTexBuff[i].Get(),
 			&renderTargetViewDesc,
-			hoge
+			rotCheck
 		);
 
-		hoge.ptr += dx12->mDevice->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_RTV);
+		rotCheck.ptr += dx12->mDevice->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_RTV);
 	}
 }
 

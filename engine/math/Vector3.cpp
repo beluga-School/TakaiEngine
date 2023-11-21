@@ -147,6 +147,16 @@ Vector3& Vector3::operator/=(const float s)
 	return *this;
 }
 
+bool Vector3::operator==(const Vector3& v)const
+{
+	return x == v.x && y == v.y && z == v.z;
+}
+
+bool Vector3::operator!=(const Vector3& v)const
+{
+	return !(*this == v);
+}
+
 //Vector2 クラスに属さない関数群
 //二項演算子
 const Vector3 operator+(const Vector3& v1, const Vector3& v2)

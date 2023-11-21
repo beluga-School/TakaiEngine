@@ -56,6 +56,16 @@ namespace MathF
 		return acosf(vec1.dot(vec2) / (vec1.length() * vec2.length()));
 	}
 
+	float GetAngleBetweenTwoLine2D(const Vector2& vec1, const Vector2& vec2)
+	{
+		float r = atan2(vec2.y - vec1.y, vec2.x - vec1.x);
+		if (r < 0) 
+		{
+			r = r + 2 * MathF::PIf;
+		}
+		return floor(r * 360 / (2 * MathF::PIf));
+	}
+
 	float AngleConvRad(const float& angle)
 	{
 		return PIf / 180 * angle;

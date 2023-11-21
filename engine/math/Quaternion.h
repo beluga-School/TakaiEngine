@@ -63,10 +63,10 @@ public:
 	Matrix4 MakeRotateMatrix();
 };
 
-Quaternion MakeAxisAngle(const Vector3& axis,const float& angle);
+Quaternion MakeAxisAngle(const Vector3& axis, float radian);
 
 //球面線形補間
-Quaternion Slerp(const Quaternion& q,const Quaternion& r,const float& t);
+Quaternion Slerp(const Quaternion& q,const Quaternion& r,float t);
 
 const Quaternion operator+(const Quaternion& q, const Quaternion& r);
 const Quaternion operator-(const Quaternion& q, const Quaternion& r);
@@ -75,5 +75,7 @@ const Quaternion operator*(const float& f, const Quaternion& q);
 const Quaternion operator/(const Quaternion& q, const float& f);
 
 Quaternion DirectionToDirection(const Vector3& u, const Vector3& v);
+Quaternion LookAt(const Vector3& target);
+Quaternion GetRotation(const Matrix4& m);
 
 float Dot(const Quaternion& q,const Quaternion& r);
