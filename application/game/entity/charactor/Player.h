@@ -152,8 +152,8 @@ private:
 	//敵との当たり判定用スフィアの描画
 	Obj3d colDrawer;
 
-	//描画オブジェクトを別で管理
-	Obj3d drawerObject;
+	//進行方向を管理するオブジェクトを別で管理
+	Obj3d centerObject;
 
 	//収集物関係
 	//スターの取得数
@@ -189,13 +189,8 @@ private:
 
 	bool flyMode = false;
 
-	
-	Quaternion hoge;
-	Quaternion hoge2;
-
 	TEasing::easeTimer rotTime = 0.5f;
 
-	Vector2 pCamVec2D;
 	Quaternion endQ;
 	Vector3 endRota;
 	Quaternion startQ;

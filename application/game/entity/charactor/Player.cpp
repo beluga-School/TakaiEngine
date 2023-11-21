@@ -22,21 +22,21 @@ void Player::LoadResource()
 void Player::Initialize()
 {
 	Obj3d::Initialize();
-	SetModel(ModelManager::GetModel("Cube"));
+	SetModel(ModelManager::GetModel("beetle"));
 
 	colDrawer.Initialize();
 	colDrawer.SetModel(ModelManager::GetModel("ICOSphere"));
 	colDrawer.SetTexture(TextureManager::GetTexture("white"));
 
-	drawerObject.Initialize();
-	drawerObject.SetModel(ModelManager::GetModel("beetle"));
+	centerObject.Initialize();
+	centerObject.SetModel(ModelManager::GetModel("beetle"));
 
 	SetOutLineState({ 0.1f,0.1f,0.1f,1.0f }, 0.05f);
 
 	hpGauge.Initialize();
 
 	rotmode = RotMode::Quaternion;
-	drawerObject.rotmode = RotMode::Quaternion;
+	centerObject.rotmode = RotMode::Quaternion;
 
 	quaternion = DirectionToDirection({0,0,0},{0,0,1});
 }
@@ -62,8 +62,8 @@ void Player::Update()
 	moveValue = { 0,0,0 };
 
 	//ベクトルを保存
-	mCenterVec = matWorld.ExtractAxisZ();
-	mSideVec = matWorld.ExtractAxisX();
+	mCenterVec = centerObject.matWorld.ExtractAxisZ();
+	mSideVec = centerObject.matWorld.ExtractAxisX();
 
 	Vector3 playerBack{};
 	Vector3 playerFeetPos{};
@@ -179,18 +179,18 @@ void Player::Update()
 	hpGauge.Update();
 
 	//描画用オブジェクトの更新
-	drawerObject.position = position;
-	drawerObject.scale = scale;
-	drawerObject.Update(*Camera::sCamera);
+	centerObject.position = position;
+	centerObject.scale = scale;
+	centerObject.Update(*Camera::sCamera);
 }
 
 void Player::Draw()
 {
 	BasicObjectPreDraw("OutLine", false);
-	drawerObject.DrawOutLine();
+	Obj3d::DrawOutLine();
 	
 	BasicObjectPreDraw("Toon");
-	drawerObject.DrawMaterial();
+	Obj3d::DrawMaterial();
 	//Obj3d::DrawMaterial();
 }
 
@@ -248,13 +248,13 @@ void Player::MoveUpdate()
 		moveValue += mSideVec * Input::Pad::GetLStickMove().x * mSpeed * TimeManager::deltaTime;
 	}
 
-	/*if (Input::Keyboard::PushKey(DIK_W) || 
+	if (Input::Keyboard::PushKey(DIK_W) || 
 		Input::Keyboard::PushKey(DIK_S) ||
 		Input::Keyboard::PushKey(DIK_D) ||
 		Input::Keyboard::PushKey(DIK_A))
 	{
 		moveValue += mCenterVec * mSpeed * TimeManager::deltaTime;
-	}*/
+	}
 
 	//壁キックタイマーが動いてるなら壁キック入力があったときの逆進行方向を足し続ける
 	if (wallKickTimer.GetRun())
@@ -310,153 +310,85 @@ float RotaComparison(float now, float target)
 
 void Player::RotaUpdate()
 {
-	////回転させる最終位置
-	////上下の入力があるか
-	//if (Input::Keyboard::PushKey(DIK_W) || 
-	//	Input::Keyboard::PushKey(DIK_S))
-	//{
-	//	if (Input::Keyboard::PushKey(DIK_W)) {
-	//		targetRota = 0;
-	//		if (Input::Keyboard::PushKey(DIK_D)) {
-	//			targetRota = 45;
-	//		}
-	//		if (Input::Keyboard::PushKey(DIK_A)) {
-	//			targetRota = 315;
-	//		}
-	//	}
-	//	if (Input::Keyboard::PushKey(DIK_S)) {
-	//		targetRota = 180;
-	//		if (Input::Keyboard::PushKey(DIK_D)) {
-	//			targetRota = 135;
-	//		}
-	//		if (Input::Keyboard::PushKey(DIK_A)) {
-	//			targetRota = 225;
-	//		}
-	//	}
-	//}
-	////ないなら
-	//else
-	//{
-	//	if (Input::Keyboard::PushKey(DIK_D))
-	//	{
-	//		targetRota = 90;
-	//	}
-	//	if (Input::Keyboard::PushKey(DIK_A))
-	//	{
-	//		targetRota = 270;
-	//	}
-	//}
-
-	//rotaTimer.Update();
-
-	////入力があった瞬間
-	//if (targetRota != oldTargetRota)
-	//{
-	//	//回転タイマーを初期化し、現在位置を初めの回転に保存
-	//	rotaTimer.Start();
-	//	rotaStart = oldTargetRota;
-
-	//	rotCheck = RotaComparison(rotaStart, targetRota);
-	//	if (rotCheck)
-	//	{
-	//		targetRota -= 360;
-	//	}
-	//}
-
-	////初めの回転から最後の回転までをタイマーで動かす
-	//float check = MathF::AngleConvRad(TEasing::OutQuad(rotaStart, targetRota, rotaTimer.GetTimeRate()));
-	//rotation.y = PlayerCamera::Get()->mHorizontalRad + check;
-	//drawerObject.rotation.y = rotation.y;
-
-	//oldTargetRota = targetRota;
-
-	/*Vector3 pCamVec = position - Camera::sCamera->mEye;
 	
-	pCamVec2D = { pCamVec.x,pCamVec.z };
+	//rotation.x = MathF::AngleConvRad(jumpPlusRotaX);
 
 	rotTime.Update();
 	rotTime.mMaxTime = 0.5f;
-	
-	float rota2D = MathF::GetAngleBetweenTwoLine2D({ 0,0 }, pCamVec2D);
-
-	if (Input::Keyboard::TriggerKey(DIK_D))
-	{
-		hoge = MakeAxisAngle({0,1,0}, 0);
-		hoge2 = MakeAxisAngle({ 0,1,0 }, MathF::AngleConvRad(rota2D));
-		rotTime.Start();
-	}
-	if (Input::Keyboard::TriggerKey(DIK_A))
-	{
-		hoge = MakeAxisAngle({ 0,1,0 },0);
-		hoge2 = MakeAxisAngle({ 0,1,0 }, MathF::AngleConvRad(rota2D));
-		rotTime.Start();
-	}
-
-	quaternion = Slerp(hoge, hoge2, rotTime.GetTimeRate());
-	drawerObject.quaternion = quaternion;*/
-
-	//ジャンプ中なら
-	//if (IsJump())
-	//{
-	//	if (jumpCount == 2)
-	//	{
-	//		jumpPlusRotaX -= 20.0f;
-	//		//カメラ引きたい
-	//	}
-	//	else if (jumpCount >= 3)
-	//	{
-	//		jumpPlusRotaX += 40.0f;
-	//	}
-	//}
-	
-	//if (wallKickTimer.GetEnd())
-	//{
-	//	jumpPlusRotaX += 20.0f;
-	//}
-	
-	////着地してるなら取り消す
-	//if (!IsJump())
-	//{
-	//	jumpPlusRotaX = 0;
-	//	PlayerCamera::Get()->InitRadius();
-	//}
-	
-	//drawerObject.rotation.x = MathF::AngleConvRad(jumpPlusRotaX);
 
 	//⑴終点になるプレイヤーの向きたい方向をクオータニオンで取得する
 	//入力方向をいい感じに取る
-	Vector3 center = { 0,0,1 };
-	Vector3 back = { 0,0,-1 };
-	Vector3 right = { 1,0,0 };
-	Vector3 left = { -1,0,0 };
+	Vector3 camCenterVec = PlayerCamera::Get()->matWorld.ExtractAxisZ();
+	Vector3 camRightVec = PlayerCamera::Get()->matWorld.ExtractAxisX();
+	camCenterVec.y = 0;
+	camCenterVec.normalize();
+	camRightVec.y = 0;
+	camRightVec.normalize();
 
-	endRota = {0,0,0};
+	Vector3 center = camCenterVec;
+	Vector3 back = -camCenterVec;
+	Vector3 right = camRightVec;
+	Vector3 left = -camRightVec;
+
+	if (Input::Keyboard::TriggerKey(DIK_W) ||
+		Input::Keyboard::TriggerKey(DIK_S) ||
+		Input::Keyboard::TriggerKey(DIK_D) ||
+		Input::Keyboard::TriggerKey(DIK_A))
+	{
+		rotTime.Start();
+		endRota = {0,0,0};
+	}
 
 	if (Input::Keyboard::PushKey(DIK_W))endRota += center;
 	if (Input::Keyboard::PushKey(DIK_S))endRota += back;
 	if (Input::Keyboard::PushKey(DIK_D))endRota += right;
 	if (Input::Keyboard::PushKey(DIK_A))endRota += left;
 
-	
 	endQ = DirectionToDirection({ 0,0,1 }, endRota);
 
 	//⑵始点になる今のプレイヤーの向きをクオータニオンで取得する
 	Vector3 startRota;
 	//回転を打ち消した始点のベクトルを作成
-	startRota = drawerObject.matWorld.ExtractAxisZ();
+	startRota = centerObject.matWorld.ExtractAxisZ();
+	//startRota = {0,0,1};
 	startRota.y = 0;
 
 	startQ = DirectionToDirection({ 0,0,1 }, startRota);
 
 	//⑶(終点Q - 始点Q)を求める
-	culQ = endQ - startQ;
-	
-	//quaternion = Quaternion::IdentityQuaternion();
-	//drawerObject.quaternion = Quaternion::IdentityQuaternion();
+	culQ = Slerp(startQ,endQ, rotTime.GetTimeRate());
+
+	//ジャンプ中なら
+	if (IsJump())
+	{
+		if (jumpCount == 2)
+		{
+			jumpPlusRotaX = MathF::AngleConvRad(-180.f);
+		}
+		else if (jumpCount >= 3)
+		{
+			jumpPlusRotaX = MathF::AngleConvRad(270.5f);
+		}
+	}
+
+	if (wallKickTimer.GetEnd())
+	{
+		jumpPlusRotaX = MathF::AngleConvRad(90.f);
+	}
+
+	//着地してるなら取り消す
+	if (!IsJump())
+	{
+		jumpPlusRotaX = 0;
+		PlayerCamera::Get()->InitRadius();
+	}
+
+	//Quaternion rotX = MakeAxisAngle(matWorld.ExtractAxisX(), jumpPlusRotaX);
 
 	//④現在のプレイヤーの向き(Q)に足しまくる
-	quaternion = endQ;
-	drawerObject.quaternion = quaternion;
+	//quaternion = rotX * culQ;
+	quaternion = culQ;
+	centerObject.quaternion = culQ;
 }
 
 void Player::Fly()
@@ -680,7 +612,6 @@ void Player::DebugGUI()
 		if(!flyMode)SetNoGravity(false);
 	}
 	ImGui::Text("flyMode %d", flyMode);
-	ImGui::Text("Angle %f", MathF::GetAngleBetweenTwoLine2D({0,0}, pCamVec2D));
 	ImGui::Text("quaternion x:%f y:%f z:%f w:%f", quaternion.vector.x, quaternion.vector.y, quaternion.vector.z, quaternion.w);
 	ImGui::Text("endRota x:%f y:%f z:%f", endRota.x, endRota.y, endRota.z);
 	ImGui::Text("startQ x:%f y:%f z:%f w:%f", startQ.vector.x, startQ.vector.y, startQ.vector.z, startQ.w);
