@@ -61,7 +61,6 @@ public://関数
 	void SetDirLightColor(const int32_t& index, const Vector3& lightcolor);
 
 	//点光源
-	
 	void SetPointLightActive(const int32_t& index, const bool& active);
 	void SetPointLightPos(const int32_t& index, const Vector3& pos);
 	void SetPointLightColor(const int32_t& index, const Vector3& color);

@@ -66,6 +66,7 @@ public:
 	//頂点バッファへデータを送信
 	void SpriteTransferVertexBuffer();
 
+public:
 	//座標
 	Vector2 mPosition = { 0,0 };
 	//Z軸回りの回転角

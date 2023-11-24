@@ -101,15 +101,25 @@ public:
 	//ディゾルブの進行度(0～1で管理)
 	float disolveVal = 0;
 
+	float transports = 0.0f;
+
+	Vector2 mTiling = { 1,1 };
+	Vector2 mOffset = { 0,0 };
+
 public:
+	//初期化
 	void Initialize();
+	//モデル設定
 	void SetModel(const Model* model);
+	//テクスチャ設定
 	void SetTexture(const Texture* texture);
+	//更新
 	void Update(const Camera& camera);
-
+	//ワールド座標を更新
 	Vector3 GetWorldTrans();
-
+	//テクスチャを使用して描画
 	void Draw();
+	//マテリアルを使用して描画
 	void DrawMaterial();
 
 	///---特殊描画
@@ -124,13 +134,10 @@ public:
 	///---ここら辺は関数をひとつにして、定数で振る舞いを変えるような設計にしたい
 	///定数の中身でオーバーロード先を変えれる感じにしたい
 
+	//アウトラインの設定回り
 	void SetOutLineState(const Float4& color, float thickness);
 	void SetOutLineAlpha(const float& alpha);
 
-	float transports = 0.0f;
-
-	Vector2 mTiling = { 1,1 };
-	Vector2 mOffset = { 0,0 };
 protected:
 	//アウトライン周りの設定
 	Float4 mOutLineColor = { 0,0,0,1.0f };

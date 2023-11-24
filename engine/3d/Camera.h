@@ -35,8 +35,6 @@ public:
 	void Initialize();
 	void UpdatematView();
 
-	//void CameraShake(float power);
-
 	static std::unique_ptr<Camera> sDefaultCam;
 	static Camera *sCamera;
 

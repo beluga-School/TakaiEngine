@@ -35,6 +35,7 @@ struct SoundData
 class SoundManager
 {
 public:
+	//初期化
 	void Initialize();
 	//音声読み込み
 	static void Load(const char* filename,const std::string& handle);
@@ -44,9 +45,9 @@ public:
 	void SoundUnload(SoundData* soundData);
 	//xAudio2の解放
 	void End();
-
+	//ハンドルで取得する
 	static SoundData* GetSound(const std::string& handle);
-
+	//インスタンス取得
 	static SoundManager* Get() {
 		static SoundManager instance;
 		return &instance;

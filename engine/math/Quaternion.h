@@ -43,7 +43,18 @@ public:
 	float GetNorm()const;
 
 	void Normalize();
+	
+	//正規化する関数
 	Quaternion GetNormalize();
+
+	//逆行列を取得
+	Quaternion GetInverse();
+
+	//eularで回転
+	Vector3 RotateVector(const Vector3& vector);
+
+	//回転行列を作成
+	Matrix4 MakeRotateMatrix();
 
 	//クォータニオンとの掛け算
 	Quaternion operator*(const Quaternion& r);
@@ -55,14 +66,9 @@ public:
 	Quaternion& operator-=(const Quaternion& q);
 	Quaternion& operator*=(const float& s);
 	Quaternion& operator/=(const float& s);
-
-	Quaternion GetInverse();
-
-	Vector3 RotateVector(const Vector3& vector);
-
-	Matrix4 MakeRotateMatrix();
 };
 
+//軸と回転からクオータニオンを作成
 Quaternion MakeAxisAngle(const Vector3& axis, float radian);
 
 //球面線形補間
@@ -74,8 +80,10 @@ const Quaternion operator*(const Quaternion& q, const float& f);
 const Quaternion operator*(const float& f, const Quaternion& q);
 const Quaternion operator/(const Quaternion& q, const float& f);
 
+//2つの軸からクオータニオンを生成
 Quaternion DirectionToDirection(const Vector3& u, const Vector3& v);
+
+//向いている方向にクオータニオンを生成
 Quaternion LookAt(const Vector3& target);
-Quaternion GetRotation(const Matrix4& m);
 
 float Dot(const Quaternion& q,const Quaternion& r);

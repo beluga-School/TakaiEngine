@@ -26,6 +26,7 @@ public:
 	//頂点バッファビューの作成
 	D3D12_VERTEX_BUFFER_VIEW mVbView{};
 
+	//頂点を作成する
 	void CreateVertex(const std::vector<Vertex> &vertices,const std::vector<uint16_t> &indices);
 	
 	Microsoft::WRL::ComPtr<ID3D12Resource> mVertBuff = nullptr;

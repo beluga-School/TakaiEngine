@@ -16,7 +16,13 @@ namespace TimeManager
 	extern float fps;
 	extern float fixFPS;
 
+	/// <summary>
+	/// 初期化
+	/// </summary>
 	void Init();
 
+	/// <summary>
+	/// 更新
+	/// </summary>
 	void Update();
 }

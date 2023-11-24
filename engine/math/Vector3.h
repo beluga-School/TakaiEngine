@@ -57,7 +57,7 @@ public:
 	Vector3 GetCross(const Vector3& v)const;
 
 	/// <summary>
-	/// Wrelf先生のやつ丸パクりSpline
+	/// Spline挙動を作る
 	/// </summary>
 	/// <param name="points"></param>
 	/// <param name="t"></param>

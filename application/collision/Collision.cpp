@@ -221,8 +221,8 @@ bool Collsions::RectangleXZCollision(const Cube& cube1, const Cube& cube2)
 	float DistanceX = cube1.position.x - cube2.position.x;
 	float DistanceZ = cube1.position.z - cube2.position.z;
 
-	DistanceX = MathF::Abs(DistanceX);
-	DistanceZ = MathF::Abs(DistanceZ);
+	DistanceX = Util::Abs(DistanceX);
+	DistanceZ = Util::Abs(DistanceZ);
 
 	if (DistanceX <= cube1.scale.x * 0.5f + cube2.scale.x * 0.5f &&
 		DistanceZ <= cube1.scale.z * 0.5f + cube2.scale.z * 0.5f)
@@ -266,9 +266,9 @@ bool Collsions::CubeCollision(const Cube& cube1, const Cube& cube2)
 	float DistanceY = cube1.position.y - cube2.position.y;
 	float DistanceZ = cube1.position.z - cube2.position.z;
 
-	DistanceX = MathF::Abs(DistanceX);
-	DistanceY = MathF::Abs(DistanceY);
-	DistanceZ = MathF::Abs(DistanceZ);
+	DistanceX = Util::Abs(DistanceX);
+	DistanceY = Util::Abs(DistanceY);
+	DistanceZ = Util::Abs(DistanceZ);
 
 	if (DistanceX <= cube1.scale.x * 0.5f + cube2.scale.x * 0.5f &&
 		DistanceY <= cube1.scale.y * 0.5f + cube2.scale.y * 0.5f &&
@@ -285,9 +285,9 @@ bool Collsions::BoxColAABB(const Obj3d& colA, const Obj3d& colB)
 	int32_t DistanceY = static_cast<int32_t>(colA.matWorld.m[3][1] - colB.matWorld.m[3][1]);
 	int32_t DistanceZ = static_cast<int32_t>(colA.matWorld.m[3][2] - colB.matWorld.m[3][2]);
 
-	DistanceX = MathF::Abs(DistanceX);
-	DistanceY = MathF::Abs(DistanceY);
-	DistanceZ = MathF::Abs(DistanceZ);
+	DistanceX = Util::Abs(DistanceX);
+	DistanceY = Util::Abs(DistanceY);
+	DistanceZ = Util::Abs(DistanceZ);
 
 	if (DistanceX <= colA.scale.x * 0.5f + colB.scale.x * 0.5f &&
 		DistanceY <= colA.scale.y * 0.5f + colB.scale.y * 0.5f &&

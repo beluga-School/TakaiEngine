@@ -25,17 +25,6 @@ struct Mesh
 class Model : public VertexData
 {
 public:
-	
-	//Obj用メッシュ
-	Mesh mMesh;
-
-	//gltf用メッシュ
-	std::vector<Mesh> mMeshes;
-
-	std::unordered_map<uint16_t, std::vector<uint16_t>> mSmoothData;
-
-	Material mMaterial;
-
 	/// <summary>
 	/// プログラムで作成したモデルを生成する用の関数
 	/// </summary>
@@ -48,14 +37,28 @@ public:
 	/// <param name="dx12_"></param>
 	void CreateModel(const std::string modelname,bool smoothing = false);
 	
+	/// <summary>
+	/// assimpでモデルを作成
+	/// </summary>
+	/// <param name="filename"></param>
 	void CreateModelAssimp(const std::wstring& filename);
+
+public:
+	//Obj用メッシュ
+	Mesh mMesh;
+
+	//gltf用メッシュ
+	std::vector<Mesh> mMeshes;
+
+	std::unordered_map<uint16_t, std::vector<uint16_t>> mSmoothData;
+
+	Material mMaterial;
 
 	std::string mSaveModelname = "";
 
 	//ロードの設計上、GetModelで参照した時に、ロードしてなくても中身が作られてしまうので、
 	//まだ生成が終わってないモデルを参照した時にnullptrを返すため、生成したかを保存しておく
 	bool mCreated = false;
-
 private:
 	/// <summary>
 	/// マテリアル読み込み
@@ -68,11 +71,24 @@ private:
 class ModelManager
 {
 public:
+	//中で指定したモデルを起動時に読み込む
 	void PreLoad();
 
+	/// <summary>
+	/// 通常読み込み
+	/// </summary>
+	/// <param name="filepath">読み込みファイルパス</param>
+	/// <param name="handle">呼び出し時のハンドル</param>
+	/// <param name="smooth">スムースをかけるか</param>
 	static void LoadModel(const std::string filepath, const std::string handle, bool smooth = false);
+	
+	/// <summary>
+	/// Assimp読み込み
+	/// </summary>
+	/// <param name="filepath">読み込みファイルパス</param>
+	/// <param name="handle">呼び出し時のハンドル</param>
 	static void LoadModelAssimp(const std::wstring filepath, const std::string handle);
-
+	//ハンドルでモデル取得
 	static Model* GetModel(const std::string handle);
 
 	static ModelManager* Get() {

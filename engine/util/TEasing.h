@@ -6,43 +6,47 @@
 */
 namespace TEasing
 {
+	//等速で移動させる
 	float lerp(const float& start, const float& end, const float& timeRate);
 	Vector3 lerp(const Vector3& start, const Vector3& end, const float& timeRate);
 
+	//入りがゆっくりになる
 	float InQuad(const float& timeRate);
-	float OutQuad(const float& timeRate);
 	float InQuad(const float& start, const float& end, const float& timeRate);
-	float OutQuad(const float& start, const float& end, const float& timeRate);
 	Vector3 InQuad(const Vector3& start, const Vector3& end, const float& timeRate);
+	
+	//戻りがゆっくりになる
+	float OutQuad(const float& timeRate);
+	float OutQuad(const float& start, const float& end, const float& timeRate);
 	Vector3 OutQuad(const Vector3& start, const Vector3& end, const float& timeRate);
 
+	//入りも戻りもゆっくりになる
 	float InOutQuad(const float& timeRate);
 	float InOutQuad(const float& start, const float& end, const float& timeRate);
 
+	//跳ねる挙動
 	float OutBounce(const float& timeRate);
-
 	float OutBounce(const float& start, const float& end, const float& timeRate);
 	float InBounce(const float& start, const float& end, const float& timeRate);
 	float InOutBounce(const float& start, const float& end, const float& timeRate);
 
+	//飛び出した後跳ねる挙動
 	float InElastic(const float& timeRate);
 	float OutElastic(const float& timeRate);
-
 	float InElastic(const float& start, const float& end, const float& timeRate);
 	float OutElastic(const float& start, const float& end, const float& timeRate);
 
+	//飛び出して戻る挙動
 	float InBack(const float& timeRate);
 	float InBack(const float& start, const float& end, const float& timeRate);
-
 	float OutBack(const float& timeRate);
 	float OutBack(const float& start, const float& end, const float& timeRate);
-
 	float InOutBack(const float& timeRate);
 	float InOutBack(const float& start, const float& end, const float& timeRate);
 
+	//大げさに移動する挙動
 	float InExpo(const float& timeRate);
 	float InExpo(const float& start, const float& end, const float& timeRate);
-
 	float OutExpo(const float& timeRate);
 	float OutExpo(const float& start, const float& end, const float& timeRate);
 

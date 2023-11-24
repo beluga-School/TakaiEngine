@@ -1,4 +1,4 @@
-﻿#pragma once
+#pragma once
 #include <DirectXMath.h>
 #pragma warning (push)
 #pragma warning( disable : 26813 )
@@ -24,19 +24,20 @@ public:
 	//白テクスチャ生成
 	void CreateWhiteTexture();
 
+	//テクスチャのメタデータ取得
+	DirectX::TexMetadata* GetMetaData();
+
+public:
 	//外部から参照する用のリソース設定(書き換えてもテクスチャ側には影響しない)
 	D3D12_RESOURCE_DESC mGetResDesc{};
 
 	Microsoft::WRL::ComPtr<ID3D12Resource> mTexBuff;
-	
+
 	D3D12_GPU_DESCRIPTOR_HANDLE mGpuHandle = { 0 };
 
 	D3D12_CPU_DESCRIPTOR_HANDLE mCpuHandle = { 0 };
 
 	bool mCreated = false;
-
-	//テクスチャのメタデータ取得
-	DirectX::TexMetadata* GetMetaData();
 
 private:
 	DirectX::TexMetadata mMetadata{};

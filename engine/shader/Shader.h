@@ -14,6 +14,7 @@ public:
 	Microsoft::WRL::ComPtr<ID3DBlob> mGsBlob;		//ジオメトリシェーダーオブジェクト
 	Microsoft::WRL::ComPtr<ID3DBlob> mErrorBlob;		//エラーオブジェクト
 
+	//コンパイル
 	ID3DBlob* Compile(const wchar_t* shaderFilename, const LPCSTR& shadermodelname, ID3DBlob* blob,const LPCSTR& entrypointname);
 };
 

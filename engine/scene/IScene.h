@@ -18,6 +18,7 @@ public:
 	virtual void Draw() = 0;
 	virtual void End() = 0;
 
+	//シーンマネージャーをセット
 	virtual void SetManager(SceneManager& SceneManager_) {
 		mSceneManager = &SceneManager_;
 	}

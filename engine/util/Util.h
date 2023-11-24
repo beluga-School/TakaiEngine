@@ -14,11 +14,24 @@ namespace Util
 	const uint32_t WIN_WIDTH = 1280;
 	const uint32_t WIN_HEIGHT = 720;
 
+	/// <summary>
+	/// 画面外にあればtrue
+	/// </summary>
+	/// <param name="pos">座標</param>
+	/// <returns></returns>
 	bool OutOfScreen(const Vector2& pos);
 
 	uint32_t CenterX();
 	uint32_t CenterY();
 
+	/// <summary>
+	/// 値を丸める
+	/// </summary>
+	/// <typeparam name="T"></typeparam>
+	/// <param name="t"></param>
+	/// <param name="min"></param>
+	/// <param name="max"></param>
+	/// <returns></returns>
 	template <class T>
 	T Clamp(T t,T min, T max)
 	{
@@ -27,6 +40,12 @@ namespace Util
 		return t;
 	}
 
+	/// <summary>
+	/// 符号を外す
+	/// </summary>
+	/// <typeparam name="T"></typeparam>
+	/// <param name="value"></param>
+	/// <returns></returns>
 	template <class T>
 	T Abs(T value)
 	{

@@ -10,10 +10,13 @@
 class DebugCamera : public Obj3d
 {
 public:
+	//初期化
 	void Initialize();
+	//更新
 	void Update();
-
+	//視野を設定
 	void SetRadius(float val);
+	//視野を取得
 	float GetRadius();
 private:
 	float mVerticalRad = 0;

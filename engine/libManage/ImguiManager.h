@@ -11,8 +11,17 @@
 class GUI
 {
 public:
+	/// <summary>
+	/// 初期設定
+	/// </summary>
+	/// <param name="name">GUIの名前</param>
 	GUI(const std::string& name);
 	
+	/// <summary>
+	/// namespace::ImGuiが適用される位置の始めの位置
+	/// </summary>
+	/// <param name="pos">画面上に配置される初期位置</param>
+	/// <param name="size">画面上に配置される時の初期サイズ</param>
 	void Begin(const Vector2& pos,const Vector2 &size);
 	void End();
 private:

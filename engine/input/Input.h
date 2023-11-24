@@ -96,8 +96,6 @@ namespace Input
 
 		/// <summary>
 		/// パッドの更新
-		/// 一度だけ呼べば問題ない
-		
 		static void Update();
 
 	public://コントローラー

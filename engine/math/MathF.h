@@ -43,22 +43,15 @@ namespace MathF
 	/// <returns>補完後の値</returns>
 	float Complement(const float& x1,const float& x2,const float& flame);
 
+	//3軸の座標上でvec1からvec2までの間の角度をAngleで返す
 	float GetAngleBetweenTwoLine(const Vector3& vec1,const Vector3& vec2);
 
 	//2軸の画面で見たときにvec1からvec2までの間の角度をAngleで返す
 	float GetAngleBetweenTwoLine2D(const Vector2 & vec1, const Vector2& vec2);
 	
+	//angleをradianに変換する
 	float AngleConvRad(const float& angle);
 
+	//radianをangleに変換する
 	float RadConvAngle(const float& rad);
-
-	template <typename T>
-	T Abs(T a)
-	{
-		if (a < 0)
-		{
-			a = -a;
-		}
-		return a;
-	}
 };

@@ -281,58 +281,6 @@ Quaternion DirectionToDirection(const Vector3& u, const Vector3& v)
 	return MakeAxisAngle(axis,theta);
 }
 
-Quaternion LookAt(const Vector3& target)
-{
-	Vector3 upVec = { 0,1,0 };
-
-	//targetをZ軸にした3軸を定義する
-	Vector3 z = target.GetNormalize();
-	
-	if (z.length() == 0)
-	{
-		z = { 0,0,1 };
-	}
-	
-	Vector3 x = upVec;
-
-	x.cross(z);
-	x.normalize();
-	
-	Vector3 y = z;
-	y.cross(x);
-	y.normalize();
-
-	//3軸から回転行列を生成する
-	Matrix4 m = Matrix4::Identity();
-	m[0][0] = x.x;
-	m[1][0] = x.y;
-	m[2][0] = x.z;
-
-	m[0][1] = y.x;
-	m[1][1] = y.y;
-	m[2][1] = y.z;
-
-	m[0][2] = z.x;
-	m[1][2] = z.y;
-	m[2][2] = z.z;
-
-	/*m[0][0] = x.x;
-	m[1][0] = y.x;
-	m[2][0] = z.x;
-
-	m[0][1] = x.y;
-	m[1][1] = y.y;
-	m[2][1] = z.y;
-
-	m[0][2] = x.z;
-	m[1][2] = y.z;
-	m[2][2] = z.z;*/
-
-	//回転行列からクォータニオンに変換する
-	Quaternion rot = GetRotation(m);
-	
-	return rot;
-}
 
 Quaternion GetRotation(const Matrix4& m)
 {
@@ -387,6 +335,48 @@ Quaternion GetRotation(const Matrix4& m)
 	}
 
 	return Quaternion(q[0], q[1], q[2], q[3]);
+}
+
+
+Quaternion LookAt(const Vector3& target)
+{
+	Vector3 upVec = { 0,1,0 };
+
+	//targetをZ軸にした3軸を定義する
+	Vector3 z = target.GetNormalize();
+	
+	if (z.length() == 0)
+	{
+		z = { 0,0,1 };
+	}
+	
+	Vector3 x = upVec;
+
+	x.cross(z);
+	x.normalize();
+	
+	Vector3 y = z;
+	y.cross(x);
+	y.normalize();
+
+	//3軸から回転行列を生成する
+	Matrix4 m = Matrix4::Identity();
+	m[0][0] = x.x;
+	m[1][0] = x.y;
+	m[2][0] = x.z;
+
+	m[0][1] = y.x;
+	m[1][1] = y.y;
+	m[2][1] = y.z;
+
+	m[0][2] = z.x;
+	m[1][2] = z.y;
+	m[2][2] = z.z;
+
+	//回転行列からクォータニオンに変換する
+	Quaternion rot = GetRotation(m);
+	
+	return rot;
 }
 
 float Dot(const Quaternion& q, const Quaternion& r)

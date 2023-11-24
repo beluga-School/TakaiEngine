@@ -159,5 +159,3 @@ private:
 	PipelineManager(){};
 	~PipelineManager(){};
 };
-
-PipelineSet CreateLambertPipeline();

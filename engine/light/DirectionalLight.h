@@ -25,11 +25,19 @@ public://関数
 
 	void Initialize();
 	void Update();
+	/// <summary>
+	/// 描画
+	/// </summary>
+	/// <param name="rootParameterIndex">使用するルートパラメータのインデックス</param>
 	void Draw(const UINT& rootParameterIndex);
 
+	//バッファに値を転送
 	void TransferBuffer();
 
+	//ライトの方向を設定
 	void SetLightDirection(const Vector3& lightdir);
+
+	//ライトの色を設定
 	void SetLightColor(const Vector3& color);
 
 	bool mActive = false;

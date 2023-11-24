@@ -49,6 +49,7 @@ private:
 	//定数バッファ
 	ConstBuffer<ConstBufferTime> mConstBuffer;
 
+private:
 	//まとめ関数
 	//テクスチャ生成(今の画面からテクスチャを生成？)
 	void CreateTexture();
