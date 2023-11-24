@@ -175,9 +175,6 @@ private:
 	//ジャンプ回数
 	int32_t jumpCount = 0;
 
-	//ジャンプ時に足される回転
-	float jumpPlusRotaX = 0;
-
 	//壁キック変数群
 	//この時間だけ反対方向に飛ぶ
 	TEasing::easeTimer wallKickTimer = 0.1f;
@@ -190,6 +187,10 @@ private:
 	bool flyMode = false;
 
 	TEasing::easeTimer rotTime = 0.5f;
+	TEasing::easeTimer angleTime = 1.0f;
+
+	float jumpRotaX = 0;
+	float jumpRotaY = 0;
 
 	Quaternion endQ;
 	Vector3 endRota;

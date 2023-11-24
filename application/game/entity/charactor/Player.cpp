@@ -363,31 +363,38 @@ void Player::RotaUpdate()
 	{
 		if (jumpCount == 2)
 		{
-			jumpPlusRotaX = MathF::AngleConvRad(-180.f);
+			jumpRotaX -= 18;
 		}
 		else if (jumpCount >= 3)
 		{
-			jumpPlusRotaX = MathF::AngleConvRad(270.5f);
+			jumpRotaX += 36;
 		}
 	}
 
-	if (wallKickTimer.GetEnd())
+	if (wallKickTimer.GetRun())
 	{
-		jumpPlusRotaX = MathF::AngleConvRad(90.f);
+		jumpRotaX -= 18;
 	}
 
 	//着地してるなら取り消す
 	if (!IsJump())
 	{
-		jumpPlusRotaX = 0;
+		jumpRotaX = 0;
 		PlayerCamera::Get()->InitRadius();
 	}
 
-	//Quaternion rotX = MakeAxisAngle(matWorld.ExtractAxisX(), jumpPlusRotaX);
+	angleTime.Update();
+	if (!angleTime.GetRun())
+	{
+		angleTime.Start();
+	}
+
+	Quaternion rotX = MakeAxisAngle({1,0,0}, MathF::AngleConvRad(jumpRotaX));
+	Quaternion rotY = MakeAxisAngle({0,1,0}, MathF::AngleConvRad(jumpRotaY));
 
 	//④現在のプレイヤーの向き(Q)に足しまくる
 	//quaternion = rotX * culQ;
-	quaternion = culQ;
+	quaternion = culQ * rotX;
 	centerObject.quaternion = culQ;
 }
 
