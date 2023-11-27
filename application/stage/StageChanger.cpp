@@ -95,7 +95,6 @@ void StageChanger::Draw()
 {
 	//物によってマテリアル描画とテクスチャ描画が混在してるのに
 	//分ける方法を作ってないので作る
-	BasicObjectPreDraw("Toon");
 	DrawCollider();
 
 	DrawModel();
@@ -862,9 +861,23 @@ void StageChanger::DrawModel()
 		//コリジョン用に配置したオブジェクトならスキップ
 		if (obj->CheckTag(TagTable::NoDraw))continue;
 		
-		BasicObjectPreDraw("OutLine", false);
+		if (obj->CheckTag(TagTable::DitherTransparent))
+		{
+			BasicObjectPreDraw("DitherOutline",false);
+		}
+		else
+		{
+			BasicObjectPreDraw("OutLine", false);
+		}
 		obj->DrawOutLine();
-		BasicObjectPreDraw("GroundToon");
+		if (obj->CheckTag(TagTable::DitherTransparent))
+		{
+			BasicObjectPreDraw("DitherTransparent");
+		}
+		else
+		{
+			BasicObjectPreDraw("GroundToon");
+		}
 		obj->Draw();
 	}
 

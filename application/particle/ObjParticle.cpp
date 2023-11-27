@@ -51,12 +51,12 @@ void ParticleManager::Update()
 
 void ParticleManager::Draw()
 {
-	/*BasicObjectPreDraw("OutLine",false);
+	BasicObjectPreDraw("DitherOutline",false);
 	for (unique_ptr<CubeParticle>& pat : cubePool) {
 		if (!pat->isdead) {
 			pat->cube.DrawOutLine();
 		}
-	}*/
+	}
 	
 	BasicObjectPreDraw("DitherTransparent");
 	for (unique_ptr<CubeParticle>& pat : cubePool) {

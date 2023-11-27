@@ -39,6 +39,7 @@ public:
 	Dokan() : Entity()
 	{
 		SetTag(TagTable::Dokan);
+		SetTag(TagTable::DitherTransparent);
 	};
 
 	~Dokan()

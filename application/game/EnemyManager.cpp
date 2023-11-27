@@ -39,10 +39,23 @@ void EnemyManager::Draw()
 {
 	for (auto& enemy : enemyList)
 	{
-		BasicObjectPreDraw("OutLine", false);
+		if (enemy->CheckTag(TagTable::DitherTransparent))
+		{
+			BasicObjectPreDraw("DitherOutline", false);
+		}
+		else
+		{
+			BasicObjectPreDraw("OutLine", false);
+		}
 		enemy->DrawOutLine();
-
-		BasicObjectPreDraw("Toon");
+		if (enemy->CheckTag(TagTable::DitherTransparent))
+		{
+			BasicObjectPreDraw("CharactorDither");
+		}
+		else
+		{
+			BasicObjectPreDraw("Toon");
+		}
 		enemy->Draw();
 
 		if (mIsDrawEncountSphere)
@@ -52,7 +65,7 @@ void EnemyManager::Draw()
 
 		if (StageChanger::Get()->mShowCollider)
 		{
-			enemy->box.DrawMaterial();
+			enemy->box.Draw();
 		}
 	}
 }

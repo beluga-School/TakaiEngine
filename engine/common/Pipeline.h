@@ -156,6 +156,12 @@ private:
 	//ディザ抜きパイプライン
 	void DitherTransparentPipeLine();
 
+	//ディザ抜きアウトラインパイプライン
+	void DitherOutLinePipeLine();
+
+	//キャラクター用スペキュラー付きディザ抜きパイプライン
+	void CharactorDitherPipeLine();
+
 	PipelineManager(){};
 	~PipelineManager(){};
 };

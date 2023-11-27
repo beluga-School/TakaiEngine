@@ -10,6 +10,7 @@ public:
 	Star() : Entity()
 	{
 		SetTag(TagTable::Star);
+		SetTag(TagTable::DitherTransparent);
 	}
 
 	void Initialize()override;

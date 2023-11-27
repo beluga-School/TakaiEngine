@@ -51,50 +51,6 @@ void PlayerCamera::Draw()
 	transparentObj.Draw();
 }
 
-void PlayerCamera::BackTransparent()
-{
-	Player* player = Player::Get();
-
-	//XとZをプレイヤーの後ろを円運動でいい感じに追従する
-	Vector2 invObjNonY = MathF::CircularMotion({ player->position.x,player->position.z },
-		(transparentObj.scale.x + transparentObj.scale.z) / 2 * 0.8f,
-		-player->rotation.y - MathF::PIf / 2);
-
-	//Yはカメラ位置と同じにする
-	transparentObj.position = { invObjNonY.x,Camera::sCamera->mEye.y,invObjNonY.y };
-
-	transparentObj.Update(*Camera::sCamera);
-
-	//当たったオブジェクトの描画フラグを折る
-	for (auto& obj : CollideManager::Get()->allCols)
-	{
-		//ブロック以外なら次へ
-		if (!obj->CheckTag(TagTable::Block))continue;
-		
-		//タイマー式じゃなくてプレイヤーとの位置関係で透けさせる？
-
-		//当たってたら消える
-		if (Collsions::BoxColAABB(obj->box, transparentObj))
-		{
-			//地面が透けてほしくないので、地面の座標がプレイヤーの足元より下なら
-			//当たってても透ける処理をスキップする
-			if (obj->box.position.y + obj->box.scale.y / 2 <= player->GetFeet())
-			{
-				continue;
-			}
-			obj->transports = Util::Saturate(Camera::sCamera->mEye.z - obj->position.z,10);
-			//obj->transports = Camera::sCamera->mEye.z;
-		}
-		//当たってないなら段々濃くする
-		else
-		{
-			obj->transports = 0.0f;
-		}
-		//段々薄くしたり濃くしたりする
-		obj->color_.w = 1.0f - obj->transports;
-	}
-}
-
 void PlayerCamera::RadiusChange()
 {
 	radiusMoveTimer.Update();
@@ -183,29 +139,6 @@ void PlayerCamera::CreateCamCol()
 void PlayerCamera::PlayerFollow()
 {
 	//yの処理
-	//更新用タイマー
-	//camRotaYTimer.Update();
-	//
-	////正面と比較して、一定の割合を超えたら適用する
-	//camMoveRotaCheck = Util::Abs(rotation.y) - Util::Abs(mHorizontalRad);
-	//camMoveRotaCheck = Util::Abs(camMoveRotaCheck);
-
-	////キャラクターが動いたら、カメラが正面になるように
-
-	////動かすたびにstartさせて、止まったらカメラだけスッと追従する感じの動きに
-	//if (oldCamRota != mHorizontalRad)
-	//{
-	//	camRotaYTimer.Start();
-	//	startCamRota = rotation.y;
-	//}
-	//if (Player::Get()->IsMove())
-	//{
-	//	rotation.y = TEasing::OutQuad(startCamRota, mHorizontalRad, camRotaYTimer.GetTimeRate());
-	//}
-
-	////ひとつ前を保存
-	//oldCamRota = mHorizontalRad;
-
 	rotation.y = mHorizontalRad;
 	//xの処理
 	rotation.x = mVerticalRad;

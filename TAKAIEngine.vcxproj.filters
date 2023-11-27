@@ -412,6 +412,12 @@
     <Filter Include="シェーダー\DitherTransparent">
       <UniqueIdentifier>{1c5f0fcb-d9fb-4e72-9845-e7a29d5670f7}</UniqueIdentifier>
     </Filter>
+    <Filter Include="シェーダー\DitherOutline">
+      <UniqueIdentifier>{8dcacdca-566f-4000-bd6d-2a591d13cfca}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="シェーダー\CharactorDT">
+      <UniqueIdentifier>{810d77ea-d184-4610-81dd-8c1e6b88a430}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="engine\input\Input.cpp">
@@ -1088,6 +1094,12 @@
     <None Include="Resources\Shader\DitherTransparent.hlsli">
       <Filter>シェーダー\DitherTransparent</Filter>
     </None>
+    <None Include="Resources\Shader\DitherOutline.hlsli">
+      <Filter>シェーダー\DitherOutline</Filter>
+    </None>
+    <None Include="Resources\Shader\CharactorDT.hlsli">
+      <Filter>シェーダー\CharactorDT</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Resources\Shader\GeometryGS.hlsl">
@@ -1239,6 +1251,18 @@
     </FxCompile>
     <FxCompile Include="Resources\Shader\DitherTransparentVS.hlsl">
       <Filter>シェーダー\DitherTransparent</Filter>
+    </FxCompile>
+    <FxCompile Include="Resources\Shader\DitherOutlinePS.hlsl">
+      <Filter>シェーダー\DitherOutline</Filter>
+    </FxCompile>
+    <FxCompile Include="Resources\Shader\DitherOutlineVS.hlsl">
+      <Filter>シェーダー\DitherOutline</Filter>
+    </FxCompile>
+    <FxCompile Include="Resources\Shader\CharactorDTPS.hlsl">
+      <Filter>シェーダー\CharactorDT</Filter>
+    </FxCompile>
+    <FxCompile Include="Resources\Shader\CharactorDTVS.hlsl">
+      <Filter>シェーダー\CharactorDT</Filter>
     </FxCompile>
   </ItemGroup>
   <ItemGroup>

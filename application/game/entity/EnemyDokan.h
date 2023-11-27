@@ -9,6 +9,7 @@ public:
 	EnemyDokan() : Entity()
 	{
 		SetTag(TagTable::EnemyDokan);
+		SetTag(TagTable::DitherTransparent);
 	};
 
 	static void LoadResource();

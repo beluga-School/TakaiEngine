@@ -12,6 +12,7 @@ class Signboard : public Entity
 public:
 	Signboard() : Entity()
 	{
+		SetTag(TagTable::DitherTransparent);
 	};
 
 	static void LoadResource();

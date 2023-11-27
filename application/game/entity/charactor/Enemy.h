@@ -24,6 +24,7 @@ public:
 	Enemy() : Mob()
 	{
 		SetTag(TagTable::Enemy);
+		SetTag(TagTable::DitherTransparent);
 	}
 	virtual void Initialize() = 0;
 	virtual void Update() = 0;

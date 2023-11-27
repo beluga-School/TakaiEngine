@@ -10,6 +10,7 @@ class Cannon : public Entity
 public:
 	Cannon() : Entity() {
 		SetTag(TagTable::Cannon);
+		SetTag(TagTable::DitherTransparent);
 	};
 
 	void Initialize()override;

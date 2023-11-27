@@ -20,4 +20,5 @@ enum class TagTable
 	EventTriggerBox = 13,
 	EventCollision = 14,
 	EnemyDokan = 15,
+	DitherTransparent = 16,
 };
