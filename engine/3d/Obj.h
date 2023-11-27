@@ -104,7 +104,9 @@ public:
 	float transports = 0.0f;
 
 	Vector2 mTiling = { 1,1 };
-	Vector2 mOffset = { 0,0 };
+	Vector2 mTexOffset = { 0,0 };
+
+	Vector3 mModelOffset = { 0,0,0 };
 
 public:
 	//初期化

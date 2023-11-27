@@ -57,7 +57,7 @@ void Obj3d::Update(const Camera& camera)
 	constBufferT.mConstBufferData->world = matWorld;
 	constBufferT.mConstBufferData->cameraPos = camera.mEye;
 	constBufferT.mConstBufferData->tiling = mTiling;
-	constBufferT.mConstBufferData->offset = mOffset;
+	constBufferT.mConstBufferData->offset = mTexOffset;
 
 	if (MODEL != nullptr)
 	{
@@ -83,6 +83,13 @@ Vector3 Obj3d::GetWorldTrans()
 }
 
 void Obj3d::Draw() {
+
+	//値が入ってるならずらす
+	if (mModelOffset.length() != 0)
+	{
+		position += mModelOffset;
+		Obj3d::Update(*Camera::sCamera);
+	}
 
 	//見えないフラグが立ってるなら描画を行わない
 	if (mIsVisiable == false)
@@ -111,9 +118,23 @@ void Obj3d::Draw() {
 
 	//描画コマンド
 	dx12->mCmdList->DrawIndexedInstanced((UINT)MODEL->mMesh.indices.size() , 1, 0, 0, 0);
+
+	//値が入ってるならずらす
+	if (mModelOffset.length() != 0)
+	{
+		position -= mModelOffset;
+	}
 }
 
 void Obj3d::DrawMaterial() {
+
+	//値が入ってるならずらす
+	if (mModelOffset.length() != 0)
+	{
+		position += mModelOffset;
+		Obj3d::Update(*Camera::sCamera);
+	}
+
 	//見えないフラグが立ってるなら描画を行わない
 	if (mIsVisiable == false)
 	{
@@ -148,10 +169,23 @@ void Obj3d::DrawMaterial() {
 
 	//描画コマンド
 	dx12->mCmdList->DrawIndexedInstanced((UINT)MODEL->mMesh.indices.size(), 1, 0, 0, 0);
+	
+	//値が入ってるならずらす
+	if (mModelOffset.length() != 0)
+	{
+		position -= mModelOffset;
+	}
 }
 
 void Obj3d::DrawOutLine()
 {
+	//値が入ってるならずらす
+	if (mModelOffset.length() != 0)
+	{
+		position += mModelOffset;
+		Obj3d::Update(*Camera::sCamera);
+	}
+
 	//見えないフラグが立ってるなら描画を行わない
 	if (mIsVisiable == false)
 	{
@@ -173,7 +207,12 @@ void Obj3d::DrawOutLine()
 
 	//描画コマンド
 	dx12->mCmdList->DrawIndexedInstanced((UINT)MODEL->mMesh.indices.size(), 1, 0, 0, 0);
-
+	
+	//値が入ってるならずらす
+	if (mModelOffset.length() != 0)
+	{
+		position -= mModelOffset;
+	}
 }
 
 void Obj3d::DrawSpecial(SpecialDraw::TEXTUREBLEND drawkey, const Texture& subTex, const Texture& maskTex)

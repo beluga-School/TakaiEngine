@@ -39,6 +39,8 @@ void Player::Initialize()
 	centerObject.rotmode = RotMode::Quaternion;
 
 	quaternion = DirectionToDirection({0,0,0},{0,0,1});
+
+	mModelOffset = { 0,0.3f,0 };
 }
 
 void Player::Update()
@@ -191,7 +193,6 @@ void Player::Draw()
 	
 	BasicObjectPreDraw("Toon");
 	Obj3d::DrawMaterial();
-	//Obj3d::DrawMaterial();
 }
 
 void Player::DrawCollider()
@@ -310,9 +311,6 @@ float RotaComparison(float now, float target)
 
 void Player::RotaUpdate()
 {
-	
-	//rotation.x = MathF::AngleConvRad(jumpPlusRotaX);
-
 	rotTime.Update();
 	rotTime.mMaxTime = 0.5f;
 

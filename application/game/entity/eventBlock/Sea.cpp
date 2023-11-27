@@ -20,8 +20,8 @@ void Sea::Update()
 		flowTimer.Start();
 	}
 	//オフセットを変更して水面を流す
-	mOffset.x = flowTimer.GetTimeRate();
-	mOffset.y = flowTimer.GetTimeRate();
+	mTexOffset.x = flowTimer.GetTimeRate();
+	mTexOffset.y = flowTimer.GetTimeRate();
 	
 	updownTimer.Update();
 	if (updownTimer.GetStarted() == false || updownTimer.GetEnd())
