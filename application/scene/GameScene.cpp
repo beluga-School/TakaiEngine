@@ -122,8 +122,6 @@ void GameScene::Update()
 
 	EventManager::Get()->Update();
 
-	pCamera->BackTransparent();
-
 	ParticleManager::Get()->Update();
 
 	//UI更新
