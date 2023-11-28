@@ -206,19 +206,8 @@ void Player::MoveUpdate()
 	{
 		jumpRotaX = 0;
 		PlayerCamera::Get()->InitRadius();
-		ResetGravity();
-
-		if (CheckState(PlayerState::HipDrop)) {
-			DeleteState(PlayerState::HipDrop);
-
-			//エフェクト出す
-			for (int i = 0; i < 10; i++)
-			{
-				ParticleManager::Get()->CreateCubeParticle(position,
-					{ 1,1,1 }, 5, { 1,1,1,1 });
-			}
-		}
 	}
+
 
 	if (Input::Pad::CheckConnectPad())
 	{
@@ -436,7 +425,7 @@ void Player::DamageEffect(int32_t damage)
 
 void Player::ApparranceMove(const Vector3& dokanPos, const Vector3& dokanScale)
 {
-	ChangeMode(PlayerState::Apparrance);
+	ChangeState(PlayerState::Apparrance);
 
 	apparranceTimer.Start();
 	saveDokanPos = dokanPos;
@@ -578,7 +567,7 @@ void Player::ApparanceUpdate()
 
 		if (apparranceTimer.GetEnd())
 		{
-			ChangeMode(PlayerState::Normal);
+			ChangeState(PlayerState::Normal);
 
 			//ここら辺システム側の処理だから、別の場所に移したい
 			GameUIManager::Get()->Move(UIMove::START, "StageTitle");
@@ -602,6 +591,24 @@ void Player::HipDropUpdate()
 			}
 		}
 	}
+	//地面に着地していて
+	if (!IsJump())
+	{
+		if (CheckState(PlayerState::Normal))
+		{
+			ResetGravity();
+			SetNoMove(false);
+		}
+		if (CheckState(PlayerState::HipDrop)) {
+			DeleteState(PlayerState::HipDrop);
+			//エフェクト出す
+			for (int i = 0; i < 10; i++)
+			{
+				ParticleManager::Get()->CreateCubeParticle(position,
+					{ 1,1,1 }, 5, { 1,1,1,1 });
+			}
+		}
+	}
 	if (hipDropTimer.GetRun())
 	{
 		jumpRotaX = TEasing::OutQuad(0, 720, hipDropTimer.GetTimeRate());
@@ -616,7 +623,6 @@ void Player::HipDropUpdate()
 		SetGravity(4.5f);
 		PlayerCamera::Get()->InitRadius();
 
-		SetNoMove(false);
 		SetNoGravity(false);
 	}
 }
@@ -729,9 +735,19 @@ void Player::DebugGUI()
 	ImGui::Text("flyMode %d", flyMode);
 }
 
-void Player::ChangeMode(const PlayerState& pState)
+void Player::ChangeState(const PlayerState& pState)
 {
 	SetState(pState);
+
+	if (pState == PlayerState::Normal)
+	{
+		SetNoCollsion(false);
+		SetNoGravity(false);
+		SetNoMove(false);
+
+		DeleteState(PlayerState::Apparrance);
+		DeleteState(PlayerState::InDokan);
+	}
 
 	if (pState == PlayerState::Apparrance)
 	{
@@ -744,6 +760,8 @@ void Player::ChangeMode(const PlayerState& pState)
 		SetNoCollsion(true);
 		SetNoGravity(true);
 		SetNoMove(true);
+
+		DeleteState(PlayerState::Normal);
 	}
 	if (pState == PlayerState::Debug)
 	{
@@ -778,6 +796,7 @@ void Player::Jump()
 	if (jumpCount == 3)
 	{
 		jumpPower = 10.0f;
+		//この処理だとここが何回も呼ばれて無限にカメラがひいちゃう
 		PlayerCamera::Get()->ChangeRadius(2.0f, 0.5f);
 	}
 

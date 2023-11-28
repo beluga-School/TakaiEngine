@@ -51,11 +51,9 @@ void Bombking::Update()
 			{
 				if(!reboundTimer.GetStarted())reboundTimer.Start();
 			}
-			else
-			{
-				mActTable = ActTable::Dead;
-			}
 		}
+
+
 		if (reboundTimer.GetEnd()) {
 			mActTable = ActTable::None;
 			reboundTimer.Reset();
@@ -88,6 +86,15 @@ void Bombking::Update()
 		break;
 	}
 
+	//死亡処理への遷移
+	if (damageTimer.GetEnd())
+	{
+		if (hp.mCurrent <= 0)
+		{
+			mActTable = ActTable::Dead;
+		}
+	}
+
 	//ずらした分を加算する
 	box.CreateCol(position + saveColCenter, box.scale, rotation);
 	box.ColDrawerUpdate(position + saveColCenter, box.scale);
@@ -106,9 +113,14 @@ void Bombking::Draw()
 
 void Bombking::HitEffect()
 {
-	if (damageTimer.GetRun())return;
+	if (mActTable == ActTable::Damage){
+		return;
+	}
 	//食らったらちょっと潰れる
-	if(!damageTimer.GetStarted())damageTimer.Start();
+	if (!damageTimer.GetStarted()) {
+		damageTimer.Start();
+	}
+
 	mActTable = ActTable::Damage;
 
 	hp.mCurrent -= 1;
@@ -120,6 +132,7 @@ void Bombking::Encount()
 	{
 		mActTable = ActTable::Encount;
 	}
+
 }
 
 void Bombking::Tracking()

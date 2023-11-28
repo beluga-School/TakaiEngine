@@ -83,7 +83,7 @@ public:
 	bool GetApparanceEnd();
 
 	//プレイヤーのモードを変える(0,通常,1,デバッグモード)
-	void ChangeMode(const PlayerState& pState);
+	void ChangeState(const PlayerState& pState);
 
 	bool IsMove();
 
