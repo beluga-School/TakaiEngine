@@ -7,6 +7,10 @@
 class Bombking : public Enemy
 {
 public:
+	Bombking() : Enemy() {
+		SetTag(TagTable::Bombking);
+	}
+
 	void Initialize()override;
 
 	void Update()override;
@@ -16,6 +20,11 @@ public:
 	void HitEffect()override;
 
 	void Encount()override;
+
+	bool ThrowBoxHit(const Mob& mob);
+
+	//投げる処理
+	void Throw(Mob& mob);
 
 private:
 
@@ -27,5 +36,14 @@ private:
 
 	TEasing::easeTimer damageTimer = 1.0f;
 	TEasing::easeTimer reboundTimer = 1.0f;
+
+	Box throwBox;
+
+	Mob* target = nullptr;
+
+	std::vector<Vector3> inters;
+
+	TEasing::easeTimer throwInterval = 1.0f;
+	TEasing::easeTimer throwTimer = 1.0f;
 };
 

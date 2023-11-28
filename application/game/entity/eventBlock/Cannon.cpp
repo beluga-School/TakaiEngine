@@ -27,7 +27,6 @@ void Cannon::Update()
 			break;
 		case Cannon::CannonState::One:
 			//ターゲットを動かす
-			//target->position = TEasing::lerp(startPos, interPos, timer.GetTimeRate());
 			target->position = Vector3::Spline(inters, timer.GetTimeRate());
 
 			//毎フレーム煙っぽくパーティクル生成

@@ -397,9 +397,6 @@
     <Filter Include="Application\Scene\TitleScene">
       <UniqueIdentifier>{126ea705-ae9c-4d2c-998f-b10a66c42174}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Application\Scene\DemoScene">
-      <UniqueIdentifier>{da1d0167-9c1a-4b76-b57c-8b4c7f9fe5ac}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Application\Entity\EventBlock\EnemyDokan">
       <UniqueIdentifier>{bcaa3691-4137-4481-a11c-60a170c03d91}</UniqueIdentifier>
     </Filter>

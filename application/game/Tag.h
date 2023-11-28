@@ -21,4 +21,6 @@ enum class TagTable
 	EventCollision = 14,
 	EnemyDokan = 15,
 	DitherTransparent = 16,
+	Bombking = 17,
+	Slime = 18,
 };

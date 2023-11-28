@@ -11,6 +11,7 @@
 #include "MoveBlock.h"
 #include "EventTriggerBox.h"
 #include "EnemyDokan.h"
+#include "Bombking.h"
 
 bool CollideManager::CheckDirections(const Cube& check, const Cube& collide, const CheckDirection& CD)
 {
@@ -175,7 +176,15 @@ void CollideManager::CheckCollide(Entity* check, Entity* collide)
 
 		//checkがmobであることは確定しているので、mob型に変換してデータを持ってくる
 		Mob* mob = static_cast<Mob*>(check);
+		
+		if (collide->CheckTag(TagTable::Bombking)) {
+			Bombking* bombking = static_cast<Bombking*>(collide);
 
+			//投げ判定に当たったら投げられる
+			if (bombking->ThrowBoxHit(*mob)) {
+				bombking->Throw(*mob);
+			}
+		}
 		//される側がブロックなら
 		if (collide->CheckTag(TagTable::Block))
 		{
