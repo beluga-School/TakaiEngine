@@ -14,6 +14,45 @@
 
 using namespace Input;
 
+bool Player::CheckState(PlayerState check)
+{
+	for (auto& tag : playerStates)
+	{
+		if (tag == check)
+		{
+			return true;
+		}
+	}
+	return false;
+}
+
+bool Player::SetState(PlayerState check)
+{
+	for (auto itr = playerStates.begin(); itr != playerStates.end(); itr++)
+	{
+		if (*itr == check)
+		{
+			return false;
+		}
+	}
+	playerStates.push_back(check);
+	return true;
+}
+
+bool Player::DeleteState(PlayerState check)
+{
+	for (auto itr = playerStates.begin(); itr != playerStates.end(); itr++)
+	{
+		if (*itr == check)
+		{
+			playerStates.erase(itr);
+			return true;
+		}
+	}
+
+	return false;
+}
+
 void Player::LoadResource()
 {
 	
@@ -41,24 +80,13 @@ void Player::Initialize()
 	quaternion = DirectionToDirection({0,0,0},{0,0,1});
 
 	mModelOffset = { 0,0.3f,0 };
+
+	SetState(PlayerState::Normal);
 }
 
 void Player::Update()
 {
-	apparranceTimer.Update();
-	if (playerState == PlayerState::Apparrance)
-	{
-		Vector3 endpos = saveDokanPos + Vector3(0, saveDokanScale.y / 2.f,0);
-		position = TEasing::OutQuad(saveDokanPos, endpos,apparranceTimer.GetTimeRate());
-
-		if (apparranceTimer.GetEnd())
-		{
-			ChangeMode(PlayerState::Normal);
-			
-			//ここら辺システム側の処理だから、別の場所に移したい
-			GameUIManager::Get()->Move(UIMove::START,"StageTitle");
-		}
-	}
+	ApparanceUpdate();
 
 	//移動地を初期化
 	moveValue = { 0,0,0 };
@@ -67,123 +95,30 @@ void Player::Update()
 	mCenterVec = centerObject.matWorld.ExtractAxisZ();
 	mSideVec = centerObject.matWorld.ExtractAxisX();
 
-	Vector3 playerBack{};
-	Vector3 playerFeetPos{};
+	//ダッシュ変更
+	ChangeDash();
+	//通常の状態であれば
+	NormalUpdate();
+	//ダッシュ状態であれば
+	DashUpdate();
+
+	HipDropUpdate();
 	
-	switch (playerState)
-	{
-	case Player::PlayerState::Normal:
-
-		jumpCount = 0;
-		mSpeed = NORMAL_SPEED;
-		MoveUpdate();
-
-		if (Input::Keyboard::TriggerKey(DIK_1))
-		{
-			ChangeMode(PlayerState::Debug);
-		}
-		if (Input::Keyboard::PushKey(DIK_LSHIFT))
-		{
-			ChangeMode(PlayerState::Dash);
-		}
-
-		break;
-	case Player::PlayerState::Dash:
-		mSpeed = DASH_SPEED;
-		MoveUpdate();
-
-		//プレイヤーの少し後ろの足元座標を算出
-		playerBack =  -matWorld.ExtractAxisZ() * (scale.z / 2);
-		playerFeetPos = Vector3( position.x,position.y - (scale.y / 2),position.z ) + playerBack;
-
-		//パーティクル配置
-		ParticleManager::Get()->CreateCubeParticle(
-			playerFeetPos,
-			{0.5f ,0.5f ,0.5f}, 
-			1.0f, 
-			{1.0f,1.0f,1.0f,1.0f}
-		);
-
-		if (!Input::Keyboard::PushKey(DIK_LSHIFT))
-		{
-			ChangeMode(PlayerState::Normal);
-		}
-
-		break;
-	case Player::PlayerState::Apparrance:
-
-		break;
-	case Player::PlayerState::InDokan:
-
-		break;
-	case Player::PlayerState::Debug:
-
-		MoveUpdate();
-
-		if (flyMode)
-		{
-			Fly();
-		}
-
-		//ダメージ処理テスト
-		if (Input::Keyboard::TriggerKey(DIK_T))
-		{
-			mutekiTimer.Reset();
-			DamageEffect(1);
-		}
-		if (Input::Keyboard::TriggerKey(DIK_G))
-		{
-			hp.mCurrent += 1;
-		}
-
-		if (Input::Keyboard::TriggerKey(DIK_1))
-		{
-			ChangeMode(PlayerState::Normal);
-		}
-
-		//入力でリロード
-		if (Input::Keyboard::TriggerKey(DIK_R))
-		{
-			StageChanger::Get()->Reload();
-		}
-
-		break;
-	}
-
-	//Mob側の更新
-	Mob::CollsionUpdate();
-
-	box.ColDrawerUpdate(position, box.scale);
-	box.CreateCol(position, box.scale, rotation);
-
-	ColUpdate();
-
-	//当たり判定
-	///--敵当たり判定
-	mEncountCol.center = position;
-	mEncountCol.radius = (scale.x + scale.y + scale.z) / 3.f;
-
-	colDrawer.position = position;
-	colDrawer.scale = scale;
+	//デバッグ状態のいろいろ
+	DebugUpdate();
+	
+	AdjudicationUpdate();
 
 	//回転更新
-	//スター取得中は正面を向けるため回転の更新をストップ(中に書いてある)
 	RotaUpdate();
 
 	//更新
 	Obj3d::Update(*Camera::sCamera);
 
-	colDrawer.Update(*Camera::sCamera);
-
 	//当たり判定後、ステータスの更新
 	DamageUpdate();
 
 	hpGauge.Update();
-
-	//描画用オブジェクトの更新
-	centerObject.position = position;
-	centerObject.scale = scale;
-	centerObject.Update(*Camera::sCamera);
 }
 
 void Player::Draw()
@@ -220,8 +155,7 @@ void Player::Reset()
 void Player::MoveUpdate()
 {
 	wallKickTimer.Update();
-	hipDropTimer.Update();
-
+	
 	//縦移動更新(重力落下含む)
 	//ジャンプしていない状態で入力があったらジャンプ
 	if (jumpState == JumpState::None)
@@ -244,13 +178,45 @@ void Player::MoveUpdate()
 			wallKickVec.y = 0;
 		}
 	}
+	//ジャンプ中なら
 	if (IsJump())
 	{
-		if (Input::Keyboard::TriggerKey(DIK_LSHIFT))
+		//回転する
+		if (jumpCount == 2)
 		{
-			jumpState = JumpState::HipDrop;
-			hipDropTimer.Start();
-			PlayerCamera::Get()->ChangeRadius(1.0f, hipDropTimer.mMaxTime);
+			jumpRotaX -= 18;
+		}
+		else if (jumpCount >= 3)
+		{
+			jumpRotaX += 36;
+		}
+		//ダッシュ状態でなくなったらもとの回転に戻す
+		if (!CheckState(PlayerState::Dash)) {
+			jumpRotaX = 0;
+		}
+	}
+
+	if (wallKickTimer.GetRun())
+	{
+		jumpRotaX -= 18;
+	}
+
+	//着地してるなら取り消す
+	if (!IsJump())
+	{
+		jumpRotaX = 0;
+		PlayerCamera::Get()->InitRadius();
+		ResetGravity();
+
+		if (CheckState(PlayerState::HipDrop)) {
+			DeleteState(PlayerState::HipDrop);
+
+			//エフェクト出す
+			for (int i = 0; i < 10; i++)
+			{
+				ParticleManager::Get()->CreateCubeParticle(position,
+					{ 1,1,1 }, 5, { 1,1,1,1 });
+			}
 		}
 	}
 
@@ -367,49 +333,6 @@ void Player::RotaUpdate()
 	//⑶(終点Q - 始点Q)を求める
 	culQ = Slerp(startQ,endQ, rotTime.GetTimeRate());
 
-	//ジャンプ中なら
-	if (IsJump())
-	{
-		if (jumpCount == 2)
-		{
-			jumpRotaX -= 18;
-		}
-		else if (jumpCount >= 3)
-		{
-			jumpRotaX += 36;
-		}
-	}
-
-	if (wallKickTimer.GetRun())
-	{
-		jumpRotaX -= 18;
-	}
-
-	//着地してるなら取り消す
-	if (!IsJump())
-	{
-		jumpRotaX = 0;
-		PlayerCamera::Get()->InitRadius();
-		ResetGravity();
-	}
-
-	if (hipDropTimer.GetRun())
-	{
-		jumpRotaX = TEasing::OutQuad(0,720,hipDropTimer.GetTimeRate());
-		playerState = PlayerState::Normal;
-		
-		SetNoMove(true);
-	}
-	if (hipDropTimer.GetNowEnd())
-	{
-		jumpRotaX = 0;
-		jumpState = JumpState::Down;
-		SetGravity(4.5f);
-		PlayerCamera::Get()->InitRadius();
-
-		SetNoMove(false);
-	}
-
 	Quaternion rotX = MakeAxisAngle({1,0,0}, MathF::AngleConvRad(jumpRotaX));
 	Quaternion rotY = MakeAxisAngle({0,1,0}, MathF::AngleConvRad(jumpRotaY));
 
@@ -497,7 +420,7 @@ bool Player::IsMove()
 
 bool Player::IsJump()
 {
-	return (jumpState == JumpState::Up || jumpState == JumpState::Down || jumpState == JumpState::HipDrop);
+	return (jumpState == JumpState::Up || jumpState == JumpState::Staying || jumpState == JumpState::Down);
 }
 
 void Player::DamageEffect(int32_t damage)
@@ -523,11 +446,6 @@ void Player::ApparranceMove(const Vector3& dokanPos, const Vector3& dokanScale)
 bool Player::GetApparanceEnd()
 {
 	return apparranceTimer.GetEnd();
-}
-
-Player::PlayerState Player::GetState()
-{
-	return playerState;
 }
 
 void Player::HPOverFlow(int32_t value)
@@ -557,6 +475,176 @@ bool Player::CheckContinuanceKick(IDdCube* check)
  		saveKickWall = check;
 	}
 	return false;
+}
+
+void Player::ChangeDash()
+{
+	if (Input::Keyboard::PushKey(DIK_LSHIFT)) {
+		SetState(PlayerState::Dash);
+	}
+	else {
+		DeleteState(PlayerState::Dash);
+	}
+	//ヒップドロップ中ならダッシュを解除する
+	if (CheckState(PlayerState::HipDrop)) {
+		DeleteState(PlayerState::Dash);
+	}
+}
+
+void Player::NormalUpdate()
+{
+	if (CheckState(PlayerState::Normal))
+	{
+		if (CheckState(PlayerState::Dash)) {
+			mSpeed = DASH_SPEED;
+		}
+		else {
+			mSpeed = NORMAL_SPEED;
+			jumpCount = 0;
+		}
+
+		MoveUpdate();
+	}
+}
+
+void Player::DashUpdate()
+{
+	Vector3 playerBack{};
+	Vector3 playerFeetPos{};
+
+	if (CheckState(PlayerState::Dash))
+	{
+		//プレイヤーの少し後ろの足元座標を算出
+		playerBack = -matWorld.ExtractAxisZ() * (scale.z / 2);
+		playerFeetPos = Vector3(position.x, position.y - (scale.y / 2), position.z) + playerBack;
+
+		//パーティクル配置
+		ParticleManager::Get()->CreateCubeParticle(
+			playerFeetPos,
+			{ 0.5f ,0.5f ,0.5f },
+			1.0f,
+			{ 1.0f,1.0f,1.0f,1.0f }
+		);
+	}
+}
+
+void Player::DebugUpdate()
+{
+	//デバッグ変更
+	if (Input::Keyboard::TriggerKey(DIK_1))
+	{
+		if (CheckState(PlayerState::Debug)) {
+			DeleteState(PlayerState::Debug);
+		}
+		else {
+			SetState(PlayerState::Debug);
+		}
+	}
+
+	if (CheckState(PlayerState::Debug))
+	{
+		if (flyMode)
+		{
+			Fly();
+		}
+
+		//ダメージ処理テスト
+		if (Input::Keyboard::TriggerKey(DIK_T))
+		{
+			mutekiTimer.Reset();
+			DamageEffect(1);
+		}
+		if (Input::Keyboard::TriggerKey(DIK_G))
+		{
+			hp.mCurrent += 1;
+		}
+
+		//入力でリロード
+		if (Input::Keyboard::TriggerKey(DIK_R))
+		{
+			StageChanger::Get()->Reload();
+		}
+	}
+
+}
+
+void Player::ApparanceUpdate()
+{
+	apparranceTimer.Update();
+	if (CheckState(PlayerState::Apparrance))
+	{
+		Vector3 endpos = saveDokanPos + Vector3(0, saveDokanScale.y / 2.f, 0);
+		position = TEasing::OutQuad(saveDokanPos, endpos, apparranceTimer.GetTimeRate());
+
+		if (apparranceTimer.GetEnd())
+		{
+			ChangeMode(PlayerState::Normal);
+
+			//ここら辺システム側の処理だから、別の場所に移したい
+			GameUIManager::Get()->Move(UIMove::START, "StageTitle");
+		}
+	}
+}
+
+void Player::HipDropUpdate()
+{
+	//ヒップドロップの更新
+	hipDropTimer.Update();
+	if (IsJump())
+	{
+		//ヒップドロップ処理
+		if (Input::Keyboard::TriggerKey(DIK_LSHIFT))
+		{
+			if (!CheckState(PlayerState::HipDrop)) {
+				SetState(PlayerState::HipDrop);
+				hipDropTimer.Start();
+				PlayerCamera::Get()->ChangeRadius(1.0f, hipDropTimer.mMaxTime);
+			}
+		}
+	}
+	if (hipDropTimer.GetRun())
+	{
+		jumpRotaX = TEasing::OutQuad(0, 720, hipDropTimer.GetTimeRate());
+
+		SetNoMove(true);
+		SetNoGravity(true);
+	}
+	if (hipDropTimer.GetNowEnd())
+	{
+		jumpRotaX = 0;
+
+		SetGravity(4.5f);
+		PlayerCamera::Get()->InitRadius();
+
+		SetNoMove(false);
+		SetNoGravity(false);
+	}
+}
+
+void Player::AdjudicationUpdate()
+{	
+	//Mob側の更新
+	Mob::CollsionUpdate();
+
+	box.ColDrawerUpdate(position, box.scale);
+	box.CreateCol(position, box.scale, rotation);
+
+	ColUpdate();
+
+	//当たり判定
+	///--敵当たり判定
+	mEncountCol.center = position;
+	mEncountCol.radius = (scale.x + scale.y + scale.z) / 3.f;
+
+	colDrawer.position = position;
+	colDrawer.scale = scale;
+
+	colDrawer.Update(*Camera::sCamera);
+
+	//進行方向管理オブジェクトの更新
+	centerObject.position = position;
+	centerObject.scale = scale;
+	centerObject.Update(*Camera::sCamera);
 }
 
 bool Player::CanWallKick()
@@ -627,7 +715,7 @@ void Player::DebugGUI()
 		position.x, position.y, position.z);
 
 	ImGui::Text("rotation x:%f y:%f z:%f", rotation.x, rotation.y, rotation.z);
-	//ImGui::Text("CanWallKick %d", CanWallKick());
+	ImGui::Text("jumpState %d", jumpState);
 	if (saveKickWall != nullptr)
 	{
 		ImGui::Text("wallID %d", saveKickWall->GetID());
@@ -639,44 +727,25 @@ void Player::DebugGUI()
 		if(!flyMode)SetNoGravity(false);
 	}
 	ImGui::Text("flyMode %d", flyMode);
-	ImGui::Text("quaternion x:%f y:%f z:%f w:%f", quaternion.vector.x, quaternion.vector.y, quaternion.vector.z, quaternion.w);
-	ImGui::Text("endRota x:%f y:%f z:%f", endRota.x, endRota.y, endRota.z);
-	ImGui::Text("startQ x:%f y:%f z:%f w:%f", startQ.vector.x, startQ.vector.y, startQ.vector.z, startQ.w);
-	ImGui::Text("endQ x:%f y:%f z:%f w:%f", endQ.vector.x, endQ.vector.y, endQ.vector.z, endQ.w);
-	ImGui::Text("culQ x:%f y:%f z:%f w:%f", culQ.vector.x, culQ.vector.y, culQ.vector.z, culQ.w);
-	//Vector3 testRota;
-	//Quaternion test = DirectionToDirection({ 0,0,0 }, {});
-	//ImGui::Text("test x:%f y:%f z:%f w:%f", test.vector.x, test.vector.y, test.vector.z, test.w);
 }
 
 void Player::ChangeMode(const PlayerState& pState)
 {
-	playerState = pState;
-	if (playerState == PlayerState::Normal)
-	{
-		SetNoCollsion(false);
-		SetNoGravity(false);
-		SetNoMove(false);
-	}
-	if (playerState == PlayerState::Dash)
-	{
-		SetNoCollsion(false);
-		SetNoGravity(false);
-		SetNoMove(false);
-	}
-	if (playerState == PlayerState::Apparrance)
+	SetState(pState);
+
+	if (pState == PlayerState::Apparrance)
 	{
 		SetNoCollsion(true);
 		SetNoGravity(true);
 		SetNoMove(true);
 	}	
-	if (playerState == PlayerState::InDokan)
+	if (pState == PlayerState::InDokan)
 	{
 		SetNoCollsion(true);
 		SetNoGravity(true);
 		SetNoMove(true);
 	}
-	if (playerState == PlayerState::Debug)
+	if (pState == PlayerState::Debug)
 	{
 		SetNoCollsion(false);
 		SetNoGravity(false);
@@ -687,14 +756,14 @@ void Player::ChangeMode(const PlayerState& pState)
 void Player::Jump()
 {
 	//ダッシュ状態ならカウント加算してジャンプ力上げる
-	if (playerState == PlayerState::Dash)
+	if (CheckState(PlayerState::Dash))
 	{
 		jumpCount++;
 	}
 
 	jumpCount = Util::Clamp(jumpCount, 0, 3);
 
-	if (jumpCount == 1)
+	if (jumpCount <= 1)
 	{
 		jumpPower = 5.0f;
 	}

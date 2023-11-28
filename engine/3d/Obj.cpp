@@ -84,17 +84,17 @@ Vector3 Obj3d::GetWorldTrans()
 
 void Obj3d::Draw() {
 
+	//見えないフラグが立ってるなら描画を行わない
+	if (mIsVisiable == false)
+	{
+		return;
+	}
+
 	//値が入ってるならずらす
 	if (mModelOffset.length() != 0)
 	{
 		position += mModelOffset;
 		Obj3d::Update(*Camera::sCamera);
-	}
-
-	//見えないフラグが立ってるなら描画を行わない
-	if (mIsVisiable == false)
-	{
-		return;
 	}
 
 	DirectX12* dx12 = DirectX12::Get();
@@ -128,17 +128,17 @@ void Obj3d::Draw() {
 
 void Obj3d::DrawMaterial() {
 
+	//見えないフラグが立ってるなら描画を行わない
+	if (mIsVisiable == false)
+	{
+		return;
+	}
+
 	//値が入ってるならずらす
 	if (mModelOffset.length() != 0)
 	{
 		position += mModelOffset;
 		Obj3d::Update(*Camera::sCamera);
-	}
-
-	//見えないフラグが立ってるなら描画を行わない
-	if (mIsVisiable == false)
-	{
-		return;
 	}
 
 	DirectX12* dx12 = DirectX12::Get();
@@ -179,17 +179,17 @@ void Obj3d::DrawMaterial() {
 
 void Obj3d::DrawOutLine()
 {
+	//見えないフラグが立ってるなら描画を行わない
+	if (mIsVisiable == false)
+	{
+		return;
+	}
+
 	//値が入ってるならずらす
 	if (mModelOffset.length() != 0)
 	{
 		position += mModelOffset;
 		Obj3d::Update(*Camera::sCamera);
-	}
-
-	//見えないフラグが立ってるなら描画を行わない
-	if (mIsVisiable == false)
-	{
-		return;
 	}
 
 	DirectX12* dx12 = DirectX12::Get();

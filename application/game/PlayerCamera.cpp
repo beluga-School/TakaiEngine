@@ -60,7 +60,7 @@ void PlayerCamera::RadiusChange()
 		mRadius = TEasing::InQuad(startRadius, endRadius, radiusMoveTimer.GetTimeRate());
 	}
 
-	if (Player::Get()->GetState() == Player::PlayerState::Debug)
+	if (Player::Get()->CheckState(Player::PlayerState::Debug))
 	{
 		//ラディウス変更(消してもいいかも)
 		if (Mouse::Wheel() < 0)

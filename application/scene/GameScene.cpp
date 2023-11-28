@@ -87,7 +87,7 @@ void GameScene::Update()
 		StageChanger::Get()->Reload();
 	}
 
-	if (player->playerState == Player::PlayerState::Debug)
+	if (player->CheckState(Player::PlayerState::Debug))
 	{
 		GameSceneDebugGUI();
 	}

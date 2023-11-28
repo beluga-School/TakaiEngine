@@ -49,5 +49,10 @@ inline Enemy* EnemyManager::PopEnemy(const Vector3& position, const Vector3& rot
 	//大きさ
 	enemyList.back()->scale = scale;
 
+	enemyList.back()->SetInitScale(scale);
+
+	enemyList.back()->box.SetTexture(TextureManager::GetTexture("white"));
+	enemyList.back()->box.SetModel(ModelManager::GetModel("Cube"));
+
 	return enemyList.back().get();
 }

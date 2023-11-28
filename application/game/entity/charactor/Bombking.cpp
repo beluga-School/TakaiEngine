@@ -24,6 +24,7 @@ void Bombking::Update()
 	damageTimer.Update();
 	reboundTimer.Update();
 
+	//ダメージ受けたときにこの大きさへと変化する
 	Vector3 damageScale = { initScale.x + 1.0f,initScale.y - 0.5f, initScale.z + 1.0f };
 
 	switch (mActTable)

@@ -154,23 +154,6 @@ void Slime::HitEffect()
 
 	deadEasingS = scale;
 	deadEasingE = {scale.x * 1.5f,0.1f ,scale.z * 1.5f};
-	
-	////死亡時のプレイヤーが向いていた方向を保存
-	//deadDirection = Player::Get()->matWorld.ExtractAxisZ();
-	//
-	////斜め上に吹っ飛んでいくように
-	//float rand = MathF::GetRand(6.0f, 6.5f);
-
-	//deadDirection.y = MathF::PIf / rand;
-
-	//deadEasingS = position;
-
-	////スケール分より遠くに吹っ飛ぶように
-	//float scaledistance = (scale.x + scale.y + scale.z) / 3 * 0.5f;
-
-	////正面に向かって吹っ飛ばされるように終点を設定
-	//deadEasingE = position + deadDirection * 7.0f * scaledistance;
-
 }
 
 void Slime::Encount()

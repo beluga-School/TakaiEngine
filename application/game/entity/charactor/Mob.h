@@ -15,7 +15,6 @@ public:
 		Up,		//上昇中
 		Staying,//滞空時間
 		Down,
-		HipDrop,//ヒップドロップ(プレイヤー用)
 	};
 
 public:	

@@ -11,18 +11,43 @@
 class Player final : public Mob
 {
 public:
-	//ここら辺の状態管理は統一したいし、Apparranceがここにいると色々不都合がありそう
+	
+	//なんか複数の状態が両立する仕組みにしたい
+	//タグと同じような管理方式に変えるか
 	//出現処理のもろもろ
 	enum class PlayerState
 	{
-		Normal,
-		Dash,
-		Apparrance,
-		InDokan,
-		Debug,
+		Normal,		//通常の状態(移動などの処理を行う)
+		Dash,		//ダッシュ状態
+		Apparrance,	//土管からの出現状態(Normalと被らない)
+		InDokan,	//土管への入り状態(Normalと被らない)
+		Debug,		//デバッグ状態
+		HipDrop,	//ヒップドロップ
 	};
-	PlayerState playerState = PlayerState::Normal;
-	
+
+	std::vector<PlayerState> playerStates;
+
+	/// <summary>
+	/// 指定したステートがあるか確認する
+	/// </summary>
+	/// <param name="check">確認したいステート</param>
+	/// <returns>あったらtrue ないならfalse</returns>
+	bool CheckState(PlayerState check);
+
+	/// <summary>
+	/// 指定したステートを付ける(重複していた場合は付けない)
+	/// </summary>
+	/// <param name="check">付けたいステート</param>
+	/// <returns>ステートのセットに成功でtrue 重複があったらfalse</returns>
+	bool SetState(PlayerState check);
+
+	/// <summary>
+	/// 指定したステートを削除する
+	/// </summary>
+	/// <param name="check">削除したいステート</param>
+	/// <returns>ステートの削除に成功でtrue ステートが見つからない場合false</returns>
+	bool DeleteState(PlayerState check);
+
 public:
 	void LoadResource();
 
@@ -57,8 +82,6 @@ public:
 
 	bool GetApparanceEnd();
 
-	PlayerState GetState();
-	
 	//プレイヤーのモードを変える(0,通常,1,デバッグモード)
 	void ChangeMode(const PlayerState& pState);
 
@@ -89,6 +112,23 @@ private:
 
 	//同じ壁を2連続で蹴っていないか確認する
 	bool CheckContinuanceKick(IDdCube* check);
+
+	//ダッシュ状態へ変更する処理
+	void ChangeDash();
+
+	//通常状態の更新処理
+	void NormalUpdate();
+	
+	void DashUpdate();
+
+	void DebugUpdate();
+
+	void ApparanceUpdate();
+
+	void HipDropUpdate();
+
+	//判定用オブジェクト群の更新
+	void AdjudicationUpdate();
 
 public:
 	//プレイヤーの回転を管理する変数
