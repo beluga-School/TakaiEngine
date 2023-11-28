@@ -238,6 +238,7 @@ void CollideManager::CheckStatus(Entity* check, Entity* collide)
 				star->HitEffect();
 			}
 		}
+		//される側がEnemyなら
 	}
 }
 
@@ -361,7 +362,7 @@ void CollideManager::CheckPlayerToEnemy(Player& player,Enemy& collide)
 	{
 		//死亡モーションに入ってるなら飛ばす
 		//今後HPが多い敵が出てきたとき困るから、攻撃を受けた後を表すステートを作るべき
-		if (collide.GetNowAct(ActTable::Dead))return;
+		if (collide.GetNowAct(ActTable::Dead) || collide.GetNowAct(ActTable::Damage))return;
 
 		if (player.GetJumpState() == Mob::JumpState::Down)
 		{

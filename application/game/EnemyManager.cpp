@@ -10,10 +10,11 @@ void EnemyManager::Load(const LevelData::ObjectData& data)
 {
 	enemyList.emplace_back();
 	enemyList.back() = std::make_unique<Slime>();
-	enemyList.back()->Initialize();
-	enemyList.back()->SetModel(ModelManager::GetModel(data.fileName));
 
 	LevelDataExchanger::SetObjectData(*enemyList.back(), data);
+
+	enemyList.back()->Initialize();
+	enemyList.back()->SetModel(ModelManager::GetModel(data.fileName));
 }
 
 void EnemyManager::Initialize()

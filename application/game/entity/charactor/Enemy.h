@@ -2,6 +2,7 @@
 #include "Obj.h"
 #include "Collision.h"
 #include "Mob.h"
+#include "Status.h"
 
 //行動テーブル この中から必要なものだけ抜き出して使う設計
 enum class ActTable
@@ -12,6 +13,7 @@ enum class ActTable
 	Attack1,
 	Attack2,
 	Staying,
+	Damage,
 	Dead,		//死亡状態
 };
 
@@ -44,14 +46,14 @@ public:
 		return mActTable == table;
 	};
 
-	Sphere sphereCol{};
-
 	int32_t GetHitDamage();
 
 	//Encountを管理するスフィアの範囲を描画する
 	void EncountSphereDraw(const std::string& oldPipeline);
 
-	Vector3 saveColCenter = {};
+	//HPの最大値を変える
+	//現在HPの削れている分は引き継ぐ
+	void SetMaxHP(int32_t SET_MAX_HP);
 
 protected:
 	/// <summary>
@@ -71,12 +73,23 @@ protected:
 	void EncountSphereInitialize();
 	void EncountSphereUpdate();
 
+public:
+	Sphere sphereCol{};
+
+	Vector3 saveColCenter = {};
+
+protected:
 	//接触時のダメージ
 	int32_t hitDamage = 1;
 
 	ActTable mActTable = ActTable::None;
 
+	int32_t maxHP = 1;
+
+	Status hp = 1;
+
 private:
 	//接触範囲のスフィアを描画する用(判定の管理自体はsphereColが行う)
 	Obj3d encountSphere;
+
 };

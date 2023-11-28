@@ -25,5 +25,7 @@ private:
 
 	float mSpeed = 10.0f;
 
+	TEasing::easeTimer damageTimer = 1.0f;
+	TEasing::easeTimer reboundTimer = 1.0f;
 };
 

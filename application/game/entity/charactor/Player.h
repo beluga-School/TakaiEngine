@@ -187,13 +187,13 @@ private:
 	bool flyMode = false;
 
 	TEasing::easeTimer rotTime = 0.5f;
-	TEasing::easeTimer angleTime = 1.0f;
+	TEasing::easeTimer hipDropTimer = 1.0f;
 
 	float jumpRotaX = 0;
 	float jumpRotaY = 0;
 
-	Quaternion endQ;
 	Vector3 endRota;
 	Quaternion startQ;
+	Quaternion endQ;
 	Quaternion culQ;
 };

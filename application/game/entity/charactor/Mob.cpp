@@ -28,6 +28,21 @@ void Mob::CollsionUpdate()
 	moveBlockHit = false;
 }
 
+void Mob::SetInitScale(const Vector3& scale_)
+{
+	initScale = scale_;
+}
+
+void Mob::SetGravity(float value)
+{
+	gravityAdd = value;
+}
+
+void Mob::ResetGravity()
+{
+	gravityAdd = 1.5f;
+}
+
 void Mob::UpdateY()
 {
 	JumpUpdate();

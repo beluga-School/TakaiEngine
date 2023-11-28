@@ -15,8 +15,6 @@ void Slime::Initialize()
 	EncountSphereInitialize();
 
 	Register();
-
-	initScale = scale;
 }
 
 void Slime::Update()

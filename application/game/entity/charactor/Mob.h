@@ -8,15 +8,17 @@
 class Mob : public Entity
 {
 public:
-	Vector3 moveValue = { 0,0,0 };
+	//ジャンプの状態管理ステート
+	enum class JumpState
+	{
+		None,	//ジャンプしていない
+		Up,		//上昇中
+		Staying,//滞空時間
+		Down,
+		HipDrop,//ヒップドロップ(プレイヤー用)
+	};
 
-	std::list<IDdCube> hitListUp;
-	std::list<IDdCube> hitListDown;
-	std::list<IDdCube> hitListRight;
-	std::list<IDdCube> hitListLeft;
-	std::list<IDdCube> hitListCenter;
-	std::list<IDdCube> hitListBack;
-	
+public:	
 	Mob() : Entity() {
 		SetTag(TagTable::Mob);
 	};
@@ -41,18 +43,41 @@ public:
 		return feet;
 	};
 
-	//ジャンプの状態管理ステート
-	enum class JumpState
-	{
-		None,	//ジャンプしていない
-		Up,		//上昇中
-		Staying,//滞空時間
-		Down,
-	};
-
 	JumpState GetJumpState() const{
 		return jumpState;
 	};
+
+	void SetInitScale(const Vector3& scale_);
+
+protected:
+	void SetGravity(float value);
+
+	void ResetGravity();
+
+	void CollsionUpdate();
+
+private:
+	//---縦方向の更新
+
+	//縦方向の更新まとめ用
+	void UpdateY();
+
+	void UpdateX();
+
+	//hitlistの中から、もっとも近い座標をX,Y,Z方向それぞれで算出する関数
+	void CalcNearestHitLists();
+	//重力とジャンプ機能の更新
+	void JumpUpdate();
+
+public:
+	Vector3 moveValue = { 0,0,0 };
+
+	std::list<IDdCube> hitListUp;
+	std::list<IDdCube> hitListDown;
+	std::list<IDdCube> hitListRight;
+	std::list<IDdCube> hitListLeft;
+	std::list<IDdCube> hitListCenter;
+	std::list<IDdCube> hitListBack;
 
 	//ムーブブロックに当たってるなら座標を記録し、そこに移動値加算前にポジション代入する
 	Vector3 moveBlockPosition{};
@@ -61,9 +86,15 @@ public:
 
 	bool checkray = false;
 
-protected:
-	void CollsionUpdate();
+	//リストの中でもっとも近い座標を保存する変数
+	float hitFeetMax = 0;
+	float hitCeilingMax = 0;
+	float hitRightMin = 0;
+	float hitLeftMin = 0;
+	float hitCenterMin = 0;
+	float hitBackMin = 0;
 
+protected:
 	bool noGravity = false;
 
 	//当たり判定を行わないようにする
@@ -91,35 +122,12 @@ protected:
 	//重力
 	float gravity = 0.0f;
 	//重力加速度
-	const float gravityAdd = 1.5f;
+	float gravityAdd = 1.5f;
 
 	//床に引っかからないように掛ける補正値
 	const float hitOffset = 0.1f;
 
-public:
-	//リストの中でもっとも近い座標を保存する変数
-	float hitFeetMax = 0;
-	float hitCeilingMax = 0;
-	float hitRightMin = 0;
-	float hitLeftMin = 0;
-	float hitCenterMin = 0;
-	float hitBackMin = 0;
-protected:
-
 	float feet = 0;
 
 	Vector3 initScale = { 0,0,0 };
-
-private:
-	//---縦方向の更新
-	
-	//縦方向の更新まとめ用
-	void UpdateY();
-
-	void UpdateX();
-
-	//hitlistの中から、もっとも近い座標をX,Y,Z方向それぞれで算出する関数
-	void CalcNearestHitLists();
-	//重力とジャンプ機能の更新
-	void JumpUpdate();
 };

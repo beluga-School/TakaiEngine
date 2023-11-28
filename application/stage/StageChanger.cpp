@@ -248,6 +248,7 @@ void StageChanger::ChangeUpdate()
 		if (objectData->setObjectName == "enemy")
 		{
 			EnemyManager::Get()->Load(*objectData);
+			EnemyManager::Get()->enemyList.back()->SetInitScale(objectData->scaling);
 			
 			if (objectData->collider.have)
 			{
@@ -295,12 +296,13 @@ void StageChanger::ChangeUpdate()
 				ModelManager::LoadModel(objectData->fileName, objectData->fileName, true);
 			}
 
-			//モデルとか設定する
-			EnemyManager::Get()->enemyList.back()->Initialize();
-
 			//positionとかを設定
 			LevelDataExchanger::SetObjectData(*EnemyManager::Get()->enemyList.back(), *objectData);
-			
+
+			//モデルとか設定する
+			EnemyManager::Get()->enemyList.back()->Initialize();
+			EnemyManager::Get()->enemyList.back()->SetInitScale(objectData->scaling);
+
 			if(objectData->collider.have)
 			{
 				//当たり判定を表示するオブジェクト

@@ -220,11 +220,12 @@ void Player::Reset()
 void Player::MoveUpdate()
 {
 	wallKickTimer.Update();
+	hipDropTimer.Update();
+
 	//縦移動更新(重力落下含む)
 	//ジャンプしていない状態で入力があったらジャンプ
 	if (jumpState == JumpState::None)
 	{
-		
 		if (Input::Keyboard::TriggerKey(DIK_SPACE) ||
 			Pad::TriggerPadButton(PadButton::A))
 		{
@@ -240,6 +241,16 @@ void Player::MoveUpdate()
 			//反対方向に飛ぶ
 			wallKickTimer.Start();
 			wallKickVec = matWorld.ExtractAxisZ();
+			wallKickVec.y = 0;
+		}
+	}
+	if (IsJump())
+	{
+		if (Input::Keyboard::TriggerKey(DIK_LSHIFT))
+		{
+			jumpState = JumpState::HipDrop;
+			hipDropTimer.Start();
+			PlayerCamera::Get()->ChangeRadius(1.0f, hipDropTimer.mMaxTime);
 		}
 	}
 
@@ -379,19 +390,30 @@ void Player::RotaUpdate()
 	{
 		jumpRotaX = 0;
 		PlayerCamera::Get()->InitRadius();
+		ResetGravity();
 	}
 
-	angleTime.Update();
-	if (!angleTime.GetRun())
+	if (hipDropTimer.GetRun())
 	{
-		angleTime.Start();
+		jumpRotaX = TEasing::OutQuad(0,720,hipDropTimer.GetTimeRate());
+		playerState = PlayerState::Normal;
+		
+		SetNoMove(true);
+	}
+	if (hipDropTimer.GetNowEnd())
+	{
+		jumpRotaX = 0;
+		jumpState = JumpState::Down;
+		SetGravity(4.5f);
+		PlayerCamera::Get()->InitRadius();
+
+		SetNoMove(false);
 	}
 
 	Quaternion rotX = MakeAxisAngle({1,0,0}, MathF::AngleConvRad(jumpRotaX));
 	Quaternion rotY = MakeAxisAngle({0,1,0}, MathF::AngleConvRad(jumpRotaY));
 
 	//④現在のプレイヤーの向き(Q)に足しまくる
-	//quaternion = rotX * culQ;
 	quaternion = culQ * rotX;
 	centerObject.quaternion = culQ;
 }
@@ -475,7 +497,7 @@ bool Player::IsMove()
 
 bool Player::IsJump()
 {
-	return (jumpState == JumpState::Up || jumpState == JumpState::Down);
+	return (jumpState == JumpState::Up || jumpState == JumpState::Down || jumpState == JumpState::HipDrop);
 }
 
 void Player::DamageEffect(int32_t damage)
