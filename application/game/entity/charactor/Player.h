@@ -25,8 +25,12 @@ public:
 		HipDrop,	//ヒップドロップ
 	};
 
-	std::vector<PlayerState> playerStates;
-
+	enum class InputMove
+	{
+		Push,
+		Trigger,
+	};
+public:
 	/// <summary>
 	/// 指定したステートがあるか確認する
 	/// </summary>
@@ -93,6 +97,8 @@ public:
 
 	void DebugGUI();
 
+	//プレイヤーの移動入力があったか
+	bool GetInputMove(InputMove input);
 private:
 	Player() : Mob()
 	{
@@ -145,6 +151,8 @@ public:
 	Sphere mEncountCol;
 
 	bool rotCheck = 0;
+
+	std::vector<PlayerState> playerStates;
 
 private:
 	//hpの最大値　ステータスの最大値は外から変えられるようにしたい
@@ -236,4 +244,6 @@ private:
 	Quaternion startQ;
 	Quaternion endQ;
 	Quaternion culQ;
+
+	
 };

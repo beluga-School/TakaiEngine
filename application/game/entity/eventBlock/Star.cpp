@@ -5,6 +5,7 @@
 #include "MathF.h"
 #include "ObjParticle.h"
 #include "GameUIManager.h"
+#include "StageChanger.h"
 
 void Star::Initialize()
 {
@@ -140,4 +141,21 @@ void Star::SetCorrected()
 	starState = StarState::End;
 	hit = true;
 	scale = { 0,0,0 };
+}
+
+void Star::PopStar(const Vector3& pop)
+{
+	LevelData::ObjectData data;
+	data.translation = pop;
+	data.scaling = { 1,1,1 };
+	data.rotation = { 0,0,0 };
+	data.collider.center = { 0,0,0 };
+	data.collider.size = { 0.25f,1.5f,1.5f };
+	data.fileName = "star";
+	data.eventtrigerName = "star";
+	StageChanger::Get()->SetObject<Star>(data);
+
+	StageChanger::Get()->CollisionSet(data);
+
+	GameUIManager::Get()->starUI.CountUp();
 }

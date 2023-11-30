@@ -60,8 +60,16 @@ void StarUI::Draw()
 	InstantDrawer::DrawGraph(uibase.GetPos().x - 30, uibase.GetPos().y, 0.5f, 0.5f, "star2d");
 	InstantDrawer::DrawGraph(uibase.GetPos().x + 60, uibase.GetPos().y, 0.5f, 0.5f, "x");
 	InstantDrawer::DrawGraph(uibase.GetPos().x + 60, uibase.GetPos().y + 50, 1.0f, 1.0f, "starstring");
-	//10以上になったらバグるぜ！！後で考えるぜ！！
-	InstantDrawer::DrawGraph(uibase.GetPos().x + 120, uibase.GetPos().y, 0.5f, 0.5f, numbers[count]);
+	
+	if (count < 10) {
+		InstantDrawer::DrawGraph(uibase.GetPos().x + 120, uibase.GetPos().y, 0.5f, 0.5f, numbers[count]);
+	}
+	else{
+		int32_t ten = count / 10;
+		int32_t one = count % 10;
+		InstantDrawer::DrawGraph(uibase.GetPos().x + 120, uibase.GetPos().y, 0.5f, 0.5f, numbers[ten]);
+		InstantDrawer::DrawGraph(uibase.GetPos().x + 180, uibase.GetPos().y, 0.5f, 0.5f, numbers[one]);
+	}
 }
 
 void StarUI::Move(UIMove uimove)

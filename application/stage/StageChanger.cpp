@@ -135,7 +135,6 @@ void StageChanger::Reset()
 
 	Player::Get()->Register();
 
-	mTempStarSaves.clear();
 
 	IDdCube::ResetID();
 
@@ -634,8 +633,6 @@ bool StageChanger::SetStar(const LevelData::ObjectData& data)
 		Star* star = static_cast<Star*>(mEntitys.back().get());
 
 		star->id = atoi(data.setObjectName.c_str());
-
-		mTempStarSaves.push_back(star);
 
 		GameUIManager::Get()->starUI.CountUp();
 

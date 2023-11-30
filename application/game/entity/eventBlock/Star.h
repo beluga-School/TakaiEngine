@@ -37,6 +37,9 @@ public:
 	//すでに取得済みの場合に、状態を取得後に変化させる処理
 	void SetCorrected();
 
+	//新たにスターを出現させる処理
+	static void PopStar(const Vector3& pop);
+
 private:
 
 public:

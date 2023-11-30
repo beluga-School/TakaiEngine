@@ -319,7 +319,7 @@ void Player::RotaUpdate()
 
 	startQ = DirectionToDirection({ 0,0,1 }, startRota);
 
-	//⑶(終点Q - 始点Q)を求める
+	//⑶終点Qを求める
 	culQ = Slerp(startQ,endQ, rotTime.GetTimeRate());
 
 	Quaternion rotX = MakeAxisAngle({1,0,0}, MathF::AngleConvRad(jumpRotaX));
@@ -733,6 +733,31 @@ void Player::DebugGUI()
 		if(!flyMode)SetNoGravity(false);
 	}
 	ImGui::Text("flyMode %d", flyMode);
+
+	if (ImGui::Button("PopStar")) {
+		Star::PopStar(position);
+	}
+}
+
+bool Player::GetInputMove(InputMove input)
+{
+	switch (input)
+	{
+	case Player::InputMove::Push:
+		return (Input::Keyboard::PushKey(DIK_W) || 
+			Input::Keyboard::PushKey(DIK_S) ||
+			Input::Keyboard::PushKey(DIK_A) ||
+			Input::Keyboard::PushKey(DIK_D));
+		break;
+	case Player::InputMove::Trigger:
+		return (Input::Keyboard::TriggerKey(DIK_W) ||
+			Input::Keyboard::TriggerKey(DIK_S) ||
+			Input::Keyboard::TriggerKey(DIK_A) ||
+			Input::Keyboard::TriggerKey(DIK_D));
+		break;
+	}
+
+	return false;
 }
 
 void Player::ChangeState(const PlayerState& pState)
@@ -815,4 +840,3 @@ int32_t Player::GetNowHP()
 {
 	return hp.mCurrent;
 }
-

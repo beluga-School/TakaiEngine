@@ -5,6 +5,7 @@
 #include "ObjParticle.h"
 #include "ClearDrawScreen.h"
 #include "CollideManager.h"
+#include "Star.h"
 
 void Bombking::Initialize()
 {
@@ -105,6 +106,7 @@ void Bombking::Update()
 		break;
 	case ActTable::Dead:
 		isDead = true;
+		Star::PopStar(position);
 		//パーティクル出す
 		for (int32_t i = 0; i < 50; i++)
 		{

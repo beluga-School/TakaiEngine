@@ -164,30 +164,8 @@ public:
 		LevelDataExchanger::SetObjectData(*mEntitys.back(), data);
 	}
 
-	//モデルの配列
-	std::list<std::unique_ptr<Entity>> mEntitys;
-
-	//大砲の制御点を一時的に保存する配列
-	std::vector<CannonPoint> mCannonPoints;
-
-	//移動床の最終地点を一時的に保存する配列
-	std::vector<MoveBlockPoint> mMoveBlockEndPoints;
-
-	//スターを一時的に保存する変数
-	std::vector<Star*> mTempStarSaves;
-
-	//海オブジェクトを配置(ここより下の座標に落ちたらMISS判定)
-	std::unique_ptr<Sea> seaObject;
-
-	//コライダーを描画するか
-	bool mShowCollider = false;
-
-	//モデルを描画するか(コライダー描画時に邪魔になるので)
-	bool mShowModel = true;
-
-	GoalSystem goalSystem;
-
-	DokanInfo saveNextDokanInfo;
+	//当たり判定配置
+	void CollisionSet(const LevelData::ObjectData& data);
 
 private:
 	StageChanger(){};
@@ -195,9 +173,6 @@ private:
 
 	//ステージリロードの際に初期化するやつら
 	void Reset();
-
-	//当たり判定配置
-	void CollisionSet(const LevelData::ObjectData& data);
 
 	//ステージ切り替えの更新
 	void ChangeUpdate();
@@ -230,18 +205,6 @@ private:
 
 	void EventNameUniquePush(const std::string& eventname);
 
-	std::string currentHandle = "";
-
-	LevelData* currentData = nullptr;
-
-	PlayerData playerData;
-
-	std::unordered_map<std::string, std::vector<LoadCamData>> loadCamDatas;
-	std::vector<LoadTargetData> loadTargetDatas;
-	std::list<std::string> eventCameraNames;
-
-	GUI rotCheck = { "hoge" };
-
 	template <class TEventCamera> void CameraLoader(const LevelData::ObjectData& data, const std::string& eventname)
 	{
 		EventCamData camdata;
@@ -272,5 +235,42 @@ private:
 			loadCamDatas[eventName].emplace_back(number, camdata);
 		}
 	}
+
+public:
+	//モデルの配列
+	std::list<std::unique_ptr<Entity>> mEntitys;
+
+	//大砲の制御点を一時的に保存する配列
+	std::vector<CannonPoint> mCannonPoints;
+
+	//移動床の最終地点を一時的に保存する配列
+	std::vector<MoveBlockPoint> mMoveBlockEndPoints;
+
+	//海オブジェクトを配置(ここより下の座標に落ちたらMISS判定)
+	std::unique_ptr<Sea> seaObject;
+
+	//コライダーを描画するか
+	bool mShowCollider = false;
+
+	//モデルを描画するか(コライダー描画時に邪魔になるので)
+	bool mShowModel = true;
+
+	GoalSystem goalSystem;
+
+	DokanInfo saveNextDokanInfo;
+
+private:
+	std::string currentHandle = "";
+
+	LevelData* currentData = nullptr;
+
+	PlayerData playerData;
+
+	std::unordered_map<std::string, std::vector<LoadCamData>> loadCamDatas;
+	std::vector<LoadTargetData> loadTargetDatas;
+	std::list<std::string> eventCameraNames;
+
+	GUI rotCheck = { "hoge" };
+
 };
 

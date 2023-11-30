@@ -91,7 +91,6 @@ Vector3 Vector3::Spline(const std::vector<Vector3>& points, float t)
 
 float Vector3::Radian(const Vector3& a) const
 {
-	//りくりくまんのコピペ
 	Vector3 na = this->GetNormalize();
 	Vector3 nb = a.GetNormalize();
 	float dot = na.dot(nb); //長さ1同士のベクトルの内積はcosθとなる...

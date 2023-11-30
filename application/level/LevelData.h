@@ -10,8 +10,8 @@
 struct LevelData
 {
 	struct ColliderData {
-		Vector3 center;
-		Vector3 size;
+		Vector3 center{};
+		Vector3 size{};
 		bool have = false;
 	};
 	struct ObjectData {
@@ -20,13 +20,13 @@ struct LevelData
 		std::string eventtrigerName;
 		std::string setObjectName;
 		
-		Vector2 tiling;
+		Vector2 tiling = {1,1};
 
-		Vector3 translation;
-		Vector3 rotation;
-		Vector3 scaling;
+		Vector3 translation{};
+		Vector3 rotation{};
+		Vector3 scaling{};
 
-		ColliderData collider;
+		ColliderData collider{};
 	};
 
 	std::vector<ObjectData> mObjects;

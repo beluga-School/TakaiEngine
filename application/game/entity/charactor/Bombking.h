@@ -30,8 +30,6 @@ private:
 
 	void Tracking();
 
-	Vector3 pVec{};
-
 	float mSpeed = 10.0f;
 
 	TEasing::easeTimer damageTimer = 1.0f;
@@ -45,5 +43,12 @@ private:
 
 	TEasing::easeTimer throwInterval = 1.0f;
 	TEasing::easeTimer throwTimer = 1.0f;
+
+	Vector3 pVec{};
+
+	TEasing::easeTimer rotTime = 10.0f;
+	Vector3 startVec{};
+	Vector3 endVec{};
+
 };
 
