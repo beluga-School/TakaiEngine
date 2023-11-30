@@ -33,6 +33,14 @@ public:
 	//現時点のラディウスから固定の値を何秒かけて引く
 	void ChangeRadius(float radius,float time);
 
+	//現時点のラディウスから固定の値まで変更する
+	void ChangeFixingRadius(float radius,float time);
+
+	//下のInitRadiusで移動する終点を決める
+	void ChangeDefaultRadius(float radius);
+
+	float GetDefRadius();
+
 	void InitRadius();
 
 private:
@@ -72,11 +80,14 @@ public:
 	bool mouseLockChange = true;
 
 private:
-	//初期のカメラ距離を保存
+	//初期のカメラ距離を保存(初期設定用)
 	const float DEFAULT_RADIUS = 8.0f;
+	
 	//初期のカメラ距離
 	float mRadius = DEFAULT_RADIUS;
 
+	//初期カメラ距離に追加するラディウス
+	float plusRadius = 0;
 
 	//このオブジェクトと当たったオブジェクトを透けさせる
 	Obj3d transparentObj;

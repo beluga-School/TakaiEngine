@@ -26,6 +26,7 @@
 #include "Signboard.h"
 #include <EnemyDokan.h>
 #include "SummonUI.h"
+#include "BossHikiCamera.h"
 
 void StageChanger::LoadResource()
 {
@@ -919,6 +920,9 @@ void StageChanger::RegisterEvent(const std::string& eventname)
 	if (eventname == "stageTitleUI_mountain")
 	{
 		EventManager::Get()->Register<StageTitleUIMountain>(eventname);
+	}
+	if (eventname == "boss_hikiCamera") {
+		EventManager::Get()->Register<BossHikiCamera>(eventname);
 	}
 }
 

@@ -415,6 +415,9 @@
     <Filter Include="シェーダー\CharactorDT">
       <UniqueIdentifier>{810d77ea-d184-4610-81dd-8c1e6b88a430}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Application\Event\BossHikiCamera">
+      <UniqueIdentifier>{b60ce555-8235-45a5-b6a1-8f719dc91ff5}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="engine\input\Input.cpp">
@@ -707,6 +710,9 @@
     </ClCompile>
     <ClCompile Include="application\ui\SummonUI.cpp">
       <Filter>Application\Event\SummonUI</Filter>
+    </ClCompile>
+    <ClCompile Include="BossHikiCamera.cpp">
+      <Filter>Application\Event\BossHikiCamera</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1015,6 +1021,9 @@
     </ClInclude>
     <ClInclude Include="application\ui\SummonUI.h">
       <Filter>Application\Event\SummonUI</Filter>
+    </ClInclude>
+    <ClInclude Include="BossHikiCamera.h">
+      <Filter>Application\Event\BossHikiCamera</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

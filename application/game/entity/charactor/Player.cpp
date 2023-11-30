@@ -204,8 +204,10 @@ void Player::MoveUpdate()
 	//着地してるなら取り消す
 	if (!IsJump())
 	{
-		jumpRotaX = 0;
-		PlayerCamera::Get()->InitRadius();
+		if (jumpRotaX != 0) {
+			jumpRotaX = 0;
+			PlayerCamera::Get()->InitRadius();
+		}
 	}
 
 

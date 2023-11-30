@@ -162,10 +162,32 @@ void PlayerCamera::ChangeRadius(float radius, float time)
 	}
 }
 
+void PlayerCamera::ChangeFixingRadius(float radius, float time)
+{
+	startRadius = mRadius;
+	endRadius = radius;
+
+	radiusMoveTimer.mMaxTime = time;
+	if (!radiusMoveTimer.GetRun())
+	{
+		radiusMoveTimer.Start();
+	}
+}
+
+void PlayerCamera::ChangeDefaultRadius(float radius)
+{
+	plusRadius = radius - DEFAULT_RADIUS;
+}
+
+float PlayerCamera::GetDefRadius()
+{
+	return DEFAULT_RADIUS + plusRadius;
+}
+
 void PlayerCamera::InitRadius()
 {
 	startRadius = mRadius;
-	endRadius = DEFAULT_RADIUS;
+	endRadius = GetDefRadius();
 
 	radiusMoveTimer.mMaxTime = 0.5f;
 	if (!radiusMoveTimer.GetRun())

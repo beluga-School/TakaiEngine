@@ -129,6 +129,7 @@
     <ClCompile Include="application\event\IEvent.cpp" />
     <ClCompile Include="APPLICATION\UI\UI.cpp" />
     <ClCompile Include="application\game\entity\EnemyDokan.cpp" />
+    <ClCompile Include="BossHikiCamera.cpp" />
     <ClCompile Include="engine\util\InstantDrawer.cpp" />
     <ClCompile Include="application\level\LevelData.cpp" />
     <ClCompile Include="application\game\entity\eventBlock\MoveBlock.cpp" />
@@ -227,6 +228,7 @@
     <ClInclude Include="application\event\NoEffectEvent.h" />
     <ClInclude Include="application\event\IEvent.h" />
     <ClInclude Include="application\game\entity\EnemyDokan.h" />
+    <ClInclude Include="BossHikiCamera.h" />
     <ClInclude Include="engine\util\InstantDrawer.h" />
     <ClInclude Include="application\level\LevelData.h" />
     <ClInclude Include="application\game\entity\eventBlock\MoveBlock.h" />
