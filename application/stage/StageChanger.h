@@ -199,6 +199,8 @@ private:
 	bool SetSignBoard(const LevelData::ObjectData& data);
 	//ゴール
 	bool SetGoal(const LevelData::ObjectData& data);
+	//ボスエリア
+	bool SetBossArea(const LevelData::ObjectData& data);
 
 	void DrawModel();
 	void DrawCollider();

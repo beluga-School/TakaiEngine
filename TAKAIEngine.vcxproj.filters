@@ -418,6 +418,9 @@
     <Filter Include="Application\Event\BossHikiCamera">
       <UniqueIdentifier>{b60ce555-8235-45a5-b6a1-8f719dc91ff5}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Application\Entity\BossArea">
+      <UniqueIdentifier>{3a937a42-5301-421b-8171-57b4abd24d8d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="engine\input\Input.cpp">
@@ -713,6 +716,9 @@
     </ClCompile>
     <ClCompile Include="BossHikiCamera.cpp">
       <Filter>Application\Event\BossHikiCamera</Filter>
+    </ClCompile>
+    <ClCompile Include="BossArea.cpp">
+      <Filter>Application\Entity\BossArea</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1024,6 +1030,9 @@
     </ClInclude>
     <ClInclude Include="BossHikiCamera.h">
       <Filter>Application\Event\BossHikiCamera</Filter>
+    </ClInclude>
+    <ClInclude Include="BossArea.h">
+      <Filter>Application\Entity\BossArea</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

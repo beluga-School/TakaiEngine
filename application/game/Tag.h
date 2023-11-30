@@ -23,4 +23,5 @@ enum class TagTable
 	DitherTransparent = 16,
 	Bombking = 17,
 	Slime = 18,
+	BossArea = 19,
 };

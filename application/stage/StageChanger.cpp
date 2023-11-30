@@ -16,6 +16,7 @@
 #include <sstream>
 #include "StageTitleUI.h"
 #include "EventManager.h"
+#include "BossArea.h"
 
 #include "Clear1.h"
 #include "NoEffectEvent.h"
@@ -380,6 +381,11 @@ void StageChanger::ChangeUpdate()
 
 		//Cannon の文字列が含まれてるなら
 		if (SetCannon(*objectData))
+		{
+			continue;
+		}
+
+		if (SetBossArea(*objectData))
 		{
 			continue;
 		}
@@ -849,6 +855,21 @@ bool StageChanger::SetGoal(const LevelData::ObjectData& data)
 		return true;
 	}
 
+	return false;
+}
+
+bool StageChanger::SetBossArea(const LevelData::ObjectData& data)
+{
+	if (data.setObjectName == "bossArea")
+	{
+		SetObject<BossArea>(data);
+		
+		BossArea* bArea = static_cast<BossArea*>(mEntitys.back().get());
+
+		bArea->Create();
+
+		return true;
+	}
 	return false;
 }
 

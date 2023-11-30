@@ -12,6 +12,7 @@
 #include "EventTriggerBox.h"
 #include "EnemyDokan.h"
 #include "Bombking.h"
+#include "BossArea.h"
 
 bool CollideManager::CheckDirections(const Cube& check, const Cube& collide, const CheckDirection& CD)
 {
@@ -213,6 +214,31 @@ void CollideManager::CheckCollide(Entity* check, Entity* collide)
 				moveblock->OnCollide(mob);
 			}
 		}
+	}
+
+	//判定する側がボスの時
+	if (check->CheckTag(TagTable::Bombking))
+	{
+		if (check == nullptr)
+		{
+			return;
+		}
+		
+		//Bombking* bombking = static_cast<Bombking*>(collide);
+
+		////される側がブロックなら
+		//if (collide->CheckTag(TagTable::BossArea))
+		//{
+		//	//collideがBlockであることは確定しているので、Block型に変換してデータを持ってくる
+		//	BossArea* bArea = static_cast<BossArea*>(collide);
+
+		//	for (auto& part : bArea->bossAreaParts){
+		//		if (Collsions::CubeCollision(part, bombking->box.cubecol)) {
+		//			//押し戻し処理を行う
+		//			Osimodosi(*bombking, *block);
+		//		}
+		//	}
+		//}
 	}
 }
 

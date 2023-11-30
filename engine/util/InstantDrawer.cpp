@@ -8,11 +8,13 @@
 
 std::list<Sprite> InstantDrawer::sSprites;
 std::list<Billboard> InstantDrawer::sBillboards;
+std::list<Obj3d> InstantDrawer::sObjs;
 
 void InstantDrawer::DrawInit()
 {
 	sSprites.clear();
 	sBillboards.clear();
+	sObjs.clear();
 }
 
 void InstantDrawer::DrawBox(const float& x, const float& y, const float& width, const float& height, const Color& color, const Anchor& anchor)
@@ -86,6 +88,19 @@ void InstantDrawer::DrawGraph3D(const Vector3& pos, float width, float height, c
 	}
 }
 
+void InstantDrawer::DrawBox3D(const Cube& cube)
+{
+	//includeで説明した通りイベント実行中なら消す
+	if (EventManager::Get()->GetLineEvent() != nullptr) return;
+
+	sObjs.emplace_back();
+	sObjs.back().Initialize();
+	sObjs.back().SetTexture(TextureManager::GetTexture("white"));
+	sObjs.back().position = cube.position;
+	sObjs.back().rotation = cube.rotation;
+	sObjs.back().scale = cube.scale;
+}
+
 void InstantDrawer::AllUpdate()
 {
 	for (auto& sprite : sSprites)
@@ -95,6 +110,10 @@ void InstantDrawer::AllUpdate()
 	for (auto& billboard : sBillboards)
 	{
 		billboard.Update(*Camera::sCamera);
+	}
+	for (auto& obj : sObjs)
+	{
+		obj.Update(*Camera::sCamera);
 	}
 }
 
@@ -115,5 +134,10 @@ void InstantDrawer::AllDraw3D()
 	for (auto& billboard : sBillboards)
 	{
 		billboard.Draw();
+	}
+	
+	for (auto& obj : sObjs)
+	{
+		obj.Draw();
 	}
 }

@@ -3,6 +3,7 @@
 #include "Color.h"
 #include <list>
 #include <Billboard.h>
+#include <Collision.h>
 
 /*! InstantDrawer
 	DxLibライクな描画関数を利用できるクラス
@@ -60,6 +61,11 @@ public:
 	static void DrawGraph3D(const Vector3& pos,float width,float height,const std::string& handle);
 	
 	/// <summary>
+	/// コリジョンのcubeを3Dオブジェクトとして描画する関数
+	/// </summary>
+	static void DrawBox3D(const Cube& cube);
+
+	/// <summary>
 	/// 全更新
 	/// </summary>
 	static void AllUpdate();
@@ -74,4 +80,6 @@ private:
 	static std::list<Sprite> sSprites;
 
 	static std::list<Billboard> sBillboards;
+
+	static std::list<Obj3d> sObjs;
 };
