@@ -16,7 +16,8 @@ public:
 		float intensity;
 		float radius;
 		float decay;
-		float padding[2];
+		bool active;
+		float padding;
 	};
 public://メンバ変数
 	//ライト座標

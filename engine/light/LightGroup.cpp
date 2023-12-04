@@ -45,6 +45,7 @@ void LightGroup::TransferBuffer()
 	for (int32_t i = 0; i < sPOINTLIGHT_NUM; i++)
 	{
 		if (mPointLights[i].mActive) {
+			mConstBuff.mConstBufferData->mPointLights[i].active = true;
 			mConstBuff.mConstBufferData->mPointLights[i].lightPos = mPointLights[i].mLightPos;
 			mConstBuff.mConstBufferData->mPointLights[i].lightColor = { mPointLights[i].mLightColor.x,mPointLights[i].mLightColor .y,mPointLights[i].mLightColor .z,1};
 			mConstBuff.mConstBufferData->mPointLights[i].intensity = mPointLights[i].intensity;
@@ -53,7 +54,7 @@ void LightGroup::TransferBuffer()
 		}
 		else
 		{
-			//mConstBuff.mConstBufferData->mPointLights[i].active = false;
+			mConstBuff.mConstBufferData->mPointLights[i].active = false;
 		}
 	}
 }

@@ -30,19 +30,22 @@ float4 main(VSOutput input) : SV_TARGET
         }
     }
     
-    for (i = 0; i < POINTLIGHT_NUM; i++)
+    for (int j = 0; j < POINTLIGHT_NUM; j++)
     {
-        //ベクトルの長さ
-        float distance = length(pointLights[i].lightpos - input.worldPos.xyz);
-        float factor = pow(saturate(-distance / pointLights[i].radius + 1.0f),pointLights[i].decay);
+        if (pointLights[j].active)
+        {
+            //ベクトルの長さ
+            float distance = length(pointLights[j].lightpos - input.worldPos.xyz);
+            float factor = pow(saturate(-distance / pointLights[j].radius + 1.0f), pointLights[j].decay);
         
-        float3 pointColor = pointLights[i].lightcolor.rgb * pointLights[i].intensity * factor;
+            float3 pointColor = pointLights[j].lightcolor.rgb * pointLights[j].intensity * factor;
             
-        float3 diffuse = pointColor * m_diffuse;
+            float3 diffuse = pointColor * m_diffuse;
         
-        float3 specular = pointColor * float3(1.0f,1.0f,1.0f);
-            
-        shadecolor.rgb += (diffuse + specular);
+            float3 specular = pointColor * float3(1.0f, 1.0f, 1.0f);
+           
+            shadecolor.rgb += diffuse + specular;
+        }
     }
     
     return float4(shadecolor.rgb * color.rgb, color.a * texcolor.a);
