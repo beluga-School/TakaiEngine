@@ -37,13 +37,34 @@ float4 main(VSOutput input) : SV_TARGET
             //ƒxƒNƒgƒ‹‚Ì’·‚³
             float distance = length(pointLights[j].lightpos - input.worldPos.xyz);
             float factor = pow(saturate(-distance / pointLights[j].radius + 1.0f), pointLights[j].decay);
-        
+            
             float3 pointColor = pointLights[j].lightcolor.rgb * pointLights[j].intensity * factor;
             
             float3 diffuse = pointColor * m_diffuse;
         
             float3 specular = pointColor * float3(1.0f, 1.0f, 1.0f);
            
+            shadecolor.rgb -= diffuse + specular;
+        }
+    }
+    
+    for (int k = 0; k < SPOTLIGHT_NUM; k++)
+    {
+        if (spotLights[k].active)
+        {
+            float3 spotlightDirectionOnSurface = normalize(input.worldPos.xyz - spotLights[k].lightpos);
+            float cosAngle = dot(spotlightDirectionOnSurface, spotLights[k].direction);
+            float falloffFactor = saturate((cosAngle - spotLights[k].cosAngle) / (1.0f - spotLights[k].cosAngle));
+            
+            float distance = length(spotLights[k].lightpos - input.worldPos.xyz);
+            float attenuationFactor = pow(saturate(-distance / spotLights[k].distance + 1.0f), spotLights[k].decay);
+            
+            float3 spotColor = spotLights[k].lightcolor.rgb * spotLights[k].intensity * falloffFactor * attenuationFactor;
+            
+            float3 diffuse = spotColor * m_diffuse;
+        
+            float3 specular = spotColor * float3(1.0f, 1.0f, 1.0f);
+        
             shadecolor.rgb += diffuse + specular;
         }
     }

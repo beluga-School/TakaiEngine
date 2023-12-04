@@ -1,6 +1,7 @@
 #include "LightGroup.h"
 #include "DirectXInit.h"
 #include "Player.h"
+#include "MathF.h"
 
 void LightGroup::Initialize()
 {
@@ -55,6 +56,26 @@ void LightGroup::TransferBuffer()
 		else
 		{
 			mConstBuff.mConstBufferData->mPointLights[i].active = false;
+		}
+	}
+
+	for (int32_t i = 0; i < sSPOTLIGHT_NUM; i++)
+	{
+		if (mSpotLights[i].mActive)
+		{
+			mConstBuff.mConstBufferData->mSpotLights[i].active = true;
+			mConstBuff.mConstBufferData->mSpotLights[i].lightPos = mSpotLights[i].mLightPos;
+			mConstBuff.mConstBufferData->mSpotLights[i].lightColor = { mSpotLights[i].mLightColor.x,mSpotLights[i].mLightColor.y,mSpotLights[i].mLightColor.z,1 };
+			mConstBuff.mConstBufferData->mSpotLights[i].intensity = mSpotLights[i].intensity;
+			mConstBuff.mConstBufferData->mSpotLights[i].decay = mSpotLights[i].decay;
+			
+			mConstBuff.mConstBufferData->mSpotLights[i].distance = mSpotLights[i].distance;
+			mConstBuff.mConstBufferData->mSpotLights[i].cosAngle = mSpotLights[i].cosAngle;
+			mConstBuff.mConstBufferData->mSpotLights[i].cosFalloffStart = mSpotLights[i].cosFalloffStart;
+		}
+		else
+		{
+			mConstBuff.mConstBufferData->mSpotLights[i].active = false;
 		}
 	}
 }
@@ -127,25 +148,62 @@ void LightGroup::DefaultLightSet()
 	mPointLights[0].mActive = true;
 	mPointLights[0].mLightColor = {1.0f,1.0f,1.0f};
 	mPointLights[0].mLightAtten = { 1.0f ,1.0f,1.0f};
+
+	mSpotLights[0].mActive = false;
+	mSpotLights[0].mLightColor = { 1.0f,1.0f,1.0f };
+	mSpotLights[0].mLightAtten = { 1.0f ,1.0f,1.0f };
 }
 
 void LightGroup::LightDebugGUI()
 {
+
 	lightGui.Begin({800,100},{200,200});
-	ImGui::SliderFloat("pointLight:intensity", &mPointLights[0].intensity,0,1.0f);
-	ImGui::SliderFloat("pointLight:pos.x", &mPointLights[0].mLightPos.x,-200.f,200.0f);
-	ImGui::SliderFloat("pointLight:pos.y", &mPointLights[0].mLightPos.y,-200.f,200.0f);
-	ImGui::SliderFloat("pointLight:pos.z", &mPointLights[0].mLightPos.z,-200.f,200.0f);
-	ImGui::SliderFloat("pointLight:radius", &mPointLights[0].radius,0.0f,100.0f);
-	ImGui::SliderFloat("pointLight:decay", &mPointLights[0].decay,0.0f, 100.0f);
 	
-	if (ImGui::Button("LightPlayerSet"))
-	{
-		LightGroup::Get()->SetPointLightPos(0, Player::Get()->position);
-	}
+	PointLightDebug();
 	
 	lightGui.End();
 
 	//重い処理なんで避ける工夫を
 	TransferBuffer();
+}
+
+void LightGroup::SpotLightDebug()
+{
+	static float angle = 0;
+	static float fallStart = 0;
+
+
+	ImGui::SliderFloat("pointLight:intensity", &mSpotLights[0].intensity,0,1.0f);
+	ImGui::SliderFloat("pointLight:pos.x", &mSpotLights[0].mLightPos.x,-200.f,200.0f);
+	ImGui::SliderFloat("pointLight:pos.y", &mSpotLights[0].mLightPos.y,-200.f,200.0f);
+	ImGui::SliderFloat("pointLight:pos.z", &mSpotLights[0].mLightPos.z,-200.f,200.0f);
+	ImGui::SliderFloat("pointLight:distance", &mSpotLights[0].distance,0.0f,100.0f);
+	ImGui::SliderFloat("pointLight:decay", &mSpotLights[0].decay,0.0f, 100.0f);
+	ImGui::SliderFloat("pointLight:cosAngle", &angle,0.0f, 360.0f);
+	ImGui::SliderFloat("pointLight:cosFalloffStart", &fallStart,1.0f, 360.0f);
+	ImGui::SliderFloat("pointLight:mDirection.x", &mSpotLights[0].mDirection.x, -1.0f, 1.0f);
+	ImGui::SliderFloat("pointLight:mDirection.y", &mSpotLights[0].mDirection.y, -1.0f, 1.0f);
+	ImGui::SliderFloat("pointLight:mDirection.z", &mSpotLights[0].mDirection.z, -1.0f, 1.0f);
+	
+	mSpotLights[0].cosAngle = MathF::AngleConvRad(angle);
+	mSpotLights[0].cosFalloffStart = MathF::AngleConvRad(fallStart);
+	if (ImGui::Button("LightPlayerSet"))
+	{
+		LightGroup::Get()->mPointLights[0].mLightPos = Player::Get()->position;
+	}
+}
+
+void LightGroup::PointLightDebug()
+{
+	ImGui::SliderFloat("pointLight:intensity", &mPointLights[0].intensity, 0, 1.0f);
+	ImGui::SliderFloat("pointLight:pos.x", &mPointLights[0].mLightPos.x, -200.f, 200.0f);
+	ImGui::SliderFloat("pointLight:pos.y", &mPointLights[0].mLightPos.y, -200.f, 200.0f);
+	ImGui::SliderFloat("pointLight:pos.z", &mPointLights[0].mLightPos.z, -200.f, 200.0f);
+	ImGui::SliderFloat("pointLight:distance", &mPointLights[0].radius, 0.0f, 100.0f);
+	ImGui::SliderFloat("pointLight:decay", &mPointLights[0].decay, 0.0f, 100.0f);
+
+	if (ImGui::Button("LightPlayerSet"))
+	{
+		LightGroup::Get()->mPointLights[0].mLightPos = Player::Get()->position;
+	}
 }

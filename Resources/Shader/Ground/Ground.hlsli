@@ -41,11 +41,26 @@ struct PointLight
     uint active;
 };
 
+static const int SPOTLIGHT_NUM = 3;
+
+struct SpotLight
+{
+    float4 lightcolor;
+    float3 lightpos;
+    float intensity;
+    float3 direction;
+    float distance;
+    float decay;
+    float cosAngle;
+    uint active;
+};
+
 cbuffer cbuff3 : register(b3)
 {
     float3 pad;
     DirLight dirLights[DIRLIGHT_NUM];
     PointLight pointLights[POINTLIGHT_NUM];
+    SpotLight spotLights[SPOTLIGHT_NUM];
 };
 
 struct VSOutput

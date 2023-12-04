@@ -3,6 +3,7 @@
 #include "Vector3.h"
 #include "ConstBuffer.h"
 #include "PointLight.h"
+#include "SpotLight.h"
 #include <stdlib.h>
 #include <memory>
 #include "ImguiManager.h"
@@ -13,6 +14,9 @@ static const int32_t sDIRLIGHT_NUM = 3;
 //点光源の数
 static const int32_t sPOINTLIGHT_NUM = 3;
 
+//スポットライトの数
+static const int32_t sSPOTLIGHT_NUM = 3;
+
 struct LightGroupData
 {
 	Vector3 pad3;
@@ -21,6 +25,8 @@ struct LightGroupData
 	DirectionalLight::ConstBufferData mDirLights[sDIRLIGHT_NUM];
 
 	PointLight::ConstBufferData mPointLights[sPOINTLIGHT_NUM];
+
+	SpotLight::ConstBufferData mSpotLights[sSPOTLIGHT_NUM];
 };
 
 /*! LightGroup
@@ -75,8 +81,13 @@ public://関数
 
 	void LightDebugGUI();
 
+	void PointLightDebug();
+
+	void SpotLightDebug();
+
 	DirectionalLight mDirLights[sDIRLIGHT_NUM];
 	PointLight mPointLights[sDIRLIGHT_NUM];
+	SpotLight mSpotLights[sSPOTLIGHT_NUM];
 
 private:
 

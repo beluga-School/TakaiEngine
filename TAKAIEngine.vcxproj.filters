@@ -421,6 +421,9 @@
     <Filter Include="Engine\Light\CircleShadow">
       <UniqueIdentifier>{866ddfe1-a629-434c-a86b-875c60a0cb0e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Engine\Light\SpotLight">
+      <UniqueIdentifier>{809d831b-3f75-4a22-89ca-c58b8ae5a1db}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="engine\input\Input.cpp">
@@ -728,6 +731,9 @@
     </ClCompile>
     <ClCompile Include="CircleShadow.cpp">
       <Filter>Engine\Light\CircleShadow</Filter>
+    </ClCompile>
+    <ClCompile Include="SpotLight.cpp">
+      <Filter>Engine\Light\SpotLight</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1051,6 +1057,9 @@
     </ClInclude>
     <ClInclude Include="CircleShadow.h">
       <Filter>Engine\Light\CircleShadow</Filter>
+    </ClInclude>
+    <ClInclude Include="SpotLight.h">
+      <Filter>Engine\Light\SpotLight</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
