@@ -55,12 +55,26 @@ struct SpotLight
     uint active;
 };
 
+static const int CIRCLESHADOW_NUM = 3;
+
+struct CircleShadow
+{
+    float3 casterPos;
+    float distance;
+    float3 atten;
+    bool active;
+    float3 direction;
+    float pad;
+    float2 angleCos;
+};
+
 cbuffer cbuff3 : register(b3)
 {
     float3 pad;
     DirLight dirLights[DIRLIGHT_NUM];
     PointLight pointLights[POINTLIGHT_NUM];
     SpotLight spotLights[SPOTLIGHT_NUM];
+    CircleShadow circleShadow[CIRCLESHADOW_NUM];
 };
 
 struct VSOutput

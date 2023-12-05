@@ -4,6 +4,7 @@
 #include "ConstBuffer.h"
 #include "PointLight.h"
 #include "SpotLight.h"
+#include "CircleShadow.h"
 #include <stdlib.h>
 #include <memory>
 #include "ImguiManager.h"
@@ -17,6 +18,9 @@ static const int32_t sPOINTLIGHT_NUM = 3;
 //スポットライトの数
 static const int32_t sSPOTLIGHT_NUM = 3;
 
+//丸影の数(今後最大数にしたい)
+static const int32_t sCIRCLESHADOW_NUM = 3;
+
 struct LightGroupData
 {
 	Vector3 pad3;
@@ -27,6 +31,8 @@ struct LightGroupData
 	PointLight::ConstBufferData mPointLights[sPOINTLIGHT_NUM];
 
 	SpotLight::ConstBufferData mSpotLights[sSPOTLIGHT_NUM];
+	
+	CircleShadow::ConstBufferData mCircleShadow[sCIRCLESHADOW_NUM];
 };
 
 /*! LightGroup
@@ -85,9 +91,12 @@ public://関数
 
 	void SpotLightDebug();
 
+	void CircleShadowDebug();
+
 	DirectionalLight mDirLights[sDIRLIGHT_NUM];
 	PointLight mPointLights[sDIRLIGHT_NUM];
 	SpotLight mSpotLights[sSPOTLIGHT_NUM];
+	CircleShadow mCircleShadow[sCIRCLESHADOW_NUM];
 
 private:
 
