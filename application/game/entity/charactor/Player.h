@@ -244,6 +244,4 @@ private:
 	Quaternion startQ;
 	Quaternion endQ;
 	Quaternion culQ;
-
-	
 };

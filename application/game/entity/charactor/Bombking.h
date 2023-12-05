@@ -7,6 +7,27 @@
 class Bombking : public Enemy
 {
 public:
+	/// <summary>
+	/// 指定したステートがあるか確認する
+	/// </summary>
+	/// <param name="check">確認したいステート</param>
+	/// <returns>あったらtrue ないならfalse</returns>
+	bool CheckState(ActTable check);
+
+	/// <summary>
+	/// 指定したステートを付ける(重複していた場合は付けない)
+	/// </summary>
+	/// <param name="check">付けたいステート</param>
+	/// <returns>ステートのセットに成功でtrue 重複があったらfalse</returns>
+	bool SetState(ActTable check);
+
+	/// <summary>
+	/// 指定したステートを削除する
+	/// </summary>
+	/// <param name="check">削除したいステート</param>
+	/// <returns>ステートの削除に成功でtrue ステートが見つからない場合false</returns>
+	bool DeleteState(ActTable check);
+public:
 	Bombking() : Enemy() {
 		SetTag(TagTable::Bombking);
 	}
@@ -25,6 +46,8 @@ public:
 
 	//投げる処理
 	void Throw(Mob& mob);
+
+	void DebugGUI();
 
 private:
 
@@ -50,5 +73,6 @@ private:
 	Vector3 startVec{};
 	Vector3 endVec{};
 
+	std::vector<ActTable> actTables;
 };
 

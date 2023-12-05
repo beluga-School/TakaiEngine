@@ -7,6 +7,45 @@
 #include "CollideManager.h"
 #include "Star.h"
 
+bool Bombking::CheckState(ActTable check)
+{
+	for (auto& tag : actTables)
+	{
+		if (tag == check)
+		{
+			return true;
+		}
+	}
+	return false;
+}
+
+bool Bombking::SetState(ActTable check)
+{
+	for (auto itr = actTables.begin(); itr != actTables.end(); itr++)
+	{
+		if (*itr == check)
+		{
+			return false;
+		}
+	}
+	actTables.push_back(check);
+	return true;
+}
+
+bool Bombking::DeleteState(ActTable check)
+{
+	for (auto itr = actTables.begin(); itr != actTables.end(); itr++)
+	{
+		if (*itr == check)
+		{
+			actTables.erase(itr);
+			return true;
+		}
+	}
+
+	return false;
+}
+
 void Bombking::Initialize()
 {
 	Obj3d::Initialize();
@@ -25,7 +64,8 @@ void Bombking::Initialize()
 
 	target = nullptr;
 
-	mActTable = ActTable::Encount;
+	actTables.clear();
+	SetState(ActTable::Tracking);
 }
 
 void Bombking::Update()
@@ -36,19 +76,19 @@ void Bombking::Update()
 	//ダメージ受けたときにこの大きさへと変化する
 	Vector3 damageScale = { initScale.x + 1.0f,initScale.y - 0.5f, initScale.z + 1.0f };
 
-	switch (mActTable)
-	{
-	case ActTable::None:
-		break;
-	case ActTable::Encount:
-		mActTable = ActTable::Tracking;
+	if (CheckState(ActTable::Encount)) {
+		SetState(ActTable::Tracking);
+		DeleteState(ActTable::Encount);
+	}
 
-		break;
-	case ActTable::Tracking:
+	if (CheckState(ActTable::Tracking)) {
 		Tracking();
 
-		break;
-	case ActTable::Attack1:
+		throwBox.position = position + (Enemy::TargetVector(*Player::Get()) * 5);
+		throwBox.scale = { 5,5,5 };
+	}
+
+	if (CheckState(ActTable::Attack1)) {
 		throwTimer.Update();
 		throwInterval.Update();
 
@@ -61,30 +101,33 @@ void Bombking::Update()
 				}
 			}
 			target->position = Vector3::Spline(inters, throwTimer.GetTimeRate());
-			
+
 			if (throwTimer.GetEnd()) {
 				target->SetNoGravity(false);
 				target->SetNoCollsion(false);
 				target = nullptr;
-				mActTable = ActTable::Encount;
+				SetState(ActTable::Encount);
+				DeleteState(ActTable::Attack1);
 			}
 		}
+	}
 
-		break;
-	case ActTable::Attack2:
-		break;
-	case ActTable::Staying:
-		break;
-	case ActTable::Damage:
+	if (CheckState(ActTable::Damage)) 
+	{
+		DeleteState(ActTable::Encount);
+		DeleteState(ActTable::Tracking);
+		DeleteState(ActTable::Attack1);
+
 		if (damageTimer.GetEnd()) {
 			if (hp.mCurrent > 0)
 			{
-				if(!reboundTimer.GetStarted())reboundTimer.Start();
+				if (!reboundTimer.GetStarted())reboundTimer.Start();
 			}
 		}
 
 		if (reboundTimer.GetEnd()) {
-			mActTable = ActTable::Encount;
+			SetState(ActTable::Encount);
+			DeleteState(ActTable::Damage);
 			reboundTimer.Reset();
 			damageTimer.Reset();
 		}
@@ -98,13 +141,14 @@ void Bombking::Update()
 
 		if (reboundTimer.GetRun())
 		{
-			scale.x = TEasing::OutElastic(damageScale.x,initScale.x, reboundTimer.GetTimeRate());
+			scale.x = TEasing::OutElastic(damageScale.x, initScale.x, reboundTimer.GetTimeRate());
 			scale.y = TEasing::OutElastic(damageScale.y, initScale.y, reboundTimer.GetTimeRate());
 			scale.z = TEasing::OutElastic(damageScale.z, initScale.z, reboundTimer.GetTimeRate());
 		}
+	}
 
-		break;
-	case ActTable::Dead:
+	if (CheckState(ActTable::Dead))
+	{
 		isDead = true;
 		Star::PopStar(position);
 		//パーティクル出す
@@ -113,7 +157,6 @@ void Bombking::Update()
 			ParticleManager::Get()->CreateCubeParticle(position,
 				{ 1.0f,1.0f,1.0f }, 10, { 0,1,0,0.5f });
 		}
-		break;
 	}
 
 	//死亡処理への遷移
@@ -121,12 +164,10 @@ void Bombking::Update()
 	{
 		if (hp.mCurrent <= 0)
 		{
-			mActTable = ActTable::Dead;
+			SetState(ActTable::Dead);
 		}
 	}
 
-	throwBox.position = position + (Enemy::TargetVector(*Player::Get()) * 5);
-	throwBox.scale = { 5,5,5 };
 	throwBox.Update(*Camera::sCamera);
 
 	//ずらした分を加算する
@@ -150,7 +191,7 @@ void Bombking::Draw()
 
 void Bombking::HitEffect()
 {
-	if (mActTable == ActTable::Damage){
+	if (CheckState(ActTable::Damage)){
 		return;
 	}
 	//食らったらちょっと潰れる
@@ -158,17 +199,14 @@ void Bombking::HitEffect()
 		damageTimer.Start();
 	}
 
-	mActTable = ActTable::Damage;
+	SetState(ActTable::Damage);
 
 	hp.mCurrent -= 1;
 }
 
 void Bombking::Encount()
 {
-	if ((mActTable != ActTable::Damage && mActTable != ActTable::Attack1))
-	{
-		mActTable = ActTable::Encount;
-	}
+	SetState(ActTable::Encount);
 }
 
 bool Bombking::ThrowBoxHit(const Mob& mob)
@@ -206,9 +244,17 @@ void Bombking::Throw(Mob& mob)
 	throwInterval.Start();
 	throwTimer.Reset();
 
-	mActTable = ActTable::Attack1;
+	SetState(ActTable::Attack1);
 
 	//endTargetCircle.position = endPos;
+}
+
+void Bombking::DebugGUI()
+{
+	for (auto& act : actTables)
+	{
+		ImGui::Text("%d", act);
+	}
 }
 
 void Bombking::Tracking()

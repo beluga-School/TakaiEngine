@@ -81,7 +81,11 @@ void Player::Initialize()
 
 	mModelOffset = { 0,0.3f,0 };
 
+	playerStates.clear();
 	SetState(PlayerState::Normal);
+
+	SetNoGravity(false);
+	SetNoMove(false);
 }
 
 void Player::Update()

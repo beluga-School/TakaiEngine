@@ -14,6 +14,7 @@
 #include "EventCamera.h"
 #include <GameUIManager.h>
 #include <EventCameraManager.h>
+#include "Bombking.h"
 
 void GameScene::LoadResource()
 {
@@ -219,6 +220,14 @@ void GameScene::GameSceneDebugGUI()
 
 	ImGui::Text("mouseR %f", PlayerCamera::Get()->GetRadius());
 	player->DebugGUI();
+
+	for (auto& hoge : EnemyManager::Get()->enemyList)
+	{
+		if (hoge->CheckTag(TagTable::Bombking)) {
+			Bombking* bomb = static_cast<Bombking*>(hoge.get());
+			bomb->DebugGUI();
+		}
+	}
 
 	PlayerCamera::Get()->CheckDebug();
 
