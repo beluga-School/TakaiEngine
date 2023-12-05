@@ -27,6 +27,9 @@ struct LevelData
 		Vector3 scaling{};
 
 		ColliderData collider{};
+
+		//テスト用　とりあえず既存の物でないデータをまとめて文字列に入れておく
+		std::vector<std::string> otherData;
 	};
 
 	std::vector<ObjectData> mObjects;

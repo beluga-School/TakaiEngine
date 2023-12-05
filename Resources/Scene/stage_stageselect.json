@@ -1941,7 +1941,7 @@
                     0.6321309804916382
                 ]
             },
-            "event_trigger": "enemyPopEvent_Slime",
+            "event_trigger": "enemyPopEvent_Slime_1",
             "setObject": "eventcamera"
         },
         {
@@ -2054,6 +2054,29 @@
             },
             "event_trigger": "enemyPopEvent_Slime",
             "setObject": "enemy"
+        },
+        {
+            "type": "MESH",
+            "name": "立方体.003",
+            "transform": {
+                "translation": [
+                    214.5567626953125,
+                    -6.136456489562988,
+                    -0.25292110443115234
+                ],
+                "rotation": [
+                    1.4280269411415247e-08,
+                    -22.032859802246094,
+                    -178.38987731933594
+                ],
+                "scaling": [
+                    0.6321309804916382,
+                    0.6321309804916382,
+                    0.6321309804916382
+                ]
+            },
+            "event_trigger": "enemyPopEvent_Slime_2",
+            "setObject": "eventcamera"
         }
     ]
 }

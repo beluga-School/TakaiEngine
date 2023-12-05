@@ -46,6 +46,11 @@ bool EventCameraManager::SetEventCamera(const std::string& eventname)
 	return true;
 }
 
+EventCamManageData* EventCameraManager::GetNowEventCameraData()
+{
+	return nowCamEvent;
+}
+
 bool EventCameraManager::GetEventEnd()
 {
 	if (!nowCamEvent->InTargetData())

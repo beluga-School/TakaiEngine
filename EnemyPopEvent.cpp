@@ -3,6 +3,7 @@
 #include "EnemyManager.h"
 #include "Slime.h"
 #include "InstantDrawer.h"
+#include "EventCameraManager.h"
 
 void EnemyPopEvent::Initialize()
 {
@@ -40,5 +41,12 @@ void EnemyPopEvent::End()
 
 bool EnemyPopEvent::EndFlag()
 {
-	return endTimer.GetEnd();
+	if (EventCameraManager::Get()->GetNowEventCameraData() != nullptr) 
+	{
+		return EventCameraManager::Get()->GetNowEventCameraData()->endStandbyTimer.GetEnd();
+	}
+	else
+	{
+		return endTimer.GetEnd();
+	}
 }

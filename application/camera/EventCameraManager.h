@@ -13,12 +13,12 @@ struct EventCamManageData
 	Vector3 target = { -1000,-1000,-1000 };
 
 	//移動時間を管理するタイマー(合計値)
-	TEasing::easeTimer moveTimer = 3.0f;
+	TEasing::easeTimer moveTimer = 2.0f;
 	TEasing::easeTimer rotaTimer = 1.0f;
 
 	//最初と最後の待機時間を管理するタイマー
-	TEasing::easeTimer startStandbyTimer = 2.0f;
-	TEasing::easeTimer endStandbyTimer = 2.0f;
+	TEasing::easeTimer startStandbyTimer = 0.0f;
+	TEasing::easeTimer endStandbyTimer = 0.0f;
 
 	//ターゲットデータに情報が入っているならtrueを返す
 	bool InTargetData();
@@ -47,6 +47,12 @@ public:
 	/// <param name="eventname">検索したいイベント名</param>
 	/// <returns>成功or失敗</returns>
 	bool SetEventCamera(const std::string& eventname);
+
+	/// <summary>
+	/// 現在呼び出されているイベントカメラのデータを取得
+	/// </summary>
+	/// <returns></returns>
+	EventCamManageData* GetNowEventCameraData();
 
 	bool GetEventEnd();
 

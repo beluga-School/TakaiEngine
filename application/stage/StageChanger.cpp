@@ -947,9 +947,6 @@ void StageChanger::RegisterEvent(const std::string& eventname)
 	if (eventname == "boss_hikiCamera") {
 		EventManager::Get()->Register<BossHikiCamera>(eventname);
 	}
-	/*if (eventname == "enemyPopEvent_Slime") {
-		EventManager::Get()->Register<EnemyPopEvent>(eventname);
-	}*/
 }
 
 void StageChanger::ResetRevise(int32_t stageNumber, int32_t starID, int32_t starnum)
