@@ -131,6 +131,8 @@
     <ClCompile Include="application\game\entity\EnemyDokan.cpp" />
     <ClCompile Include="BossArea.cpp" />
     <ClCompile Include="BossHikiCamera.cpp" />
+    <ClCompile Include="CameraEvent.cpp" />
+    <ClCompile Include="EnemyPopEvent.cpp" />
     <ClCompile Include="engine\util\InstantDrawer.cpp" />
     <ClCompile Include="application\level\LevelData.cpp" />
     <ClCompile Include="application\game\entity\eventBlock\MoveBlock.cpp" />
@@ -231,6 +233,8 @@
     <ClInclude Include="application\game\entity\EnemyDokan.h" />
     <ClInclude Include="BossArea.h" />
     <ClInclude Include="BossHikiCamera.h" />
+    <ClInclude Include="CameraEvent.h" />
+    <ClInclude Include="EnemyPopEvent.h" />
     <ClInclude Include="engine\util\InstantDrawer.h" />
     <ClInclude Include="application\level\LevelData.h" />
     <ClInclude Include="application\game\entity\eventBlock\MoveBlock.h" />

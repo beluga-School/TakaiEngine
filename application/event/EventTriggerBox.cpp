@@ -10,6 +10,14 @@ void EventTriggerBox::Initialize()
 void EventTriggerBox::Update()
 {
 	Obj3d::Update(*Camera::sCamera);
+
+	//自身の持っているイベントが終了フラグを発動したら
+	if (EventManager::Get()->CheckExestEvent(eventName_) != nullptr) {
+		if (EventManager::Get()->CheckExestEvent(eventName_)->get()->state == IEvent::EventState::End) {
+			//終了する
+			EventEnd();
+		}
+	}
 }
 
 void EventTriggerBox::Draw()
@@ -19,11 +27,20 @@ void EventTriggerBox::Draw()
 
 void EventTriggerBox::EventStart()
 {
+	//トリガーイベントで、すでに実行済みなら開始しない
+	if (EventManager::Get()->CheckExestEvent(eventName_) != nullptr) {
+		if (EventManager::Get()->CheckExestEvent(eventName_)->get()->isExecuted)
+		{
+			return;
+		}
+	}
+
 	if (trigger)
 	{
 		return;
 	}
 	EventManager::Get()->Start(eventName_);
+	
 	trigger = true;
 }
 
@@ -34,5 +51,6 @@ void EventTriggerBox::EventEnd()
 		return;
 	}
 	EventManager::Get()->End(eventName_);
+
 	trigger = false;
 }

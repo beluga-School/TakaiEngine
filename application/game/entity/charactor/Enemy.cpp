@@ -2,6 +2,51 @@
 #include "MathF.h"
 #include "ClearDrawScreen.h"
 
+bool Enemy::CheckState(ActTable check)
+{
+	for (auto& tag : actTables)
+	{
+		if (tag == check)
+		{
+			return true;
+		}
+	}
+	return false;
+}
+
+bool Enemy::SetState(ActTable check)
+{
+	for (auto itr = actTables.begin(); itr != actTables.end(); itr++)
+	{
+		if (*itr == check)
+		{
+			return false;
+		}
+	}
+	actTables.push_back(check);
+	return true;
+}
+
+bool Enemy::DeleteState(ActTable check)
+{
+	for (auto itr = actTables.begin(); itr != actTables.end(); itr++)
+	{
+		if (*itr == check)
+		{
+			actTables.erase(itr);
+			return true;
+		}
+	}
+
+	return false;
+}
+
+void Enemy::ForceState(ActTable force)
+{
+	actTables.clear();
+	SetState(force);
+}
+
 int32_t Enemy::GetHitDamage()
 {
 	return hitDamage;
@@ -65,4 +110,9 @@ void Enemy::SetMaxHP(int32_t SET_MAX_HP)
 	int32_t nowDecreaceHP = nowMAXHP - nowHP;
 	maxHP = SET_MAX_HP;
 	hp = SET_MAX_HP - nowDecreaceHP;
+}
+
+bool Enemy::GetActive()
+{
+	return mActive;
 }

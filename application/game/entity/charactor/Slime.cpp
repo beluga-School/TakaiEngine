@@ -15,6 +15,9 @@ void Slime::Initialize()
 	EncountSphereInitialize();
 
 	Register();
+
+	actTables.clear();
+	SetState(ActTable::None);
 }
 
 void Slime::Update()
@@ -28,17 +31,12 @@ void Slime::Update()
 
 	Vector3 standardRotaVec = {MathF::PIf / 2,0,0};
 
-	switch (mActTable)
-	{
-		
-	case ActTable::None:
+	if (CheckState(ActTable::None)) {
 		rotation.y = 0;
-		break;
-	case ActTable::Encount:
-		SetNoGravity(true);
-
+	}
+	if (CheckState(ActTable::Encount)) {
 		//ジャンプする
-		position.y = TEasing::OutQuad(encountJumpS, encountJumpE, encountJumpTimer.GetTimeRate());
+		//position.y = TEasing::OutQuad(encountJumpS, encountJumpE, encountJumpTimer.GetTimeRate());
 
 		if (encountJumpTimer.GetEnd())
 		{
@@ -46,15 +44,13 @@ void Slime::Update()
 		}
 		if (encountJumpTimer.GetReverseEnd())
 		{
-			mActTable = ActTable::Tracking;
+			SetState(ActTable::Tracking);
+			DeleteState(ActTable::Encount);
 			metronomeTimer.Start();
 			accelerationTimer.Start();
-			SetNoGravity(false);
 		}
-
-		break;
-	case ActTable::Tracking:
-		
+	}
+	if (CheckState(ActTable::Tracking)) {
 		///---見た目処理
 		//追いかける方向へ向きを変える
 		pVec = Player::Get()->position - position;
@@ -88,27 +84,26 @@ void Slime::Update()
 		//攻撃範囲から外れたら終わり
 		if (!Collsions::SphereCollsion(Player::Get()->mEncountCol, sphereCol))
 		{
-			mActTable = ActTable::Staying;
+			SetState(ActTable::Staying);
+			DeleteState(ActTable::Tracking);
 			stayTimer.Start();
 		}
-
-		break;
-	case ActTable::Staying:
-		
+	}
+	if (CheckState(ActTable::Staying)) {
 		if (stayTimer.GetEnd())
 		{
-			mActTable = ActTable::None;
+			SetState(ActTable::None);
+			DeleteState(ActTable::Staying);
 			stayTimer.Reset();
 		}
-
-		break;
-	case ActTable::Dead:
+	}
+	if (CheckState(ActTable::Dead)) {
 		//縦はつぶす
-		scale.y = TEasing::OutQuad(deadEasingS.y, deadEasingE.y,deadTimer.GetTimeRate());
-		
+		scale.y = TEasing::OutQuad(deadEasingS.y, deadEasingE.y, deadTimer.GetTimeRate());
+
 		//横は伸ばす
-		scale.x = TEasing::OutQuad(deadEasingS.x, deadEasingE.x,deadTimer.GetTimeRate());
-		scale.z = TEasing::OutQuad(deadEasingS.z, deadEasingE.z,deadTimer.GetTimeRate());
+		scale.x = TEasing::OutQuad(deadEasingS.x, deadEasingE.x, deadTimer.GetTimeRate());
+		scale.z = TEasing::OutQuad(deadEasingS.z, deadEasingE.z, deadTimer.GetTimeRate());
 
 		//yを0に
 		rotation.x = 0;
@@ -125,7 +120,6 @@ void Slime::Update()
 			}
 		}
 
-		break;
 	}
 	//ずらした分を加算する
 	box.CreateCol(position + saveColCenter, box.scale, rotation);
@@ -147,7 +141,7 @@ void Slime::HitEffect()
 {
 	//すでに死亡済みならスキップ
 	if (IsDead())return;
-	mActTable = ActTable::Dead;
+	SetState(ActTable::Dead);
 
 	//潰れるようにしたい
 	deadTimer.Start();
@@ -159,8 +153,11 @@ void Slime::HitEffect()
 void Slime::Encount()
 {
 	//ステートがNoneならエンカウントに以降
-	if (mActTable != ActTable::None)return;
-	mActTable = ActTable::Encount;
+	if (!CheckState(ActTable::None)) return;
+
+	SetState(ActTable::Encount);
+	DeleteState(ActTable::None);
+
 	encountJumpTimer.Start();
 	encountJumpS = position.y;
 	encountJumpE = position.y + 0.2f;

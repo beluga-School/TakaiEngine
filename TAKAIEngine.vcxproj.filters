@@ -421,6 +421,12 @@
     <Filter Include="Application\Entity\BossArea">
       <UniqueIdentifier>{3a937a42-5301-421b-8171-57b4abd24d8d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Application\Event\EnemyPopEvent">
+      <UniqueIdentifier>{ad714f83-e5c2-4914-afc2-c3f9f172bfa0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Application\Event\CameraEvent">
+      <UniqueIdentifier>{fc986ac4-b462-444e-8795-58c911bfdf92}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="engine\input\Input.cpp">
@@ -719,6 +725,12 @@
     </ClCompile>
     <ClCompile Include="BossArea.cpp">
       <Filter>Application\Entity\BossArea</Filter>
+    </ClCompile>
+    <ClCompile Include="EnemyPopEvent.cpp">
+      <Filter>Application\Event\EnemyPopEvent</Filter>
+    </ClCompile>
+    <ClCompile Include="CameraEvent.cpp">
+      <Filter>Application\Event\CameraEvent</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1033,6 +1045,12 @@
     </ClInclude>
     <ClInclude Include="BossArea.h">
       <Filter>Application\Entity\BossArea</Filter>
+    </ClInclude>
+    <ClInclude Include="EnemyPopEvent.h">
+      <Filter>Application\Event\EnemyPopEvent</Filter>
+    </ClInclude>
+    <ClInclude Include="CameraEvent.h">
+      <Filter>Application\Event\CameraEvent</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

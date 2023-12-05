@@ -27,6 +27,9 @@ public:
 	//実行済みなら立つ
 	bool isExecuted = false;
 
+	//一度だけ実行されるなら立てるフラグ
+	bool isTrigerEvent = false;
+
 	std::string eventName;
 
 	//カメラを使用するか

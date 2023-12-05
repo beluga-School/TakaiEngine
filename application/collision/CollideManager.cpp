@@ -397,7 +397,7 @@ void CollideManager::CheckPlayerToEnemy(Player& player,Enemy& collide)
 	{
 		//死亡モーションに入ってるなら飛ばす
 		//今後HPが多い敵が出てきたとき困るから、攻撃を受けた後を表すステートを作るべき
-		if (collide.GetNowAct(ActTable::Dead) || collide.GetNowAct(ActTable::Damage))return;
+		if (collide.CheckState(ActTable::Dead) || collide.CheckState(ActTable::Damage))return;
 
 		if (player.GetJumpState() == Player::JumpState::Down)
 		{

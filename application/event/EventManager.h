@@ -31,7 +31,10 @@ public:
 	std::unique_ptr<IEvent>* CheckExestEvent(const std::string& eventName);
 
 	//現在実行中イベントにそのイベントがあればそのイベントを取得
-	std::unique_ptr<IEvent>* GetRunEvent(const std::string& eventName);
+	std::unique_ptr<IEvent>* CheckRunEvent(const std::string& eventName);
+
+	//現在実行中イベント名の一覧を取得
+	std::list<std::unique_ptr<IEvent>*> GetNowEvents();
 
 	//現在実行中イベントにそのイベントがあればそのイベントを削除
 	void DeleteRunEvent(const std::string& eventName);

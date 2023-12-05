@@ -15,6 +15,13 @@ void EnemyManager::Load(const LevelData::ObjectData& data)
 
 	enemyList.back()->Initialize();
 	enemyList.back()->SetModel(ModelManager::GetModel(data.fileName));
+
+	//イベント名を入れているなら、非アクティブ化してイベントが呼び出されたときに出現するようにする
+	if (data.eventtrigerName != "")
+	{
+		enemyList.back()->eventName_ = data.eventtrigerName;
+		enemyList.back()->mActive = false;
+	}
 }
 
 void EnemyManager::Initialize()
@@ -32,6 +39,8 @@ void EnemyManager::Update()
 		});
 	for (auto& enemy : enemyList)
 	{
+		if (!enemy->mActive)continue;
+
 		enemy->Update();
 	}
 }
@@ -40,6 +49,8 @@ void EnemyManager::Draw()
 {
 	for (auto& enemy : enemyList)
 	{
+		if (!enemy->mActive)continue;
+
 		if (enemy->CheckTag(TagTable::DitherTransparent))
 		{
 			BasicObjectPreDraw("DitherOutline", false);
@@ -69,4 +80,23 @@ void EnemyManager::Draw()
 			enemy->box.Draw();
 		}
 	}
+}
+
+std::list<Enemy*> EnemyManager::PopEventEnemy(std::string eventname_)
+{
+	std::list<Enemy*> enemys;
+
+	for (auto& enemy : enemyList)
+	{
+		//呼び出しイベント名と持っているイベント名が一致する個体を呼び出す
+		if (eventname_ == enemy->eventName_)
+		{
+			if (!enemy->mActive) {
+				enemy->mActive = true;
+				enemys.push_back(enemy.get());
+			}
+		}
+	}
+
+	return enemys;
 }

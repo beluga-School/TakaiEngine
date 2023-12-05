@@ -7,45 +7,6 @@
 #include "CollideManager.h"
 #include "Star.h"
 
-bool Bombking::CheckState(ActTable check)
-{
-	for (auto& tag : actTables)
-	{
-		if (tag == check)
-		{
-			return true;
-		}
-	}
-	return false;
-}
-
-bool Bombking::SetState(ActTable check)
-{
-	for (auto itr = actTables.begin(); itr != actTables.end(); itr++)
-	{
-		if (*itr == check)
-		{
-			return false;
-		}
-	}
-	actTables.push_back(check);
-	return true;
-}
-
-bool Bombking::DeleteState(ActTable check)
-{
-	for (auto itr = actTables.begin(); itr != actTables.end(); itr++)
-	{
-		if (*itr == check)
-		{
-			actTables.erase(itr);
-			return true;
-		}
-	}
-
-	return false;
-}
-
 void Bombking::Initialize()
 {
 	Obj3d::Initialize();

@@ -7,6 +7,7 @@
 /*! EnemyManager
 	エネミーを管理するクラス
 */
+
 class EnemyManager
 {
 public:
@@ -23,6 +24,9 @@ public:
 	void Draw();
 
 	template <class TEnemy> Enemy* PopEnemy(const Vector3& posision, const Vector3& rotation, const Vector3& scale);
+
+	//イベント名を元に、事前に配置している敵をその座標に出現させる処理
+	std::list<Enemy*> PopEventEnemy(std::string eventname_);
 
 	std::list<std::unique_ptr<Enemy>> enemyList;
 

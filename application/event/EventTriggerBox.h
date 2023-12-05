@@ -20,8 +20,6 @@ public:
 
 	void EventEnd();
 
-	//std::string eventName_ = "";
-
 private:
 	bool trigger = false;
 };

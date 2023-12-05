@@ -138,7 +138,7 @@
                     0.6321309804916382
                 ]
             },
-            "event_trigger": "nextCamera_1",
+            "event_trigger": "nextCamera1",
             "setObject": "eventcamera"
         },
         {
@@ -1670,43 +1670,6 @@
         },
         {
             "type": "MESH",
-            "name": "立方体_立方体.009",
-            "transform": {
-                "translation": [
-                    205.72915649414062,
-                    -8.710653305053711,
-                    17.522308349609375
-                ],
-                "rotation": [
-                    0.0,
-                    -0.0,
-                    0.0
-                ],
-                "scaling": [
-                    1.0,
-                    1.0,
-                    1.0
-                ]
-            },
-            "file_name": "star",
-            "collider": {
-                "type": "BOX",
-                "center": [
-                    0.0,
-                    0.0,
-                    0.0
-                ],
-                "size": [
-                    0.25,
-                    1.5,
-                    1.5
-                ]
-            },
-            "event_trigger": "star",
-            "setObject": "0"
-        },
-        {
-            "type": "MESH",
             "name": "Cube.027",
             "transform": {
                 "translation": [
@@ -1748,93 +1711,11 @@
         },
         {
             "type": "MESH",
-            "name": "Cube.028",
-            "transform": {
-                "translation": [
-                    206.32525634765625,
-                    2.2076220512390137,
-                    14.35456371307373
-                ],
-                "rotation": [
-                    0.0,
-                    -0.0,
-                    0.0
-                ],
-                "scaling": [
-                    9.419416427612305,
-                    5.31201171875,
-                    20.663475036621094
-                ]
-            },
-            "file_name": "groundCube",
-            "collider": {
-                "type": "BOX",
-                "center": [
-                    0.0,
-                    0.0,
-                    0.0
-                ],
-                "size": [
-                    2.0,
-                    2.0,
-                    2.0
-                ]
-            },
-            "tiling": {
-                "tiling": [
-                    10.0,
-                    10.0
-                ]
-            }
-        },
-        {
-            "type": "MESH",
-            "name": "Cube.029",
-            "transform": {
-                "translation": [
-                    206.32525634765625,
-                    -18.929533004760742,
-                    14.35456371307373
-                ],
-                "rotation": [
-                    0.0,
-                    -0.0,
-                    0.0
-                ],
-                "scaling": [
-                    9.419416427612305,
-                    5.31201171875,
-                    20.663475036621094
-                ]
-            },
-            "file_name": "",
-            "collider": {
-                "type": "BOX",
-                "center": [
-                    0.0,
-                    0.0,
-                    0.0
-                ],
-                "size": [
-                    2.0,
-                    2.0,
-                    2.0
-                ]
-            },
-            "tiling": {
-                "tiling": [
-                    10.0,
-                    10.0
-                ]
-            }
-        },
-        {
-            "type": "MESH",
             "name": "立方体.006_立方体.016",
             "transform": {
                 "translation": [
                     165.6787872314453,
-                    -53.83230209350586,
+                    -88.83833312988281,
                     -7.397500991821289
                 ],
                 "rotation": [
@@ -1870,7 +1751,7 @@
             "transform": {
                 "translation": [
                     165.94366455078125,
-                    -50.924224853515625,
+                    -85.93025207519531,
                     -14.232345581054688
                 ],
                 "rotation": [
@@ -1907,33 +1788,11 @@
         },
         {
             "type": "MESH",
-            "name": "立方体_立方体.010",
-            "transform": {
-                "translation": [
-                    166.7418975830078,
-                    -54.320491790771484,
-                    7.261829853057861
-                ],
-                "rotation": [
-                    0.0,
-                    -0.0,
-                    0.0
-                ],
-                "scaling": [
-                    32.0,
-                    32.0,
-                    32.0
-                ]
-            },
-            "setObject": "bossArea"
-        },
-        {
-            "type": "MESH",
             "name": "立方体_立方体.011",
             "transform": {
                 "translation": [
                     166.7418975830078,
-                    -62.515098571777344,
+                    -97.52112579345703,
                     -0.07236087322235107
                 ],
                 "rotation": [
@@ -1962,6 +1821,239 @@
             },
             "event_trigger": "boss_hikiCamera",
             "setObject": "triggerBox"
+        },
+        {
+            "type": "MESH",
+            "name": "Cube.028",
+            "transform": {
+                "translation": [
+                    225.2429962158203,
+                    -7.340602874755859,
+                    -14.232345581054688
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    9.419416427612305,
+                    16.76510238647461,
+                    6.581528186798096
+                ]
+            },
+            "file_name": "groundCube",
+            "collider": {
+                "type": "BOX",
+                "center": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "size": [
+                    2.0,
+                    2.0,
+                    2.0
+                ]
+            },
+            "tiling": {
+                "tiling": [
+                    10.0,
+                    10.0
+                ]
+            }
+        },
+        {
+            "type": "MESH",
+            "name": "立方体.001",
+            "transform": {
+                "translation": [
+                    210.33493041992188,
+                    -6.808107376098633,
+                    -6.3119354248046875
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "setObject": "player"
+        },
+        {
+            "type": "MESH",
+            "name": "立方体_立方体.009",
+            "transform": {
+                "translation": [
+                    223.64614868164062,
+                    -6.9626665115356445,
+                    -2.8829259872436523
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    10.62749195098877,
+                    14.460269927978516,
+                    4.870754718780518
+                ]
+            },
+            "collider": {
+                "type": "BOX",
+                "center": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "size": [
+                    2.0,
+                    2.0,
+                    2.0
+                ]
+            },
+            "event_trigger": "enemyPopEvent_Slime",
+            "setObject": "triggerBox"
+        },
+        {
+            "type": "MESH",
+            "name": "立方体.002",
+            "transform": {
+                "translation": [
+                    202.0094757080078,
+                    -6.136456489562988,
+                    7.991761207580566
+                ],
+                "rotation": [
+                    1.4280269411415247e-08,
+                    -22.032859802246094,
+                    -178.38987731933594
+                ],
+                "scaling": [
+                    0.6321309804916382,
+                    0.6321309804916382,
+                    0.6321309804916382
+                ]
+            },
+            "event_trigger": "enemyPopEvent_Slime",
+            "setObject": "eventcamera"
+        },
+        {
+            "type": "MESH",
+            "name": "球.001",
+            "transform": {
+                "translation": [
+                    226.88479614257812,
+                    -5.805805206298828,
+                    7.816049575805664
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "slime",
+            "collider": {
+                "type": "BOX",
+                "center": [
+                    0.0,
+                    0.0,
+                    0.75
+                ],
+                "size": [
+                    2.0,
+                    2.0,
+                    1.5
+                ]
+            },
+            "event_trigger": "enemyPopEvent_Slime",
+            "setObject": "enemy"
+        },
+        {
+            "type": "MESH",
+            "name": "球.002",
+            "transform": {
+                "translation": [
+                    220.68011474609375,
+                    -1.5809006690979004,
+                    7.816049575805664
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "slime",
+            "collider": {
+                "type": "BOX",
+                "center": [
+                    0.0,
+                    0.0,
+                    0.75
+                ],
+                "size": [
+                    2.0,
+                    2.0,
+                    1.5
+                ]
+            },
+            "event_trigger": "enemyPopEvent_Slime",
+            "setObject": "enemy"
+        },
+        {
+            "type": "MESH",
+            "name": "球.003",
+            "transform": {
+                "translation": [
+                    220.68011474609375,
+                    -11.54151725769043,
+                    7.816049575805664
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "slime",
+            "collider": {
+                "type": "BOX",
+                "center": [
+                    0.0,
+                    0.0,
+                    0.75
+                ],
+                "size": [
+                    2.0,
+                    2.0,
+                    1.5
+                ]
+            },
+            "event_trigger": "enemyPopEvent_Slime",
+            "setObject": "enemy"
         }
     ]
 }

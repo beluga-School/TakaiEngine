@@ -181,7 +181,6 @@ void GameScene::GameSceneDebugGUI()
 	if (ImGui::Button("CheckEncountSphere"))
 	{
 		EnemyManager::Get()->mIsDrawEncountSphere = !EnemyManager::Get()->mIsDrawEncountSphere;
-		//EnemyManager::Get()->mIsDrawEncountSphere = !EnemyManager::Get()->mIsDrawEncountSphere;
 	}
 
 	//ハンドルが空でなければ
@@ -221,15 +220,22 @@ void GameScene::GameSceneDebugGUI()
 	ImGui::Text("mouseR %f", PlayerCamera::Get()->GetRadius());
 	player->DebugGUI();
 
-	for (auto& hoge : EnemyManager::Get()->enemyList)
+	ImGui::Text("RunEvents");
+	for (auto& run : EventManager::Get()->GetNowEvents())
+	{
+		ImGui::Text("%s", run->get()->eventName.c_str());
+	}
+	ImGui::Text("RunEventsEnd");
+
+	/*for (auto& hoge : EnemyManager::Get()->enemyList)
 	{
 		if (hoge->CheckTag(TagTable::Bombking)) {
 			Bombking* bomb = static_cast<Bombking*>(hoge.get());
 			bomb->DebugGUI();
 		}
-	}
+	}*/
 
-	PlayerCamera::Get()->CheckDebug();
+	//PlayerCamera::Get()->CheckDebug();
 
 	sceneChangeGUI.End();
 }

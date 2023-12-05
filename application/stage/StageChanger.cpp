@@ -28,6 +28,7 @@
 #include <EnemyDokan.h>
 #include "SummonUI.h"
 #include "BossHikiCamera.h"
+#include "EnemyPopEvent.h"
 
 void StageChanger::LoadResource()
 {
@@ -214,6 +215,7 @@ void StageChanger::ChangeUpdate()
 			CameraLoader<NoEffectEvent>(*objectData,"goalCamera");
 			CameraLoader<NoEffectEvent>(*objectData,"startCamera");
 			CameraLoader<NoEffectEvent>(*objectData, "lockbackCam");
+			CameraLoader<EnemyPopEvent>(*objectData, "enemyPopEvent_Slime");
 
 			continue;
 		}
@@ -945,6 +947,9 @@ void StageChanger::RegisterEvent(const std::string& eventname)
 	if (eventname == "boss_hikiCamera") {
 		EventManager::Get()->Register<BossHikiCamera>(eventname);
 	}
+	/*if (eventname == "enemyPopEvent_Slime") {
+		EventManager::Get()->Register<EnemyPopEvent>(eventname);
+	}*/
 }
 
 void StageChanger::ResetRevise(int32_t stageNumber, int32_t starID, int32_t starnum)

@@ -10,7 +10,8 @@
 
 void EventManager::LoadResource()
 {
-	
+	TextureManager::Load("Resources\\ui\\slaystring.png", "slaystring");
+	TextureManager::Load("Resources\\ui\\trapstring.png", "trapstring");
 }
 
 bool EventManager::Start(const std::string& startEventName)
@@ -68,17 +69,9 @@ bool EventManager::Start(const std::string& startEventName)
 
 void EventManager::ForceEnd(const std::string endEventName)
 {
-	////イベント名が指定されているなら、現在実行中イベントを確認する
-	//if (endEventName != "")
-	//{
-	//	if (GetNowEvent() == nullptr)return;
-	//	//イベント名が一致しないなら通さない
-	//	if (GetNowEvent()->get()->eventName != endEventName)return;
-	//}
+	if (CheckRunEvent(endEventName) == nullptr)return;
 
-	if (GetRunEvent(endEventName) == nullptr)return;
-
-	GetRunEvent(endEventName)->get()->isExecuted = true;
+	CheckRunEvent(endEventName)->get()->isExecuted = true;
 	DeleteRunEvent(endEventName);
 
 	uppos.x = 0;
@@ -87,19 +80,15 @@ void EventManager::ForceEnd(const std::string endEventName)
 
 void EventManager::End(const std::string endEventName)
 {
-	////イベント名が指定されているなら、現在実行中イベントを確認する
-	//if (endEventName != "")
-	//{
-	//	if (GetNowEvent() == nullptr)return;
-	//	//イベント名が一致しないなら通さない
-	//	if (GetNowEvent()->get()->eventName != endEventName)return;
-	//}
-
-	if (GetRunEvent(endEventName) == nullptr)return;
+	if (CheckRunEvent(endEventName) == nullptr)return;
 
 	endTimer.Start();
-	GetRunEvent(endEventName)->get()->End();
-	DeleteRunEvent(endEventName);
+	CheckRunEvent(endEventName)->get()->isExecuted = true;
+	CheckRunEvent(endEventName)->get()->End();
+	
+	if (!CheckRunEvent(endEventName)->get()->isUseEventLine) {
+		DeleteRunEvent(endEventName);
+	}
 }
 
 std::unique_ptr<IEvent>* EventManager::GetLineEvent()
@@ -130,7 +119,7 @@ std::unique_ptr<IEvent>* EventManager::CheckExestEvent(const std::string& eventN
 	return nullptr;
 }
 
-std::unique_ptr<IEvent>* EventManager::GetRunEvent(const std::string& eventName)
+std::unique_ptr<IEvent>* EventManager::CheckRunEvent(const std::string& eventName)
 {
 	for (auto& Event : runEvents)
 	{
@@ -143,12 +132,17 @@ std::unique_ptr<IEvent>* EventManager::GetRunEvent(const std::string& eventName)
 	return nullptr;
 }
 
+std::list<std::unique_ptr<IEvent>*> EventManager::GetNowEvents()
+{
+	return runEvents;
+}
+
 void EventManager::DeleteRunEvent(const std::string& eventName)
 {
 	for (auto itr = runEvents.begin(); itr != runEvents.end();)
 	{
 		IEvent* e = (*itr)->get();
-		
+
 		if (e->eventName == eventName)
 		{
 			itr = runEvents.erase(itr);
@@ -158,14 +152,6 @@ void EventManager::DeleteRunEvent(const std::string& eventName)
 			itr++;
 		}
 	}
-	//for (auto& Event : runEvents)
-	//{
-	//	//イベントがあれば消す
-	//	if (Event->get()->eventName == eventName)
-	//	{
-	//		Event->reset();
-	//	}
-	//}
 }
 
 void EventManager::Initialize()
