@@ -159,3 +159,57 @@ void Star::PopStar(const Vector3& pop)
 
 	GameUIManager::Get()->starUI.CountUp();
 }
+
+Star* Star::EventPopStar(const std::string& eventname)
+{
+	for (auto& star : StageChanger::Get()->mEntitys)
+	{
+		//呼び出しイベント名と持っているイベント名が一致する個体を呼び出す
+		if (eventname == star->eventName_)
+		{
+			if (!star->mActive) {
+				Star* temp = static_cast<Star*>(star.get());
+				temp->mActive = true;
+				return temp;
+			}
+		}
+	}
+
+	return nullptr;
+}
+
+void Star::EventVanishStar(const std::string& eventname)
+{
+	for (auto& star : StageChanger::Get()->mEntitys)
+	{
+		//呼び出しイベント名と持っているイベント名が一致する個体を呼び出す
+		if (eventname == star->eventName_)
+		{
+			if (star->mActive) {
+				star->mActive = false;
+			}
+		}
+	}
+}
+
+bool Star::EventCheckStar(const std::string& eventname)
+{
+	for (auto& star : StageChanger::Get()->mEntitys)
+	{
+		//呼び出しイベント名と持っているイベント名が一致する個体を呼び出す
+		if (eventname == star->eventName_)
+		{
+			//取得されているならtrue まだ未取得ならfalseを返す
+			Star* check = static_cast<Star*>(star.get());
+			return check->hit;
+		}
+	}
+
+	return false;
+}
+
+void Star::Vanish()
+{
+	mActive = false;
+}
+

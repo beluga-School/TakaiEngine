@@ -132,6 +132,7 @@
     <ClCompile Include="BossArea.cpp" />
     <ClCompile Include="BossHikiCamera.cpp" />
     <ClCompile Include="CameraEvent.cpp" />
+    <ClCompile Include="CountDownTimer.cpp" />
     <ClCompile Include="EnemyPopEvent.cpp" />
     <ClCompile Include="engine\util\InstantDrawer.cpp" />
     <ClCompile Include="application\level\LevelData.cpp" />
@@ -206,6 +207,8 @@
     <ClCompile Include="application\game\entity\eventBlock\Signboard.cpp" />
     <ClCompile Include="application\event\StageTitleUIMountain.cpp" />
     <ClCompile Include="application\ui\SummonUI.cpp" />
+    <ClCompile Include="GetStar.cpp" />
+    <ClCompile Include="StarStringEvent.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="application\collision\CollideManager.h" />
@@ -234,6 +237,7 @@
     <ClInclude Include="BossArea.h" />
     <ClInclude Include="BossHikiCamera.h" />
     <ClInclude Include="CameraEvent.h" />
+    <ClInclude Include="CountDownTimer.h" />
     <ClInclude Include="EnemyPopEvent.h" />
     <ClInclude Include="engine\util\InstantDrawer.h" />
     <ClInclude Include="application\level\LevelData.h" />
@@ -308,12 +312,14 @@
     <ClInclude Include="External\json.hpp" />
     <ClInclude Include="application\ui\GameUIManager.h" />
     <ClInclude Include="application\ui\InterfaceUI.h" />
+    <ClInclude Include="GetStar.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="application\ui\StarUI.h" />
     <ClInclude Include="application\ui\UI.h" />
     <ClInclude Include="application\game\entity\eventBlock\Signboard.h" />
     <ClInclude Include="application\event\StageTitleUIMountain.h" />
     <ClInclude Include="application\ui\SummonUI.h" />
+    <ClInclude Include="StarStringEvent.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\Shader\CharactorDT.hlsli" />

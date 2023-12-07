@@ -22,7 +22,7 @@ public:
 	void ForceEnd(const std::string endEventName = "");
 
 	//イベントの上下黒線をなくして、end状態に移行
-	void End(const std::string endEventName = "");
+	void End(const std::string endEventName);
 
 	//線イベント(上下線が出て、それの実行中は他の上下線が出るイベントが実行されない)を検索して返す
 	std::unique_ptr<IEvent>* GetLineEvent();
@@ -37,7 +37,7 @@ public:
 	std::list<std::unique_ptr<IEvent>*> GetNowEvents();
 
 	//現在実行中イベントにそのイベントがあればそのイベントを削除
-	void DeleteRunEvent(const std::string& eventName);
+	bool DeleteRunEvent(const std::string& eventName);
 
 	static EventManager* Get()
 	{
@@ -81,5 +81,8 @@ private:
 
 	bool stage1CamFlag = false;
 	bool next1CamFlag = false;
+
+	bool deleteCheck = false;
+
 };
 

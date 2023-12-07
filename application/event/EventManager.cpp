@@ -12,6 +12,7 @@ void EventManager::LoadResource()
 {
 	TextureManager::Load("Resources\\ui\\slaystring.png", "slaystring");
 	TextureManager::Load("Resources\\ui\\trapstring.png", "trapstring");
+	TextureManager::Load("Resources\\ui\\getstarstring.png", "getstarstring");
 }
 
 bool EventManager::Start(const std::string& startEventName)
@@ -137,7 +138,7 @@ std::list<std::unique_ptr<IEvent>*> EventManager::GetNowEvents()
 	return runEvents;
 }
 
-void EventManager::DeleteRunEvent(const std::string& eventName)
+bool EventManager::DeleteRunEvent(const std::string& eventName)
 {
 	for (auto itr = runEvents.begin(); itr != runEvents.end();)
 	{
@@ -146,12 +147,16 @@ void EventManager::DeleteRunEvent(const std::string& eventName)
 		if (e->eventName == eventName)
 		{
 			itr = runEvents.erase(itr);
+			deleteCheck = true;
+			return true;
 		}
 		else
 		{
 			itr++;
 		}
 	}
+
+	return false;
 }
 
 void EventManager::Initialize()
@@ -162,13 +167,15 @@ void EventManager::Initialize()
 
 void EventManager::Update()
 {
-	//if (nowEvent == nullptr)return;
-
 	startTimer.Update();
 	endTimer.Update();
 
+	deleteCheck = false;
+
 	for (auto& Event : runEvents)
 	{
+		if (deleteCheck)break;
+
 		if (runEvents.size() <= 0)break;
 
 		switch (Event->get()->state)
@@ -202,8 +209,8 @@ void EventManager::Update()
 			//イベント終了
 			if (Event->get()->EndFlag())
 			{
-				End();
 				Event->get()->state = IEvent::EventState::End;
+				End(Event->get()->eventName);
 			}
 
 			break;
@@ -214,7 +221,7 @@ void EventManager::Update()
 				downpos.x = TEasing::InQuad(0, Util::WIN_WIDTH * -1.f, endTimer.GetTimeRate());
 				if (endTimer.GetEnd())
 				{
-					DeleteRunEvent(Event->get()->eventName);
+					deleteCheck = DeleteRunEvent(Event->get()->eventName);
 				}
 			}
 			break;

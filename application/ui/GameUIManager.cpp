@@ -5,6 +5,8 @@ void GameUIManager::LoadResource()
 {
 	StageTitleUI::LoadResource();
 	StarUI::LoadResource();
+	CountDownTimer::LoadResource();
+
 	TextureManager::Load("Resources\\ui\\eyeMoveUI.png", "eyeMoveUI");
 	TextureManager::Load("Resources\\ui\\jumpUI.png", "jumpUI");
 	TextureManager::Load("Resources\\ui\\moveUI.png", "moveUI");
@@ -116,6 +118,7 @@ void GameUIManager::Update()
 {
 	stageTitleUI.Update();
 	starUI.Update();
+	CDTimer.Update();
 
 	tutorialEyeMove.Update();
 	tutorialJump.Update();
@@ -130,6 +133,7 @@ void GameUIManager::Draw()
 {
 	stageTitleUI.Draw();
 	starUI.Draw();
+	CDTimer.Draw();
 
 	tutorialEyeMove.Draw();
 	tutorialJump.Draw();

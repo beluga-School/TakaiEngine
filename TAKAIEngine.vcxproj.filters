@@ -427,6 +427,15 @@
     <Filter Include="Application\Event\CameraEvent">
       <UniqueIdentifier>{fc986ac4-b462-444e-8795-58c911bfdf92}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Application\Event\GetStar">
+      <UniqueIdentifier>{c30c4e4d-c02a-4c66-92b5-881df30058de}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Application\UI\CountDownTimer">
+      <UniqueIdentifier>{c4590b75-72cd-44d3-8f8b-336aafc3c9b3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Application\Event\StarStringEvent">
+      <UniqueIdentifier>{d9c0a293-65e5-4365-8371-71953b5f668f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="engine\input\Input.cpp">
@@ -731,6 +740,15 @@
     </ClCompile>
     <ClCompile Include="CameraEvent.cpp">
       <Filter>Application\Event\CameraEvent</Filter>
+    </ClCompile>
+    <ClCompile Include="GetStar.cpp">
+      <Filter>Application\Event\GetStar</Filter>
+    </ClCompile>
+    <ClCompile Include="CountDownTimer.cpp">
+      <Filter>Application\UI\CountDownTimer</Filter>
+    </ClCompile>
+    <ClCompile Include="StarStringEvent.cpp">
+      <Filter>Application\Event\StarStringEvent</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1051,6 +1069,15 @@
     </ClInclude>
     <ClInclude Include="CameraEvent.h">
       <Filter>Application\Event\CameraEvent</Filter>
+    </ClInclude>
+    <ClInclude Include="GetStar.h">
+      <Filter>Application\Event\GetStar</Filter>
+    </ClInclude>
+    <ClInclude Include="CountDownTimer.h">
+      <Filter>Application\UI\CountDownTimer</Filter>
+    </ClInclude>
+    <ClInclude Include="StarStringEvent.h">
+      <Filter>Application\Event\StarStringEvent</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

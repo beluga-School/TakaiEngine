@@ -67,6 +67,9 @@ public:
 	//イベント名を保持
 	std::string eventName_ = "";
 
+	//アクティブ(更新がされる状態)かどうか
+	bool mActive = true;
+
 protected:
 	bool isDead = false;
 

@@ -99,9 +99,6 @@ public:
 
 	Vector3 saveColCenter = {};
 
-	//アクティブ(更新がされる状態)かどうか
-	bool mActive = true;
-
 protected:
 	//接触時のダメージ
 	int32_t hitDamage = 1;

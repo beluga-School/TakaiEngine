@@ -40,6 +40,14 @@ public:
 	//新たにスターを出現させる処理
 	static void PopStar(const Vector3& pop);
 
+	//イベント名と一致しているスターを出現させる処理
+	static Star* EventPopStar(const std::string& eventname);
+	static void EventVanishStar(const std::string& eventname);
+	static bool EventCheckStar(const std::string& eventname);
+	
+	//自身を消滅させる処理
+	void Vanish();
+
 private:
 
 public:

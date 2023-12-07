@@ -29,6 +29,8 @@
 #include "SummonUI.h"
 #include "BossHikiCamera.h"
 #include "EnemyPopEvent.h"
+#include "GetStar.h"
+#include "StarStringEvent.h"
 
 void StageChanger::LoadResource()
 {
@@ -81,11 +83,15 @@ void StageChanger::Update()
 
 	for (auto& obj : mEntitys)
 	{
+		if (!obj->mActive)continue;
+
 		obj->Update();
 	}
 
 	for (auto& obj : CollideManager::Get()->allCols)
 	{
+		if (!obj->mActive)continue;
+
 		obj->box.Update(*Camera::sCamera);
 		obj->box.CreateCol(obj->box.position, obj->box.scale, obj->box.rotation);
 	}
@@ -137,7 +143,6 @@ void StageChanger::Reset()
 	EnemyManager::Get()->enemyList.clear();
 
 	Player::Get()->Register();
-
 
 	IDdCube::ResetID();
 
@@ -216,6 +221,7 @@ void StageChanger::ChangeUpdate()
 			CameraLoader<NoEffectEvent>(*objectData,"startCamera");
 			CameraLoader<NoEffectEvent>(*objectData, "lockbackCam");
 			CameraLoader<EnemyPopEvent>(*objectData, "enemyPopEvent_Slime");
+			CameraLoader<StarStringEvent>(*objectData, "StarStringEvent");
 
 			continue;
 		}
@@ -628,6 +634,29 @@ bool StageChanger::SetEnemyDokan(const LevelData::ObjectData& data)
 
 bool StageChanger::SetStar(const LevelData::ObjectData& data)
 {
+	if (data.setObjectName == "star")
+	{
+		SetObject<Star>(data);
+
+		//当たり判定を作成
+		if (data.collider.have)
+		{
+			CollisionSet(data);
+		}
+
+		Star* star = static_cast<Star*>(mEntitys.back().get());
+
+		star->id = -1;
+
+		//イベント名に何か入ってたら
+		if (data.eventtrigerName != "") {
+			star->mActive = false;
+		}
+
+		GameUIManager::Get()->starUI.CountUp();
+
+		return true;
+	}
 	//star の文字列が完全一致するなら
 	if (data.eventtrigerName == "star")
 	{
@@ -881,6 +910,7 @@ void StageChanger::DrawModel()
 	seaObject->Draw();
 	for (auto& obj : mEntitys)
 	{
+		if (!obj->mActive)continue;
 		//コリジョン用に配置したオブジェクトならスキップ
 		if (obj->CheckTag(TagTable::NoDraw))continue;
 		
@@ -912,6 +942,7 @@ void StageChanger::DrawCollider()
 	if (mShowCollider == false) return;
 	for (auto& obj : CollideManager::Get()->allCols)
 	{
+		if (!obj->mActive)continue;
 		if (!obj->CheckTag(TagTable::Collsion))continue;
 
 		BasicObjectPreDraw("WireFrame");
@@ -946,6 +977,9 @@ void StageChanger::RegisterEvent(const std::string& eventname)
 	}
 	if (eventname == "boss_hikiCamera") {
 		EventManager::Get()->Register<BossHikiCamera>(eventname);
+	}
+	if (eventname == "getStarEvent_A") {
+		EventManager::Get()->Register<GetStar>(eventname);
 	}
 }
 

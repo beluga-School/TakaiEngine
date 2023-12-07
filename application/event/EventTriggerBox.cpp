@@ -29,7 +29,8 @@ void EventTriggerBox::EventStart()
 {
 	//トリガーイベントで、すでに実行済みなら開始しない
 	if (EventManager::Get()->CheckExestEvent(eventName_) != nullptr) {
-		if (EventManager::Get()->CheckExestEvent(eventName_)->get()->isExecuted)
+		if (EventManager::Get()->CheckExestEvent(eventName_)->get()->isTrigerEvent && 
+			EventManager::Get()->CheckExestEvent(eventName_)->get()->isExecuted)
 		{
 			return;
 		}
@@ -46,6 +47,14 @@ void EventTriggerBox::EventStart()
 
 void EventTriggerBox::EventEnd()
 {
+	//トリガーイベントなら、終了を内部の処理に任せる
+	if (EventManager::Get()->CheckExestEvent(eventName_) != nullptr) {
+		if (EventManager::Get()->CheckExestEvent(eventName_)->get()->isTrigerEvent)
+		{
+			return;
+		}
+	}
+
 	if (!trigger)
 	{
 		return;

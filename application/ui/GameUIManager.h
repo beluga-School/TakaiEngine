@@ -2,6 +2,7 @@
 #include <StageTitleUI.h>
 #include <UI.h>
 #include <StarUI.h>
+#include <CountDownTimer.h>
 
 /*! GameUIManager
 	ゲーム画面上に出てくる2DUIを管理するマネージャー
@@ -35,6 +36,7 @@ private:
 
 public:
 	StarUI starUI;
+	CountDownTimer CDTimer;
 
 private:
 	StageTitleUI stageTitleUI;
