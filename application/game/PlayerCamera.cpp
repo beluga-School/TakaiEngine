@@ -82,6 +82,7 @@ void PlayerCamera::NormalUpdate()
 
 	mCenterVec = matWorld.ExtractAxisZ();
 	position = player->position;
+	position.y += offsetY;
 
 	Camera::sCamera->mEye = position - (mCenterVec * mRadius);
 	Camera::sCamera->mTarget = position;
@@ -146,8 +147,7 @@ void PlayerCamera::PlayerFollow()
 
 void PlayerCamera::CheckDebug()
 {
-	ImGui::Text("camMoveRotaCheck %f", camMoveRotaCheck);
-	ImGui::SliderFloat("camMoveRotaCheckOffset %f", &camMoveRotaCheckOffset,0.0f,3.0f);
+	ImGui::SliderFloat("offsetY %f", &offsetY,0.0f,10.0f);
 }
 
 void PlayerCamera::ChangeRadius(float radius, float time)

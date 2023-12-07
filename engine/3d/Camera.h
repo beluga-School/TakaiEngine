@@ -22,7 +22,7 @@ public:
 	float mAspect = Util::WIN_WIDTH / Util::WIN_HEIGHT;
 	float mNearClip = 0.1f;
 	float mFarZ = 10000.0f;
-	float mFovAngle = 90;
+	float mFovAngle = 45;
 
 	//射影変換行列(投資投影)
 	Matrix4 mMatProjection;

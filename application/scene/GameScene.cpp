@@ -227,15 +227,7 @@ void GameScene::GameSceneDebugGUI()
 	}
 	ImGui::Text("RunEventsEnd");
 
-	/*for (auto& hoge : EnemyManager::Get()->enemyList)
-	{
-		if (hoge->CheckTag(TagTable::Bombking)) {
-			Bombking* bomb = static_cast<Bombking*>(hoge.get());
-			bomb->DebugGUI();
-		}
-	}*/
-
-	//PlayerCamera::Get()->CheckDebug();
+	PlayerCamera::Get()->CheckDebug();
 
 	sceneChangeGUI.End();
 }

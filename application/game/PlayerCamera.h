@@ -113,5 +113,6 @@ private:
 	//ラディウスを動かすタイマー
 	TEasing::easeTimer radiusMoveTimer = 0.5f;
 
+	float offsetY = 1.5f;
 };
 
