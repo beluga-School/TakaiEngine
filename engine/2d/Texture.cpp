@@ -1,7 +1,10 @@
-﻿#include "Texture.h"
+#include "Texture.h"
 #include "Result.h"
 #include "DirectXInit.h"
 #include <memory>
+#include "Util.h"
+#include <vector>
+#include "StringUtil.h"
 
 using namespace DirectX;
 
@@ -104,11 +107,24 @@ void Texture::CreateWhiteTexture()
 
 void Texture::Load(const wchar_t& t)
 {
-	sResult = LoadFromWICFile(
-		&t,	//ここに読み込みたいファイルのパスを入れる
-		WIC_FLAGS_NONE,
-		&mMetadata, mScratchImg
-	);
+	std::string hoge = ConvertWCharToString(&t);
+
+	std::vector<std::string> fileExt_ = Util::SplitString(hoge,".");
+	if (fileExt_.back() == "dds") {
+		sResult = LoadFromDDSFile(
+			&t,	//ここに読み込みたいファイルのパスを入れる
+			DDS_FLAGS_NONE,
+			&mMetadata, mScratchImg
+		);
+	}
+	else
+	{
+		sResult = LoadFromWICFile(
+			&t,	//ここに読み込みたいファイルのパスを入れる
+			WIC_FLAGS_NONE,
+			&mMetadata, mScratchImg
+		);
+	}
 
 	//ミップマップ生成
 	sResult = GenerateMipMaps(
@@ -225,6 +241,7 @@ void TextureManager::PreLoad()
 	Load("Resources\\particle.png", "particle");
 	Load("Resources\\firewisp\\tex.png", "firewisp");
 	Load("Resources\\redScreen.png", "redScreen");
+	Load("Resources\\ddsconvert.dds", "hogeta");
 }
 
 //ネットで拾ってきたstring->wstring変換

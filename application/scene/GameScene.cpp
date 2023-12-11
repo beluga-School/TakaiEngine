@@ -15,6 +15,7 @@
 #include <GameUIManager.h>
 #include <EventCameraManager.h>
 #include "Bombking.h"
+#include "InstantDrawer.h"
 
 void GameScene::LoadResource()
 {
@@ -153,6 +154,8 @@ void GameScene::Draw()
 	GameUIManager::Get()->Draw();
 
 	StageChanger::Get()->DrawSprite();
+
+	InstantDrawer::DrawGraph(100, 100, 1, 1, "hogeta");
 }
 
 void GameScene::End()
