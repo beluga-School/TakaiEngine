@@ -436,6 +436,12 @@
     <Filter Include="Application\Event\StarStringEvent">
       <UniqueIdentifier>{d9c0a293-65e5-4365-8371-71953b5f668f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Application\Entity\EventBlock\RedCoin">
+      <UniqueIdentifier>{dd02a74d-d929-42e9-a5ca-384308deebd8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Application\Event\RedCoinEvent">
+      <UniqueIdentifier>{f031548c-763b-4eb3-abe3-3e95697fcf6e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="engine\input\Input.cpp">
@@ -749,6 +755,12 @@
     </ClCompile>
     <ClCompile Include="StarStringEvent.cpp">
       <Filter>Application\Event\StarStringEvent</Filter>
+    </ClCompile>
+    <ClCompile Include="RedCoin.cpp">
+      <Filter>Application\Entity\EventBlock\RedCoin</Filter>
+    </ClCompile>
+    <ClCompile Include="RedCoinEvent.cpp">
+      <Filter>Application\Event\RedCoinEvent</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1078,6 +1090,12 @@
     </ClInclude>
     <ClInclude Include="StarStringEvent.h">
       <Filter>Application\Event\StarStringEvent</Filter>
+    </ClInclude>
+    <ClInclude Include="RedCoin.h">
+      <Filter>Application\Entity\EventBlock\RedCoin</Filter>
+    </ClInclude>
+    <ClInclude Include="RedCoinEvent.h">
+      <Filter>Application\Event\RedCoinEvent</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

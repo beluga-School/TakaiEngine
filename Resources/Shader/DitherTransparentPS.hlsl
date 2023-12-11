@@ -55,5 +55,4 @@ float4 main(VSOutput input) : SV_TARGET
     }
     
     return float4(shadecolor.rgb * color.rgb, color.a * texcolor.a);
-    //return float4(maskTexcolor, 0, 0, 1);
 }

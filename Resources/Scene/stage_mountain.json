@@ -7089,6 +7089,150 @@
             },
             "event_trigger": "StarStringEvent",
             "setObject": "eventcamera"
+        },
+        {
+            "type": "MESH",
+            "name": "立方体_立方体.005",
+            "transform": {
+                "translation": [
+                    -113.37983703613281,
+                    -51.751686096191406,
+                    28.273788452148438
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    179.6950225830078
+                ],
+                "scaling": [
+                    20.16909408569336,
+                    15.003527641296387,
+                    4.870754718780518
+                ]
+            },
+            "collider": {
+                "type": "BOX",
+                "center": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "size": [
+                    2.0,
+                    2.0,
+                    2.0
+                ]
+            },
+            "event_trigger": "redCoinEvent_A",
+            "setObject": "triggerBox"
+        },
+        {
+            "type": "MESH",
+            "name": "円柱.002",
+            "transform": {
+                "translation": [
+                    -105.66519165039062,
+                    -44.18169403076172,
+                    24.532344818115234
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "collider": {
+                "type": "BOX",
+                "center": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "size": [
+                    2.0,
+                    2.0,
+                    2.0
+                ]
+            },
+            "event_trigger": "redCoinEvent_A",
+            "setObject": "redcoin"
+        },
+        {
+            "type": "MESH",
+            "name": "円柱.001",
+            "transform": {
+                "translation": [
+                    -113.28657531738281,
+                    -44.18169403076172,
+                    24.532344818115234
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "collider": {
+                "type": "BOX",
+                "center": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "size": [
+                    2.0,
+                    2.0,
+                    2.0
+                ]
+            },
+            "event_trigger": "redCoinEvent_A",
+            "setObject": "redcoin"
+        },
+        {
+            "type": "MESH",
+            "name": "円柱.003",
+            "transform": {
+                "translation": [
+                    -120.3696517944336,
+                    -44.18169403076172,
+                    24.532344818115234
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "collider": {
+                "type": "BOX",
+                "center": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "size": [
+                    2.0,
+                    2.0,
+                    2.0
+                ]
+            },
+            "event_trigger": "redCoinEvent_A",
+            "setObject": "redcoin"
         }
     ]
 }

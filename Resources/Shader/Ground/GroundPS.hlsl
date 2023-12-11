@@ -9,12 +9,7 @@ float4 main(VSOutput input) : SV_TARGET
     float4 texcolor = tex.Sample(smp, input.uv * tiling + offset);
     
     clip(m_alpha);
-    //clip(texcolor.r + texcolor.g + texcolor.b);
-    
-    //float radius_ = 1;
-    //float dist = distance(input.worldPos.xyz, cameraPos);
-    //float clamp_distance = saturate(dist / radius_);
-    
+  
     float4 shadecolor = { 0, 0, 0, 1 };
     
     float threshold = 0.01f;

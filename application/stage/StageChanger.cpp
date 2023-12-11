@@ -31,6 +31,8 @@
 #include "EnemyPopEvent.h"
 #include "GetStar.h"
 #include "StarStringEvent.h"
+#include "RedCoin.h"
+#include "RedCoinEvent.h"
 
 void StageChanger::LoadResource()
 {
@@ -394,6 +396,11 @@ void StageChanger::ChangeUpdate()
 		}
 
 		if (SetBossArea(*objectData))
+		{
+			continue;
+		}
+
+		if (SetRedCoin(*objectData))
 		{
 			continue;
 		}
@@ -904,6 +911,25 @@ bool StageChanger::SetBossArea(const LevelData::ObjectData& data)
 	return false;
 }
 
+bool StageChanger::SetRedCoin(const LevelData::ObjectData& data)
+{
+	if (data.setObjectName == "redcoin")
+	{
+		SetObject<RedCoin>(data);
+
+		RedCoin* redcoin = static_cast<RedCoin*>(mEntitys.back().get());
+
+		redcoin->Initialize();
+
+		if (data.eventtrigerName != "") {
+			redcoin->mActive = false;
+		}
+
+		return true;
+	}
+	return false;
+}
+
 void StageChanger::DrawModel()
 {
 	if (mShowModel == false) return;
@@ -980,6 +1006,9 @@ void StageChanger::RegisterEvent(const std::string& eventname)
 	}
 	if (eventname == "getStarEvent_A") {
 		EventManager::Get()->Register<GetStar>(eventname);
+	}
+	if (eventname == "redCoinEvent_A") {
+		EventManager::Get()->Register<RedCoinEvent>(eventname);
 	}
 }
 

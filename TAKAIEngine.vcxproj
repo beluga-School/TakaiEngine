@@ -208,6 +208,8 @@
     <ClCompile Include="application\event\StageTitleUIMountain.cpp" />
     <ClCompile Include="application\ui\SummonUI.cpp" />
     <ClCompile Include="GetStar.cpp" />
+    <ClCompile Include="RedCoin.cpp" />
+    <ClCompile Include="RedCoinEvent.cpp" />
     <ClCompile Include="StarStringEvent.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -313,6 +315,8 @@
     <ClInclude Include="application\ui\GameUIManager.h" />
     <ClInclude Include="application\ui\InterfaceUI.h" />
     <ClInclude Include="GetStar.h" />
+    <ClInclude Include="RedCoin.h" />
+    <ClInclude Include="RedCoinEvent.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="application\ui\StarUI.h" />
     <ClInclude Include="application\ui\UI.h" />

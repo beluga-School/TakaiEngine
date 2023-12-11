@@ -201,6 +201,8 @@ private:
 	bool SetGoal(const LevelData::ObjectData& data);
 	//ボスエリア
 	bool SetBossArea(const LevelData::ObjectData& data);
+	//赤コインの配置
+	bool SetRedCoin(const LevelData::ObjectData& data);
 
 	void DrawModel();
 	void DrawCollider();
