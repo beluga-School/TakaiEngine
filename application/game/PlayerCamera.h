@@ -81,7 +81,7 @@ public:
 
 private:
 	//初期のカメラ距離を保存(初期設定用)
-	const float DEFAULT_RADIUS = 8.0f;
+	const float DEFAULT_RADIUS = 16.0f;
 	
 	//初期のカメラ距離
 	float mRadius = DEFAULT_RADIUS;

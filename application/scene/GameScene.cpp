@@ -154,8 +154,6 @@ void GameScene::Draw()
 	GameUIManager::Get()->Draw();
 
 	StageChanger::Get()->DrawSprite();
-
-	InstantDrawer::DrawGraph(100, 100, 1, 1, "hogeta");
 }
 
 void GameScene::End()
