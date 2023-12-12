@@ -16,6 +16,9 @@ void Bombking::Initialize()
 	
 	EncountSphereInitialize();
 
+	//追跡範囲の球の半径(ベースの大きさ+大きさの平均を足す)
+	sphereCol.radius = 16;
+
 	Register();
 
 	//現在HPを設定 エディタ側からの指定に対応したい
@@ -38,8 +41,12 @@ void Bombking::Update()
 	Vector3 damageScale = { initScale.x + 1.0f,initScale.y - 0.5f, initScale.z + 1.0f };
 
 	if (CheckState(ActTable::Encount)) {
-		SetState(ActTable::Tracking);
-		DeleteState(ActTable::Encount);
+		//攻撃範囲から外れたら終わり
+		if (Collsions::SphereCollsion(Player::Get()->mEncountCol, sphereCol))
+		{
+			SetState(ActTable::Tracking);
+			DeleteState(ActTable::Encount);
+		}
 	}
 
 	if (CheckState(ActTable::Tracking)) {
@@ -47,6 +54,13 @@ void Bombking::Update()
 
 		throwBox.position = position + (Enemy::TargetVector(*Player::Get()) * 5);
 		throwBox.scale = { 5,5,5 };
+
+		//攻撃範囲から外れたら終わり
+		if (!Collsions::SphereCollsion(Player::Get()->mEncountCol, sphereCol))
+		{
+			SetState(ActTable::Encount);
+			DeleteState(ActTable::Tracking);
+		}
 	}
 
 	if (CheckState(ActTable::Attack1)) {

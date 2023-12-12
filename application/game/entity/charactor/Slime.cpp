@@ -14,6 +14,9 @@ void Slime::Initialize()
 
 	EncountSphereInitialize();
 
+	//追跡範囲の球の半径(ベースの大きさ+大きさの平均を足す)
+	sphereCol.radius = 8 + MathF::Avarage(scale);
+
 	Register();
 
 	actTables.clear();
@@ -35,9 +38,6 @@ void Slime::Update()
 		rotation.y = 0;
 	}
 	if (CheckState(ActTable::Encount)) {
-		//ジャンプする
-		//position.y = TEasing::OutQuad(encountJumpS, encountJumpE, encountJumpTimer.GetTimeRate());
-
 		if (encountJumpTimer.GetEnd())
 		{
 			encountJumpTimer.ReverseStart();

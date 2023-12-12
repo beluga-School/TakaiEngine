@@ -86,8 +86,6 @@ void Enemy::EncountSphereInitialize()
 void Enemy::EncountSphereUpdate()
 {
 	sphereCol.center = position;
-	//追跡範囲の球の半径(ベースの大きさ+大きさの平均を足す)
-	sphereCol.radius = 8 + MathF::Avarage(scale);
 
 	encountSphere.position = sphereCol.center;
 	encountSphere.scale = { sphereCol.radius,sphereCol.radius,sphereCol.radius };
