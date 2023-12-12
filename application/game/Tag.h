@@ -24,4 +24,5 @@ enum class TagTable
 	Bombking = 17,
 	Slime = 18,
 	BossArea = 19,
+	RedCoin = 20,
 };

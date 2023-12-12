@@ -40,6 +40,9 @@ void InstantDrawer::DrawBox(const float& x, const float& y, const float& width, 
 
 void InstantDrawer::DrawGraph(const float& x, const float& y, float sizerateX, float sizerateY, const std::string& handle, const Anchor& anchor)
 {
+	//ハンドルが空なら描画をキャンセル
+	if (handle == "")return;
+
 	sSprites.emplace_back();
 	sSprites.back().SetTexture(*TextureManager::GetTexture(handle));
 	sSprites.back().mPosition = { x,y };

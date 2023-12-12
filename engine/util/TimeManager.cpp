@@ -8,9 +8,7 @@ namespace TimeManager
 	LARGE_INTEGER startTime;
 	LARGE_INTEGER endTime;
 	LARGE_INTEGER nowTimeFreq;
-}	
-
-//const float MIN_FREAM_TIME = 1.0f / (TimeManager::fixFPS);
+}
 
 void TimeManager::Init()
 {

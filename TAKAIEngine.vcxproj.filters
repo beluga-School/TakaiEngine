@@ -424,9 +424,6 @@
     <Filter Include="Application\Event\EnemyPopEvent">
       <UniqueIdentifier>{ad714f83-e5c2-4914-afc2-c3f9f172bfa0}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Application\Event\CameraEvent">
-      <UniqueIdentifier>{fc986ac4-b462-444e-8795-58c911bfdf92}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Application\Event\GetStar">
       <UniqueIdentifier>{c30c4e4d-c02a-4c66-92b5-881df30058de}</UniqueIdentifier>
     </Filter>
@@ -743,9 +740,6 @@
     </ClCompile>
     <ClCompile Include="EnemyPopEvent.cpp">
       <Filter>Application\Event\EnemyPopEvent</Filter>
-    </ClCompile>
-    <ClCompile Include="CameraEvent.cpp">
-      <Filter>Application\Event\CameraEvent</Filter>
     </ClCompile>
     <ClCompile Include="GetStar.cpp">
       <Filter>Application\Event\GetStar</Filter>
@@ -1078,9 +1072,6 @@
     </ClInclude>
     <ClInclude Include="EnemyPopEvent.h">
       <Filter>Application\Event\EnemyPopEvent</Filter>
-    </ClInclude>
-    <ClInclude Include="CameraEvent.h">
-      <Filter>Application\Event\CameraEvent</Filter>
     </ClInclude>
     <ClInclude Include="GetStar.h">
       <Filter>Application\Event\GetStar</Filter>

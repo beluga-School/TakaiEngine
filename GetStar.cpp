@@ -17,8 +17,7 @@ void GetStar::Update()
 
 void GetStar::Draw()
 {
-	InstantDrawer::DrawBox(Util::WIN_WIDTH / 2, 200, 800, 100, Color(0.1f, 0.1f, 0.1f, 0.9f));
-	InstantDrawer::DrawGraph(Util::WIN_WIDTH / 2, 200, 1, 1, "getstarstring");
+	
 }
 
 void GetStar::Start()
@@ -41,7 +40,8 @@ void GetStar::End()
 bool GetStar::EndFlag()
 {
 	//スターがなくなったら成功で返す
-	if (Star::EventCheckStar(eventName)) {
+	if (!Star::EventCheckStar(eventName)) {
+		GameUIManager::Get()->CDTimer.Reset();
 		return true;
 	}
 

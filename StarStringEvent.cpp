@@ -1,31 +1,33 @@
 #include "StarStringEvent.h"
 #include "InstantDrawer.h"
 
-void StarStringEvent::Initialize()
+void MessageEvent::Initialize()
 {
 }
 
-void StarStringEvent::Update()
+void MessageEvent::Update()
 {
 	endTimer.Update();
 }
 
-void StarStringEvent::Draw()
+void MessageEvent::Draw()
 {
-	InstantDrawer::DrawBox(Util::WIN_WIDTH / 2, 200, 800, 100, Color(0.1f, 0.1f, 0.1f, 0.9f));
-	InstantDrawer::DrawGraph(Util::WIN_WIDTH / 2, 200, 1, 1, "getstarstring");
+	if (messageTexHandle != "") {
+		InstantDrawer::DrawBox(Util::WIN_WIDTH / 2, 200, 800, 100, Color(0.1f, 0.1f, 0.1f, 0.9f));
+		InstantDrawer::DrawGraph(Util::WIN_WIDTH / 2, 200, 1, 1, messageTexHandle);
+	}
 }
 
-void StarStringEvent::Start()
+void MessageEvent::Start()
 {
 	endTimer.Start();
 }
 
-void StarStringEvent::End()
+void MessageEvent::End()
 {
 }
 
-bool StarStringEvent::EndFlag()
+bool MessageEvent::EndFlag()
 {
 	return endTimer.GetEnd();
 }

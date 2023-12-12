@@ -223,7 +223,14 @@ void StageChanger::ChangeUpdate()
 			CameraLoader<NoEffectEvent>(*objectData,"startCamera");
 			CameraLoader<NoEffectEvent>(*objectData, "lockbackCam");
 			CameraLoader<EnemyPopEvent>(*objectData, "enemyPopEvent_Slime");
-			CameraLoader<StarStringEvent>(*objectData, "StarStringEvent");
+			CameraLoader<MessageEvent>(*objectData, "StarStringEvent");
+			//テクスチャを外部から設定
+			if (EventManager::Get()->CheckExestEvent("StarStringEvent") != nullptr) {
+				MessageEvent* getEvent = static_cast<MessageEvent*>( EventManager::Get()->CheckExestEvent("StarStringEvent")->get());
+				getEvent->messageTexHandle = "getstarstring";
+			}
+			CameraLoader<MessageEvent>(*objectData, "RedStringEvent");
+			CameraLoader<MessageEvent>(*objectData, "RedEventEnd");
 
 			continue;
 		}
@@ -921,6 +928,12 @@ bool StageChanger::SetRedCoin(const LevelData::ObjectData& data)
 
 		redcoin->Initialize();
 
+		//当たり判定を作成
+		if (data.collider.have)
+		{
+			CollisionSet(data);
+		}
+
 		if (data.eventtrigerName != "") {
 			redcoin->mActive = false;
 		}
@@ -947,6 +960,7 @@ void StageChanger::DrawModel()
 		else
 		{
 			BasicObjectPreDraw("OutLine", false);
+			//BasicObjectPreDraw("DitherOutline", false);
 		}
 		obj->DrawOutLine();
 		if (obj->CheckTag(TagTable::DitherTransparent))
@@ -956,6 +970,7 @@ void StageChanger::DrawModel()
 		else
 		{
 			BasicObjectPreDraw("GroundToon");
+			//BasicObjectPreDraw("DitherTransparent");
 		}
 		obj->Draw();
 	}

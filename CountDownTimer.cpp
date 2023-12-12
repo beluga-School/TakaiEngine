@@ -30,6 +30,12 @@ void CountDownTimer::Start()
 	timer.ReverseStart();
 }
 
+void CountDownTimer::Reset()
+{
+	timer.Reset();
+	mActive = false;
+}
+
 void CountDownTimer::Update()
 {
 	if (!mActive)return;
