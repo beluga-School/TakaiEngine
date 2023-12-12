@@ -169,7 +169,9 @@ void Bombking::Draw()
 	Obj3d::DrawMaterial();
 
 	BasicObjectPreDraw("WireFrame");
-	throwBox.Draw();
+	
+	//デバッグ用の投げ判定を描画
+	//throwBox.Draw();
 }
 
 void Bombking::HitEffect()
