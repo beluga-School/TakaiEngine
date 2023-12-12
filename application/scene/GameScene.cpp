@@ -230,5 +230,14 @@ void GameScene::GameSceneDebugGUI()
 
 	PlayerCamera::Get()->CheckDebug();
 
+	EnemyManager* point = EnemyManager::Get();
+	for (auto& enemy : point->enemyList)
+	{
+		Bombking* king = static_cast<Bombking*>(enemy.get());
+		if (king != nullptr && king->CheckTag(TagTable::Bombking)) {
+			king->DebugGUI();
+		}
+	}
+
 	sceneChangeGUI.End();
 }

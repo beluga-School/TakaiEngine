@@ -553,6 +553,8 @@ void StageChanger::SetPlayer(const LevelData::ObjectData& data)
 
 	Player::Get()->mDokanApparrance = true;
 
+	Player::Get()->Initialize();
+
 	Player::Get()->Register();
 }
 

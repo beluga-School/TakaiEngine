@@ -84,8 +84,9 @@ void Player::Initialize()
 	playerStates.clear();
 	SetState(PlayerState::Normal);
 
-	SetNoGravity(false);
 	SetNoMove(false);
+	SetNoCollsion(false);
+	SetNoGravity(false);
 }
 
 void Player::Update()
@@ -727,11 +728,7 @@ void Player::DebugGUI()
 		position.x, position.y, position.z);
 
 	ImGui::Text("rotation x:%f y:%f z:%f", rotation.x, rotation.y, rotation.z);
-	ImGui::Text("jumpState %d", jumpState);
-	if (saveKickWall != nullptr)
-	{
-		ImGui::Text("wallID %d", saveKickWall->GetID());
-	}
+	
 	if (ImGui::Button("FlyChange"))
 	{
 		flyMode = !flyMode;
@@ -739,10 +736,12 @@ void Player::DebugGUI()
 		if(!flyMode)SetNoGravity(false);
 	}
 	ImGui::Text("flyMode %d", flyMode);
+	
+	ImGui::Text("noGravity:%d", noGravity);
+	ImGui::Text("mNoMove:%d", mNoMove);
+	ImGui::Text("mNoCollision:%d", mNoCollision);
 
-	if (ImGui::Button("PopStar")) {
-		Star::PopStar(position);
-	}
+
 }
 
 bool Player::GetInputMove(InputMove input)

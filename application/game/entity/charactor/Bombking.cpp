@@ -50,10 +50,7 @@ void Bombking::Update()
 	}
 
 	if (CheckState(ActTable::Tracking)) {
-		Tracking();
-
-		throwBox.position = position + (Enemy::TargetVector(*Player::Get()) * 5);
-		throwBox.scale = { 5,5,5 };
+		Tracking();		
 
 		//攻撃範囲から外れたら終わり
 		if (!Collsions::SphereCollsion(Player::Get()->mEncountCol, sphereCol))
@@ -78,9 +75,6 @@ void Bombking::Update()
 			target->position = Vector3::Spline(inters, throwTimer.GetTimeRate());
 
 			if (throwTimer.GetEnd()) {
-				target->SetNoGravity(false);
-				target->SetNoCollsion(false);
-				target = nullptr;
 				SetState(ActTable::Encount);
 				DeleteState(ActTable::Attack1);
 			}
@@ -132,7 +126,23 @@ void Bombking::Update()
 			ParticleManager::Get()->CreateCubeParticle(position,
 				{ 1.0f,1.0f,1.0f }, 10, { 0,1,0,0.5f });
 		}
+
+		actTables.clear();
 	}
+
+	if (!CheckState(ActTable::Attack1)) {
+		if (target != nullptr)
+		{
+			target->SetNoGravity(false);
+			target->SetNoCollsion(false);
+			target = nullptr;
+		}
+	}
+
+	throwBox.position = position + (Enemy::TargetVector(*Player::Get()) * 5);
+	throwBox.scale = { 5,5,5 };
+
+	throwBox.Update(*Camera::sCamera);
 
 	//死亡処理への遷移
 	if (damageTimer.GetEnd())
@@ -141,9 +151,7 @@ void Bombking::Update()
 		{
 			SetState(ActTable::Dead);
 		}
-	}
-
-	throwBox.Update(*Camera::sCamera);
+	}	
 
 	//ずらした分を加算する
 	box.CreateCol(position + saveColCenter, box.scale, rotation);
@@ -228,7 +236,11 @@ void Bombking::DebugGUI()
 {
 	for (auto& act : actTables)
 	{
-		ImGui::Text("%d", act);
+		ImGui::Text("Act %d", act);
+	}
+
+	if (target != nullptr) {
+		ImGui::Text("target あり");
 	}
 }
 
