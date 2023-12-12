@@ -732,28 +732,28 @@
     <ClCompile Include="application\ui\SummonUI.cpp">
       <Filter>Application\Event\SummonUI</Filter>
     </ClCompile>
-    <ClCompile Include="BossHikiCamera.cpp">
+    <ClCompile Include="application\event\BossHikiCamera.cpp">
       <Filter>Application\Event\BossHikiCamera</Filter>
     </ClCompile>
-    <ClCompile Include="BossArea.cpp">
+    <ClCompile Include="application\game\entity\BossArea.cpp">
       <Filter>Application\Entity\BossArea</Filter>
     </ClCompile>
-    <ClCompile Include="EnemyPopEvent.cpp">
+    <ClCompile Include="application\event\EnemyPopEvent.cpp">
       <Filter>Application\Event\EnemyPopEvent</Filter>
     </ClCompile>
-    <ClCompile Include="GetStar.cpp">
+    <ClCompile Include="application\event\GetStar.cpp">
       <Filter>Application\Event\GetStar</Filter>
     </ClCompile>
-    <ClCompile Include="CountDownTimer.cpp">
+    <ClCompile Include="application\system\CountDownTimer.cpp">
       <Filter>Application\UI\CountDownTimer</Filter>
     </ClCompile>
-    <ClCompile Include="StarStringEvent.cpp">
+    <ClCompile Include="application\event\StarStringEvent.cpp">
       <Filter>Application\Event\StarStringEvent</Filter>
     </ClCompile>
-    <ClCompile Include="RedCoin.cpp">
+    <ClCompile Include="application\game\entity\RedCoin.cpp">
       <Filter>Application\Entity\EventBlock\RedCoin</Filter>
     </ClCompile>
-    <ClCompile Include="RedCoinEvent.cpp">
+    <ClCompile Include="application\event\RedCoinEvent.cpp">
       <Filter>Application\Event\RedCoinEvent</Filter>
     </ClCompile>
   </ItemGroup>
@@ -1064,28 +1064,28 @@
     <ClInclude Include="application\ui\SummonUI.h">
       <Filter>Application\Event\SummonUI</Filter>
     </ClInclude>
-    <ClInclude Include="BossHikiCamera.h">
+    <ClInclude Include="application\event\BossHikiCamera.h">
       <Filter>Application\Event\BossHikiCamera</Filter>
     </ClInclude>
-    <ClInclude Include="BossArea.h">
+    <ClInclude Include="application\game\entity\BossArea.h">
       <Filter>Application\Entity\BossArea</Filter>
     </ClInclude>
-    <ClInclude Include="EnemyPopEvent.h">
+    <ClInclude Include="application\event\EnemyPopEvent.h">
       <Filter>Application\Event\EnemyPopEvent</Filter>
     </ClInclude>
-    <ClInclude Include="GetStar.h">
+    <ClInclude Include="application\event\GetStar.h">
       <Filter>Application\Event\GetStar</Filter>
     </ClInclude>
-    <ClInclude Include="CountDownTimer.h">
+    <ClInclude Include="application\system\CountDownTimer.h">
       <Filter>Application\UI\CountDownTimer</Filter>
     </ClInclude>
-    <ClInclude Include="StarStringEvent.h">
+    <ClInclude Include="application\event\StarStringEvent.h">
       <Filter>Application\Event\StarStringEvent</Filter>
     </ClInclude>
-    <ClInclude Include="RedCoin.h">
+    <ClInclude Include="application\game\entity\RedCoin.h">
       <Filter>Application\Entity\EventBlock\RedCoin</Filter>
     </ClInclude>
-    <ClInclude Include="RedCoinEvent.h">
+    <ClInclude Include="application\event\RedCoinEvent.h">
       <Filter>Application\Event\RedCoinEvent</Filter>
     </ClInclude>
   </ItemGroup>
