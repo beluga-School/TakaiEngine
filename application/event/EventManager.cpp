@@ -13,6 +13,7 @@ void EventManager::LoadResource()
 	TextureManager::Load("Resources\\ui\\slaystring.png", "slaystring");
 	TextureManager::Load("Resources\\ui\\trapstring.png", "trapstring");
 	TextureManager::Load("Resources\\ui\\getstarstring.png", "getstarstring");
+	TextureManager::Load("Resources\\ui\\redcoinString.png", "redcoinString");
 }
 
 bool EventManager::Start(const std::string& startEventName)

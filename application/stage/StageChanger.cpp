@@ -230,6 +230,11 @@ void StageChanger::ChangeUpdate()
 				getEvent->messageTexHandle = "getstarstring";
 			}
 			CameraLoader<MessageEvent>(*objectData, "RedStringEvent");
+			//テクスチャを外部から設定
+			if (EventManager::Get()->CheckExestEvent("RedStringEvent") != nullptr) {
+				MessageEvent* getEvent = static_cast<MessageEvent*>(EventManager::Get()->CheckExestEvent("RedStringEvent")->get());
+				getEvent->messageTexHandle = "redcoinString";
+			}
 			CameraLoader<MessageEvent>(*objectData, "RedEventEnd");
 
 			continue;
