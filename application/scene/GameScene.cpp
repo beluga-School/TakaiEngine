@@ -94,6 +94,11 @@ void GameScene::Update()
 		GameSceneDebugGUI();
 	}
 
+	if (Input::Keyboard::TriggerKey(DIK_1))
+	{
+		EventManager::Get()->Start("");
+	}
+
 	mSkydome.Update();
 
 	StageChanger::Get()->Update();

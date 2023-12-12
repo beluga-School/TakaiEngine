@@ -23,6 +23,8 @@ public:
 	//残りのスターの数を代入する
 	void Substitution(int32_t value);
 
+	int32_t GetCount();
+
 private:
 
 public:

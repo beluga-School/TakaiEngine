@@ -5,9 +5,13 @@
 /*! Clear1
 	ステージ1クリア後のイベント
 */
-class Clear1 : public IEvent
+class ClearEvent : public IEvent
 {
 public:
+	ClearEvent() : IEvent() {
+		isUseEventLine = false;
+		isTrigerEvent = true;
+	}
 	void Initialize()override;
 	void Update()override;
 	void Draw()override;
@@ -17,7 +21,10 @@ public:
 
 	bool EndFlag()override;
 
-	TEasing::easeTimer timer = 2.0f;
-	bool setFlag = false;
+private:
+	TEasing::easeTimer spriteTimer = 0.5f;
+	TEasing::easeTimer changeTimer = 2.0f;
+
+	Vector2 spritePos = { Util::WIN_WIDTH / 2,-300 };
 };
 

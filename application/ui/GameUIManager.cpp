@@ -15,6 +15,9 @@ void GameUIManager::LoadResource()
 	TextureManager::Load("Resources\\ui\\enemyDownUI.png", "enemyDownUI");
 	TextureManager::Load("Resources\\ui\\getstarUI.png", "getstarUI");
 	TextureManager::Load("Resources\\ui\\inDokanUI.png", "inDokanUI");
+	TextureManager::Load("Resources\\ui\\inDokanUI.png", "inDokanUI");
+	TextureManager::Load("Resources\\ui\\dashUI.png", "dashUI");
+	TextureManager::Load("Resources\\ui\\dashjump.png", "dashjump");
 }
 
 void GameUIManager::Move(UIMove uimove, const std::string& handle)
@@ -54,6 +57,14 @@ void GameUIManager::Move(UIMove uimove, const std::string& handle)
 	if (handle == "tutorialUI_InDokan")
 	{
 		tutorialInDokan.Move(uimove);
+	}
+	if (handle == "tutorialUI_Dash")
+	{
+		tutorialDash.Move(uimove);
+	}
+	if (handle == "tutorialUI_DashJump")
+	{
+		tutorialDashJump.Move(uimove);
 	}
 }
 
@@ -112,6 +123,16 @@ void GameUIManager::Initialize()
 	tutorialInDokan.InitPos({ 300,-300 }, { 300,200 });
 	tutorialInDokan.InitScale({ 1,1 }, { 1,1 });
 	tutorialInDokan.SetSize({ 1,1 });
+
+	tutorialDash.SetTexture("dashUI");
+	tutorialDash.InitPos({ (float)Util::CenterX(),Util::WIN_HEIGHT + 200 }, { (float)Util::CenterX(),Util::WIN_HEIGHT });
+	tutorialDash.InitScale({ 0.5f,0.5f }, { 0.5f,0.5f });
+	tutorialDash.SetSize({ 0.5f,0.5f });
+
+	tutorialDashJump.SetTexture("dashjump");
+	tutorialDashJump.InitPos({ (float)Util::CenterX(),Util::WIN_HEIGHT + 200 }, { (float)Util::CenterX(),Util::WIN_HEIGHT });
+	tutorialDashJump.InitScale({ 0.5f,0.5f }, { 0.5f,0.5f });
+	tutorialDashJump.SetSize({ 0.5f,0.5f });
 }
 
 void GameUIManager::Update()
@@ -127,6 +148,8 @@ void GameUIManager::Update()
 	tutorialEnemyDown.Update();
 	tutorialGetStar.Update();
 	tutorialInDokan.Update();
+	tutorialDash.Update();
+	tutorialDashJump.Update();
 }
 
 void GameUIManager::Draw()
@@ -142,4 +165,6 @@ void GameUIManager::Draw()
 	tutorialEnemyDown.Draw();
 	tutorialGetStar.Draw();
 	tutorialInDokan.Draw();
+	tutorialDash.Draw();
+	tutorialDashJump.Draw();
 }

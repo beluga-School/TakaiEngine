@@ -45,6 +45,8 @@ public:
 		return &instance;
 	}
 
+	void PreRegister();
+
 	void Initialize();
 
 	void Update();

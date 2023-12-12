@@ -157,8 +157,6 @@ void Star::PopStar(const Vector3& pop)
 	StageChanger::Get()->SetObject<Star>(data);
 
 	StageChanger::Get()->CollisionSet(data);
-
-	GameUIManager::Get()->starUI.CountUp();
 }
 
 Star* Star::EventPopStar(const std::string& eventname)

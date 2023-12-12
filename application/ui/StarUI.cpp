@@ -1,6 +1,7 @@
 #include "StarUI.h"
 #include "Util.h"
 #include "InstantDrawer.h"
+#include "StageChanger.h"
 
 void StarUI::LoadResource()
 {
@@ -38,6 +39,19 @@ void StarUI::Initialize()
 void StarUI::Update()
 {
 	uibase.Update();
+
+	int32_t starcount = 0;
+	for (auto& star : StageChanger::Get()->mEntitys)
+	{
+		if (star->CheckTag(TagTable::Star)) {
+			if (star->mActive)
+			{
+				starcount++;
+			}
+		}
+	}
+
+	Substitution(starcount);
 }
 
 void StarUI::Draw()
@@ -100,4 +114,9 @@ void StarUI::CountDown()
 void StarUI::Substitution(int32_t value)
 {
 	count = value;
+}
+
+int32_t StarUI::GetCount()
+{
+	return count;
 }

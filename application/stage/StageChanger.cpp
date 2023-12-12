@@ -71,16 +71,17 @@ void StageChanger::Update()
 		//切り替え開始(同期処理)
 		ChangeUpdate();
 
-		//ステージ切り替え時に実行されるイベントがあればここで実行
-		if (GetNowStageHandle() == "stage_stageselect" &&
-			LevelLoader::Get()->GetData("stage_mountain")->isClear &&
-			EventManager::Get()->CheckExestEvent("nextCamera")->get()->isExecuted == false)
-		{
-			EventManager::Get()->Start("nextCamera");
-		}
-
 		//切り替えが終わったら暗転を解除
 		SceneChange::Get()->Open();
+	}
+
+	//クリアイベントの実行
+	if (GetNowStageHandle() == "stage_mountain")
+	{
+		//スターの残数を監視し、0より小さいならクリアイベント実行
+		if (GameUIManager::Get()->starUI.GetCount() <= 0) {
+			EventManager::Get()->Start("clearEvent");
+		}
 	}
 
 	for (auto& obj : mEntitys)
@@ -149,6 +150,7 @@ void StageChanger::Reset()
 	IDdCube::ResetID();
 
 	EventManager::Get()->Clear();
+	EventManager::Get()->Initialize();
 	GameUIManager::Get()->Initialize();
 
 	eventCameraNames.clear();
@@ -218,7 +220,6 @@ void StageChanger::ChangeUpdate()
 		//カメラの配置なら
 		if (objectData->setObjectName == "eventcamera")
 		{
-			CameraLoader<Clear1>(*objectData,"nextCamera");
 			CameraLoader<NoEffectEvent>(*objectData,"goalCamera");
 			CameraLoader<NoEffectEvent>(*objectData,"startCamera");
 			CameraLoader<NoEffectEvent>(*objectData, "lockbackCam");
