@@ -439,6 +439,9 @@
     <Filter Include="Application\Event\RedCoinEvent">
       <UniqueIdentifier>{f031548c-763b-4eb3-abe3-3e95697fcf6e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Application\Charactor\Enemy\BombSolider">
+      <UniqueIdentifier>{aab5fe61-aa59-4c18-a84f-50750f3c6381}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="engine\input\Input.cpp">
@@ -755,6 +758,9 @@
     </ClCompile>
     <ClCompile Include="application\event\RedCoinEvent.cpp">
       <Filter>Application\Event\RedCoinEvent</Filter>
+    </ClCompile>
+    <ClCompile Include="BombSolider.cpp">
+      <Filter>Application\Charactor\Enemy\BombSolider</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1087,6 +1093,9 @@
     </ClInclude>
     <ClInclude Include="application\event\RedCoinEvent.h">
       <Filter>Application\Event\RedCoinEvent</Filter>
+    </ClInclude>
+    <ClInclude Include="BombSolider.h">
+      <Filter>Application\Charactor\Enemy\BombSolider</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

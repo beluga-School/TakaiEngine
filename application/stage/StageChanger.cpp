@@ -362,6 +362,11 @@ void StageChanger::ChangeUpdate()
 			continue;
 		}
 
+		//ボスの配置なら
+		if (objectData->setObjectName == "bombSolider")
+		{
+		}
+
 		//移動ブロックの配置
 		if (SetMoveBlock(*objectData))
 		{

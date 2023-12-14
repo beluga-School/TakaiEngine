@@ -304,6 +304,7 @@ void ModelManager::PreLoad()
 	LoadModel("dokan", "dokan",true);
 	LoadModel("slime", "slime",true);
 	LoadModel("Coin", "Coin",true);
+	LoadModel("bombSolider", "bombSolider",true);
 }
 
 void ModelManager::LoadModel(const std::string filepath, const std::string handle, bool smooth)
