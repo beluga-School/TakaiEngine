@@ -49,5 +49,8 @@ private:
 	UI tutorialEnemyDown;
 	UI tutorialGetStar;
 	UI tutorialInDokan;
+	UI tutorialDash;
+	UI tutorialDashJump;
+
 };
 

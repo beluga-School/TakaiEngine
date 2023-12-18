@@ -83,6 +83,7 @@ void Star::Update()
 	case Star::StarState::CountDown:
 		GameUIManager::Get()->starUI.CountDown();
 		starState = StarState::End;
+		mActive = false;
 		break;
 	case Star::StarState::End:
 	
@@ -156,14 +157,16 @@ void Star::PopStar(const Vector3& pop)
 	StageChanger::Get()->SetObject<Star>(data);
 
 	StageChanger::Get()->CollisionSet(data);
-
-	GameUIManager::Get()->starUI.CountUp();
 }
 
 Star* Star::EventPopStar(const std::string& eventname)
 {
 	for (auto& star : StageChanger::Get()->mEntitys)
 	{
+		//出現させようとしているものが赤コインか確認し、違うなら返す
+		if (!star->CheckTag(TagTable::Star)) {
+			continue; 
+		}
 		//呼び出しイベント名と持っているイベント名が一致する個体を呼び出す
 		if (eventname == star->eventName_)
 		{
@@ -182,6 +185,10 @@ void Star::EventVanishStar(const std::string& eventname)
 {
 	for (auto& star : StageChanger::Get()->mEntitys)
 	{
+		//出現させようとしているものが赤コインか確認し、違うなら返す
+		if (!star->CheckTag(TagTable::Star)) {
+			continue; 
+		}
 		//呼び出しイベント名と持っているイベント名が一致する個体を呼び出す
 		if (eventname == star->eventName_)
 		{
@@ -196,12 +203,15 @@ bool Star::EventCheckStar(const std::string& eventname)
 {
 	for (auto& star : StageChanger::Get()->mEntitys)
 	{
+		//出現させようとしているものが赤コインか確認し、違うなら返す
+		if (!star->CheckTag(TagTable::Star)) {
+			continue;
+		}
 		//呼び出しイベント名と持っているイベント名が一致する個体を呼び出す
-		if (eventname == star->eventName_)
+		if (eventname == star->eventName_ && star->mActive)
 		{
 			//取得されているならtrue まだ未取得ならfalseを返す
-			Star* check = static_cast<Star*>(star.get());
-			return check->hit;
+			return true;
 		}
 	}
 

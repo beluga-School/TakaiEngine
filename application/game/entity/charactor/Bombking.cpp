@@ -16,6 +16,9 @@ void Bombking::Initialize()
 	
 	EncountSphereInitialize();
 
+	//追跡範囲の球の半径(ベースの大きさ+大きさの平均を足す)
+	sphereCol.radius = 16;
+
 	Register();
 
 	//現在HPを設定 エディタ側からの指定に対応したい
@@ -38,15 +41,23 @@ void Bombking::Update()
 	Vector3 damageScale = { initScale.x + 1.0f,initScale.y - 0.5f, initScale.z + 1.0f };
 
 	if (CheckState(ActTable::Encount)) {
-		SetState(ActTable::Tracking);
-		DeleteState(ActTable::Encount);
+		//攻撃範囲から外れたら終わり
+		if (Collsions::SphereCollsion(Player::Get()->mEncountCol, sphereCol))
+		{
+			SetState(ActTable::Tracking);
+			DeleteState(ActTable::Encount);
+		}
 	}
 
 	if (CheckState(ActTable::Tracking)) {
-		Tracking();
+		Tracking();		
 
-		throwBox.position = position + (Enemy::TargetVector(*Player::Get()) * 5);
-		throwBox.scale = { 5,5,5 };
+		//攻撃範囲から外れたら終わり
+		if (!Collsions::SphereCollsion(Player::Get()->mEncountCol, sphereCol))
+		{
+			SetState(ActTable::Encount);
+			DeleteState(ActTable::Tracking);
+		}
 	}
 
 	if (CheckState(ActTable::Attack1)) {
@@ -64,9 +75,6 @@ void Bombking::Update()
 			target->position = Vector3::Spline(inters, throwTimer.GetTimeRate());
 
 			if (throwTimer.GetEnd()) {
-				target->SetNoGravity(false);
-				target->SetNoCollsion(false);
-				target = nullptr;
 				SetState(ActTable::Encount);
 				DeleteState(ActTable::Attack1);
 			}
@@ -118,7 +126,23 @@ void Bombking::Update()
 			ParticleManager::Get()->CreateCubeParticle(position,
 				{ 1.0f,1.0f,1.0f }, 10, { 0,1,0,0.5f });
 		}
+
+		actTables.clear();
 	}
+
+	if (!CheckState(ActTable::Attack1)) {
+		if (target != nullptr)
+		{
+			target->SetNoGravity(false);
+			target->SetNoCollsion(false);
+			target = nullptr;
+		}
+	}
+
+	throwBox.position = position + (Enemy::TargetVector(*Player::Get()) * 5);
+	throwBox.scale = { 5,5,5 };
+
+	throwBox.Update(*Camera::sCamera);
 
 	//死亡処理への遷移
 	if (damageTimer.GetEnd())
@@ -127,9 +151,7 @@ void Bombking::Update()
 		{
 			SetState(ActTable::Dead);
 		}
-	}
-
-	throwBox.Update(*Camera::sCamera);
+	}	
 
 	//ずらした分を加算する
 	box.CreateCol(position + saveColCenter, box.scale, rotation);
@@ -147,7 +169,9 @@ void Bombking::Draw()
 	Obj3d::DrawMaterial();
 
 	BasicObjectPreDraw("WireFrame");
-	throwBox.Draw();
+	
+	//デバッグ用の投げ判定を描画
+	//throwBox.Draw();
 }
 
 void Bombking::HitEffect()
@@ -214,7 +238,11 @@ void Bombking::DebugGUI()
 {
 	for (auto& act : actTables)
 	{
-		ImGui::Text("%d", act);
+		ImGui::Text("Act %d", act);
+	}
+
+	if (target != nullptr) {
+		ImGui::Text("target あり");
 	}
 }
 

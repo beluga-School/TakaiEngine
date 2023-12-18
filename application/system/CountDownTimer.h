@@ -8,6 +8,7 @@ public:
 
 	void SetTime(float maxTime);
 	void Start();
+	void Reset();
 
 	void Update();
 	void Draw();

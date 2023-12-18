@@ -129,11 +129,11 @@
     <ClCompile Include="application\event\IEvent.cpp" />
     <ClCompile Include="APPLICATION\UI\UI.cpp" />
     <ClCompile Include="application\game\entity\EnemyDokan.cpp" />
-    <ClCompile Include="BossArea.cpp" />
-    <ClCompile Include="BossHikiCamera.cpp" />
-    <ClCompile Include="CameraEvent.cpp" />
-    <ClCompile Include="CountDownTimer.cpp" />
-    <ClCompile Include="EnemyPopEvent.cpp" />
+    <ClCompile Include="application\game\entity\BossArea.cpp" />
+    <ClCompile Include="application\event\BossHikiCamera.cpp" />
+    <ClCompile Include="application\system\CountDownTimer.cpp" />
+    <ClCompile Include="application\event\EnemyPopEvent.cpp" />
+    <ClCompile Include="BombSolider.cpp" />
     <ClCompile Include="engine\util\InstantDrawer.cpp" />
     <ClCompile Include="application\level\LevelData.cpp" />
     <ClCompile Include="application\game\entity\eventBlock\MoveBlock.cpp" />
@@ -212,6 +212,10 @@
     <ClCompile Include="RedCoinEvent.cpp" />
     <ClCompile Include="StarStringEvent.cpp" />
     <ClCompile Include="SpotLight.cpp" />
+    <ClCompile Include="application\event\GetStar.cpp" />
+    <ClCompile Include="application\game\entity\RedCoin.cpp" />
+    <ClCompile Include="application\event\RedCoinEvent.cpp" />
+    <ClCompile Include="application\event\StarStringEvent.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="application\collision\CollideManager.h" />
@@ -237,11 +241,11 @@
     <ClInclude Include="application\event\NoEffectEvent.h" />
     <ClInclude Include="application\event\IEvent.h" />
     <ClInclude Include="application\game\entity\EnemyDokan.h" />
-    <ClInclude Include="BossArea.h" />
-    <ClInclude Include="BossHikiCamera.h" />
-    <ClInclude Include="CameraEvent.h" />
-    <ClInclude Include="CountDownTimer.h" />
-    <ClInclude Include="EnemyPopEvent.h" />
+    <ClInclude Include="application\game\entity\BossArea.h" />
+    <ClInclude Include="application\event\BossHikiCamera.h" />
+    <ClInclude Include="application\system\CountDownTimer.h" />
+    <ClInclude Include="application\event\EnemyPopEvent.h" />
+    <ClInclude Include="BombSolider.h" />
     <ClInclude Include="engine\util\InstantDrawer.h" />
     <ClInclude Include="application\level\LevelData.h" />
     <ClInclude Include="application\game\entity\eventBlock\MoveBlock.h" />
@@ -315,9 +319,9 @@
     <ClInclude Include="External\json.hpp" />
     <ClInclude Include="application\ui\GameUIManager.h" />
     <ClInclude Include="application\ui\InterfaceUI.h" />
-    <ClInclude Include="GetStar.h" />
-    <ClInclude Include="RedCoin.h" />
-    <ClInclude Include="RedCoinEvent.h" />
+    <ClInclude Include="application\event\GetStar.h" />
+    <ClInclude Include="application\game\entity\RedCoin.h" />
+    <ClInclude Include="application\event\RedCoinEvent.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="application\ui\StarUI.h" />
     <ClInclude Include="application\ui\UI.h" />
@@ -326,6 +330,7 @@
     <ClInclude Include="application\ui\SummonUI.h" />
     <ClInclude Include="StarStringEvent.h" />
     <ClInclude Include="SpotLight.h" />
+    <ClInclude Include="application\event\StarStringEvent.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\Shader\CharactorDT.hlsli" />

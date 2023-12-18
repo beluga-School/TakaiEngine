@@ -2,6 +2,7 @@
 #include "SceneChange.h"
 #include <cassert>
 #include "InstantDrawer.h"
+#include "GameUIManager.h"
 
 void SceneManager::Update()
 {
@@ -50,10 +51,12 @@ void SceneManager::Draw()
 
 	//簡易描画クラスの毎フレーム更新
 	InstantDrawer::AllUpdate();
+	//ビルボードが後ろ
+	InstantDrawer::AllDraw3D();
 	//簡易描画クラスの描画
 	InstantDrawer::AllDraw2D();
-	//ビルボードが手前に来るように
-	InstantDrawer::AllDraw3D();
+
+	//GameUIManager::Get()->Draw();
 
 	//切り替え演出の描画
 	SpriteCommonBeginDraw();

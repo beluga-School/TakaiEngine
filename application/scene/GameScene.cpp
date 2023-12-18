@@ -94,6 +94,11 @@ void GameScene::Update()
 		GameSceneDebugGUI();
 	}
 
+	if (Input::Keyboard::TriggerKey(DIK_1))
+	{
+		EventManager::Get()->Start("");
+	}
+
 	LightGroup::Get()->LightDebugGUI();
 
 	mSkydome.Update();
@@ -231,6 +236,15 @@ void GameScene::GameSceneDebugGUI()
 	ImGui::Text("RunEventsEnd");
 
 	PlayerCamera::Get()->CheckDebug();
+
+	EnemyManager* point = EnemyManager::Get();
+	for (auto& enemy : point->enemyList)
+	{
+		Bombking* king = static_cast<Bombking*>(enemy.get());
+		if (king != nullptr && king->CheckTag(TagTable::Bombking)) {
+			king->DebugGUI();
+		}
+	}
 
 	sceneChangeGUI.End();
 }

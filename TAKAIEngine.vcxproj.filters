@@ -424,9 +424,6 @@
     <Filter Include="Application\Event\EnemyPopEvent">
       <UniqueIdentifier>{ad714f83-e5c2-4914-afc2-c3f9f172bfa0}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Application\Event\CameraEvent">
-      <UniqueIdentifier>{fc986ac4-b462-444e-8795-58c911bfdf92}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Application\Event\GetStar">
       <UniqueIdentifier>{c30c4e4d-c02a-4c66-92b5-881df30058de}</UniqueIdentifier>
     </Filter>
@@ -444,6 +441,9 @@
     </Filter>
     <Filter Include="Engine\Light\SpotLight">
       <UniqueIdentifier>{809d831b-3f75-4a22-89ca-c58b8ae5a1db}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Application\Charactor\Enemy\BombSolider">
+      <UniqueIdentifier>{aab5fe61-aa59-4c18-a84f-50750f3c6381}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -738,35 +738,35 @@
     <ClCompile Include="application\ui\SummonUI.cpp">
       <Filter>Application\Event\SummonUI</Filter>
     </ClCompile>
-    <ClCompile Include="BossHikiCamera.cpp">
+    <ClCompile Include="application\event\BossHikiCamera.cpp">
       <Filter>Application\Event\BossHikiCamera</Filter>
     </ClCompile>
-    <ClCompile Include="BossArea.cpp">
+    <ClCompile Include="application\game\entity\BossArea.cpp">
       <Filter>Application\Entity\BossArea</Filter>
     </ClCompile>
-    <ClCompile Include="EnemyPopEvent.cpp">
+    <ClCompile Include="application\event\EnemyPopEvent.cpp">
       <Filter>Application\Event\EnemyPopEvent</Filter>
     </ClCompile>
-    <ClCompile Include="CameraEvent.cpp">
-      <Filter>Application\Event\CameraEvent</Filter>
-    </ClCompile>
-    <ClCompile Include="GetStar.cpp">
+    <ClCompile Include="application\event\GetStar.cpp">
       <Filter>Application\Event\GetStar</Filter>
     </ClCompile>
-    <ClCompile Include="CountDownTimer.cpp">
+    <ClCompile Include="application\system\CountDownTimer.cpp">
       <Filter>Application\UI\CountDownTimer</Filter>
     </ClCompile>
-    <ClCompile Include="StarStringEvent.cpp">
+    <ClCompile Include="application\event\StarStringEvent.cpp">
       <Filter>Application\Event\StarStringEvent</Filter>
     </ClCompile>
-    <ClCompile Include="RedCoin.cpp">
+    <ClCompile Include="application\game\entity\RedCoin.cpp">
       <Filter>Application\Entity\EventBlock\RedCoin</Filter>
     </ClCompile>
-    <ClCompile Include="RedCoinEvent.cpp">
+    <ClCompile Include="application\event\RedCoinEvent.cpp">
       <Filter>Application\Event\RedCoinEvent</Filter>
     </ClCompile>
     <ClCompile Include="SpotLight.cpp">
       <Filter>Engine\Light\SpotLight</Filter>
+    </ClCompile>
+    <ClCompile Include="BombSolider.cpp">
+      <Filter>Application\Charactor\Enemy\BombSolider</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1076,35 +1076,35 @@
     <ClInclude Include="application\ui\SummonUI.h">
       <Filter>Application\Event\SummonUI</Filter>
     </ClInclude>
-    <ClInclude Include="BossHikiCamera.h">
+    <ClInclude Include="application\event\BossHikiCamera.h">
       <Filter>Application\Event\BossHikiCamera</Filter>
     </ClInclude>
-    <ClInclude Include="BossArea.h">
+    <ClInclude Include="application\game\entity\BossArea.h">
       <Filter>Application\Entity\BossArea</Filter>
     </ClInclude>
-    <ClInclude Include="EnemyPopEvent.h">
+    <ClInclude Include="application\event\EnemyPopEvent.h">
       <Filter>Application\Event\EnemyPopEvent</Filter>
     </ClInclude>
-    <ClInclude Include="CameraEvent.h">
-      <Filter>Application\Event\CameraEvent</Filter>
-    </ClInclude>
-    <ClInclude Include="GetStar.h">
+    <ClInclude Include="application\event\GetStar.h">
       <Filter>Application\Event\GetStar</Filter>
     </ClInclude>
-    <ClInclude Include="CountDownTimer.h">
+    <ClInclude Include="application\system\CountDownTimer.h">
       <Filter>Application\UI\CountDownTimer</Filter>
     </ClInclude>
-    <ClInclude Include="StarStringEvent.h">
+    <ClInclude Include="application\event\StarStringEvent.h">
       <Filter>Application\Event\StarStringEvent</Filter>
     </ClInclude>
-    <ClInclude Include="RedCoin.h">
+    <ClInclude Include="application\game\entity\RedCoin.h">
       <Filter>Application\Entity\EventBlock\RedCoin</Filter>
     </ClInclude>
-    <ClInclude Include="RedCoinEvent.h">
+    <ClInclude Include="application\event\RedCoinEvent.h">
       <Filter>Application\Event\RedCoinEvent</Filter>
     </ClInclude>
     <ClInclude Include="SpotLight.h">
       <Filter>Engine\Light\SpotLight</Filter>
+    </ClInclude>
+    <ClInclude Include="BombSolider.h">
+      <Filter>Application\Charactor\Enemy\BombSolider</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

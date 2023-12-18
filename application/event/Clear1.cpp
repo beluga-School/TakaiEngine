@@ -1,40 +1,42 @@
 #include "Clear1.h"
 #include "StageChanger.h"
-#include "GoalSystem.h"
+#include "InstantDrawer.h"
 
-void Clear1::Start()
+void ClearEvent::Start()
 {
-	setFlag = false;
-	timer.Start();
+	spriteTimer.Start();
+	changeTimer.Reset();
 }
 
-void Clear1::End()
+void ClearEvent::End()
 {
+	StageChanger::Get()->ChangeLevel(*LevelLoader::Get()->GetData("stage_stageselect"));
 }
 
-void Clear1::Initialize()
+void ClearEvent::Initialize()
 {
+
 }
 
-void Clear1::Update()
+void ClearEvent::Update()
 {
-	timer.Update();
-	//ブロックを特定の位置に置く
-	if (timer.GetTimeRate() >= 0.5f && setFlag == false)
-	{
-		for (auto& objectData : LevelLoader::Get()->GetData("clear1")->mObjects)
-		{
-			StageChanger::Get()->SetBlock(objectData);
-		};
-		setFlag = true;
+	spriteTimer.Update();
+	changeTimer.Update();
+	if (spriteTimer.GetEnd()) {
+		if (!changeTimer.GetStarted()) {
+			changeTimer.Start();
+		}
 	}
+
+	spritePos.y = TEasing::OutQuad(-100, Util::WIN_HEIGHT / 2, spriteTimer.GetTimeRate());
 }
 
-void Clear1::Draw()
+void ClearEvent::Draw()
 {
+	InstantDrawer::DrawGraph(spritePos.x, spritePos.y,2.0f,2.0f,"clearString");
 }
 
-bool Clear1::EndFlag()
+bool ClearEvent::EndFlag()
 {
-	return timer.GetEnd();
+	return changeTimer.GetEnd();
 }

@@ -13,6 +13,7 @@
 #include "EnemyDokan.h"
 #include "Bombking.h"
 #include "BossArea.h"
+#include "RedCoin.h"
 
 bool CollideManager::CheckDirections(const Cube& check, const Cube& collide, const CheckDirection& CD)
 {
@@ -107,6 +108,15 @@ void CollideManager::CheckCollide(Entity* check, Entity* collide)
 	{
 		//checkがPlayerであることは確定しているので、player型に変換してデータを持ってくる
 		Player* player = static_cast<Player*>(check);
+
+		if (collide->CheckTag(TagTable::RedCoin))
+		{
+			RedCoin* redcoin = static_cast<RedCoin*>(collide);
+			if (Collsions::CubeCollision(player->box.cubecol, redcoin->box.cubecol))
+			{
+				redcoin->HitEffect();
+			}
+		}
 
 		if (collide->CheckTag(TagTable::Dokan))
 		{

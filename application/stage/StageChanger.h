@@ -235,6 +235,11 @@ private:
 				return;
 			}
 
+			if (data.textureName != "")
+			{
+
+			}
+
 			//イベント名、番号、カメラ位置を保存
 			loadCamDatas[eventName].emplace_back(number, camdata);
 		}

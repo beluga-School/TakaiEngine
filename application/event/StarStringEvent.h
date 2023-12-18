@@ -1,6 +1,7 @@
 #pragma once
 #include "IEvent.h"
-class StarStringEvent : public IEvent
+
+class MessageEvent : public IEvent
 {
 public:
 	void Initialize()override;
@@ -11,6 +12,8 @@ public:
 	void End()override;
 
 	bool EndFlag()override;
+
+	std::string messageTexHandle = "";
 
 private:
 	TEasing::easeTimer endTimer = 1.0f;

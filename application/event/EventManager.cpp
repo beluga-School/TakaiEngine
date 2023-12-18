@@ -13,6 +13,8 @@ void EventManager::LoadResource()
 	TextureManager::Load("Resources\\ui\\slaystring.png", "slaystring");
 	TextureManager::Load("Resources\\ui\\trapstring.png", "trapstring");
 	TextureManager::Load("Resources\\ui\\getstarstring.png", "getstarstring");
+	TextureManager::Load("Resources\\ui\\redcoinString.png", "redcoinString");
+	TextureManager::Load("Resources\\ui\\clearString.png", "clearString");
 }
 
 bool EventManager::Start(const std::string& startEventName)
@@ -159,10 +161,17 @@ bool EventManager::DeleteRunEvent(const std::string& eventName)
 	return false;
 }
 
+void EventManager::PreRegister()
+{
+	Register<ClearEvent>("clearEvent");
+}
+
 void EventManager::Initialize()
 {
 	uppos = { 0,0 };
 	downpos = { Util::WIN_WIDTH,Util::WIN_HEIGHT };
+
+	PreRegister();
 }
 
 void EventManager::Update()

@@ -71,16 +71,17 @@ void StageChanger::Update()
 		//切り替え開始(同期処理)
 		ChangeUpdate();
 
-		//ステージ切り替え時に実行されるイベントがあればここで実行
-		if (GetNowStageHandle() == "stage_stageselect" &&
-			LevelLoader::Get()->GetData("stage_mountain")->isClear &&
-			EventManager::Get()->CheckExestEvent("nextCamera")->get()->isExecuted == false)
-		{
-			EventManager::Get()->Start("nextCamera");
-		}
-
 		//切り替えが終わったら暗転を解除
 		SceneChange::Get()->Open();
+	}
+
+	//クリアイベントの実行
+	if (GetNowStageHandle() == "stage_mountain")
+	{
+		//スターの残数を監視し、0より小さいならクリアイベント実行
+		if (GameUIManager::Get()->starUI.GetCount() <= 0) {
+			EventManager::Get()->Start("clearEvent");
+		}
 	}
 
 	for (auto& obj : mEntitys)
@@ -149,6 +150,7 @@ void StageChanger::Reset()
 	IDdCube::ResetID();
 
 	EventManager::Get()->Clear();
+	EventManager::Get()->Initialize();
 	GameUIManager::Get()->Initialize();
 
 	eventCameraNames.clear();
@@ -218,12 +220,23 @@ void StageChanger::ChangeUpdate()
 		//カメラの配置なら
 		if (objectData->setObjectName == "eventcamera")
 		{
-			CameraLoader<Clear1>(*objectData,"nextCamera");
 			CameraLoader<NoEffectEvent>(*objectData,"goalCamera");
 			CameraLoader<NoEffectEvent>(*objectData,"startCamera");
 			CameraLoader<NoEffectEvent>(*objectData, "lockbackCam");
 			CameraLoader<EnemyPopEvent>(*objectData, "enemyPopEvent_Slime");
-			CameraLoader<StarStringEvent>(*objectData, "StarStringEvent");
+			CameraLoader<MessageEvent>(*objectData, "StarStringEvent");
+			//テクスチャを外部から設定
+			if (EventManager::Get()->CheckExestEvent("StarStringEvent") != nullptr) {
+				MessageEvent* getEvent = static_cast<MessageEvent*>( EventManager::Get()->CheckExestEvent("StarStringEvent")->get());
+				getEvent->messageTexHandle = "getstarstring";
+			}
+			CameraLoader<MessageEvent>(*objectData, "RedStringEvent");
+			//テクスチャを外部から設定
+			if (EventManager::Get()->CheckExestEvent("RedStringEvent") != nullptr) {
+				MessageEvent* getEvent = static_cast<MessageEvent*>(EventManager::Get()->CheckExestEvent("RedStringEvent")->get());
+				getEvent->messageTexHandle = "redcoinString";
+			}
+			CameraLoader<MessageEvent>(*objectData, "RedEventEnd");
 
 			continue;
 		}
@@ -347,6 +360,11 @@ void StageChanger::ChangeUpdate()
 			}
 
 			continue;
+		}
+
+		//ボスの配置なら
+		if (objectData->setObjectName == "bombSolider")
+		{
 		}
 
 		//移動ブロックの配置
@@ -540,6 +558,8 @@ void StageChanger::SetPlayer(const LevelData::ObjectData& data)
 	Player::Get()->box.cubecol.scale = Player::Get()->scale;
 
 	Player::Get()->mDokanApparrance = true;
+
+	Player::Get()->Initialize();
 
 	Player::Get()->Register();
 }
@@ -921,6 +941,12 @@ bool StageChanger::SetRedCoin(const LevelData::ObjectData& data)
 
 		redcoin->Initialize();
 
+		//当たり判定を作成
+		if (data.collider.have)
+		{
+			CollisionSet(data);
+		}
+
 		if (data.eventtrigerName != "") {
 			redcoin->mActive = false;
 		}
@@ -947,6 +973,7 @@ void StageChanger::DrawModel()
 		else
 		{
 			BasicObjectPreDraw("OutLine", false);
+			//BasicObjectPreDraw("DitherOutline", false);
 		}
 		obj->DrawOutLine();
 		if (obj->CheckTag(TagTable::DitherTransparent))
@@ -956,6 +983,7 @@ void StageChanger::DrawModel()
 		else
 		{
 			BasicObjectPreDraw("GroundToon");
+			//BasicObjectPreDraw("DitherTransparent");
 		}
 		obj->Draw();
 	}
