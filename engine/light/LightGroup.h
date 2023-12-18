@@ -14,8 +14,8 @@ static const int32_t sDIRLIGHT_NUM = 3;
 //点光源の数
 static const int32_t sPOINTLIGHT_NUM = 3;
 
-//スポットライトの数
-static const int32_t sCIRCLESHADOW_NUM = 1;
+//丸影の数(今後最大数にしたい)
+static const int32_t sCIRCLESHADOW_NUM = 3;
 
 struct LightGroupData
 {
@@ -84,6 +84,8 @@ public://関数
 	void PointLightDebug();
 
 	void SpotLightDebug();
+
+	void CircleShadowDebug();
 
 	DirectionalLight mDirLights[sDIRLIGHT_NUM];
 	PointLight mPointLights[sDIRLIGHT_NUM];

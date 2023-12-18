@@ -70,7 +70,7 @@ float4 main(VSOutput input) : SV_TARGET
             
             atten *= angleatten;
    
-            shadecolor.rgb -= atten;
+            shadecolor.rgb -= atten * float3(0.1f,0.1f,0.1f);
         }
     }
     
