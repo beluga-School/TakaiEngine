@@ -442,6 +442,9 @@
     <Filter Include="Application\Event\RedCoinEvent">
       <UniqueIdentifier>{f031548c-763b-4eb3-abe3-3e95697fcf6e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Engine\Light\SpotLight">
+      <UniqueIdentifier>{809d831b-3f75-4a22-89ca-c58b8ae5a1db}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="engine\input\Input.cpp">
@@ -761,6 +764,9 @@
     </ClCompile>
     <ClCompile Include="RedCoinEvent.cpp">
       <Filter>Application\Event\RedCoinEvent</Filter>
+    </ClCompile>
+    <ClCompile Include="SpotLight.cpp">
+      <Filter>Engine\Light\SpotLight</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1096,6 +1102,9 @@
     </ClInclude>
     <ClInclude Include="RedCoinEvent.h">
       <Filter>Application\Event\RedCoinEvent</Filter>
+    </ClInclude>
+    <ClInclude Include="SpotLight.h">
+      <Filter>Engine\Light\SpotLight</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

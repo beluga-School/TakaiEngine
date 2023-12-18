@@ -129,7 +129,7 @@ void BasicObjectPreDraw(const std::string& pipelineName, bool useLight)
 
 	if (useLight)
 	{
-		LightGroup::sLightGroup->Draw(4);
+		LightGroup::Get()->Draw(4);
 	}
 }
 

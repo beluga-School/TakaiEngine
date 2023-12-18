@@ -3,14 +3,19 @@
 #include "Vector3.h"
 #include "ConstBuffer.h"
 #include "PointLight.h"
+#include "SpotLight.h"
 #include <stdlib.h>
 #include <memory>
+#include "ImguiManager.h"
 
 //ライトの数
 static const int32_t sDIRLIGHT_NUM = 3;
 
 //点光源の数
 static const int32_t sPOINTLIGHT_NUM = 3;
+
+//丸影の数(今後最大数にしたい)
+static const int32_t sCIRCLESHADOW_NUM = 3;
 
 struct LightGroupData
 {
@@ -20,6 +25,8 @@ struct LightGroupData
 	DirectionalLight::ConstBufferData mDirLights[sDIRLIGHT_NUM];
 
 	PointLight::ConstBufferData mPointLights[sPOINTLIGHT_NUM];
+
+	CircleShadow::ConstBufferData mCircleShadows[sCIRCLESHADOW_NUM];
 };
 
 /*! LightGroup
@@ -28,17 +35,20 @@ struct LightGroupData
 class LightGroup
 {
 public://変数
-	
+	LightGroup() {
+		Initialize();
+	};
 
-	//全てのオブジェクトで共通のライトデータ
-	static std::unique_ptr<LightGroup> sLightGroup;
-	   
+	static LightGroup* Get()
+	{
+		static LightGroup instance;
+		return &instance;
+	}
+   
 	//定数バッファ
 	ConstBuffer<LightGroupData> mConstBuff;
 
 public://関数
-	//インスタンス生成
-	static void Create();
 
 	//初期化
 	void Initialize();
@@ -69,10 +79,21 @@ public://関数
 	//標準のライト設定
 	void DefaultLightSet();
 
+	void LightDebugGUI();
+
+	void PointLightDebug();
+
+	void SpotLightDebug();
+
+	void CircleShadowDebug();
+
 	DirectionalLight mDirLights[sDIRLIGHT_NUM];
 	PointLight mPointLights[sDIRLIGHT_NUM];
+	CircleShadow mCircleShadows[sCIRCLESHADOW_NUM];
 
 private:
+
+	GUI lightGui = {"lightDebug"};
 
 	bool mDirty = false;
 };

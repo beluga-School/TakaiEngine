@@ -211,6 +211,7 @@
     <ClCompile Include="RedCoin.cpp" />
     <ClCompile Include="RedCoinEvent.cpp" />
     <ClCompile Include="StarStringEvent.cpp" />
+    <ClCompile Include="SpotLight.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="application\collision\CollideManager.h" />
@@ -324,6 +325,7 @@
     <ClInclude Include="application\event\StageTitleUIMountain.h" />
     <ClInclude Include="application\ui\SummonUI.h" />
     <ClInclude Include="StarStringEvent.h" />
+    <ClInclude Include="SpotLight.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\Shader\CharactorDT.hlsli" />

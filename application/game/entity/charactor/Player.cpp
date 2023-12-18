@@ -11,6 +11,7 @@
 #include "StageTitleUI.h"
 #include "EventManager.h"
 #include "GameUIManager.h"
+#include "LightGroup.h"
 
 using namespace Input;
 
@@ -123,6 +124,7 @@ void Player::Update()
 	DamageUpdate();
 
 	hpGauge.Update();
+
 }
 
 void Player::Draw()

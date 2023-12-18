@@ -94,6 +94,8 @@ void GameScene::Update()
 		GameSceneDebugGUI();
 	}
 
+	LightGroup::Get()->LightDebugGUI();
+
 	mSkydome.Update();
 
 	StageChanger::Get()->Update();
