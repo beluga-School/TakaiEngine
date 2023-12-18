@@ -99,8 +99,6 @@ void GameScene::Update()
 		EventManager::Get()->Start("");
 	}
 
-	LightGroup::Get()->LightDebugGUI();
-
 	mSkydome.Update();
 
 	StageChanger::Get()->Update();
@@ -123,6 +121,8 @@ void GameScene::Update()
 	{
 		pCamera->Update();
 	}
+
+	LightGroup::Get()->Update();
 
 	EnemyManager::Get()->Update();
 

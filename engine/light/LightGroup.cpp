@@ -13,6 +13,8 @@ void LightGroup::Initialize()
 
 void LightGroup::Update()
 {
+	LightGroup::Get()->mCircleShadows[0].casterPos = Player::Get()->position;
+	LightGroup::Get()->TransferBuffer();
 	if (mDirty)
 	{
 		TransferBuffer();
@@ -162,9 +164,6 @@ void LightGroup::LightDebugGUI()
 	SpotLightDebug();
 
 	lightGui.End();
-
-	//重い処理なんで避ける工夫を
-	TransferBuffer();
 }
 
 void LightGroup::SpotLightDebug()
@@ -183,7 +182,6 @@ void LightGroup::SpotLightDebug()
 	ImGui::SliderFloat("factorAngleCos.y", &mCircleShadows[0].factorAngleCos.y,-MathF::PIf, MathF::PIf);
 	ImGui::SliderFloat("distance", &mCircleShadows[0].distance,0.f,5.0f);
 
-	mCircleShadows[0].casterPos = Player::Get()->position;
 	//mCircleShadows[0].casterPos.y -= 10;
 
 	if (ImGui::Button("LightPlayerSet"))
