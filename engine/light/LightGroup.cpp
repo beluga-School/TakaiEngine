@@ -59,23 +59,20 @@ void LightGroup::TransferBuffer()
 		}
 	}
 
-	for (int32_t i = 0; i < sSPOTLIGHT_NUM; i++)
+	for (int32_t i = 0; i < sCIRCLESHADOW_NUM; i++)
 	{
-		if (mSpotLights[i].mActive)
+		if (mCircleShadows[i].mActive)
 		{
-			mConstBuff.mConstBufferData->mSpotLights[i].active = true;
-			mConstBuff.mConstBufferData->mSpotLights[i].lightPos = mSpotLights[i].mLightPos;
-			mConstBuff.mConstBufferData->mSpotLights[i].lightColor = { mSpotLights[i].mLightColor.x,mSpotLights[i].mLightColor.y,mSpotLights[i].mLightColor.z,1 };
-			mConstBuff.mConstBufferData->mSpotLights[i].intensity = mSpotLights[i].intensity;
-			mConstBuff.mConstBufferData->mSpotLights[i].decay = mSpotLights[i].decay;
-			
-			mConstBuff.mConstBufferData->mSpotLights[i].distance = mSpotLights[i].distance;
-			mConstBuff.mConstBufferData->mSpotLights[i].cosAngle = mSpotLights[i].cosAngle;
-			mConstBuff.mConstBufferData->mSpotLights[i].cosFalloffStart = mSpotLights[i].cosFalloffStart;
+			mConstBuff.mConstBufferData->mCircleShadows[i].active = true;
+			mConstBuff.mConstBufferData->mCircleShadows[i].direction = -mCircleShadows[i].mDirection;
+			mConstBuff.mConstBufferData->mCircleShadows[i].casterPos = mCircleShadows[i].casterPos;
+			mConstBuff.mConstBufferData->mCircleShadows[i].distance = mCircleShadows[i].distance;
+			mConstBuff.mConstBufferData->mCircleShadows[i].atten = mCircleShadows[i].atten;
+			mConstBuff.mConstBufferData->mCircleShadows[i].factorAngleCos = mCircleShadows[i].factorAngleCos;
 		}
 		else
 		{
-			mConstBuff.mConstBufferData->mSpotLights[i].active = false;
+			mConstBuff.mConstBufferData->mCircleShadows[i].active = false;
 		}
 	}
 }
@@ -145,13 +142,11 @@ void LightGroup::DefaultLightSet()
 	mDirLights[2].mColor = { 1.0f,1.0f,1.0f };
 	mDirLights[2].mDirection = { -0.5f,0.1f,-0.2f };
 
-	mPointLights[0].mActive = true;
+	mPointLights[0].mActive = false;
 	mPointLights[0].mLightColor = {1.0f,1.0f,1.0f};
 	mPointLights[0].mLightAtten = { 1.0f ,1.0f,1.0f};
 
-	mSpotLights[0].mActive = false;
-	mSpotLights[0].mLightColor = { 1.0f,1.0f,1.0f };
-	mSpotLights[0].mLightAtten = { 1.0f ,1.0f,1.0f };
+	mCircleShadows[0].mActive = true;
 }
 
 void LightGroup::LightDebugGUI()
@@ -159,8 +154,9 @@ void LightGroup::LightDebugGUI()
 
 	lightGui.Begin({800,100},{200,200});
 	
-	PointLightDebug();
-	
+	//PointLightDebug();
+	SpotLightDebug();
+
 	lightGui.End();
 
 	//重い処理なんで避ける工夫を
@@ -173,23 +169,22 @@ void LightGroup::SpotLightDebug()
 	static float fallStart = 0;
 
 
-	ImGui::SliderFloat("pointLight:intensity", &mSpotLights[0].intensity,0,1.0f);
-	ImGui::SliderFloat("pointLight:pos.x", &mSpotLights[0].mLightPos.x,-200.f,200.0f);
-	ImGui::SliderFloat("pointLight:pos.y", &mSpotLights[0].mLightPos.y,-200.f,200.0f);
-	ImGui::SliderFloat("pointLight:pos.z", &mSpotLights[0].mLightPos.z,-200.f,200.0f);
-	ImGui::SliderFloat("pointLight:distance", &mSpotLights[0].distance,0.0f,100.0f);
-	ImGui::SliderFloat("pointLight:decay", &mSpotLights[0].decay,0.0f, 100.0f);
-	ImGui::SliderFloat("pointLight:cosAngle", &angle,0.0f, 360.0f);
-	ImGui::SliderFloat("pointLight:cosFalloffStart", &fallStart,1.0f, 360.0f);
-	ImGui::SliderFloat("pointLight:mDirection.x", &mSpotLights[0].mDirection.x, -1.0f, 1.0f);
-	ImGui::SliderFloat("pointLight:mDirection.y", &mSpotLights[0].mDirection.y, -1.0f, 1.0f);
-	ImGui::SliderFloat("pointLight:mDirection.z", &mSpotLights[0].mDirection.z, -1.0f, 1.0f);
-	
-	mSpotLights[0].cosAngle = MathF::AngleConvRad(angle);
-	mSpotLights[0].cosFalloffStart = MathF::AngleConvRad(fallStart);
+	ImGui::SliderFloat("mDirection.x", &mCircleShadows[0].mDirection.x,-1.f,1.0f);
+	ImGui::SliderFloat("mDirection.y", &mCircleShadows[0].mDirection.y,-1.f,1.0f);
+	ImGui::SliderFloat("mDirection.z", &mCircleShadows[0].mDirection.z,-1.f,1.0f);
+	ImGui::SliderFloat("atten.x", &mCircleShadows[0].atten.x,-10.f,10.0f);
+	ImGui::SliderFloat("atten.y", &mCircleShadows[0].atten.y,-10.f,10.0f);
+	ImGui::SliderFloat("atten.z", &mCircleShadows[0].atten.z,-10.f,10.0f);
+	ImGui::SliderFloat("factorAngleCos.x", &mCircleShadows[0].factorAngleCos.x,-MathF::PIf, MathF::PIf);
+	ImGui::SliderFloat("factorAngleCos.y", &mCircleShadows[0].factorAngleCos.y,-MathF::PIf, MathF::PIf);
+	ImGui::SliderFloat("distance", &mCircleShadows[0].distance,0.f,5.0f);
+
+	mCircleShadows[0].casterPos = Player::Get()->position;
+	//mCircleShadows[0].casterPos.y -= 10;
+
 	if (ImGui::Button("LightPlayerSet"))
 	{
-		LightGroup::Get()->mPointLights[0].mLightPos = Player::Get()->position;
+		LightGroup::Get()->mCircleShadows[0].casterPos = Player::Get()->position;
 	}
 }
 

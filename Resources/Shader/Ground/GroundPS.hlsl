@@ -44,28 +44,33 @@ float4 main(VSOutput input) : SV_TARGET
         
             float3 specular = pointColor * float3(1.0f, 1.0f, 1.0f);
            
-            shadecolor.rgb -= diffuse + specular;
+            shadecolor.rgb += diffuse + specular;
         }
     }
     
-    for (int k = 0; k < SPOTLIGHT_NUM; k++)
+    for (i = 0; i < CIRCLESHADOW_NUM; i++)
     {
-        if (spotLights[k].active)
+        if (circleShadows[i].active)
         {
-            float3 spotlightDirectionOnSurface = normalize(input.worldPos.xyz - spotLights[k].lightpos);
-            float cosAngle = dot(spotlightDirectionOnSurface, spotLights[k].direction);
-            float falloffFactor = saturate((cosAngle - spotLights[k].cosAngle) / (1.0f - spotLights[k].cosAngle));
+            float3 casterv = circleShadows[i].casterPos - input.worldPos.xyz;
             
-            float distance = length(spotLights[k].lightpos - input.worldPos.xyz);
-            float attenuationFactor = pow(saturate(-distance / spotLights[k].distance + 1.0f), spotLights[k].decay);
+            float d = dot(casterv, circleShadows[i].direction);
             
-            float3 spotColor = spotLights[k].lightcolor.rgb * spotLights[k].intensity * falloffFactor * attenuationFactor;
+            float atten = saturate(1.0f / (circleShadows[i].atten.x + circleShadows[i].atten.y * d + circleShadows[i].atten.z * d * d));
             
-            float3 diffuse = spotColor * m_diffuse;
-        
-            float3 specular = spotColor * float3(1.0f, 1.0f, 1.0f);
-        
-            shadecolor.rgb += diffuse + specular;
+            atten *= step(0, d);
+            
+            float3 lightpos = circleShadows[i].casterPos + circleShadows[i].direction * circleShadows[i].distance;
+            
+            float3 lightv = normalize(lightpos - input.worldPos.xyz);
+            
+            float cos = dot(lightv, circleShadows[i].direction);
+            
+            float angleatten = smoothstep(circleShadows[i].cosAngle.y, circleShadows[i].cosAngle.x, cos);
+            
+            atten *= angleatten;
+   
+            shadecolor.rgb -= atten;
         }
     }
     

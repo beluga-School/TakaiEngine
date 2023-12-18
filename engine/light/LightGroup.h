@@ -15,7 +15,7 @@ static const int32_t sDIRLIGHT_NUM = 3;
 static const int32_t sPOINTLIGHT_NUM = 3;
 
 //スポットライトの数
-static const int32_t sSPOTLIGHT_NUM = 3;
+static const int32_t sCIRCLESHADOW_NUM = 1;
 
 struct LightGroupData
 {
@@ -26,7 +26,7 @@ struct LightGroupData
 
 	PointLight::ConstBufferData mPointLights[sPOINTLIGHT_NUM];
 
-	SpotLight::ConstBufferData mSpotLights[sSPOTLIGHT_NUM];
+	CircleShadow::ConstBufferData mCircleShadows[sCIRCLESHADOW_NUM];
 };
 
 /*! LightGroup
@@ -87,7 +87,7 @@ public://関数
 
 	DirectionalLight mDirLights[sDIRLIGHT_NUM];
 	PointLight mPointLights[sDIRLIGHT_NUM];
-	SpotLight mSpotLights[sSPOTLIGHT_NUM];
+	CircleShadow mCircleShadows[sCIRCLESHADOW_NUM];
 
 private:
 
