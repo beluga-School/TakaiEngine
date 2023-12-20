@@ -133,7 +133,7 @@
     <ClCompile Include="application\event\BossHikiCamera.cpp" />
     <ClCompile Include="application\system\CountDownTimer.cpp" />
     <ClCompile Include="application\event\EnemyPopEvent.cpp" />
-    <ClCompile Include="BombSolider.cpp" />
+    <ClCompile Include="application\game\BombSolider.cpp" />
     <ClCompile Include="engine\util\InstantDrawer.cpp" />
     <ClCompile Include="application\level\LevelData.cpp" />
     <ClCompile Include="application\game\entity\eventBlock\MoveBlock.cpp" />
@@ -207,7 +207,7 @@
     <ClCompile Include="application\game\entity\eventBlock\Signboard.cpp" />
     <ClCompile Include="application\event\StageTitleUIMountain.cpp" />
     <ClCompile Include="application\ui\SummonUI.cpp" />
-    <ClCompile Include="SpotLight.cpp" />
+    <ClCompile Include="engine\light\SpotLight.cpp" />
     <ClCompile Include="application\event\GetStar.cpp" />
     <ClCompile Include="application\game\entity\RedCoin.cpp" />
     <ClCompile Include="application\event\RedCoinEvent.cpp" />
@@ -241,7 +241,7 @@
     <ClInclude Include="application\event\BossHikiCamera.h" />
     <ClInclude Include="application\system\CountDownTimer.h" />
     <ClInclude Include="application\event\EnemyPopEvent.h" />
-    <ClInclude Include="BombSolider.h" />
+    <ClInclude Include="application\game\BombSolider.h" />
     <ClInclude Include="engine\util\InstantDrawer.h" />
     <ClInclude Include="application\level\LevelData.h" />
     <ClInclude Include="application\game\entity\eventBlock\MoveBlock.h" />
@@ -324,7 +324,7 @@
     <ClInclude Include="application\game\entity\eventBlock\Signboard.h" />
     <ClInclude Include="application\event\StageTitleUIMountain.h" />
     <ClInclude Include="application\ui\SummonUI.h" />
-    <ClInclude Include="SpotLight.h" />
+    <ClInclude Include="engine\light\SpotLight.h" />
     <ClInclude Include="application\event\StarStringEvent.h" />
   </ItemGroup>
   <ItemGroup>

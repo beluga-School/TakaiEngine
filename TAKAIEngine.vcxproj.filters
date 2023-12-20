@@ -762,10 +762,10 @@
     <ClCompile Include="application\event\RedCoinEvent.cpp">
       <Filter>Application\Event\RedCoinEvent</Filter>
     </ClCompile>
-    <ClCompile Include="SpotLight.cpp">
+    <ClCompile Include="engine\light\SpotLight.cpp">
       <Filter>Engine\Light\SpotLight</Filter>
     </ClCompile>
-    <ClCompile Include="BombSolider.cpp">
+    <ClCompile Include="application\game\BombSolider.cpp">
       <Filter>Application\Charactor\Enemy\BombSolider</Filter>
     </ClCompile>
   </ItemGroup>
@@ -1100,10 +1100,10 @@
     <ClInclude Include="application\event\RedCoinEvent.h">
       <Filter>Application\Event\RedCoinEvent</Filter>
     </ClInclude>
-    <ClInclude Include="SpotLight.h">
+    <ClInclude Include="engine\light\SpotLight.h">
       <Filter>Engine\Light\SpotLight</Filter>
     </ClInclude>
-    <ClInclude Include="BombSolider.h">
+    <ClInclude Include="application\game\BombSolider.h">
       <Filter>Application\Charactor\Enemy\BombSolider</Filter>
     </ClInclude>
   </ItemGroup>
