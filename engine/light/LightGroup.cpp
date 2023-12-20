@@ -2,6 +2,7 @@
 #include "DirectXInit.h"
 #include "Player.h"
 #include "MathF.h"
+#include "EnemyManager.h"
 
 void LightGroup::Initialize()
 {
@@ -13,11 +14,10 @@ void LightGroup::Initialize()
 
 void LightGroup::Update()
 {
-	LightGroup::Get()->mCircleShadows[0].casterPos = Player::Get()->position;
-	LightGroup::Get()->TransferBuffer();
+	TransferBuffer();
 	if (mDirty)
 	{
-		TransferBuffer();
+		//TransferBuffer();
 		mDirty = false;
 	}
 }
@@ -26,6 +26,15 @@ void LightGroup::Draw(const UINT& index)
 {
 	DirectX12::Get()->mCmdList->SetGraphicsRootConstantBufferView(index,
 		mConstBuff.mBuffer->GetGPUVirtualAddress());
+}
+
+void LightGroup::Reset()
+{
+	shadowNum = 0;
+	for (int32_t i = 0; i < sCIRCLESHADOW_NUM; i++)
+	{
+		mShadow[i].mActive = false;
+	}
 }
 
 void LightGroup::TransferBuffer()
@@ -60,18 +69,15 @@ void LightGroup::TransferBuffer()
 			mConstBuff.mConstBufferData->mPointLights[i].active = false;
 		}
 	}
-
 	for (int32_t i = 0; i < sCIRCLESHADOW_NUM; i++)
 	{
-		if (mCircleShadows[i].mActive)
-		{
+		if (mShadow[i].mActive) {
 			mConstBuff.mConstBufferData->mCircleShadows[i].active = true;
-			mConstBuff.mConstBufferData->mCircleShadows[i].factorAngleCos = mCircleShadows[i].factorAngleCos;
-			mConstBuff.mConstBufferData->mCircleShadows[i].atten = mCircleShadows[i].atten;
-			mConstBuff.mConstBufferData->mCircleShadows[i].casterPos = mCircleShadows[i].casterPos;
-			mConstBuff.mConstBufferData->mCircleShadows[i].distance = mCircleShadows[i].distance;
-			mConstBuff.mConstBufferData->mCircleShadows[i].direction = mCircleShadows[i].mDirection;
-		
+			mConstBuff.mConstBufferData->mCircleShadows[i].casterPos = mShadow[i].casterPos;
+			mConstBuff.mConstBufferData->mCircleShadows[i].atten = mShadow[i].atten;
+			mConstBuff.mConstBufferData->mCircleShadows[i].distance = mShadow[i].distance;
+			mConstBuff.mConstBufferData->mCircleShadows[i].direction = mShadow[i].mDirection;
+			mConstBuff.mConstBufferData->mCircleShadows[i].factorAngleCos = mShadow[i].factorAngleCos;
 		}
 		else
 		{
@@ -151,8 +157,6 @@ void LightGroup::DefaultLightSet()
 	mPointLights[0].decay = 2.0f;
 	mPointLights[0].intensity = 0.2f;
 	mPointLights[0].radius = MathF::Avarage(Player::Get()->scale) * 2;
-
-	mCircleShadows[0].mActive = true;
 }
 
 void LightGroup::LightDebugGUI()
@@ -172,27 +176,27 @@ void LightGroup::SpotLightDebug()
 	static float fallStart = 0;
 
 
-	ImGui::SliderFloat("mDirection.x", &mCircleShadows[0].mDirection.x,-1.f,1.0f);
-	ImGui::SliderFloat("mDirection.y", &mCircleShadows[0].mDirection.y,-1.f,1.0f);
-	ImGui::SliderFloat("mDirection.z", &mCircleShadows[0].mDirection.z,-1.f,1.0f);
-	ImGui::SliderFloat("atten.x", &mCircleShadows[0].atten.x,-10.f,10.0f);
-	ImGui::SliderFloat("atten.y", &mCircleShadows[0].atten.y,-10.f,10.0f);
-	ImGui::SliderFloat("atten.z", &mCircleShadows[0].atten.z,-10.f,10.0f);
-	ImGui::SliderFloat("factorAngleCos.x", &mCircleShadows[0].factorAngleCos.x,-MathF::PIf, MathF::PIf);
-	ImGui::SliderFloat("factorAngleCos.y", &mCircleShadows[0].factorAngleCos.y,-MathF::PIf, MathF::PIf);
-	ImGui::SliderFloat("distance", &mCircleShadows[0].distance,0.f,5.0f);
+	ImGui::SliderFloat("mDirection.x", &mShadow[0].mDirection.x,-1.f,1.0f);
+	ImGui::SliderFloat("mDirection.y", &mShadow[0].mDirection.y,-1.f,1.0f);
+	ImGui::SliderFloat("mDirection.z", &mShadow[0].mDirection.z,-1.f,1.0f);
+	ImGui::SliderFloat("atten.x", &mShadow[0].atten.x,-10.f,10.0f);
+	ImGui::SliderFloat("atten.y", &mShadow[0].atten.y,-10.f,10.0f);
+	ImGui::SliderFloat("atten.z", &mShadow[0].atten.z,-10.f,10.0f);
+	ImGui::SliderFloat("factorAngleCos.x", &mShadow[0].factorAngleCos.x,-MathF::PIf, MathF::PIf);
+	ImGui::SliderFloat("factorAngleCos.y", &mShadow[0].factorAngleCos.y,-MathF::PIf, MathF::PIf);
+	ImGui::SliderFloat("distance", &mShadow[0].distance,0.f,5.0f);
 
 	//mCircleShadows[0].casterPos.y -= 10;
 
 	if (ImGui::Button("LightPlayerSet"))
 	{
-		LightGroup::Get()->mCircleShadows[0].casterPos = Player::Get()->position;
+		LightGroup::Get()->mShadow[0].casterPos = Player::Get()->position;
 	}
 }
 
 void LightGroup::CircleShadowDebug()
 {
-	ImGui::SliderFloat("circleShadow:distance", &mCircleShadows[0].distance, 0, 1.0f);
+	/*ImGui::SliderFloat("circleShadow:distance", &mCircleShadows[0].distance, 0, 1.0f);
 	ImGui::SliderFloat("circleShadow:atten.x", &mCircleShadows[0].atten.x, -200.f, 200.0f);
 	ImGui::SliderFloat("circleShadow:atten.y", &mCircleShadows[0].atten.y, -200.f, 200.0f);
 	ImGui::SliderFloat("circleShadow:atten.z", &mCircleShadows[0].atten.z, -200.f, 200.0f);
@@ -202,7 +206,19 @@ void LightGroup::CircleShadowDebug()
 	if (ImGui::Button("LightPlayerSet"))
 	{
 		LightGroup::Get()->mCircleShadows[0].casterPos = Player::Get()->position;
+	}*/
+}
+
+int32_t LightGroup::CircleShadowActive()
+{
+	//敵の生成数が最大値を超えたら多分バグる
+	shadowNum++;
+	if (mShadow[shadowNum].mActive == false) {
+		mShadow[shadowNum].mActive = true;
+		return shadowNum;
 	}
+
+	return -1;
 }
 
 void LightGroup::PointLightDebug()

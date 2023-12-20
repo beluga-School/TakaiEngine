@@ -15,7 +15,7 @@ static const int32_t sDIRLIGHT_NUM = 3;
 static const int32_t sPOINTLIGHT_NUM = 3;
 
 //丸影の数(今後最大数にしたい)
-static const int32_t sCIRCLESHADOW_NUM = 3;
+static const int32_t sCIRCLESHADOW_NUM = 128;
 
 struct LightGroupData
 {
@@ -57,6 +57,9 @@ public://関数
 	//描画コマンド
 	void Draw(const UINT& index);
 
+	//リセット
+	void Reset();
+
 	//定数バッファを転送
 	void TransferBuffer();
 
@@ -76,6 +79,8 @@ public://関数
 	void SetPointLightColor(const int32_t& index, const Vector3& color);
 	void SetPointLightAtten(const int32_t& index, const Vector3& atten);
 
+	//丸影をアクティブにする
+
 	//標準のライト設定
 	void DefaultLightSet();
 
@@ -87,14 +92,17 @@ public://関数
 
 	void CircleShadowDebug();
 
+	int32_t CircleShadowActive();
+
 	DirectionalLight mDirLights[sDIRLIGHT_NUM];
-	PointLight mPointLights[sDIRLIGHT_NUM];
-	CircleShadow mCircleShadows[sCIRCLESHADOW_NUM];
+	PointLight mPointLights[sPOINTLIGHT_NUM];
+	CircleShadow mShadow[sCIRCLESHADOW_NUM];
 
 private:
-
 	GUI lightGui = {"lightDebug"};
 
 	bool mDirty = false;
+
+	int32_t shadowNum = 0;
 };
 

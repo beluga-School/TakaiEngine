@@ -1,5 +1,6 @@
 #include "Mob.h"
 #include "TimeManager.h"
+#include "LightGroup.h"
 
 void Mob::CollsionUpdate()
 {
@@ -26,7 +27,19 @@ void Mob::CollsionUpdate()
 	moveBlockPosition = { 0,0,0 };
 
 	moveBlockHit = false;
+
+	//影を動かす
+	LightGroup* hoge = LightGroup::Get();
+	if (isDead) {
+		hoge->mShadow[shadowNum].mActive = false;
+	}
+
+	hoge->mShadow[shadowNum].casterPos = position;
 }
+
+void Mob::SetLight() {
+	shadowNum = LightGroup::Get()->CircleShadowActive();
+};
 
 void Mob::SetInitScale(const Vector3& scale_)
 {

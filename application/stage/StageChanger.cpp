@@ -33,6 +33,7 @@
 #include "StarStringEvent.h"
 #include "RedCoin.h"
 #include "RedCoinEvent.h"
+#include "Slime.h"
 
 void StageChanger::LoadResource()
 {
@@ -164,6 +165,8 @@ void StageChanger::Reset()
 		//カメライベントの実行フラグを戻す
 		EventManager::Get()->CamFlagReset();
 	}
+
+	LightGroup::Get()->Reset();
 }
 
 bool StageChanger::SetBlock(const LevelData::ObjectData& data)
@@ -273,6 +276,9 @@ void StageChanger::ChangeUpdate()
 		{
 			EnemyManager::Get()->Load(*objectData);
 			EnemyManager::Get()->enemyList.back()->SetInitScale(objectData->scaling);
+
+			Mob* enemy = static_cast<Mob*>(EnemyManager::Get()->enemyList.back().get());
+			enemy->SetLight();
 			
 			if (objectData->collider.have)
 			{
@@ -560,6 +566,9 @@ void StageChanger::SetPlayer(const LevelData::ObjectData& data)
 	Player::Get()->mDokanApparrance = true;
 
 	Player::Get()->Initialize();
+
+	Mob* mob = static_cast<Mob*>(Player::Get());
+	mob->SetLight();
 
 	Player::Get()->Register();
 }

@@ -50,7 +50,7 @@ void GameScene::LoadResource()
 }
 
 void GameScene::Initialize()
-{
+{	
 	//初期化
 	mSkydome.Initialize();
 	mDebugCamera.Initialize();
@@ -94,9 +94,9 @@ void GameScene::Update()
 		GameSceneDebugGUI();
 	}
 
-	if (Input::Keyboard::TriggerKey(DIK_1))
+	if (Input::Keyboard::TriggerKey(DIK_5))
 	{
-		EventManager::Get()->Start("");
+		//EventManager::Get()->Start("");
 	}
 
 	mSkydome.Update();

@@ -20,6 +20,7 @@ public:
 public:	
 	Mob() : Entity() {
 		SetTag(TagTable::Mob);
+		//SetLight();
 	};
 
 	//trueになると重力を受けなくする(gravityの値も0にする)
@@ -47,6 +48,8 @@ public:
 	};
 
 	void SetInitScale(const Vector3& scale_);
+
+	void SetLight();
 
 protected:
 	void SetGravity(float value);
@@ -129,4 +132,7 @@ protected:
 	float feet = 0;
 
 	Vector3 initScale = { 0,0,0 };
+
+	//丸影を参照するための番号
+	int32_t shadowNum = -1;
 };

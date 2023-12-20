@@ -1218,7 +1218,7 @@ void PipelineManager::GroundToonPipeLine()
 	};
 
 	//ルートパラメータの設定
-	pSet.paramSize = 6;
+	pSet.paramSize = 7;
 	pSet.rootParams.resize(pSet.paramSize);
 	//定数バッファ0番 b0
 	pSet.rootParams[0].ParameterType = D3D12_ROOT_PARAMETER_TYPE_CBV;	//種類
@@ -1250,7 +1250,11 @@ void PipelineManager::GroundToonPipeLine()
 	pSet.rootParams[5].Descriptor.ShaderRegister = 4;					//定数バッファ番号
 	pSet.rootParams[5].Descriptor.RegisterSpace = 0;						//デフォルト値
 	pSet.rootParams[5].ShaderVisibility = D3D12_SHADER_VISIBILITY_ALL;	//すべてのシェーダから見える
-
+	//定数バッファ5番 b5
+	pSet.rootParams[6].ParameterType = D3D12_ROOT_PARAMETER_TYPE_CBV;	//種類
+	pSet.rootParams[6].Descriptor.ShaderRegister = 5;					//定数バッファ番号
+	pSet.rootParams[6].Descriptor.RegisterSpace = 0;						//デフォルト値
+	pSet.rootParams[6].ShaderVisibility = D3D12_SHADER_VISIBILITY_ALL;	//すべてのシェーダから見える
 
 	pSet.Create();
 

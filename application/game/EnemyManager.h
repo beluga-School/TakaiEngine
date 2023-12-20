@@ -41,6 +41,7 @@ inline Enemy* EnemyManager::PopEnemy(const Vector3& position, const Vector3& rot
 	enemyList.emplace_back();
 	enemyList.back() = std::make_unique<TEnemy>();
 	enemyList.back()->Initialize();
+	enemyList.back()->SetLight();
 
 	//座標
 	enemyList.back()->position = position;

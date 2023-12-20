@@ -15,6 +15,8 @@ public:
 		Vector3 atten;
 		float pad2;
 		Vector2 factorAngleCos;
+		float pad3;
+		float pad4;
 	};
 public://メンバ変数
 	Vector3 mDirection = { 0.0f,1.0f,0.0f };
