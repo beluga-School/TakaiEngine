@@ -6,7 +6,7 @@ class BombSolider : public Enemy
 public:
 	BombSolider() : Enemy()
 	{
-
+		SetTag(TagTable::BombSolider);
 	}
 
 	void Initialize()override;

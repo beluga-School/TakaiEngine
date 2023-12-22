@@ -81,6 +81,9 @@ void Enemy::EncountSphereInitialize()
 	encountSphere.Initialize();
 	encountSphere.SetModel(ModelManager::GetModel("ICOSphere"));
 	encountSphere.SetTexture(TextureManager::GetTexture("white"));
+
+	sphereCol.center = position;
+	sphereCol.radius = 0;
 }
 
 void Enemy::EncountSphereUpdate()

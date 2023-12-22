@@ -267,9 +267,6 @@
     <Filter Include="シェーダー\PerlinNoisePE">
       <UniqueIdentifier>{d961cf0c-520f-449d-9e6a-bdaf3f70f313}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Application\Charactor\Bombking">
-      <UniqueIdentifier>{78cc1e19-54eb-4c7e-9efa-687c2f3bd240}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Engine\Particle2D">
       <UniqueIdentifier>{a4cb542a-92e5-43f3-90e8-c79f8f43db1c}</UniqueIdentifier>
     </Filter>
@@ -445,6 +442,9 @@
     <Filter Include="Application\Charactor\Enemy\BombSolider">
       <UniqueIdentifier>{aab5fe61-aa59-4c18-a84f-50750f3c6381}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Application\Charactor\Enemy\Bombking">
+      <UniqueIdentifier>{78cc1e19-54eb-4c7e-9efa-687c2f3bd240}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="engine\input\Input.cpp">
@@ -598,7 +598,7 @@
       <Filter>Application\Entity</Filter>
     </ClCompile>
     <ClCompile Include="application\game\Entity\Charactor\Bombking.cpp">
-      <Filter>Application\Charactor\Bombking</Filter>
+      <Filter>Application\Charactor\Enemy\Bombking</Filter>
     </ClCompile>
     <ClCompile Include="application\game\Entity\Charactor\Player.cpp">
       <Filter>Application\Charactor\Player</Filter>
@@ -930,7 +930,7 @@
       <Filter>Application\Entity</Filter>
     </ClInclude>
     <ClInclude Include="application\game\Entity\Charactor\Bombking.h">
-      <Filter>Application\Charactor\Bombking</Filter>
+      <Filter>Application\Charactor\Enemy\Bombking</Filter>
     </ClInclude>
     <ClInclude Include="application\game\Entity\Charactor\Player.h">
       <Filter>Application\Charactor\Player</Filter>

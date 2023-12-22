@@ -34,6 +34,7 @@
 #include "RedCoin.h"
 #include "RedCoinEvent.h"
 #include "Slime.h"
+#include "BombSolider.h"
 
 void StageChanger::LoadResource()
 {
@@ -211,6 +212,38 @@ void StageChanger::CollisionSet(const LevelData::ObjectData& data)
 	mEntitys.back()->Register();
 }
 
+void StageChanger::EnemyCollisionSet(const LevelData::ObjectData& data)
+{
+	//当たり判定を表示するオブジェクト
+	EnemyManager::Get()->enemyList.back()->box.Initialize();
+
+	//エンティティリストで参照されたくないので、コリジョンのタグを付ける
+	EnemyManager::Get()->enemyList.back()->SetTag(TagTable::Collsion);
+
+	EnemyManager::Get()->enemyList.back()->box.SetModel(ModelManager::GetModel("Cube"));
+	EnemyManager::Get()->enemyList.back()->box.SetTexture(TextureManager::Get()->GetTexture("white"));
+
+	//中心位置をずらす情報を保存
+	EnemyManager::Get()->enemyList.back()->saveColCenter = data.collider.center;
+
+	EnemyManager::Get()->enemyList.back()->box.position = data.translation + EnemyManager::Get()->enemyList.back()->saveColCenter;
+	EnemyManager::Get()->enemyList.back()->box.scale = {
+		data.scaling.x * data.collider.size.x,
+		data.scaling.y * data.collider.size.y,
+		data.scaling.z * data.collider.size.z
+	};
+	EnemyManager::Get()->enemyList.back()->box.rotation = {
+		MathF::AngleConvRad(data.rotation.x),
+		MathF::AngleConvRad(data.rotation.y),
+		MathF::AngleConvRad(data.rotation.z)
+	};
+
+	EnemyManager::Get()->enemyList.back()->box.cubecol.position = EnemyManager::Get()->enemyList.back()->box.position;
+	EnemyManager::Get()->enemyList.back()->box.cubecol.scale = EnemyManager::Get()->enemyList.back()->box.scale;
+	//当たり判定だけマネージャーに登録
+	EnemyManager::Get()->enemyList.back()->Register();
+}
+
 void StageChanger::ChangeUpdate()
 {
 	//ハンドルをステージに保存
@@ -335,42 +368,37 @@ void StageChanger::ChangeUpdate()
 
 			if(objectData->collider.have)
 			{
-				//当たり判定を表示するオブジェクト
-				EnemyManager::Get()->enemyList.back()->box.Initialize();
-
-				//エンティティリストで参照されたくないので、コリジョンのタグを付ける
-				EnemyManager::Get()->enemyList.back()->SetTag(TagTable::Collsion);
-
-				EnemyManager::Get()->enemyList.back()->box.SetModel(ModelManager::GetModel("Cube"));
-				EnemyManager::Get()->enemyList.back()->box.SetTexture(TextureManager::Get()->GetTexture("white"));
-
-				//中心位置をずらす情報を保存
-				EnemyManager::Get()->enemyList.back()->saveColCenter = objectData->collider.center;
-
-				EnemyManager::Get()->enemyList.back()->box.position = objectData->translation + EnemyManager::Get()->enemyList.back()->saveColCenter;
-				EnemyManager::Get()->enemyList.back()->box.scale = {
-					objectData->scaling.x * objectData->collider.size.x,
-					objectData->scaling.y * objectData->collider.size.y,
-					objectData->scaling.z * objectData->collider.size.z
-				};
-				EnemyManager::Get()->enemyList.back()->box.rotation = {
-					MathF::AngleConvRad(objectData->rotation.x),
-					MathF::AngleConvRad(objectData->rotation.y),
-					MathF::AngleConvRad(objectData->rotation.z)
-				};
-
-				EnemyManager::Get()->enemyList.back()->box.cubecol.position = EnemyManager::Get()->enemyList.back()->box.position;
-				EnemyManager::Get()->enemyList.back()->box.cubecol.scale = EnemyManager::Get()->enemyList.back()->box.scale;
-				//当たり判定だけマネージャーに登録
-				EnemyManager::Get()->enemyList.back()->Register();
+				EnemyCollisionSet(*objectData);
 			}
 
 			continue;
 		}
 
-		//ボスの配置なら
+		//
 		if (objectData->setObjectName == "bombSolider")
 		{
+			EnemyManager::Get()->enemyList.emplace_back();
+			EnemyManager::Get()->enemyList.back() = std::make_unique<BombSolider>();
+
+			//読み込みしてないなら読み込みも行う
+			if (ModelManager::GetModel(objectData->fileName) == nullptr)
+			{
+				ModelManager::LoadModel(objectData->fileName, objectData->fileName, true);
+			}
+
+			//positionとかを設定
+			LevelDataExchanger::SetObjectData(*EnemyManager::Get()->enemyList.back(), *objectData);
+
+			//モデルとか設定する
+			EnemyManager::Get()->enemyList.back()->Initialize();
+			EnemyManager::Get()->enemyList.back()->SetInitScale(objectData->scaling);
+
+			if (objectData->collider.have)
+			{
+				EnemyCollisionSet(*objectData);
+			}
+
+			continue;
 		}
 
 		//移動ブロックの配置

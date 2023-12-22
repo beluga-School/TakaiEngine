@@ -167,6 +167,8 @@ public:
 	//当たり判定配置
 	void CollisionSet(const LevelData::ObjectData& data);
 
+	void EnemyCollisionSet(const LevelData::ObjectData& data);
+
 private:
 	StageChanger(){};
 	~StageChanger(){};

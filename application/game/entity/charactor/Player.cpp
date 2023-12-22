@@ -88,6 +88,9 @@ void Player::Initialize()
 	SetNoMove(false);
 	SetNoCollsion(false);
 	SetNoGravity(false);
+
+	mEncountCol.center = position;
+	mEncountCol.radius = 0;
 }
 
 void Player::Update()

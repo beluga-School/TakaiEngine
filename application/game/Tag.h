@@ -25,4 +25,5 @@ enum class TagTable
 	Slime = 18,
 	BossArea = 19,
 	RedCoin = 20,
+	BombSolider = 21,
 };

@@ -1,5 +1,7 @@
 #include "BombSolider.h"
 #include "MathF.h"
+#include "ObjParticle.h"
+#include "Color.h"
 
 void BombSolider::Initialize()
 {
@@ -21,6 +23,23 @@ void BombSolider::Initialize()
 
 void BombSolider::Update()
 {
+	if (CheckState(ActTable::None)) {
+		
+	}
+	if (CheckState(ActTable::Encount)) {
+		for (int32_t i = 0; i < 10; i++)
+		{
+			ParticleManager::Get()->CreateCubeParticle(position, { 1,1,1 },
+				30, { 0, 0, 0, 1 });
+		}
+
+		SetState(ActTable::Dead);
+		DeleteState(ActTable::Encount);
+	}
+	if (CheckState(ActTable::Dead)) {
+		
+	}
+
 	CollsionUpdate();
 
 	EncountSphereUpdate();
@@ -35,10 +54,16 @@ void BombSolider::Draw()
 
 void BombSolider::HitEffect()
 {
+	if (IsDead())return;
+	SetState(ActTable::Dead);
 
 }
 
 void BombSolider::Encount()
 {
+	//ステートがNoneならエンカウントに以降
+	if (!CheckState(ActTable::None)) return;
 
+	SetState(ActTable::Encount);
+	DeleteState(ActTable::None);
 }

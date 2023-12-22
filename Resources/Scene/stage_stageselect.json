@@ -1826,6 +1826,42 @@
                     10.0
                 ]
             }
+        },
+        {
+            "type": "MESH",
+            "name": "立方体_立方体.011",
+            "transform": {
+                "translation": [
+                    234.34512329101562,
+                    -3.573446750640869,
+                    -3.074793815612793
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "bombSolider",
+            "collider": {
+                "type": "BOX",
+                "center": [
+                    0.0,
+                    0.0,
+                    1.5
+                ],
+                "size": [
+                    2.0,
+                    2.0,
+                    3.0
+                ]
+            },
+            "setObject": "bombSolider"
         }
     ]
 }
