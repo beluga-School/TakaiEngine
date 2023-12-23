@@ -35,6 +35,7 @@
 #include "RedCoinEvent.h"
 #include "Slime.h"
 #include "BombSolider.h"
+#include "BreakBlock.h"
 
 void StageChanger::LoadResource()
 {
@@ -456,6 +457,10 @@ void StageChanger::ChangeUpdate()
 		}
 
 		if (SetRedCoin(*objectData))
+		{
+			continue;
+		}
+		if (SetBreakBlock(*objectData))
 		{
 			continue;
 		}
@@ -989,6 +994,23 @@ bool StageChanger::SetRedCoin(const LevelData::ObjectData& data)
 
 		if (data.eventtrigerName != "") {
 			redcoin->mActive = false;
+		}
+
+		return true;
+	}
+	return false;
+}
+
+bool StageChanger::SetBreakBlock(const LevelData::ObjectData& data)
+{
+	if (data.setObjectName == "breakBlock")
+	{
+		SetObject<BreakBlock>(data);
+
+		//当たり判定を作成
+		if (data.collider.have)
+		{
+			CollisionSet(data);
 		}
 
 		return true;

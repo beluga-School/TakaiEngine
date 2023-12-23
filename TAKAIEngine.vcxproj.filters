@@ -445,6 +445,9 @@
     <Filter Include="Application\Charactor\Enemy\Bombking">
       <UniqueIdentifier>{78cc1e19-54eb-4c7e-9efa-687c2f3bd240}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Application\Entity\EventBlock\BreakBlock">
+      <UniqueIdentifier>{40bef473-134d-413b-a78c-78fbd9f590e2}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="engine\input\Input.cpp">
@@ -767,6 +770,9 @@
     </ClCompile>
     <ClCompile Include="application\game\BombSolider.cpp">
       <Filter>Application\Charactor\Enemy\BombSolider</Filter>
+    </ClCompile>
+    <ClCompile Include="BreakBlock.cpp">
+      <Filter>Application\Entity\EventBlock\BreakBlock</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1105,6 +1111,9 @@
     </ClInclude>
     <ClInclude Include="application\game\BombSolider.h">
       <Filter>Application\Charactor\Enemy\BombSolider</Filter>
+    </ClInclude>
+    <ClInclude Include="BreakBlock.h">
+      <Filter>Application\Entity\EventBlock\BreakBlock</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

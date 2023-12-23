@@ -205,6 +205,8 @@ private:
 	bool SetBossArea(const LevelData::ObjectData& data);
 	//赤コインの配置
 	bool SetRedCoin(const LevelData::ObjectData& data);
+	//破壊可能ブロックの配置
+	bool SetBreakBlock(const LevelData::ObjectData& data);
 
 	void DrawModel();
 	void DrawCollider();

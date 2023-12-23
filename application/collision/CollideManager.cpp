@@ -14,6 +14,7 @@
 #include "Bombking.h"
 #include "BossArea.h"
 #include "RedCoin.h"
+#include "BreakBlock.h"
 
 bool CollideManager::CheckDirections(const Cube& check, const Cube& collide, const CheckDirection& CD)
 {
@@ -54,6 +55,14 @@ void CollideManager::CollideUpdate()
 	{
 		if (CheckIsDead(*itr))
 		{
+			Entity* entity = static_cast<Entity*>(*itr);			
+			//消すときにここでそのブロックを登録済みの当たり判定から削除
+			UniqueObjectErase(Player::Get()->hitListUp, entity->box.cubecol);
+			UniqueObjectErase(Player::Get()->hitListDown, entity->box.cubecol);
+			UniqueObjectErase(Player::Get()->hitListBack, entity->box.cubecol);
+			UniqueObjectErase(Player::Get()->hitListCenter, entity->box.cubecol);
+			UniqueObjectErase(Player::Get()->hitListLeft, entity->box.cubecol);
+			UniqueObjectErase(Player::Get()->hitListRight, entity->box.cubecol);
 			itr = allCols.erase(itr);
 		}
 		else
@@ -78,6 +87,14 @@ void CollideManager::StatusUpdate()
 	{
 		if (CheckIsDead(*itr))
 		{
+			Entity* entity = static_cast<Entity*>(*itr);
+			//消すときにここでそのブロックを登録済みの当たり判定から削除
+			UniqueObjectErase(Player::Get()->hitListUp, entity->box.cubecol);
+			UniqueObjectErase(Player::Get()->hitListDown, entity->box.cubecol);
+			UniqueObjectErase(Player::Get()->hitListBack, entity->box.cubecol);
+			UniqueObjectErase(Player::Get()->hitListCenter, entity->box.cubecol);
+			UniqueObjectErase(Player::Get()->hitListLeft, entity->box.cubecol);
+			UniqueObjectErase(Player::Get()->hitListRight, entity->box.cubecol);
 			itr = allCols.erase(itr);
 		}
 		else
@@ -115,6 +132,35 @@ void CollideManager::CheckCollide(Entity* check, Entity* collide)
 			if (Collsions::CubeCollision(player->box.cubecol, redcoin->box.cubecol))
 			{
 				redcoin->HitEffect();
+			}
+		}
+
+		if (collide->CheckTag(TagTable::BreakBlock))
+		{
+			BreakBlock* bBlock = static_cast<BreakBlock*>(collide);
+
+			//ヒップドロップ中なら
+			if (player->CheckState(Player::PlayerState::HipDrop))
+			{
+				//もし下面の当たり判定の中にブロックがあるなら、このブロックの当たり判定を消す
+				for (auto block : player->hitListDown)
+				{
+					if (block.GetID() == bBlock->GetID()) {
+						bBlock->canBreak = false;
+					}
+					else
+					{
+						bBlock->canBreak = true;
+					}
+				}
+
+				//そのうえで当たったなら
+				if (Collsions::CubeCollision(player->box.cubecol, bBlock->box.cubecol) && 
+					!bBlock->canBreak)
+				{
+					//破壊する
+					bBlock->HitEffect();
+				}
 			}
 		}
 
@@ -201,6 +247,9 @@ void CollideManager::CheckCollide(Entity* check, Entity* collide)
 		{
 			//collideがBlockであることは確定しているので、Block型に変換してデータを持ってくる
 			Block* block = static_cast<Block*>(collide);
+
+			//非アクティブなら推し戻しをしない
+			if (!block->mActive)return;
 
 			//押し戻し処理を行う
 			Osimodosi(*mob, *block);
