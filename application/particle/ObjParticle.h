@@ -9,14 +9,14 @@
 class IParticle
 {
 public:
-	Obj3d cube;
+	Obj3d part;
 
 	virtual ~IParticle() {};
 
 	virtual void Update() = 0;
 
 	void Draw() {
-		cube.Draw();
+		part.Draw();
 	};
 
 	bool isdead = true;
@@ -47,6 +47,27 @@ private:
 	Vector3 rotateSpeed = { 0,0,0 };
 };
 
+class SphereParticle : public IParticle
+{
+public:
+	SphereParticle();
+	SphereParticle(const Vector3& pos, const Vector3& scale, const float& moveDistance, const DirectX::XMFLOAT4& color);
+
+	void Set(const Vector3& pos, const Vector3& scale, const float& moveDistance,const DirectX::XMFLOAT4& color);
+
+	void Update();
+
+private:
+	//動く速さ
+	Vector3 moveSpeed = { 0,0,0 };
+
+	//スケール保存
+	Vector3 saveScale = { 0.f,0.f,0.f };
+
+	TEasing::easeTimer uptime = 0.5f;
+	TEasing::easeTimer downtime = 0.5f;
+};
+
 /*! ParticleManager
 	3Dオブジェクトパーティクルを生成、管理するクラス
 */
@@ -59,12 +80,14 @@ public:
 	void AllDelete();
 
 	void CreateCubeParticle(const Vector3& pos, const Vector3& scale, const float& moveDistance, const DirectX::XMFLOAT4& color);
+	void CreateSphereParticle(const Vector3& pos, const Vector3& scale, const float& moveDistance, const DirectX::XMFLOAT4& color);
 
 	void Update();
 	void Draw();
 
 private:
 	std::list<std::unique_ptr<CubeParticle>> cubePool;
+	std::list<std::unique_ptr<SphereParticle>> spherePool;
 
 	ParticleManager() {};
 	~ParticleManager() {};

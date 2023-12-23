@@ -400,6 +400,12 @@ void CollideManager::CheckPlayerToEnemy(Player& player,Enemy& collide)
 	if (Collsions::SphereCollsion(player.mEncountCol, collide.sphereCol))
 	{
 		collide.Encount();
+		if (collide.CheckTag(TagTable::BombSolider)) {
+			if (collide.CheckState(ActTable::Attack2)) {
+				//接触ダメージを受ける
+				player.DamageEffect(collide.GetHitDamage());
+			}
+		}
 	}
 }
 

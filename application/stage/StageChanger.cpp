@@ -380,6 +380,9 @@ void StageChanger::ChangeUpdate()
 			EnemyManager::Get()->enemyList.emplace_back();
 			EnemyManager::Get()->enemyList.back() = std::make_unique<BombSolider>();
 
+			Mob* enemy = static_cast<Mob*>(EnemyManager::Get()->enemyList.back().get());
+			enemy->SetLight();
+
 			//読み込みしてないなら読み込みも行う
 			if (ModelManager::GetModel(objectData->fileName) == nullptr)
 			{

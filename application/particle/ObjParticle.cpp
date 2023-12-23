@@ -17,12 +17,16 @@ void ParticleManager::CreatePool()
 	for (int32_t i = 0; i < maxPool; i++)
 	{
 		cubePool.emplace_back(std::make_unique<CubeParticle>());
+		spherePool.emplace_back(std::make_unique<SphereParticle>());
 	}
 }
 
 void ParticleManager::AllDelete()
 {
 	for (unique_ptr<CubeParticle>& pat : cubePool) {
+		pat->isdead = true;
+	}
+	for (unique_ptr<SphereParticle>& pat : spherePool) {
 		pat->isdead = true;
 	}
 }
@@ -36,13 +40,29 @@ void ParticleManager::CreateCubeParticle(const Vector3& pos, const Vector3& scal
 		}
 	}
 
-	
 	cubePool.emplace_back(std::make_unique<CubeParticle>(pos, scale, moveDistance, color));
+}
+
+void ParticleManager::CreateSphereParticle(const Vector3& pos, const Vector3& scale, const float& moveDistance, const DirectX::XMFLOAT4& color)
+{
+	for (unique_ptr<SphereParticle>& pat : spherePool) {
+		if (pat->isdead) {
+			pat->Set(pos, scale, moveDistance, color);
+			return;
+		}
+	}
+
+	spherePool.emplace_back(std::make_unique<SphereParticle>(pos, scale, moveDistance, color));
 }
 
 void ParticleManager::Update()
 {
 	for (unique_ptr<CubeParticle>& pat : cubePool) {
+		if (!pat->isdead) {
+			pat->Update();
+		}
+	}
+	for (unique_ptr<SphereParticle>& pat : spherePool) {
 		if (!pat->isdead) {
 			pat->Update();
 		}
@@ -54,7 +74,13 @@ void ParticleManager::Draw()
 	BasicObjectPreDraw("DitherOutline",false);
 	for (unique_ptr<CubeParticle>& pat : cubePool) {
 		if (!pat->isdead) {
-			pat->cube.DrawOutLine();
+			pat->part.DrawOutLine();
+		}
+	}
+
+	for (unique_ptr<SphereParticle>& pat : spherePool) {
+		if (!pat->isdead) {
+			pat->part.DrawOutLine();
 		}
 	}
 	
@@ -64,47 +90,53 @@ void ParticleManager::Draw()
 			pat->Draw();
 		}
 	}
+
+	for (unique_ptr<SphereParticle>& pat : spherePool) {
+		if (!pat->isdead) {
+			pat->Draw();
+		}
+	}
 }
 
 CubeParticle::CubeParticle()
 {
-	cube.Initialize();
-	cube.SetTexture(TextureManager::Get()->GetTexture("white"));
+	part.Initialize();
+	part.SetTexture(TextureManager::Get()->GetTexture("white"));
 
-	cube.color_ = {
+	part.color_ = {
 		218.0f / 255.0f,
 		159.0f / 255.0f,
 		64.0f / 255.0f,
 		1 };
 
-	cube.SetOutLineState({ 0,0,0,1 }, 0.05f);
+	part.SetOutLineState({ 0,0,0,1 }, 0.05f);
 }
 
 CubeParticle::CubeParticle(const Vector3& pos, const Vector3& scale, const float& moveDistance, const DirectX::XMFLOAT4& color)
 {
-	cube.Initialize();
-	cube.SetTexture(TextureManager::Get()->GetTexture("white"));
+	part.Initialize();
+	part.SetTexture(TextureManager::Get()->GetTexture("white"));
 
 	Set(pos,scale, moveDistance, color);
 
-	cube.SetOutLineState({ 0,0,0,1 }, 0.05f);
+	part.SetOutLineState({ 0,0,0,1 }, 0.05f);
 }
 
 void CubeParticle::Set(const Vector3& pos, const Vector3& scale, const float& moveDistance, const DirectX::XMFLOAT4& color)
 {
-	cube.position ={
+	part.position ={
 		pos.x,
 		pos.y,
 		pos.z
 	};
 
-	cube.scale = {
+	part.scale = {
 		scale.x,
 		scale.y,
 		scale.z
 	};
 
-	cube.color_ = {
+	part.color_ = {
 		color.x,
 		color.y,
 		color.z,
@@ -132,25 +164,118 @@ void CubeParticle::Set(const Vector3& pos, const Vector3& scale, const float& mo
 void CubeParticle::Update()
 {
 	float minScale = 0.1f;
-	if (cube.scale.x <= minScale ||
-		cube.scale.y <= minScale ||
-		cube.scale.z <= minScale
+	if (part.scale.x <= minScale ||
+		part.scale.y <= minScale ||
+		part.scale.z <= minScale
 		)
 	{
 		isdead = true;
 	}
 
-	cube.position.x += moveSpeed.x * TimeManager::deltaTime;
-	cube.position.y += moveSpeed.y * TimeManager::deltaTime;
-	cube.position.z += moveSpeed.z * TimeManager::deltaTime;
+	part.position.x += moveSpeed.x * TimeManager::deltaTime;
+	part.position.y += moveSpeed.y * TimeManager::deltaTime;
+	part.position.z += moveSpeed.z * TimeManager::deltaTime;
 
-	cube.scale.x -= shrinkSpeed.x * TimeManager::deltaTime;
-	cube.scale.y -= shrinkSpeed.y * TimeManager::deltaTime;
-	cube.scale.z -= shrinkSpeed.z * TimeManager::deltaTime;
+	part.scale.x -= shrinkSpeed.x * TimeManager::deltaTime;
+	part.scale.y -= shrinkSpeed.y * TimeManager::deltaTime;
+	part.scale.z -= shrinkSpeed.z * TimeManager::deltaTime;
 
-	cube.rotation.x += rotateSpeed.x * TimeManager::deltaTime;
-	cube.rotation.y += rotateSpeed.y * TimeManager::deltaTime;
-	cube.rotation.z += rotateSpeed.z * TimeManager::deltaTime;
+	part.rotation.x += rotateSpeed.x * TimeManager::deltaTime;
+	part.rotation.y += rotateSpeed.y * TimeManager::deltaTime;
+	part.rotation.z += rotateSpeed.z * TimeManager::deltaTime;
 
-	cube.Update(*Camera::sCamera);
+	part.Update(*Camera::sCamera);
+}
+
+SphereParticle::SphereParticle()
+{
+	part.Initialize();
+	part.SetTexture(TextureManager::Get()->GetTexture("white"));
+	part.SetModel(ModelManager::GetModel("Sphere"));
+
+	part.color_ = {
+		218.0f / 255.0f,
+		159.0f / 255.0f,
+		64.0f / 255.0f,
+		1 };
+
+	part.SetOutLineState({ 0,0,0,1 }, 0.05f);
+}
+
+SphereParticle::SphereParticle(const Vector3& pos, const Vector3& scale, const float& moveDistance,const DirectX::XMFLOAT4& color)
+{
+	part.Initialize();
+	part.SetTexture(TextureManager::Get()->GetTexture("white"));
+	part.SetModel(ModelManager::GetModel("Sphere"));
+
+	Set(pos, scale, moveDistance, color);
+
+	part.SetOutLineState({ 0,0,0,1 }, 0.05f);
+}
+
+
+void SphereParticle::Set(const Vector3& pos, const Vector3& scale, const float& moveDistance, const DirectX::XMFLOAT4& color)
+{
+	part.position = {
+		pos.x,
+		pos.y,
+		pos.z
+	};
+
+	part.scale = {
+		scale.x,
+		scale.y,
+		scale.z
+	};
+
+	part.color_ = {
+		color.x,
+		color.y,
+		color.z,
+		color.w };
+
+	moveSpeed.x = MathF::GetRand(-1.0f, 1.0f) * moveDistance;
+	moveSpeed.y = MathF::GetRand(-1.0f, 1.0f) * moveDistance;
+	moveSpeed.z = MathF::GetRand(-1.0f, 1.0f) * moveDistance;
+
+	saveScale = scale;
+
+	uptime.Start();
+	downtime.Reset();
+
+	isdead = false;
+}
+
+void SphereParticle::Update()
+{
+	uptime.Update();
+	downtime.Update();
+
+	if (downtime.GetEnd())
+	{
+		isdead = true; 
+	}
+
+	part.position.x += moveSpeed.x * TimeManager::deltaTime;
+	part.position.y += moveSpeed.y * TimeManager::deltaTime;
+	part.position.z += moveSpeed.z * TimeManager::deltaTime;
+
+	if (uptime.GetEnd()) {
+		if(!downtime.GetStarted())downtime.Start();
+	}
+
+	if (uptime.GetRun())
+	{
+		part.scale.x = TEasing::OutQuad(0.f, saveScale.x, uptime.GetTimeRate());
+		part.scale.y = TEasing::OutQuad(0.f, saveScale.y, uptime.GetTimeRate());
+		part.scale.z = TEasing::OutQuad(0.f, saveScale.z, uptime.GetTimeRate());
+	}
+	else
+	{
+		part.scale.x = TEasing::InBack(saveScale.x, 0.f, downtime.GetTimeRate());
+		part.scale.y = TEasing::InBack(saveScale.y, 0.f, downtime.GetTimeRate());
+		part.scale.z = TEasing::InBack(saveScale.z, 0.f, downtime.GetTimeRate());
+	}
+
+	part.Update(*Camera::sCamera);
 }

@@ -29,11 +29,14 @@ void BombSolider::Update()
 
 	//近づく->範囲から離れる->爆発
 	//近づく->一定距離まで近づく(本体と当たる)->ぷしゅーっていうやつ(attack1)->爆発(attack2)
+	//もっといい感じにしたい
 
 	Vector3 standardRotaVec = { -MathF::PIf / 2,0,0 };
 
 	scalingTimer.Update();
 	explosionTimer.Update();
+	damageTimer.Update();
+	partCool.Update();
 
 	if (CheckState(ActTable::None)) {
 		
@@ -66,8 +69,6 @@ void BombSolider::Update()
 		}
 	}
 	if (CheckState(ActTable::Attack1)) {
-		
-		
 		Vector3 end = { def.x * 2, def.y * 2, def.z * 2 };
 
 		scale = TEasing::OutQuad(def, end,scalingTimer.GetTimeRate());
@@ -75,22 +76,38 @@ void BombSolider::Update()
 		if (scalingTimer.GetEnd()) {
 			SetState(ActTable::Attack2);
 			DeleteState(ActTable::Attack1);
+			damageTimer.Start();
 		}
 	}
 	if (CheckState(ActTable::Attack2)) {
-		
-		//攻撃判定発生
 
-		SetState(ActTable::Dead);
-		DeleteState(ActTable::Attack2);
+		if (!partCool.GetRun())
+		{
+			partCool.Start();
+			for (int32_t i = 0; i < 10; i++)
+			{
+				Vector3 randpos = position;
+				randpos.x += MathF::GetRand(-sphereCol.radius, sphereCol.radius);
+				randpos.y += MathF::GetRand(-sphereCol.radius, sphereCol.radius);
+				randpos.z += MathF::GetRand(-sphereCol.radius, sphereCol.radius);
+
+				float partSize = 2.0f;
+
+				ParticleManager::Get()->CreateSphereParticle(randpos, { partSize,partSize,partSize }, 0.f, { 1.0f, 0.0f, 0, 1 });
+			}
+		}
+
+		//丸パーティクル大量発生させる
+
+		//攻撃判定発生
+		if (damageTimer.GetEnd()) {
+			SetState(ActTable::Dead);
+			DeleteState(ActTable::Attack2);
+			isDead = true;
+		}
 	}
 	if (CheckState(ActTable::Dead)) {
-		for (int32_t i = 0; i < 10; i++)
-		{
-			ParticleManager::Get()->CreateCubeParticle(position, { 1,1,1 },
-				30, { 0, 0, 0, 1 });
-		}
-		isDead = true;
+		
 	}
 
 	CollsionUpdate();
@@ -103,14 +120,15 @@ void BombSolider::Update()
 void BombSolider::Draw()
 {
 	if (isDead)return;
+	if (CheckState(ActTable::Attack2))return;
+
 	Obj3d::DrawMaterial();
 }
 
 void BombSolider::HitEffect()
 {
 	if (IsDead())return;
-	//SetState(ActTable::Dead);
-
+	
 }
 
 void BombSolider::Encount()
