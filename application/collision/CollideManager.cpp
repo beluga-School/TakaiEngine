@@ -274,6 +274,31 @@ void CollideManager::CheckCollide(Entity* check, Entity* collide)
 			}
 		}
 	}
+
+	//爆発の範囲を四角にして、範囲内にブロックがあるなら破壊する
+	//ボム兵の爆発ダメージ判定
+	if (check->CheckTag(TagTable::BombSolider)) {
+		Enemy* enemy = static_cast<Enemy*>(check);
+
+		if (collide->CheckTag(TagTable::BreakBlock))
+		{
+			BreakBlock* bBlock = static_cast<BreakBlock*>(collide);
+			if (enemy->CheckState(ActTable::Attack2)) {
+
+				Cube boomRange;
+				boomRange.position = enemy->sphereCol.center;
+				boomRange.rotation = { 0,0,0 };
+				boomRange.scale = { enemy->sphereCol.radius ,enemy->sphereCol.radius,enemy->sphereCol.radius };
+
+				//爆発範囲に破壊ブロックがあるなら
+				if (Collsions::CubeCollision(boomRange, collide->box.cubecol))
+				{
+					//破壊する
+					bBlock->HitEffect();
+				}
+			}
+		}
+	}
 }
 
 void CollideManager::CheckStatus(Entity* check, Entity* collide)
@@ -449,6 +474,7 @@ void CollideManager::CheckPlayerToEnemy(Player& player,Enemy& collide)
 	if (Collsions::SphereCollsion(player.mEncountCol, collide.sphereCol))
 	{
 		collide.Encount();
+		//ボム兵の爆発ダメージ判定
 		if (collide.CheckTag(TagTable::BombSolider)) {
 			if (collide.CheckState(ActTable::Attack2)) {
 				//接触ダメージを受ける

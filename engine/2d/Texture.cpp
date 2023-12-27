@@ -242,6 +242,7 @@ void TextureManager::PreLoad()
 	Load("Resources\\firewisp\\tex.png", "firewisp");
 	Load("Resources\\redScreen.png", "redScreen");
 	Load("Resources\\ddsconvert.dds", "hogeta");
+	Load("Resources\\renga.png", "renga");
 }
 
 //ネットで拾ってきたstring->wstring変換

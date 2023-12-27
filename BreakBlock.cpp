@@ -15,14 +15,16 @@ void BreakBlock::Update()
 
 void BreakBlock::Draw()
 {
-	Obj3d::DrawMaterial();
+	Obj3d::Draw();
 }
 
 void BreakBlock::HitEffect()
 {
 	for (int32_t i = 0; i < 10; i++)
 	{
-		ParticleManager::Get()->CreateCubeParticle(position, { 1,1,1 }, 5.f, { 28.f/255.f,64.f/255.f,42.f/255.f,1 });
+		ParticleManager::Get()->CreateCubeParticle(position, 
+			{ 1,1,1 }, 5.f,
+			{ 1,1,1,1 },"renga");
 	}
 
 	scale = { 0,0,0 };

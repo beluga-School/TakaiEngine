@@ -31,16 +31,18 @@ void ParticleManager::AllDelete()
 	}
 }
 
-void ParticleManager::CreateCubeParticle(const Vector3& pos, const Vector3& scale, const float& moveDistance, const DirectX::XMFLOAT4& color)
+void ParticleManager::CreateCubeParticle(const Vector3& pos, const Vector3& scale,
+	const float& moveDistance, const DirectX::XMFLOAT4& color, 
+	const string& texturehandle)
 {
 	for (unique_ptr<CubeParticle>& pat : cubePool) {
 		if (pat->isdead) {
-			pat->Set(pos, scale, moveDistance,color);
+			pat->Set(pos, scale, moveDistance,color, texturehandle);
 			return;
 		}
 	}
 
-	cubePool.emplace_back(std::make_unique<CubeParticle>(pos, scale, moveDistance, color));
+	cubePool.emplace_back(std::make_unique<CubeParticle>(pos, scale, moveDistance, color, texturehandle));
 }
 
 void ParticleManager::CreateSphereParticle(const Vector3& pos, const Vector3& scale, const float& moveDistance, const DirectX::XMFLOAT4& color)
@@ -112,18 +114,24 @@ CubeParticle::CubeParticle()
 	part.SetOutLineState({ 0,0,0,1 }, 0.05f);
 }
 
-CubeParticle::CubeParticle(const Vector3& pos, const Vector3& scale, const float& moveDistance, const DirectX::XMFLOAT4& color)
+CubeParticle::CubeParticle(const Vector3& pos, const Vector3& scale, const float& moveDistance, const DirectX::XMFLOAT4& color, const string& texturehandle)
 {
 	part.Initialize();
 	part.SetTexture(TextureManager::Get()->GetTexture("white"));
 
-	Set(pos,scale, moveDistance, color);
+	Set(pos,scale, moveDistance, color, texturehandle);
 
 	part.SetOutLineState({ 0,0,0,1 }, 0.05f);
 }
 
-void CubeParticle::Set(const Vector3& pos, const Vector3& scale, const float& moveDistance, const DirectX::XMFLOAT4& color)
+void CubeParticle::Set(const Vector3& pos, const Vector3& scale, const float& moveDistance, const DirectX::XMFLOAT4& color, const string& texturehandle)
 {
+	part.SetTexture(TextureManager::Get()->GetTexture("white"));
+	//テクスチャを何かしら使用するなら
+	if (texturehandle != "") {
+		part.SetTexture(TextureManager::Get()->GetTexture(texturehandle));
+	}
+
 	part.position ={
 		pos.x,
 		pos.y,

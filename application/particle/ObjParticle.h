@@ -2,6 +2,7 @@
 #include <memory>
 #include <list>
 #include "Obj.h"
+#include <string>
 
 /*! CubeParticle
 	3Dオブジェクトパーティクルのインターフェース
@@ -29,9 +30,11 @@ class CubeParticle : public IParticle
 {
 public:
 	CubeParticle();
-	CubeParticle(const Vector3& pos, const Vector3& scale, const float& moveDistance,const DirectX::XMFLOAT4& color);
+	CubeParticle(const Vector3& pos, const Vector3& scale, const float& moveDistance,const DirectX::XMFLOAT4& color,
+		const std::string& texturehandle = "");
 
-	void Set(const Vector3& pos, const Vector3& scale,const float& moveDistance,const DirectX::XMFLOAT4& color);
+	void Set(const Vector3& pos, const Vector3& scale,const float& moveDistance,const DirectX::XMFLOAT4& color,
+		const std::string& texturehandle = "");
 
 	void Update();
 private:
@@ -79,7 +82,8 @@ public:
 	void CreatePool();
 	void AllDelete();
 
-	void CreateCubeParticle(const Vector3& pos, const Vector3& scale, const float& moveDistance, const DirectX::XMFLOAT4& color);
+	void CreateCubeParticle(const Vector3& pos, const Vector3& scale, const float& moveDistance, const DirectX::XMFLOAT4& color,
+		const std::string& texturehandle = "");
 	void CreateSphereParticle(const Vector3& pos, const Vector3& scale, const float& moveDistance, const DirectX::XMFLOAT4& color);
 
 	void Update();
