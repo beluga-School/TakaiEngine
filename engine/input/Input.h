@@ -104,6 +104,7 @@ namespace Input
 
 		static float DEAD_ZONE;
 
+		//パッド接続がされているか
 		static bool CheckConnectPad(const int32_t& padIndex = 0);
 
 		/// <summary>

@@ -65,6 +65,7 @@ public:
 	virtual void Encount() = 0;
 	virtual ~Enemy() {};
 
+	//ヒット時のダメージを取得(基本1)
 	int32_t GetHitDamage();
 
 	//Encountを管理するスフィアの範囲を描画する
@@ -74,6 +75,7 @@ public:
 	//現在HPの削れている分は引き継ぐ
 	void SetMaxHP(int32_t SET_MAX_HP);
 
+	//アクティブ状態の取得
 	bool GetActive();
 
 protected:
@@ -91,7 +93,9 @@ protected:
 	/// <param name="target"></param>
 	void TargetTurn(const Vector3& tVec);
 
+	//エンカウント判定をする球の初期化
 	void EncountSphereInitialize();
+	//エンカウント判定をする球の更新
 	void EncountSphereUpdate();
 
 public:

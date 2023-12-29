@@ -312,7 +312,7 @@ void StageChanger::ChangeUpdate()
 			EnemyManager::Get()->enemyList.back()->SetInitScale(objectData->scaling);
 
 			Mob* enemy = static_cast<Mob*>(EnemyManager::Get()->enemyList.back().get());
-			enemy->SetLight();
+			enemy->SetShadow();
 			
 			if (objectData->collider.have)
 			{
@@ -382,7 +382,7 @@ void StageChanger::ChangeUpdate()
 			EnemyManager::Get()->enemyList.back() = std::make_unique<BombSolider>();
 
 			Mob* enemy = static_cast<Mob*>(EnemyManager::Get()->enemyList.back().get());
-			enemy->SetLight();
+			enemy->SetShadow();
 
 			//読み込みしてないなら読み込みも行う
 			if (ModelManager::GetModel(objectData->fileName) == nullptr)
@@ -604,7 +604,7 @@ void StageChanger::SetPlayer(const LevelData::ObjectData& data)
 	Player::Get()->Initialize();
 
 	Mob* mob = static_cast<Mob*>(Player::Get());
-	mob->SetLight();
+	mob->SetShadow();
 
 	Player::Get()->Register();
 }

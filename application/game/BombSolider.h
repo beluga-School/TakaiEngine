@@ -13,7 +13,10 @@ public:
 	void Update()override;
 	void Draw()override;
 
+	//ヒット時に発生すること
 	void HitEffect()override;
+
+	//エンカウント時の処理
 	void Encount()override;
 
 private:

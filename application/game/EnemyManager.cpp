@@ -15,7 +15,7 @@ void EnemyManager::Load(const LevelData::ObjectData& data)
 
 	enemyList.back()->Initialize();
 	enemyList.back()->SetModel(ModelManager::GetModel(data.fileName));
-	enemyList.back()->SetLight();
+	enemyList.back()->SetShadow();
 
 	//イベント名を入れているなら、非アクティブ化してイベントが呼び出されたときに出現するようにする
 	if (data.eventtrigerName != "")

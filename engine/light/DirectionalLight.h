@@ -25,6 +25,7 @@ public://関数
 
 	void Initialize();
 	void Update();
+	
 	/// <summary>
 	/// 描画
 	/// </summary>

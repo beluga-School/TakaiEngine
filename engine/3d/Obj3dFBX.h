@@ -8,8 +8,12 @@ class Obj3dFBX
 {
 public:
 	void Update();
+	
 	void Draw();
+	
 	void DrawMaterial();
+
+	//モデルを設定
 	void SetModel(const Model* model);
 
 	std::vector<Obj3d> mObj3ds;

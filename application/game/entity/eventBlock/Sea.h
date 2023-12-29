@@ -19,6 +19,7 @@ public:
 	/// </summary>
 	void SetInfo(const Vector3& position,const Vector3& scale,const Vector2& tiling);
 
+	//海の高さを取得
 	float GetPosY();
 
 private:

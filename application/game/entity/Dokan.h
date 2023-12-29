@@ -63,6 +63,7 @@ public:
 
 	void Draw();
 
+	//ヒット時のやつ
 	void HitEffect();
 	void HitEffect(Mob* target);
 

@@ -16,6 +16,7 @@ public:
 	void Update()override;
 	void Draw()override;
 
+	//当たったときの処理
 	void HitEffect();
 
 	bool canBreak = false;

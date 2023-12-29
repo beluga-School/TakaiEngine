@@ -19,10 +19,12 @@ public:
 		return &instance;
 	}
 
+	//現在の範囲取得
 	float GetRadius() {
 		return mRadius;
 	};
 
+	//カメラの変化が終了したか
 	bool CamChangeEnd() {
 		return radiusMoveTimer.GetEnd();
 	};
@@ -39,8 +41,10 @@ public:
 	//下のInitRadiusで移動する終点を決める
 	void ChangeDefaultRadius(float radius);
 
+	//デフォルトに戻すための範囲取得
 	float GetDefRadius();
 
+	//範囲を初期化
 	void InitRadius();
 
 private:

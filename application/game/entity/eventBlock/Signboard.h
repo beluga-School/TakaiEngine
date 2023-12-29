@@ -15,14 +15,14 @@ public:
 		SetTag(TagTable::DitherTransparent);
 	};
 
+	//リソース読み込み
 	static void LoadResource();
 
 	void Initialize()override;
 	void Update()override;
 	void Draw()override;
 
-	//void HitEffect()override;
-
+	//貼り付けるテクスチャの設定
 	void SetPicture(const std::string& texHandle);
 
 private:

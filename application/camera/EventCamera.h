@@ -15,8 +15,14 @@ struct EventCamData
 class EventCamera
 {
 public:
+	//Blenderからの情報を設定するための関数群
+	//位置設定
 	void SetPos(const Vector3& position);
+	
+	//目標設定
 	void SetTarget(const Vector3& targetpos);
+	
+	//回転設定
 	void SetRotation(const Vector3& rotation);
 
 	void Initialize();

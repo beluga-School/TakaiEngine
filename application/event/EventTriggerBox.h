@@ -16,8 +16,10 @@ public:
 	void Update()override;
 	void Draw()override;
 
+	//イベント開始処理
 	void EventStart();
 
+	//イベント終了処理
 	void EventEnd();
 
 private:

@@ -66,23 +66,27 @@ namespace Collsions
 	//レイと平面の当たり判定
 	bool RayPlaneCollision(const Ray& ray, const Plane& plane);
 
+	//レイとキューブの当たり判定
 	RayCubeColOutput RayCubeCollision(const Ray& ray, const Cube& cube);
 
 	//y軸を0として、xとzの2軸で四角同士で判定する当たり判定
 	bool RectangleXZCollision(const Cube& cube1, const Cube& cube2);
 
+	//キューブの当たり判定
 	bool CubeCollision(const Cube& cube1, const Cube& cube2);
 
+	//AABBの当たり判定
 	bool BoxColAABB(const Obj3d& colA, const Obj3d& colB);
 
+	//球と平面の当たり判定
 	bool SpherePlaneCollision(const Sphere& sphere, const Plane& plane);
 
+	//点と三角形の当たり判定
 	Vector3 ClosestPtPoint2Triangle(const Vector3& point, const Triangle& triangle);
 
+	//球と三角形の当たり判定
 	bool CheckSphere2Triangle(const Sphere& sphere, const Triangle& triangle);
 
+	//球同士の当たり判定
 	bool SphereCollsion(const Sphere& sphere1, const Sphere& sphere2);
-
-	//レイと三角形の当たり判定すればええんか
-	bool RayTriangleCollision(const Ray& ray, const Triangle& triangle);
 }

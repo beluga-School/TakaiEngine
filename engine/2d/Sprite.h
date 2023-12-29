@@ -118,4 +118,5 @@ struct SpriteCommon
 //スプライト共通グラフィックコマンドのセット
 void SpriteCommonBeginDraw();
 
+//スプライト共通処理の作成
 SpriteCommon SpriteCommonCreate();

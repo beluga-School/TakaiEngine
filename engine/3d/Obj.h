@@ -28,7 +28,6 @@ struct ConstBufferBrightness
 };
 
 struct ConstBufferDataTransform {
-	//Matrix4 mat;	//3D変換行列
 	Matrix4 viewproj;	//ビュープロ行列
 	Matrix4 world;		//ワールド行列
 	Vector3 cameraPos;	//カメラ座標(ワールド行列)

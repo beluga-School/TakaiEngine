@@ -25,8 +25,10 @@ public:
 	bool Load(const ImportSettings& setting);	//モデルのロード
 
 private:
+	//メッシュの読み込み
 	void LoadMesh(Mesh& dst, const aiMesh* src, const bool& inverseU, const bool& inverseV);
+	
+	//テクスチャの読み込み
 	void LoadTexture(const wchar_t* filename,Mesh& dst,const aiMaterial* src);
-
 };
 

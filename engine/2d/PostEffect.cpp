@@ -1,4 +1,4 @@
-﻿#include "PostEffect.h"
+#include "PostEffect.h"
 #include "util.h"
 #include "Result.h"
 #include <memory>
@@ -32,14 +32,6 @@ void PostEffect::Initialize()
 		{{  1.0f, -1.0f,  0.0f},{1.0f,1.0f}},//右下
 		{{  1.0f,  1.0f,  0.0f},{1.0f,0.0f}},//右上
 	};
-
-	//VertexPosUV vertices[] = {
-	//	//x      y      z        u    v
-	//	{{ -0.5f, -0.5f,  0.0f},{0.0f,1.0f}},//左下
-	//	{{ -0.5f,  0.5f,  0.0f},{0.0f,0.0f}},//左上
-	//	{{  0.5f, -0.5f,  0.0f},{1.0f,1.0f}},//右下
-	//	{{  0.5f,  0.5f,  0.0f},{1.0f,0.0f}},//右上
-	//};
 
 	D3D12_RESOURCE_DESC resDesc{};
 	resDesc.Dimension = D3D12_RESOURCE_DIMENSION_BUFFER;

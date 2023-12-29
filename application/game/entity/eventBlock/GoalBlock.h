@@ -15,6 +15,7 @@ public:
 
 	void Draw()override;
 
+	//ヒット時の処理
 	void HitEffect();
 
 private:

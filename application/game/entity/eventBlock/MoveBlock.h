@@ -18,6 +18,7 @@ public:
 	void Update()override;
 	void Draw()override;
 
+	//ヒット時の処理
 	void HitEffect();
 
 	/// <summary>

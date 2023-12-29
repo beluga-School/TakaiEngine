@@ -20,9 +20,11 @@ public:
 	void Update();
 	void Draw();
 
-	void HitEffect();
+	//ヒット時に発生すること
+	void HitEffect()override;
 
-	void Encount();
+	//エンカウント時の処理
+	void Encount()override;
 
 private:
 	float mSpeed = 2.5f;	//1秒間の移動速度

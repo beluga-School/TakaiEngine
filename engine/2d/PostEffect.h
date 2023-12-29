@@ -20,10 +20,30 @@ public:
 
 	void Draw();
 
+	//ポストエフェクト描画に対応させるための前準備
 	void PreDrawScene();
 
+	//ポストエフェクト描画に対応させるための後処理
 	void PostDrawScene();
 
+private:
+	//まとめ関数
+	//テクスチャ生成(今の画面からテクスチャを生成する)
+	void CreateTexture();
+
+	//SRV(シェーダーリソースビュー)作成
+	void CreateSRV();
+
+	//RTV(レンダーターゲットビュー)作成
+	void CreateRTV();
+
+	//深度バッファ生成
+	void CreateDepthBuff();
+
+	//DSV(デプスステンシルビュー)作成
+	void CreateDSV();
+
+public:
 	//パイプライン切り替え用にとりあえず置いておく
 	static std::string pipeLineName;
 
@@ -48,21 +68,4 @@ private:
 	D3D12_VERTEX_BUFFER_VIEW mVbView{};
 	//定数バッファ
 	ConstBuffer<ConstBufferTime> mConstBuffer;
-
-private:
-	//まとめ関数
-	//テクスチャ生成(今の画面からテクスチャを生成？)
-	void CreateTexture();
-
-	//SRV(シェーダーリソースビュー)作成
-	void CreateSRV();
-
-	//RTV(レンダーターゲットビュー)作成
-	void CreateRTV();
-	
-	//深度バッファ生成
-	void CreateDepthBuff();
-
-	//DSV(デプスステンシルビュー)作成
-	void CreateDSV();
 };

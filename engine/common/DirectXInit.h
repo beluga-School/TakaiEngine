@@ -20,7 +20,6 @@ static IDXGIAdapter4* sTmpAdapter = nullptr;
 class DirectX12
 {
 public:
-
 	Microsoft::WRL::ComPtr<ID3D12Device> mDevice;
 	Microsoft::WRL::ComPtr<IDXGIFactory7> mDxgifactory;
 	Microsoft::WRL::ComPtr<IDXGISwapChain4> mSwapChain;
@@ -42,20 +41,14 @@ private:
 	//起動時の一連の流れを実行
 	void Execution();
 
+	//DirectXの起動時処理をまとめたもの達
 	void AdapterSort();
-
 	void CreateDevice();
-
 	void CreateCmdList();
-
 	void SetSwapChain();
-
 	void SetDescHeap();
-
 	void SetBackBuffer();
-
 	void RenderTargetView();
-
 	void CreateFence();
 
 private:

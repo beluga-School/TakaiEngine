@@ -16,10 +16,12 @@ public:
 	void Initialize()override;
 	void Update()override;
 	void Draw()override;
+
+	//当たったときのやつ
 	void HitEffect();
-
+	//星の取得処理が終わっているか
 	void StateEnd();
-
+	//吸収処理の演出
 	bool InHoleEnd();
 
 	enum class StarState

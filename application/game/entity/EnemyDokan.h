@@ -12,6 +12,7 @@ public:
 		SetTag(TagTable::DitherTransparent);
 	};
 
+	//リソース読み込み
 	static void LoadResource();
 
 	void Initialize()override;
@@ -20,6 +21,7 @@ public:
 
 	void Draw()override;
 
+	//エネミーを出現処理
 	void PopEnemy();
 
 public:

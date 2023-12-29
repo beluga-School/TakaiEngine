@@ -32,6 +32,7 @@ public:
 
 	void Update(const Camera& camera);
 
+	//ノイズテクスチャを用いた描画
 	void DrawNoise();
 
 	ConstBuffer<ConstBufferPerlinNoise> cBufferNoise;

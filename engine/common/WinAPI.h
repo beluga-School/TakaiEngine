@@ -24,5 +24,6 @@ private:
 	WinAPI(const WinAPI& a) = delete;
 	WinAPI& operator=(const WinAPI&) = delete;
 
+	//ウィンドウの情報を設定
 	void SetWindowClass();
 };

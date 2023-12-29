@@ -23,6 +23,10 @@ public:
 	/// <param name="pos">画面上に配置される初期位置</param>
 	/// <param name="size">画面上に配置される時の初期サイズ</param>
 	void Begin(const Vector2& pos,const Vector2 &size);
+	
+	/// <summary>
+	/// namespace::ImGuiが適用される位置の終わりの位置
+	/// </summary>
 	void End();
 private:
 	std::string mName;
@@ -35,7 +39,6 @@ private:
 class ImguiManager
 {
 public:
-
 	/// <summary>
 	/// imguiの初期化
 	/// </summary>

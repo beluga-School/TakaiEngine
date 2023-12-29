@@ -53,15 +53,19 @@ public:
 	bool DeleteState(PlayerState check);
 
 public:
+	//リソース読み込み
 	void LoadResource();
 
 	void Initialize();
 	void Update();
 	void Draw();
+	//当たり判定描画
 	void DrawCollider();
 
+	//UI描画
 	void DrawUI();
 
+	//色々初期化(主に当たり判定)
 	void Reset();
 
 	static Player* Get()
@@ -84,21 +88,27 @@ public:
 	//土管から出現する動き
 	void ApparranceMove(const Vector3& dokanPos, const Vector3& dokanScale);
 
+	//出現する動きの終了を取得
 	bool GetApparanceEnd();
 
 	//プレイヤーのモードを変える(0,通常,1,デバッグモード)
 	void ChangeState(const PlayerState& pState);
 
+	//動いているか
 	bool IsMove();
 
+	//ジャンプしているか
 	bool IsJump();
 
+	//壁キックができるかどうか
 	bool CanWallKick();
 
+	//Imguiの処理
 	void DebugGUI();
 
 	//プレイヤーの移動入力があったか
 	bool GetInputMove(InputMove input);
+
 private:
 	Player() : Mob()
 	{
@@ -106,11 +116,19 @@ private:
 	};
 	~Player() {};
 
+	//動きの更新
 	void MoveUpdate();
 
+	//当たり判定の更新
 	void ColUpdate();
+	
+	//回転挙動の更新
 	void RotaUpdate();
+	
+	//ダメージ処理の更新
 	void DamageUpdate();
+	
+	//跳ぶ処理の更新
 	void Fly();
 
 	//HPをその値に書きかえる 最大値より大きい場合、最大値を書き換える
@@ -125,12 +143,16 @@ private:
 	//通常状態の更新処理
 	void NormalUpdate();
 	
+	//ダッシュ状態の更新処理
 	void DashUpdate();
 
+	//デバッグモードの更新処理
 	void DebugUpdate();
 
+	//出現処理の更新処理
 	void ApparanceUpdate();
 
+	//ヒップドロップの更新処理
 	void HipDropUpdate();
 
 	//判定用オブジェクト群の更新

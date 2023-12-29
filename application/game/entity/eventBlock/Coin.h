@@ -15,6 +15,8 @@ public:
 	void Initialize()override;
 	void Update()override;
 	void Draw()override;
+
+	//当たったときのやつ
 	void HitEffect();
 private:
 	bool hit = false;

@@ -20,7 +20,6 @@ public:
 public:	
 	Mob() : Entity() {
 		SetTag(TagTable::Mob);
-		//SetLight();
 	};
 
 	//trueになると重力を受けなくする(gravityの値も0にする)
@@ -29,11 +28,12 @@ public:
 		if (flag)gravity = 0;
 		noGravity = flag;
 	}
+	//trueになると当たり判定がなくなる
 	void SetNoCollsion(bool flag)
 	{
 		mNoCollision = flag;
 	}
-
+	//trueになると動けなくする
 	void SetNoMove(bool flag) {
 		mNoMove = flag;
 	};
@@ -43,31 +43,37 @@ public:
 		return feet;
 	};
 
+	//ジャンプの現在の状態を取得する
 	JumpState GetJumpState() const{
 		return jumpState;
 	};
 
+	//スケールを初期化する
 	void SetInitScale(const Vector3& scale_);
 
-	void SetLight();
+	//丸影を設定する
+	void SetShadow();
 
 protected:
+	//重力の強さを設定
 	void SetGravity(float value);
 
+	//重力を初期化
 	void ResetGravity();
 
+	//当たり判定の更新
 	void CollsionUpdate();
 
 private:
-	//---縦方向の更新
-
-	//縦方向の更新まとめ用
+	//縦方向の当たり判定更新
 	void UpdateY();
 
+	//横方向の当たり判定更新
 	void UpdateX();
 
 	//hitlistの中から、もっとも近い座標をX,Y,Z方向それぞれで算出する関数
 	void CalcNearestHitLists();
+
 	//重力とジャンプ機能の更新
 	void JumpUpdate();
 

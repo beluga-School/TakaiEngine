@@ -37,7 +37,7 @@ void Mob::CollsionUpdate()
 	hoge->mShadow[shadowNum].casterPos = position;
 }
 
-void Mob::SetLight() {
+void Mob::SetShadow() {
 	shadowNum = LightGroup::Get()->CircleShadowActive();
 };
 

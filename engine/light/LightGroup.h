@@ -3,7 +3,7 @@
 #include "Vector3.h"
 #include "ConstBuffer.h"
 #include "PointLight.h"
-#include "SpotLight.h"
+#include "CircleShadow.h"
 #include <stdlib.h>
 #include <memory>
 #include "ImguiManager.h"

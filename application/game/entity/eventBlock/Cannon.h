@@ -19,6 +19,7 @@ public:
 
 	void Draw()override;
 
+	//当たったときのやつ
 	void OnCollide(Mob& mob);
 
 	//今のところは中間点を1つしか設定できない

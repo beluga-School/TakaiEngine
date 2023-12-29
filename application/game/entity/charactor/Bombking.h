@@ -17,20 +17,28 @@ public:
 
 	void Draw()override;
 
+	//ヒット時に発生すること
 	void HitEffect()override;
 
+	//エンカウント時の処理
 	void Encount()override;
 
+	//投げボックスとの当たり判定
 	bool ThrowBoxHit(const Mob& mob);
 
 	//投げる処理
 	void Throw(Mob& mob);
 
+	//Imguiの処理まとめ
 	void DebugGUI();
 
 private:
-
+	//追いかける処理まとめ
 	void Tracking();
+
+public:
+
+private:
 
 	float mSpeed = 10.0f;
 
