@@ -109,7 +109,7 @@ protected:
 
 	int32_t maxHP = 1;
 
-	Status hp = 1;
+	Status mHp = 1;
 
 	std::vector<ActTable> actTables;
 
