@@ -17,7 +17,7 @@ using namespace Input;
 
 bool Player::CheckState(PlayerState check)
 {
-	for (auto& tag : playerStates)
+	for (auto& tag : mPlayerStates)
 	{
 		if (tag == check)
 		{
@@ -29,24 +29,24 @@ bool Player::CheckState(PlayerState check)
 
 bool Player::SetState(PlayerState check)
 {
-	for (auto itr = playerStates.begin(); itr != playerStates.end(); itr++)
+	for (auto itr = mPlayerStates.begin(); itr != mPlayerStates.end(); itr++)
 	{
 		if (*itr == check)
 		{
 			return false;
 		}
 	}
-	playerStates.push_back(check);
+	mPlayerStates.push_back(check);
 	return true;
 }
 
 bool Player::DeleteState(PlayerState check)
 {
-	for (auto itr = playerStates.begin(); itr != playerStates.end(); itr++)
+	for (auto itr = mPlayerStates.begin(); itr != mPlayerStates.end(); itr++)
 	{
 		if (*itr == check)
 		{
-			playerStates.erase(itr);
+			mPlayerStates.erase(itr);
 			return true;
 		}
 	}
@@ -64,25 +64,25 @@ void Player::Initialize()
 	Obj3d::Initialize();
 	SetModel(ModelManager::GetModel("beetle"));
 
-	colDrawer.Initialize();
-	colDrawer.SetModel(ModelManager::GetModel("ICOSphere"));
-	colDrawer.SetTexture(TextureManager::GetTexture("white"));
+	mColDrawer.Initialize();
+	mColDrawer.SetModel(ModelManager::GetModel("ICOSphere"));
+	mColDrawer.SetTexture(TextureManager::GetTexture("white"));
 
-	centerObject.Initialize();
-	centerObject.SetModel(ModelManager::GetModel("beetle"));
+	mCenterObject.Initialize();
+	mCenterObject.SetModel(ModelManager::GetModel("beetle"));
 
 	SetOutLineState({ 0.1f,0.1f,0.1f,1.0f }, 0.05f);
 
-	hpGauge.Initialize();
+	mHpGauge.Initialize();
 
 	rotmode = RotMode::Quaternion;
-	centerObject.rotmode = RotMode::Quaternion;
+	mCenterObject.rotmode = RotMode::Quaternion;
 
 	quaternion = DirectionToDirection({0,0,0},{0,0,1});
 
 	mModelOffset = { 0,0.3f,0 };
 
-	playerStates.clear();
+	mPlayerStates.clear();
 	SetState(PlayerState::Normal);
 
 	SetNoMove(false);
@@ -101,8 +101,8 @@ void Player::Update()
 	moveValue = { 0,0,0 };
 
 	//ベクトルを保存
-	mCenterVec = centerObject.matWorld.ExtractAxisZ();
-	mSideVec = centerObject.matWorld.ExtractAxisX();
+	mCenterVec = mCenterObject.matWorld.ExtractAxisZ();
+	mSideVec = mCenterObject.matWorld.ExtractAxisX();
 
 	//ダッシュ変更
 	ChangeDash();
@@ -127,7 +127,7 @@ void Player::Update()
 	//当たり判定後、ステータスの更新
 	DamageUpdate();
 
-	hpGauge.Update();
+	mHpGauge.Update();
 
 }
 
@@ -148,7 +148,7 @@ void Player::DrawCollider()
 
 void Player::DrawUI()
 {
-	hpGauge.Draw();
+	mHpGauge.Draw();
 }
 
 void Player::Reset()
@@ -164,7 +164,7 @@ void Player::Reset()
 
 void Player::MoveUpdate()
 {
-	wallKickTimer.Update();
+	mWallKickTimer.Update();
 	
 	//縦移動更新(重力落下含む)
 	//ジャンプしていない状態で入力があったらジャンプ
@@ -183,39 +183,40 @@ void Player::MoveUpdate()
 		{
 			Jump();
 			//反対方向に飛ぶ
-			wallKickTimer.Start();
-			wallKickVec = matWorld.ExtractAxisZ();
-			wallKickVec.y = 0;
+			mWallKickTimer.Start();
+			mWallKickVec = matWorld.ExtractAxisZ();
+			mWallKickVec.y = 0;
 		}
 	}
+
 	//ジャンプ中なら
 	if (IsJump())
 	{
 		//回転する
-		if (jumpCount == 2)
+		if (mJumpCount == 2)
 		{
-			jumpRotaX -= 18;
+			mJumpRotaX -= ROTA_VALUE;
 		}
-		else if (jumpCount >= 3)
+		else if (mJumpCount >= 3)
 		{
-			jumpRotaX += 36;
+			mJumpRotaX += ROTA_VALUE * 2;
 		}
 		//ダッシュ状態でなくなったらもとの回転に戻す
 		if (!CheckState(PlayerState::Dash)) {
-			jumpRotaX = 0;
+			mJumpRotaX = 0;
 		}
 	}
 
-	if (wallKickTimer.GetRun())
+	if (mWallKickTimer.GetRun())
 	{
-		jumpRotaX -= 18;
+		mJumpRotaX -= ROTA_VALUE;
 	}
 
 	//着地してるなら取り消す
 	if (!IsJump())
 	{
-		if (jumpRotaX != 0) {
-			jumpRotaX = 0;
+		if (mJumpRotaX != 0) {
+			mJumpRotaX = 0;
 			PlayerCamera::Get()->InitRadius();
 		}
 	}
@@ -236,11 +237,11 @@ void Player::MoveUpdate()
 	}
 
 	//壁キックタイマーが動いてるなら壁キック入力があったときの逆進行方向を足し続ける
-	if (wallKickTimer.GetRun())
+	if (mWallKickTimer.GetRun())
 	{
 		moveValue = { 0,0,0 };
 		//斜め上に飛ばしたい
-		moveValue -= wallKickVec;
+		moveValue -= mWallKickVec;
 	}
 }
 
@@ -289,8 +290,8 @@ float RotaComparison(float now, float target)
 
 void Player::RotaUpdate()
 {
-	rotTime.Update();
-	rotTime.mMaxTime = 0.5f;
+	mRotTime.Update();
+	mRotTime.mMaxTime = 0.5f;
 
 	//⑴終点になるプレイヤーの向きたい方向をクオータニオンで取得する
 	//入力方向をいい感じに取る
@@ -311,35 +312,35 @@ void Player::RotaUpdate()
 		Input::Keyboard::TriggerKey(DIK_D) ||
 		Input::Keyboard::TriggerKey(DIK_A))
 	{
-		rotTime.Start();
-		endRota = {0,0,0};
+		mRotTime.Start();
+		mEndRota = {0,0,0};
 	}
 
-	if (Input::Keyboard::PushKey(DIK_W))endRota += center;
-	if (Input::Keyboard::PushKey(DIK_S))endRota += back;
-	if (Input::Keyboard::PushKey(DIK_D))endRota += right;
-	if (Input::Keyboard::PushKey(DIK_A))endRota += left;
+	if (Input::Keyboard::PushKey(DIK_W))mEndRota += center;
+	if (Input::Keyboard::PushKey(DIK_S))mEndRota += back;
+	if (Input::Keyboard::PushKey(DIK_D))mEndRota += right;
+	if (Input::Keyboard::PushKey(DIK_A))mEndRota += left;
 
-	endQ = DirectionToDirection({ 0,0,1 }, endRota);
+	mEndQ = DirectionToDirection({ 0,0,1 }, mEndRota);
 
 	//⑵始点になる今のプレイヤーの向きをクオータニオンで取得する
 	Vector3 startRota;
 	//回転を打ち消した始点のベクトルを作成
-	startRota = centerObject.matWorld.ExtractAxisZ();
+	startRota = mCenterObject.matWorld.ExtractAxisZ();
 	//startRota = {0,0,1};
 	startRota.y = 0;
 
-	startQ = DirectionToDirection({ 0,0,1 }, startRota);
+	mStartQ = DirectionToDirection({ 0,0,1 }, startRota);
 
 	//⑶終点Qを求める
-	culQ = Slerp(startQ,endQ, rotTime.GetTimeRate());
+	mCulQ = Slerp(mStartQ,mEndQ, mRotTime.GetTimeRate());
 
-	Quaternion rotX = MakeAxisAngle({1,0,0}, MathF::AngleConvRad(jumpRotaX));
-	Quaternion rotY = MakeAxisAngle({0,1,0}, MathF::AngleConvRad(jumpRotaY));
+	Quaternion rotX = MakeAxisAngle({1,0,0}, MathF::AngleConvRad(mJumpRotaX));
+	Quaternion rotY = MakeAxisAngle({0,1,0}, MathF::AngleConvRad(mJumpRotaY));
 
 	//④現在のプレイヤーの向き(Q)に足しまくる
-	quaternion = culQ * rotX;
-	centerObject.quaternion = culQ;
+	quaternion = mCulQ * rotX;
+	mCenterObject.quaternion = mCulQ;
 }
 
 void Player::Fly()
@@ -359,33 +360,33 @@ void Player::Fly()
 
 void Player::DamageUpdate()
 {
-	mutekiTimer.Update();
-	flashTimer.Update();
+	mMutekiTimer.Update();
+	mFlashTimer.Update();
 
 	//無敵時間中は点滅させる
-	if (mutekiTimer.GetRun())
+	if (mMutekiTimer.GetRun())
 	{
-		if (flashTimer.GetRun() == false)
+		if (mFlashTimer.GetRun() == false)
 		{
-			flashTimer.Start();
+			mFlashTimer.Start();
 			mIsVisiable = !mIsVisiable;
 		}
 	}
 	//無敵時間が終了したら点滅解除
-	if (mutekiTimer.GetEnd())
+	if (mMutekiTimer.GetEnd())
 	{
 		if (mIsVisiable == false)
 		{
 			mIsVisiable = true;
 		}
-		mutekiTimer.Reset();
+		mMutekiTimer.Reset();
 	}
 
 	//外側でHPの最大値を超える処理を書いていたら丸める
-	hp.mCurrent = Util::Clamp(hp.mCurrent, -1, MAX_HP);
+	mHp.mCurrent = Util::Clamp(mHp.mCurrent, -1, MAX_HP);
 
 	//ダメージを受けたとき
-	if (hp.DecreaseTrigger())
+	if (mHp.DecreaseTrigger())
 	{
 		//エフェクト出す
 		for (int i = 0; i < 3; i++)
@@ -398,19 +399,19 @@ void Player::DamageUpdate()
 	//hpゲージの色を変える処理
 	int32_t changeIndex = 0;
 	
-	if (hp.DecreaseTrigger())
+	if (mHp.DecreaseTrigger())
 	{
-		changeIndex = (MAX_HP - hp.mCurrent) - 1;
+		changeIndex = (MAX_HP - mHp.mCurrent) - 1;
 		changeIndex = Util::Clamp(changeIndex, 0, MAX_HP);
 		
-		hpGauge.Addition(-1);
+		mHpGauge.Addition(-1);
 	}
-	if (hp.IncreaseTrigger())
+	if (mHp.IncreaseTrigger())
 	{
-		changeIndex = (MAX_HP - hp.mCurrent);
+		changeIndex = (MAX_HP - mHp.mCurrent);
 		changeIndex = Util::Clamp(changeIndex, 0, MAX_HP);
 
-		hpGauge.Addition(1);
+		mHpGauge.Addition(1);
 	}
 }
 
@@ -427,53 +428,53 @@ bool Player::IsJump()
 void Player::DamageEffect(int32_t damage)
 {
 	//無敵時間中ならスキップ
-	if (mutekiTimer.GetRun())return;
+	if (mMutekiTimer.GetRun())return;
 
 	//無敵時間開始
-	mutekiTimer.Start();
+	mMutekiTimer.Start();
 	//ダメージ受ける
-	hp.mCurrent -= damage;
+	mHp.mCurrent -= damage;
 }
 
 void Player::ApparranceMove(const Vector3& dokanPos, const Vector3& dokanScale)
 {
 	ChangeState(PlayerState::Apparrance);
 
-	apparranceTimer.Start();
-	saveDokanPos = dokanPos;
-	saveDokanScale = dokanScale;
+	mApparranceTimer.Start();
+	mSaveDokanPos = dokanPos;
+	mSaveDokanScale = dokanScale;
 }
 
 bool Player::GetApparanceEnd()
 {
-	return apparranceTimer.GetEnd();
+	return mApparranceTimer.GetEnd();
 }
 
 void Player::HPOverFlow(int32_t value)
 {
-	hp.mCurrent = value;
+	mHp.mCurrent = value;
 	//HPのオーバーフロー処理
-	if (hp.mCurrent > MAX_HP)
+	if (mHp.mCurrent > MAX_HP)
 	{
-		MAX_HP = hp.mCurrent;
-		hpGauge.SetGaugeSize(hp.mCurrent, true);
+		MAX_HP = mHp.mCurrent;
+		mHpGauge.SetGaugeSize(mHp.mCurrent, true);
 	}
 }
 
 bool Player::CheckContinuanceKick(IDdCube* check)
 {
 	//ひとつ前のセーブした壁とIDが同じならtrueを返す
-	if (saveKickWall != nullptr)
+	if (mSaveKickWall != nullptr)
 	{
-		if (saveKickWall->GetID() == check->GetID())
+		if (mSaveKickWall->GetID() == check->GetID())
 		{
 			return true;
 		}
 	}
 	//IDが不正な物でなければ
-	if (saveKickWall == nullptr)
+	if (mSaveKickWall == nullptr)
 	{
- 		saveKickWall = check;
+ 		mSaveKickWall = check;
 	}
 	return false;
 }
@@ -501,7 +502,7 @@ void Player::NormalUpdate()
 		}
 		else {
 			mSpeed = NORMAL_SPEED;
-			jumpCount = 0;
+			mJumpCount = 0;
 		}
 
 		MoveUpdate();
@@ -544,7 +545,7 @@ void Player::DebugUpdate()
 
 	if (CheckState(PlayerState::Debug))
 	{
-		if (flyMode)
+		if (mFlyMode)
 		{
 			Fly();
 		}
@@ -552,12 +553,12 @@ void Player::DebugUpdate()
 		//ダメージ処理テスト
 		if (Input::Keyboard::TriggerKey(DIK_T))
 		{
-			mutekiTimer.Reset();
+			mMutekiTimer.Reset();
 			DamageEffect(1);
 		}
 		if (Input::Keyboard::TriggerKey(DIK_G))
 		{
-			hp.mCurrent += 1;
+			mHp.mCurrent += 1;
 		}
 
 		//入力でリロード
@@ -571,13 +572,13 @@ void Player::DebugUpdate()
 
 void Player::ApparanceUpdate()
 {
-	apparranceTimer.Update();
+	mApparranceTimer.Update();
 	if (CheckState(PlayerState::Apparrance))
 	{
-		Vector3 endpos = saveDokanPos + Vector3(0, saveDokanScale.y / 2.f, 0);
-		position = TEasing::OutQuad(saveDokanPos, endpos, apparranceTimer.GetTimeRate());
+		Vector3 endpos = mSaveDokanPos + Vector3(0, mSaveDokanScale.y / 2.f, 0);
+		position = TEasing::OutQuad(mSaveDokanPos, endpos, mApparranceTimer.GetTimeRate());
 
-		if (apparranceTimer.GetEnd())
+		if (mApparranceTimer.GetEnd())
 		{
 			ChangeState(PlayerState::Normal);
 
@@ -590,7 +591,7 @@ void Player::ApparanceUpdate()
 void Player::HipDropUpdate()
 {
 	//ヒップドロップの更新
-	hipDropTimer.Update();
+	mHipDropTimer.Update();
 	if (IsJump())
 	{
 		//ヒップドロップ処理
@@ -598,8 +599,8 @@ void Player::HipDropUpdate()
 		{
 			if (!CheckState(PlayerState::HipDrop)) {
 				SetState(PlayerState::HipDrop);
-				hipDropTimer.Start();
-				PlayerCamera::Get()->ChangeRadius(1.0f, hipDropTimer.mMaxTime);
+				mHipDropTimer.Start();
+				PlayerCamera::Get()->ChangeRadius(1.0f, mHipDropTimer.mMaxTime);
 			}
 		}
 	}
@@ -621,16 +622,16 @@ void Player::HipDropUpdate()
 			}
 		}
 	}
-	if (hipDropTimer.GetRun())
+	if (mHipDropTimer.GetRun())
 	{
-		jumpRotaX = TEasing::OutQuad(0, 720, hipDropTimer.GetTimeRate());
+		mJumpRotaX = TEasing::OutQuad(0, 720, mHipDropTimer.GetTimeRate());
 
 		SetNoMove(true);
 		SetNoGravity(true);
 	}
-	if (hipDropTimer.GetNowEnd())
+	if (mHipDropTimer.GetNowEnd())
 	{
-		jumpRotaX = 0;
+		mJumpRotaX = 0;
 
 		SetGravity(4.5f);
 		PlayerCamera::Get()->InitRadius();
@@ -654,15 +655,15 @@ void Player::AdjudicationUpdate()
 	mEncountCol.center = position;
 	mEncountCol.radius = (scale.x + scale.y + scale.z) / 3.f;
 
-	colDrawer.position = position;
-	colDrawer.scale = scale;
+	mColDrawer.position = position;
+	mColDrawer.scale = scale;
 
-	colDrawer.Update(*Camera::sCamera);
+	mColDrawer.Update(*Camera::sCamera);
 
 	//進行方向管理オブジェクトの更新
-	centerObject.position = position;
-	centerObject.scale = scale;
-	centerObject.Update(*Camera::sCamera);
+	mCenterObject.position = position;
+	mCenterObject.scale = scale;
+	mCenterObject.Update(*Camera::sCamera);
 }
 
 bool Player::CanWallKick()
@@ -736,11 +737,11 @@ void Player::DebugGUI()
 	
 	if (ImGui::Button("FlyChange"))
 	{
-		flyMode = !flyMode;
-		if(flyMode)SetNoGravity(true);
-		if(!flyMode)SetNoGravity(false);
+		mFlyMode = !mFlyMode;
+		if(mFlyMode)SetNoGravity(true);
+		if(!mFlyMode)SetNoGravity(false);
 	}
-	ImGui::Text("flyMode %d", flyMode);
+	ImGui::Text("flyMode %d", mFlyMode);
 	
 	ImGui::Text("noGravity:%d", noGravity);
 	ImGui::Text("mNoMove:%d", mNoMove);
@@ -811,26 +812,26 @@ void Player::Jump()
 	//ダッシュ状態ならカウント加算してジャンプ力上げる
 	if (CheckState(PlayerState::Dash))
 	{
-		jumpCount++;
+		mJumpCount++;
 	}
 
-	jumpCount = Util::Clamp(jumpCount, 0, 3);
+	mJumpCount = Util::Clamp(mJumpCount, 0, 3);
 
-	if (jumpCount <= 1)
+	if (mJumpCount <= 1)
 	{
-		jumpPower = 5.0f;
+		jumpPower = JUMP_VALUE * 2;
 	}
 
-	if (jumpCount == 2)
+	if (mJumpCount == 2)
 	{
-		jumpPower = 7.5f;
+		jumpPower = JUMP_VALUE * 3;
 		//カメラをちょい引く(もっと放してもいいかも)
 		PlayerCamera::Get()->ChangeRadius(1.0f, 0.5f);
 	}
 
-	if (jumpCount == 3)
+	if (mJumpCount == 3)
 	{
-		jumpPower = 10.0f;
+		jumpPower = JUMP_VALUE * 4;
 		//この処理だとここが何回も呼ばれて無限にカメラがひいちゃう
 		PlayerCamera::Get()->ChangeRadius(2.0f, 0.5f);
 	}
@@ -848,5 +849,5 @@ void Player::Jump()
 
 int32_t Player::GetNowHP()
 {
-	return hp.mCurrent;
+	return mHp.mCurrent;
 }

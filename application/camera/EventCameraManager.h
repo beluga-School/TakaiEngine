@@ -14,7 +14,7 @@ struct EventCamManageData
 
 	//移動時間を管理するタイマー(合計値)
 	TEasing::easeTimer moveTimer = 2.0f;
-	TEasing::easeTimer rotaTimer = 1.0f;
+	TEasing::easeTimer mRotaTimer = 1.0f;
 
 	//最初と最後の待機時間を管理するタイマー
 	TEasing::easeTimer startStandbyTimer = 0.0f;
@@ -87,7 +87,7 @@ private:
 	//TEasing::easeTimer moveTimer = 5.0f;
 	//TEasing::easeTimer rotaTimer = 1.0f;
 
-	GUI rotCheck = { "hogeDebug" };
+	GUI mRotCheck = { "hogeDebug" };
 
 	std::string eventname_ = "";
 

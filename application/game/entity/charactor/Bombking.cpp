@@ -88,7 +88,7 @@ void Bombking::Update()
 		DeleteState(ActTable::Attack1);
 
 		if (damageTimer.GetEnd()) {
-			if (hp.mCurrent > 0)
+			if (mHp.mCurrent > 0)
 			{
 				if (!reboundTimer.GetStarted())reboundTimer.Start();
 			}
@@ -147,7 +147,7 @@ void Bombking::Update()
 	//死亡処理への遷移
 	if (damageTimer.GetEnd())
 	{
-		if (hp.mCurrent <= 0)
+		if (mHp.mCurrent <= 0)
 		{
 			SetState(ActTable::Dead);
 		}
@@ -186,7 +186,7 @@ void Bombking::HitEffect()
 
 	SetState(ActTable::Damage);
 
-	hp.mCurrent -= 1;
+	mHp.mCurrent -= 1;
 }
 
 void Bombking::Encount()

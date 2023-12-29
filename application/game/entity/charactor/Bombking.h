@@ -56,7 +56,7 @@ private:
 
 	Vector3 pVec{};
 
-	TEasing::easeTimer rotTime = 10.0f;
+	TEasing::easeTimer mRotTime = 10.0f;
 	Vector3 startVec{};
 	Vector3 endVec{};
 };

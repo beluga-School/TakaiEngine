@@ -106,11 +106,11 @@ void Enemy::EncountSphereDraw(const std::string& oldPipeline)
 
 void Enemy::SetMaxHP(int32_t SET_MAX_HP)
 {
-	int32_t nowHP = hp.mCurrent;
+	int32_t nowHP = mHp.mCurrent;
 	int32_t nowMAXHP = maxHP;
 	int32_t nowDecreaceHP = nowMAXHP - nowHP;
 	maxHP = SET_MAX_HP;
-	hp = SET_MAX_HP - nowDecreaceHP;
+	mHp = SET_MAX_HP - nowDecreaceHP;
 }
 
 bool Enemy::GetActive()

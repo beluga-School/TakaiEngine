@@ -587,7 +587,7 @@ void StageChanger::ChangeUpdate()
 void StageChanger::SetPlayer(const LevelData::ObjectData& data)
 {
 	Player::Get()->Reset();
-	Player::Get()->preMove = data.translation;
+	Player::Get()->mPreMove = data.translation;
 	Player::Get()->position = data.translation;
 	Player::Get()->rotation = data.rotation;
 

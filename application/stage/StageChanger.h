@@ -283,7 +283,7 @@ private:
 	std::vector<LoadTargetData> loadTargetDatas;
 	std::list<std::string> eventCameraNames;
 
-	GUI rotCheck = { "hoge" };
+	GUI mRotCheck = { "hoge" };
 
 };
 

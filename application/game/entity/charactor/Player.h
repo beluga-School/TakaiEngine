@@ -167,31 +167,29 @@ public:
 	bool mDokanApparrance = false;
 
 	//前移動(上移動)
-	Vector3 preMove = { 0,0,0 };
+	Vector3 mPreMove = { 0,0,0 };
 
 	//敵との当たり判定用スフィア
 	Sphere mEncountCol;
 
-	bool rotCheck = 0;
-
-	std::vector<PlayerState> playerStates;
+	std::vector<PlayerState> mPlayerStates;
 
 private:
 	//hpの最大値　ステータスの最大値は外から変えられるようにしたい
 	int32_t MAX_HP = 8;
 
-	Status hp = 8;
+	Status mHp = 8;
 
-	Gauge hpGauge = { {
+	Gauge mHpGauge = { {
 			Util::WIN_WIDTH / 16,
 			Util::WIN_HEIGHT - Util::WIN_HEIGHT / 12
 		},8 };
 
 	//無敵時間
-	TEasing::easeTimer mutekiTimer = 2.0f;
+	TEasing::easeTimer mMutekiTimer = 2.0f;
 	//ダメージ受けた後の点滅
 	//0.1秒ごとに描画を取り消す
-	TEasing::easeTimer flashTimer = 0.05f;
+	TEasing::easeTimer mFlashTimer = 0.05f;
 
 	///---横移動
 	//移動速度
@@ -212,7 +210,7 @@ private:
 	//ダッシュ時の最大速度
 	const float MAX_DASH_SPEED = 15.0f;
 
-	Vector3 oldMoveVec = {0,0,0};
+	const float JUMP_VALUE = 2.5f;
 
 	//方向ベクトル保存
 	Vector3 mCenterVec = {0,0,0};
@@ -220,50 +218,41 @@ private:
 
 	///---当たり判定用の別オブジェクト群
 	//敵との当たり判定用スフィアの描画
-	Obj3d colDrawer;
+	Obj3d mColDrawer;
 
 	//進行方向を管理するオブジェクトを別で管理
-	Obj3d centerObject;
+	Obj3d mCenterObject;
 
-	//収集物関係
-	//スターの取得数
-	Status starCorrectNum = 0;
+	TEasing::easeTimer mApparranceTimer = 1.0f;
 
-	TEasing::easeTimer UIDelayTimer = 0.5f;
-
-	TEasing::easeTimer apparranceTimer = 1.0f;
-
-	Vector3 saveDokanPos{};
-	Vector3 saveDokanScale{};
-
-	//横回転の変数群
-	TEasing::easeTimer rotaTimer = 0.25f;
-	float rotaStart = 0.0f;
-	float targetRota = 0.0f;
-	float oldTargetRota = 0.0f;
+	Vector3 mSaveDokanPos{};
+	Vector3 mSaveDokanScale{};
 
 	//ジャンプ回数
-	int32_t jumpCount = 0;
+	int32_t mJumpCount = 0;
 
 	//壁キック変数群
 	//この時間だけ反対方向に飛ぶ
-	TEasing::easeTimer wallKickTimer = 0.1f;
+	TEasing::easeTimer mWallKickTimer = 0.1f;
+
 	//壁キックの進行方向
-	Vector3 wallKickVec = {};
+	Vector3 mWallKickVec = {};
 
 	//一度壁キックした壁を保存し、連続でキックできないようにする
-	IDdCube *saveKickWall = nullptr;
+	IDdCube *mSaveKickWall = nullptr;
 
-	bool flyMode = false;
+	bool mFlyMode = false;
 
-	TEasing::easeTimer rotTime = 0.5f;
-	TEasing::easeTimer hipDropTimer = 1.0f;
+	TEasing::easeTimer mRotTime = 0.5f;
+	TEasing::easeTimer mHipDropTimer = 1.0f;
 
-	float jumpRotaX = 0;
-	float jumpRotaY = 0;
+	const int ROTA_VALUE = 18;
 
-	Vector3 endRota;
-	Quaternion startQ;
-	Quaternion endQ;
-	Quaternion culQ;
+	float mJumpRotaX = 0;
+	float mJumpRotaY = 0;
+
+	Vector3 mEndRota;
+	Quaternion mStartQ;
+	Quaternion mEndQ;
+	Quaternion mCulQ;
 };

@@ -80,11 +80,11 @@ void EventCameraManager::Update()
 
 	if (!nowCamEvent->InTargetData())
 	{
-		nowCamEvent->rotaTimer.Update();
+		nowCamEvent->mRotaTimer.Update();
 		
 		eventCamera.SetRotation(TEasing::InQuad(frontCamera->rotation, backCamera->rotation,
-			nowCamEvent->rotaTimer.GetTimeRate()));
-		if (nowCamEvent->rotaTimer.GetEnd())
+			nowCamEvent->mRotaTimer.GetTimeRate()));
+		if (nowCamEvent->mRotaTimer.GetEnd())
 		{
 			//管理番号が全体のサイズより小さいなら
 			if (itrNumber < nowCamEvent->datas.size() - 1)
@@ -93,7 +93,7 @@ void EventCameraManager::Update()
 				itrNumber++;
 				frontCamera = backCamera;
 				backCamera = &nowCamEvent->datas.front() + itrNumber;
-				nowCamEvent->rotaTimer.Start();
+				nowCamEvent->mRotaTimer.Start();
 			}
 		}
 	}
@@ -110,12 +110,12 @@ void EventCameraManager::DebugGUI()
 {
 	if (nowCamEvent == nullptr)return;
 
-	rotCheck.Begin({200,200},{500,300});
+	mRotCheck.Begin({200,200},{500,300});
 	ImGui::Text("frontCamera pos.x:%f,y:%f,z:%f", frontCamera->pos.x, frontCamera->pos.y, frontCamera->pos.z);
 	ImGui::Text("backCamera pos.x:%f,y:%f,z:%f", backCamera->pos.x, backCamera->pos.y, backCamera->pos.z);
 	ImGui::Text("eventCameraDatas.size:%d", (int32_t)eventCameraDatas.size());
 	ImGui::Text("moveTimer:%f", nowCamEvent->moveTimer.GetTimeRate());
-	rotCheck.End();
+	mRotCheck.End();
 }
 
 void EventCameraManager::Reset()
@@ -126,7 +126,7 @@ void EventCameraManager::Reset()
 	backCamera = nullptr;
 	eventCameraDatas.clear();
 	nowCamEvent->moveTimer.Reset();
-	nowCamEvent->rotaTimer.Reset();
+	nowCamEvent->mRotaTimer.Reset();
 }
 
 bool EventCamManageData::InTargetData()
@@ -150,8 +150,8 @@ void EventCamManageData::Start()
 
 	moveTimer.Reset();
 	
-	rotaTimer.Reset();
-	rotaTimer.mMaxTime = moveTimer.mMaxTime / datas.size();
+	mRotaTimer.Reset();
+	mRotaTimer.mMaxTime = moveTimer.mMaxTime / datas.size();
 }
 
 void EventCamManageData::Update()
@@ -163,7 +163,7 @@ void EventCamManageData::Update()
 	if (startStandbyTimer.GetEnd())
 	{
 		if(!moveTimer.GetStarted())	moveTimer.Start();
-		if(!rotaTimer.GetStarted())	rotaTimer.Start();
+		if(!mRotaTimer.GetStarted())	mRotaTimer.Start();
 	}
 	if (moveTimer.GetEnd())
 	{
