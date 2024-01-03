@@ -207,6 +207,8 @@ private:
 	bool SetRedCoin(const LevelData::ObjectData& data);
 	//破壊可能ブロックの配置
 	bool SetBreakBlock(const LevelData::ObjectData& data);
+	//落ちるブロックの処理
+	bool SetDropBlock(const LevelData::ObjectData& data);
 
 	void DrawModel();
 	void DrawCollider();

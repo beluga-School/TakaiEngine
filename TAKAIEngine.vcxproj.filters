@@ -448,6 +448,9 @@
     <Filter Include="Engine\Light\CircleShadow">
       <UniqueIdentifier>{809d831b-3f75-4a22-89ca-c58b8ae5a1db}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Application\Entity\DropBlock">
+      <UniqueIdentifier>{f428f05d-cc48-410a-86ac-354103784445}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="engine\input\Input.cpp">
@@ -773,6 +776,9 @@
     </ClCompile>
     <ClCompile Include="BreakBlock.cpp">
       <Filter>Application\Entity\EventBlock\BreakBlock</Filter>
+    </ClCompile>
+    <ClCompile Include="DropBlock.cpp">
+      <Filter>Application\Entity\DropBlock</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1114,6 +1120,9 @@
     </ClInclude>
     <ClInclude Include="BreakBlock.h">
       <Filter>Application\Entity\EventBlock\BreakBlock</Filter>
+    </ClInclude>
+    <ClInclude Include="DropBlock.h">
+      <Filter>Application\Entity\DropBlock</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

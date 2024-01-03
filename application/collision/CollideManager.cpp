@@ -321,6 +321,12 @@ void CollideManager::CheckStatus(Entity* check, Entity* collide)
 			//collideがEnemyであることは確定しているので、mob型に変換してデータを持ってくる
 			Enemy* enemy = static_cast<Enemy*>(collide);
 
+			//もしブロックなら
+			if (collide->CheckTag(TagTable::Block))
+			{
+				return;
+			}
+
 			CheckPlayerToEnemy(*player, *enemy);
 		}
 		if (collide->CheckTag(TagTable::Star))

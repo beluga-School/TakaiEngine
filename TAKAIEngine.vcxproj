@@ -136,6 +136,7 @@
     <ClCompile Include="application\event\EnemyPopEvent.cpp" />
     <ClCompile Include="application\game\BombSolider.cpp" />
     <ClCompile Include="BreakBlock.cpp" />
+    <ClCompile Include="DropBlock.cpp" />
     <ClCompile Include="engine\util\InstantDrawer.cpp" />
     <ClCompile Include="application\level\LevelData.cpp" />
     <ClCompile Include="application\game\entity\eventBlock\MoveBlock.cpp" />
@@ -245,6 +246,7 @@
     <ClInclude Include="application\event\EnemyPopEvent.h" />
     <ClInclude Include="application\game\BombSolider.h" />
     <ClInclude Include="BreakBlock.h" />
+    <ClInclude Include="DropBlock.h" />
     <ClInclude Include="engine\util\InstantDrawer.h" />
     <ClInclude Include="application\level\LevelData.h" />
     <ClInclude Include="application\game\entity\eventBlock\MoveBlock.h" />

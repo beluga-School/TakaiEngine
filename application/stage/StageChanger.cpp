@@ -36,6 +36,7 @@
 #include "Slime.h"
 #include "BombSolider.h"
 #include "BreakBlock.h"
+#include "DropBlock.h"
 
 void StageChanger::LoadResource()
 {
@@ -461,6 +462,11 @@ void StageChanger::ChangeUpdate()
 			continue;
 		}
 		if (SetBreakBlock(*objectData))
+		{
+			continue;
+		}
+
+		if (SetDropBlock(*objectData))
 		{
 			continue;
 		}
@@ -1006,6 +1012,23 @@ bool StageChanger::SetBreakBlock(const LevelData::ObjectData& data)
 	if (data.setObjectName == "breakBlock")
 	{
 		SetObject<BreakBlock>(data);
+
+		//当たり判定を作成
+		if (data.collider.have)
+		{
+			CollisionSet(data);
+		}
+
+		return true;
+	}
+	return false;
+}
+
+bool StageChanger::SetDropBlock(const LevelData::ObjectData& data)
+{
+	if (data.setObjectName == "DropBlock")
+	{
+		SetObject<DropBlock>(data);
 
 		//当たり判定を作成
 		if (data.collider.have)
