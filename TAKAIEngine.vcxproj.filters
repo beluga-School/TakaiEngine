@@ -352,24 +352,6 @@
     <Filter Include="Application\Event\NoEffectEvent">
       <UniqueIdentifier>{21dd0378-7023-4b0f-a7ba-e2e5aea7e0dc}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Application\UI">
-      <UniqueIdentifier>{474ba4e5-8eb6-4f8f-be0f-266f1b73ee1f}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Application\UI\HPGauge">
-      <UniqueIdentifier>{cf542d8c-5bba-45fc-b53e-70bebf207435}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Application\UI\InterfaceUI">
-      <UniqueIdentifier>{a82005b8-1bbf-4b18-bc60-c9cbd3286e55}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Application\UI\StarUI">
-      <UniqueIdentifier>{c7988369-42db-4a28-8372-35f15dd7c01e}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Application\UI\UI">
-      <UniqueIdentifier>{c0ce0d6d-b600-46db-9dea-4d6233f7d49c}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Application\UI\StageTitleUI">
-      <UniqueIdentifier>{b24b72f9-59b1-4ff8-9937-a28061c7a015}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Application\Entity\EventBlock\EventTriggerBox">
       <UniqueIdentifier>{7fbfc7a2-db8e-42f9-a13e-5698d84e617c}</UniqueIdentifier>
     </Filter>
@@ -424,9 +406,6 @@
     <Filter Include="Application\Event\GetStar">
       <UniqueIdentifier>{c30c4e4d-c02a-4c66-92b5-881df30058de}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Application\UI\CountDownTimer">
-      <UniqueIdentifier>{c4590b75-72cd-44d3-8f8b-336aafc3c9b3}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Application\Event\StarStringEvent">
       <UniqueIdentifier>{d9c0a293-65e5-4365-8371-71953b5f668f}</UniqueIdentifier>
     </Filter>
@@ -453,6 +432,27 @@
     </Filter>
     <Filter Include="Application\Entity\EventBlock\TikuwaBlock">
       <UniqueIdentifier>{9c7eaeb9-9cc3-4224-ada9-8623827387c6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\UI">
+      <UniqueIdentifier>{474ba4e5-8eb6-4f8f-be0f-266f1b73ee1f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\UI\HPGauge">
+      <UniqueIdentifier>{cf542d8c-5bba-45fc-b53e-70bebf207435}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\UI\InterfaceUI">
+      <UniqueIdentifier>{a82005b8-1bbf-4b18-bc60-c9cbd3286e55}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\UI\StarUI">
+      <UniqueIdentifier>{c7988369-42db-4a28-8372-35f15dd7c01e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\UI\UI">
+      <UniqueIdentifier>{c0ce0d6d-b600-46db-9dea-4d6233f7d49c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\UI\StageTitleUI">
+      <UniqueIdentifier>{b24b72f9-59b1-4ff8-9937-a28061c7a015}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\UI\CountDownTimer">
+      <UniqueIdentifier>{c4590b75-72cd-44d3-8f8b-336aafc3c9b3}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -661,7 +661,7 @@
       <Filter>Application\Scene\GameScene</Filter>
     </ClCompile>
     <ClCompile Include="application\ui\HPGauge.cpp">
-      <Filter>Application\UI\HPGauge</Filter>
+      <Filter>Engine\UI\HPGauge</Filter>
     </ClCompile>
     <ClCompile Include="engine\particle\IParticle2D.cpp">
       <Filter>Engine\Particle2D\IParticle2D</Filter>
@@ -691,22 +691,22 @@
       <Filter>Application\Entity\EventBlock\Dokan</Filter>
     </ClCompile>
     <ClCompile Include="application\ui\StageTitleUI.cpp">
-      <Filter>Application\UI\StageTitleUI</Filter>
+      <Filter>Engine\UI\StageTitleUI</Filter>
     </ClCompile>
     <ClCompile Include="application\ui\InterfaceUI.cpp">
-      <Filter>Application\UI\InterfaceUI</Filter>
+      <Filter>Engine\UI\InterfaceUI</Filter>
     </ClCompile>
     <ClCompile Include="APPLICATION\UI\UI.cpp">
-      <Filter>Application\UI\UI</Filter>
+      <Filter>Engine\UI\UI</Filter>
     </ClCompile>
     <ClCompile Include="application\level\LevelData.cpp">
       <Filter>Application\LevelLoader\LevelData</Filter>
     </ClCompile>
     <ClCompile Include="application\ui\StarUI.cpp">
-      <Filter>Application\UI\StarUI</Filter>
+      <Filter>Engine\UI\StarUI</Filter>
     </ClCompile>
     <ClCompile Include="application\ui\GameUIManager.cpp">
-      <Filter>Application\UI</Filter>
+      <Filter>Engine\UI</Filter>
     </ClCompile>
     <ClCompile Include="application\camera\EventCamera.cpp">
       <Filter>Application\Camera\EventCamera</Filter>
@@ -760,7 +760,7 @@
       <Filter>Application\Event\GetStar</Filter>
     </ClCompile>
     <ClCompile Include="application\system\CountDownTimer.cpp">
-      <Filter>Application\UI\CountDownTimer</Filter>
+      <Filter>Engine\UI\CountDownTimer</Filter>
     </ClCompile>
     <ClCompile Include="application\event\StarStringEvent.cpp">
       <Filter>Application\Event\StarStringEvent</Filter>
@@ -1002,7 +1002,7 @@
       <Filter>Application\Scene\GameScene</Filter>
     </ClInclude>
     <ClInclude Include="application\ui\HPGauge.h">
-      <Filter>Application\UI\HPGauge</Filter>
+      <Filter>Engine\UI\HPGauge</Filter>
     </ClInclude>
     <ClInclude Include="engine\particle\IParticle2D.h">
       <Filter>Engine\Particle2D\IParticle2D</Filter>
@@ -1035,22 +1035,22 @@
       <Filter>Application\Entity\EventBlock\Dokan</Filter>
     </ClInclude>
     <ClInclude Include="application\ui\StageTitleUI.h">
-      <Filter>Application\UI\StageTitleUI</Filter>
+      <Filter>Engine\UI\StageTitleUI</Filter>
     </ClInclude>
     <ClInclude Include="application\ui\InterfaceUI.h">
-      <Filter>Application\UI\InterfaceUI</Filter>
+      <Filter>Engine\UI\InterfaceUI</Filter>
     </ClInclude>
     <ClInclude Include="application\ui\UI.h">
-      <Filter>Application\UI\UI</Filter>
+      <Filter>Engine\UI\UI</Filter>
     </ClInclude>
     <ClInclude Include="application\level\LevelData.h">
       <Filter>Application\LevelLoader\LevelData</Filter>
     </ClInclude>
     <ClInclude Include="application\ui\StarUI.h">
-      <Filter>Application\UI\StarUI</Filter>
+      <Filter>Engine\UI\StarUI</Filter>
     </ClInclude>
     <ClInclude Include="application\ui\GameUIManager.h">
-      <Filter>Application\UI</Filter>
+      <Filter>Engine\UI</Filter>
     </ClInclude>
     <ClInclude Include="application\camera\EventCamera.h">
       <Filter>Application\Camera\EventCamera</Filter>
@@ -1107,7 +1107,7 @@
       <Filter>Application\Event\GetStar</Filter>
     </ClInclude>
     <ClInclude Include="application\system\CountDownTimer.h">
-      <Filter>Application\UI\CountDownTimer</Filter>
+      <Filter>Engine\UI\CountDownTimer</Filter>
     </ClInclude>
     <ClInclude Include="application\event\StarStringEvent.h">
       <Filter>Application\Event\StarStringEvent</Filter>

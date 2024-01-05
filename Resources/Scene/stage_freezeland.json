@@ -100,7 +100,7 @@
                     2.0
                 ]
             },
-            "texture": "grass",
+            "texture": "wood",
             "event_trigger": "start_1",
             "setObject": "moveBlock_static",
             "tiling": {
@@ -144,7 +144,7 @@
                     2.0
                 ]
             },
-            "texture": "grass",
+            "texture": "snow",
             "tiling": {
                 "tiling": [
                     10.0,
@@ -186,7 +186,7 @@
                     2.0
                 ]
             },
-            "texture": "grass",
+            "texture": "snow",
             "tiling": {
                 "tiling": [
                     10.0,
@@ -228,7 +228,7 @@
                     2.0
                 ]
             },
-            "texture": "grass",
+            "texture": "snow",
             "tiling": {
                 "tiling": [
                     10.0,
@@ -270,7 +270,7 @@
                     2.0
                 ]
             },
-            "texture": "grass",
+            "texture": "wood",
             "tiling": {
                 "tiling": [
                     10.0,
@@ -312,7 +312,7 @@
                     2.0
                 ]
             },
-            "texture": "grass",
+            "texture": "snow",
             "tiling": {
                 "tiling": [
                     10.0,
@@ -354,7 +354,7 @@
                     2.0
                 ]
             },
-            "texture": "grass",
+            "texture": "ice",
             "tiling": {
                 "tiling": [
                     10.0,
@@ -593,7 +593,7 @@
                     2.0
                 ]
             },
-            "texture": "grass",
+            "texture": "snow",
             "tiling": {
                 "tiling": [
                     10.0,
@@ -672,7 +672,7 @@
                     2.0
                 ]
             },
-            "texture": "grass",
+            "texture": "wood",
             "event_trigger": "end_1",
             "setObject": "moveBlock_static",
             "tiling": {
@@ -716,7 +716,7 @@
                     2.0
                 ]
             },
-            "texture": "grass",
+            "texture": "ice",
             "tiling": {
                 "tiling": [
                     10.0,
@@ -758,7 +758,7 @@
                     2.0
                 ]
             },
-            "texture": "grass",
+            "texture": "ice",
             "tiling": {
                 "tiling": [
                     10.0,
@@ -800,7 +800,7 @@
                     2.0
                 ]
             },
-            "texture": "grass",
+            "texture": "snow",
             "tiling": {
                 "tiling": [
                     10.0,
@@ -842,7 +842,7 @@
                     2.0
                 ]
             },
-            "texture": "grass",
+            "texture": "snow",
             "tiling": {
                 "tiling": [
                     10.0,
@@ -884,85 +884,7 @@
                     2.0
                 ]
             },
-            "texture": "grass",
-            "tiling": {
-                "tiling": [
-                    10.0,
-                    10.0
-                ]
-            }
-        },
-        {
-            "type": "MESH",
-            "name": "立方体_立方体.005",
-            "transform": {
-                "translation": [
-                    42.3140869140625,
-                    -7.778014183044434,
-                    109.2470932006836
-                ],
-                "rotation": [
-                    0.0,
-                    -0.0,
-                    179.6950225830078
-                ],
-                "scaling": [
-                    9.29325008392334,
-                    7.434595584869385,
-                    4.870754718780518
-                ]
-            },
-            "collider": {
-                "type": "BOX",
-                "center": [
-                    0.0,
-                    0.0,
-                    0.0
-                ],
-                "size": [
-                    2.0,
-                    2.0,
-                    2.0
-                ]
-            },
-            "event_trigger": "redCoinEvent_A",
-            "setObject": "triggerBox"
-        },
-        {
-            "type": "MESH",
-            "name": "Cube.017",
-            "transform": {
-                "translation": [
-                    42.070533752441406,
-                    33.97320556640625,
-                    116.02665710449219
-                ],
-                "rotation": [
-                    0.0,
-                    -0.0,
-                    0.0
-                ],
-                "scaling": [
-                    8.248550415039062,
-                    8.254079818725586,
-                    23.830724716186523
-                ]
-            },
-            "file_name": "groundCube",
-            "collider": {
-                "type": "BOX",
-                "center": [
-                    0.0,
-                    0.0,
-                    0.0
-                ],
-                "size": [
-                    2.0,
-                    2.0,
-                    2.0
-                ]
-            },
-            "texture": "grass",
+            "texture": "snow",
             "tiling": {
                 "tiling": [
                     10.0,
@@ -1004,7 +926,7 @@
                     2.0
                 ]
             },
-            "texture": "grass",
+            "texture": "snow",
             "tiling": {
                 "tiling": [
                     10.0,
@@ -1046,7 +968,7 @@
                     2.0
                 ]
             },
-            "texture": "renga",
+            "texture": "ice",
             "event_trigger": "",
             "setObject": "TikuwaBlock",
             "tiling": {
@@ -1090,7 +1012,7 @@
                     2.0
                 ]
             },
-            "texture": "grass",
+            "texture": "snow",
             "tiling": {
                 "tiling": [
                     10.0,
@@ -1132,7 +1054,7 @@
                     2.0
                 ]
             },
-            "texture": "renga",
+            "texture": "ice",
             "event_trigger": "ここから崩れるブロック",
             "setObject": "TikuwaBlock",
             "tiling": {
@@ -1176,7 +1098,7 @@
                     2.0
                 ]
             },
-            "texture": "renga",
+            "texture": "ice",
             "event_trigger": "ここから崩れるブロック",
             "setObject": "TikuwaBlock",
             "tiling": {
@@ -1220,7 +1142,7 @@
                     2.0
                 ]
             },
-            "texture": "renga",
+            "texture": "ice",
             "event_trigger": "ここから崩れるブロック",
             "setObject": "TikuwaBlock",
             "tiling": {
@@ -1264,7 +1186,7 @@
                     2.0
                 ]
             },
-            "texture": "renga",
+            "texture": "ice",
             "event_trigger": "ここから崩れるブロック",
             "setObject": "TikuwaBlock",
             "tiling": {
@@ -1308,7 +1230,7 @@
                     2.0
                 ]
             },
-            "texture": "grass",
+            "texture": "snow",
             "tiling": {
                 "tiling": [
                     10.0,
@@ -1350,7 +1272,7 @@
                     2.0
                 ]
             },
-            "texture": "grass",
+            "texture": "snow",
             "tiling": {
                 "tiling": [
                     10.0,
@@ -1392,7 +1314,7 @@
                     2.0
                 ]
             },
-            "texture": "grass",
+            "texture": "snow",
             "tiling": {
                 "tiling": [
                     10.0,
@@ -1471,7 +1393,7 @@
                     2.0
                 ]
             },
-            "texture": "grass",
+            "texture": "snow",
             "tiling": {
                 "tiling": [
                     10.0,
@@ -1556,7 +1478,7 @@
                     2.0
                 ]
             },
-            "texture": "grass",
+            "texture": "snow",
             "tiling": {
                 "tiling": [
                     10.0,
@@ -1598,7 +1520,7 @@
                     2.0
                 ]
             },
-            "texture": "grass",
+            "texture": "snow",
             "event_trigger": "",
             "tiling": {
                 "tiling": [
@@ -1641,12 +1563,41 @@
                     2.0
                 ]
             },
-            "texture": "grass",
+            "texture": "snow",
             "event_trigger": "",
             "tiling": {
                 "tiling": [
                     10.0,
                     10.0
+                ]
+            }
+        },
+        {
+            "type": "MESH",
+            "name": "平面",
+            "transform": {
+                "translation": [
+                    0.0,
+                    -44.73982620239258,
+                    59.98724365234375
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    28.761119842529297,
+                    28.761119842529297,
+                    28.761119842529297
+                ]
+            },
+            "file_name": "mountain",
+            "texture": "ice",
+            "tiling": {
+                "tiling": [
+                    100.0,
+                    100.0
                 ]
             }
         }

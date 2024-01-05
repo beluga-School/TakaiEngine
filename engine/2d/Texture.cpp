@@ -243,6 +243,8 @@ void TextureManager::PreLoad()
 	Load("Resources\\redScreen.png", "redScreen");
 	Load("Resources\\ddsconvert.dds", "hogeta");
 	Load("Resources\\renga.png", "renga");
+	Load("Resources\\snow.png", "snow");
+	Load("Resources\\ice.png", "ice");
 }
 
 //ネットで拾ってきたstring->wstring変換
