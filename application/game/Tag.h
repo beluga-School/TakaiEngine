@@ -27,4 +27,5 @@ enum class TagTable
 	RedCoin = 20,
 	BombSolider = 21,
 	BreakBlock = 22,
+	TikuwaBlock = 23,
 };

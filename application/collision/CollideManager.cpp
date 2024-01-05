@@ -15,6 +15,7 @@
 #include "BossArea.h"
 #include "RedCoin.h"
 #include "BreakBlock.h"
+#include "TikuwaBlock.h"
 
 bool CollideManager::CheckDirections(const Cube& check, const Cube& collide, const CheckDirection& CD)
 {
@@ -161,6 +162,19 @@ void CollideManager::CheckCollide(Entity* check, Entity* collide)
 					//破壊する
 					bBlock->HitEffect();
 				}
+			}
+		}
+
+		if (collide->CheckTag(TagTable::TikuwaBlock)) {
+			TikuwaBlock* tikuwa = static_cast<TikuwaBlock*>(collide);
+			
+			//そのままだと復活後に上に乗っている判定されなかったため、少しだけ判定を大きめにする
+			Cube tikuwaCol = tikuwa->box.cubecol;
+			tikuwaCol.scale.y *= 1.1f;
+
+			if (Collsions::CubeCollision(player->box.cubecol, tikuwaCol))
+			{
+				tikuwa->HitEffect();
 			}
 		}
 

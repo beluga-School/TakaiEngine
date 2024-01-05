@@ -1047,7 +1047,8 @@
                 ]
             },
             "texture": "grass",
-            "event_trigger": "ここから崩れるブロック",
+            "event_trigger": "",
+            "setObject": "TikuwaBlock",
             "tiling": {
                 "tiling": [
                     10.0,
@@ -1133,6 +1134,7 @@
             },
             "texture": "grass",
             "event_trigger": "ここから崩れるブロック",
+            "setObject": "TikuwaBlock",
             "tiling": {
                 "tiling": [
                     10.0,
@@ -1176,6 +1178,7 @@
             },
             "texture": "grass",
             "event_trigger": "ここから崩れるブロック",
+            "setObject": "TikuwaBlock",
             "tiling": {
                 "tiling": [
                     10.0,
@@ -1219,6 +1222,7 @@
             },
             "texture": "grass",
             "event_trigger": "ここから崩れるブロック",
+            "setObject": "TikuwaBlock",
             "tiling": {
                 "tiling": [
                     10.0,
@@ -1262,6 +1266,7 @@
             },
             "texture": "grass",
             "event_trigger": "ここから崩れるブロック",
+            "setObject": "TikuwaBlock",
             "tiling": {
                 "tiling": [
                     10.0,

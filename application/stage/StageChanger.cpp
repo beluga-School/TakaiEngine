@@ -37,6 +37,7 @@
 #include "BombSolider.h"
 #include "BreakBlock.h"
 #include "DropBlock.h"
+#include "TikuwaBlock.h"
 
 void StageChanger::LoadResource()
 {
@@ -467,6 +468,11 @@ void StageChanger::ChangeUpdate()
 		}
 
 		if (SetDropBlock(*objectData))
+		{
+			continue;
+		}
+
+		if (SetTikuwaBlock(*objectData))
 		{
 			continue;
 		}
@@ -1042,6 +1048,29 @@ bool StageChanger::SetDropBlock(const LevelData::ObjectData& data)
 		{
 			CollisionSet(data);
 		}
+
+		return true;
+	}
+	return false;
+}
+
+bool StageChanger::SetTikuwaBlock(const LevelData::ObjectData& data)
+{
+	if (data.setObjectName == "TikuwaBlock")
+	{
+		SetObject<TikuwaBlock>(data);
+
+		//当たり判定を作成
+		if (data.collider.have)
+		{
+			CollisionSet(data);
+		}
+
+		TikuwaBlock* tikuwa = static_cast<TikuwaBlock*>(mEntitys.back().get());
+
+		tikuwa->saveScale = tikuwa->scale;
+		tikuwa->saveBoxScale = tikuwa->box.scale;
+		tikuwa->savePosition = tikuwa->position;
 
 		return true;
 	}

@@ -215,6 +215,7 @@
     <ClCompile Include="application\game\entity\RedCoin.cpp" />
     <ClCompile Include="application\event\RedCoinEvent.cpp" />
     <ClCompile Include="application\event\StarStringEvent.cpp" />
+    <ClCompile Include="TikuwaBlock.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="application\collision\CollideManager.h" />
@@ -331,6 +332,7 @@
     <ClInclude Include="application\ui\SummonUI.h" />
     <ClInclude Include="engine\light\CircleShadow.h" />
     <ClInclude Include="application\event\StarStringEvent.h" />
+    <ClInclude Include="TikuwaBlock.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\Shader\CharactorDT.hlsli" />

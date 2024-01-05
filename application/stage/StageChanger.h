@@ -209,6 +209,8 @@ private:
 	bool SetBreakBlock(const LevelData::ObjectData& data);
 	//落ちるブロックの処理
 	bool SetDropBlock(const LevelData::ObjectData& data);
+	//プレイヤーが乗ったら落ちるブロックの実装
+	bool SetTikuwaBlock(const LevelData::ObjectData& data);
 
 	void DrawModel();
 	void DrawCollider();
