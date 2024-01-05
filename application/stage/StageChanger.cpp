@@ -852,6 +852,13 @@ bool StageChanger::SetMoveBlock(const LevelData::ObjectData& data)
 			mb->startpos = data.translation;
 		}
 
+		//static付きならフラグを立てる
+		if (data.setObjectName.find("static") != std::string::npos)
+		{
+			mb->SetStatic();
+		}
+
+		mb->TimerStart();
 
 		return true;
 	}

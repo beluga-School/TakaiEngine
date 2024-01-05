@@ -27,6 +27,12 @@ public:
 	/// <param name="mob"></param>
 	void OnCollide(Mob* mob);
 
+	//乗ったときに動き出すような挙動になるフラグを立てる
+	void SetStatic();
+
+	void TimerStart();
+
+public:
 	Vector3 startpos{};
 	Vector3 endpos{};
 
@@ -37,5 +43,12 @@ private:
 	//1フレームで移動した量
 	Vector3 moveValue{};
 	Vector3 oldPos{};
+
+	//プレイヤーが乗ったときに動き出すような挙動になるフラグ
+	bool isStatic = false;
+
+	bool checkP = false;
+
+	TEasing::easeTimer invideTimer = 2.0f;
 };
 
