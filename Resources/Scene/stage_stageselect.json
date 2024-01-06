@@ -1906,49 +1906,6 @@
         },
         {
             "type": "MESH",
-            "name": "Cube.021",
-            "transform": {
-                "translation": [
-                    250.3529815673828,
-                    -4.929590225219727,
-                    16.775421142578125
-                ],
-                "rotation": [
-                    0.0,
-                    -0.0,
-                    0.0
-                ],
-                "scaling": [
-                    2.421539068222046,
-                    3.3130972385406494,
-                    2.3754751682281494
-                ]
-            },
-            "file_name": "groundCube",
-            "collider": {
-                "type": "BOX",
-                "center": [
-                    0.0,
-                    0.0,
-                    0.0
-                ],
-                "size": [
-                    2.0,
-                    2.0,
-                    2.0
-                ]
-            },
-            "texture": "renga",
-            "setObject": "breakBlock",
-            "tiling": {
-                "tiling": [
-                    10.0,
-                    10.0
-                ]
-            }
-        },
-        {
-            "type": "MESH",
             "name": "土管.002",
             "transform": {
                 "translation": [
