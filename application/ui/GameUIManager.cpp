@@ -1,4 +1,5 @@
 #include "GameUIManager.h"
+#include "GameUIManager.h"
 #include "Util.h"
 
 void GameUIManager::LoadResource()

@@ -16,5 +16,7 @@ public:
 	bool mActive = false;
 
 	TEasing::easeTimer timer = 1.0f;
+private:
+	TEasing::easeTimer scalingTimer = 0.5f;
 };
 

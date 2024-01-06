@@ -34,9 +34,9 @@
             "name": "土管",
             "transform": {
                 "translation": [
-                    25.166250228881836,
-                    -2.020507335662842,
-                    74.20926666259766
+                    -7.945406436920166,
+                    -19.952489852905273,
+                    74.46530151367188
                 ],
                 "rotation": [
                     0.0,
@@ -238,90 +238,6 @@
         },
         {
             "type": "MESH",
-            "name": "Cube.009",
-            "transform": {
-                "translation": [
-                    41.86627197265625,
-                    -5.1110453605651855,
-                    71.98179626464844
-                ],
-                "rotation": [
-                    0.0,
-                    -0.0,
-                    0.0
-                ],
-                "scaling": [
-                    8.425996780395508,
-                    2.7026877403259277,
-                    2.2980194091796875
-                ]
-            },
-            "file_name": "groundCube",
-            "collider": {
-                "type": "BOX",
-                "center": [
-                    0.0,
-                    0.0,
-                    0.0
-                ],
-                "size": [
-                    2.0,
-                    2.0,
-                    2.0
-                ]
-            },
-            "texture": "wood",
-            "tiling": {
-                "tiling": [
-                    10.0,
-                    10.0
-                ]
-            }
-        },
-        {
-            "type": "MESH",
-            "name": "Cube.012",
-            "transform": {
-                "translation": [
-                    26.96430015563965,
-                    -2.002075433731079,
-                    73.38282012939453
-                ],
-                "rotation": [
-                    0.0,
-                    -0.0,
-                    0.0
-                ],
-                "scaling": [
-                    6.702358722686768,
-                    7.039048194885254,
-                    0.9330909848213196
-                ]
-            },
-            "file_name": "groundCube",
-            "collider": {
-                "type": "BOX",
-                "center": [
-                    0.0,
-                    0.0,
-                    0.0
-                ],
-                "size": [
-                    2.0,
-                    2.0,
-                    2.0
-                ]
-            },
-            "texture": "snow",
-            "tiling": {
-                "tiling": [
-                    10.0,
-                    10.0
-                ]
-            }
-        },
-        {
-            "type": "MESH",
             "name": "Cube.020",
             "transform": {
                 "translation": [
@@ -403,9 +319,9 @@
             "name": "コイン",
             "transform": {
                 "translation": [
-                    45.98452377319336,
-                    -5.246352672576904,
-                    96.10610961914062
+                    54.6165885925293,
+                    -3.6631457805633545,
+                    75.5124740600586
                 ],
                 "rotation": [
                     0.0,
@@ -432,96 +348,8 @@
                     1.5
                 ]
             },
-            "event_trigger": "",
+            "event_trigger": "redCoinEvent_A",
             "setObject": "star"
-        },
-        {
-            "type": "MESH",
-            "name": "Cube.011",
-            "transform": {
-                "translation": [
-                    37.22454833984375,
-                    -5.287233352661133,
-                    92.6136245727539
-                ],
-                "rotation": [
-                    0.0,
-                    -0.0,
-                    0.0
-                ],
-                "scaling": [
-                    2.5169425010681152,
-                    2.4370017051696777,
-                    2.128736972808838
-                ]
-            },
-            "file_name": "groundCube",
-            "collider": {
-                "type": "BOX",
-                "center": [
-                    0.0,
-                    0.0,
-                    0.0
-                ],
-                "size": [
-                    2.0,
-                    2.0,
-                    2.0
-                ]
-            },
-            "texture": "wood",
-            "event_trigger": "",
-            "setObject": "",
-            "tiling": {
-                "tiling": [
-                    5.0,
-                    5.0
-                ]
-            }
-        },
-        {
-            "type": "MESH",
-            "name": "Cube.010",
-            "transform": {
-                "translation": [
-                    46.0922737121582,
-                    -5.287233352661133,
-                    92.6136245727539
-                ],
-                "rotation": [
-                    0.0,
-                    -0.0,
-                    0.0
-                ],
-                "scaling": [
-                    2.5169425010681152,
-                    2.4370017051696777,
-                    2.128736972808838
-                ]
-            },
-            "file_name": "groundCube",
-            "collider": {
-                "type": "BOX",
-                "center": [
-                    0.0,
-                    0.0,
-                    0.0
-                ],
-                "size": [
-                    2.0,
-                    2.0,
-                    2.0
-                ]
-            },
-            "texture": "wood",
-            "event_trigger": "",
-            "setObject": "",
-            "tiling": {
-                "tiling": [
-                    5.0,
-                    5.0
-                ]
-            }
         },
         {
             "type": "MESH",
@@ -1245,7 +1073,7 @@
                 "translation": [
                     41.98296356201172,
                     -50.891334533691406,
-                    103.60214233398438
+                    101.80618286132812
                 ],
                 "rotation": [
                     0.0,
@@ -1287,7 +1115,7 @@
                 "translation": [
                     41.98296356201172,
                     -56.33710861206055,
-                    105.29055786132812
+                    101.76044464111328
                 ],
                 "rotation": [
                     0.0,
@@ -1296,8 +1124,8 @@
                 ],
                 "scaling": [
                     8.192798614501953,
-                    2.7026877403259277,
-                    2.2980194091796875
+                    2.7026898860931396,
+                    2.2980198860168457
                 ]
             },
             "file_name": "groundCube",
@@ -1328,8 +1156,8 @@
             "transform": {
                 "translation": [
                     41.949485778808594,
-                    -57.08791732788086,
-                    109.02656555175781
+                    -126.79105377197266,
+                    106.66974639892578
                 ],
                 "rotation": [
                     0.0,
@@ -1394,49 +1222,6 @@
                 ]
             },
             "texture": "snow",
-            "tiling": {
-                "tiling": [
-                    10.0,
-                    10.0
-                ]
-            }
-        },
-        {
-            "type": "MESH",
-            "name": "Cube.032",
-            "transform": {
-                "translation": [
-                    41.98296356201172,
-                    -76.2899398803711,
-                    99.25713348388672
-                ],
-                "rotation": [
-                    0.0,
-                    -0.0,
-                    0.0
-                ],
-                "scaling": [
-                    8.192798614501953,
-                    2.7026877403259277,
-                    2.2980194091796875
-                ]
-            },
-            "file_name": "groundCube",
-            "collider": {
-                "type": "BOX",
-                "center": [
-                    0.0,
-                    0.0,
-                    0.0
-                ],
-                "size": [
-                    2.0,
-                    2.0,
-                    2.0
-                ]
-            },
-            "texture": "grass",
-            "event_trigger": "ゴール予定",
             "tiling": {
                 "tiling": [
                     10.0,
@@ -1574,12 +1359,12 @@
         },
         {
             "type": "MESH",
-            "name": "平面",
+            "name": "山",
             "transform": {
                 "translation": [
                     0.0,
                     -44.73982620239258,
-                    59.98724365234375
+                    36.156097412109375
                 ],
                 "rotation": [
                     0.0,
@@ -1587,8 +1372,8 @@
                     0.0
                 ],
                 "scaling": [
-                    28.761119842529297,
-                    28.761119842529297,
+                    55.959938049316406,
+                    48.919246673583984,
                     28.761119842529297
                 ]
             },
@@ -1598,6 +1383,1562 @@
                 "tiling": [
                     100.0,
                     100.0
+                ]
+            }
+        },
+        {
+            "type": "MESH",
+            "name": "Cube.016",
+            "transform": {
+                "translation": [
+                    35.33512496948242,
+                    -12.669209480285645,
+                    72.06739044189453
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    3.8810482025146484,
+                    9.69960880279541,
+                    2.2980194091796875
+                ]
+            },
+            "file_name": "groundCube",
+            "collider": {
+                "type": "BOX",
+                "center": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "size": [
+                    2.0,
+                    2.0,
+                    2.0
+                ]
+            },
+            "texture": "wood",
+            "tiling": {
+                "tiling": [
+                    10.0,
+                    10.0
+                ]
+            }
+        },
+        {
+            "type": "MESH",
+            "name": "Cube.017",
+            "transform": {
+                "translation": [
+                    49.13977813720703,
+                    -18.900758743286133,
+                    72.01115417480469
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    9.912364959716797,
+                    3.49949312210083,
+                    2.2980194091796875
+                ]
+            },
+            "file_name": "groundCube",
+            "collider": {
+                "type": "BOX",
+                "center": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "size": [
+                    2.0,
+                    2.0,
+                    2.0
+                ]
+            },
+            "texture": "wood",
+            "tiling": {
+                "tiling": [
+                    10.0,
+                    10.0
+                ]
+            }
+        },
+        {
+            "type": "MESH",
+            "name": "Cube.034",
+            "transform": {
+                "translation": [
+                    44.809532165527344,
+                    -7.814736366271973,
+                    73.2291488647461
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    4.426699161529541,
+                    4.804736614227295,
+                    0.8153782486915588
+                ]
+            },
+            "file_name": "groundCube",
+            "collider": {
+                "type": "BOX",
+                "center": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "size": [
+                    2.0,
+                    2.0,
+                    2.0
+                ]
+            },
+            "texture": "wood",
+            "event_trigger": "start_2",
+            "setObject": "moveBlock",
+            "tiling": {
+                "tiling": [
+                    10.0,
+                    10.0
+                ]
+            }
+        },
+        {
+            "type": "MESH",
+            "name": "Cube.035",
+            "transform": {
+                "translation": [
+                    44.809486389160156,
+                    -7.814732551574707,
+                    65.82710266113281
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    4.426699161529541,
+                    4.804736614227295,
+                    0.8153782486915588
+                ]
+            },
+            "file_name": "groundCube",
+            "collider": {
+                "type": "BOX",
+                "center": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "size": [
+                    2.0,
+                    2.0,
+                    2.0
+                ]
+            },
+            "texture": "wood",
+            "event_trigger": "end_2",
+            "setObject": "moveBlock",
+            "tiling": {
+                "tiling": [
+                    10.0,
+                    10.0
+                ]
+            }
+        },
+        {
+            "type": "MESH",
+            "name": "Cube.038",
+            "transform": {
+                "translation": [
+                    54.69825744628906,
+                    -11.55769157409668,
+                    70.02336883544922
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    4.219071388244629,
+                    3.7618889808654785,
+                    4.211181640625
+                ]
+            },
+            "file_name": "groundCube",
+            "collider": {
+                "type": "BOX",
+                "center": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "size": [
+                    2.0,
+                    2.0,
+                    2.0
+                ]
+            },
+            "texture": "snow",
+            "tiling": {
+                "tiling": [
+                    10.0,
+                    10.0
+                ]
+            }
+        },
+        {
+            "type": "MESH",
+            "name": "Cube.011",
+            "transform": {
+                "translation": [
+                    15.333309173583984,
+                    -19.8289852142334,
+                    72.06739044189453
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    3.8810482025146484,
+                    9.69960880279541,
+                    2.2980194091796875
+                ]
+            },
+            "file_name": "groundCube",
+            "collider": {
+                "type": "BOX",
+                "center": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "size": [
+                    2.0,
+                    2.0,
+                    2.0
+                ]
+            },
+            "texture": "wood",
+            "tiling": {
+                "tiling": [
+                    10.0,
+                    10.0
+                ]
+            }
+        },
+        {
+            "type": "MESH",
+            "name": "立方体_立方体.005",
+            "transform": {
+                "translation": [
+                    5.273472309112549,
+                    -19.571674346923828,
+                    78.16873168945312
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    179.6950225830078
+                ],
+                "scaling": [
+                    7.322491645812988,
+                    11.254149436950684,
+                    4.870754718780518
+                ]
+            },
+            "collider": {
+                "type": "BOX",
+                "center": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "size": [
+                    2.0,
+                    2.0,
+                    2.0
+                ]
+            },
+            "event_trigger": "redCoinEvent_A",
+            "setObject": "triggerBox"
+        },
+        {
+            "type": "MESH",
+            "name": "Cube.010",
+            "transform": {
+                "translation": [
+                    -0.04622220993041992,
+                    -19.8289852142334,
+                    72.06739044189453
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    11.501784324645996,
+                    9.69960880279541,
+                    2.2980194091796875
+                ]
+            },
+            "file_name": "groundCube",
+            "collider": {
+                "type": "BOX",
+                "center": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "size": [
+                    2.0,
+                    2.0,
+                    2.0
+                ]
+            },
+            "texture": "wood",
+            "tiling": {
+                "tiling": [
+                    10.0,
+                    10.0
+                ]
+            }
+        },
+        {
+            "type": "MESH",
+            "name": "Cube.009",
+            "transform": {
+                "translation": [
+                    25.141050338745117,
+                    -16.305360794067383,
+                    65.82710266113281
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    4.426699161529541,
+                    4.804736614227295,
+                    0.8153782486915588
+                ]
+            },
+            "file_name": "groundCube",
+            "collider": {
+                "type": "BOX",
+                "center": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "size": [
+                    2.0,
+                    2.0,
+                    2.0
+                ]
+            },
+            "texture": "wood",
+            "event_trigger": "start_3",
+            "setObject": "moveBlock",
+            "tiling": {
+                "tiling": [
+                    10.0,
+                    10.0
+                ]
+            }
+        },
+        {
+            "type": "MESH",
+            "name": "Cube.012",
+            "transform": {
+                "translation": [
+                    25.141096115112305,
+                    -16.30536460876465,
+                    73.2291488647461
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    4.426699161529541,
+                    4.804736614227295,
+                    0.8153782486915588
+                ]
+            },
+            "file_name": "groundCube",
+            "collider": {
+                "type": "BOX",
+                "center": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "size": [
+                    2.0,
+                    2.0,
+                    2.0
+                ]
+            },
+            "texture": "wood",
+            "event_trigger": "end_3",
+            "setObject": "moveBlock",
+            "tiling": {
+                "tiling": [
+                    10.0,
+                    10.0
+                ]
+            }
+        },
+        {
+            "type": "MESH",
+            "name": "Cube.036",
+            "transform": {
+                "translation": [
+                    21.50933074951172,
+                    -6.553133010864258,
+                    72.01115417480469
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    9.912364959716797,
+                    3.49949312210083,
+                    2.2980194091796875
+                ]
+            },
+            "file_name": "groundCube",
+            "collider": {
+                "type": "BOX",
+                "center": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "size": [
+                    2.0,
+                    2.0,
+                    2.0
+                ]
+            },
+            "texture": "wood",
+            "tiling": {
+                "tiling": [
+                    10.0,
+                    10.0
+                ]
+            }
+        },
+        {
+            "type": "MESH",
+            "name": "土管.001",
+            "transform": {
+                "translation": [
+                    25.09247589111328,
+                    -17.341581344604492,
+                    75.9234390258789
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "Coin",
+            "collider": {
+                "type": "BOX",
+                "center": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "size": [
+                    2.0,
+                    2.0,
+                    2.0
+                ]
+            },
+            "event_trigger": "redCoinEvent_A",
+            "setObject": "redcoin"
+        },
+        {
+            "type": "MESH",
+            "name": "土管.002",
+            "transform": {
+                "translation": [
+                    25.09247589111328,
+                    -6.201442718505859,
+                    75.9234390258789
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "Coin",
+            "collider": {
+                "type": "BOX",
+                "center": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "size": [
+                    2.0,
+                    2.0,
+                    2.0
+                ]
+            },
+            "event_trigger": "redCoinEvent_A",
+            "setObject": "redcoin"
+        },
+        {
+            "type": "MESH",
+            "name": "土管.003",
+            "transform": {
+                "translation": [
+                    35.08354187011719,
+                    -6.201442718505859,
+                    75.9234390258789
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "Coin",
+            "collider": {
+                "type": "BOX",
+                "center": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "size": [
+                    2.0,
+                    2.0,
+                    2.0
+                ]
+            },
+            "event_trigger": "redCoinEvent_A",
+            "setObject": "redcoin"
+        },
+        {
+            "type": "MESH",
+            "name": "土管.004",
+            "transform": {
+                "translation": [
+                    35.08354187011719,
+                    -17.60726547241211,
+                    75.9234390258789
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "Coin",
+            "collider": {
+                "type": "BOX",
+                "center": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "size": [
+                    2.0,
+                    2.0,
+                    2.0
+                ]
+            },
+            "event_trigger": "redCoinEvent_A",
+            "setObject": "redcoin"
+        },
+        {
+            "type": "MESH",
+            "name": "土管.005",
+            "transform": {
+                "translation": [
+                    45.37599563598633,
+                    -17.60726547241211,
+                    75.9234390258789
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "Coin",
+            "collider": {
+                "type": "BOX",
+                "center": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "size": [
+                    2.0,
+                    2.0,
+                    2.0
+                ]
+            },
+            "event_trigger": "redCoinEvent_A",
+            "setObject": "redcoin"
+        },
+        {
+            "type": "MESH",
+            "name": "土管.006",
+            "transform": {
+                "translation": [
+                    45.37599563598633,
+                    -6.061877250671387,
+                    75.9234390258789
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "Coin",
+            "collider": {
+                "type": "BOX",
+                "center": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "size": [
+                    2.0,
+                    2.0,
+                    2.0
+                ]
+            },
+            "event_trigger": "redCoinEvent_A",
+            "setObject": "redcoin"
+        },
+        {
+            "type": "MESH",
+            "name": "立方体.004",
+            "transform": {
+                "translation": [
+                    69.03916931152344,
+                    -11.541948318481445,
+                    85.75902557373047
+                ],
+                "rotation": [
+                    3.007225046758322e-08,
+                    -22.032865524291992,
+                    1.3051573038101196
+                ],
+                "scaling": [
+                    0.6321309804916382,
+                    0.6321309208869934,
+                    0.6321309208869934
+                ]
+            },
+            "event_trigger": "RedStringEvent",
+            "setObject": "eventcamera"
+        },
+        {
+            "type": "MESH",
+            "name": "立方体.005",
+            "transform": {
+                "translation": [
+                    66.11970520019531,
+                    -2.8739266395568848,
+                    78.73726654052734
+                ],
+                "rotation": [
+                    3.007225046758322e-08,
+                    -22.032865524291992,
+                    1.3051573038101196
+                ],
+                "scaling": [
+                    0.6321309804916382,
+                    0.6321309208869934,
+                    0.6321309208869934
+                ]
+            },
+            "event_trigger": "RedEventEnd",
+            "setObject": "eventcamera"
+        },
+        {
+            "type": "MESH",
+            "name": "Cube.041",
+            "transform": {
+                "translation": [
+                    41.9726448059082,
+                    -62.07257080078125,
+                    101.76335906982422
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    3.0,
+                    3.0,
+                    2.2980198860168457
+                ]
+            },
+            "file_name": "groundCube",
+            "collider": {
+                "type": "BOX",
+                "center": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "size": [
+                    2.0,
+                    2.0,
+                    2.0
+                ]
+            },
+            "texture": "ice",
+            "event_trigger": "",
+            "setObject": "TikuwaBlock",
+            "tiling": {
+                "tiling": [
+                    10.0,
+                    10.0
+                ]
+            }
+        },
+        {
+            "type": "MESH",
+            "name": "Cube.042",
+            "transform": {
+                "translation": [
+                    41.98296356201172,
+                    -98.65397644042969,
+                    90.44010162353516
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    8.192798614501953,
+                    17.554046630859375,
+                    2.2980194091796875
+                ]
+            },
+            "file_name": "groundCube",
+            "collider": {
+                "type": "BOX",
+                "center": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "size": [
+                    2.0,
+                    2.0,
+                    2.0
+                ]
+            },
+            "texture": "snow",
+            "tiling": {
+                "tiling": [
+                    10.0,
+                    10.0
+                ]
+            }
+        },
+        {
+            "type": "MESH",
+            "name": "Cube.032",
+            "transform": {
+                "translation": [
+                    41.9726448059082,
+                    -68.04946899414062,
+                    101.76335906982422
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    3.0,
+                    3.0,
+                    2.2980198860168457
+                ]
+            },
+            "file_name": "groundCube",
+            "collider": {
+                "type": "BOX",
+                "center": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "size": [
+                    2.0,
+                    2.0,
+                    2.0
+                ]
+            },
+            "texture": "ice",
+            "event_trigger": "",
+            "setObject": "TikuwaBlock",
+            "tiling": {
+                "tiling": [
+                    10.0,
+                    10.0
+                ]
+            }
+        },
+        {
+            "type": "MESH",
+            "name": "Cube.037",
+            "transform": {
+                "translation": [
+                    41.9726448059082,
+                    -74.04946899414062,
+                    101.76335906982422
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    3.0,
+                    3.0,
+                    2.2980198860168457
+                ]
+            },
+            "file_name": "groundCube",
+            "collider": {
+                "type": "BOX",
+                "center": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "size": [
+                    2.0,
+                    2.0,
+                    2.0
+                ]
+            },
+            "texture": "ice",
+            "event_trigger": "",
+            "setObject": "TikuwaBlock",
+            "tiling": {
+                "tiling": [
+                    10.0,
+                    10.0
+                ]
+            }
+        },
+        {
+            "type": "MESH",
+            "name": "Cube.039",
+            "transform": {
+                "translation": [
+                    35.9726448059082,
+                    -74.04946899414062,
+                    101.76335906982422
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    3.0,
+                    3.0,
+                    2.2980198860168457
+                ]
+            },
+            "file_name": "groundCube",
+            "collider": {
+                "type": "BOX",
+                "center": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "size": [
+                    2.0,
+                    2.0,
+                    2.0
+                ]
+            },
+            "texture": "ice",
+            "event_trigger": "",
+            "setObject": "TikuwaBlock",
+            "tiling": {
+                "tiling": [
+                    10.0,
+                    10.0
+                ]
+            }
+        },
+        {
+            "type": "MESH",
+            "name": "Cube.040",
+            "transform": {
+                "translation": [
+                    35.9726448059082,
+                    -80.04946899414062,
+                    101.76335906982422
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    3.0,
+                    3.0,
+                    2.2980198860168457
+                ]
+            },
+            "file_name": "groundCube",
+            "collider": {
+                "type": "BOX",
+                "center": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "size": [
+                    2.0,
+                    2.0,
+                    2.0
+                ]
+            },
+            "texture": "ice",
+            "event_trigger": "",
+            "setObject": "TikuwaBlock",
+            "tiling": {
+                "tiling": [
+                    10.0,
+                    10.0
+                ]
+            }
+        },
+        {
+            "type": "MESH",
+            "name": "Cube.043",
+            "transform": {
+                "translation": [
+                    35.9726448059082,
+                    -86.04946899414062,
+                    101.76335906982422
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    3.0,
+                    3.0,
+                    2.2980198860168457
+                ]
+            },
+            "file_name": "groundCube",
+            "collider": {
+                "type": "BOX",
+                "center": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "size": [
+                    2.0,
+                    2.0,
+                    2.0
+                ]
+            },
+            "texture": "ice",
+            "event_trigger": "",
+            "setObject": "TikuwaBlock",
+            "tiling": {
+                "tiling": [
+                    10.0,
+                    10.0
+                ]
+            }
+        },
+        {
+            "type": "MESH",
+            "name": "Cube.044",
+            "transform": {
+                "translation": [
+                    41.9726448059082,
+                    -86.04946899414062,
+                    101.76335906982422
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    3.0,
+                    3.0,
+                    2.2980198860168457
+                ]
+            },
+            "file_name": "groundCube",
+            "collider": {
+                "type": "BOX",
+                "center": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "size": [
+                    2.0,
+                    2.0,
+                    2.0
+                ]
+            },
+            "texture": "ice",
+            "event_trigger": "",
+            "setObject": "TikuwaBlock",
+            "tiling": {
+                "tiling": [
+                    10.0,
+                    10.0
+                ]
+            }
+        },
+        {
+            "type": "MESH",
+            "name": "Cube.045",
+            "transform": {
+                "translation": [
+                    47.9726448059082,
+                    -92.04946899414062,
+                    101.76335906982422
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    3.0,
+                    3.0,
+                    2.2980198860168457
+                ]
+            },
+            "file_name": "groundCube",
+            "collider": {
+                "type": "BOX",
+                "center": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "size": [
+                    2.0,
+                    2.0,
+                    2.0
+                ]
+            },
+            "texture": "ice",
+            "event_trigger": "",
+            "setObject": "TikuwaBlock",
+            "tiling": {
+                "tiling": [
+                    10.0,
+                    10.0
+                ]
+            }
+        },
+        {
+            "type": "MESH",
+            "name": "Cube.046",
+            "transform": {
+                "translation": [
+                    41.9726448059082,
+                    -104.04946899414062,
+                    101.76335906982422
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    3.0,
+                    3.0,
+                    2.2980198860168457
+                ]
+            },
+            "file_name": "groundCube",
+            "collider": {
+                "type": "BOX",
+                "center": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "size": [
+                    2.0,
+                    2.0,
+                    2.0
+                ]
+            },
+            "texture": "ice",
+            "event_trigger": "",
+            "setObject": "TikuwaBlock",
+            "tiling": {
+                "tiling": [
+                    10.0,
+                    10.0
+                ]
+            }
+        },
+        {
+            "type": "MESH",
+            "name": "Cube.047",
+            "transform": {
+                "translation": [
+                    47.9726448059082,
+                    -86.04946899414062,
+                    101.76335906982422
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    3.0,
+                    3.0,
+                    2.2980198860168457
+                ]
+            },
+            "file_name": "groundCube",
+            "collider": {
+                "type": "BOX",
+                "center": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "size": [
+                    2.0,
+                    2.0,
+                    2.0
+                ]
+            },
+            "texture": "ice",
+            "event_trigger": "",
+            "setObject": "TikuwaBlock",
+            "tiling": {
+                "tiling": [
+                    10.0,
+                    10.0
+                ]
+            }
+        },
+        {
+            "type": "MESH",
+            "name": "Cube.049",
+            "transform": {
+                "translation": [
+                    47.9726448059082,
+                    -98.04946899414062,
+                    101.76335906982422
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    3.0,
+                    3.0,
+                    2.2980198860168457
+                ]
+            },
+            "file_name": "groundCube",
+            "collider": {
+                "type": "BOX",
+                "center": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "size": [
+                    2.0,
+                    2.0,
+                    2.0
+                ]
+            },
+            "texture": "ice",
+            "event_trigger": "",
+            "setObject": "TikuwaBlock",
+            "tiling": {
+                "tiling": [
+                    10.0,
+                    10.0
+                ]
+            }
+        },
+        {
+            "type": "MESH",
+            "name": "Cube.050",
+            "transform": {
+                "translation": [
+                    41.98296356201172,
+                    -45.587745666503906,
+                    101.82982635498047
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    8.192798614501953,
+                    2.7026877403259277,
+                    2.2980194091796875
+                ]
+            },
+            "file_name": "groundCube",
+            "collider": {
+                "type": "BOX",
+                "center": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "size": [
+                    2.0,
+                    2.0,
+                    2.0
+                ]
+            },
+            "texture": "snow",
+            "tiling": {
+                "tiling": [
+                    10.0,
+                    10.0
+                ]
+            }
+        },
+        {
+            "type": "MESH",
+            "name": "Cube.051",
+            "transform": {
+                "translation": [
+                    41.98296356201172,
+                    -121.81986999511719,
+                    101.82982635498047
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    3.0,
+                    2.7026877403259277,
+                    2.2980194091796875
+                ]
+            },
+            "file_name": "groundCube",
+            "collider": {
+                "type": "BOX",
+                "center": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "size": [
+                    2.0,
+                    2.0,
+                    2.0
+                ]
+            },
+            "texture": "snow",
+            "tiling": {
+                "tiling": [
+                    10.0,
+                    10.0
+                ]
+            }
+        },
+        {
+            "type": "MESH",
+            "name": "Cube.052",
+            "transform": {
+                "translation": [
+                    41.98296356201172,
+                    -133.7743682861328,
+                    90.44010162353516
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    8.192798614501953,
+                    17.554046630859375,
+                    2.2980194091796875
+                ]
+            },
+            "file_name": "groundCube",
+            "collider": {
+                "type": "BOX",
+                "center": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "size": [
+                    2.0,
+                    2.0,
+                    2.0
+                ]
+            },
+            "texture": "snow",
+            "tiling": {
+                "tiling": [
+                    10.0,
+                    10.0
+                ]
+            }
+        },
+        {
+            "type": "MESH",
+            "name": "Cube.053",
+            "transform": {
+                "translation": [
+                    41.98296356201172,
+                    -127.17749786376953,
+                    101.82982635498047
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    3.0,
+                    2.7026877403259277,
+                    2.2980194091796875
+                ]
+            },
+            "file_name": "groundCube",
+            "collider": {
+                "type": "BOX",
+                "center": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "size": [
+                    2.0,
+                    2.0,
+                    2.0
+                ]
+            },
+            "texture": "snow",
+            "tiling": {
+                "tiling": [
+                    10.0,
+                    10.0
+                ]
+            }
+        },
+        {
+            "type": "MESH",
+            "name": "Cube.054",
+            "transform": {
+                "translation": [
+                    41.98296356201172,
+                    -132.63217163085938,
+                    101.82982635498047
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    3.0,
+                    2.7026877403259277,
+                    2.2980194091796875
+                ]
+            },
+            "file_name": "groundCube",
+            "collider": {
+                "type": "BOX",
+                "center": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "size": [
+                    2.0,
+                    2.0,
+                    2.0
+                ]
+            },
+            "texture": "snow",
+            "tiling": {
+                "tiling": [
+                    10.0,
+                    10.0
+                ]
+            }
+        },
+        {
+            "type": "MESH",
+            "name": "Cube.055",
+            "transform": {
+                "translation": [
+                    47.9726448059082,
+                    -104.04946899414062,
+                    101.76335906982422
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    3.0,
+                    3.0,
+                    2.2980198860168457
+                ]
+            },
+            "file_name": "groundCube",
+            "collider": {
+                "type": "BOX",
+                "center": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "size": [
+                    2.0,
+                    2.0,
+                    2.0
+                ]
+            },
+            "texture": "ice",
+            "event_trigger": "",
+            "setObject": "TikuwaBlock",
+            "tiling": {
+                "tiling": [
+                    10.0,
+                    10.0
+                ]
+            }
+        },
+        {
+            "type": "MESH",
+            "name": "Cube.056",
+            "transform": {
+                "translation": [
+                    41.9726448059082,
+                    -116.04946899414062,
+                    101.76335906982422
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    3.0,
+                    3.0,
+                    2.2980198860168457
+                ]
+            },
+            "file_name": "groundCube",
+            "collider": {
+                "type": "BOX",
+                "center": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "size": [
+                    2.0,
+                    2.0,
+                    2.0
+                ]
+            },
+            "texture": "ice",
+            "event_trigger": "",
+            "setObject": "TikuwaBlock",
+            "tiling": {
+                "tiling": [
+                    10.0,
+                    10.0
                 ]
             }
         }

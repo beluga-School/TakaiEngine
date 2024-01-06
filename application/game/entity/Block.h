@@ -7,6 +7,7 @@ class Block : public Entity
 public:
 	Block() {
 		SetTag(TagTable::Block);
+		SetTag(TagTable::DitherTransparent);
 		Register();
 	};
 

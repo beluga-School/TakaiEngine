@@ -275,7 +275,7 @@ void StageChanger::ChangeUpdate()
 				MessageEvent* getEvent = static_cast<MessageEvent*>(EventManager::Get()->CheckExestEvent("RedStringEvent")->get());
 				getEvent->messageTexHandle = "redcoinString";
 			}
-			CameraLoader<MessageEvent>(*objectData, "RedEventEnd");
+			CameraLoader<NoEffectEvent>(*objectData, "RedEventEnd");
 
 			continue;
 		}

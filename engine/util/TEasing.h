@@ -99,6 +99,8 @@ namespace TEasing
 		// 現在が最大秒数のうちどの割合かを(0.0f～1.0f)の値で返す
 		float GetTimeRate();
 
+		void Roop();
+
 	private:
 		//起動中フラグ
 		bool run = false;
@@ -109,5 +111,7 @@ namespace TEasing
 		bool reverseend = false;
 
 		float mOldElapsedTime = 0.0f;	// 1フレーム前の経過時間
+
+		bool roopStart = false;
 	};
 };

@@ -297,3 +297,22 @@ float TEasing::easeTimer::GetTimeRate()
 {
 	return min(mElapsedTime / mMaxTime, 1.0f);
 }
+
+void TEasing::easeTimer::Roop()
+{
+	if (!roopStart)
+	{
+		roopStart = true;
+		Start();
+	}
+
+	if (GetEnd())
+	{
+		ReverseStart();
+	}
+	
+	if (GetReverseEnd()) 
+	{
+		Start();
+	}
+}

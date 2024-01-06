@@ -16,6 +16,12 @@ public:
 	std::string messageTexHandle = "";
 
 private:
-	TEasing::easeTimer endTimer = 1.0f;
+	Vector2 pos;
+	Vector2 startPos;
+	Vector2 endPos;
+	TEasing::easeTimer spawnTimer = 1.0f;
+	TEasing::easeTimer invideTimer = 0.5f;
+	TEasing::easeTimer backTimer = 1.0f;
+	
 };
 

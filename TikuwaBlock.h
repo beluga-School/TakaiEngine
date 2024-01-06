@@ -24,6 +24,8 @@ private:
 	TEasing::easeTimer respawnTimer = 1.0f;
 	TEasing::easeTimer reScalingTimer = 0.5f;
 
+	Vector3 saveEndPosition = { 0,0,0 };
+
 	bool isDraw = true;
 };
 

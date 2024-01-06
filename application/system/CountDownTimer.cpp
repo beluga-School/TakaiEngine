@@ -1,6 +1,7 @@
 #include "CountDownTimer.h"
 #include "Texture.h"
 #include "InstantDrawer.h"
+#include "player.h"
 
 void CountDownTimer::LoadResource()
 {
@@ -67,7 +68,16 @@ void CountDownTimer::Draw()
 	int32_t ten = (int32_t)timer.mElapsedTime / 10;
 	int32_t one = (int32_t)timer.mElapsedTime % 10;
 
-	InstantDrawer::DrawGraph(200, 100, 0.5f, 0.5f, numbers[ten]);
-	InstantDrawer::DrawGraph(200 + 70, 100, 0.5f, 0.5f, numbers[one]);
+	scalingTimer.Update();
+	scalingTimer.Roop();
 
+	float scale = TEasing::OutQuad(0.45f,0.55f, scalingTimer.GetTimeRate());
+
+	Vector2 pos = { Util::WIN_WIDTH / 2 ,Util::WIN_HEIGHT / 2 - 100 };
+
+	InstantDrawer::DrawBox(pos.x, pos.y, 150, 100, Color(0.1f, 0.1f, 0.1f, 0.9f));
+
+
+	InstantDrawer::DrawGraph(pos.x - 35, pos.y, scale, scale, numbers[ten]);
+	InstantDrawer::DrawGraph(pos.x + 35, pos.y, scale, scale, numbers[one]);
 }

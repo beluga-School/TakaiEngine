@@ -12,7 +12,7 @@ void GetStar::Initialize()
 
 void GetStar::Update()
 {
-	
+
 }
 
 void GetStar::Draw()
@@ -24,9 +24,6 @@ void GetStar::Start()
 {
 	Star::EventPopStar(eventName);
 	EventManager::Get()->Start("StarStringEvent");
-
-	GameUIManager::Get()->CDTimer.SetTime(20.0f);
-	GameUIManager::Get()->CDTimer.Start();
 }
 
 void GetStar::End()

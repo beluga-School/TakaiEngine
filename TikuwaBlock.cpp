@@ -14,9 +14,6 @@ void TikuwaBlock::Update()
 	reScalingTimer.Update();
 	respawnTimer.Update();
 
-	//位置リセット
-	position = savePosition;
-
 	if (reScalingTimer.GetEnd())
 	{
 		scalingTimer.Reset();
@@ -28,6 +25,12 @@ void TikuwaBlock::Update()
 	//消える実装
 	if (deleteTimer.GetRun())
 	{
+		//位置リセット
+		position = savePosition;
+
+		saveEndPosition = position;
+		saveEndPosition.y -= 10;
+
 		//震える挙動(みため)
 		//適当に揺らす
 		float rand = MathF::GetRand(-0.25f, 0.25f);
@@ -37,8 +40,12 @@ void TikuwaBlock::Update()
 	if (scalingTimer.GetRun()) {
 		scale = TEasing::OutQuad(saveScale, { 0,0,0 }, scalingTimer.GetTimeRate());
 		box.scale = TEasing::OutQuad(saveBoxScale, { 0,0,0 }, scalingTimer.GetTimeRate());
+		position = TEasing::OutQuad(savePosition, saveEndPosition, scalingTimer.GetTimeRate());
+		box.position = TEasing::OutQuad(savePosition, saveEndPosition, scalingTimer.GetTimeRate());
 	}
 	if (reScalingTimer.GetRun()) {
+		position = savePosition;
+		box.position = savePosition;
 		scale = TEasing::OutQuad({ 0,0,0 }, saveScale, reScalingTimer.GetTimeRate());
 		box.scale = TEasing::OutQuad({ 0,0,0 }, saveBoxScale, reScalingTimer.GetTimeRate());
 	}

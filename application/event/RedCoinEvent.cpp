@@ -14,7 +14,6 @@ void RedCoinEvent::Update()
 	//赤コインが全て取られたら
 	if (!RedCoin::CheckEventRedCoin(eventName)) 
 	{
-		
 	}
 }
 
@@ -28,9 +27,6 @@ void RedCoinEvent::Start()
 	RedCoin::PopEventRedCoin(eventName);
 
 	EventManager::Get()->Start("RedStringEvent");
-
-	GameUIManager::Get()->CDTimer.SetTime(20.0f);
-	GameUIManager::Get()->CDTimer.Start();
 }
 
 void RedCoinEvent::End()
