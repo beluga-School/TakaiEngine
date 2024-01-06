@@ -19,9 +19,9 @@ private:
 	Vector2 pos;
 	Vector2 startPos;
 	Vector2 endPos;
-	TEasing::easeTimer spawnTimer = 1.0f;
-	TEasing::easeTimer invideTimer = 0.5f;
-	TEasing::easeTimer backTimer = 1.0f;
+	TEasing::easeTimer spawnTimer = 0.75f;
+	TEasing::easeTimer invideTimer = 1.0f;
+	TEasing::easeTimer backTimer = 0.75f;
 	
 };
 

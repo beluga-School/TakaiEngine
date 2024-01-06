@@ -4,6 +4,7 @@
 #include "Color.h"
 #include "Player.h"
 #include "TimeManager.h"
+#include "InstantDrawer.h"
 
 void BombSolider::Initialize()
 {
@@ -84,16 +85,38 @@ void BombSolider::Update()
 		if (!partCool.GetRun())
 		{
 			partCool.Start();
-			for (int32_t i = 0; i < 10; i++)
+			for (int32_t i = 0; i < 30; i++)
 			{
+				Color orange = { 1.0f, 0.2f, 0, 1 };
+				Color gray = { 0.1f, 0.1f, 0.1f, 1 };
+				Color black = { 0.0f, 0.0f, 0.f, 1 };
+				Color partColor = gray;
+
+				float maxDistance = 0.0f;
+
+				float randColor = MathF::GetRand(0, 3);
+				if (randColor < 1)
+				{
+					partColor = black;
+					maxDistance = 2.0f;
+				}
+				else if (randColor < 2) {
+					partColor = orange;
+					maxDistance = 5.0f;
+				}
+				else
+				{
+					partColor = gray;
+					maxDistance = 10.0f;
+				}
+
 				Vector3 randpos = position;
-				randpos.x += MathF::GetRand(-sphereCol.radius, sphereCol.radius);
-				randpos.y += MathF::GetRand(-sphereCol.radius, sphereCol.radius);
-				randpos.z += MathF::GetRand(-sphereCol.radius, sphereCol.radius);
 
-				float partSize = 2.0f;
+				float partSize = 0.5f;
 
-				ParticleManager::Get()->CreateSphereParticle(randpos, { partSize,partSize,partSize }, 0.f, { 1.0f, 0.0f, 0, 1 });
+				ParticleManager::Get()->CreateSphereParticle(randpos, 
+					{ partSize,partSize,partSize }, maxDistance,
+					{ partColor.f4 .x, partColor.f4.y, partColor.f4.z , partColor.f4.w});
 			}
 		}
 
@@ -128,7 +151,6 @@ void BombSolider::Draw()
 void BombSolider::HitEffect()
 {
 	if (IsDead())return;
-	
 }
 
 void BombSolider::Encount()

@@ -245,6 +245,7 @@ void TextureManager::PreLoad()
 	Load("Resources\\renga.png", "renga");
 	Load("Resources\\snow.png", "snow");
 	Load("Resources\\ice.png", "ice");
+	Load("Resources\\boompart.png", "boompart");
 }
 
 //ネットで拾ってきたstring->wstring変換

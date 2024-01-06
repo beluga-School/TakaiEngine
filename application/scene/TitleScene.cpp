@@ -1,4 +1,4 @@
-﻿#include "TitleScene.h"
+#include "TitleScene.h"
 #include "Input.h"
 #include "SceneChange.h"
 #include "SceneManager.h"
@@ -38,8 +38,8 @@ void TitleScene::Initialize()
 
 	sceneID = "Title";
 
-	string[0].sprite.SetTexture(*TextureManager::GetTexture("title_u"));
 	string[1].sprite.SetTexture(*TextureManager::GetTexture("title_l"));
+	string[0].sprite.SetTexture(*TextureManager::GetTexture("title_u"));
 	string[2].sprite.SetTexture(*TextureManager::GetTexture("title_t"));
 	string[3].sprite.SetTexture(*TextureManager::GetTexture("title_r"));
 	string[4].sprite.SetTexture(*TextureManager::GetTexture("title_a"));

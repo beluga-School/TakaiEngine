@@ -54,5 +54,27 @@ float4 main(VSOutput input) : SV_TARGET
         }
     }
     
-    return float4(shadecolor.rgb * color.rgb, color.a * texcolor.a);
+     //カメラと頂点の距離を計算
+    float3 camLength = (cameraPos - input.worldPos.xyz);
+    camLength = abs(camLength);
+    
+    //フォグが完全にかかる距離
+    const float FOG_MAX = 1000.0f;
+    //フォグがかかり始める距離
+    const float FOG_START = 50.f;
+    
+    //フォグ色の強さを算出
+    float fogWeight = (camLength.x + camLength.z) / 2 - FOG_START;
+    fogWeight = max(fogWeight, 0);
+    
+    //フォグ色の強さをかかる距離で割って小さめの値に変換(ここら辺適当。きちんとやるなら0~1の値にしっかり収まるようにしたい)
+    float fogColor = fogWeight / FOG_MAX;
+
+    //最終的な色を算出(丸影とかの色を出した値に無理やり乗せる形なので、何かしら問題が起きそう。こわい。)
+    float3 outputColor = (shadecolor.rgb * color.rgb) + float3(fogColor, fogColor, fogColor);
+    
+    //出力
+    return float4(outputColor, color.a * texcolor.a);
+    
+    //return float4(shadecolor.rgb * color.rgb, color.a * texcolor.a);
 }

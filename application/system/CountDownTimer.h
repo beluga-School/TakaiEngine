@@ -1,5 +1,6 @@
 #pragma once
 #include "TEasing.h"
+#include "HPGauge.h"
 
 class CountDownTimer
 {
@@ -17,6 +18,8 @@ public:
 
 	TEasing::easeTimer timer = 1.0f;
 private:
-	TEasing::easeTimer scalingTimer = 0.5f;
+	TEasing::easeTimer scalingTimer = 0.4f;
+
+
 };
 

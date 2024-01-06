@@ -75,8 +75,19 @@ void CountDownTimer::Draw()
 
 	Vector2 pos = { Util::WIN_WIDTH / 2 ,Util::WIN_HEIGHT / 2 - 100 };
 
-	InstantDrawer::DrawBox(pos.x, pos.y, 150, 100, Color(0.1f, 0.1f, 0.1f, 0.9f));
+	//タイマーを視覚的にするためのあれ
+	float sizeX = TEasing::lerp(150, 0,1 - timer.GetTimeRate());
 
+	Color barColor = Color(0.1f, 1.0f, 0.1f, 1.0f);
+	barColor.f4.x = TEasing::lerp(0.1f, 1.0f, 1 - timer.GetTimeRate());
+	barColor.f4.y = TEasing::lerp(1.0f, 0.1f, 1 - timer.GetTimeRate());
+
+	//ゲージ
+	InstantDrawer::DrawBox(pos.x - 80, pos.y + 70, 160, 25, Color(0.1f, 0.1f, 0.1f, 1.0f),InstantDrawer::Anchor::LEFT);
+	InstantDrawer::DrawBox(pos.x - 75, pos.y + 70, sizeX, 15, barColor, InstantDrawer::Anchor::LEFT);
+	
+	//灰色背景
+	InstantDrawer::DrawBox(pos.x, pos.y, 150, 100, Color(0.1f, 0.1f, 0.1f, 0.9f));
 
 	InstantDrawer::DrawGraph(pos.x - 35, pos.y, scale, scale, numbers[ten]);
 	InstantDrawer::DrawGraph(pos.x + 35, pos.y, scale, scale, numbers[one]);
