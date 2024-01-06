@@ -24,7 +24,7 @@ void BreakBlock::HitEffect()
 	{
 		ParticleManager::Get()->CreateCubeParticle(position, 
 			{ 1,1,1 }, 5.f,
-			{ 1,1,1,1 },"renga");
+			{ 1,1,1,1 },"break");
 	}
 
 	scale = { 0,0,0 };

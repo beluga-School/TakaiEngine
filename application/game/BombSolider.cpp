@@ -102,7 +102,7 @@ void BombSolider::Update()
 				}
 				else if (randColor < 2) {
 					partColor = orange;
-					maxDistance = 5.0f;
+					maxDistance = 6.0f;
 				}
 				else
 				{

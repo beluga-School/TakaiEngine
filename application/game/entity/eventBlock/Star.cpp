@@ -30,9 +30,10 @@ void Star::Update()
 		if (particleTimer.GetRun() == false)
 		{
 			particleTimer.Start();
-			for (int i = 0; i < 3; i++)
+			for (int i = 0; i < 10; i++)
 			{
-				ParticleManager::Get()->CreateCubeParticle(position, { 1.5f,1.5f,1.5f }, 2.0f, { 1.0f,1.0f,0.0f,1 });
+				float size = 0.75f;
+				ParticleManager::Get()->CreateCubeParticle(position, { size,size,size }, 2.0f, { 1.0f,1.0f,0.0f,1 });
 			}
 		}
 

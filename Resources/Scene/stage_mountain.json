@@ -7415,12 +7415,12 @@
                     2.0
                 ]
             },
-            "texture": "renga",
+            "texture": "break",
             "setObject": "breakBlock",
             "tiling": {
                 "tiling": [
-                    10.0,
-                    10.0
+                    4.0,
+                    4.0
                 ]
             }
         },
@@ -7458,12 +7458,12 @@
                     2.0
                 ]
             },
-            "texture": "renga",
+            "texture": "break",
             "setObject": "breakBlock",
             "tiling": {
                 "tiling": [
-                    10.0,
-                    10.0
+                    4.0,
+                    4.0
                 ]
             }
         },
