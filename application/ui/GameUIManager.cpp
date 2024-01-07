@@ -155,7 +155,7 @@ void GameUIManager::Update()
 
 void GameUIManager::Draw()
 {
-	stageTitleUI.Draw();
+	//stageTitleUI.Draw();
 	starUI.Draw();
 	CDTimer.Draw();
 

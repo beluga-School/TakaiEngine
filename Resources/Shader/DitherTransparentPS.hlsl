@@ -20,8 +20,7 @@ float3 magnitude(float3 v)
 float4 main(VSOutput input) : SV_TARGET
 {
     float4 texcolor = tex.Sample(smp, input.uv * tiling + offset);
-    float maskTexcolor = depthTex.Sample(smp, input.uv * tiling + offset);
-    
+
     int ditherUV_x = (int) fmod(input.svpos.x, 4.0f); //パターンの大きさで割ったときの余りを求める
     int ditherUV_y = (int) fmod(input.svpos.y, 4.0f); //今回のパターンサイズは4x4なので4で除算
     float dither = pattern[ditherUV_x + ditherUV_y * 4]; //求めた余りからパターン値を取得
