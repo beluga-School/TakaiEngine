@@ -3,6 +3,7 @@
 #include <UI.h>
 #include <StarUI.h>
 #include <CountDownTimer.h>
+#include "StarTutorialUI.h"
 
 /*! GameUIManager
 	ゲーム画面上に出てくる2DUIを管理するマネージャー
@@ -40,14 +41,13 @@ public:
 
 private:
 	StageTitleUI stageTitleUI;
-
+	StarTutorialUI tStarUI;
 
 	UI tutorialEyeMove;
 	UI tutorialJump;
 	UI tutorialMove;
 	UI selectTitleUIMountain;
 	UI tutorialEnemyDown;
-	UI tutorialGetStar;
 	UI tutorialInDokan;
 	UI tutorialDash;
 	UI tutorialDashJump;

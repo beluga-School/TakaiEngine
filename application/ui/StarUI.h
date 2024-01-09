@@ -1,5 +1,6 @@
 #pragma once
 #include "UI.h"
+#include "Star.h"
 
 /*! StarUI
 	スター取得の状況を表示するクラス
@@ -16,17 +17,11 @@ public:
 
 	void Move(UIMove uimove);
 
-	void CountUp();
-
-	void CountDown();
-
 	//
 	void StarCount();
 
-	//残りのスターの数を代入する
-	void Substitution(int32_t value);
-
-	int32_t GetCount();
+	//全てのスターを入手しているか
+	bool CheckAllCollect();
 
 private:
 
@@ -37,6 +32,6 @@ public:
 private:
 	UI uibase;
 
-	int32_t count = 0;
+	std::vector<Star*> stars;
 };
 

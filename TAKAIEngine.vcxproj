@@ -135,6 +135,7 @@
     <ClCompile Include="application\system\CountDownTimer.cpp" />
     <ClCompile Include="application\event\EnemyPopEvent.cpp" />
     <ClCompile Include="application\game\BombSolider.cpp" />
+    <ClCompile Include="AttackTutorialUI.cpp" />
     <ClCompile Include="BreakBlock.cpp" />
     <ClCompile Include="DropBlock.cpp" />
     <ClCompile Include="engine\util\InstantDrawer.cpp" />
@@ -216,6 +217,8 @@
     <ClCompile Include="application\event\RedCoinEvent.cpp" />
     <ClCompile Include="application\event\StarStringEvent.cpp" />
     <ClCompile Include="TikuwaBlock.cpp" />
+    <ClCompile Include="StarTutorialUI.cpp" />
+    <ClCompile Include="TutorialUI.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="application\collision\CollideManager.h" />
@@ -246,6 +249,7 @@
     <ClInclude Include="application\system\CountDownTimer.h" />
     <ClInclude Include="application\event\EnemyPopEvent.h" />
     <ClInclude Include="application\game\BombSolider.h" />
+    <ClInclude Include="AttackTutorialUI.h" />
     <ClInclude Include="BreakBlock.h" />
     <ClInclude Include="DropBlock.h" />
     <ClInclude Include="engine\util\InstantDrawer.h" />
@@ -333,6 +337,8 @@
     <ClInclude Include="engine\light\CircleShadow.h" />
     <ClInclude Include="application\event\StarStringEvent.h" />
     <ClInclude Include="TikuwaBlock.h" />
+    <ClInclude Include="StarTutorialUI.h" />
+    <ClInclude Include="TutorialUI.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\Shader\CharactorDT.hlsli" />

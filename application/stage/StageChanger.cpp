@@ -84,7 +84,7 @@ void StageChanger::Update()
 	if (GetNowStageHandle() != "stage_stageselect")
 	{
 		//スターの残数を監視し、0より小さいならクリアイベント実行
-		if (GameUIManager::Get()->starUI.GetCount() <= 0) {
+		if (GameUIManager::Get()->starUI.CheckAllCollect()) {
 			EventManager::Get()->Start("clearEvent");
 		}
 	}
@@ -720,7 +720,8 @@ bool StageChanger::SetEnemyDokan(const LevelData::ObjectData& data)
 
 bool StageChanger::SetStar(const LevelData::ObjectData& data)
 {
-	if (data.setObjectName == "star")
+	//番号とIDがスターに含まれているか
+	if (Util::CheckString(data.setObjectName,"star_"))
 	{
 		SetObject<Star>(data);
 
@@ -732,29 +733,12 @@ bool StageChanger::SetStar(const LevelData::ObjectData& data)
 
 		Star* star = static_cast<Star*>(mEntitys.back().get());
 
-		star->id = -1;
+		star->id = Util::GetNumber(data.setObjectName, "_");
 
 		//イベント名に何か入ってたら
 		if (data.eventtrigerName != "") {
 			star->mActive = false;
 		}
-
-		return true;
-	}
-	//star の文字列が完全一致するなら
-	if (data.eventtrigerName == "star")
-	{
-		SetObject<Star>(data);
-
-		//当たり判定を作成
-		if (data.collider.have)
-		{
-			CollisionSet(data);
-		}
-
-		Star* star = static_cast<Star*>(mEntitys.back().get());
-
-		star->id = atoi(data.setObjectName.c_str());
 
 		return true;
 	}

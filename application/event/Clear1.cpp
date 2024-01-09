@@ -11,7 +11,9 @@ void ClearEvent::Start()
 void ClearEvent::End()
 {
 	StageChanger::Get()->ChangeLevel(*LevelLoader::Get()->GetData("stage_stageselect"));
-	StageChanger::Get()->playerData.dokanPriority = true;
+	StageChanger::Get()->saveNextDokanInfo.stageName = "stageselect";
+	StageChanger::Get()->saveNextDokanInfo.id = 1;
+	
 }
 
 void ClearEvent::Initialize()

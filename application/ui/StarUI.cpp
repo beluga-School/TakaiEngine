@@ -2,10 +2,13 @@
 #include "Util.h"
 #include "InstantDrawer.h"
 #include "StageChanger.h"
+#include "MathF.h"
 
 void StarUI::LoadResource()
 {
 	TextureManager::Load("Resources\\UI\\star2d.png", "star2d");
+	TextureManager::Load("Resources\\UI\\starblank.png", "starblank");
+	TextureManager::Load("Resources\\UI\\starshadow.png", "starshadow");
 	TextureManager::Load("Resources\\UI\\uiback.png", "uiback");
 	TextureManager::Load("Resources\\UI\\starstring.png", "starstring");
 
@@ -24,9 +27,9 @@ void StarUI::LoadResource()
 
 void StarUI::Initialize()
 {
-	uibase.SetTexture("star2d");
+	uibase.SetTexture("starblank");
 	
-	uibase.InitPos({Util::WIN_WIDTH + 400,80 }, { Util::WIN_WIDTH - 300,80 });
+	uibase.InitPos({-400,80 }, {0,80 });
 	uibase.InitScale({ 0.5f,0.5f }, { 0.5f,0.5f });
 
 	//初期化の際に出現フラグが立ってるなら出現させっぱなし
@@ -43,33 +46,35 @@ void StarUI::Update()
 
 void StarUI::Draw()
 {
-	std::vector<std::string> numbers
-	{
-		"0",
-		"1",
-		"2",
-		"3",
-		"4",
-		"5",
-		"6",
-		"7",
-		"8",
-		"9",
-	};
+	float invideX = 80;
+	float shadowScale = 1.05f;
+	Color backColor = { 0.1f,0.1f,0.1f,0.5f };
 
-	InstantDrawer::DrawGraph(uibase.GetPos().x + 60, uibase.GetPos().y + 30, 1.5f, 0.6f, "uiback");
-	InstantDrawer::DrawGraph(uibase.GetPos().x - 30, uibase.GetPos().y, 0.5f, 0.5f, "star2d");
-	InstantDrawer::DrawGraph(uibase.GetPos().x + 60, uibase.GetPos().y, 0.5f, 0.5f, "x");
-	InstantDrawer::DrawGraph(uibase.GetPos().x + 60, uibase.GetPos().y + 50, 1.0f, 1.0f, "starstring");
-	
-	if (count < 10) {
-		InstantDrawer::DrawGraph(uibase.GetPos().x + 120, uibase.GetPos().y, 0.5f, 0.5f, numbers[count]);
-	}
-	else{
-		int32_t ten = count / 10;
-		int32_t one = count % 10;
-		InstantDrawer::DrawGraph(uibase.GetPos().x + 120, uibase.GetPos().y, 0.5f, 0.5f, numbers[ten]);
-		InstantDrawer::DrawGraph(uibase.GetPos().x + 180, uibase.GetPos().y, 0.5f, 0.5f, numbers[one]);
+	for (auto& star : stars)
+	{
+		star->uiInfo.Update();
+		if (star->uiInfo.get)
+		{
+			//下地描画
+			InstantDrawer::DrawRotaGraph(uibase.GetPos().x + star->id * invideX,
+				uibase.GetPos().y + 5, star->uiInfo.scale.x * shadowScale, star->uiInfo.scale.y * shadowScale,
+				star->uiInfo.angle, "starshadow", backColor);
+			//本描画
+			InstantDrawer::DrawRotaGraph(uibase.GetPos().x + star->id * invideX,
+				uibase.GetPos().y, star->uiInfo.scale.x, star->uiInfo.scale.y,
+				star->uiInfo.angle, "star2d");
+		}
+		else
+		{
+			//下地描画
+			InstantDrawer::DrawRotaGraph(uibase.GetPos().x + star->id * invideX,
+				uibase.GetPos().y, star->uiInfo.scale.x, star->uiInfo.scale.y,
+				star->uiInfo.angle, "starshadow", backColor);
+			//本描画
+			InstantDrawer::DrawRotaGraph(uibase.GetPos().x + star->id * invideX,
+				uibase.GetPos().y, star->uiInfo.scale.x, star->uiInfo.scale.y, 
+				star->uiInfo.angle,"starblank");
+		}
 	}
 }
 
@@ -86,36 +91,26 @@ void StarUI::Move(UIMove uimove)
 	}
 }
 
-void StarUI::CountUp()
-{
-	count++;
-}
-
-void StarUI::CountDown()
-{
-	count--;
-	//星の数の丸め(0以下にならないように)
-	Util::Clamp(count, 0, 9999);
-}
-
 void StarUI::StarCount()
 {
-	count = 0;
-	for (auto& star : StageChanger::Get()->mEntitys)
+	stars.clear();
+	for (auto& ent : StageChanger::Get()->mEntitys)
 	{
-		if (star->CheckTag(TagTable::Star))
+		if (ent->CheckTag(TagTable::Star))
 		{
-			count++;
+			Star* star = static_cast<Star*>(ent.get());
+			stars.push_back(star);
 		}
 	}
 }
 
-void StarUI::Substitution(int32_t value)
+bool StarUI::CheckAllCollect()
 {
-	count = value;
-}
-
-int32_t StarUI::GetCount()
-{
-	return count;
+	//どれか一つでも未入手ならfalse
+	for (auto& star : stars)
+	{
+		if (!star->uiInfo.get)return false;
+	}
+	//全部通ってたらtrue
+	return true;
 }

@@ -144,7 +144,7 @@ void CollideManager::CheckCollide(Entity* check, Entity* collide)
 			if (player->CheckState(Player::PlayerState::HipDrop))
 			{
 				//もし下面の当たり判定の中にブロックがあるなら、このブロックの当たり判定を消す
-				for (auto block : player->hitListDown)
+				for (auto& block : player->hitListDown)
 				{
 					if (block.GetID() == bBlock->GetID()) {
 						bBlock->canBreak = false;

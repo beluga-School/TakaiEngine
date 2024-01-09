@@ -171,8 +171,8 @@
                     1.5
                 ]
             },
-            "event_trigger": "star",
-            "setObject": "0"
+            "event_trigger": "",
+            "setObject": "star_1"
         },
         {
             "type": "MESH",
@@ -6626,7 +6626,7 @@
                 "translation": [
                     -90.75498962402344,
                     -76.03231048583984,
-                    21.075952529907227
+                    21.743946075439453
                 ],
                 "rotation": [
                     0.0,
@@ -6654,7 +6654,7 @@
                 ]
             },
             "event_trigger": "getStarEvent_A",
-            "setObject": "star"
+            "setObject": "star_3"
         },
         {
             "type": "MESH",
@@ -7069,7 +7069,7 @@
                 ]
             },
             "event_trigger": "redCoinEvent_A",
-            "setObject": "star"
+            "setObject": "star_2"
         },
         {
             "type": "MESH",

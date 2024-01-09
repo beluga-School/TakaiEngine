@@ -50,6 +50,21 @@ public:
 		const float& x, const float& y,
 		float sizerateX,float sizerateY,
 		const std::string& handle, const Anchor& anchor = Anchor::CENTER);
+
+	/// <summary>
+	/// 2Dで画像を描画する機能
+	/// </summary>
+	/// <param name="x"></param>
+	/// <param name="y"></param>
+	/// <param name="sizerateX"></param>
+	/// <param name="sizerateY"></param>
+	/// <param name="angle">弧度法で角度</param>
+	/// <param name="handle"></param>
+	/// <param name="anchor"></param>
+	static void DrawRotaGraph(
+		const float& x, const float& y,
+		float sizerateX, float sizerateY,float angle,
+		const std::string& handle,Color color = {1,1,1,1}, const Anchor& anchor = Anchor::CENTER);
 	
 	/// <summary>
 	/// 3Dで画像を描画する機能(ビルボード)

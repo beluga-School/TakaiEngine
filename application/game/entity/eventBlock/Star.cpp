@@ -6,6 +6,7 @@
 #include "ObjParticle.h"
 #include "GameUIManager.h"
 #include "StageChanger.h"
+#include "InstantDrawer.h"
 
 void Star::Initialize()
 {
@@ -18,7 +19,7 @@ void Star::Update()
 	particleTimer.Update();
 	jumpUpTimer.Update();
 	inholeTimer.Update();
-	delayTimer.Update();
+	delayTimer.Update();	
 
 	float randScale = 0.0f;
 
@@ -82,7 +83,7 @@ void Star::Update()
 
 		break;
 	case Star::StarState::CountDown:
-		GameUIManager::Get()->starUI.StarCount();
+		uiInfo.get = true;
 		starState = StarState::End;
 		mActive = false;
 		break;
@@ -204,7 +205,7 @@ bool Star::EventCheckStar(const std::string& eventname)
 {
 	for (auto& star : StageChanger::Get()->mEntitys)
 	{
-		//出現させようとしているものが赤コインか確認し、違うなら返す
+		//出現させようとしているものがスターか確認し、違うなら返す
 		if (!star->CheckTag(TagTable::Star)) {
 			continue;
 		}
@@ -224,3 +225,24 @@ void Star::Vanish()
 	mActive = false;
 }
 
+bool Star::UIInfo::NowGet()
+{
+	return get && !oldget;
+}
+
+void Star::UIInfo::Update()
+{
+	timer.Update();
+	//取得したら挙動を開始
+	if (NowGet()) {
+		timer.Start();
+	}
+
+	angle = TEasing::OutBack(0, 360,timer.GetTimeRate());
+
+	scale.x = TEasing::OutBack(0.5f, 0.55f, timer.GetTimeRate());
+	scale.y = TEasing::OutBack(0.5f, 0.55f, timer.GetTimeRate());
+
+	//UIに送る情報を記録
+	oldget = get;
+}

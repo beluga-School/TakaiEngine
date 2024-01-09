@@ -349,7 +349,7 @@
                 ]
             },
             "event_trigger": "redCoinEvent_A",
-            "setObject": "star"
+            "setObject": "star_1"
         },
         {
             "type": "MESH",
@@ -464,7 +464,7 @@
                 ]
             },
             "event_trigger": "",
-            "setObject": "star"
+            "setObject": "star_2"
         },
         {
             "type": "MESH",
@@ -1185,7 +1185,7 @@
                 ]
             },
             "event_trigger": "",
-            "setObject": "star"
+            "setObject": "star_3"
         },
         {
             "type": "MESH",

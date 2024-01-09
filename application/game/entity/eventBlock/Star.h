@@ -50,6 +50,26 @@ public:
 	//自身を消滅させる処理
 	void Vanish();
 
+	//UIに送る自身の状況(更新と描画はUI管理マネージャーで行う)
+	class UIInfo
+	{
+	public:
+		bool get = false;
+		bool oldget = false;
+
+		bool NowGet();
+
+		void Update();
+
+		Vector2 scale = { 0.5f,0.5f };
+		float angle = 0;
+
+	private:
+		TEasing::easeTimer timer = 1.0f;
+	};
+
+	UIInfo uiInfo;
+
 private:
 
 public:

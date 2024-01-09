@@ -454,6 +454,15 @@
     <Filter Include="Engine\UI\CountDownTimer">
       <UniqueIdentifier>{c4590b75-72cd-44d3-8f8b-336aafc3c9b3}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Engine\UI\StarTutorialUI">
+      <UniqueIdentifier>{e0c22492-17f0-4367-aae2-f888cc20a86a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\UI\AttackTutorialUI">
+      <UniqueIdentifier>{d08c863c-26f4-4ccd-9830-35c4e6c04021}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\UI\TutorialUI">
+      <UniqueIdentifier>{193eb588-5c50-4dfd-8332-ae7391472eb0}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="engine\input\Input.cpp">
@@ -785,6 +794,15 @@
     </ClCompile>
     <ClCompile Include="TikuwaBlock.cpp">
       <Filter>Application\Entity\EventBlock\TikuwaBlock</Filter>
+    </ClCompile>
+    <ClCompile Include="StarTutorialUI.cpp">
+      <Filter>Engine\UI\StarTutorialUI</Filter>
+    </ClCompile>
+    <ClCompile Include="AttackTutorialUI.cpp">
+      <Filter>Engine\UI\AttackTutorialUI</Filter>
+    </ClCompile>
+    <ClCompile Include="TutorialUI.cpp">
+      <Filter>Engine\UI\TutorialUI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1132,6 +1150,15 @@
     </ClInclude>
     <ClInclude Include="TikuwaBlock.h">
       <Filter>Application\Entity\EventBlock\TikuwaBlock</Filter>
+    </ClInclude>
+    <ClInclude Include="StarTutorialUI.h">
+      <Filter>Engine\UI\StarTutorialUI</Filter>
+    </ClInclude>
+    <ClInclude Include="AttackTutorialUI.h">
+      <Filter>Engine\UI\AttackTutorialUI</Filter>
+    </ClInclude>
+    <ClInclude Include="TutorialUI.h">
+      <Filter>Engine\UI\TutorialUI</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
