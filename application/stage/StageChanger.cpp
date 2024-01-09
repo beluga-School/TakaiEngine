@@ -81,7 +81,7 @@ void StageChanger::Update()
 	}
 
 	//クリアイベントの実行
-	if (GetNowStageHandle() == "stage_mountain")
+	if (GetNowStageHandle() != "stage_stageselect")
 	{
 		//スターの残数を監視し、0より小さいならクリアイベント実行
 		if (GameUIManager::Get()->starUI.GetCount() <= 0) {
@@ -594,6 +594,8 @@ void StageChanger::ChangeUpdate()
 		saveNextDokanInfo.id = 0;
 		Player::Get()->mDokanApparrance = false;
 	}
+
+	GameUIManager::Get()->starUI.StarCount();
 }
 
 void StageChanger::SetPlayer(const LevelData::ObjectData& data)
@@ -737,8 +739,6 @@ bool StageChanger::SetStar(const LevelData::ObjectData& data)
 			star->mActive = false;
 		}
 
-		GameUIManager::Get()->starUI.CountUp();
-
 		return true;
 	}
 	//star の文字列が完全一致するなら
@@ -755,8 +755,6 @@ bool StageChanger::SetStar(const LevelData::ObjectData& data)
 		Star* star = static_cast<Star*>(mEntitys.back().get());
 
 		star->id = atoi(data.setObjectName.c_str());
-
-		GameUIManager::Get()->starUI.CountUp();
 
 		return true;
 	}

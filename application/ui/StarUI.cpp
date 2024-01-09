@@ -39,19 +39,6 @@ void StarUI::Initialize()
 void StarUI::Update()
 {
 	uibase.Update();
-
-	int32_t starcount = 0;
-	for (auto& star : StageChanger::Get()->mEntitys)
-	{
-		if (star->CheckTag(TagTable::Star)) {
-			if (star->mActive)
-			{
-				starcount++;
-			}
-		}
-	}
-
-	Substitution(starcount);
 }
 
 void StarUI::Draw()
@@ -109,6 +96,18 @@ void StarUI::CountDown()
 	count--;
 	//星の数の丸め(0以下にならないように)
 	Util::Clamp(count, 0, 9999);
+}
+
+void StarUI::StarCount()
+{
+	count = 0;
+	for (auto& star : StageChanger::Get()->mEntitys)
+	{
+		if (star->CheckTag(TagTable::Star))
+		{
+			count++;
+		}
+	}
 }
 
 void StarUI::Substitution(int32_t value)

@@ -11,6 +11,7 @@ void ClearEvent::Start()
 void ClearEvent::End()
 {
 	StageChanger::Get()->ChangeLevel(*LevelLoader::Get()->GetData("stage_stageselect"));
+	StageChanger::Get()->playerData.dokanPriority = true;
 }
 
 void ClearEvent::Initialize()

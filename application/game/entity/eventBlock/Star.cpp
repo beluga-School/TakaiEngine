@@ -82,7 +82,7 @@ void Star::Update()
 
 		break;
 	case Star::StarState::CountDown:
-		GameUIManager::Get()->starUI.CountDown();
+		GameUIManager::Get()->starUI.StarCount();
 		starState = StarState::End;
 		mActive = false;
 		break;
@@ -164,7 +164,7 @@ Star* Star::EventPopStar(const std::string& eventname)
 {
 	for (auto& star : StageChanger::Get()->mEntitys)
 	{
-		//出現させようとしているものが赤コインか確認し、違うなら返す
+		//出現させようとしているものがスターか確認し、違うなら返す
 		if (!star->CheckTag(TagTable::Star)) {
 			continue; 
 		}

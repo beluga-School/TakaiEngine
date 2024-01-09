@@ -20,6 +20,9 @@ public:
 
 	void CountDown();
 
+	//
+	void StarCount();
+
 	//残りのスターの数を代入する
 	void Substitution(int32_t value);
 

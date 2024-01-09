@@ -1999,6 +1999,79 @@
                     10.0
                 ]
             }
+        },
+        {
+            "type": "MESH",
+            "name": "土管.003",
+            "transform": {
+                "translation": [
+                    254.15342712402344,
+                    -6.835107803344727,
+                    -4.366887092590332
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    2.0,
+                    2.0,
+                    2.0
+                ]
+            },
+            "file_name": "dokan",
+            "collider": {
+                "type": "BOX",
+                "center": [
+                    0.0,
+                    0.0,
+                    1.0
+                ],
+                "size": [
+                    2.0,
+                    2.0,
+                    2.0
+                ]
+            },
+            "event_trigger": "stage_mountain_1",
+            "setObject": "dokan_1"
+        },
+        {
+            "type": "MESH",
+            "name": "立方体_立方体.010",
+            "transform": {
+                "translation": [
+                    256.95220947265625,
+                    -6.511631011962891,
+                    -1.2389230728149414
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    15.597908973693848,
+                    17.38026237487793,
+                    4.870754718780518
+                ]
+            },
+            "collider": {
+                "type": "BOX",
+                "center": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "size": [
+                    2.0,
+                    2.0,
+                    2.0
+                ]
+            },
+            "event_trigger": "tutorialUI_GetStar",
+            "setObject": "triggerBox"
         }
     ]
 }

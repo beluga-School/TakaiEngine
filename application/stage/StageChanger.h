@@ -276,12 +276,11 @@ public:
 
 	DokanInfo saveNextDokanInfo;
 
+	PlayerData playerData;
 private:
 	std::string currentHandle = "";
 
 	LevelData* currentData = nullptr;
-
-	PlayerData playerData;
 
 	std::unordered_map<std::string, std::vector<LoadCamData>> loadCamDatas;
 	std::vector<LoadTargetData> loadTargetDatas;
