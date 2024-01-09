@@ -1,5 +1,4 @@
 #include "GameUIManager.h"
-#include "GameUIManager.h"
 #include "Util.h"
 #include "InstantDrawer.h"
 
@@ -9,6 +8,7 @@ void GameUIManager::LoadResource()
 	StarUI::LoadResource();
 	CountDownTimer::LoadResource();
 	StarTutorialUI::LoadResource();
+	AttackTutorialUI::LoadResource();
 
 	TextureManager::Load("Resources\\ui\\eyeMoveUI.png", "eyeMoveUI");
 	TextureManager::Load("Resources\\ui\\jumpUI.png", "jumpUI");
@@ -46,7 +46,8 @@ void GameUIManager::Move(UIMove uimove, const std::string& handle)
 	}
 	if (handle == "tutorialUI_EnemyDown")
 	{
-		tutorialEnemyDown.Move(uimove);
+		//tutorialEnemyDown.Move(uimove);
+		tAttackUI.Move(uimove);
 	}
 	if (handle == "tutorialUI_GetStar")
 	{
@@ -76,7 +77,7 @@ void GameUIManager::Reset()
 	tutorialJump.Initialize();
 	tutorialMove.Initialize();
 	selectTitleUIMountain.Initialize();
-	tutorialEnemyDown.Initialize();
+	//tutorialEnemyDown.Initialize();
 	//tutorialGetStar.Initialize();
 	tutorialInDokan.Initialize();
 }
@@ -108,10 +109,10 @@ void GameUIManager::Initialize()
 	selectTitleUIMountain.InitScale({ 1,1 }, { 1,1 });
 	selectTitleUIMountain.SetSize({ 1,1 });
 
-	tutorialEnemyDown.SetTexture("enemyDownUI");
+	/*tutorialEnemyDown.SetTexture("enemyDownUI");
 	tutorialEnemyDown.InitPos({ 300,-300 }, { 300,200 });
 	tutorialEnemyDown.InitScale({ 1,1 }, { 1,1 });
-	tutorialEnemyDown.SetSize({ 1,1 });
+	tutorialEnemyDown.SetSize({ 1,1 });*/
 	
 	/*tutorialGetStar.SetTexture("startutorial");
 	tutorialGetStar.InitPos({ 300,-300 }, { 300,200 });
@@ -140,17 +141,16 @@ void GameUIManager::Update()
 	starUI.Update();
 	CDTimer.Update();
 	tStarUI.Update();
+	tAttackUI.Update();
 
 	tutorialEyeMove.Update();
 	tutorialJump.Update();
 	tutorialMove.Update();
 	selectTitleUIMountain.Update();
-	tutorialEnemyDown.Update();
+	//tutorialEnemyDown.Update();
 	tutorialInDokan.Update();
 	tutorialDash.Update();
 	tutorialDashJump.Update();
-
-	tStarUI.Gui();
 }
 
 void GameUIManager::Draw()
@@ -159,12 +159,12 @@ void GameUIManager::Draw()
 	starUI.Draw();
 	CDTimer.Draw();
 	tStarUI.Draw();
+	tAttackUI.Draw();
 
 	tutorialEyeMove.Draw();
 	tutorialJump.Draw();
 	tutorialMove.Draw();
 	selectTitleUIMountain.Draw();
-	tutorialEnemyDown.Draw();
 	tutorialInDokan.Draw();
 	tutorialDash.Draw();
 	tutorialDashJump.Draw();

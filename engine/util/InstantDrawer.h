@@ -16,6 +16,8 @@ public:
 		LEFT,
 		CENTER,
 		RIGHT,
+		UP,
+		DOWN,
 	};
 
 	/// <summary>

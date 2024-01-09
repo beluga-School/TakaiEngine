@@ -72,6 +72,11 @@ void GameScene::Initialize()
 	GameUIManager::Get()->Initialize();
 
 	StageChanger::Get()->Initialize(*LevelLoader::Get()->GetData(output));
+
+	if (SceneChange::Get()->IsBlackOut())
+	{
+		SceneChange::Get()->Open();
+	}
 }
 
 GUI sceneChangeGUI("operator");

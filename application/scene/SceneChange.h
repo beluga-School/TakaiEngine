@@ -69,7 +69,7 @@ private:
 	const float mLeft = Util::WIN_WIDTH;
 
 	TEasing::easeTimer mFirstTimer = 0.25f;
-	TEasing::easeTimer mSecondTimer = 0.25f;
+	TEasing::easeTimer mSecondTimer = 1.0f;
 
 	SceneChange() {};
 	~SceneChange() {};

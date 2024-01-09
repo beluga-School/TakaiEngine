@@ -35,6 +35,12 @@ void InstantDrawer::DrawBox(const float& x, const float& y, const float& width, 
 	case InstantDrawer::Anchor::RIGHT:
 		sSprites.back().SetAnchor({ 1.0f,0.5f });
 		break;
+	case InstantDrawer::Anchor::UP:
+		sSprites.back().SetAnchor({ 0.5f,0 });
+		break;
+	case InstantDrawer::Anchor::DOWN:
+		sSprites.back().SetAnchor({ 0.5f,1.0f });
+		break;
 	}
 }
 
@@ -57,6 +63,12 @@ void InstantDrawer::DrawGraph(const float& x, const float& y, float sizerateX, f
 		break;
 	case InstantDrawer::Anchor::RIGHT:
 		sSprites.back().SetAnchor({ 1.0f,0.5f });
+		break;
+	case InstantDrawer::Anchor::UP:
+		sSprites.back().SetAnchor({ 0.5f,0 });
+		break;
+	case InstantDrawer::Anchor::DOWN:
+		sSprites.back().SetAnchor({ 0.5f,1.0f });
 		break;
 	}
 }
@@ -83,6 +95,12 @@ void InstantDrawer::DrawRotaGraph(const float& x, const float& y, float sizerate
 		break;
 	case InstantDrawer::Anchor::RIGHT:
 		sSprites.back().SetAnchor({ 1.0f,0.5f });
+		break;
+	case InstantDrawer::Anchor::UP:
+		sSprites.back().SetAnchor({ 0.5f,0 });
+		break;
+	case InstantDrawer::Anchor::DOWN:
+		sSprites.back().SetAnchor({ 0.5f,1.0f });
 		break;
 	}
 }
