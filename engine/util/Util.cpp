@@ -1,6 +1,7 @@
 #include "Util.h"
 #include <math.h>
 #include <minmax.h>
+#include "MathF.h"
 
 using namespace std;
 
@@ -80,4 +81,16 @@ int32_t Util::GetNumber(const std::string& str, const char* delimiter)
     }
 
     return -1;
+}
+
+Vector3 Util::GetRandVector3(const Vector3& value, float min, float max, const Vector3& factor)
+{
+    Vector3 temp = value;
+    float posrand = MathF::GetRand(min, max);
+    temp.x += posrand * factor.x;
+    posrand = MathF::GetRand(min, max);
+    temp.y += posrand * factor.y;
+    posrand = MathF::GetRand(min, max);
+    temp.z += posrand * factor.z;
+    return temp;
 }

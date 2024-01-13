@@ -33,16 +33,16 @@ void ParticleManager::AllDelete()
 
 void ParticleManager::CreateCubeParticle(const Vector3& pos, const Vector3& scale,
 	const float& moveDistance, const DirectX::XMFLOAT4& color, 
-	const string& texturehandle)
+	const string& texturehandle, PARTICLEPATTERN pattern_)
 {
 	for (unique_ptr<CubeParticle>& pat : cubePool) {
 		if (pat->isdead) {
-			pat->Set(pos, scale, moveDistance,color, texturehandle);
+			pat->Set(pos, scale, moveDistance,color, texturehandle, pattern_);
 			return;
 		}
 	}
 
-	cubePool.emplace_back(std::make_unique<CubeParticle>(pos, scale, moveDistance, color, texturehandle));
+	cubePool.emplace_back(std::make_unique<CubeParticle>(pos, scale, moveDistance, color, texturehandle, pattern_));
 }
 
 void ParticleManager::CreateSphereParticle(const Vector3& pos, const Vector3& scale, const float& moveDistance, const DirectX::XMFLOAT4& color)
@@ -114,17 +114,19 @@ CubeParticle::CubeParticle()
 	part.SetOutLineState({ 0,0,0,1 }, 0.05f);
 }
 
-CubeParticle::CubeParticle(const Vector3& pos, const Vector3& scale, const float& moveDistance, const DirectX::XMFLOAT4& color, const string& texturehandle)
+CubeParticle::CubeParticle(const Vector3& pos, const Vector3& scale, const float& moveDistance, 
+	const DirectX::XMFLOAT4& color, const string& texturehandle, PARTICLEPATTERN pattern_)
 {
 	part.Initialize();
 	part.SetTexture(TextureManager::Get()->GetTexture("white"));
 
-	Set(pos,scale, moveDistance, color, texturehandle);
+	Set(pos,scale, moveDistance, color, texturehandle,pattern_);
 
 	part.SetOutLineState({ 0,0,0,1 }, 0.05f);
 }
 
-void CubeParticle::Set(const Vector3& pos, const Vector3& scale, const float& moveDistance, const DirectX::XMFLOAT4& color, const string& texturehandle)
+void CubeParticle::Set(const Vector3& pos, const Vector3& scale, const float& moveDistance,
+	const DirectX::XMFLOAT4& color, const string& texturehandle, PARTICLEPATTERN pattern_)
 {
 	part.SetTexture(TextureManager::Get()->GetTexture("white"));
 	//テクスチャを何かしら使用するなら
@@ -160,33 +162,54 @@ void CubeParticle::Set(const Vector3& pos, const Vector3& scale, const float& mo
 		MathF::GetRand(-1.0f, 1.0f) * rotateMag
 	};
 	
-	shrinkSpeed = {
+	saveScale = {
 		scale.x,
 		scale.y,
 		scale.z
 	};
 
 	isdead = false;
+
+	pattern = pattern_;
+
+	lifeTimer.Start();
 }
 
 void CubeParticle::Update()
 {
-	float minScale = 0.1f;
-	if (part.scale.x <= minScale ||
-		part.scale.y <= minScale ||
-		part.scale.z <= minScale
-		)
+	lifeTimer.Update();
+
+	if (lifeTimer.GetEnd())
 	{
 		isdead = true;
 	}
 
-	part.position.x += moveSpeed.x * TimeManager::deltaTime;
-	part.position.y += moveSpeed.y * TimeManager::deltaTime;
-	part.position.z += moveSpeed.z * TimeManager::deltaTime;
+	switch (pattern)
+	{
+	case PARTICLEPATTERN::NORMAL:
+		part.position.x += moveSpeed.x * TimeManager::deltaTime;
+		part.position.y += moveSpeed.y * TimeManager::deltaTime;
+		part.position.z += moveSpeed.z * TimeManager::deltaTime;
+	
+		break;
+	case PARTICLEPATTERN::DROP:
+		if (lifeTimer.GetTimeRate() < 0.5f)
+		{
+			moveSpeed.y = TEasing::OutQuad(1.0f,1.5f,lifeTimer.GetTimeRate());
+		}
+		else
+		{
+			moveSpeed.y = TEasing::InQuad(1.5f,-20.f,lifeTimer.GetTimeRate());
+		}
 
-	part.scale.x -= shrinkSpeed.x * TimeManager::deltaTime;
-	part.scale.y -= shrinkSpeed.y * TimeManager::deltaTime;
-	part.scale.z -= shrinkSpeed.z * TimeManager::deltaTime;
+		part.position.x += moveSpeed.x * TimeManager::deltaTime;
+		part.position.y += moveSpeed.y * TimeManager::deltaTime;
+		part.position.z += moveSpeed.z * TimeManager::deltaTime;
+
+		break;
+	}
+
+	part.scale = TEasing::OutQuad(saveScale, {0,0,0}, lifeTimer.GetTimeRate());
 
 	part.rotation.x += rotateSpeed.x * TimeManager::deltaTime;
 	part.rotation.y += rotateSpeed.y * TimeManager::deltaTime;

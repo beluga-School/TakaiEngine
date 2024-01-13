@@ -382,6 +382,11 @@ void CollideManager::Osimodosi(Mob& check, const Block& collide)
 	//スケールをめっちゃ引き延ばす
 	rayCubeY.scale.y = 100;
 
+	if (check.CheckTag(TagTable::Player))
+	{
+		rayCubeY.scale.y = 100;
+	}
+
 	//当たったなら
 	bool cubeColY = Collsions::CubeCollision(rayCubeY, collide.box.cubecol);
 

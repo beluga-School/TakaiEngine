@@ -158,6 +158,8 @@ void StageChanger::Reset()
 	EventManager::Get()->Initialize();
 	GameUIManager::Get()->Initialize();
 
+	
+
 	eventCameraNames.clear();
 	loadCamDatas.clear();
 	loadTargetDatas.clear();

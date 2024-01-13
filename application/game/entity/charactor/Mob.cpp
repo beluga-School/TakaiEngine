@@ -37,6 +37,13 @@ void Mob::CollsionUpdate()
 	hoge->mShadow[shadowNum].casterPos = position;
 }
 
+bool Mob::CheckNowHitGround()
+{
+	return checkGround;
+}
+
+
+
 void Mob::SetShadow() {
 	shadowNum = LightGroup::Get()->CircleShadowActive();
 };
@@ -195,6 +202,8 @@ void Mob::CalcNearestHitLists()
 
 void Mob::JumpUpdate()
 {
+	checkGround = false;
+
 	if (mNoCollision)return;
 
 	jumpManageTimer.Update();
@@ -268,8 +277,8 @@ void Mob::JumpUpdate()
 		else
 		{
 			jumpState = JumpState::None;
+			checkGround = true;
 		}
-
 		break;
 	}
 }

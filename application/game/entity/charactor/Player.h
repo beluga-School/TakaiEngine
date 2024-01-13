@@ -158,6 +158,9 @@ private:
 	//判定用オブジェクト群の更新
 	void AdjudicationUpdate();
 
+	//地面とぶつかった時のパーティクル
+	void GroundHitParticle();
+
 public:
 	//プレイヤーの回転を管理する変数
 	float mVerticalRad = 0;
@@ -173,6 +176,8 @@ public:
 	Sphere mEncountCol;
 
 	std::vector<PlayerState> mPlayerStates;
+
+	void CheckGUI();
 
 private:
 	//hpの最大値　ステータスの最大値は外から変えられるようにしたい

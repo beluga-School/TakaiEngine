@@ -5,6 +5,7 @@
 #include <CountDownTimer.h>
 #include "StarTutorialUI.h"
 #include "AttackTutorialUI.h"
+#include "DokanTutorialUI.h"
 
 /*! GameUIManager
 	ゲーム画面上に出てくる2DUIを管理するマネージャー
@@ -44,13 +45,14 @@ private:
 	StageTitleUI stageTitleUI;
 	StarTutorialUI tStarUI;
 	AttackTutorialUI tAttackUI;
+	DokanTutorialUI tDokanUI;
 
 	UI tutorialEyeMove;
 	UI tutorialJump;
 	UI tutorialMove;
 	UI selectTitleUIMountain;
 	//UI tutorialEnemyDown;
-	UI tutorialInDokan;
+	//UI tutorialInDokan;
 	UI tutorialDash;
 	UI tutorialDashJump;
 

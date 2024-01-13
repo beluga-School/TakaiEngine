@@ -12,7 +12,7 @@
 #include "Status.h"
 #include "EventManager.h"
 #include "EventCamera.h"
-#include <GameUIManager.h>
+#include "GameUIManager.h"
 #include <EventCameraManager.h>
 #include "Bombking.h"
 #include "InstantDrawer.h"
@@ -233,6 +233,7 @@ void GameScene::GameSceneDebugGUI()
 
 	ImGui::Text("mouseR %f", PlayerCamera::Get()->GetRadius());
 	player->DebugGUI();
+	player->CheckGUI();
 
 	ImGui::Text("RunEvents");
 	for (auto& run : EventManager::Get()->GetNowEvents())

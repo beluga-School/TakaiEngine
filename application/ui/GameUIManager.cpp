@@ -9,17 +9,17 @@ void GameUIManager::LoadResource()
 	CountDownTimer::LoadResource();
 	StarTutorialUI::LoadResource();
 	AttackTutorialUI::LoadResource();
+	DokanTutorialUI::LoadResource();
 
 	TextureManager::Load("Resources\\ui\\eyeMoveUI.png", "eyeMoveUI");
 	TextureManager::Load("Resources\\ui\\jumpUI.png", "jumpUI");
 	TextureManager::Load("Resources\\ui\\moveUI.png", "moveUI");
 	TextureManager::Load("Resources\\stagename_1.png", "stageTitle_1");
-	TextureManager::Load("Resources\\ui\\enemyDownUI.png", "enemyDownUI");
-	TextureManager::Load("Resources\\ui\\getstarUI.png", "getstarUI");
-	TextureManager::Load("Resources\\ui\\inDokanUI.png", "inDokanUI");
+	//TextureManager::Load("Resources\\ui\\enemyDownUI.png", "enemyDownUI");
+	//TextureManager::Load("Resources\\ui\\getstarUI.png", "getstarUI");
+	//TextureManager::Load("Resources\\ui\\inDokanUI.png", "inDokanUI");
 	TextureManager::Load("Resources\\ui\\dashUI.png", "dashUI");
 	TextureManager::Load("Resources\\ui\\dashjump.png", "dashjump");
-
 }
 
 void GameUIManager::Move(UIMove uimove, const std::string& handle)
@@ -59,7 +59,8 @@ void GameUIManager::Move(UIMove uimove, const std::string& handle)
 	}
 	if (handle == "tutorialUI_InDokan")
 	{
-		tutorialInDokan.Move(uimove);
+		//tutorialInDokan.Move(uimove);
+		tDokanUI.Move(uimove);
 	}
 	if (handle == "tutorialUI_Dash")
 	{
@@ -77,9 +78,12 @@ void GameUIManager::Reset()
 	tutorialJump.Initialize();
 	tutorialMove.Initialize();
 	selectTitleUIMountain.Initialize();
-	//tutorialEnemyDown.Initialize();
-	//tutorialGetStar.Initialize();
-	tutorialInDokan.Initialize();
+	
+	tStarUI.Reset();
+	tAttackUI.Reset();
+	tDokanUI.Reset();
+
+	GameUIManager::Get()->CDTimer.Reset();
 }
 
 void GameUIManager::Initialize()
@@ -108,21 +112,11 @@ void GameUIManager::Initialize()
 	selectTitleUIMountain.InitPos({ (float)Util::CenterX(),-200 }, { (float)Util::CenterX(),50 });
 	selectTitleUIMountain.InitScale({ 1,1 }, { 1,1 });
 	selectTitleUIMountain.SetSize({ 1,1 });
-
-	/*tutorialEnemyDown.SetTexture("enemyDownUI");
-	tutorialEnemyDown.InitPos({ 300,-300 }, { 300,200 });
-	tutorialEnemyDown.InitScale({ 1,1 }, { 1,1 });
-	tutorialEnemyDown.SetSize({ 1,1 });*/
 	
-	/*tutorialGetStar.SetTexture("startutorial");
-	tutorialGetStar.InitPos({ 300,-300 }, { 300,200 });
-	tutorialGetStar.InitScale({ 1,1 }, { 1,1 });
-	tutorialGetStar.SetSize({ 1,1 });*/
-	
-	tutorialInDokan.SetTexture("inDokanUI");
+	/*tutorialInDokan.SetTexture("inDokanUI");
 	tutorialInDokan.InitPos({ 300,-300 }, { 300,200 });
 	tutorialInDokan.InitScale({ 1,1 }, { 1,1 });
-	tutorialInDokan.SetSize({ 1,1 });
+	tutorialInDokan.SetSize({ 1,1 });*/
 
 	tutorialDash.SetTexture("dashUI");
 	tutorialDash.InitPos({ (float)Util::CenterX(),Util::WIN_HEIGHT + 200 }, { (float)Util::CenterX(),Util::WIN_HEIGHT });
@@ -142,13 +136,14 @@ void GameUIManager::Update()
 	CDTimer.Update();
 	tStarUI.Update();
 	tAttackUI.Update();
+	tDokanUI.Update();
 
 	tutorialEyeMove.Update();
 	tutorialJump.Update();
 	tutorialMove.Update();
 	selectTitleUIMountain.Update();
 	//tutorialEnemyDown.Update();
-	tutorialInDokan.Update();
+	//tutorialInDokan.Update();
 	tutorialDash.Update();
 	tutorialDashJump.Update();
 }
@@ -160,12 +155,13 @@ void GameUIManager::Draw()
 	CDTimer.Draw();
 	tStarUI.Draw();
 	tAttackUI.Draw();
+	tDokanUI.Draw();
 
 	tutorialEyeMove.Draw();
 	tutorialJump.Draw();
 	tutorialMove.Draw();
 	selectTitleUIMountain.Draw();
-	tutorialInDokan.Draw();
+	//tutorialInDokan.Draw();
 	tutorialDash.Draw();
 	tutorialDashJump.Draw();
 }

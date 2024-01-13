@@ -1,6 +1,11 @@
 #include "TutorialUI.h"
 #include "InstantDrawer.h"
 
+void TutorialUI::Reset()
+{
+	alphaTimer.Reset();
+}
+
 void TutorialUI::BackUpdate()
 {
 	alphaTimer.Update();

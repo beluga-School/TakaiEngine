@@ -8,9 +8,9 @@ void StarTutorialUI::LoadResource()
 
 void StarTutorialUI::Update()
 {
-	alphaTimer.Update();
+	BackUpdate();
+	
 	stringColor.f4.w = TEasing::OutQuad(0, 1.0f, alphaTimer.GetTimeRate());
-	backColor.f4.w = TEasing::OutQuad(0, 0.25f, alphaTimer.GetTimeRate());
 
 	starpos.y = stringpos.y - 100;
 
@@ -61,7 +61,7 @@ void StarTutorialUI::Update()
 
 void StarTutorialUI::Draw()
 {
-	InstantDrawer::DrawBox(backpos.x, backpos.y, Util::WIN_WIDTH, Util::WIN_HEIGHT / 3,backColor);
+	BackDraw();
 	InstantDrawer::DrawRotaGraph(stringpos.x,stringpos.y, 1.0f,1.0f,0,"startutorial", stringColor);
 	
 	Color tempC = {0.1f,0.1f,0.1f,starBackC.f4.w};

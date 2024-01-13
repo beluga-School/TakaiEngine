@@ -4,6 +4,12 @@
 #include "Obj.h"
 #include <string>
 
+enum class PARTICLEPATTERN
+{
+	NORMAL,
+	DROP,
+};
+
 /*! CubeParticle
 	3Dオブジェクトパーティクルのインターフェース
 */
@@ -31,10 +37,10 @@ class CubeParticle : public IParticle
 public:
 	CubeParticle();
 	CubeParticle(const Vector3& pos, const Vector3& scale, const float& moveDistance,const DirectX::XMFLOAT4& color,
-		const std::string& texturehandle = "");
+		const std::string& texturehandle, PARTICLEPATTERN pattern);
 
 	void Set(const Vector3& pos, const Vector3& scale,const float& moveDistance,const DirectX::XMFLOAT4& color,
-		const std::string& texturehandle = "");
+		const std::string& texturehandle, PARTICLEPATTERN pattern);
 
 	void Update();
 private:
@@ -45,9 +51,13 @@ private:
 	Vector3 moveSpeed = {0,0,0};
 
 	//縮小する速さ
-	Vector3 shrinkSpeed = { 1.0f,1.0f,1.0f };
+	Vector3 saveScale = { 1.0f,1.0f,1.0f };
 
 	Vector3 rotateSpeed = { 0,0,0 };
+
+	PARTICLEPATTERN pattern = PARTICLEPATTERN::NORMAL;
+
+	TEasing::easeTimer lifeTimer = 1.0f;
 };
 
 class SphereParticle : public IParticle
@@ -83,7 +93,7 @@ public:
 	void AllDelete();
 
 	void CreateCubeParticle(const Vector3& pos, const Vector3& scale, const float& moveDistance, const DirectX::XMFLOAT4& color,
-		const std::string& texturehandle = "");
+		const std::string& texturehandle = "", PARTICLEPATTERN pattern = PARTICLEPATTERN::NORMAL);
 	void CreateSphereParticle(const Vector3& pos, const Vector3& scale, const float& moveDistance, const DirectX::XMFLOAT4& color);
 
 	void Update();

@@ -22,9 +22,9 @@ void RedCoin::Update()
 
 	if (getTimer.GetNowEnd())
 	{
-		for (int32_t i = 0; i < 20; i++)
+		for (int32_t i = 0; i < 10; i++)
 		{
-			ParticleManager::Get()->CreateCubeParticle(position, { 2,2,2 }, 10.0f, { 1, 0, 0, 1 });
+			ParticleManager::Get()->CreateCubeParticle(position, { 2.0f,2.0f,2.0f }, 2.0f, { 1, 0, 0, 1 },"",PARTICLEPATTERN::DROP);
 		}
 		scale = { 0,0,0 };
 		mActive = false;

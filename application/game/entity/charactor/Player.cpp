@@ -128,7 +128,18 @@ void Player::Update()
 	DamageUpdate();
 
 	mHpGauge.Update();
+}
 
+void Player::CheckGUI()
+{
+	ImGui::Text("pPosY %f", position.y);
+	for (auto& down : hitListDown)
+	{
+		ImGui::Text("hitblockID %d", down.GetID());
+		ImGui::SliderFloat("hitblockX", &down.position.x,-1000,1000);
+		ImGui::SliderFloat("hitblockY", &down.position.y,-100,100);
+		ImGui::SliderFloat("hitblockZ", &down.position.z,-1000,1000);
+	}
 }
 
 void Player::Draw()
@@ -174,6 +185,7 @@ void Player::MoveUpdate()
 			Pad::TriggerPadButton(PadButton::A))
 		{
 			Jump();
+			GroundHitParticle();
 		}
 	}
 	if (CanWallKick())
@@ -221,6 +233,10 @@ void Player::MoveUpdate()
 		}
 	}
 
+	if (CheckNowHitGround())
+	{
+		GroundHitParticle();
+	}
 
 	if (Input::Pad::CheckConnectPad())
 	{
@@ -520,13 +536,15 @@ void Player::DashUpdate()
 		playerBack = -matWorld.ExtractAxisZ() * (scale.z / 2);
 		playerFeetPos = Vector3(position.x, position.y - (scale.y / 2), position.z) + playerBack;
 
+		Vector3 randPos = Util::GetRandVector3(playerFeetPos, -0.25f, 0.25f, { 1,0,1 });
+
 		//パーティクル配置
 		ParticleManager::Get()->CreateCubeParticle(
-			playerFeetPos,
-			{ 0.5f ,0.5f ,0.5f },
+			randPos,
+			{ 0.25f ,0.25f ,0.25f },
 			1.0f,
-			{ 1.0f,1.0f,1.0f,1.0f }
-		);
+			{ 1.0f,1.0f,1.0f,1.0f },
+			"",PARTICLEPATTERN::NORMAL);
 	}
 }
 
@@ -664,6 +682,17 @@ void Player::AdjudicationUpdate()
 	mCenterObject.position = position;
 	mCenterObject.scale = scale;
 	mCenterObject.Update(*Camera::sCamera);
+}
+
+void Player::GroundHitParticle()
+{
+	for (int32_t i = 0; i < 5; i++)
+	{
+		float size = 0.5f;
+		Vector3 partPos = Util::GetRandVector3(position, -1.f, 1.f, { 1,0,1 });
+		ParticleManager::Get()->CreateCubeParticle(partPos, { size ,size ,size }, 2.0f, { 1.0f,1.0f,1.0f,1.0f },
+			"", PARTICLEPATTERN::DROP);
+	}
 }
 
 bool Player::CanWallKick()

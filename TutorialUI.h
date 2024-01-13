@@ -6,7 +6,7 @@
 class TutorialUI
 {
 public:
-
+	void Reset();
 protected:
 	//背景
 	Vector2 backpos = { Util::WIN_WIDTH / 2, 500 };

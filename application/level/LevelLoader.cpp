@@ -173,7 +173,9 @@ void LevelDataExchanger::SetObjectData(Obj3d& exportData, const LevelData::Objec
 			MathF::AngleConvRad(inportData.rotation.y),
 			MathF::AngleConvRad(inportData.rotation.z)
 	};
-	//大きさ
-	exportData.scale = inportData.scaling;
+	//大きさ(-はミスなので反転させる)
+	exportData.scale.x = Util::Abs(inportData.scaling.x);
+	exportData.scale.y = Util::Abs(inportData.scaling.y);
+	exportData.scale.z = Util::Abs(inportData.scaling.z);
 }
 

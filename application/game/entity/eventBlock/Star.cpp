@@ -44,7 +44,7 @@ void Star::Update()
 		rotaSpeed = 2;
 
 		jumpUpPos = saveStartPos;
-		jumpUpPos.y += 10.0f;
+		jumpUpPos.y += 5.0f;
 
 		jumpUpScale = saveScale * 1.5f;
 

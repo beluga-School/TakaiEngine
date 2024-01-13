@@ -4,8 +4,9 @@
 #include "Util.h"
 #include "Color.h"
 #include "ImguiManager.h"
+#include "TutorialUI.h"
 
-class StarTutorialUI
+class StarTutorialUI : public TutorialUI
 {
 public:
 	static void LoadResource();
@@ -26,8 +27,6 @@ private:
 	//背景
 	Vector2 backpos = { Util::WIN_WIDTH / 2, 500 };
 	Color backColor = {0.1f,0.1f,0.1f,0.5f};
-	//出現消滅のタイマー
-	TEasing::easeTimer alphaTimer = 0.5f;
 	//星
 	Vector2 starpos = { Util::WIN_WIDTH / 2, 580 };
 	float starAngle = 0;

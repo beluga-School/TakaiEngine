@@ -4,6 +4,7 @@
 #include <vector>
 #include <string>
 #include <unordered_map>
+#include "Vector3.h"
 
 /* Util
 	便利関数群
@@ -69,6 +70,16 @@ namespace Util
 
 	//文字列を指定した区切り文字で分割し、一番手前にあった文字を返す
 	int32_t GetNumber(const std::string& str, const char* delimiter);
+
+	/// <summary>
+	/// vector3を適当にずらす
+	/// </summary>
+	/// <param name="value"></param>
+	/// <param name="min"></param>
+	/// <param name="max"></param>
+	/// <param name="factor">係数 出た乱数にここの数を掛けてから足す</param>
+	/// <returns></returns>
+	Vector3 GetRandVector3(const Vector3& value,float min,float max,const Vector3& factor = {1.f,1.f,1.f});
 
 	//そのキーがマップ内に存在するかを検索する
 	template <class Key, class Value>

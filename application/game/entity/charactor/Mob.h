@@ -64,6 +64,9 @@ protected:
 	//当たり判定の更新
 	void CollsionUpdate();
 
+	//地面に当たった瞬間ならtrue
+	bool CheckNowHitGround();
+
 private:
 	//縦方向の当たり判定更新
 	void UpdateY();
@@ -135,10 +138,15 @@ protected:
 	//床に引っかからないように掛ける補正値
 	const float hitOffset = 0.1f;
 
-	float feet = 0;
 
 	Vector3 initScale = { 0,0,0 };
 
+	float feet = 0;
+	
+private:
 	//丸影を参照するための番号
 	int32_t shadowNum = -1;
+
+	bool checkGround = false;
+
 };
