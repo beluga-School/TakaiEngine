@@ -56,6 +56,7 @@ public:
 	Vector2 operator *(const float& other) const;
 	Vector2 operator /(const float& other) const;
 
+	bool operator ==(const Vector2& other)const;
 	//自身を書き換えるやつら
 	Vector2 operator +=(const Vector2& other);
 	Vector2 operator -=(const Vector2& other);

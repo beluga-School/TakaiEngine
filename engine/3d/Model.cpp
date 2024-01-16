@@ -289,6 +289,7 @@ void ModelManager::PreLoad()
 	LoadModel("skydome","skydome");
 	LoadModel("firewisp","firewisp",true);
 	LoadModel("beetle","beetle",true);
+	LoadModel("plate","plate",true);
 	LoadModel("spawnpoint", "spawnpoint");
 	LoadModel("eventtriger", "eventtriger");
 	LoadModel("groundCube", "groundCube", true);

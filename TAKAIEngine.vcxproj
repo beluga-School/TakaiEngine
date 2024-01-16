@@ -217,6 +217,7 @@
     <ClCompile Include="application\game\entity\RedCoin.cpp" />
     <ClCompile Include="application\event\RedCoinEvent.cpp" />
     <ClCompile Include="application\event\StarStringEvent.cpp" />
+    <ClCompile Include="Grass.cpp" />
     <ClCompile Include="TikuwaBlock.cpp" />
     <ClCompile Include="StarTutorialUI.cpp" />
     <ClCompile Include="TutorialUI.cpp" />
@@ -330,6 +331,7 @@
     <ClInclude Include="application\event\GetStar.h" />
     <ClInclude Include="application\game\entity\RedCoin.h" />
     <ClInclude Include="application\event\RedCoinEvent.h" />
+    <ClInclude Include="Grass.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="application\ui\StarUI.h" />
     <ClInclude Include="application\ui\UI.h" />

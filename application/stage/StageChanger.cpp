@@ -38,6 +38,7 @@
 #include "BreakBlock.h"
 #include "DropBlock.h"
 #include "TikuwaBlock.h"
+#include "Grass.h"
 
 void StageChanger::LoadResource()
 {
@@ -45,6 +46,7 @@ void StageChanger::LoadResource()
 	Dokan::LoadResource();
 	EnemyDokan::LoadResource();
 	Signboard::LoadResource();
+	Grass::LoadResource();
 }
 
 void StageChanger::ChangeLevel(LevelData& data)
@@ -475,6 +477,10 @@ void StageChanger::ChangeUpdate()
 		}
 
 		if (SetTikuwaBlock(*objectData))
+		{
+			continue;
+		}
+		if (SetGrass(*objectData))
 		{
 			continue;
 		}
@@ -1055,6 +1061,23 @@ bool StageChanger::SetTikuwaBlock(const LevelData::ObjectData& data)
 		tikuwa->saveScale = tikuwa->scale;
 		tikuwa->saveBoxScale = tikuwa->box.scale;
 		tikuwa->savePosition = tikuwa->position;
+
+		return true;
+	}
+	return false;
+}
+
+bool StageChanger::SetGrass(const LevelData::ObjectData& data)
+{
+	if (data.setObjectName == "grass")
+	{
+		SetObject<Grass>(data);
+
+		//当たり判定を作成
+		if (data.collider.have)
+		{
+			CollisionSet(data);
+		}
 
 		return true;
 	}

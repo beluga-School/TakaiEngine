@@ -260,4 +260,7 @@ private:
 	Quaternion mStartQ;
 	Quaternion mEndQ;
 	Quaternion mCulQ;
+
+	Vector3 oldMove = { 0,0,0 };
+	Vector2 oldPad = { 0,0 };
 };

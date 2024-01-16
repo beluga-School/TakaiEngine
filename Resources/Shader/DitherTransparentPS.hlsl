@@ -30,6 +30,8 @@ float4 main(VSOutput input) : SV_TARGET
     float clamp_dither = saturate(dither / 4);
     float clamp_length = saturate(camlength / 50);
     
+    clip(texcolor.w);
+    
     clip(clamp_length - clamp_dither); //è‡’l‚ª0ˆÈ‰º‚È‚ç•`‰æ‚µ‚È‚¢
 
     float4 shadecolor = { 0, 0, 0, 1 };

@@ -211,6 +211,8 @@ private:
 	bool SetDropBlock(const LevelData::ObjectData& data);
 	//プレイヤーが乗ったら落ちるブロックの実装
 	bool SetTikuwaBlock(const LevelData::ObjectData& data);
+	//動く草
+	bool SetGrass(const LevelData::ObjectData& data);
 
 	void DrawModel();
 	void DrawCollider();

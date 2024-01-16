@@ -98,6 +98,7 @@ void Player::Update()
 	ApparanceUpdate();
 
 	//移動地を初期化
+	oldMove = moveValue;
 	moveValue = { 0,0,0 };
 
 	//ベクトルを保存
@@ -128,6 +129,8 @@ void Player::Update()
 	DamageUpdate();
 
 	mHpGauge.Update();
+
+	oldPad = Pad::GetLStickMove();
 }
 
 void Player::CheckGUI()
@@ -238,16 +241,7 @@ void Player::MoveUpdate()
 		GroundHitParticle();
 	}
 
-	if (Input::Pad::CheckConnectPad())
-	{
-		moveValue += mCenterVec * Input::Pad::GetLStickMove().y * mSpeed * TimeManager::deltaTime;
-		moveValue += mSideVec * Input::Pad::GetLStickMove().x * mSpeed * TimeManager::deltaTime;
-	}
-
-	if (Input::Keyboard::PushKey(DIK_W) || 
-		Input::Keyboard::PushKey(DIK_S) ||
-		Input::Keyboard::PushKey(DIK_D) ||
-		Input::Keyboard::PushKey(DIK_A))
+	if (GetInputMove(Player::InputMove::Push))
 	{
 		moveValue += mCenterVec * mSpeed * TimeManager::deltaTime;
 	}
@@ -323,20 +317,32 @@ void Player::RotaUpdate()
 	Vector3 right = camRightVec;
 	Vector3 left = -camRightVec;
 
-	if (Input::Keyboard::TriggerKey(DIK_W) ||
-		Input::Keyboard::TriggerKey(DIK_S) ||
-		Input::Keyboard::TriggerKey(DIK_D) ||
-		Input::Keyboard::TriggerKey(DIK_A))
+	if (GetInputMove(Player::InputMove::Trigger))
 	{
 		mRotTime.Start();
-		mEndRota = {0,0,0};
+		mEndRota = { 0,0,0 };
 	}
 
-	if (Input::Keyboard::PushKey(DIK_W))mEndRota += center;
-	if (Input::Keyboard::PushKey(DIK_S))mEndRota += back;
-	if (Input::Keyboard::PushKey(DIK_D))mEndRota += right;
-	if (Input::Keyboard::PushKey(DIK_A))mEndRota += left;
-
+	if (Input::Pad::GetLStickMove().GetLength() > 0)
+	{
+		if (mRotTime.GetEnd())
+		{
+			mRotTime.Reset();
+		}
+		mRotTime.NoInitStart();
+		if (Input::Pad::GetLStickMove().y > 0)mEndRota += center;
+		if (Input::Pad::GetLStickMove().y < 0)mEndRota += back;
+		if (Input::Pad::GetLStickMove().x > 0)mEndRota += right;
+		if (Input::Pad::GetLStickMove().x < 0)mEndRota += left;
+	}
+	else
+	{
+		if (Input::Keyboard::PushKey(DIK_W))mEndRota += center;
+		if (Input::Keyboard::PushKey(DIK_S))mEndRota += back;
+		if (Input::Keyboard::PushKey(DIK_D))mEndRota += right;
+		if (Input::Keyboard::PushKey(DIK_A))mEndRota += left;
+	}
+	
 	mEndQ = DirectionToDirection({ 0,0,1 }, mEndRota);
 
 	//⑵始点になる今のプレイヤーの向きをクオータニオンで取得する
@@ -349,10 +355,10 @@ void Player::RotaUpdate()
 	mStartQ = DirectionToDirection({ 0,0,1 }, startRota);
 
 	//⑶終点Qを求める
-	mCulQ = Slerp(mStartQ,mEndQ, mRotTime.GetTimeRate());
+	mCulQ = Slerp(mStartQ, mEndQ, mRotTime.GetTimeRate());
 
-	Quaternion rotX = MakeAxisAngle({1,0,0}, MathF::AngleConvRad(mJumpRotaX));
-	Quaternion rotY = MakeAxisAngle({0,1,0}, MathF::AngleConvRad(mJumpRotaY));
+	Quaternion rotX = MakeAxisAngle({ 1,0,0 }, MathF::AngleConvRad(mJumpRotaX));
+	Quaternion rotY = MakeAxisAngle({ 0,1,0 }, MathF::AngleConvRad(mJumpRotaY));
 
 	//④現在のプレイヤーの向き(Q)に足しまくる
 	quaternion = mCulQ * rotX;
@@ -776,7 +782,11 @@ void Player::DebugGUI()
 	ImGui::Text("mNoMove:%d", mNoMove);
 	ImGui::Text("mNoCollision:%d", mNoCollision);
 
-
+	ImGui::Text("Pad::GetLStickMove.x:%f", Pad::GetLStickMove().x);
+	ImGui::Text("Pad::GetLStickMove.y:%f", Pad::GetLStickMove().y);
+	ImGui::Text("mEndRota.x:%f", mEndRota.x);
+	ImGui::Text("mEndRota.y:%f", mEndRota.y);
+	ImGui::Text("mEndRota.z:%f", mEndRota.z);
 }
 
 bool Player::GetInputMove(InputMove input)
@@ -787,13 +797,15 @@ bool Player::GetInputMove(InputMove input)
 		return (Input::Keyboard::PushKey(DIK_W) || 
 			Input::Keyboard::PushKey(DIK_S) ||
 			Input::Keyboard::PushKey(DIK_A) ||
-			Input::Keyboard::PushKey(DIK_D));
+			Input::Keyboard::PushKey(DIK_D)) || 
+			Input::Pad::GetLStickMove().GetLength() > 0;
 		break;
 	case Player::InputMove::Trigger:
 		return (Input::Keyboard::TriggerKey(DIK_W) ||
 			Input::Keyboard::TriggerKey(DIK_S) ||
 			Input::Keyboard::TriggerKey(DIK_A) ||
-			Input::Keyboard::TriggerKey(DIK_D));
+			Input::Keyboard::TriggerKey(DIK_D)) ||
+			(Input::Pad::GetLStickMove().GetLength() > 0 && oldMove.length() == 0);
 		break;
 	}
 

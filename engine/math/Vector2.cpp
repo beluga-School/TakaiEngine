@@ -106,6 +106,11 @@ Vector2 Vector2::operator /(const float& other) const
 	return v;
 }
 
+bool Vector2::operator==(const Vector2& other) const
+{
+	return (x == other.x) && (y == other.y);
+}
+
 //自身を書き換えるやつら
 Vector2 Vector2::operator +=(const Vector2& other)
 {
