@@ -62,6 +62,8 @@ class Obj3d
 {
 public:
 
+	virtual ~Obj3d() {};
+
 	enum class RotMode
 	{
 		Eular,

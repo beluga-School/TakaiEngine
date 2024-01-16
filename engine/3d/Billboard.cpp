@@ -17,19 +17,17 @@ void Billboard::Update(const Camera& camera)
 {
 	Matrix4 MatBillboard = Matrix4::Identity();
 	
-	Matrix4 matScale;	//スケーリング行列
-	Matrix4 matRot;	//回転行列
-	Matrix4 matTrans;	//平行移動行列
+	Matrix4 matScale = Matrix4::Identity();;	//スケーリング行列
+	Matrix4 matRot = Matrix4::Identity();	//回転行列
+	Matrix4 matTrans = Matrix4::Identity();	//平行移動行列
 
 	//スケールを設定
-	matScale = Matrix4::Identity();
 	matScale = Matrix4::scale(scale);
 
 	//回転を設定
-	matRot = Matrix4::Identity();
 	matRot = Matrix4::rotateZ(rotation.z) * Matrix4::rotateX(rotation.x) * Matrix4::rotateY(rotation.y);
 
-	matTrans = Matrix4::Identity();
+	//位置を設定
 	matTrans = Matrix4::translate(position);
 
 	//ビルボード行列を作成

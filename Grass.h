@@ -17,8 +17,8 @@ public:
 	void Draw()override;
 
 private:
-	Obj3d poligon1;
-	Obj3d poligon2;
+	//Obj3d poligon1;
+	//Obj3d poligon2;
 
 	TEasing::easeTimer timer;
 };
