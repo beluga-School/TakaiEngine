@@ -42,7 +42,7 @@ int32_t WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_  HINSTANCE hPrevInstan
 	if (SUCCEEDED(D3D12GetDebugInterface(IID_PPV_ARGS(&debugController)))) {
 		debugController->EnableDebugLayer();
 		//これより前にデバイスを生成するとデバイスが消されるらしい
-		debugController->SetEnableGPUBasedValidation(TRUE);
+		debugController->SetEnableGPUBasedValidation(false);
 	}
 
 #endif _DEBUG
