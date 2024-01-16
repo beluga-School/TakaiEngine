@@ -1,5 +1,6 @@
 #include "Grass.h"
 #include "MathF.h"
+#include "ObjParticle.h"
 
 void Grass::LoadResource()
 {
@@ -10,33 +11,54 @@ void Grass::Initialize()
 {
 	SetModel(ModelManager::GetModel("grass"));
 	SetTexture(TextureManager::GetTexture("default"));
-	//poligon1.SetModel(ModelManager::GetModel("plate"));
-	//poligon1.SetTexture(TextureManager::GetTexture("movegrass"));
-	//poligon2.SetModel(ModelManager::GetModel("plate"));
-	//poligon2.SetTexture(TextureManager::GetTexture("movegrass"));
 }
 
 void Grass::Update()
 {
 	timer.Update();
+
+	if (timer.GetNowEnd())
+	{
+		bounceCount++;
+	}
+	if (bounceCount % 2 == 0)
+	{
+		if (timer.GetNowEnd())
+		{
+			Vector3 partPos = position;
+			partPos.y += 1.0f;
+			float partSize = 1.0f;
+
+			ParticleManager::Get()->CreateCubeParticle(partPos, { partSize,partSize,partSize }, 10.f, { 0,1,0,1 }, "", PARTICLEPATTERN::DROP);
+			if (bounceCount > 5)
+			{
+				for (int32_t i = 0; i < 3; i++)
+				{
+					ParticleManager::Get()->CreateCubeParticle(partPos, { partSize,partSize,partSize }, 10.f, { 0,1,0,1 }, "", PARTICLEPATTERN::DROP);
+				}
+			}
+		}
+	}
+	if (bounceCount > 5)
+	{
+		rotation.x = TEasing::InQuad(0, MathF::AngleConvRad(20), timer.GetTimeRate());
+		scale.y = TEasing::InQuad(0.8f, 1.0f, timer.GetTimeRate());
+		if (timer.GetReverseEnd())
+		{
+			bounceCount = 0;
+		}
+	}
+	else
+	{
+		scale.y = TEasing::InQuad(0.8f, 1.0f,timer.GetTimeRate());
+	}
+
 	timer.Roop();
 
-	/*poligon1.position = position;
-	poligon1.position.y -= 0.2f * (1.0f-timer.GetTimeRate());
-	poligon2.position = position;
-	poligon2.position.y -= 0.2f * (1.0f - timer.GetTimeRate());
-
-	poligon2.rotation.y = MathF::AngleConvRad(90);
-
-	poligon1.scale.y = TEasing::InQuad(0.8f,1.f, timer.GetTimeRate());
-	poligon2.scale.y = TEasing::InQuad(0.8f,1.f, timer.GetTimeRate());
-
-	poligon1.Update(*Camera::sCamera);
-	poligon2.Update(*Camera::sCamera);*/
 	Obj3d::Update(*Camera::sCamera);
 }
 
 void Grass::Draw()
 {
-	DrawMaterial();
+	Obj3d::DrawMaterial();
 }

@@ -1700,6 +1700,144 @@
             },
             "event_trigger": "stage_mountain_1",
             "setObject": "dokan_1"
+        },
+        {
+            "type": "MESH",
+            "name": "ICO球",
+            "transform": {
+                "translation": [
+                    259.896240234375,
+                    2.924579381942749,
+                    -4.242624759674072
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "grass",
+            "setObject": "grass"
+        },
+        {
+            "type": "MESH",
+            "name": "ICO球.001",
+            "transform": {
+                "translation": [
+                    242.92176818847656,
+                    -0.29917478561401367,
+                    -4.242624759674072
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "grass",
+            "setObject": "grass"
+        },
+        {
+            "type": "MESH",
+            "name": "ICO球.002",
+            "transform": {
+                "translation": [
+                    246.70118713378906,
+                    -12.299175262451172,
+                    -4.242624759674072
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "grass",
+            "setObject": "grass"
+        },
+        {
+            "type": "MESH",
+            "name": "ICO球.003",
+            "transform": {
+                "translation": [
+                    254.98731994628906,
+                    -15.216397285461426,
+                    -4.242624759674072
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "grass",
+            "setObject": "grass"
+        },
+        {
+            "type": "MESH",
+            "name": "ICO球.004",
+            "transform": {
+                "translation": [
+                    230.77374267578125,
+                    -16.91851806640625,
+                    -4.242624759674072
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "grass",
+            "setObject": "grass"
+        },
+        {
+            "type": "MESH",
+            "name": "ICO球.005",
+            "transform": {
+                "translation": [
+                    230.77374267578125,
+                    3.0295772552490234,
+                    -4.242624759674072
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "grass",
+            "setObject": "grass"
         }
     ]
 }
