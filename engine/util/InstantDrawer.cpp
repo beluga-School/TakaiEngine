@@ -6,41 +6,53 @@
 //現在カメラ依存に修正できたら消していい
 #include <EventManager.h>
 
-std::list<Sprite> InstantDrawer::sSprites;
-std::list<Billboard> InstantDrawer::sBillboards;
-std::list<Obj3d> InstantDrawer::sObjs;
-
 void InstantDrawer::DrawInit()
 {
-	sSprites.clear();
-	sBillboards.clear();
-	sObjs.clear();
+	for (auto& instant : Get()->sSprites)
+	{
+		instant.isUse = false;
+	}
+	for (auto& instant : Get()->sBillboards)
+	{
+		instant.isUse = false;
+	}
+	for (auto& instant : Get()->sObjs)
+	{
+		instant.isUse = false;
+	}
 }
 
 void InstantDrawer::DrawBox(const float& x, const float& y, const float& width, const float& height, const Color& color, const Anchor& anchor)
 {
-	sSprites.emplace_back();
-	sSprites.back().SetTexture(*TextureManager::GetTexture("white"));
-	sSprites.back().mPosition = { x,y };
-	sSprites.back().SetSize({ width, height });
-	sSprites.back().mColor = color;
-	switch (anchor)
+	for (auto& instant : Get()->sSprites)
 	{
-	case InstantDrawer::Anchor::LEFT:
-		sSprites.back().SetAnchor({ 0,0.5f });
-		break;
-	case InstantDrawer::Anchor::CENTER:
-		sSprites.back().SetAnchor({ 0.5f,0.5f });
-		break;
-	case InstantDrawer::Anchor::RIGHT:
-		sSprites.back().SetAnchor({ 1.0f,0.5f });
-		break;
-	case InstantDrawer::Anchor::UP:
-		sSprites.back().SetAnchor({ 0.5f,0 });
-		break;
-	case InstantDrawer::Anchor::DOWN:
-		sSprites.back().SetAnchor({ 0.5f,1.0f });
-		break;
+		if (!instant.isUse)
+		{
+			instant.isUse = true;
+			instant.SetTexture(*TextureManager::GetTexture("white"));
+			instant.mPosition = { x,y };
+			instant.SetSize({ width, height });
+			instant.mColor = color;
+			switch (anchor)
+			{
+			case InstantDrawer::Anchor::LEFT:
+				instant.SetAnchor({ 0,0.5f });
+				break;
+			case InstantDrawer::Anchor::CENTER:
+				instant.SetAnchor({ 0.5f,0.5f });
+				break;
+			case InstantDrawer::Anchor::RIGHT:
+				instant.SetAnchor({ 1.0f,0.5f });
+				break;
+			case InstantDrawer::Anchor::UP:
+				instant.SetAnchor({ 0.5f,0 });
+				break;
+			case InstantDrawer::Anchor::DOWN:
+				instant.SetAnchor({ 0.5f,1.0f });
+				break;
+			}
+			break;
+		}
 	}
 }
 
@@ -49,27 +61,34 @@ void InstantDrawer::DrawGraph(const float& x, const float& y, float sizerateX, f
 	//ハンドルが空なら描画をキャンセル
 	if (handle == "")return;
 
-	sSprites.emplace_back();
-	sSprites.back().SetTexture(*TextureManager::GetTexture(handle));
-	sSprites.back().mPosition = { x,y };
-	sSprites.back().SetSizeRate({ sizerateX, sizerateY });
-	switch (anchor)
+	for (auto& instant : Get()->sSprites)
 	{
-	case InstantDrawer::Anchor::LEFT:
-		sSprites.back().SetAnchor({ 0,0.5f });
-		break;
-	case InstantDrawer::Anchor::CENTER:
-		sSprites.back().SetAnchor({ 0.5f,0.5f });
-		break;
-	case InstantDrawer::Anchor::RIGHT:
-		sSprites.back().SetAnchor({ 1.0f,0.5f });
-		break;
-	case InstantDrawer::Anchor::UP:
-		sSprites.back().SetAnchor({ 0.5f,0 });
-		break;
-	case InstantDrawer::Anchor::DOWN:
-		sSprites.back().SetAnchor({ 0.5f,1.0f });
-		break;
+		if (!instant.isUse)
+		{
+			instant.isUse = true;
+			instant.SetTexture(*TextureManager::GetTexture(handle));
+			instant.mPosition = { x,y };
+			instant.SetSizeRate({ sizerateX, sizerateY });
+			switch (anchor)
+			{
+			case InstantDrawer::Anchor::LEFT:
+				instant.SetAnchor({ 0,0.5f });
+				break;
+			case InstantDrawer::Anchor::CENTER:
+				instant.SetAnchor({ 0.5f,0.5f });
+				break;
+			case InstantDrawer::Anchor::RIGHT:
+				instant.SetAnchor({ 1.0f,0.5f });
+				break;
+			case InstantDrawer::Anchor::UP:
+				instant.SetAnchor({ 0.5f,0 });
+				break;
+			case InstantDrawer::Anchor::DOWN:
+				instant.SetAnchor({ 0.5f,1.0f });
+				break;
+			}
+			break;
+		}
 	}
 }
 
@@ -79,29 +98,36 @@ void InstantDrawer::DrawRotaGraph(const float& x, const float& y, float sizerate
 	//ハンドルが空なら描画をキャンセル
 	if (handle == "")return;
 
-	sSprites.emplace_back();
-	sSprites.back().SetTexture(*TextureManager::GetTexture(handle));
-	sSprites.back().mPosition = { x,y };
-	sSprites.back().mRotation = rotation;
-	sSprites.back().mColor = color;
-	sSprites.back().SetSizeRate({ sizerateX, sizerateY });
-	switch (anchor)
+	for (auto& instant : Get()->sSprites)
 	{
-	case InstantDrawer::Anchor::LEFT:
-		sSprites.back().SetAnchor({ 0,0.5f });
-		break;
-	case InstantDrawer::Anchor::CENTER:
-		sSprites.back().SetAnchor({ 0.5f,0.5f });
-		break;
-	case InstantDrawer::Anchor::RIGHT:
-		sSprites.back().SetAnchor({ 1.0f,0.5f });
-		break;
-	case InstantDrawer::Anchor::UP:
-		sSprites.back().SetAnchor({ 0.5f,0 });
-		break;
-	case InstantDrawer::Anchor::DOWN:
-		sSprites.back().SetAnchor({ 0.5f,1.0f });
-		break;
+		if (!instant.isUse)
+		{
+			instant.isUse = true;
+			instant.SetTexture(*TextureManager::GetTexture(handle));
+			instant.mPosition = { x,y };
+			instant.mRotation = rotation;
+			instant.mColor = color;
+			instant.SetSizeRate({ sizerateX, sizerateY });
+			switch (anchor)
+			{
+			case InstantDrawer::Anchor::LEFT:
+				instant.SetAnchor({ 0,0.5f });
+				break;
+			case InstantDrawer::Anchor::CENTER:
+				instant.SetAnchor({ 0.5f,0.5f });
+				break;
+			case InstantDrawer::Anchor::RIGHT:
+				instant.SetAnchor({ 1.0f,0.5f });
+				break;
+			case InstantDrawer::Anchor::UP:
+				instant.SetAnchor({ 0.5f,0 });
+				break;
+			case InstantDrawer::Anchor::DOWN:
+				instant.SetAnchor({ 0.5f,1.0f });
+				break;
+			}
+			break;
+		}
 	}
 }
 
@@ -110,28 +136,35 @@ void InstantDrawer::DrawGraph3D(const Vector3& pos, float width, float height, c
 	//includeで説明した通りイベント実行中なら消す
 	if (EventManager::Get()->GetLineEvent() != nullptr) return;
 
-	sBillboards.emplace_back();
-	sBillboards.back().SetTexture(TextureManager::GetTexture(handle));
-	sBillboards.back().position = pos;
-
-	int32_t texWidth = (int32_t)TextureManager::GetTexture(handle)->GetMetaData()->width;
-	int32_t texHeight = (int32_t)TextureManager::GetTexture(handle)->GetMetaData()->height;
-
-	int32_t bigger = max(texWidth, texHeight);
-	int32_t smaller = min(texWidth, texHeight);
-
-	bigger /= smaller;
-	smaller = 1;
-
-	//横の方が大きいなら
-	if (texWidth > texHeight)
+	for (auto& instant : Get()->sBillboards)
 	{
-		sBillboards.back().scale = { (float)bigger * width,(float)smaller * height,1 };
-	}
-	//縦の方が大きいor同じなら
-	else
-	{
-		sBillboards.back().scale = { (float)smaller * width,(float)bigger * height,1 };
+		if (!instant.isUse)
+		{
+			instant.isUse = true;
+			instant.SetTexture(TextureManager::GetTexture(handle));
+			instant.position = pos;
+
+			int32_t texWidth = (int32_t)TextureManager::GetTexture(handle)->GetMetaData()->width;
+			int32_t texHeight = (int32_t)TextureManager::GetTexture(handle)->GetMetaData()->height;
+
+			int32_t bigger = max(texWidth, texHeight);
+			int32_t smaller = min(texWidth, texHeight);
+
+			bigger /= smaller;
+			smaller = 1;
+
+			//横の方が大きいなら
+			if (texWidth > texHeight)
+			{
+				instant.scale = { (float)bigger * width,(float)smaller * height,1 };
+			}
+			//縦の方が大きいor同じなら
+			else
+			{
+				instant.scale = { (float)smaller * width,(float)bigger * height,1 };
+			}
+			break;
+		}
 	}
 }
 
@@ -140,27 +173,43 @@ void InstantDrawer::DrawBox3D(const Cube& cube)
 	//includeで説明した通りイベント実行中なら消す
 	if (EventManager::Get()->GetLineEvent() != nullptr) return;
 
-	sObjs.emplace_back();
-	sObjs.back().Initialize();
-	sObjs.back().SetTexture(TextureManager::GetTexture("white"));
-	sObjs.back().position = cube.position;
-	sObjs.back().rotation = cube.rotation;
-	sObjs.back().scale = cube.scale;
+	for (auto& instant : Get()->sObjs)
+	{
+		if (!instant.isUse)
+		{
+			instant.isUse = true;
+			instant.Initialize();
+			instant.SetTexture(TextureManager::GetTexture("white"));
+			instant.position = cube.position;
+			instant.rotation = cube.rotation;
+			instant.scale = cube.scale;
+			break;
+		}
+	}
 }
 
 void InstantDrawer::AllUpdate()
 {
-	for (auto& sprite : sSprites)
+	for (auto& sprite : Get()->sSprites)
 	{
-		sprite.Update();
+		if (sprite.isUse)
+		{
+			sprite.Update();
+		}
 	}
-	for (auto& billboard : sBillboards)
+	for (auto& billboard : Get()->sBillboards)
 	{
-		billboard.Update(*Camera::sCamera);
+		if (billboard.isUse)
+		{
+			billboard.Update(*Camera::sCamera);
+		}
 	}
-	for (auto& obj : sObjs)
+	for (auto& obj : Get()->sObjs)
 	{
-		obj.Update(*Camera::sCamera);
+		if (obj.isUse)
+		{
+			obj.Update(*Camera::sCamera);
+		}
 	}
 }
 
@@ -168,9 +217,14 @@ void InstantDrawer::AllDraw2D()
 {
 	SpriteCommonBeginDraw();
 
-	for (auto &sprite : sSprites)
+	std::list<InstantSprite>* hoge = &Get()->sSprites;
+
+	for (auto &sprite : *hoge)
 	{
-		sprite.Draw();
+		if (sprite.isUse)
+		{
+			sprite.Draw();
+		}
 	}
 }
 
@@ -178,13 +232,35 @@ void InstantDrawer::AllDraw3D()
 {
 	BasicObjectPreDraw("GroundToon");
 
-	for (auto& billboard : sBillboards)
+	for (auto& billboard : Get()->sBillboards)
 	{
-		billboard.Draw();
+		if (billboard.isUse)
+		{
+			billboard.Draw();
+		}
 	}
 	
-	for (auto& obj : sObjs)
+	for (auto& obj : Get()->sObjs)
 	{
-		obj.Draw();
+		if (obj.isUse)
+		{
+			obj.Draw();
+		}
+	}
+}
+
+void InstantDrawer::PreCreate()
+{
+	for (int32_t i = 0; i < 100; i++)
+	{
+		Get()->sSprites.emplace_back();
+	}
+	for (int32_t i = 0; i < 100; i++)
+	{
+		Get()->sBillboards.emplace_back();
+	}
+	for (int32_t i = 0; i < 100; i++)
+	{
+		Get()->sObjs.emplace_back();
 	}
 }

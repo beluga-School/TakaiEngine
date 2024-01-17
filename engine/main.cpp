@@ -20,6 +20,7 @@
 #include "GameScene.h"
 #include "ShaderTestScene.h"
 #include "TitleScene.h"
+#include "InstantDrawer.h"
 
 //命名規則は以下の通り
 //メンバ変数->手前にm, mの次は大文字(例:mHoge)
@@ -111,6 +112,8 @@ int32_t WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_  HINSTANCE hPrevInstan
 	PipelineManager::Get()->Initialize();
 
 	SpriteCommon::sSpriteCommon.Initialize();
+
+	InstantDrawer::PreCreate();
 
 	//ゲームループ
 	while (true){

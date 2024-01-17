@@ -8,6 +8,25 @@
 /*! InstantDrawer
 	DxLibライクな描画関数を利用できるクラス
 */
+
+class InstantSprite : public Sprite
+{
+public:
+	bool isUse = false;
+};
+
+class InstantBillboard : public Billboard
+{
+public:
+	bool isUse = true;
+};
+
+class InstantObj : public Obj3d
+{
+public:
+	bool isUse = true;
+};
+
 class InstantDrawer
 {
 public:
@@ -93,10 +112,18 @@ public:
 	static void AllDraw2D();
 	static void AllDraw3D();
 
+	//事前にメモリを確保
+	static void PreCreate();
+
 private:
-	static std::list<Sprite> sSprites;
+	static InstantDrawer* Get() {
+		static InstantDrawer instance;
+		return &instance;
+	}
 
-	static std::list<Billboard> sBillboards;
+	std::list<InstantSprite> sSprites;
 
-	static std::list<Obj3d> sObjs;
+	std::list<InstantBillboard> sBillboards;
+
+	std::list<InstantObj> sObjs;
 };
