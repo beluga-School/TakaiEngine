@@ -138,6 +138,13 @@ Quaternion Quaternion::operator*(const Quaternion& r)
 	return temp;
 }
 
+Vector3 Quaternion::operator*(const Vector3& v)
+{
+	Quaternion vQ = {v.x,v.y,v.z,0};
+	Quaternion temp = *this * vQ;
+	return temp.vector;
+}
+
 Quaternion Quaternion::operator+()
 {
 	return *this;

@@ -59,6 +59,9 @@ public:
 	//クォータニオンとの掛け算
 	Quaternion operator*(const Quaternion& r);
 
+	//ベクトルとの掛け算
+	Vector3 operator*(const Vector3& v);
+
 	Quaternion operator+();
 	Quaternion operator-();
 	

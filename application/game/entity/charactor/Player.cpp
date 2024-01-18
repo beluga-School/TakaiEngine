@@ -110,7 +110,7 @@ void Player::Update()
 	//通常の状態であれば
 	NormalUpdate();
 	//ダッシュ状態であれば
-	DashUpdate();
+	//DashUpdate();
 
 	HipDropUpdate();
 	
@@ -730,19 +730,44 @@ void Donute(const Obj3d& obj, float x, float y, float z)
 
 void Player::DonuteSmoke(Vector3 center)
 {
-	center;
-	//めっちゃ無理やりだけど、それぞれの角度ごとに足し算引き算して、最終地点を割り出す
-	for (int32_t i = 0; i < 4; i++)
+	Vector3 ziku = matWorld.ExtractAxisZ();
+	//Vector3 ziku = { 0, 0, 1 };
+
+	//内部的にここの角度を2倍にしないとうまく動かない
+	//ちゃんと見たほうがいいかも
+	Quaternion qu = MakeAxisAngle(ziku, MathF::AngleConvRad(90.f));
+	Vector3 upvec = { 0,1,0 };
+	for (int32_t i = 0; i < 8; i++)
 	{
-		Donute(*this, 0, 1, 1);
-		Donute(*this, 0, -1, 1);
-		Donute(*this, 1, 0, 1);
-		Donute(*this, -1, 0, 1);
-		Donute(*this, 0.75f, 0.75f, 1);
-		Donute(*this, 0.75f, -0.75f, 1);
-		Donute(*this, -0.75f, 0.75f, 1);
-		Donute(*this, -0.75f, -0.75f, 1);
+		upvec = qu * upvec;
+
+		for (int32_t j = 0; j < 4; j++)
+		{
+			Vector3 partPos = center + upvec * 2.0f;
+
+			partPos = Util::GetRandVector3(partPos, -0.25f, 0.25f);
+			Vector3 end = partPos - ziku *2.0f;
+
+			float size = MathF::GetRand(0.5f, 0.7f);
+			float time = MathF::GetRand(0.3f, 0.7f);
+			ParticleManager::Get()->CreateSmoke(partPos, end,
+				{ size,size,size }, time, Color(1, 1, 1, 1), EASEPATTERN::INBACK);
+		}
 	}
+
+	//center;
+	////めっちゃ無理やりだけど、それぞれの角度ごとに足し算引き算して、最終地点を割り出す
+	//for (int32_t i = 0; i < 4; i++)
+	//{
+	//	Donute(*this, 0, 1, 1);
+	//	Donute(*this, 0, -1, 1);
+	//	Donute(*this, 1, 0, 1);
+	//	Donute(*this, -1, 0, 1);
+	//	Donute(*this, 0.75f, 0.75f, 1);
+	//	Donute(*this, 0.75f, -0.75f, 1);
+	//	Donute(*this, -0.75f, 0.75f, 1);
+	//	Donute(*this, -0.75f, -0.75f, 1);
+	//}
 }
 
 bool Player::CanWallKick()
