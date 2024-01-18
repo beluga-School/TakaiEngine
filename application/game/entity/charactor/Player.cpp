@@ -131,6 +131,7 @@ void Player::Update()
 	mHpGauge.Update();
 
 	oldPad = Pad::GetLStickMove();
+
 }
 
 void Player::CheckGUI()
@@ -505,6 +506,10 @@ void Player::ChangeDash()
 {
 	if (Input::Keyboard::PushKey(DIK_LSHIFT)) {
 		SetState(PlayerState::Dash);
+		if (Input::Keyboard::TriggerKey(DIK_LSHIFT))
+		{
+			DonuteSmoke(position);
+		}
 	}
 	else {
 		DeleteState(PlayerState::Dash);
@@ -542,15 +547,19 @@ void Player::DashUpdate()
 		playerBack = -matWorld.ExtractAxisZ() * (scale.z / 2);
 		playerFeetPos = Vector3(position.x, position.y - (scale.y / 2), position.z) + playerBack;
 
-		Vector3 randPos = Util::GetRandVector3(playerFeetPos, -0.25f, 0.25f, { 1,0,1 });
+		Vector3 randPos = Util::GetRandVector3(playerFeetPos, -0.75f, 0.75f, { 1,0,1 });
+
+		float time = MathF::GetRand(0.5f, 1.0f);
+		float size = MathF::GetRand(0.1f, 0.3f);
 
 		//パーティクル配置
-		ParticleManager::Get()->CreateCubeParticle(
+		ParticleManager::Get()->CreateSmoke(
 			randPos,
-			{ 0.25f ,0.25f ,0.25f },
-			1.0f,
-			{ 1.0f,1.0f,1.0f,1.0f },
-			"",PARTICLEPATTERN::NORMAL);
+			randPos,
+			{ size ,size ,size },
+			time,
+			Color(1,1,1,1),
+			EASEPATTERN::INBACK);
 	}
 }
 
@@ -694,10 +703,45 @@ void Player::GroundHitParticle()
 {
 	for (int32_t i = 0; i < 5; i++)
 	{
-		float size = 0.5f;
+		float size = MathF::GetRand(0.1f, 0.3f);
+		float time = MathF::GetRand(0.3f,0.7f);
 		Vector3 partPos = Util::GetRandVector3(position, -1.f, 1.f, { 1,0,1 });
-		ParticleManager::Get()->CreateCubeParticle(partPos, { size ,size ,size }, 2.0f, { 1.0f,1.0f,1.0f,1.0f },
-			"", PARTICLEPATTERN::DROP);
+		
+		ParticleManager::Get()->CreateSmoke(partPos, partPos,
+			{ size,size,size }, time, Color(1, 1, 1, 1), EASEPATTERN::INBACK);
+	}
+}
+
+void Donute(const Obj3d& obj, float x, float y, float z)
+{
+	Vector3 partPos = obj.position
+		+ obj.matWorld.ExtractAxisX() * x
+		+ obj.matWorld.ExtractAxisY() * y
+		+ obj.matWorld.ExtractAxisZ() * z;
+
+	partPos = Util::GetRandVector3(partPos, -0.25f, 0.25f);
+	Vector3 end = partPos - obj.matWorld.ExtractAxisZ() * 2.0f;
+
+	float size = MathF::GetRand(0.5f, 0.7f);
+	float time = MathF::GetRand(0.3f, 0.7f);
+	ParticleManager::Get()->CreateSmoke(partPos, end,
+		{ size,size,size }, time, Color(1, 1, 1, 1), EASEPATTERN::INBACK);
+};
+
+void Player::DonuteSmoke(Vector3 center)
+{
+	center;
+	//めっちゃ無理やりだけど、それぞれの角度ごとに足し算引き算して、最終地点を割り出す
+	for (int32_t i = 0; i < 4; i++)
+	{
+		Donute(*this, 0, 1, 1);
+		Donute(*this, 0, -1, 1);
+		Donute(*this, 1, 0, 1);
+		Donute(*this, -1, 0, 1);
+		Donute(*this, 0.75f, 0.75f, 1);
+		Donute(*this, 0.75f, -0.75f, 1);
+		Donute(*this, -0.75f, 0.75f, 1);
+		Donute(*this, -0.75f, -0.75f, 1);
 	}
 }
 

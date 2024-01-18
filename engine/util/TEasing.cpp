@@ -174,6 +174,16 @@ float TEasing::InBack(const float& start, const float& end, const float& timeRat
 	return start + dif;
 }
 
+Vector3 TEasing::InBack(const Vector3& start, const Vector3& end, const float& timeRate)
+{
+	Vector3 temp;
+	temp.x = InBack(start.x, end.x, timeRate);
+	temp.y = InBack(start.y, end.y, timeRate);
+	temp.z = InBack(start.z, end.z, timeRate);
+
+	return temp;
+}
+
 float TEasing::OutBack(const float& timeRate)
 {
 	const float c1 = 1.70158f;
@@ -187,6 +197,16 @@ float TEasing::OutBack(const float& start, const float& end, const float& timeRa
 	float dif = end - start;
 	dif *= OutBack(timeRate);
 	return start + dif;
+}
+
+Vector3 TEasing::OutBack(const Vector3& start, const Vector3& end, const float& timeRate)
+{
+	Vector3 temp;
+	temp.x = OutBack(start.x, end.x, timeRate);
+	temp.y = OutBack(start.y, end.y, timeRate);
+	temp.z = OutBack(start.z, end.z, timeRate);
+
+	return temp;
 }
 
 float TEasing::InOutBack(const float& timeRate)

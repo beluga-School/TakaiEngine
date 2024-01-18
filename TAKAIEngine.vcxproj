@@ -137,6 +137,7 @@
     <ClCompile Include="application\game\BombSolider.cpp" />
     <ClCompile Include="AttackTutorialUI.cpp" />
     <ClCompile Include="BreakBlock.cpp" />
+    <ClCompile Include="CameraHitCheck.cpp" />
     <ClCompile Include="DokanTutorialUI.cpp" />
     <ClCompile Include="DropBlock.cpp" />
     <ClCompile Include="engine\util\InstantDrawer.cpp" />
@@ -253,6 +254,7 @@
     <ClInclude Include="application\game\BombSolider.h" />
     <ClInclude Include="AttackTutorialUI.h" />
     <ClInclude Include="BreakBlock.h" />
+    <ClInclude Include="CameraHitCheck.h" />
     <ClInclude Include="DokanTutorialUI.h" />
     <ClInclude Include="DropBlock.h" />
     <ClInclude Include="engine\util\InstantDrawer.h" />

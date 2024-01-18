@@ -30,6 +30,8 @@ namespace MathF
 	/// <param name="angle">角度</param>
 	/// <returns></returns>
 	Vector2 CircularMotion(const Vector2& CenterPoint,const float& radius,const float& angle);
+	
+	Vector3 CircularMotion(const Vector3& CenterPoint,const float& radius,const float& angle);
 
 	//入ってきた要素の平均を返す 要素全てが0だったら0を返す
 	float Avarage(Vector3 v);

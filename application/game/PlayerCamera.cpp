@@ -16,8 +16,8 @@ void PlayerCamera::Initialize()
 	Obj3d::Initialize();
 
 	transparentObj.Initialize();
-	transparentObj.SetModel(ModelManager::GetModel("BlankCube"));
-	transparentObj.scale = { 5,5,5 };
+	transparentObj.SetModel(ModelManager::GetModel("Cube"));
+	transparentObj.scale = { 1,1,1 };
 }
 
 void PlayerCamera::Update()
@@ -135,6 +135,8 @@ void PlayerCamera::CreateCamCol()
 		player->scale.z };
 
 	cameraCol.scale.y = Util::Clamp(cameraCol.scale.y, player->scale.y, 9999.f);
+
+	transparentObj.Update(*Camera::sCamera);
 }
 
 void PlayerCamera::PlayerFollow()

@@ -39,8 +39,10 @@ namespace TEasing
 	//飛び出して戻る挙動
 	float InBack(const float& timeRate);
 	float InBack(const float& start, const float& end, const float& timeRate);
+	Vector3 InBack(const Vector3& start, const Vector3& end, const float& timeRate);
 	float OutBack(const float& timeRate);
 	float OutBack(const float& start, const float& end, const float& timeRate);
+	Vector3 OutBack(const Vector3& start, const Vector3& end, const float& timeRate);
 	float InOutBack(const float& timeRate);
 	float InOutBack(const float& start, const float& end, const float& timeRate);
 

@@ -4,6 +4,7 @@
 #include "HPGauge.h"
 #include "Mob.h"
 #include "ImguiManager.h"
+#include "CameraHitCheck.h"
 
 /*! Player
 	プレイヤークラス
@@ -160,6 +161,9 @@ private:
 
 	//地面とぶつかった時のパーティクル
 	void GroundHitParticle();
+
+	//煙のパーティクルをドーナツ型で出現させる(より汎用的な場所に移動したい)
+	void DonuteSmoke(Vector3 center);
 
 public:
 	//プレイヤーの回転を管理する変数

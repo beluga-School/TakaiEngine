@@ -28,4 +28,5 @@ enum class TagTable
 	BombSolider = 21,
 	BreakBlock = 22,
 	TikuwaBlock = 23,
+	CameraHitCheck = 24,
 };

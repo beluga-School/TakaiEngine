@@ -472,6 +472,9 @@
     <Filter Include="Application\Entity\EventBlock\Grass">
       <UniqueIdentifier>{4bed3920-454d-4433-88d1-e9e4d1ca3588}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Application\Entity\EventBlock\CameraHitCheck">
+      <UniqueIdentifier>{9976d343-0f8b-43db-b160-051330ddc1c4}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="engine\input\Input.cpp">
@@ -818,6 +821,9 @@
     </ClCompile>
     <ClCompile Include="Grass.cpp">
       <Filter>Application\Entity\EventBlock\Grass</Filter>
+    </ClCompile>
+    <ClCompile Include="CameraHitCheck.cpp">
+      <Filter>Application\Entity\EventBlock\CameraHitCheck</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1180,6 +1186,9 @@
     </ClInclude>
     <ClInclude Include="Grass.h">
       <Filter>Application\Entity\EventBlock\Grass</Filter>
+    </ClInclude>
+    <ClInclude Include="CameraHitCheck.h">
+      <Filter>Application\Entity\EventBlock\CameraHitCheck</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

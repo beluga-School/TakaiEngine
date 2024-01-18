@@ -3,11 +3,20 @@
 #include <list>
 #include "Obj.h"
 #include <string>
+#include "Color.h"
 
 enum class PARTICLEPATTERN
 {
 	NORMAL,
 	DROP,
+};
+
+enum class EASEPATTERN
+{
+	INQUAD,
+	OUTQUAD,
+	INBACK,
+	OUTBACK,
 };
 
 /*! CubeParticle
@@ -81,6 +90,37 @@ private:
 	TEasing::easeTimer downtime = 0.5f;
 };
 
+class Smoke : public IParticle
+{
+public:
+	Smoke();
+	Smoke(const Vector3& start,
+		const Vector3& end,
+		const Vector3& scale,
+		float time,
+		const Color& color,
+		const EASEPATTERN& pattern);
+
+	void Set(const Vector3& start,
+		const Vector3& end,
+		const Vector3& scale,
+		float time,
+		const Color& color,
+		const EASEPATTERN& pattern);
+
+	void Update();
+
+private:
+	Vector3 start;
+	Vector3 end;
+
+	Vector3 startScale;
+
+	EASEPATTERN pattern;
+	
+	TEasing::easeTimer lifeTimer = 1.0f;
+};
+
 /*! ParticleManager
 	3Dオブジェクトパーティクルを生成、管理するクラス
 */
@@ -96,12 +136,27 @@ public:
 		const std::string& texturehandle = "", PARTICLEPATTERN pattern = PARTICLEPATTERN::NORMAL);
 	void CreateSphereParticle(const Vector3& pos, const Vector3& scale, const float& moveDistance, const DirectX::XMFLOAT4& color);
 
+	//開始座標
+	//終点座標
+	//開始スケール
+	//消えるまでの時間
+	//色
+	//消えるまでのイージング
+	void CreateSmoke(const Vector3& start,
+		const Vector3& end,
+		const Vector3& scale,
+		float time,
+		const Color& color,
+		const EASEPATTERN& pattern = EASEPATTERN::INQUAD);
+
+
 	void Update();
 	void Draw();
 
 private:
 	std::list<std::unique_ptr<CubeParticle>> cubePool;
 	std::list<std::unique_ptr<SphereParticle>> spherePool;
+	std::list<std::unique_ptr<Smoke>> smokePool;
 
 	ParticleManager() {};
 	~ParticleManager() {};

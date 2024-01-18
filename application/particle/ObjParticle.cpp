@@ -18,6 +18,7 @@ void ParticleManager::CreatePool()
 	{
 		cubePool.emplace_back(std::make_unique<CubeParticle>());
 		spherePool.emplace_back(std::make_unique<SphereParticle>());
+		smokePool.emplace_back(std::make_unique<Smoke>());
 	}
 }
 
@@ -27,6 +28,9 @@ void ParticleManager::AllDelete()
 		pat->isdead = true;
 	}
 	for (unique_ptr<SphereParticle>& pat : spherePool) {
+		pat->isdead = true;
+	}
+	for (unique_ptr<Smoke>& pat : smokePool) {
 		pat->isdead = true;
 	}
 }
@@ -57,6 +61,18 @@ void ParticleManager::CreateSphereParticle(const Vector3& pos, const Vector3& sc
 	spherePool.emplace_back(std::make_unique<SphereParticle>(pos, scale, moveDistance, color));
 }
 
+void ParticleManager::CreateSmoke(const Vector3& start, const Vector3& end, const Vector3& scale, float time, const Color& color, const EASEPATTERN& pattern)
+{
+	for (unique_ptr<Smoke>& pat : smokePool) {
+		if (pat->isdead) {
+			pat->Set(start,end,scale,time,color,pattern);
+			return;
+		}
+	}
+
+	smokePool.emplace_back(std::make_unique<Smoke>(start, end, scale, time, color, pattern));
+}
+
 void ParticleManager::Update()
 {
 	for (unique_ptr<CubeParticle>& pat : cubePool) {
@@ -65,6 +81,11 @@ void ParticleManager::Update()
 		}
 	}
 	for (unique_ptr<SphereParticle>& pat : spherePool) {
+		if (!pat->isdead) {
+			pat->Update();
+		}
+	}
+	for (unique_ptr<Smoke>& pat : smokePool) {
 		if (!pat->isdead) {
 			pat->Update();
 		}
@@ -85,6 +106,11 @@ void ParticleManager::Draw()
 			pat->part.DrawOutLine();
 		}
 	}
+	for (unique_ptr<Smoke>& pat : smokePool) {
+		if (!pat->isdead) {
+			pat->part.DrawOutLine();
+		}
+	}
 	
 	BasicObjectPreDraw("DitherTransparent");
 	for (unique_ptr<CubeParticle>& pat : cubePool) {
@@ -94,6 +120,11 @@ void ParticleManager::Draw()
 	}
 
 	for (unique_ptr<SphereParticle>& pat : spherePool) {
+		if (!pat->isdead) {
+			pat->Draw();
+		}
+	}
+	for (unique_ptr<Smoke>& pat : smokePool) {
 		if (!pat->isdead) {
 			pat->Draw();
 		}
@@ -308,5 +339,82 @@ void SphereParticle::Update()
 		part.scale.z = TEasing::InBack(saveScale.z, 0.f, downtime.GetTimeRate());
 	}
 
+	part.Update(*Camera::sCamera);
+}
+
+Smoke::Smoke()
+{
+	part.Initialize();
+	part.SetTexture(TextureManager::Get()->GetTexture("white"));
+	part.SetModel(ModelManager::GetModel("Sphere"));
+
+	part.SetOutLineState({ 0,0,0,1 }, 0.05f);
+}
+
+Smoke::Smoke(const Vector3& start,
+	const Vector3& end,
+	const Vector3& scale,
+	float time,
+	const Color& color,
+	const EASEPATTERN& pattern)
+{
+	part.Initialize();
+	part.SetTexture(TextureManager::Get()->GetTexture("white"));
+	part.SetModel(ModelManager::GetModel("Sphere"));
+
+	Set(start,end,scale,time,color,pattern);
+
+	part.SetOutLineState({ 0,0,0,1 }, 0.05f);
+}
+
+void Smoke::Set(const Vector3& start_, 
+	const Vector3& end_,
+	const Vector3& scale_,
+	float time_, 
+	const Color& color_, 
+	const EASEPATTERN& pattern_)
+{
+	start = start_;
+	end = end_;
+	part.position = start_;
+	part.scale = scale_;
+	part.color_ = color_.f4;
+	pattern = pattern_;
+
+	startScale = scale_;
+
+	lifeTimer.mMaxTime = time_;
+
+	isdead = false;
+
+	lifeTimer.Start();
+}
+
+void Smoke::Update()
+{
+	lifeTimer.Update();
+
+	if (lifeTimer.GetEnd())
+	{
+		isdead = true;
+	}
+
+	switch (pattern)
+	{
+	case EASEPATTERN::INQUAD:
+		part.scale = TEasing::InQuad(startScale, Vector3(0, 0, 0), lifeTimer.GetTimeRate());
+		break;
+	case EASEPATTERN::OUTQUAD:
+		part.scale = TEasing::OutQuad(startScale, Vector3(0, 0, 0), lifeTimer.GetTimeRate());
+		break;
+	case EASEPATTERN::INBACK:
+		part.scale = TEasing::InBack(startScale, Vector3(0, 0, 0), lifeTimer.GetTimeRate());
+		break;
+	case EASEPATTERN::OUTBACK:
+		part.scale = TEasing::OutBack(startScale, Vector3(0,0,0), lifeTimer.GetTimeRate());
+		break;
+	}
+
+	part.position = TEasing::InQuad(start, end, lifeTimer.GetTimeRate());
 	part.Update(*Camera::sCamera);
 }
