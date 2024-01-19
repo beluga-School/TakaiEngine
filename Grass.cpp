@@ -9,12 +9,13 @@ void Grass::LoadResource()
 
 void Grass::Initialize()
 {
-	SetModel(ModelManager::GetModel("grass"));
+	SetModel(ModelManager::GetModel("teiboku"));
 	SetTexture(TextureManager::GetTexture("default"));
 }
 
 void Grass::Update()
 {
+	minScale = saveScale * 0.8f;
 	timer.Update();
 
 	if (timer.GetNowEnd())
@@ -42,7 +43,7 @@ void Grass::Update()
 	if (bounceCount > 5)
 	{
 		rotation.x = TEasing::InQuad(0, MathF::AngleConvRad(20), timer.GetTimeRate());
-		scale.y = TEasing::InQuad(0.8f, 1.0f, timer.GetTimeRate());
+		scale.y = TEasing::InQuad(minScale.y, saveScale.y, timer.GetTimeRate());
 		if (timer.GetReverseEnd())
 		{
 			bounceCount = 0;
@@ -50,7 +51,7 @@ void Grass::Update()
 	}
 	else
 	{
-		scale.y = TEasing::InQuad(0.8f, 1.0f,timer.GetTimeRate());
+		scale.y = TEasing::InQuad(minScale.y, saveScale.y,timer.GetTimeRate());
 	}
 
 	timer.Roop();

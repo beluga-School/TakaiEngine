@@ -1079,6 +1079,9 @@ bool StageChanger::SetGrass(const LevelData::ObjectData& data)
 			CollisionSet(data);
 		}
 
+		Grass* grass = static_cast<Grass*>(mEntitys.back().get());
+		grass->saveScale = data.scaling;
+
 		return true;
 	}
 	return false;

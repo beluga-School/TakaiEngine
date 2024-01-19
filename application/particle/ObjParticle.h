@@ -115,9 +115,13 @@ private:
 	Vector3 end;
 
 	Vector3 startScale;
+	Vector3 maxScale;
 
 	EASEPATTERN pattern;
 	
+	TEasing::easeTimer upTimer = 1.0f;
+	TEasing::easeTimer stayTimer = 0.1f;
+	TEasing::easeTimer downTimer = 1.0f;
 	TEasing::easeTimer lifeTimer = 1.0f;
 };
 

@@ -306,6 +306,8 @@ void ModelManager::PreLoad()
 	LoadModel("slime", "slime",true);
 	LoadModel("Coin", "Coin",true);
 	LoadModel("bombSolider", "bombSolider",true);
+	LoadModel("smoke", "smoke",true);
+	LoadModel("teiboku", "teiboku",true);
 }
 
 void ModelManager::LoadModel(const std::string filepath, const std::string handle, bool smooth)

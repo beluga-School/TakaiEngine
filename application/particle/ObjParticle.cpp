@@ -346,7 +346,7 @@ Smoke::Smoke()
 {
 	part.Initialize();
 	part.SetTexture(TextureManager::Get()->GetTexture("white"));
-	part.SetModel(ModelManager::GetModel("Sphere"));
+	part.SetModel(ModelManager::GetModel("smoke"));
 
 	part.SetOutLineState({ 0,0,0,1 }, 0.05f);
 }
@@ -360,7 +360,7 @@ Smoke::Smoke(const Vector3& start,
 {
 	part.Initialize();
 	part.SetTexture(TextureManager::Get()->GetTexture("white"));
-	part.SetModel(ModelManager::GetModel("Sphere"));
+	part.SetModel(ModelManager::GetModel("smoke"));
 
 	Set(start,end,scale,time,color,pattern);
 
@@ -381,18 +381,43 @@ void Smoke::Set(const Vector3& start_,
 	part.color_ = color_.f4;
 	pattern = pattern_;
 
-	startScale = scale_;
+	startScale = scale_ * 0.5f;
+	maxScale = scale_;
 
 	lifeTimer.mMaxTime = time_;
+
+	upTimer.mMaxTime = time_ * 0.2f;
+	stayTimer.mMaxTime = time_ * 0.2f;
+	downTimer.mMaxTime = time_ * 0.6f;
 
 	isdead = false;
 
 	lifeTimer.Start();
+
+	upTimer.Start();
+	stayTimer.Reset();
+	downTimer.Reset();
+
+	part.rotation.x = MathF::GetRand(0.0f, 3.14f);
+	part.rotation.y = MathF::GetRand(0.0f, 3.14f);
+	part.rotation.z = MathF::GetRand(0.0f, 3.14f);
 }
 
 void Smoke::Update()
 {
+	upTimer.Update();
+	stayTimer.Update();
+	downTimer.Update();
 	lifeTimer.Update();
+
+	if (upTimer.GetNowEnd())
+	{
+		stayTimer.Start();
+	}
+	if (stayTimer.GetNowEnd())
+	{
+		downTimer.Start();
+	}
 
 	if (lifeTimer.GetEnd())
 	{
@@ -402,17 +427,43 @@ void Smoke::Update()
 	switch (pattern)
 	{
 	case EASEPATTERN::INQUAD:
-		part.scale = TEasing::InQuad(startScale, Vector3(0, 0, 0), lifeTimer.GetTimeRate());
+		if (upTimer.GetRun())
+		{
+			part.scale = TEasing::InQuad(startScale,maxScale, upTimer.GetTimeRate());
+		}
+		else
+		{
+			part.scale = TEasing::InQuad(maxScale, Vector3(0, 0, 0), downTimer.GetTimeRate());
+		}
 		break;
 	case EASEPATTERN::OUTQUAD:
-		part.scale = TEasing::OutQuad(startScale, Vector3(0, 0, 0), lifeTimer.GetTimeRate());
-		break;
+		if (upTimer.GetRun())
+		{
+			part.scale = TEasing::OutQuad(startScale, maxScale, upTimer.GetTimeRate());
+		}
+		else
+		{
+			part.scale = TEasing::OutQuad(maxScale, Vector3(0, 0, 0), downTimer.GetTimeRate());
+		}break;
 	case EASEPATTERN::INBACK:
-		part.scale = TEasing::InBack(startScale, Vector3(0, 0, 0), lifeTimer.GetTimeRate());
+		if (upTimer.GetRun())
+		{
+			part.scale = TEasing::InBack(startScale, maxScale, upTimer.GetTimeRate());
+		}
+		else
+		{
+			part.scale = TEasing::InBack(maxScale, Vector3(0, 0, 0), downTimer.GetTimeRate());
+		}
 		break;
 	case EASEPATTERN::OUTBACK:
-		part.scale = TEasing::OutBack(startScale, Vector3(0,0,0), lifeTimer.GetTimeRate());
-		break;
+		if (upTimer.GetRun())
+		{
+			part.scale = TEasing::OutBack(startScale, maxScale, upTimer.GetTimeRate());
+		}
+		else
+		{
+			part.scale = TEasing::OutBack(maxScale, Vector3(0, 0, 0), downTimer.GetTimeRate());
+		}break;
 	}
 
 	part.position = TEasing::InQuad(start, end, lifeTimer.GetTimeRate());
