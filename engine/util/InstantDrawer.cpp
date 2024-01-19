@@ -11,6 +11,8 @@ void InstantDrawer::DrawInit()
 	for (auto& instant : Get()->sSprites)
 	{
 		instant.isUse = false;
+		instant.mColor = {1,1,1,1};
+		instant.mRotation = 0;
 	}
 	for (auto& instant : Get()->sBillboards)
 	{
