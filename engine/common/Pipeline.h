@@ -162,6 +162,9 @@ private:
 	//キャラクター用スペキュラー付きディザ抜きパイプライン
 	void CharactorDitherPipeLine();
 
+	//ビルボード用パイプライン
+	void BillboardPipeLine();
+
 	PipelineManager(){};
 	~PipelineManager(){};
 };

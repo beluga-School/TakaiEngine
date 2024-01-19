@@ -181,6 +181,10 @@ private:
 	EASEPATTERN pattern;
 
 	TEasing::easeTimer lifeTimer;
+
+	TEasing::easeTimer roopTimer;
+
+	Vector3 moveSpeed = { 0,0,0 };
 };
 
 /*! ParticleManager

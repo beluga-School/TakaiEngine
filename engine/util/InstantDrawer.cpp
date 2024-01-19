@@ -232,8 +232,7 @@ void InstantDrawer::AllDraw2D()
 
 void InstantDrawer::AllDraw3D()
 {
-	BasicObjectPreDraw("GroundToon");
-
+	BasicObjectPreDraw("Billboard",false);
 	for (auto& billboard : Get()->sBillboards)
 	{
 		if (billboard.isUse)
@@ -242,6 +241,7 @@ void InstantDrawer::AllDraw3D()
 		}
 	}
 	
+	BasicObjectPreDraw("GroundToon");
 	for (auto& obj : Get()->sObjs)
 	{
 		if (obj.isUse)

@@ -541,6 +541,9 @@ void TextureParticle::Set(const Vector3& start_,
 	
 	lifeTimer.Start();
 	isdead = false;
+
+	moveSpeed.x = MathF::GetRand(-1, 1);
+	moveSpeed.z = MathF::GetRand(-1, 1);
 }
 
 void TextureParticle::Update()
@@ -551,7 +554,21 @@ void TextureParticle::Update()
 		isdead = true;
 	}
 
-	position = TEasing::InQuad(start, end, lifeTimer.GetTimeRate());
+	if (lifeTimer.GetTimeRate() < 0.5f)
+	{
+		moveSpeed.y = TEasing::OutQuad(10.f, 0, lifeTimer.GetTimeRate());
+	}
+	else
+	{
+		moveSpeed.y = TEasing::InQuad(0, -10.f, lifeTimer.GetTimeRate());
+	}
+
+	position.x += moveSpeed.x * TimeManager::deltaTime;
+	position.y += moveSpeed.y * TimeManager::deltaTime;
+	position.z += moveSpeed.z * TimeManager::deltaTime;
+
+	//position = TEasing::InQuad(start, end, roopTimer.GetTimeRate());
+	
 	sizeRate.x = TEasing::InQuad(startRate.x, 0, lifeTimer.GetTimeRate());
 	sizeRate.y = TEasing::InQuad(startRate.y, 0, lifeTimer.GetTimeRate());
 }

@@ -27,13 +27,13 @@ void Grass::Update()
 		if (timer.GetNowEnd())
 		{
 			Vector3 startPos = position + Vector3(0,2,0);
-			Vector3 endPos = Util::GetRandVector3(startPos,-2.0f,2.0f);
+			Vector3 partpos = Util::GetRandVector3(startPos, -2.0f, 2.0f, {1,0,1});
 			
 			float partSize = 1.f;
 
 			ParticleManager::Get()->CreateTextureParticle(
-				startPos,
-				endPos,
+				partpos,
+				partpos,
 				{ partSize ,partSize },
 				1.0f,
 				"leaf",
@@ -43,9 +43,10 @@ void Grass::Update()
 			{
 				for (int32_t i = 0; i < 3; i++)
 				{
+					partpos = Util::GetRandVector3(startPos, -2.0f, 2.0f, { 1,0,1 });
 					ParticleManager::Get()->CreateTextureParticle(
-						startPos,
-						endPos,
+						partpos,
+						partpos,
 						{ partSize ,partSize },
 						1.0f,
 						"leaf",
