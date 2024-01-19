@@ -31,9 +31,7 @@ public:
 
 	virtual void Update() = 0;
 
-	void Draw() {
-		part.Draw();
-	};
+	virtual void Draw() = 0;
 
 	bool isdead = true;
 };
@@ -52,6 +50,10 @@ public:
 		const std::string& texturehandle, PARTICLEPATTERN pattern);
 
 	void Update();
+
+	void Draw() {
+		part.Draw();
+	};
 private:
 	//回転速度の倍率
 	float rotateMag = 10.0f;
@@ -78,6 +80,10 @@ public:
 	void Set(const Vector3& pos, const Vector3& scale, const float& moveDistance,const DirectX::XMFLOAT4& color);
 
 	void Update();
+
+	void Draw() {
+		part.Draw();
+	};
 
 private:
 	//動く速さ
@@ -110,6 +116,10 @@ public:
 
 	void Update();
 
+	void Draw() {
+		part.Draw();
+	};
+
 private:
 	Vector3 start;
 	Vector3 end;
@@ -123,6 +133,54 @@ private:
 	TEasing::easeTimer stayTimer = 0.1f;
 	TEasing::easeTimer downTimer = 1.0f;
 	TEasing::easeTimer lifeTimer = 1.0f;
+};
+
+class TextureParticle
+{
+public:
+	TextureParticle();
+	TextureParticle(const Vector3& start,
+		const Vector3& end,
+		const Vector2& sizeRate,
+		float time,
+		const std::string& texturehandle,
+		EASEPATTERN pattern);
+
+	/// <summary>
+	/// 開始位置
+	/// 終点位置
+	/// 使うテクスチャ
+	/// 開始スケール
+	/// 色
+	/// 挙動
+	/// </summary>
+	void Set(const Vector3& start,
+		const Vector3& end,
+		const Vector2& sizeRate,
+		float time,
+		const std::string& texturehandle,
+		EASEPATTERN pattern);
+
+	void Update();
+
+	void Draw();
+
+	bool isdead = true;
+private:
+	Vector3 position;
+
+	Vector3 start;
+	Vector3 end;
+
+	Vector2 sizeRate;
+	Vector2 startRate;
+
+	Color color;
+	std::string handle = "";
+
+	EASEPATTERN pattern;
+
+	TEasing::easeTimer lifeTimer;
 };
 
 /*! ParticleManager
@@ -139,6 +197,13 @@ public:
 	void CreateCubeParticle(const Vector3& pos, const Vector3& scale, const float& moveDistance, const DirectX::XMFLOAT4& color,
 		const std::string& texturehandle = "", PARTICLEPATTERN pattern = PARTICLEPATTERN::NORMAL);
 	void CreateSphereParticle(const Vector3& pos, const Vector3& scale, const float& moveDistance, const DirectX::XMFLOAT4& color);
+
+	void CreateTextureParticle(const Vector3& start,
+		const Vector3& end,
+		const Vector2& sizeRate,
+		float time,
+		const std::string& texturehandle,
+		EASEPATTERN pattern);
 
 	//開始座標
 	//終点座標
@@ -161,6 +226,7 @@ private:
 	std::list<std::unique_ptr<CubeParticle>> cubePool;
 	std::list<std::unique_ptr<SphereParticle>> spherePool;
 	std::list<std::unique_ptr<Smoke>> smokePool;
+	std::list<std::unique_ptr<TextureParticle>> texPool;
 
 	ParticleManager() {};
 	~ParticleManager() {};

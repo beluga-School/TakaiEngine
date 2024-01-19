@@ -3,6 +3,7 @@
 #include "TimeManager.h"
 #include "Camera.h"
 #include "ClearDrawScreen.h"
+#include "InstantDrawer.h"
 
 using namespace std;
 
@@ -73,6 +74,23 @@ void ParticleManager::CreateSmoke(const Vector3& start, const Vector3& end, cons
 	smokePool.emplace_back(std::make_unique<Smoke>(start, end, scale, time, color, pattern));
 }
 
+void ParticleManager::CreateTextureParticle(const Vector3& start,
+	const Vector3& end,
+	const Vector2& sizeRate,
+	float time,
+	const std::string& texturehandle,
+	EASEPATTERN pattern)
+{
+	for (unique_ptr<TextureParticle>& pat : texPool) {
+		if (pat->isdead) {
+			pat->Set(start, end, sizeRate, time, texturehandle, pattern);
+			return;
+		}
+	}
+
+	texPool.emplace_back(std::make_unique<TextureParticle>(start, end, sizeRate, time, texturehandle, pattern));
+}
+
 void ParticleManager::Update()
 {
 	for (unique_ptr<CubeParticle>& pat : cubePool) {
@@ -86,6 +104,11 @@ void ParticleManager::Update()
 		}
 	}
 	for (unique_ptr<Smoke>& pat : smokePool) {
+		if (!pat->isdead) {
+			pat->Update();
+		}
+	}
+	for (unique_ptr<TextureParticle>& pat : texPool) {
 		if (!pat->isdead) {
 			pat->Update();
 		}
@@ -125,6 +148,13 @@ void ParticleManager::Draw()
 		}
 	}
 	for (unique_ptr<Smoke>& pat : smokePool) {
+		if (!pat->isdead) {
+			pat->Draw();
+		}
+	}
+
+	BasicObjectPreDraw("DitherTransparent");
+	for (unique_ptr<TextureParticle>& pat : texPool) {
 		if (!pat->isdead) {
 			pat->Draw();
 		}
@@ -468,4 +498,65 @@ void Smoke::Update()
 
 	part.position = TEasing::InQuad(start, end, lifeTimer.GetTimeRate());
 	part.Update(*Camera::sCamera);
+}
+
+TextureParticle::TextureParticle()
+{
+	
+}
+
+TextureParticle::TextureParticle(const Vector3& start_, 
+	const Vector3& end_, 
+	const Vector2& sizeRate_,
+	float time_,
+	const std::string& texturehandle_,
+	EASEPATTERN pattern_)
+{
+	position = start_;
+	end = end_;
+	startRate = sizeRate_;
+	sizeRate = sizeRate_;
+	pattern = pattern_;
+	handle = texturehandle_;
+
+	lifeTimer.mMaxTime = time_;
+}
+
+void TextureParticle::Set(const Vector3& start_,
+	const Vector3& end_,
+	const Vector2& sizeRate_,
+	float time_,
+	const std::string& texturehandle_,
+	EASEPATTERN pattern_)
+{
+	position = start_;
+	start = start_;
+	end = end_;
+	startRate = sizeRate_;
+	sizeRate = sizeRate_;
+	pattern = pattern_;
+	handle = texturehandle_;
+
+	lifeTimer.mMaxTime = time_;
+	
+	lifeTimer.Start();
+	isdead = false;
+}
+
+void TextureParticle::Update()
+{
+	lifeTimer.Update();
+	if (lifeTimer.GetEnd())
+	{
+		isdead = true;
+	}
+
+	position = TEasing::InQuad(start, end, lifeTimer.GetTimeRate());
+	sizeRate.x = TEasing::InQuad(startRate.x, 0, lifeTimer.GetTimeRate());
+	sizeRate.y = TEasing::InQuad(startRate.y, 0, lifeTimer.GetTimeRate());
+}
+
+void TextureParticle::Draw()
+{
+	InstantDrawer::DrawGraph3D(position, sizeRate.x, sizeRate.y, handle);
 }

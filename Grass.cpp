@@ -4,7 +4,7 @@
 
 void Grass::LoadResource()
 {
-	//TextureManager::Load("Resources\\movegrass.png", "movegrass");
+	TextureManager::Load("Resources\\leaf.png", "leaf");
 }
 
 void Grass::Initialize()
@@ -26,16 +26,30 @@ void Grass::Update()
 	{
 		if (timer.GetNowEnd())
 		{
-			Vector3 partPos = position;
-			partPos.y += 1.0f;
-			float partSize = 1.0f;
+			Vector3 startPos = position + Vector3(0,2,0);
+			Vector3 endPos = Util::GetRandVector3(startPos,-2.0f,2.0f);
+			
+			float partSize = 1.f;
 
-			ParticleManager::Get()->CreateCubeParticle(partPos, { partSize,partSize,partSize }, 10.f, { 0,1,0,1 }, "", PARTICLEPATTERN::DROP);
+			ParticleManager::Get()->CreateTextureParticle(
+				startPos,
+				endPos,
+				{ partSize ,partSize },
+				1.0f,
+				"leaf",
+				EASEPATTERN::INQUAD);
+
 			if (bounceCount > 5)
 			{
 				for (int32_t i = 0; i < 3; i++)
 				{
-					ParticleManager::Get()->CreateCubeParticle(partPos, { partSize,partSize,partSize }, 10.f, { 0,1,0,1 }, "", PARTICLEPATTERN::DROP);
+					ParticleManager::Get()->CreateTextureParticle(
+						startPos,
+						endPos,
+						{ partSize ,partSize },
+						1.0f,
+						"leaf",
+						EASEPATTERN::INQUAD);
 				}
 			}
 		}
