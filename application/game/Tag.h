@@ -29,4 +29,5 @@ enum class TagTable
 	BreakBlock = 22,
 	TikuwaBlock = 23,
 	CameraHitCheck = 24,
+	BackGround = 25,
 };

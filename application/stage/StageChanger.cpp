@@ -484,6 +484,10 @@ void StageChanger::ChangeUpdate()
 		{
 			continue;
 		}
+		if (SetBackGround(*objectData))
+		{
+			continue;
+		}
 
 		if(SetBlock(*objectData))
 		{
@@ -1087,6 +1091,26 @@ bool StageChanger::SetGrass(const LevelData::ObjectData& data)
 	return false;
 }
 
+bool StageChanger::SetBackGround(const LevelData::ObjectData& data)
+{
+	
+	if (data.setObjectName == "background")
+	{
+		SetObject<Block>(data);
+
+		//当たり判定を作成
+		if (data.collider.have)
+		{
+			CollisionSet(data);
+		}
+
+		mEntitys.back()->SetTag(TagTable::BackGround);
+
+		return true;
+	}
+	return false;
+}
+
 void StageChanger::DrawModel()
 {
 	if (mShowModel == false) return;
@@ -1104,17 +1128,19 @@ void StageChanger::DrawModel()
 		else
 		{
 			BasicObjectPreDraw("OutLine", false);
-			//BasicObjectPreDraw("DitherOutline", false);
 		}
 		obj->DrawOutLine();
 		if (obj->CheckTag(TagTable::DitherTransparent))
 		{
 			BasicObjectPreDraw("DitherTransparent");
 		}
+		else if (obj->CheckTag(TagTable::BackGround))
+		{
+			BasicObjectPreDraw("BackGround", false);
+		}
 		else
 		{
 			BasicObjectPreDraw("GroundToon");
-			//BasicObjectPreDraw("DitherTransparent");
 		}
 		obj->Draw();
 	}

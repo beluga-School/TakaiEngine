@@ -165,6 +165,9 @@ private:
 	//ビルボード用パイプライン
 	void BillboardPipeLine();
 
+	//遠景用パイプライン
+	void BackGroundPipeLine();
+
 	PipelineManager(){};
 	~PipelineManager(){};
 };

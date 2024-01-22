@@ -475,6 +475,9 @@
     <Filter Include="Application\Entity\EventBlock\CameraHitCheck">
       <UniqueIdentifier>{9976d343-0f8b-43db-b160-051330ddc1c4}</UniqueIdentifier>
     </Filter>
+    <Filter Include="シェーダー\BackGround">
+      <UniqueIdentifier>{64e4de64-2e14-4b1d-82d6-69a46692867d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="engine\input\Input.cpp">
@@ -795,34 +798,34 @@
     <ClCompile Include="application\game\BombSolider.cpp">
       <Filter>Application\Charactor\Enemy\BombSolider</Filter>
     </ClCompile>
-    <ClCompile Include="BreakBlock.cpp">
+    <ClCompile Include="application\game\BreakBlock.cpp">
       <Filter>Application\Entity\EventBlock\BreakBlock</Filter>
     </ClCompile>
-    <ClCompile Include="DropBlock.cpp">
+    <ClCompile Include="application\game\DropBlock.cpp">
       <Filter>Application\Entity\EventBlock\DropBlock</Filter>
     </ClCompile>
-    <ClCompile Include="TikuwaBlock.cpp">
+    <ClCompile Include="application\game\TikuwaBlock.cpp">
       <Filter>Application\Entity\EventBlock\TikuwaBlock</Filter>
     </ClCompile>
-    <ClCompile Include="StarTutorialUI.cpp">
+    <ClCompile Include="application\ui\StarTutorialUI.cpp">
       <Filter>Application\UI\StarTutorialUI</Filter>
     </ClCompile>
-    <ClCompile Include="AttackTutorialUI.cpp">
+    <ClCompile Include="application\ui\AttackTutorialUI.cpp">
       <Filter>Application\UI\AttackTutorialUI</Filter>
     </ClCompile>
-    <ClCompile Include="TutorialUI.cpp">
+    <ClCompile Include="application\ui\TutorialUI.cpp">
       <Filter>Application\UI\TutorialUI</Filter>
     </ClCompile>
     <ClCompile Include="application\ui\GameUIManager.cpp">
       <Filter>Application\UI</Filter>
     </ClCompile>
-    <ClCompile Include="DokanTutorialUI.cpp">
+    <ClCompile Include="application\ui\DokanTutorialUI.cpp">
       <Filter>Application\UI\DokanTutorialUI</Filter>
     </ClCompile>
-    <ClCompile Include="Grass.cpp">
+    <ClCompile Include="application\game\Grass.cpp">
       <Filter>Application\Entity\EventBlock\Grass</Filter>
     </ClCompile>
-    <ClCompile Include="CameraHitCheck.cpp">
+    <ClCompile Include="application\CameraHitCheck.cpp">
       <Filter>Application\Entity\EventBlock\CameraHitCheck</Filter>
     </ClCompile>
   </ItemGroup>
@@ -1160,34 +1163,34 @@
     <ClInclude Include="application\game\BombSolider.h">
       <Filter>Application\Charactor\Enemy\BombSolider</Filter>
     </ClInclude>
-    <ClInclude Include="BreakBlock.h">
+    <ClInclude Include="application\game\BreakBlock.h">
       <Filter>Application\Entity\EventBlock\BreakBlock</Filter>
     </ClInclude>
-    <ClInclude Include="DropBlock.h">
+    <ClInclude Include="application\game\DropBlock.h">
       <Filter>Application\Entity\EventBlock\DropBlock</Filter>
     </ClInclude>
-    <ClInclude Include="TikuwaBlock.h">
+    <ClInclude Include="application\game\TikuwaBlock.h">
       <Filter>Application\Entity\EventBlock\TikuwaBlock</Filter>
     </ClInclude>
-    <ClInclude Include="StarTutorialUI.h">
+    <ClInclude Include="application\ui\StarTutorialUI.h">
       <Filter>Application\UI\StarTutorialUI</Filter>
     </ClInclude>
-    <ClInclude Include="AttackTutorialUI.h">
+    <ClInclude Include="application\ui\AttackTutorialUI.h">
       <Filter>Application\UI\AttackTutorialUI</Filter>
     </ClInclude>
-    <ClInclude Include="TutorialUI.h">
+    <ClInclude Include="application\ui\TutorialUI.h">
       <Filter>Application\UI\TutorialUI</Filter>
     </ClInclude>
     <ClInclude Include="application\ui\GameUIManager.h">
       <Filter>Application\UI</Filter>
     </ClInclude>
-    <ClInclude Include="DokanTutorialUI.h">
+    <ClInclude Include="application\ui\DokanTutorialUI.h">
       <Filter>Application\UI\DokanTutorialUI</Filter>
     </ClInclude>
-    <ClInclude Include="Grass.h">
+    <ClInclude Include="application\game\Grass.h">
       <Filter>Application\Entity\EventBlock\Grass</Filter>
     </ClInclude>
-    <ClInclude Include="CameraHitCheck.h">
+    <ClInclude Include="application\CameraHitCheck.h">
       <Filter>Application\Entity\EventBlock\CameraHitCheck</Filter>
     </ClInclude>
   </ItemGroup>
@@ -1270,6 +1273,9 @@
     </None>
     <None Include="Resources\Shader\CharactorDT.hlsli">
       <Filter>シェーダー\CharactorDT</Filter>
+    </None>
+    <None Include="Resources\Shader\BackGround.hlsli">
+      <Filter>シェーダー\BackGround</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>
@@ -1434,6 +1440,12 @@
     </FxCompile>
     <FxCompile Include="Resources\Shader\CharactorDTVS.hlsl">
       <Filter>シェーダー\CharactorDT</Filter>
+    </FxCompile>
+    <FxCompile Include="Resources\Shader\BackGroundPS.hlsl">
+      <Filter>シェーダー\BackGround</Filter>
+    </FxCompile>
+    <FxCompile Include="Resources\Shader\BackGroundVS.hlsl">
+      <Filter>シェーダー\BackGround</Filter>
     </FxCompile>
   </ItemGroup>
   <ItemGroup>

@@ -213,6 +213,8 @@ private:
 	bool SetTikuwaBlock(const LevelData::ObjectData& data);
 	//動く草
 	bool SetGrass(const LevelData::ObjectData& data);
+	//遠景配置(ライティングがされないシェーダーが使用される)
+	bool SetBackGround(const LevelData::ObjectData& data);
 
 	void DrawModel();
 	void DrawCollider();

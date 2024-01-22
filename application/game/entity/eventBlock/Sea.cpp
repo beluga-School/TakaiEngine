@@ -44,7 +44,7 @@ void Sea::Update()
 
 void Sea::Draw()
 {
-	BasicObjectPreDraw("GroundToon");
+	BasicObjectPreDraw("BackGround",false);
 	Obj3d::Draw();
 }
 

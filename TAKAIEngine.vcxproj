@@ -135,11 +135,11 @@
     <ClCompile Include="application\system\CountDownTimer.cpp" />
     <ClCompile Include="application\event\EnemyPopEvent.cpp" />
     <ClCompile Include="application\game\BombSolider.cpp" />
-    <ClCompile Include="AttackTutorialUI.cpp" />
-    <ClCompile Include="BreakBlock.cpp" />
-    <ClCompile Include="CameraHitCheck.cpp" />
-    <ClCompile Include="DokanTutorialUI.cpp" />
-    <ClCompile Include="DropBlock.cpp" />
+    <ClCompile Include="application\ui\AttackTutorialUI.cpp" />
+    <ClCompile Include="application\game\BreakBlock.cpp" />
+    <ClCompile Include="application\CameraHitCheck.cpp" />
+    <ClCompile Include="application\ui\DokanTutorialUI.cpp" />
+    <ClCompile Include="application\game\DropBlock.cpp" />
     <ClCompile Include="engine\util\InstantDrawer.cpp" />
     <ClCompile Include="application\level\LevelData.cpp" />
     <ClCompile Include="application\game\entity\eventBlock\MoveBlock.cpp" />
@@ -218,10 +218,10 @@
     <ClCompile Include="application\game\entity\RedCoin.cpp" />
     <ClCompile Include="application\event\RedCoinEvent.cpp" />
     <ClCompile Include="application\event\StarStringEvent.cpp" />
-    <ClCompile Include="Grass.cpp" />
-    <ClCompile Include="TikuwaBlock.cpp" />
-    <ClCompile Include="StarTutorialUI.cpp" />
-    <ClCompile Include="TutorialUI.cpp" />
+    <ClCompile Include="application\game\Grass.cpp" />
+    <ClCompile Include="application\game\TikuwaBlock.cpp" />
+    <ClCompile Include="application\ui\StarTutorialUI.cpp" />
+    <ClCompile Include="application\ui\TutorialUI.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="application\collision\CollideManager.h" />
@@ -252,11 +252,11 @@
     <ClInclude Include="application\system\CountDownTimer.h" />
     <ClInclude Include="application\event\EnemyPopEvent.h" />
     <ClInclude Include="application\game\BombSolider.h" />
-    <ClInclude Include="AttackTutorialUI.h" />
-    <ClInclude Include="BreakBlock.h" />
-    <ClInclude Include="CameraHitCheck.h" />
-    <ClInclude Include="DokanTutorialUI.h" />
-    <ClInclude Include="DropBlock.h" />
+    <ClInclude Include="application\ui\AttackTutorialUI.h" />
+    <ClInclude Include="application\game\BreakBlock.h" />
+    <ClInclude Include="application\CameraHitCheck.h" />
+    <ClInclude Include="application\ui\DokanTutorialUI.h" />
+    <ClInclude Include="application\game\DropBlock.h" />
     <ClInclude Include="engine\util\InstantDrawer.h" />
     <ClInclude Include="application\level\LevelData.h" />
     <ClInclude Include="application\game\entity\eventBlock\MoveBlock.h" />
@@ -333,7 +333,7 @@
     <ClInclude Include="application\event\GetStar.h" />
     <ClInclude Include="application\game\entity\RedCoin.h" />
     <ClInclude Include="application\event\RedCoinEvent.h" />
-    <ClInclude Include="Grass.h" />
+    <ClInclude Include="application\game\Grass.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="application\ui\StarUI.h" />
     <ClInclude Include="application\ui\UI.h" />
@@ -342,11 +342,12 @@
     <ClInclude Include="application\ui\SummonUI.h" />
     <ClInclude Include="engine\light\CircleShadow.h" />
     <ClInclude Include="application\event\StarStringEvent.h" />
-    <ClInclude Include="TikuwaBlock.h" />
-    <ClInclude Include="StarTutorialUI.h" />
-    <ClInclude Include="TutorialUI.h" />
+    <ClInclude Include="application\game\TikuwaBlock.h" />
+    <ClInclude Include="application\ui\StarTutorialUI.h" />
+    <ClInclude Include="application\ui\TutorialUI.h" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Resources\Shader\BackGround.hlsli" />
     <None Include="Resources\Shader\CharactorDT.hlsli" />
     <None Include="External\imgui\imgui.ini" />
     <None Include="Resources\Shader\Basic.hlsli" />
@@ -376,6 +377,16 @@
     <None Include="Resources\Shader\Toon.hlsli" />
   </ItemGroup>
   <ItemGroup>
+    <FxCompile Include="Resources\Shader\BackGroundPS.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">5.0</ShaderModel>
+    </FxCompile>
+    <FxCompile Include="Resources\Shader\BackGroundVS.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">5.0</ShaderModel>
+    </FxCompile>
     <FxCompile Include="Resources\Shader\CharactorDTPS.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
