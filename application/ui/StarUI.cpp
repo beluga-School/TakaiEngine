@@ -109,7 +109,9 @@ bool StarUI::CheckAllCollect()
 	//どれか一つでも未入手ならfalse
 	for (auto& star : stars)
 	{
-		if (!star->uiInfo.get)return false;
+		if (!star->uiInfo.get) {
+			return false;
+		}
 	}
 	//全部通ってたらtrue
 	return true;

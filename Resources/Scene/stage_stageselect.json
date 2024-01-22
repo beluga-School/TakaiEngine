@@ -1727,6 +1727,7 @@
                     2.0
                 ]
             },
+            "texture": "",
             "tiling": {
                 "tiling": [
                     10.0,
@@ -2049,9 +2050,9 @@
             "name": "土管.003",
             "transform": {
                 "translation": [
-                    248.73873901367188,
-                    -8.956390380859375,
-                    -4.087345600128174
+                    247.34852600097656,
+                    -6.835107803344727,
+                    -3.809614658355713
                 ],
                 "rotation": [
                     0.0,
@@ -2078,8 +2079,8 @@
                     2.0
                 ]
             },
-            "event_trigger": "stage_freezeland_0",
-            "setObject": "dokan_2"
+            "event_trigger": "stage_mountain_1",
+            "setObject": "dokan_1"
         }
     ]
 }
