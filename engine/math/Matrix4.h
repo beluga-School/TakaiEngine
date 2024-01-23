@@ -44,6 +44,9 @@ public:
 
 	static Matrix4 RotArbitrary(Vector3& axis,const float& rad);
 
+	//逆行列を取得
+	Matrix4 Inverse()const;
+
 	float* operator[](const int32_t& i);
 
 	float& operator()(const int32_t& i,const int32_t& j);

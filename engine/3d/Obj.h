@@ -112,6 +112,10 @@ public:
 
 	Vector3 mModelOffset = { 0,0,0 };
 
+	Matrix4 matScale;	//スケーリング行列
+	Matrix4 matRot;	//回転行列
+	Matrix4 matTrans;	//平行移動行列
+
 public:
 	//初期化
 	void Initialize();

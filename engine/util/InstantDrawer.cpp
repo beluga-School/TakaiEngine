@@ -181,6 +181,7 @@ void InstantDrawer::DrawBox3D(const Cube& cube)
 		{
 			instant.isUse = true;
 			instant.Initialize();
+			instant.SetModel(ModelManager::GetModel("Cube"));
 			instant.SetTexture(TextureManager::GetTexture("white"));
 			instant.position = cube.position;
 			instant.rotation = cube.rotation;

@@ -390,11 +390,56 @@ bool Collsions::CheckSphere2Triangle(const Sphere& sphere, const Triangle& trian
 	return true;
 }
 
-bool Collsions::SpherePoligonCollsion(const Sphere& sphere, const Vector3& poligonPos, const Triangle& triangle)
+bool Collsions::SpherePoligonCollsion(const Sphere& sphere, const Obj3d& poligon, Vector3* inter)
 {
 	Sphere temp = sphere;
-	temp.center = sphere.center - poligonPos;
-	return CheckSphere2Triangle(temp, triangle);
+	
+	//球をローカル座標へ変換
+	temp.center = Matrix4::transform(sphere.center, poligon.matWorld.Inverse());
+	temp.radius = sphere.radius * poligon.matScale.Inverse().m[0][0];
+
+	for (auto& mesh : poligon.MODEL->mTriangles)
+	{
+		if (CheckSphere2Triangle(temp, mesh))
+		{
+			if (inter)
+			{
+				*inter = Collsions::ClosestPtPoint2Triangle(temp.center, mesh);
+				*inter = Matrix4::transform(*inter, poligon.matWorld);
+			}
+			return true;
+		}
+	}
+
+	return false;
+}
+
+bool Collsions::SpherePoligonCollsion(const Sphere& sphere, const Obj3d& poligon, Vector3* inter, Triangle* triangle)
+{
+	Sphere temp = sphere;
+
+	//球をローカル座標へ変換
+	temp.center = Matrix4::transform(sphere.center, poligon.matWorld.Inverse());
+	temp.radius = sphere.radius * poligon.matScale.Inverse().m[0][0];
+
+	for (auto& mesh : poligon.MODEL->mTriangles)
+	{
+		if (CheckSphere2Triangle(temp, mesh))
+		{
+			if (inter)
+			{
+				*inter = Collsions::ClosestPtPoint2Triangle(temp.center, mesh);
+				*inter = Matrix4::transform(*inter, poligon.matWorld);
+			}
+			if (triangle)
+			{
+				*triangle = mesh;
+			}
+			return true;
+		}
+	}
+
+	return false;
 }
 
 bool Collsions::SphereCollsion(const Sphere& sphere1, const Sphere& sphere2)

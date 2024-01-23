@@ -26,6 +26,82 @@ Matrix4::Matrix4(
 	m[3][0] = x30; m[3][1] = x31; m[3][2] = x32; m[3][3] = x33;
 }
 
+Matrix4 Matrix4::Inverse() const
+{
+	//ここ全部りくりくまんのパクり
+	//申し訳ないが一旦使わせてもらう
+	Matrix4 temp;
+	float mat[4][8] = { 0 };
+
+	for (int32_t i = 0; i < 4; i++) {
+		for (int32_t j = 0; j < 4; j++) {
+			mat[i][j] = m[i][j];
+		}
+	}
+
+	mat[0][4] = 1;
+	mat[1][5] = 1;
+	mat[2][6] = 1;
+	mat[3][7] = 1;
+
+	for (int32_t n = 0; n < 4; n++) {
+		//最大の絶対値を探索する(とりあえず対象成分を最大と仮定しておく)
+		float max = abs(mat[n][n]);
+		int32_t maxIndex = n;
+
+		for (int32_t i = n + 1; i < 4; i++) {
+			if (abs(mat[i][n]) > max) {
+				max = abs(mat[i][n]);
+				maxIndex = i;
+			}
+		}
+
+		float EPSILON = 0.0005f;
+		//最大の絶対値が0だったら逆行列は求められない
+		if (abs(mat[maxIndex][n]) <= EPSILON) {
+			return temp; //とりあえず単位行列返しちゃう
+		}
+
+		//入れ替え
+		if (n != maxIndex) {
+			for (int32_t i = 0; i < 8; i++) {
+				float f = mat[maxIndex][i];
+				mat[maxIndex][i] = mat[n][i];
+				mat[n][i] = f;
+			}
+		}
+
+		//掛けたら1になる値を算出
+		float mul = 1 / mat[n][n];
+
+		//掛ける
+		for (int32_t i = 0; i < 8; i++) {
+			mat[n][i] *= mul;
+		}
+
+		//他全部0にする
+		for (int32_t i = 0; i < 4; i++) {
+			if (n == i) {
+				continue;
+			}
+
+			mul = -mat[i][n];
+
+			for (int32_t j = 0; j < 8; j++) {
+				mat[i][j] += mat[n][j] * mul;
+			}
+		}
+	}
+
+	for (int32_t i = 0; i < 4; i++) {
+		for (int32_t j = 0; j < 4; j++) {
+			temp[i][j] = mat[i][j + 4];
+		}
+	}
+
+	return temp;
+}
+
 Matrix4 Matrix4::Identity()
 {
 	Matrix4 result;

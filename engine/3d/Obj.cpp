@@ -22,10 +22,6 @@ void Obj3d::Initialize()
 
 void Obj3d::Update(const Camera& camera)
 {
-	Matrix4 matScale;	//スケーリング行列
-	Matrix4 matRot;	//回転行列
-	Matrix4 matTrans;	//平行移動行列
-
 	//スケールを設定
 	matScale = Matrix4::Identity();
 	matScale = Matrix4::scale(scale);

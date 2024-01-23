@@ -17,10 +17,10 @@ public:
 private:
 	Obj3d tri3d;
 
-	//std::vector<Obj3d> debugObjects;
-	bool isUse[NUM] = {false};
 	GUI gui = {"check"};
 
 	Player* player = Player::Get();
+
+	std::vector<Cube> debugCubes;
 };
 
