@@ -81,7 +81,6 @@ namespace Collsions
 	//球とポリゴンオブジェクトの当たり判定
 	bool SpherePoligonCollsion(const Sphere& sphere, const Vector3& poligonPos, const Triangle& triangle);
 
-
 	//球同士の当たり判定
 	bool SphereCollsion(const Sphere& sphere1, const Sphere& sphere2);
 }

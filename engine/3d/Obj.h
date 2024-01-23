@@ -96,6 +96,7 @@ public:
 
 	Model* MODEL = nullptr;
 
+	//ワールドに変換した三角形の座標
 	std::vector<Triangle> mWorldTriangle;
 
 	//描画フラグ

@@ -45,10 +45,13 @@ void TestScene::Update()
 	bool hit = false;
 	std::vector<Vector3> hitPoses;
 	std::vector<Triangle> triangles;
-	for (auto& mesh : tri3d.MODEL->mTriangles)
+	//こっちはローカルの状態の三角形(こっちを使うなら、ほかのすべてのやつをローカルに合わせる)
+	//for (auto& mesh : tri3d.MODEL->mTriangles)
+	//こっちはワールドの状態の三角形
+	for (auto& mesh : tri3d.mWorldTriangle)
 	{
-		//if (Collsions::CheckSphere2Triangle(player->mEncountCol, mesh))
-		if (Collsions::SpherePoligonCollsion(player->mEncountCol, tri3d.position, mesh))
+		if (Collsions::CheckSphere2Triangle(player->mEncountCol, mesh))
+		//if (Collsions::SpherePoligonCollsion(player->mEncountCol, tri3d.position, mesh))
 		{
 			hit = true;
 			Collsions::SpherePoligonCollsion(player->mEncountCol, tri3d.position, mesh);
