@@ -17,7 +17,7 @@ public:
 private:
 	Obj3d tri3d;
 
-	std::vector<Obj3d> debugObjects;
+	//std::vector<Obj3d> debugObjects;
 	bool isUse[NUM] = {false};
 	GUI gui = {"check"};
 

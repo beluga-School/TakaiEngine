@@ -10,13 +10,7 @@ void TestScene::LoadResource()
 
 void TestScene::Initialize()
 {
-	//デバッグだと生成時にconstbufferがバグって起動できない
-	for (int32_t i = 0; i < NUM; i++)
-	{
-		debugObjects.emplace_back();
-		debugObjects.back().Initialize();
-	}
-	tri3d.SetModel(ModelManager::GetModel("slime"));
+	tri3d.SetModel(ModelManager::GetModel("Cube"));
 	tri3d.SetTexture(TextureManager::GetTexture("white"));
 
 	tri3d.position = {0,-10,0 };
@@ -51,9 +45,10 @@ void TestScene::Update()
 	bool hit = false;
 	std::vector<Vector3> hitPoses;
 	std::vector<Triangle> triangles;
-	for (auto& mesh : tri3d.mWorldTriangle)
+	for (auto& mesh : tri3d.MODEL->mTriangles)
 	{
-		if (Collsions::CheckSphere2Triangle(player->mEncountCol, mesh))
+		//if (Collsions::CheckSphere2Triangle(player->mEncountCol, mesh))
+		if (Collsions::SpherePoligonCollsion(player->mEncountCol, tri3d.position, mesh))
 		{
 			hit = true;
 			Collsions::SpherePoligonCollsion(player->mEncountCol, tri3d.position, mesh);
@@ -88,22 +83,6 @@ void TestScene::Update()
 	{
 		player->position -= player->moveValue;
 		ImGui::Text("hit");
-		for (auto& tri : triangles)
-		{
-			for (int32_t i = 0; i < NUM; i++)
-			{
-				if (isUse[i] == false)
-				{
-					debugObjects[i].position = tri.pos0;
-					debugObjects[i + 1].position = tri.pos1;
-					debugObjects[i + 2].position = tri.pos2;
-					isUse[i] = true;
-					isUse[i + 1] = true;
-					isUse[i + 2] = true;
-					break;
-				}
-			}
-		}
 		for (int32_t i = 0; i < hitPoses.size();i++)
 		{
 			ImGui::Text("hitpos x:%fy:%fz:%f", hitPoses[i].x, hitPoses[i].y, hitPoses[i].z);
@@ -113,14 +92,6 @@ void TestScene::Update()
 		}
 	}
 	gui.End();
-
-	for (int32_t i = 0; i < NUM; i++)
-	{
-		if (isUse[i])
-		{
-			debugObjects[i].Update(*Camera::sCamera);
-		}
-	}
 }
 
 void TestScene::Draw()
@@ -128,13 +99,6 @@ void TestScene::Draw()
 	player->Draw();
 	
 	BasicObjectPreDraw("WireFrame");
-	for (int32_t i = 0; i < NUM; i++)
-	{
-		if (isUse[i])
-		{
-			debugObjects[i].Draw();
-		}
-	}
 
 	tri3d.DrawMaterial();
 }
