@@ -5,7 +5,6 @@
 
 bool Collsions::RayPlaneCollision(const Ray& ray, const Plane& plane)
 {
-	
 	float d1 = plane.normal.dot(ray.direction);
 	//レイが平面と交わらない方向にのびているなら当たらないのでfalse
 	if (d1 > 0)
@@ -310,6 +309,7 @@ bool Collsions::SpherePlaneCollision(const Sphere& sphere, const Plane& plane)
 
 Vector3 Collsions::ClosestPtPoint2Triangle(const Vector3& point, const Triangle& triangle)
 {
+
 	//pointがp0の外側にあるかをチェック
 	Vector3 p0_p1 = triangle.pos1 - triangle.pos0;
 	Vector3 p0_p2 = triangle.pos2 - triangle.pos0;
@@ -388,6 +388,13 @@ bool Collsions::CheckSphere2Triangle(const Sphere& sphere, const Triangle& trian
 	}
 
 	return true;
+}
+
+bool Collsions::SpherePoligonCollsion(const Sphere& sphere, const Vector3& poligonPos, const Triangle& triangle)
+{
+	Sphere temp = sphere;
+	temp.center = sphere.center - poligonPos;
+	return CheckSphere2Triangle(temp, triangle);
 }
 
 bool Collsions::SphereCollsion(const Sphere& sphere1, const Sphere& sphere2)

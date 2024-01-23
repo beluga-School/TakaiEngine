@@ -94,7 +94,9 @@ public:
 
 	const Texture* TEXTURE = nullptr;
 
-	const Model* MODEL = nullptr;
+	Model* MODEL = nullptr;
+
+	std::vector<Triangle> mWorldTriangle;
 
 	//描画フラグ
 	bool mIsVisiable = true;
@@ -113,7 +115,7 @@ public:
 	//初期化
 	void Initialize();
 	//モデル設定
-	void SetModel(const Model* model);
+	void SetModel(Model* model);
 	//テクスチャ設定
 	void SetTexture(const Texture* texture);
 	//更新

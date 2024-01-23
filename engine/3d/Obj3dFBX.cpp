@@ -25,7 +25,7 @@ void Obj3dFBX::DrawMaterial()
 	}
 }
 
-void Obj3dFBX::SetModel(const Model* model)
+void Obj3dFBX::SetModel(Model* model)
 {
 	mMeshesSize = (int32_t)model->mMeshes.size();
 

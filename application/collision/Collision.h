@@ -37,15 +37,6 @@ struct Sphere
 	float radius = 1.0f;
 };
 
-struct Triangle
-{
-	Vector3 pos0;
-	Vector3 pos1;
-	Vector3 pos2;
-
-	Vector3 normal;
-};
-
 struct RayCubeColOutput
 {
 	bool XYCenter = false;
@@ -86,6 +77,10 @@ namespace Collsions
 
 	//球と三角形の当たり判定
 	bool CheckSphere2Triangle(const Sphere& sphere, const Triangle& triangle);
+
+	//球とポリゴンオブジェクトの当たり判定
+	bool SpherePoligonCollsion(const Sphere& sphere, const Vector3& poligonPos, const Triangle& triangle);
+
 
 	//球同士の当たり判定
 	bool SphereCollsion(const Sphere& sphere1, const Sphere& sphere2);

@@ -19,6 +19,15 @@ struct Mesh
 	std::wstring diffuseMap;		//テクスチャのファイル
 };
 
+struct Triangle
+{
+	Vector3 pos0;
+	Vector3 pos1;
+	Vector3 pos2;
+
+	Vector3 normal;
+};
+
 /*! Model
 	3Dオブジェクトに使用するモデル
 */
@@ -49,6 +58,9 @@ public:
 
 	//gltf用メッシュ
 	std::vector<Mesh> mMeshes;
+
+	//三角形
+	std::vector<Triangle> mTriangles;
 
 	std::unordered_map<uint16_t, std::vector<uint16_t>> mSmoothData;
 

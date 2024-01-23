@@ -4,7 +4,7 @@
 SpecialDraw::DISOLVE DISOLVE_ = 0;
 SpecialDraw::TEXTUREBLEND TEXTUREBLEND_ = 1;
 
-void Obj3d::SetModel(const Model* model)
+void Obj3d::SetModel(Model* model)
 {
 	MODEL = model;
 }
@@ -16,8 +16,8 @@ void Obj3d::SetTexture(const Texture* texture)
 
 void Obj3d::Initialize()
 {
-	MODEL = ModelManager::GetModel("Cube");
-	TEXTURE = TextureManager::GetTexture("default");
+	MODEL = ModelManager::GetModel("Sphere");
+	TEXTURE = TextureManager::GetTexture("white");
 }
 
 void Obj3d::Update(const Camera& camera)
@@ -61,6 +61,16 @@ void Obj3d::Update(const Camera& camera)
 
 	if (MODEL != nullptr)
 	{
+		mWorldTriangle.clear();
+		for (auto& tri : MODEL->mTriangles)
+		{
+			mWorldTriangle.emplace_back();
+			mWorldTriangle.back().pos0 = (tri.pos0 * matScale * matRot) + position;
+			mWorldTriangle.back().pos1 = (tri.pos1 * matScale * matRot) + position;
+			mWorldTriangle.back().pos2 = (tri.pos2 * matScale * matRot) + position;
+			mWorldTriangle.back().normal = tri.normal;
+		}
+
 		constBufferB1.mConstBufferData->ambient = MODEL->mMaterial.mAmbient;
 		constBufferB1.mConstBufferData->diffuse = MODEL->mMaterial.mDiffuse;
 		constBufferB1.mConstBufferData->specular = MODEL->mMaterial.mSpecular;

@@ -14,7 +14,7 @@ public:
 	void DrawMaterial();
 
 	//モデルを設定
-	void SetModel(const Model* model);
+	void SetModel(Model* model);
 
 	std::vector<Obj3d> mObj3ds;
 

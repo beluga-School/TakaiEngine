@@ -176,7 +176,7 @@ void Model::CreateModel(const std::string modelname, bool smoothing)
 				vertex.normal.x = normals[indexNormal - 1].x;
 				vertex.normal.y = normals[indexNormal - 1].y;
 				vertex.normal.z = normals[indexNormal - 1].z;
-				
+
 				vertex.uv.x = texcoords[indexTexcoord - 1].x;
 				vertex.uv.y = texcoords[indexTexcoord - 1].y;
 				
@@ -195,8 +195,10 @@ void Model::CreateModel(const std::string modelname, bool smoothing)
 	}
 	file.close();
 
+	Triangle tricol;
 	for (int32_t i = 0; i < mMesh.indices.size() / 3; i++)
-	{	//三角形1つごとに計算していく
+	{	
+		//三角形1つごとに計算していく
 		//三角形のインデックスを取り出して、一時的な変数にいれる
 		uint16_t indices0 = mMesh.indices[i * 3 + 0];
 		uint16_t indices1 = mMesh.indices[i * 3 + 1];
@@ -217,6 +219,13 @@ void Model::CreateModel(const std::string modelname, bool smoothing)
 		XMStoreFloat3(&mMesh.vertices[indices0].normal, normal);
 		XMStoreFloat3(&mMesh.vertices[indices1].normal, normal);
 		XMStoreFloat3(&mMesh.vertices[indices2].normal, normal);
+
+		tricol.normal = { normal.m128_f32[0],normal.m128_f32[1],normal.m128_f32[2] };
+		tricol.pos0 = { p0.m128_f32[0],p0.m128_f32[1],p0.m128_f32[2] };
+		tricol.pos1 = { p1.m128_f32[0],p1.m128_f32[1],p1.m128_f32[2] };
+		tricol.pos2 = { p2.m128_f32[0],p2.m128_f32[1],p2.m128_f32[2] };
+
+		mTriangles.push_back(tricol);
 	}
 
 	if (smoothing)
@@ -308,6 +317,8 @@ void ModelManager::PreLoad()
 	LoadModel("bombSolider", "bombSolider",true);
 	LoadModel("smoke", "smoke",true);
 	LoadModel("teiboku", "teiboku",true);
+	LoadModel("triangle", "triangle",true);
+	LoadModel("mountain2", "mountain2",true);
 }
 
 void ModelManager::LoadModel(const std::string filepath, const std::string handle, bool smooth)

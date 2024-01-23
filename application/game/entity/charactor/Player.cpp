@@ -106,13 +106,13 @@ void Player::Update()
 	mSideVec = mCenterObject.matWorld.ExtractAxisX();
 
 	//ダッシュ変更
-	ChangeDash();
+	//ChangeDash();
 	//通常の状態であれば
 	NormalUpdate();
 	//ダッシュ状態であれば
 	DashUpdate();
 
-	HipDropUpdate();
+	//HipDropUpdate();
 	
 	//デバッグ状態のいろいろ
 	DebugUpdate();
@@ -578,9 +578,10 @@ void Player::DebugUpdate()
 
 	if (CheckState(PlayerState::Debug))
 	{
+		//mFlyMode = true;
+		Fly();
 		if (mFlyMode)
 		{
-			Fly();
 		}
 
 		//ダメージ処理テスト
@@ -597,7 +598,8 @@ void Player::DebugUpdate()
 		//入力でリロード
 		if (Input::Keyboard::TriggerKey(DIK_R))
 		{
-			StageChanger::Get()->Reload();
+			//StageChanger::Get()->Reload();
+			position = {0,10,0};
 		}
 	}
 

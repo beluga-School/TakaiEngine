@@ -56,3 +56,6 @@ public:
 
 	Matrix4& operator *= (const Matrix4& a);
 };
+
+Vector3 operator* (const Vector3 vec,const Matrix4 mat);
+Vector3& operator*= (Vector3& vec,const Matrix4 mat);

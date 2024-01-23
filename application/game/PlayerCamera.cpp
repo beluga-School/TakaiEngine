@@ -16,7 +16,7 @@ void PlayerCamera::Initialize()
 	Obj3d::Initialize();
 
 	transparentObj.Initialize();
-	transparentObj.SetModel(ModelManager::GetModel("Cube"));
+	transparentObj.MODEL = (ModelManager::GetModel("Cube"));
 	transparentObj.scale = { 1,1,1 };
 }
 
