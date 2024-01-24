@@ -329,7 +329,7 @@ Vector3 Collsions::ClosestPtPoint2Triangle(const Vector3& point, const Triangle&
 	float d3 = p0_p1.dot(p1_pt);
 	float d4 = p0_p2.dot(p1_pt);
 
-	if (d3 >= 0.0f && d4 <= 0.0f)
+	if (d3 >= 0.0f && d4 <= d3)
 	{
 		return triangle.pos1;
 	}

@@ -11,7 +11,7 @@ void TestScene::LoadResource()
 
 void TestScene::Initialize()
 {
-	tri3d.SetModel(ModelManager::GetModel("Cube"));
+	tri3d.SetModel(ModelManager::GetModel("mountain2"));
 	tri3d.SetTexture(TextureManager::GetTexture("white"));
 
 	tri3d.position = {0,-10,0 };
@@ -33,26 +33,9 @@ void TestScene::Update()
 	PlayerCamera::Get()->Update();
 	player->Update();
 
-	static bool trigger = false;
-
-	if (trigger)
-	{
-		tri3d.position.x += Input::Keyboard::TriggerKey(DIK_RIGHT) - Input::Keyboard::TriggerKey(DIK_LEFT);
-		tri3d.position.z += Input::Keyboard::TriggerKey(DIK_UP) - Input::Keyboard::TriggerKey(DIK_DOWN);
-	}
-	else
-	{
-		tri3d.position.x += Input::Keyboard::PushKey(DIK_RIGHT) - Input::Keyboard::PushKey(DIK_LEFT);
-		tri3d.position.z += Input::Keyboard::PushKey(DIK_UP) - Input::Keyboard::PushKey(DIK_DOWN);
-	}
 	tri3d.Update(*Camera::sCamera);
 
 	gui.Begin({100,100},{500,300});
-	ImGui::Text("trigger %d", trigger);
-	if(ImGui::Button("triggerChange"))
-	{
-		trigger = !trigger;
-	}
 	ImGui::Text("playerpos x:%fy:%fz:%f", player->position.x, player->position.y, player->position.z);
 	ImGui::Text("tri3d.position x:%fy:%fz:%f", tri3d.position.x, tri3d.position.y, tri3d.position.z);
 	bool hit = false;
