@@ -54,9 +54,9 @@ public:
 	//丸影を設定する
 	void SetShadow();
 
-protected:
 	//重力の強さを設定
 	void SetGravity(float value);
+protected:
 
 	//重力を初期化
 	void ResetGravity();

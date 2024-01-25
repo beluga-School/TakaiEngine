@@ -3,6 +3,7 @@
 #include "ClearDrawScreen.h"
 #include "Input.h"
 #include "InstantDrawer.h"
+#include "MathF.h"
 
 void TestScene::LoadResource()
 {
@@ -24,7 +25,7 @@ void TestScene::Initialize()
 	player->SetModel(ModelManager::GetModel("Sphere"));
 	player->position = { 0,2,0 };
 	player->ChangeState(Player::PlayerState::Debug);
-	player->SetNoGravity(true);
+	//player->SetNoGravity(true);
 }
 
 void TestScene::Update()
@@ -56,11 +57,36 @@ void TestScene::Update()
 		hit = true;
 	}
 
+	float distance = 0;
+	Ray ray;
+	ray.start = player->position;
+
+	ray.direction = {0,-1,0};
+	inter = { 0,0,0 };
+
+	if (distance) {
+		ImGui::Text("distance %f",distance);
+	}
+
+	player->SetNoGravity(false);
+
 	if (hit)
 	{
-		//雑押し戻し
-		player->position -= player->moveValue;
-		ImGui::Text("hit");
+		if (Collsions::CheckRayToPoligon(ray, tri3d, &distance, &inter)) {
+			ImGui::Text("rayhit");
+		}
+
+		if (MathF::Avarage(inter)) {
+			ImGui::Text("inter x:%f y:%f z:%f", inter.x, inter.y, inter.z);
+			Cube temp;
+			temp.position = inter;
+			temp.scale = { 1,1,1 };
+			debugCubes.push_back(temp);
+
+			//雑押し戻し
+			player->position.y = inter.y;
+			player->SetNoGravity(true);
+		}
 	}
 	gui.End();
 }

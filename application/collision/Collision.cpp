@@ -3,7 +3,8 @@
 #include "MathF.h"
 #include <math.h>
 
-bool Collsions::RayPlaneCollision(const Ray& ray, const Plane& plane)
+bool Collsions::RayPlaneCollision(const Ray& ray, const Plane& plane,
+	float* distance_, Vector3* inter)
 {
 	float d1 = plane.normal.dot(ray.direction);
 	//レイが平面と交わらない方向にのびているなら当たらないのでfalse
@@ -22,6 +23,9 @@ bool Collsions::RayPlaneCollision(const Ray& ray, const Plane& plane)
 	{
 		return false;
 	}
+
+	if (distance_) { *distance_ = distance; }
+	if (inter) { *inter = ray.start + distance * ray.direction; }
 
 	return true;
 }
@@ -309,7 +313,6 @@ bool Collsions::SpherePlaneCollision(const Sphere& sphere, const Plane& plane)
 
 Vector3 Collsions::ClosestPtPoint2Triangle(const Vector3& point, const Triangle& triangle)
 {
-
 	//pointがp0の外側にあるかをチェック
 	Vector3 p0_p1 = triangle.pos1 - triangle.pos0;
 	Vector3 p0_p2 = triangle.pos2 - triangle.pos0;
@@ -372,6 +375,73 @@ Vector3 Collsions::ClosestPtPoint2Triangle(const Vector3& point, const Triangle&
 	float v = vb * denom;
 	float w = vc * denom;
 	return triangle.pos0 + p0_p1 * v + p0_p2 * w;
+}
+
+bool Collsions::CheckRayToTriangle(const Ray& ray, const Triangle& triangle, float* distance, Vector3* inter)
+{
+	Plane plane;
+	Vector3 interPlane;
+	plane.normal = triangle.normal;
+	plane.distance = triangle.normal.dot(triangle.pos0);
+	
+	if (!RayPlaneCollision(ray, plane, distance, &interPlane))
+	{
+		return false;
+	}
+
+	const float epsilion = 1.0e-5f;
+	
+	Vector3 pt_p0 = triangle.pos0 - interPlane;
+	Vector3 pt_p1 = triangle.pos1 - interPlane;
+	Vector3 pt_p2 = triangle.pos2 - interPlane;
+	Vector3 p0_p1 = triangle.pos1 - triangle.pos0;
+	Vector3 p1_p2 = triangle.pos2 - triangle.pos1;
+	Vector3 p2_p0 = triangle.pos0 - triangle.pos2;
+
+	Vector3 m = pt_p0.GetCross(p0_p1);
+
+	//辺の外側であれば判定を打ち切る
+	if (m.dot(triangle.normal) < -epsilion) {
+		return false;
+	}
+
+	m = pt_p1.GetCross(p1_p2);
+	//辺の外側であれば判定を打ち切る
+	if (m.dot(triangle.normal) < -epsilion) {
+		return false;
+	}
+
+	m = pt_p2.GetCross(p2_p0);
+	//辺の外側であれば判定を打ち切る
+	if (m.dot(triangle.normal) < -epsilion) {
+		return false;
+	}
+
+	if (inter) {
+		*inter = interPlane;
+	}
+
+	return true;
+}
+
+bool Collsions::CheckRayToPoligon(const Ray& ray, const Obj3d& poligon, float* distance, Vector3* inter)
+{
+	//レイをローカル座標へ変換
+	Ray temp = ray;
+	temp.start = Matrix4::transform(ray.start, poligon.matWorld.Inverse());
+
+	for (auto& tri : poligon.MODEL->mTriangles)
+	{
+		if (CheckRayToTriangle(temp, tri, distance, inter))
+		{
+			if (inter)
+			{
+				*inter = Matrix4::transform(*inter, poligon.matWorld);
+			}
+			return true;
+		}
+	}
+	return false;
 }
 
 bool Collsions::CheckSphere2Triangle(const Sphere& sphere, const Triangle& triangle)

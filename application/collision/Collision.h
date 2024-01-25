@@ -55,7 +55,7 @@ struct RayCubeColOutput
 namespace Collsions
 {
 	//レイと平面の当たり判定
-	bool RayPlaneCollision(const Ray& ray, const Plane& plane);
+	bool RayPlaneCollision(const Ray& ray, const Plane& plane, float* distance = nullptr, Vector3* inter = nullptr);
 
 	//レイとキューブの当たり判定
 	RayCubeColOutput RayCubeCollision(const Ray& ray, const Cube& cube);
@@ -74,6 +74,11 @@ namespace Collsions
 
 	//点と三角形の当たり判定
 	Vector3 ClosestPtPoint2Triangle(const Vector3& point, const Triangle& triangle);
+	
+	//レイと三角形の当たり判定
+	bool CheckRayToTriangle(const Ray& ray, const Triangle& triangle, float* distance = nullptr, Vector3* inter = nullptr);
+	
+	bool CheckRayToPoligon(const Ray& ray, const Obj3d& poligon, float* distance = nullptr, Vector3* inter = nullptr);
 
 	//球と三角形の当たり判定
 	bool CheckSphere2Triangle(const Sphere& sphere, const Triangle& triangle);
