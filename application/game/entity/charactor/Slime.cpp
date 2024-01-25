@@ -82,7 +82,7 @@ void Slime::Update()
 
 		///---遷移処理
 		//攻撃範囲から外れたら終わり
-		if (!Collsions::SphereCollsion(Player::Get()->mEncountCol, sphereCol))
+		if (!Collsions::SphereCollsion(Player::Get()->sphereCol, sphereCol))
 		{
 			SetState(ActTable::Staying);
 			DeleteState(ActTable::Tracking);

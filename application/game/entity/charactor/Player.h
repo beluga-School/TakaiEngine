@@ -9,6 +9,7 @@
 /*! Player
 	プレイヤークラス
 */
+
 class Player final : public Mob
 {
 public:
@@ -175,9 +176,6 @@ public:
 
 	//前移動(上移動)
 	Vector3 mPreMove = { 0,0,0 };
-
-	//敵との当たり判定用スフィア
-	Sphere mEncountCol;
 
 	std::vector<PlayerState> mPlayerStates;
 

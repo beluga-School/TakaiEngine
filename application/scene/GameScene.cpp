@@ -233,25 +233,5 @@ void GameScene::GameSceneDebugGUI()
 
 	ImGui::Text("mouseR %f", PlayerCamera::Get()->GetRadius());
 	player->DebugGUI();
-	player->CheckGUI();
-
-	ImGui::Text("RunEvents");
-	for (auto& run : EventManager::Get()->GetNowEvents())
-	{
-		ImGui::Text("%s", run->get()->eventName.c_str());
-	}
-	ImGui::Text("RunEventsEnd");
-
-	PlayerCamera::Get()->CheckDebug();
-
-	EnemyManager* point = EnemyManager::Get();
-	for (auto& enemy : point->enemyList)
-	{
-		Bombking* king = static_cast<Bombking*>(enemy.get());
-		if (king != nullptr && king->CheckTag(TagTable::Bombking)) {
-			king->DebugGUI();
-		}
-	}
-
 	sceneChangeGUI.End();
 }

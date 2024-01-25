@@ -42,7 +42,7 @@ void Bombking::Update()
 
 	if (CheckState(ActTable::Encount)) {
 		//攻撃範囲から外れたら終わり
-		if (Collsions::SphereCollsion(Player::Get()->mEncountCol, sphereCol))
+		if (Collsions::SphereCollsion(Player::Get()->sphereCol, sphereCol))
 		{
 			SetState(ActTable::Tracking);
 			DeleteState(ActTable::Encount);
@@ -53,7 +53,7 @@ void Bombking::Update()
 		Tracking();		
 
 		//攻撃範囲から外れたら終わり
-		if (!Collsions::SphereCollsion(Player::Get()->mEncountCol, sphereCol))
+		if (!Collsions::SphereCollsion(Player::Get()->sphereCol, sphereCol))
 		{
 			SetState(ActTable::Encount);
 			DeleteState(ActTable::Tracking);

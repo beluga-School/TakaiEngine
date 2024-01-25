@@ -83,14 +83,12 @@ void Player::Initialize()
 	mModelOffset = { 0,0.3f,0 };
 
 	mPlayerStates.clear();
-	SetState(PlayerState::Normal);
 
+	SetState(PlayerState::Normal);
+	//SetState(PlayerState::Debug);
 	SetNoMove(false);
 	SetNoCollsion(false);
 	SetNoGravity(false);
-
-	mEncountCol.center = position;
-	mEncountCol.radius = 0;
 }
 
 void Player::Update()
@@ -106,7 +104,7 @@ void Player::Update()
 	mSideVec = mCenterObject.matWorld.ExtractAxisX();
 
 	//ダッシュ変更
-	//ChangeDash();
+	ChangeDash();
 	//通常の状態であれば
 	NormalUpdate();
 	//ダッシュ状態であれば
@@ -598,8 +596,8 @@ void Player::DebugUpdate()
 		//入力でリロード
 		if (Input::Keyboard::TriggerKey(DIK_R))
 		{
-			//StageChanger::Get()->Reload();
-			position = {0,10,0};
+			StageChanger::Get()->Reload();
+			//position = {0,10,0};
 		}
 	}
 
@@ -668,7 +666,7 @@ void Player::HipDropUpdate()
 	{
 		mJumpRotaX = 0;
 
-		SetGravity(4.5f);
+		SetAddGravity(4.5f);
 		PlayerCamera::Get()->InitRadius();
 
 		SetNoGravity(false);
@@ -686,10 +684,6 @@ void Player::AdjudicationUpdate()
 	ColUpdate();
 
 	//当たり判定
-	///--敵当たり判定
-	mEncountCol.center = position;
-	mEncountCol.radius = (scale.x + scale.y + scale.z) / 3.f;
-
 	mColDrawer.position = position;
 	mColDrawer.scale = scale;
 
@@ -805,11 +799,6 @@ bool Player::CanWallKick()
 
 void Player::DebugGUI()
 {
-	ImGui::Text("position x:%f y:%f z:%f",
-		position.x, position.y, position.z);
-
-	ImGui::Text("rotation x:%f y:%f z:%f", rotation.x, rotation.y, rotation.z);
-	
 	if (ImGui::Button("FlyChange"))
 	{
 		mFlyMode = !mFlyMode;
@@ -822,11 +811,7 @@ void Player::DebugGUI()
 	ImGui::Text("mNoMove:%d", mNoMove);
 	ImGui::Text("mNoCollision:%d", mNoCollision);
 
-	ImGui::Text("Pad::GetLStickMove.x:%f", Pad::GetLStickMove().x);
-	ImGui::Text("Pad::GetLStickMove.y:%f", Pad::GetLStickMove().y);
-	ImGui::Text("mEndRota.x:%f", mEndRota.x);
-	ImGui::Text("mEndRota.y:%f", mEndRota.y);
-	ImGui::Text("mEndRota.z:%f", mEndRota.z);
+	ImGui::Text("distance:%f", distance);
 }
 
 bool Player::GetInputMove(InputMove input)

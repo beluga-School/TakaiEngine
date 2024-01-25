@@ -16,6 +16,7 @@
 #include "RedCoin.h"
 #include "BreakBlock.h"
 #include "TikuwaBlock.h"
+#include "MathF.h"
 
 bool CollideManager::CheckDirections(const Cube& check, const Cube& collide, const CheckDirection& CD)
 {
@@ -200,7 +201,7 @@ void CollideManager::CheckCollide(Entity* check, Entity* collide)
 					dokan->HitEffect(player);
 				}
 			}
-			if (Collsions::SphereCollsion(player->mEncountCol, dokan->popUIRangeSphere))
+			if (Collsions::SphereCollsion(player->sphereCol, dokan->popUIRangeSphere))
 			{
 				dokan->PopUpUI();
 			}
@@ -230,7 +231,7 @@ void CollideManager::CheckCollide(Entity* check, Entity* collide)
 		{
 			//collideがEnemyDokanであることは確定しているので、EnemyDokan型に変換してデータを持ってくる
 			EnemyDokan* enemyDokan = static_cast<EnemyDokan*>(collide);
-			if (Collsions::SphereCollsion(player->mEncountCol, enemyDokan->popEnemyCol))
+			if (Collsions::SphereCollsion(player->sphereCol, enemyDokan->popEnemyCol))
 			{
 				enemyDokan->PopEnemy();
 			}
@@ -266,7 +267,7 @@ void CollideManager::CheckCollide(Entity* check, Entity* collide)
 			if (!block->mActive)return;
 
 			//押し戻し処理を行う
-			Osimodosi(*mob, *block);
+			MeshHitGround(*mob, *block);
 		}
 		if (collide->CheckTag(TagTable::Cannon))
 		{
@@ -353,6 +354,47 @@ void CollideManager::CheckStatus(Entity* check, Entity* collide)
 			}
 		}
 		//される側がEnemyなら
+	}
+}
+
+void CollideManager::MeshHitGround(Mob& check, const Block& collide)
+{
+	Vector3 inter;
+	Triangle tri;
+	Ray ray;
+	ray.start = check.position;
+	ray.direction = {0,-1,0};
+
+	//レイとポリゴンで判定
+	if (Collsions::CheckRayToPoligon(ray, collide, &check.distance, &inter)) {
+		if (MathF::Avarage(inter)) {
+			//プレイヤーを設置状態に
+			if (Collsions::SpherePoligonCollsion(check.sphereCol, collide))
+			{
+				
+			}
+			if (check.jumpState == Mob::JumpState::Down)
+			{
+				check.jumpState = Mob::JumpState::None;
+				
+			}
+			//ここでなんか値を入れているが、下のやつで何かあるかを判定するために適当な値を入れている
+			HitInfo info;
+			info.distance = check.distance;
+			info.inter = inter;
+			check.hitInfos.push_back(info);
+		}
+	}
+	else
+	{
+		//当たったリストに何もないなら
+		if (check.hitInfos.size() <= 0)
+		{
+			if (check.jumpState == Mob::JumpState::None)
+			{
+				check.jumpState = Mob::JumpState::Down;
+			}
+		}
 	}
 }
 
@@ -496,7 +538,7 @@ void CollideManager::CheckPlayerToEnemy(Player& player,Enemy& collide)
 	}
 
 	//エンカウント判定
-	if (Collsions::SphereCollsion(player.mEncountCol, collide.sphereCol))
+	if (Collsions::SphereCollsion(player.sphereCol, collide.sphereCol))
 	{
 		collide.Encount();
 		//ボム兵の爆発ダメージ判定

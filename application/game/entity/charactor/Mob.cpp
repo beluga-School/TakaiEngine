@@ -7,6 +7,8 @@ void Mob::CollsionUpdate()
 	//当たり判定の丸め
 	CalcNearestHitLists();
 
+	UpdateY();
+
 	if (moveBlockHit)
 	{
 		position += moveBlockPosition;
@@ -20,9 +22,9 @@ void Mob::CollsionUpdate()
 	}
 
 	//今後Xも入る予定
-	UpdateX();
+	//UpdateX();
 
-	UpdateY();
+	sphereCol.center = position;
 
 	moveBlockPosition = { 0,0,0 };
 
@@ -53,9 +55,14 @@ void Mob::SetInitScale(const Vector3& scale_)
 	initScale = scale_;
 }
 
-void Mob::SetGravity(float value)
+void Mob::SetAddGravity(float value)
 {
 	gravityAdd = value;
+}
+
+void Mob::SetNowGravity(float value)
+{
+	gravity = value;
 }
 
 void Mob::ResetGravity()
@@ -212,38 +219,19 @@ void Mob::JumpUpdate()
 	switch (jumpState)
 	{
 	case Mob::JumpState::None:
+		for (auto& info : hitInfos)
+		{
+		
+		position.y = info.inter.y + sphereCol.radius / 4;
+		}
+		SetNowGravity(0);
 
-		for (auto& hit : hitListDown)
-		{
-			if (hit.parentEntity->CheckTag(TagTable::MoveBlock))
-			{
-				if (moveBlockPosition.y <= 0.001)
-				{
-					position.y = hitFeetMax;
-				}
-			}
-		}
-		if (position.y > hitFeetMax)
-		{
-			jumpState = JumpState::Down;
-		}
-		else
-		{
-			//地面に立っている状態にする
-			gravity = 0;
-			position.y = hitFeetMax;
-		}
+		hitInfos.clear();
 
 		break;
 	case Mob::JumpState::Up:
 		//イージングで上昇
 		position.y = TEasing::OutQuad(upJumpS, upJumpE, jumpManageTimer.GetTimeRate());
-
-		if (hitCeilingMax <= position.y)
-		{
-			jumpState = JumpState::Down;
-			jumpManageTimer.Reset();
-		}
 
 		//時間が終わったらステートを次の状態に遷移
 		if (jumpManageTimer.GetEnd())
@@ -263,22 +251,12 @@ void Mob::JumpUpdate()
 
 		break;
 	case Mob::JumpState::Down:
-		//hitListの中で、最も高い位置にあるオブジェクトより自身の座標が高かったら
-		if (position.y > hitFeetMax)
+		if (!noGravity)
 		{
-			//重力落下させる
-			if (!noGravity)
-			{
-				gravity += gravityAdd;
-				position.y -= gravity * TimeManager::deltaTime;
-			}
-		}
-		//hitListオブジェクトの中で、最も高い位置にあるオブジェクトに自身が当たっているなら
-		else
-		{
-			jumpState = JumpState::None;
-			checkGround = true;
-		}
+			gravity += gravityAdd;
+			gravity = Util::Clamp(gravity, 0.f, 30.f);
+			moveValue.y -= gravity * TimeManager::deltaTime;
+		};
 		break;
 	}
 }

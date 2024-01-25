@@ -46,6 +46,9 @@ private:
 	CollideManager(){};
 	~CollideManager(){};
 
+	//メッシュで押し戻し判定
+	void MeshHitGround(Mob& check, const Block& collide);
+	
 	//押し戻し処理
 	void Osimodosi(Mob& check, const Block& collide);
 

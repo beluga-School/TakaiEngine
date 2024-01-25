@@ -2,6 +2,13 @@
 #include "Entity.h"
 #include "Box.h"
 
+class HitInfo
+{
+public:
+	float distance;
+	Vector3 inter;
+};
+
 /*! Mob
 	敵味方問わず、ブロックと当たり判定を持つ生き物が継承するクラス
 */
@@ -55,7 +62,9 @@ public:
 	void SetShadow();
 
 	//重力の強さを設定
-	void SetGravity(float value);
+	void SetAddGravity(float value);
+
+	void SetNowGravity(float value);
 protected:
 
 	//重力を初期化
@@ -83,6 +92,8 @@ private:
 public:
 	Vector3 moveValue = { 0,0,0 };
 
+	std::list<HitInfo> hitInfos;
+
 	std::list<IDdCube> hitListUp;
 	std::list<IDdCube> hitListDown;
 	std::list<IDdCube> hitListRight;
@@ -105,6 +116,11 @@ public:
 	float hitCenterMin = 0;
 	float hitBackMin = 0;
 
+	Sphere sphereCol{};
+
+	JumpState jumpState = JumpState::None;
+
+	float distance = 0;
 protected:
 	bool noGravity = false;
 
@@ -115,7 +131,6 @@ protected:
 	bool mNoMove = false;
 
 	///---縦移動
-	JumpState jumpState = JumpState::None;
 
 	//上昇イージングの始点と終点
 	float upJumpS = 0;
@@ -143,6 +158,7 @@ protected:
 
 	float feet = 0;
 	
+
 private:
 	//丸影を参照するための番号
 	int32_t shadowNum = -1;

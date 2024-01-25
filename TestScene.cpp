@@ -22,9 +22,10 @@ void TestScene::Initialize()
 	PlayerCamera::Get()->Initialize();
 
 	player->Initialize();
-	player->SetModel(ModelManager::GetModel("Sphere"));
+	//player->SetModel(ModelManager::GetModel("Sphere"));
 	player->position = { 0,2,0 };
-	player->ChangeState(Player::PlayerState::Debug);
+	player->scale = { 1.5f,1.5f,1.5f };
+	//player->ChangeState(Player::PlayerState::Debug);
 	//player->SetNoGravity(true);
 }
 
@@ -42,7 +43,7 @@ void TestScene::Update()
 	bool hit = false;
 	Vector3 inter;
 	Triangle tri;
-	if (Collsions::SpherePoligonCollsion(player->mEncountCol, tri3d, &inter, &tri))
+	if (Collsions::SpherePoligonCollsion(player->sphereCol, tri3d, &inter, &tri))
 	{
 		Cube temp;
 		temp.position = inter;
@@ -57,25 +58,14 @@ void TestScene::Update()
 		hit = true;
 	}
 
-	float distance = 0;
+	player->distance = 0;
 	Ray ray;
 	ray.start = player->position;
 
 	ray.direction = {0,-1,0};
 	inter = { 0,0,0 };
 
-	if (distance) {
-		ImGui::Text("distance %f",distance);
-	}
-
-	player->SetNoGravity(false);
-
-	if (hit)
-	{
-		if (Collsions::CheckRayToPoligon(ray, tri3d, &distance, &inter)) {
-			ImGui::Text("rayhit");
-		}
-
+	if (Collsions::CheckRayToPoligon(ray, tri3d, &player->distance, &inter)) {
 		if (MathF::Avarage(inter)) {
 			ImGui::Text("inter x:%f y:%f z:%f", inter.x, inter.y, inter.z);
 			Cube temp;
@@ -83,11 +73,42 @@ void TestScene::Update()
 			temp.scale = { 1,1,1 };
 			debugCubes.push_back(temp);
 
-			//雑押し戻し
-			player->position.y = inter.y;
-			player->SetNoGravity(true);
+			//プレイヤーを設置状態に
+			if (Collsions::SpherePoligonCollsion(player->sphereCol, tri3d))
+			{
+				
+			}
+			if (player->jumpState == Player::JumpState::Down)
+			{
+				player->jumpState = Player::JumpState::None;
+			}
+			HitInfo info;
+			info.distance = player->distance;
+			info.inter = inter;
+			player->hitInfos.push_back(info);
 		}
 	}
+	else
+	{
+		//当たったリストに何もないなら
+		if (player->hitInfos.size() <= 0)
+		{
+			if (player->jumpState == Mob::JumpState::None)
+			{
+				player->jumpState = Mob::JumpState::Down;
+			}
+		}
+	}
+
+	player->position.y = inter.y + player->sphereCol.radius / 4;
+
+	if (player->distance) {
+		ImGui::Text("distance %f", player->distance);
+		//ImGui::Text("groundPos x:%f y:%f z:%f", player->groundPos.x, player->groundPos.y, player->groundPos.z);
+	}
+
+	ImGui::Text("jumpState %d", player->jumpState);
+
 	gui.End();
 }
 
@@ -95,8 +116,8 @@ void TestScene::Draw()
 {
 	player->Draw();
 	
-	BasicObjectPreDraw("WireFrame");
 
+	BasicObjectPreDraw("WireFrame");
 	tri3d.DrawMaterial();
 
 	for (auto& cube : debugCubes)

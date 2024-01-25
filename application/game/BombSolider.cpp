@@ -61,7 +61,7 @@ void BombSolider::Update()
 		///---遷移処理
 		//攻撃範囲から外れたら終わり
 		//もしくは時間経過で爆発
-		if (!Collsions::SphereCollsion(Player::Get()->mEncountCol, sphereCol) || 
+		if (!Collsions::SphereCollsion(Player::Get()->sphereCol, sphereCol) || 
 			explosionTimer.GetEnd())
 		{
 			SetState(ActTable::Attack1);
