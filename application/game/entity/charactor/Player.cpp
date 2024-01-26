@@ -504,10 +504,12 @@ bool Player::CheckContinuanceKick(IDdCube* check)
 
 void Player::ChangeDash()
 {
-	if (Input::Keyboard::PushKey(DIK_LSHIFT)) {
+	if (Input::Keyboard::PushKey(DIK_LSHIFT) ||
+		Pad::PushRT()) 
+	{
 		SetState(PlayerState::Dash);
-		if (Input::Keyboard::TriggerKey(DIK_LSHIFT))
-		{
+		if (Input::Keyboard::TriggerKey(DIK_LSHIFT) ||
+			Pad::TriggerRT()) {
 			DonuteSmoke(position);
 		}
 	}
@@ -628,7 +630,8 @@ void Player::HipDropUpdate()
 	if (IsJump())
 	{
 		//ヒップドロップ処理
-		if (Input::Keyboard::TriggerKey(DIK_LSHIFT))
+		if (Input::Keyboard::TriggerKey(DIK_LSHIFT) ||
+			Pad::TriggerRT())
 		{
 			if (!CheckState(PlayerState::HipDrop)) {
 				SetState(PlayerState::HipDrop);

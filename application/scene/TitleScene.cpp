@@ -89,13 +89,14 @@ void TitleScene::Initialize()
 
 void TitleScene::Update()
 {
-	if (Input::Keyboard::TriggerKey(DIK_SPACE))
+	if (Input::Keyboard::TriggerKey(DIK_SPACE)||
+		Input::Pad::TriggerPadButton(PadButton::A))
 	{
 		//デバッグ用 演出がどのタイミングでもスキップできるように
-		if (effectState != EffectState::None)
+		/*if (effectState != EffectState::None)
 		{
 			SceneChange::Get()->Start();
-		}
+		}*/
 		//演出開始
 		if (effectState == EffectState::None)
 		{

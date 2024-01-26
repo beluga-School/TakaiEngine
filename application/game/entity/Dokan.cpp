@@ -50,7 +50,8 @@ void Dokan::HitEffect(Mob* target_)
 	if (mDokanState != DokanState::None)return;
 
 	//ボタン入力があったら
-	if (Input::Keyboard::TriggerKey(DIK_LSHIFT))
+	if (Input::Keyboard::TriggerKey(DIK_LSHIFT) ||
+		Input::Pad::TriggerRT())
 	{
 		mPreMoveTimer.Start();
 		mDokanState = DokanState::PreMove;

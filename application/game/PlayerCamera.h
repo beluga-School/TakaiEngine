@@ -76,7 +76,7 @@ public:
 	float mMouseSensitivity = 0.15f;
 
 	//カメラ回転の感度(パッド)
-	float mPadSensitivity = 1.0f;
+	float mPadSensitivity = 2.0f;
 
 	//カメラベクトル
 	Vector3 mCenterVec = { 0,0,0 };
