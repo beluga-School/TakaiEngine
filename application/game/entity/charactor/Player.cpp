@@ -12,6 +12,7 @@
 #include "EventManager.h"
 #include "GameUIManager.h"
 #include "LightGroup.h"
+#include "InstantDrawer.h"
 
 using namespace Input;
 
@@ -812,6 +813,12 @@ void Player::DebugGUI()
 	ImGui::Text("mNoCollision:%d", mNoCollision);
 
 	ImGui::Text("distance:%f", distance);
+	ImGui::Text("jump:%d", jumpState);
+	for (auto& info : hitInfos)
+	{
+		ImGui::Text("inter x:%f y:%f z:%f", info.inter.x, info.inter.y, info.inter.z);
+		ImGui::Text("distance:%f", info.distance);
+	}
 }
 
 bool Player::GetInputMove(InputMove input)

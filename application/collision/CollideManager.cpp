@@ -369,20 +369,21 @@ void CollideManager::MeshHitGround(Mob& check, const Block& collide)
 	if (Collsions::CheckRayToPoligon(ray, collide, &check.distance, &inter)) {
 		if (MathF::Avarage(inter)) {
 			//プレイヤーを設置状態に
-			if (Collsions::SpherePoligonCollsion(check.sphereCol, collide))
-			{
-				
-			}
+			Sphere hoge = check.sphereCol;
+			hoge.radius *= 1.3f;
 			if (check.jumpState == Mob::JumpState::Down)
 			{
 				check.jumpState = Mob::JumpState::None;
-				
 			}
 			//ここでなんか値を入れているが、下のやつで何かあるかを判定するために適当な値を入れている
 			HitInfo info;
 			info.distance = check.distance;
 			info.inter = inter;
 			check.hitInfos.push_back(info);
+
+			if (check.mostInter.y < info.inter.y) {
+				check.mostInter = info.inter;
+			}
 		}
 	}
 	else
@@ -393,6 +394,7 @@ void CollideManager::MeshHitGround(Mob& check, const Block& collide)
 			if (check.jumpState == Mob::JumpState::None)
 			{
 				check.jumpState = Mob::JumpState::Down;
+				check.mostInter = { 0,-999.f,0 };
 			}
 		}
 	}

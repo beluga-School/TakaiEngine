@@ -210,14 +210,8 @@
     <Filter Include="Application\Collision">
       <UniqueIdentifier>{921fc882-a1c8-46bd-a451-bd0c04bdebcf}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Application\Charactor\Enemy">
-      <UniqueIdentifier>{e46da77e-f434-44e8-a38d-981d3fdb64f9}</UniqueIdentifier>
-    </Filter>
     <Filter Include="シェーダー\Toon">
       <UniqueIdentifier>{fc37acf7-e514-49f2-94bb-842ba4c4fe9d}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Application\Charactor\Enemy\EnemyManager">
-      <UniqueIdentifier>{4a1c0f97-a5fe-4cce-a633-5de90a38ede8}</UniqueIdentifier>
     </Filter>
     <Filter Include="Application\System">
       <UniqueIdentifier>{6886546f-0922-478c-90cd-17a63328ee64}</UniqueIdentifier>
@@ -382,9 +376,6 @@
     <Filter Include="Application\Event\SummonUI">
       <UniqueIdentifier>{1de720c6-d4d6-4c6d-aaad-13fcacfcfdea}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Application\Charactor\Enemy\Slime">
-      <UniqueIdentifier>{2b0e9669-3383-42af-834c-1079df58a241}</UniqueIdentifier>
-    </Filter>
     <Filter Include="シェーダー\DitherTransparent">
       <UniqueIdentifier>{1c5f0fcb-d9fb-4e72-9845-e7a29d5670f7}</UniqueIdentifier>
     </Filter>
@@ -414,12 +405,6 @@
     </Filter>
     <Filter Include="Application\Event\RedCoinEvent">
       <UniqueIdentifier>{f031548c-763b-4eb3-abe3-3e95697fcf6e}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Application\Charactor\Enemy\BombSolider">
-      <UniqueIdentifier>{aab5fe61-aa59-4c18-a84f-50750f3c6381}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Application\Charactor\Enemy\Bombking">
-      <UniqueIdentifier>{78cc1e19-54eb-4c7e-9efa-687c2f3bd240}</UniqueIdentifier>
     </Filter>
     <Filter Include="Application\Entity\EventBlock\BreakBlock">
       <UniqueIdentifier>{40bef473-134d-413b-a78c-78fbd9f590e2}</UniqueIdentifier>
@@ -480,6 +465,21 @@
     </Filter>
     <Filter Include="Application\Scene\TestScene">
       <UniqueIdentifier>{d43015ef-980f-4253-bbd2-0ec7d29d30ae}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Application\Charactor\Mob\Enemy">
+      <UniqueIdentifier>{e46da77e-f434-44e8-a38d-981d3fdb64f9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Application\Charactor\Mob\Enemy\EnemyManager">
+      <UniqueIdentifier>{4a1c0f97-a5fe-4cce-a633-5de90a38ede8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Application\Charactor\Mob\Enemy\Slime">
+      <UniqueIdentifier>{2b0e9669-3383-42af-834c-1079df58a241}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Application\Charactor\Mob\Enemy\BombSolider">
+      <UniqueIdentifier>{aab5fe61-aa59-4c18-a84f-50750f3c6381}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Application\Charactor\Mob\Enemy\Bombking">
+      <UniqueIdentifier>{78cc1e19-54eb-4c7e-9efa-687c2f3bd240}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -634,7 +634,7 @@
       <Filter>Application\Entity</Filter>
     </ClCompile>
     <ClCompile Include="application\game\Entity\Charactor\Bombking.cpp">
-      <Filter>Application\Charactor\Enemy\Bombking</Filter>
+      <Filter>Application\Charactor\Mob\Enemy\Bombking</Filter>
     </ClCompile>
     <ClCompile Include="application\game\Entity\Charactor\Player.cpp">
       <Filter>Application\Charactor\Player</Filter>
@@ -646,10 +646,10 @@
       <Filter>Application\Entity\EventBlock\Star</Filter>
     </ClCompile>
     <ClCompile Include="application\game\Entity\Charactor\Slime.cpp">
-      <Filter>Application\Charactor\Enemy\Slime</Filter>
+      <Filter>Application\Charactor\Mob\Enemy\Slime</Filter>
     </ClCompile>
     <ClCompile Include="application\game\Entity\Charactor\Enemy.cpp">
-      <Filter>Application\Charactor\Enemy</Filter>
+      <Filter>Application\Charactor\Mob\Enemy</Filter>
     </ClCompile>
     <ClCompile Include="application\game\Entity\EventBlock\Cannon.cpp">
       <Filter>Application\Entity\EventBlock\Cannon</Filter>
@@ -676,7 +676,7 @@
       <Filter>Application\Charactor\Box</Filter>
     </ClCompile>
     <ClCompile Include="application\game\EnemyManager.cpp">
-      <Filter>Application\Charactor\Enemy\EnemyManager</Filter>
+      <Filter>Application\Charactor\Mob\Enemy\EnemyManager</Filter>
     </ClCompile>
     <ClCompile Include="application\scene\TitleScene.cpp">
       <Filter>Application\Scene\TitleScene</Filter>
@@ -799,7 +799,7 @@
       <Filter>Engine\Light\CircleShadow</Filter>
     </ClCompile>
     <ClCompile Include="application\game\BombSolider.cpp">
-      <Filter>Application\Charactor\Enemy\BombSolider</Filter>
+      <Filter>Application\Charactor\Mob\Enemy\BombSolider</Filter>
     </ClCompile>
     <ClCompile Include="application\game\BreakBlock.cpp">
       <Filter>Application\Entity\EventBlock\BreakBlock</Filter>
@@ -996,7 +996,7 @@
       <Filter>Application\Entity</Filter>
     </ClInclude>
     <ClInclude Include="application\game\Entity\Charactor\Bombking.h">
-      <Filter>Application\Charactor\Enemy\Bombking</Filter>
+      <Filter>Application\Charactor\Mob\Enemy\Bombking</Filter>
     </ClInclude>
     <ClInclude Include="application\game\Entity\Charactor\Player.h">
       <Filter>Application\Charactor\Player</Filter>
@@ -1008,10 +1008,10 @@
       <Filter>Application\Entity\EventBlock\Star</Filter>
     </ClInclude>
     <ClInclude Include="application\game\Entity\Charactor\Slime.h">
-      <Filter>Application\Charactor\Enemy\Slime</Filter>
+      <Filter>Application\Charactor\Mob\Enemy\Slime</Filter>
     </ClInclude>
     <ClInclude Include="application\game\Entity\Charactor\Enemy.h">
-      <Filter>Application\Charactor\Enemy</Filter>
+      <Filter>Application\Charactor\Mob\Enemy</Filter>
     </ClInclude>
     <ClInclude Include="application\game\Entity\EventBlock\Cannon.h">
       <Filter>Application\Entity\EventBlock\Cannon</Filter>
@@ -1038,7 +1038,7 @@
       <Filter>Application\Charactor\Box</Filter>
     </ClInclude>
     <ClInclude Include="application\game\EnemyManager.h">
-      <Filter>Application\Charactor\Enemy\EnemyManager</Filter>
+      <Filter>Application\Charactor\Mob\Enemy\EnemyManager</Filter>
     </ClInclude>
     <ClInclude Include="application\scene\TitleScene.h">
       <Filter>Application\Scene\TitleScene</Filter>
@@ -1167,7 +1167,7 @@
       <Filter>Engine\Light\CircleShadow</Filter>
     </ClInclude>
     <ClInclude Include="application\game\BombSolider.h">
-      <Filter>Application\Charactor\Enemy\BombSolider</Filter>
+      <Filter>Application\Charactor\Mob\Enemy\BombSolider</Filter>
     </ClInclude>
     <ClInclude Include="application\game\BreakBlock.h">
       <Filter>Application\Entity\EventBlock\BreakBlock</Filter>

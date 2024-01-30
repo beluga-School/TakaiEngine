@@ -219,11 +219,9 @@ void Mob::JumpUpdate()
 	switch (jumpState)
 	{
 	case Mob::JumpState::None:
-		for (auto& info : hitInfos)
-		{
+
+		position.y = mostInter.y + sphereCol.radius / 4;
 		
-		position.y = info.inter.y + sphereCol.radius / 4;
-		}
 		SetNowGravity(0);
 
 		hitInfos.clear();

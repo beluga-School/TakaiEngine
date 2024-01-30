@@ -1140,7 +1140,8 @@ void StageChanger::DrawModel()
 		}
 		else
 		{
-			BasicObjectPreDraw("GroundToon");
+			//BasicObjectPreDraw("GroundToon");
+			BasicObjectPreDraw("WireFrame");
 		}
 		obj->Draw();
 	}
