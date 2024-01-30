@@ -369,8 +369,6 @@ void CollideManager::MeshHitGround(Mob& check, const Block& collide)
 	if (Collsions::CheckRayToPoligon(ray, collide, &check.distance, &inter)) {
 		if (MathF::Avarage(inter)) {
 			//プレイヤーを設置状態に
-			Sphere hoge = check.sphereCol;
-			hoge.radius *= 1.3f;
 			if (check.jumpState == Mob::JumpState::Down)
 			{
 				check.jumpState = Mob::JumpState::None;
@@ -381,6 +379,7 @@ void CollideManager::MeshHitGround(Mob& check, const Block& collide)
 			info.inter = inter;
 			check.hitInfos.push_back(info);
 
+			//最高交点を更新
 			if (check.mostInter.y < info.inter.y) {
 				check.mostInter = info.inter;
 			}
