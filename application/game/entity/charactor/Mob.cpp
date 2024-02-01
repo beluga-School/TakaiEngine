@@ -1,6 +1,7 @@
 #include "Mob.h"
 #include "TimeManager.h"
 #include "LightGroup.h"
+#include "InstantDrawer.h"
 
 void Mob::CollsionUpdate()
 {
@@ -37,14 +38,15 @@ void Mob::CollsionUpdate()
 	}
 
 	hoge->mShadow[shadowNum].casterPos = position;
+
+	InstantDrawer::DrawBox3D(debugCube);
+
 }
 
 bool Mob::CheckNowHitGround()
 {
 	return checkGround;
 }
-
-
 
 void Mob::SetShadow() {
 	shadowNum = LightGroup::Get()->CircleShadowActive();
@@ -216,15 +218,37 @@ void Mob::JumpUpdate()
 	jumpManageTimer.Update();
 	stayManageTimer.Update();
 
+	float mostInter = -999.0f;
+	float pFeet = position.y + sphereCol.radius / 2;
+
 	switch (jumpState)
 	{
 	case Mob::JumpState::None:
 
-		position.y = mostInter.y + sphereCol.radius / 4;
-		
-		SetNowGravity(0);
+		for (auto& info : hitInfos)
+		{
+			if (mostInter < info.inter.y) {
+				mostInter = info.inter.y;
+			}
+		}
+
+		if (hitInfos.size() >= 1)
+		{
+			position.y = pFeet;
+		}
+
+		//ここの処理が設置状態でも入っちゃう
+		if (mostInter < pFeet)
+		{
+			if (jumpState == Mob::JumpState::None)
+			{
+				jumpState = Mob::JumpState::Down;
+			}
+		}
 
 		hitInfos.clear();
+
+		SetNowGravity(0);
 
 		break;
 	case Mob::JumpState::Up:
@@ -256,5 +280,11 @@ void Mob::JumpUpdate()
 			moveValue.y -= gravity * TimeManager::deltaTime;
 		};
 		break;
+	}
+
+	if (mostInter > -100.0f)
+	{
+		debugCube.position = position;
+		debugCube.position.y = mostInter;
 	}
 }

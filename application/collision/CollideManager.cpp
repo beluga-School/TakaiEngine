@@ -363,38 +363,26 @@ void CollideManager::MeshHitGround(Mob& check, const Block& collide)
 	Triangle tri;
 	Ray ray;
 	ray.start = check.position;
+	//レイの視点を判定球の上の頂点に
+	ray.start.y += check.scale.y / 2;
 	ray.direction = {0,-1,0};
 
 	//レイとポリゴンで判定
 	if (Collsions::CheckRayToPoligon(ray, collide, &check.distance, &inter)) {
-		if (MathF::Avarage(inter)) {
+		//足元に判定があるなら球で判定
+		if (Collsions::SpherePoligonCollsion(check.sphereCol, collide))
+		{
+			//通るなら当たってるので
 			//プレイヤーを設置状態に
 			if (check.jumpState == Mob::JumpState::Down)
 			{
 				check.jumpState = Mob::JumpState::None;
 			}
-			//ここでなんか値を入れているが、下のやつで何かあるかを判定するために適当な値を入れている
-			HitInfo info;
-			info.distance = check.distance;
-			info.inter = inter;
-			check.hitInfos.push_back(info);
-
-			//最高交点を更新
-			if (check.mostInter.y < info.inter.y) {
-				check.mostInter = info.inter;
-			}
-		}
-	}
-	else
-	{
-		//当たったリストに何もないなら
-		if (check.hitInfos.size() <= 0)
-		{
-			if (check.jumpState == Mob::JumpState::None)
-			{
-				check.jumpState = Mob::JumpState::Down;
-				check.mostInter = { 0,-999.f,0 };
-			}
+			
+			//check.position.y = inter.y + check.sphereCol.radius / 2;
+			
+			check.hitInfos.emplace_back();
+			check.hitInfos.back().inter = inter;
 		}
 	}
 }

@@ -92,10 +92,9 @@ private:
 public:
 	Vector3 moveValue = { 0,0,0 };
 
-	//もっとも高い位置にある交点を保存
-	Vector3 mostInter = { 0,0,0 };
-
 	std::list<HitInfo> hitInfos;
+
+	Cube debugCube;
 
 	std::list<IDdCube> hitListUp;
 	std::list<IDdCube> hitListDown;

@@ -43,11 +43,18 @@ void TestScene::Update()
 	bool hit = false;
 	Vector3 inter;
 	Triangle tri;
-	if (Collsions::SpherePoligonCollsion(player->sphereCol, tri3d, &inter, &tri))
+	
+	Ray ray;
+	ray.start = player->position;
+	//レイの視点を判定球の上の頂点に
+	ray.start.y += player->scale.y / 2;
+	ray.direction = { 0,-1,0 };
+
+	if (Collsions::CheckRayToPoligon(ray, tri3d,&player->distance, &inter))
 	{
 		Cube temp;
 		temp.position = inter;
-		temp.scale = {1,1,1};
+		temp.scale = { 1,1,1 };
 		debugCubes.push_back(temp);
 		temp.position = (tri.pos0 * tri3d.matScale * tri3d.matRot) + tri3d.position;
 		debugCubes.push_back(temp);
@@ -58,56 +65,44 @@ void TestScene::Update()
 		hit = true;
 	}
 
-	player->distance = 0;
-	Ray ray;
-	ray.start = player->position;
 
-	ray.direction = {0,-1,0};
-	inter = { 0,0,0 };
-
+	//レイとポリゴンで判定
 	if (Collsions::CheckRayToPoligon(ray, tri3d, &player->distance, &inter)) {
-		if (MathF::Avarage(inter)) {
-			ImGui::Text("inter x:%f y:%f z:%f", inter.x, inter.y, inter.z);
-			Cube temp;
-			temp.position = inter;
-			temp.scale = { 1,1,1 };
-			debugCubes.push_back(temp);
-
-			//プレイヤーを設置状態に
-			if (Collsions::SpherePoligonCollsion(player->sphereCol, tri3d))
-			{
-				
-			}
-			if (player->jumpState == Player::JumpState::Down)
-			{
-				player->jumpState = Player::JumpState::None;
-			}
-			HitInfo info;
-			info.distance = player->distance;
-			info.inter = inter;
-			player->hitInfos.push_back(info);
-		}
-	}
-	else
-	{
-		//当たったリストに何もないなら
-		if (player->hitInfos.size() <= 0)
+		//足元に判定があるなら球で判定
+		if (Collsions::SpherePoligonCollsion(player->sphereCol, tri3d))
 		{
-			if (player->jumpState == Mob::JumpState::None)
+			//通るなら当たってるので
+			//プレイヤーを設置状態に
+			if (player->jumpState == Mob::JumpState::Down)
 			{
-				player->jumpState = Mob::JumpState::Down;
+				player->jumpState = Mob::JumpState::None;
 			}
+			player->position.y = inter.y + player->sphereCol.radius / 2;
 		}
+		//判定に通らないなら落下中なので
 	}
 
-	player->position.y = inter.y + player->sphereCol.radius / 4;
+	//ここの処理はMobのUpdate内でやんないといけない？
+	if (inter.y < player->position.y - player->sphereCol.radius / 2)
+	{
+		if (player->jumpState == Mob::JumpState::None)
+		{
+			player->jumpState = Mob::JumpState::Down;
+		}
+	}
 
 	if (player->distance) {
 		ImGui::Text("distance %f", player->distance);
-		//ImGui::Text("groundPos x:%f y:%f z:%f", player->groundPos.x, player->groundPos.y, player->groundPos.z);
 	}
 
 	ImGui::Text("jumpState %d", player->jumpState);
+
+	ImGui::Text("inter x:%fy:%fz:%f",
+		inter.x, inter.y, inter.z);
+	Vector3 pFeet = player->position;
+	pFeet.y -= player->sphereCol.radius / 2;
+	ImGui::Text("pFeet x:%fy:%fz:%f",
+		pFeet.x, pFeet.y, pFeet.z);
 
 	gui.End();
 }

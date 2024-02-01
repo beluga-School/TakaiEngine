@@ -30,6 +30,7 @@ void GameScene::LoadResource()
 	LevelLoader::Get()->Load("Scene/stage_desert", "stage_desert", -1);
 	LevelLoader::Get()->Load("Scene/stage_demo", "stage_demo", -1);
 	LevelLoader::Get()->Load("Scene/stage_freezeland", "stage_freezeland", 0);
+	LevelLoader::Get()->Load("Scene/stage_meshdemo", "stage_meshdemo", 0);
 	
 	//新規シーンを登録して、登録してあるシーンから選んで飛ぶ方式にしたい
 	//マップからハンドル名の一覧を取得
