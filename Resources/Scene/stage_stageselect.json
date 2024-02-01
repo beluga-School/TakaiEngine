@@ -2081,6 +2081,48 @@
             },
             "event_trigger": "stage_mountain_1",
             "setObject": "dokan_1"
+        },
+        {
+            "type": "MESH",
+            "name": "Cube.034",
+            "transform": {
+                "translation": [
+                    250.0833282470703,
+                    -93.94497680664062,
+                    -10.74002456665039
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    117.49356842041016,
+                    70.23430633544922,
+                    6.5815277099609375
+                ]
+            },
+            "file_name": "groundCube",
+            "collider": {
+                "type": "BOX",
+                "center": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "size": [
+                    2.0,
+                    2.0,
+                    2.0
+                ]
+            },
+            "texture": "",
+            "tiling": {
+                "tiling": [
+                    10.0,
+                    10.0
+                ]
+            }
         }
     ]
 }

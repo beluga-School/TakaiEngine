@@ -70,7 +70,7 @@ void Player::Initialize()
 	mColDrawer.SetTexture(TextureManager::GetTexture("white"));
 
 	mCenterObject.Initialize();
-	mCenterObject.SetModel(ModelManager::GetModel("beetle"));
+	mCenterObject.SetModel(ModelManager::GetModel("Sphere"));
 
 	SetOutLineState({ 0.1f,0.1f,0.1f,1.0f }, 0.05f);
 
@@ -578,9 +578,9 @@ void Player::DebugUpdate()
 	if (CheckState(PlayerState::Debug))
 	{
 		//mFlyMode = true;
-		Fly();
 		if (mFlyMode)
 		{
+			Fly();
 		}
 
 		//ダメージ処理テスト
@@ -811,13 +811,17 @@ void Player::DebugGUI()
 	ImGui::Text("noGravity:%d", noGravity);
 	ImGui::Text("mNoMove:%d", mNoMove);
 	ImGui::Text("mNoCollision:%d", mNoCollision);
+	
+	ImGui::Text("pos x:%f y:%f z:%f", position.x, position.y, position.z);
 
-	ImGui::Text("distance:%f", distance);
 	ImGui::Text("jump:%d", jumpState);
-	for (auto& info : hitInfos)
+	for (auto& info : sphereHits)
 	{
-		ImGui::Text("inter x:%f y:%f z:%f", info.inter.x, info.inter.y, info.inter.z);
-		ImGui::Text("distance:%f", info.distance);
+		ImGui::Text("sphereInter x:%f y:%f z:%f", info.inter.x, info.inter.y, info.inter.z);
+	}
+	for (auto& info : rayHits)
+	{
+		ImGui::Text("rayInter x:%f y:%f z:%f", info.inter.x, info.inter.y, info.inter.z);
 	}
 }
 

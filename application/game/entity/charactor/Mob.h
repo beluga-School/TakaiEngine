@@ -5,8 +5,8 @@
 class HitInfo
 {
 public:
-	float distance;
 	Vector3 inter;
+	std::string name;
 };
 
 /*! Mob
@@ -92,9 +92,13 @@ private:
 public:
 	Vector3 moveValue = { 0,0,0 };
 
-	std::list<HitInfo> hitInfos;
+	std::list<HitInfo> sphereHits;
+	std::list<HitInfo> rayHits;
 
 	Cube debugCube;
+
+	bool isHit = false;
+	bool oldGround = false;
 
 	std::list<IDdCube> hitListUp;
 	std::list<IDdCube> hitListDown;

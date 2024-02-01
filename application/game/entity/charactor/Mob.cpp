@@ -26,6 +26,7 @@ void Mob::CollsionUpdate()
 	//UpdateX();
 
 	sphereCol.center = position;
+	sphereCol.radius = scale.y;
 
 	moveBlockPosition = { 0,0,0 };
 
@@ -221,37 +222,47 @@ void Mob::JumpUpdate()
 	float mostInter = -999.0f;
 	float pFeet = position.y + sphereCol.radius / 2;
 
+	oldGround = isHit;
+
+	for (auto& info : sphereHits)
+	{
+		if (mostInter < info.inter.y) {
+			mostInter = info.inter.y;
+		}
+	}
+
 	switch (jumpState)
 	{
 	case Mob::JumpState::None:
-
-		for (auto& info : hitInfos)
+		//球状範囲に何かあるなら
+		if (sphereHits.size() >= 1)
 		{
-			if (mostInter < info.inter.y) {
-				mostInter = info.inter.y;
-			}
-		}
-
-		if (hitInfos.size() >= 1)
-		{
+			isHit = true;
+			pFeet = mostInter + sphereCol.radius / 2;
 			position.y = pFeet;
 		}
-
-		//ここの処理が設置状態でも入っちゃう
-		if (mostInter < pFeet)
+		//球状範囲かつ設置状態、という状態にならないといけない
+		else
 		{
-			if (jumpState == Mob::JumpState::None)
+			isHit = false;
+		}
+		//設置状態から地面がない判定されたら
+		if (oldGround)
+		{
+			if (!isHit)
 			{
-				jumpState = Mob::JumpState::Down;
+				//落下状態へ遷移
+				jumpState = JumpState::Down;
 			}
 		}
-
-		hitInfos.clear();
+		sphereHits.clear();
+		rayHits.clear();
 
 		SetNowGravity(0);
 
 		break;
 	case Mob::JumpState::Up:
+		isHit = false;
 		//イージングで上昇
 		position.y = TEasing::OutQuad(upJumpS, upJumpE, jumpManageTimer.GetTimeRate());
 
@@ -280,11 +291,5 @@ void Mob::JumpUpdate()
 			moveValue.y -= gravity * TimeManager::deltaTime;
 		};
 		break;
-	}
-
-	if (mostInter > -100.0f)
-	{
-		debugCube.position = position;
-		debugCube.position.y = mostInter;
 	}
 }

@@ -187,7 +187,7 @@ void CollideManager::CheckCollide(Entity* check, Entity* collide)
 			Cube tempDokan = dokan->box.cubecol;
 			tempDokan.scale.y *= 1.1f;
 
-			if (Collsions::CubeCollision(player->box.cubecol, tempDokan))
+			if (Collsions::SpherePoligonCollsion(player->sphereCol, *collide))
 			{
 				if (player->mDokanApparrance)
 				{
@@ -364,26 +364,24 @@ void CollideManager::MeshHitGround(Mob& check, const Block& collide)
 	Ray ray;
 	ray.start = check.position;
 	//レイの視点を判定球の上の頂点に
-	ray.start.y += check.scale.y / 2;
+	ray.start.y += check.sphereCol.radius / 2;
 	ray.direction = {0,-1,0};
 
-	//レイとポリゴンで判定
-	if (Collsions::CheckRayToPoligon(ray, collide, &check.distance, &inter)) {
-		//足元に判定があるなら球で判定
-		if (Collsions::SpherePoligonCollsion(check.sphereCol, collide))
+	//足元に判定があるなら球で判定
+	//多少大雑把に地形判定をとるために、通常より1.5倍にして地面との判定をとる
+	Sphere cSphere = check.sphereCol;
+	cSphere.radius *= 1.5f;
+
+	if (Collsions::SpherePoligonCollsion(cSphere, collide, &inter))
+	{
+		//通るなら当たってるので
+		//プレイヤーを設置状態に
+		if (check.jumpState == Mob::JumpState::Down)
 		{
-			//通るなら当たってるので
-			//プレイヤーを設置状態に
-			if (check.jumpState == Mob::JumpState::Down)
-			{
-				check.jumpState = Mob::JumpState::None;
-			}
-			
-			//check.position.y = inter.y + check.sphereCol.radius / 2;
-			
-			check.hitInfos.emplace_back();
-			check.hitInfos.back().inter = inter;
+			check.jumpState = Mob::JumpState::None;
 		}
+		check.sphereHits.emplace_back();
+		check.sphereHits.back().inter = inter;
 	}
 }
 
