@@ -7796,7 +7796,7 @@
                 "rotation": [
                     0.0,
                     -0.0,
-                    -179.99998474121094
+                    0.0
                 ],
                 "scaling": [
                     1.0,
@@ -7823,6 +7823,64 @@
                 "tiling": [
                     10.0,
                     10.0
+                ]
+            }
+        },
+        {
+            "type": "MESH",
+            "name": "ICO球.002",
+            "transform": {
+                "translation": [
+                    -128.77593994140625,
+                    -86.50730895996094,
+                    19.509660720825195
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    10.0,
+                    10.0,
+                    10.0
+                ]
+            },
+            "file_name": "icoSphere",
+            "texture": "stone",
+            "tiling": {
+                "tiling": [
+                    3.0,
+                    3.0
+                ]
+            }
+        },
+        {
+            "type": "MESH",
+            "name": "ICO球.003",
+            "transform": {
+                "translation": [
+                    -102.28644561767578,
+                    2.0709705352783203,
+                    15.826497077941895
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    10.0,
+                    10.0,
+                    10.0
+                ]
+            },
+            "file_name": "icoSphere",
+            "texture": "stone",
+            "tiling": {
+                "tiling": [
+                    3.0,
+                    3.0
                 ]
             }
         }
