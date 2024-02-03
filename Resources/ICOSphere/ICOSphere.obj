@@ -1,7 +1,7 @@
-# Blender v3.1.2 OBJ File: ''
+# Blender v3.2.0 OBJ File: ''
 # www.blender.org
-mtllib ICOSphere.mtl
-o ICO球
+mtllib icoSphere.mtl
+o ICO球_ICO球.001
 v 0.000000 -1.000000 0.000000
 v 0.723607 -0.447220 0.525725
 v -0.276388 -0.447220 0.850649
