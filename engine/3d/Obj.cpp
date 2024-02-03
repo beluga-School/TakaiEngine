@@ -67,11 +67,14 @@ void Obj3d::Update(const Camera& camera)
 			mWorldTriangle.back().normal = tri.normal;
 		}
 
-		constBufferB1.mConstBufferData->ambient = MODEL->mMaterial.mAmbient;
-		constBufferB1.mConstBufferData->diffuse = MODEL->mMaterial.mDiffuse;
-		constBufferB1.mConstBufferData->specular = MODEL->mMaterial.mSpecular;
-		constBufferB1.mConstBufferData->alpha = MODEL->mMaterial.mAlpha;
-		constBufferB.mConstBufferData->brightness = color_;
+		for (auto& mesh : MODEL->mMeshes)
+		{
+			constBufferB1.mConstBufferData->ambient = mesh.mMaterial.mAmbient;
+			constBufferB1.mConstBufferData->diffuse = mesh.mMaterial.mDiffuse;
+			constBufferB1.mConstBufferData->specular = mesh.mMaterial.mSpecular;
+			constBufferB1.mConstBufferData->alpha = mesh.mMaterial.mAlpha;
+			constBufferB.mConstBufferData->brightness = color_;
+		}
 	}
 
 	constBufferOutLine.mConstBufferData->color = mOutLineColor;
@@ -123,7 +126,10 @@ void Obj3d::Draw() {
 	dx12->mCmdList->SetGraphicsRootConstantBufferView(3, constBufferB.mBuffer->GetGPUVirtualAddress());
 
 	//描画コマンド
-	dx12->mCmdList->DrawIndexedInstanced((UINT)MODEL->mMesh.indices.size() , 1, 0, 0, 0);
+	for (auto& mesh : MODEL->mMeshes)
+	{
+		dx12->mCmdList->DrawIndexedInstanced((UINT)mesh.indices.size() , 1, 0, 0, 0);
+	}
 
 	//値が入ってるならずらす
 	if (mModelOffset.length() != 0)
@@ -151,13 +157,16 @@ void Obj3d::DrawMaterial() {
 	
 	//SRVヒープの先頭から順番にSRVをルートパラメータ1番に設定
 	//ルートパラメータ1番はテクスチャバッファ
-	if (MODEL->mMaterial.mTexture->mTexBuff != nullptr)
+	for (auto& mesh : MODEL->mMeshes)
 	{
-		dx12->mCmdList->SetGraphicsRootDescriptorTable(1, MODEL->mMaterial.mTexture->mGpuHandle);
-	}
-	else
-	{
-		dx12->mCmdList->SetGraphicsRootDescriptorTable(1, TEXTURE->mGpuHandle);
+		if (mesh.mMaterial.mTexture->mTexBuff != nullptr)
+		{
+			dx12->mCmdList->SetGraphicsRootDescriptorTable(1, mesh.mMaterial.mTexture->mGpuHandle);
+		}
+		else
+		{
+			dx12->mCmdList->SetGraphicsRootDescriptorTable(1, TEXTURE->mGpuHandle);
+		}
 	}
 	
 	//頂点バッファの設定
@@ -173,8 +182,11 @@ void Obj3d::DrawMaterial() {
 
 	dx12->mCmdList->SetGraphicsRootConstantBufferView(3, constBufferB.mBuffer->GetGPUVirtualAddress());
 
-	//描画コマンド
-	dx12->mCmdList->DrawIndexedInstanced((UINT)MODEL->mMesh.indices.size(), 1, 0, 0, 0);
+	for (auto& mesh : MODEL->mMeshes)
+	{
+		//描画コマンド
+		dx12->mCmdList->DrawIndexedInstanced((UINT)mesh.indices.size(), 1, 0, 0, 0);
+	}
 	
 	//値が入ってるならずらす
 	if (mModelOffset.length() != 0)
@@ -212,7 +224,10 @@ void Obj3d::DrawOutLine()
 	dx12->mCmdList->SetGraphicsRootConstantBufferView(1, constBufferT.mBuffer->GetGPUVirtualAddress());
 
 	//描画コマンド
-	dx12->mCmdList->DrawIndexedInstanced((UINT)MODEL->mMesh.indices.size(), 1, 0, 0, 0);
+	for (auto& mesh : MODEL->mMeshes)
+	{
+		dx12->mCmdList->DrawIndexedInstanced((UINT)mesh.indices.size(), 1, 0, 0, 0);
+	}
 	
 	//値が入ってるならずらす
 	if (mModelOffset.length() != 0)
@@ -255,7 +270,10 @@ void Obj3d::DrawSpecial(SpecialDraw::TEXTUREBLEND drawkey, const Texture& subTex
 	dx12->mCmdList->SetGraphicsRootConstantBufferView(3, constBufferB.mBuffer->GetGPUVirtualAddress());
 	
 	//描画コマンド
-	dx12->mCmdList->DrawIndexedInstanced((UINT)MODEL->mMesh.indices.size(), 1, 0, 0, 0);
+	for (auto& mesh : MODEL->mMeshes)
+	{
+		dx12->mCmdList->DrawIndexedInstanced((UINT)mesh.indices.size(), 1, 0, 0, 0);
+	}
 }
 
 void Obj3d::DrawSpecial(SpecialDraw::DISOLVE drawkey, const Texture& maskTex)
@@ -296,7 +314,10 @@ void Obj3d::DrawSpecial(SpecialDraw::DISOLVE drawkey, const Texture& maskTex)
 	dx12->mCmdList->SetGraphicsRootConstantBufferView(5, constBufferDisolve.mBuffer->GetGPUVirtualAddress());
 
 	//描画コマンド
-	dx12->mCmdList->DrawIndexedInstanced((UINT)MODEL->mMesh.indices.size(), 1, 0, 0, 0);
+	for (auto& mesh : MODEL->mMeshes)
+	{
+		dx12->mCmdList->DrawIndexedInstanced((UINT)mesh.indices.size(), 1, 0, 0, 0);
+	}
 }
 
 void Obj3d::SetOutLineState(const Float4& color, float thickness)

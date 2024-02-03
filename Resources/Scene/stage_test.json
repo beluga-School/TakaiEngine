@@ -45,35 +45,6 @@
         },
         {
             "type": "MESH",
-            "name": "平面",
-            "transform": {
-                "translation": [
-                    0.0,
-                    0.0,
-                    0.0
-                ],
-                "rotation": [
-                    0.0,
-                    -0.0,
-                    0.0
-                ],
-                "scaling": [
-                    3.0,
-                    3.0,
-                    3.0
-                ]
-            },
-            "file_name": "testStage",
-            "texture": "grass",
-            "tiling": {
-                "tiling": [
-                    3.0,
-                    3.0
-                ]
-            }
-        },
-        {
-            "type": "MESH",
             "name": "立方体_立方体.003",
             "transform": {
                 "translation": [
@@ -196,7 +167,9 @@
                     5.670793533325195,
                     0.6762230396270752
                 ]
-            }
+            },
+            "file_name": "groundCube",
+            "texture": "wood"
         },
         {
             "type": "MESH",
@@ -263,7 +236,9 @@
                     5.670793533325195,
                     0.6762230396270752
                 ]
-            }
+            },
+            "file_name": "groundCube",
+            "texture": "wood"
         },
         {
             "type": "MESH",
@@ -333,6 +308,79 @@
             },
             "file_name": "groundCube",
             "texture": "wood"
+        },
+        {
+            "type": "MESH",
+            "name": "壁1",
+            "transform": {
+                "translation": [
+                    -47.553932189941406,
+                    23.071868896484375,
+                    0.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    47.98078536987305,
+                    72.28438568115234,
+                    21.20316505432129
+                ]
+            },
+            "file_name": "groundCube"
+        },
+        {
+            "type": "MESH",
+            "name": "umi",
+            "transform": {
+                "translation": [
+                    0.0,
+                    0.0,
+                    -78.69020080566406
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    500.0,
+                    500.0,
+                    0.5
+                ]
+            },
+            "setObject": "sea",
+            "tiling": {
+                "tiling": [
+                    10.0,
+                    10.0
+                ]
+            }
+        },
+        {
+            "type": "MESH",
+            "name": "床1",
+            "transform": {
+                "translation": [
+                    -1.7257064580917358,
+                    62.70175552368164,
+                    -9.200458526611328
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "yuka1",
+            "texture": "grass"
         }
     ]
 }

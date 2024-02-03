@@ -17,6 +17,8 @@ struct Mesh
 	std::vector<Vertex> vertices;	//頂点データ配列
 	std::vector<uint16_t> indices;	//インデックス配列
 	std::wstring diffuseMap;		//テクスチャのファイル
+
+	Material mMaterial;
 };
 
 struct Triangle
@@ -38,7 +40,7 @@ public:
 	/// プログラムで作成したモデルを生成する用の関数
 	/// </summary>
 	/// <param name="dx12_"></param>
-	void CreateDefaultModel();
+	//void CreateDefaultModel();
 
 	/// <summary>
 	/// モデルを読み込んで生成する関数
@@ -54,7 +56,7 @@ public:
 
 public:
 	//Obj用メッシュ
-	Mesh mMesh;
+	//Mesh mMesh;
 
 	//gltf用メッシュ
 	std::vector<Mesh> mMeshes;
@@ -64,7 +66,7 @@ public:
 
 	std::unordered_map<uint16_t, std::vector<uint16_t>> mSmoothData;
 
-	Material mMaterial;
+	std::vector<Material> mMaterials;
 
 	std::string mSaveModelname = "";
 
@@ -74,10 +76,19 @@ public:
 private:
 	/// <summary>
 	/// マテリアル読み込み
+	/// 下記実装により廃止予定
 	/// </summary>
 	/// <param name="directoryPath"></param>
 	/// <param name="filename"></param>
-	void LoadMaterial(const std::string& directoryPath, const std::string& filename);
+	//void LoadMaterial(const std::string& directoryPath, const std::string& filename);
+	
+	/// <summary>
+	/// 複数マテリアルの読み込み
+	/// </summary>
+	/// <param name="directoryPath"></param>
+	/// <param name="filename"></param>
+	/// <returns></returns>
+	std::vector<Material> LoadMaterials(const std::string& directoryPath, const std::string& filename);
 };
 
 class ModelManager

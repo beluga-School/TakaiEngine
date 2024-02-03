@@ -6,7 +6,7 @@
 void RedCoin::Initialize()
 {
 	SetModel(ModelManager::GetModel("Coin"));
-	SetTexture(ModelManager::GetModel("Coin")->mMaterial.mTexture.get());
+	//SetTexture(ModelManager::GetModel("Coin")->mMaterial.mTexture.get());
 	color_ = { 1,0,0,1 };
 
 	savePos = position;
@@ -35,7 +35,7 @@ void RedCoin::Update()
 
 void RedCoin::Draw()
 {
-	Obj3d::Draw();
+	Obj3d::DrawMaterial();
 }
 
 void RedCoin::HitEffect()
