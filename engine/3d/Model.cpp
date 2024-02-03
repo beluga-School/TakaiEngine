@@ -141,7 +141,7 @@ std::vector<Material> Model::LoadMaterials(const std::string& directoryPath, con
 		{
 			line_stream >> loadingMaterial.mTextureFilename;
 
-			loadingMaterial.mTexture->Load(
+			loadingMaterial.mTexture.Load(
 				*ConvertStringToWChar(directoryPath + loadingMaterial.mTextureFilename).c_str());
 		}
 	}

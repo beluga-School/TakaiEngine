@@ -159,9 +159,9 @@ void Obj3d::DrawMaterial() {
 	//ルートパラメータ1番はテクスチャバッファ
 	for (auto& mesh : MODEL->mMeshes)
 	{
-		if (mesh.mMaterial.mTexture->mTexBuff != nullptr)
+		if (mesh.mMaterial.mTexture.mTexBuff != nullptr)
 		{
-			dx12->mCmdList->SetGraphicsRootDescriptorTable(1, mesh.mMaterial.mTexture->mGpuHandle);
+			dx12->mCmdList->SetGraphicsRootDescriptorTable(1, mesh.mMaterial.mTexture.mGpuHandle);
 		}
 		else
 		{

@@ -17,7 +17,7 @@ public:
 	float mAlpha;				//アルファ
 	Vector3 mColor;
 	std::string mTextureFilename;//テクスチャファイル名
-	std::unique_ptr<Texture> mTexture = std::make_unique<Texture>();
+	Texture mTexture;
 
 	Material() {
 		mAmbient = { 0.3f,0.3f,0.3f };
@@ -35,6 +35,8 @@ public:
 		mColor = mat.mColor;
 		mName = mat.mName;
 		mTextureFilename = mat.mTextureFilename;
+		
+		mTexture.Copy(mat.mTexture);
 	}
 
 	~Material() {};
