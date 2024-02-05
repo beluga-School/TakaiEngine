@@ -17,7 +17,7 @@ public:
 private:
 	Obj3d tri3d;
 
-	GUI gui = {"check"};
+	//GUI gui = {"check"};
 
 	Player* player = Player::Get();
 

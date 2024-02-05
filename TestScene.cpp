@@ -37,9 +37,9 @@ void TestScene::Update()
 
 	tri3d.Update(*Camera::sCamera);
 
-	gui.Begin({100,100},{500,300});
-	ImGui::Text("playerpos x:%fy:%fz:%f", player->position.x, player->position.y, player->position.z);
-	ImGui::Text("tri3d.position x:%fy:%fz:%f", tri3d.position.x, tri3d.position.y, tri3d.position.z);
+	//gui.Begin({100,100},{500,300});
+	//ImGui::Text("playerpos x:%fy:%fz:%f", player->position.x, player->position.y, player->position.z);
+	//ImGui::Text("tri3d.position x:%fy:%fz:%f", tri3d.position.x, tri3d.position.y, tri3d.position.z);
 	bool hit = false;
 	Vector3 inter;
 	Triangle tri;
@@ -91,7 +91,7 @@ void TestScene::Update()
 		}
 	}
 
-	if (player->distance) {
+	/*if (player->distance) {
 		ImGui::Text("distance %f", player->distance);
 	}
 
@@ -104,7 +104,7 @@ void TestScene::Update()
 	ImGui::Text("pFeet x:%fy:%fz:%f",
 		pFeet.x, pFeet.y, pFeet.z);
 
-	gui.End();
+	gui.End();*/
 }
 
 void TestScene::Draw()
@@ -114,6 +114,8 @@ void TestScene::Draw()
 
 	BasicObjectPreDraw("WireFrame");
 	tri3d.DrawMaterial();
+
+	InstantDrawer::DrawGraph(200, 200, 1.0f, 1.0f, "fovieta");
 
 	for (auto& cube : debugCubes)
 	{

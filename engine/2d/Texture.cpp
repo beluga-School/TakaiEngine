@@ -241,11 +241,12 @@ void TextureManager::PreLoad()
 	Load("Resources\\particle.png", "particle");
 	Load("Resources\\firewisp\\tex.png", "firewisp");
 	Load("Resources\\redScreen.png", "redScreen");
-	Load("Resources\\ddsconvert.dds", "hogeta");
 	Load("Resources\\renga.png", "renga");
 	Load("Resources\\break.png", "break");
 	Load("Resources\\snow.png", "snow");
 	Load("Resources\\ice.png", "ice");
+	//Load("Resources\\ddsconvert.dds", "hogeta");
+	Load("Resources\\fovieta.dds", "fovieta");
 }
 
 //ネットで拾ってきたstring->wstring変換
