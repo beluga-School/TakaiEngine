@@ -74,6 +74,7 @@ struct LoadTargetData
 
 /*! StageChanger
 	ステージを読み込み生成するクラス
+	すべてのエンティティの描画、更新も行う
 */
 class StageChanger
 {
