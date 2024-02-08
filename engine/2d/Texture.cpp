@@ -105,6 +105,21 @@ void Texture::CreateWhiteTexture()
 	mGetResDesc = textureResourceDesc;
 }
 
+void Texture::Copy(const Texture& t)
+{
+	mGetResDesc = t.mGetResDesc;
+	mTexBuff = t.mTexBuff;
+	mGpuHandle = t.mGpuHandle;
+	mCpuHandle = t.mCpuHandle;
+	mCreated = t.mCreated;
+	mMetadata = t.mMetadata;
+	mSrvDesc = t.mSrvDesc;
+	mResDesc = t.mResDesc;
+	
+	//mScratchImg = t.mScratchImg;
+	//mMipChain = t.mMipChain;
+}
+
 void Texture::Load(const wchar_t& t)
 {
 	std::string hoge = ConvertWCharToString(&t);

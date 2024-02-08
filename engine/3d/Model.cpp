@@ -11,13 +11,77 @@ using namespace DirectX;
 
 std::map<std::string, Model> ModelManager::sModels;
 
-void Model::CreateDefaultModel()
-{
-	CreateVertex(mMesh.vertices, mMesh.indices);
-}
+//void Model::CreateDefaultModel()
+//{
+//	CreateVertex(mMesh.vertices, mMesh.indices);
+//}
+//
+//void Model::LoadMaterial(const std::string& directoryPath, const std::string& filename)
+//{
+//	//ファイルストリーム
+//	std::ifstream file;
+//	//マテリアルファイルを開く
+//	file.open(directoryPath + filename);
+//
+//	//ファイルオープン失敗をチェック
+//	if (file.fail())
+//	{
+//		assert(0);
+//	}
+//
+//	//1行ずつ読み込む
+//	string line;
+//	while (getline(file, line))
+//	{
+//		std::istringstream line_stream(line);
+//		//半角スペース区切りで行の先頭文字列を取得
+//		string key;
+//		getline(line_stream, key, ' ');
+//
+//		//先頭のタブ文字は無視する
+//		if (key[0] == '\t') {
+//			key.erase(key.begin());//先頭の文字を削除
+//		}
+//
+//		//先頭文字列がnewmtlならマテリアル名
+//		if (key == "newmtl") {
+//			//マテリアル名
+//			line_stream >> mMaterial.mName;
+//		}
+//
+//		if (key == "Ka") {
+//			line_stream >> mMaterial.mAmbient.x;
+//			line_stream >> mMaterial.mAmbient.y;
+//			line_stream >> mMaterial.mAmbient.z;
+//		}
+//
+//		if (key == "Kd") {
+//			line_stream >> mMaterial.mDiffuse.x;
+//			line_stream >> mMaterial.mDiffuse.y;
+//			line_stream >> mMaterial.mDiffuse.z;
+//		}
+//
+//		if (key == "Ks") {
+//			line_stream >> mMaterial.mSpecular.x;
+//			line_stream >> mMaterial.mSpecular.y;
+//			line_stream >> mMaterial.mSpecular.z;
+//		}
+//
+//		if (key == "map_Kd")
+//		{
+//			line_stream >> mMaterial.mTextureFilename;
+//
+//			mMaterial.mTexture->Load(*ConvertStringToWChar(directoryPath + mMaterial.mTextureFilename).c_str());
+//		}
+//	}
+//	//ファイルを閉じる
+//	file.close();
+//}
 
-void Model::LoadMaterial(const std::string& directoryPath, const std::string& filename)
+std::vector<Material> Model::LoadMaterials(const std::string& directoryPath, const std::string& filename)
 {
+	std::vector<Material> data;
+
 	//ファイルストリーム
 	std::ifstream file;
 	//マテリアルファイルを開く
@@ -28,6 +92,8 @@ void Model::LoadMaterial(const std::string& directoryPath, const std::string& fi
 	{
 		assert(0);
 	}
+
+	Material loadingMaterial;
 
 	//1行ずつ読み込む
 	string line;
@@ -45,37 +111,47 @@ void Model::LoadMaterial(const std::string& directoryPath, const std::string& fi
 
 		//先頭文字列がnewmtlならマテリアル名
 		if (key == "newmtl") {
+			//情報が入っているなら今まで作ったマテリアルを登録
+			if (loadingMaterial.mName != "") {
+				data.push_back(loadingMaterial);
+			}
 			//マテリアル名
-			line_stream >> mMaterial.mName;
+			line_stream >> loadingMaterial.mName;
 		}
 
 		if (key == "Ka") {
-			line_stream >> mMaterial.mAmbient.x;
-			line_stream >> mMaterial.mAmbient.y;
-			line_stream >> mMaterial.mAmbient.z;
+			line_stream >> loadingMaterial.mAmbient.x;
+			line_stream >> loadingMaterial.mAmbient.y;
+			line_stream >> loadingMaterial.mAmbient.z;
 		}
 
 		if (key == "Kd") {
-			line_stream >> mMaterial.mDiffuse.x;
-			line_stream >> mMaterial.mDiffuse.y;
-			line_stream >> mMaterial.mDiffuse.z;
+			line_stream >> loadingMaterial.mDiffuse.x;
+			line_stream >> loadingMaterial.mDiffuse.y;
+			line_stream >> loadingMaterial.mDiffuse.z;
 		}
 
 		if (key == "Ks") {
-			line_stream >> mMaterial.mSpecular.x;
-			line_stream >> mMaterial.mSpecular.y;
-			line_stream >> mMaterial.mSpecular.z;
+			line_stream >> loadingMaterial.mSpecular.x;
+			line_stream >> loadingMaterial.mSpecular.y;
+			line_stream >> loadingMaterial.mSpecular.z;
 		}
 
 		if (key == "map_Kd")
 		{
-			line_stream >> mMaterial.mTextureFilename;
+			line_stream >> loadingMaterial.mTextureFilename;
 
-			mMaterial.mTexture->Load(*ConvertStringToWChar(directoryPath + mMaterial.mTextureFilename).c_str());
+			loadingMaterial.mTexture.Load(
+				*ConvertStringToWChar(directoryPath + loadingMaterial.mTextureFilename).c_str());
 		}
 	}
 	//ファイルを閉じる
 	file.close();
+
+	//最後に作ったマテリアルを登録
+	data.push_back(loadingMaterial);
+
+	return data;
 }
 
 void Model::CreateModel(const std::string modelname, bool smoothing)
@@ -99,6 +175,8 @@ void Model::CreateModel(const std::string modelname, bool smoothing)
 	vector<Vector3> normals;	//法線ベクトル
 	vector<Vector2> texcoords;	//テクスチャuv
 
+	Mesh loadingMesh;
+
 	string line;
 	while (getline(file, line))
 	{
@@ -109,16 +187,6 @@ void Model::CreateModel(const std::string modelname, bool smoothing)
 
 		if (key[0] == '\t') {
 			key.erase(key.begin());
-		}
-
-		if (key == "mtllib")
-		{
-			//マテリアルのファイル名読み込み
-			string matfilename;
-			line_stream >> matfilename;
-
-			//マテリアル読み込み
-			LoadMaterial(directoryPath, matfilename);
 		}
 
 		if (key == "v")
@@ -180,15 +248,46 @@ void Model::CreateModel(const std::string modelname, bool smoothing)
 				vertex.uv.x = texcoords[indexTexcoord - 1].x;
 				vertex.uv.y = texcoords[indexTexcoord - 1].y;
 				
-				mMesh.vertices.emplace_back(vertex);
+				loadingMesh.vertices.emplace_back(vertex);
 
 				//頂点インデックスに追加
-				mMesh.indices.emplace_back(static_cast<uint16_t>(mMesh.indices.size()));
+				loadingMesh.indices.emplace_back(static_cast<uint16_t>(loadingMesh.indices.size()));
 
 				//ここでデータを保持
 				if (smoothing)
 				{
-					mSmoothData[indexPosition].emplace_back(static_cast<uint16_t>(mMesh.vertices.size() - 1));
+					mSmoothData[indexPosition].emplace_back(static_cast<uint16_t>(loadingMesh.vertices.size() - 1));
+				}
+			}
+		}
+
+		if (key == "mtllib")
+		{
+			//マテリアルのファイル名読み込み
+			string matfilename;
+			line_stream >> matfilename;
+
+			mMaterials = LoadMaterials(directoryPath, matfilename);
+
+			//マテリアル読み込み
+			//LoadMaterial(directoryPath, matfilename);
+		}
+
+		if (key == "usemtl")
+		{
+			string matfilename;
+			line_stream >> matfilename;
+			for (auto& mat : mMaterials)
+			{
+				if (mat.mName == matfilename) 
+				{
+					loadingMesh.mMaterial.mAmbient = mat.mAmbient;
+					loadingMesh.mMaterial.mDiffuse = mat.mDiffuse;
+					loadingMesh.mMaterial.mSpecular = mat.mSpecular;
+					loadingMesh.mMaterial.mAlpha = mat.mAlpha;
+					loadingMesh.mMaterial.mColor = mat.mColor;
+					loadingMesh.mMaterial.mName = mat.mName;
+					loadingMesh.mMaterial.mTextureFilename = mat.mTextureFilename;
 				}
 			}
 		}
@@ -196,17 +295,17 @@ void Model::CreateModel(const std::string modelname, bool smoothing)
 	file.close();
 
 	Triangle tricol;
-	for (int32_t i = 0; i < mMesh.indices.size() / 3; i++)
+	for (int32_t i = 0; i < loadingMesh.indices.size() / 3; i++)
 	{	
 		//三角形1つごとに計算していく
 		//三角形のインデックスを取り出して、一時的な変数にいれる
-		uint16_t indices0 = mMesh.indices[i * 3 + 0];
-		uint16_t indices1 = mMesh.indices[i * 3 + 1];
-		uint16_t indices2 = mMesh.indices[i * 3 + 2];
+		uint16_t indices0 = loadingMesh.indices[i * 3 + 0];
+		uint16_t indices1 = loadingMesh.indices[i * 3 + 1];
+		uint16_t indices2 = loadingMesh.indices[i * 3 + 2];
 		//三角形を構成する頂点座標をベクトルに代入
-		XMVECTOR p0 = XMLoadFloat3(&mMesh.vertices[indices0].pos);
-		XMVECTOR p1 = XMLoadFloat3(&mMesh.vertices[indices1].pos);
-		XMVECTOR p2 = XMLoadFloat3(&mMesh.vertices[indices2].pos);
+		XMVECTOR p0 = XMLoadFloat3(&loadingMesh.vertices[indices0].pos);
+		XMVECTOR p1 = XMLoadFloat3(&loadingMesh.vertices[indices1].pos);
+		XMVECTOR p2 = XMLoadFloat3(&loadingMesh.vertices[indices2].pos);
 
 		//p0→p1ベクトル、p0→p2ベクトルを計算(ベクトルの減算)
 		XMVECTOR v1 = XMVectorSubtract(p1, p0);
@@ -216,9 +315,9 @@ void Model::CreateModel(const std::string modelname, bool smoothing)
 		//正規化(長さを1にする)
 		normal = XMVector3Normalize(normal);
 		//求めた法線を頂点データに代入
-		XMStoreFloat3(&mMesh.vertices[indices0].normal, normal);
-		XMStoreFloat3(&mMesh.vertices[indices1].normal, normal);
-		XMStoreFloat3(&mMesh.vertices[indices2].normal, normal);
+		XMStoreFloat3(&loadingMesh.vertices[indices0].normal, normal);
+		XMStoreFloat3(&loadingMesh.vertices[indices1].normal, normal);
+		XMStoreFloat3(&loadingMesh.vertices[indices2].normal, normal);
 
 		tricol.normal = { normal.m128_f32[0],normal.m128_f32[1],normal.m128_f32[2] };
 		tricol.pos0 = { p0.m128_f32[0],p0.m128_f32[1],p0.m128_f32[2] };
@@ -238,14 +337,16 @@ void Model::CreateModel(const std::string modelname, bool smoothing)
 			XMVECTOR normal = {};
 			for (uint16_t index : v)
 			{
-				normal += XMVectorSet(mMesh.vertices[index].normal.x, mMesh.vertices[index].normal.y, mMesh.vertices[index].normal.z, 0);
+				normal += XMVectorSet(loadingMesh.vertices[index].normal.x, 
+					loadingMesh.vertices[index].normal.y,
+					loadingMesh.vertices[index].normal.z, 0);
 			}
 
 			normal = XMVector3Normalize(normal / (float)v.size());
 
 			for (uint16_t index : v)
 			{
-				mMesh.vertices[index].normal = { 
+				loadingMesh.vertices[index].normal = {
 					normal.m128_f32[0],
 					normal.m128_f32[1],
 					normal.m128_f32[2] 
@@ -254,7 +355,9 @@ void Model::CreateModel(const std::string modelname, bool smoothing)
 		}
 	}
 
-	CreateVertex(mMesh.vertices, mMesh.indices);
+	CreateVertex(loadingMesh.vertices, loadingMesh.indices);
+
+	mMeshes.push_back(loadingMesh);
 
 	mCreated = true;
 }
@@ -276,17 +379,17 @@ void Model::CreateModelAssimp(const std::wstring& filename)
 		assert(0);
 	}
 
-	for (size_t i = 0; i < mMeshes.size(); i++)
-	{
-		auto vertices = mMeshes[i].vertices;
-		auto indices = mMeshes[i].indices;
+	//for (size_t i = 0; i < mMeshes.size(); i++)
+	//{
+	//	auto vertices = mMeshes[i].vertices;
+	//	auto indices = mMeshes[i].indices;
 
-		CreateVertex(vertices, indices);
-		mMesh.vertices = vertices;
-		mMesh.indices = indices;
+	//	CreateVertex(vertices, indices);
+	//	mMesh.vertices = vertices;
+	//	mMesh.indices = indices;
 
-		//mMaterial.mTextire->Load(*mMeshes[i].diffuseMap.c_str());
-	}
+	//	//mMaterial.mTextire->Load(*mMeshes[i].diffuseMap.c_str());
+	//}
 
 	mCreated = true;
 }

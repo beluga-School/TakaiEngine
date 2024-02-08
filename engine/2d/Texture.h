@@ -18,6 +18,11 @@ class Texture
 {
 public:
 
+	Texture() {}
+	~Texture() {}
+
+	void Copy(const Texture& t);
+
 	//リソースの読み込み
 	void Load(const wchar_t& t);
 

@@ -45,11 +45,14 @@ void Billboard::Update(const Camera& camera)
 
 	if (MODEL != nullptr)
 	{
-		constBufferB1.mConstBufferData->ambient = MODEL->mMaterial.mAmbient;
-		constBufferB1.mConstBufferData->diffuse = MODEL->mMaterial.mDiffuse;
-		constBufferB1.mConstBufferData->specular = MODEL->mMaterial.mSpecular;
-		constBufferB1.mConstBufferData->alpha = MODEL->mMaterial.mAlpha;
-		constBufferB.mConstBufferData->brightness = color_;
+		for (auto& mesh : MODEL->mMeshes)
+		{
+			constBufferB1.mConstBufferData->ambient = mesh.mMaterial.mAmbient;
+			constBufferB1.mConstBufferData->diffuse = mesh.mMaterial.mDiffuse;
+			constBufferB1.mConstBufferData->specular = mesh.mMaterial.mSpecular;
+			constBufferB1.mConstBufferData->alpha = mesh.mMaterial.mAlpha;
+			constBufferB.mConstBufferData->brightness = color_;
+		}
 	}
 
 	constBufferOutLine.mConstBufferData->color = mOutLineColor;
@@ -110,11 +113,14 @@ void BillboardY::Update(const Camera& camera)
 
 	if (MODEL != nullptr)
 	{
-		constBufferB1.mConstBufferData->ambient = MODEL->mMaterial.mAmbient;
-		constBufferB1.mConstBufferData->diffuse = MODEL->mMaterial.mDiffuse;
-		constBufferB1.mConstBufferData->specular = MODEL->mMaterial.mSpecular;
-		constBufferB1.mConstBufferData->alpha = MODEL->mMaterial.mAlpha;
-		constBufferB.mConstBufferData->brightness = color_;
+		for (auto& mesh : MODEL->mMeshes)
+		{
+			constBufferB1.mConstBufferData->ambient = mesh.mMaterial.mAmbient;
+			constBufferB1.mConstBufferData->diffuse = mesh.mMaterial.mDiffuse;
+			constBufferB1.mConstBufferData->specular = mesh.mMaterial.mSpecular;
+			constBufferB1.mConstBufferData->alpha = mesh.mMaterial.mAlpha;
+			constBufferB.mConstBufferData->brightness = color_;
+		}
 	}
 
 	constBufferOutLine.mConstBufferData->color = mOutLineColor;
@@ -150,6 +156,9 @@ void BillboardY::DrawNoise()
 	dx12->mCmdList->SetGraphicsRootConstantBufferView(0, constBufferB1.mBuffer->GetGPUVirtualAddress());
 	
 	//描画コマンド
-	dx12->mCmdList->DrawIndexedInstanced((UINT)MODEL->mMesh.indices.size(), 1, 0, 0, 0);
+	for (auto& mesh : MODEL->mMeshes)
+	{
+		dx12->mCmdList->DrawIndexedInstanced((UINT)mesh.indices.size(), 1, 0, 0, 0);
+	}
 
 }
