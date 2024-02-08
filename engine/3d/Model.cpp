@@ -317,7 +317,6 @@ void ModelManager::PreLoad()
 	LoadModel("bombSolider", "bombSolider",true);
 	LoadModel("smoke", "smoke",true);
 	LoadModel("teiboku", "teiboku",true);
-	LoadModel("triangle", "triangle",true);
 	LoadModel("mountain2", "mountain2",true);
 }
 
