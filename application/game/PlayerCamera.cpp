@@ -60,18 +60,18 @@ void PlayerCamera::RadiusChange()
 		mRadius = TEasing::InQuad(startRadius, endRadius, radiusMoveTimer.GetTimeRate());
 	}
 
-	if (Player::Get()->CheckState(Player::PlayerState::Debug))
-	{
-		//ラディウス変更(消してもいいかも)
-		if (Mouse::Wheel() < 0)
-		{
-			mRadius += 2.0f;
-		}
-		if (Mouse::Wheel() > 0)
-		{
-			mRadius -= 2.0f;
-		}
-	}
+	//if (Player::Get()->CheckState(Player::PlayerState::Debug))
+	//{
+	//	//ラディウス変更(消してもいいかも)
+	//	if (Mouse::Wheel() < 0)
+	//	{
+	//		mRadius += 2.0f;
+	//	}
+	//	if (Mouse::Wheel() > 0)
+	//	{
+	//		mRadius -= 2.0f;
+	//	}
+	//}
 
 	mRadius = Util::Clamp(mRadius, 1.0f, 30.f);
 }

@@ -15,43 +15,54 @@
 
 using namespace Input;
 
-bool Player::CheckState(PlayerState check)
+//bool Player::CheckState(PlayerState check)
+//{
+//	for (auto& tag : mPlayerStates)
+//	{
+//		if (tag == check)
+//		{
+//			return true;
+//		}
+//	}
+//	return false;
+//}
+//
+//bool Player::SetState(PlayerState check)
+//{
+//	for (auto itr = mPlayerStates.begin(); itr != mPlayerStates.end(); itr++)
+//	{
+//		if (*itr == check)
+//		{
+//			return false;
+//		}
+//	}
+//	mPlayerStates.push_back(check);
+//	return true;
+//}
+//
+//bool Player::DeleteState(PlayerState check)
+//{
+//	for (auto itr = mPlayerStates.begin(); itr != mPlayerStates.end(); itr++)
+//	{
+//		if (*itr == check)
+//		{
+//			mPlayerStates.erase(itr);
+//			return true;
+//		}
+//	}
+//
+//	return false;
+//}
+
+void Player::ChangeState(PlayerState* newstate)
 {
-	for (auto& tag : mPlayerStates)
-	{
-		if (tag == check)
-		{
-			return true;
-		}
-	}
-	return false;
+	delete state;
+	state = newstate;
 }
 
-bool Player::SetState(PlayerState check)
+std::string Player::showState()
 {
-	for (auto itr = mPlayerStates.begin(); itr != mPlayerStates.end(); itr++)
-	{
-		if (*itr == check)
-		{
-			return false;
-		}
-	}
-	mPlayerStates.push_back(check);
-	return true;
-}
-
-bool Player::DeleteState(PlayerState check)
-{
-	for (auto itr = mPlayerStates.begin(); itr != mPlayerStates.end(); itr++)
-	{
-		if (*itr == check)
-		{
-			mPlayerStates.erase(itr);
-			return true;
-		}
-	}
-
-	return false;
+	return state->showState();
 }
 
 void Player::LoadResource()
@@ -82,8 +93,8 @@ void Player::Initialize()
 
 	mModelOffset = { 0,0.3f,0 };
 
-	mPlayerStates.clear();
-	SetState(PlayerState::Normal);
+	//mPlayerStates.clear();
+	//SetState(PlayerState::Normal);
 
 	SetNoMove(false);
 	SetNoCollsion(false);
@@ -95,8 +106,6 @@ void Player::Initialize()
 
 void Player::Update()
 {
-	ApparanceUpdate();
-
 	//移動地を初期化
 	oldMove = moveValue;
 	moveValue = { 0,0,0 };
@@ -107,15 +116,9 @@ void Player::Update()
 
 	//ダッシュ変更
 	ChangeDash();
-	//通常の状態であれば
-	NormalUpdate();
-	//ダッシュ状態であれば
-	DashUpdate();
 
-	HipDropUpdate();
-	
-	//デバッグ状態のいろいろ
-	DebugUpdate();
+	//現在ステートの更新
+	state->Update(this);
 	
 	AdjudicationUpdate();
 
@@ -179,8 +182,6 @@ void Player::Reset()
 
 void Player::MoveUpdate()
 {
-	mWallKickTimer.Update();
-	
 	//縦移動更新(重力落下含む)
 	//ジャンプしていない状態で入力があったらジャンプ
 	if (jumpState == JumpState::None)
@@ -192,19 +193,6 @@ void Player::MoveUpdate()
 			GroundHitParticle();
 		}
 	}
-	if (CanWallKick())
-	{
-		//if (Input::Keyboard::TriggerKey(DIK_SPACE) ||
-		//	Pad::TriggerPadButton(PadButton::A))
-		//{
-		//	Jump();
-		//	//反対方向に飛ぶ
-		//	mWallKickTimer.Start();
-		//	mWallKickVec = matWorld.ExtractAxisZ();
-		//	mWallKickVec.y = 0;
-		//}
-	}
-
 	//ジャンプ中なら
 	if (IsJump())
 	{
@@ -218,14 +206,9 @@ void Player::MoveUpdate()
 			mJumpRotaX += ROTA_VALUE * 2;
 		}
 		//ダッシュ状態でなくなったらもとの回転に戻す
-		if (!CheckState(PlayerState::Dash)) {
+		if (showState() != "dash") {
 			mJumpRotaX = 0;
 		}
-	}
-
-	if (mWallKickTimer.GetRun())
-	{
-		mJumpRotaX -= ROTA_VALUE;
 	}
 
 	//着地してるなら取り消す
@@ -245,14 +228,6 @@ void Player::MoveUpdate()
 	if (GetInputMove(Player::InputMove::Push))
 	{
 		moveValue += mCenterVec * mSpeed * TimeManager::deltaTime;
-	}
-
-	//壁キックタイマーが動いてるなら壁キック入力があったときの逆進行方向を足し続ける
-	if (mWallKickTimer.GetRun())
-	{
-		moveValue = { 0,0,0 };
-		//斜め上に飛ばしたい
-		moveValue -= mWallKickVec;
 	}
 }
 
@@ -461,7 +436,7 @@ void Player::DamageEffect(int32_t damage)
 
 void Player::ApparranceMove(const Vector3& dokanPos, const Vector3& dokanScale)
 {
-	ChangeState(PlayerState::Apparrance);
+	//ChangeState(PlayerState::Apparrance);
 
 	mApparranceTimer.Start();
 	mSaveDokanPos = dokanPos;
@@ -484,197 +459,184 @@ void Player::HPOverFlow(int32_t value)
 	}
 }
 
-bool Player::CheckContinuanceKick(IDdCube* check)
-{
-	//ひとつ前のセーブした壁とIDが同じならtrueを返す
-	if (mSaveKickWall != nullptr)
-	{
-		if (mSaveKickWall->GetID() == check->GetID())
-		{
-			return true;
-		}
-	}
-	//IDが不正な物でなければ
-	if (mSaveKickWall == nullptr)
-	{
- 		mSaveKickWall = check;
-	}
-	return false;
-}
-
 void Player::ChangeDash()
 {
 	if (Input::Keyboard::PushKey(DIK_LSHIFT) ||
 		Pad::PushRT()) 
 	{
-		SetState(PlayerState::Dash);
+		//SetState(PlayerState::Dash);
+		//ダッシュへ遷移
+		ChangeState(new PlayerDash());
+		mSpeed = DASH_SPEED;
 		if (Input::Keyboard::TriggerKey(DIK_LSHIFT) ||
 			Pad::TriggerRT()) {
 			DonuteSmoke(position);
 		}
 	}
 	else {
-		DeleteState(PlayerState::Dash);
+		//通常へ遷移
+		ChangeState(new PlayerNormal());
+		mSpeed = NORMAL_SPEED;
 	}
-	//ヒップドロップ中ならダッシュを解除する
-	if (CheckState(PlayerState::HipDrop)) {
-		DeleteState(PlayerState::Dash);
-	}
+	////ヒップドロップ中ならダッシュを解除する
+	//if (CheckState(PlayerState::HipDrop)) {
+	//	DeleteState(PlayerState::Dash);
+	//}
 }
 
-void Player::NormalUpdate()
-{
-	if (CheckState(PlayerState::Normal))
-	{
-		if (CheckState(PlayerState::Dash)) {
-			mSpeed = DASH_SPEED;
-		}
-		else {
-			mSpeed = NORMAL_SPEED;
-			mJumpCount = 0;
-		}
+//void Player::NormalUpdate()
+//{
+//	if (CheckState(PlayerState::Normal))
+//	{
+//		if (CheckState(PlayerState::Dash)) {
+//			mSpeed = DASH_SPEED;
+//		}
+//		else {
+//			mSpeed = NORMAL_SPEED;
+//			mJumpCount = 0;
+//		}
+//
+//		MoveUpdate();
+//	}
+//}
+//
+//void Player::DashUpdate()
+//{
+//	Vector3 playerBack{};
+//	Vector3 playerFeetPos{};
+//
+//	if (CheckState(PlayerState::Dash))
+//	{
+//		//プレイヤーの少し後ろの足元座標を算出
+//		playerBack = -matWorld.ExtractAxisZ() * (scale.z / 2);
+//		playerFeetPos = Vector3(position.x, position.y - (scale.y / 2), position.z) + playerBack;
+//
+//		Vector3 randPos = Util::GetRandVector3(playerFeetPos, -0.25f, 0.25f, { 1,0,1 });
+//
+//		float time = MathF::GetRand(0.5f, 1.0f);
+//		float size = MathF::GetRand(0.3f, 0.6f);
+//
+//		//パーティクル配置
+//		ParticleManager::Get()->CreateSmoke(
+//			randPos,
+//			randPos,
+//			{ size ,size ,size },
+//			time,
+//			Color(1,1,1,1),
+//			EASEPATTERN::INBACK);
+//	}
+//}
 
-		MoveUpdate();
-	}
-}
-
-void Player::DashUpdate()
-{
-	Vector3 playerBack{};
-	Vector3 playerFeetPos{};
-
-	if (CheckState(PlayerState::Dash))
-	{
-		//プレイヤーの少し後ろの足元座標を算出
-		playerBack = -matWorld.ExtractAxisZ() * (scale.z / 2);
-		playerFeetPos = Vector3(position.x, position.y - (scale.y / 2), position.z) + playerBack;
-
-		Vector3 randPos = Util::GetRandVector3(playerFeetPos, -0.25f, 0.25f, { 1,0,1 });
-
-		float time = MathF::GetRand(0.5f, 1.0f);
-		float size = MathF::GetRand(0.3f, 0.6f);
-
-		//パーティクル配置
-		ParticleManager::Get()->CreateSmoke(
-			randPos,
-			randPos,
-			{ size ,size ,size },
-			time,
-			Color(1,1,1,1),
-			EASEPATTERN::INBACK);
-	}
-}
-
-void Player::DebugUpdate()
-{
-	//デバッグ変更
-	if (Input::Keyboard::TriggerKey(DIK_1))
-	{
-		if (CheckState(PlayerState::Debug)) {
-			DeleteState(PlayerState::Debug);
-		}
-		else {
-			SetState(PlayerState::Debug);
-		}
-	}
-
-	if (CheckState(PlayerState::Debug))
-	{
-		if (mFlyMode)
-		{
-			Fly();
-		}
-
-		//ダメージ処理テスト
-		if (Input::Keyboard::TriggerKey(DIK_T))
-		{
-			mMutekiTimer.Reset();
-			DamageEffect(1);
-		}
-		if (Input::Keyboard::TriggerKey(DIK_G))
-		{
-			mHp.mCurrent += 1;
-		}
-
-		//入力でリロード
-		if (Input::Keyboard::TriggerKey(DIK_R))
-		{
-			StageChanger::Get()->Reload();
-		}
-	}
-
-}
-
-void Player::ApparanceUpdate()
-{
-	mApparranceTimer.Update();
-	if (CheckState(PlayerState::Apparrance))
-	{
-		Vector3 endpos = mSaveDokanPos + Vector3(0, mSaveDokanScale.y / 2.f, 0);
-		position = TEasing::OutQuad(mSaveDokanPos, endpos, mApparranceTimer.GetTimeRate());
-
-		if (mApparranceTimer.GetEnd())
-		{
-			ChangeState(PlayerState::Normal);
-
-			//ここら辺システム側の処理だから、別の場所に移したい
-			GameUIManager::Get()->Move(UIMove::START, "StageTitle");
-		}
-	}
-}
-
-void Player::HipDropUpdate()
-{
-	//ヒップドロップの更新
-	mHipDropTimer.Update();
-	if (IsJump())
-	{
-		//ヒップドロップ処理
-		if (Input::Keyboard::TriggerKey(DIK_LSHIFT) ||
-			Pad::TriggerRT())
-		{
-			if (!CheckState(PlayerState::HipDrop)) {
-				SetState(PlayerState::HipDrop);
-				mHipDropTimer.Start();
-				PlayerCamera::Get()->ChangeRadius(1.0f, mHipDropTimer.mMaxTime);
-			}
-		}
-	}
-	//地面に着地していて
-	if (!IsJump())
-	{
-		if (CheckState(PlayerState::Normal))
-		{
-			ResetGravity();
-			SetNoMove(false);
-		}
-		if (CheckState(PlayerState::HipDrop)) {
-			DeleteState(PlayerState::HipDrop);
-			//エフェクト出す
-			for (int i = 0; i < 10; i++)
-			{
-				ParticleManager::Get()->CreateCubeParticle(position,
-					{ 1,1,1 }, 5, { 1,1,1,1 });
-			}
-		}
-	}
-	if (mHipDropTimer.GetRun())
-	{
-		mJumpRotaX = TEasing::OutQuad(0, 720, mHipDropTimer.GetTimeRate());
-
-		SetNoMove(true);
-		SetNoGravity(true);
-	}
-	if (mHipDropTimer.GetNowEnd())
-	{
-		mJumpRotaX = 0;
-
-		SetGravity(4.5f);
-		PlayerCamera::Get()->InitRadius();
-
-		SetNoGravity(false);
-	}
-}
+//void Player::DebugUpdate()
+//{
+//	//デバッグ変更
+//	if (Input::Keyboard::TriggerKey(DIK_1))
+//	{
+//		if (CheckState(PlayerState::Debug)) {
+//			DeleteState(PlayerState::Debug);
+//		}
+//		else {
+//			SetState(PlayerState::Debug);
+//		}
+//	}
+//
+//	if (CheckState(PlayerState::Debug))
+//	{
+//		if (mFlyMode)
+//		{
+//			Fly();
+//		}
+//
+//		//ダメージ処理テスト
+//		if (Input::Keyboard::TriggerKey(DIK_T))
+//		{
+//			mMutekiTimer.Reset();
+//			DamageEffect(1);
+//		}
+//		if (Input::Keyboard::TriggerKey(DIK_G))
+//		{
+//			mHp.mCurrent += 1;
+//		}
+//
+//		//入力でリロード
+//		if (Input::Keyboard::TriggerKey(DIK_R))
+//		{
+//			StageChanger::Get()->Reload();
+//		}
+//	}
+//
+//}
+//
+//void Player::ApparanceUpdate()
+//{
+//	mApparranceTimer.Update();
+//	if (CheckState(PlayerState::Apparrance))
+//	{
+//		Vector3 endpos = mSaveDokanPos + Vector3(0, mSaveDokanScale.y / 2.f, 0);
+//		position = TEasing::OutQuad(mSaveDokanPos, endpos, mApparranceTimer.GetTimeRate());
+//
+//		if (mApparranceTimer.GetEnd())
+//		{
+//			ChangeState(PlayerState::Normal);
+//
+//			//ここら辺システム側の処理だから、別の場所に移したい
+//			GameUIManager::Get()->Move(UIMove::START, "StageTitle");
+//		}
+//	}
+//}
+//
+//void Player::HipDropUpdate()
+//{
+//	//ヒップドロップの更新
+//	mHipDropTimer.Update();
+//	if (IsJump())
+//	{
+//		//ヒップドロップ処理
+//		if (Input::Keyboard::TriggerKey(DIK_LSHIFT) ||
+//			Pad::TriggerRT())
+//		{
+//			if (!CheckState(PlayerState::HipDrop)) {
+//				SetState(PlayerState::HipDrop);
+//				mHipDropTimer.Start();
+//				PlayerCamera::Get()->ChangeRadius(1.0f, mHipDropTimer.mMaxTime);
+//			}
+//		}
+//	}
+//	//地面に着地していて
+//	if (!IsJump())
+//	{
+//		if (CheckState(PlayerState::Normal))
+//		{
+//			ResetGravity();
+//			SetNoMove(false);
+//		}
+//		if (CheckState(PlayerState::HipDrop)) {
+//			DeleteState(PlayerState::HipDrop);
+//			//エフェクト出す
+//			for (int i = 0; i < 10; i++)
+//			{
+//				ParticleManager::Get()->CreateCubeParticle(position,
+//					{ 1,1,1 }, 5, { 1,1,1,1 });
+//			}
+//		}
+//	}
+//	if (mHipDropTimer.GetRun())
+//	{
+//		mJumpRotaX = TEasing::OutQuad(0, 720, mHipDropTimer.GetTimeRate());
+//
+//		SetNoMove(true);
+//		SetNoGravity(true);
+//	}
+//	if (mHipDropTimer.GetNowEnd())
+//	{
+//		mJumpRotaX = 0;
+//
+//		SetGravity(4.5f);
+//		PlayerCamera::Get()->InitRadius();
+//
+//		SetNoGravity(false);
+//	}
+//}
 
 void Player::AdjudicationUpdate()
 {	
@@ -715,6 +677,21 @@ void Player::GroundHitParticle()
 	}
 }
 
+void Player::MoveValuePlus(const Vector3& plus)
+{
+	moveValue += plus;
+}
+
+Vector3 Player::GetCenterVec()
+{
+	return mCenterVec;
+}
+
+float Player::GetSpeed()
+{
+	return mSpeed;
+}
+
 void Player::DonuteSmoke(Vector3 center)
 {
 	Vector3 ziku = matWorld.ExtractAxisZ();
@@ -740,68 +717,6 @@ void Player::DonuteSmoke(Vector3 center)
 				{ size,size,size }, time, Color(1, 1, 1, 1), EASEPATTERN::INQUAD);
 		}
 	}
-}
-
-bool Player::CanWallKick()
-{
-	//ジャンプ中でないなら不可
-	if (jumpState != JumpState::Down)return false;
-
-	//正面ベクトルにちょい足しした位置の四角と当たり判定して当たってるなら壁キックできる
-	Cube cube;
-	cube.position = position + (matWorld.ExtractAxisZ() * 5.0f);
-	cube.scale = scale;
-	cube.rotation = rotation;
-
-	for (auto& hit : hitListCenter)
-	{
-		if (Collsions::CubeCollision(hit, cube))
-		{
-			//ひとつ前のセーブした壁とIDが同じなら失敗判定にする
-			if (CheckContinuanceKick(&hit))
-			{
-				return false;
-			}
-			return true;
-		}
-	}
-	for (auto& hit : hitListBack)
-	{
-		if (Collsions::CubeCollision(hit, cube))
-		{
-			//ひとつ前のセーブした壁とIDが同じなら失敗判定にする
-			if (CheckContinuanceKick(&hit))
-			{
-				return false;
-			}
-			return true;
-		}
-	}
-	for (auto& hit : hitListRight)
-	{
-		if (Collsions::CubeCollision(hit, cube))
-		{
-			//ひとつ前のセーブした壁とIDが同じなら失敗判定にする
-			if (CheckContinuanceKick(&hit))
-			{
-				return false;
-			}
-			return true;
-		}
-	}
-	for (auto& hit : hitListLeft)
-	{
-		if (Collsions::CubeCollision(hit, cube))
-		{
-			//ひとつ前のセーブした壁とIDが同じなら失敗判定にする
-			if (CheckContinuanceKick(&hit))
-			{
-				return false;
-			}
-			return true;
-		}
-	}
-	return false;
 }
 
 void Player::DebugGUI()
@@ -853,80 +768,80 @@ bool Player::GetInputMove(InputMove input)
 	return false;
 }
 
-void Player::ChangeState(const PlayerState& pState)
-{
-	SetState(pState);
-
-	if (pState == PlayerState::Normal)
-	{
-		SetNoCollsion(false);
-		SetNoGravity(false);
-		SetNoMove(false);
-
-		DeleteState(PlayerState::Apparrance);
-		DeleteState(PlayerState::InDokan);
-	}
-
-	if (pState == PlayerState::Apparrance)
-	{
-		SetNoCollsion(true);
-		SetNoGravity(true);
-		SetNoMove(true);
-	}	
-	if (pState == PlayerState::InDokan)
-	{
-		SetNoCollsion(true);
-		SetNoGravity(true);
-		SetNoMove(true);
-
-		DeleteState(PlayerState::Normal);
-	}
-	if (pState == PlayerState::Debug)
-	{
-		SetNoCollsion(false);
-		SetNoGravity(false);
-		SetNoMove(false);
-	}
-}
+//void Player::ChangeState(const PlayerState& pState)
+//{
+//	SetState(pState);
+//
+//	if (pState == PlayerState::Normal)
+//	{
+//		SetNoCollsion(false);
+//		SetNoGravity(false);
+//		SetNoMove(false);
+//
+//		DeleteState(PlayerState::Apparrance);
+//		DeleteState(PlayerState::InDokan);
+//	}
+//
+//	if (pState == PlayerState::Apparrance)
+//	{
+//		SetNoCollsion(true);
+//		SetNoGravity(true);
+//		SetNoMove(true);
+//	}	
+//	if (pState == PlayerState::InDokan)
+//	{
+//		SetNoCollsion(true);
+//		SetNoGravity(true);
+//		SetNoMove(true);
+//
+//		DeleteState(PlayerState::Normal);
+//	}
+//	if (pState == PlayerState::Debug)
+//	{
+//		SetNoCollsion(false);
+//		SetNoGravity(false);
+//		SetNoMove(false);
+//	}
+//}
 
 void Player::Jump()
 {
-	//ダッシュ状態ならカウント加算してジャンプ力上げる
-	if (CheckState(PlayerState::Dash))
-	{
-		mJumpCount++;
-	}
+	////ダッシュ状態ならカウント加算してジャンプ力上げる
+	//if (CheckState(PlayerState::Dash))
+	//{
+	//	mJumpCount++;
+	//}
 
-	mJumpCount = Util::Clamp(mJumpCount, 0, 3);
+	//mJumpCount = Util::Clamp(mJumpCount, 0, 3);
 
-	if (mJumpCount <= 1)
-	{
-		jumpPower = JUMP_VALUE * 2;
-	}
+	//if (mJumpCount <= 1)
+	//{
+	//	jumpPower = JUMP_VALUE * 2;
+	//}
 
-	if (mJumpCount == 2)
-	{
-		jumpPower = JUMP_VALUE * 3;
-		//カメラをちょい引く(もっと放してもいいかも)
-		PlayerCamera::Get()->ChangeRadius(1.0f, 0.5f);
-	}
+	//if (mJumpCount == 2)
+	//{
+	//	jumpPower = JUMP_VALUE * 3;
+	//	//カメラをちょい引く(もっと放してもいいかも)
+	//	PlayerCamera::Get()->ChangeRadius(1.0f, 0.5f);
+	//}
 
-	if (mJumpCount == 3)
-	{
-		jumpPower = JUMP_VALUE * 4;
-		//この処理だとここが何回も呼ばれて無限にカメラがひいちゃう
-		PlayerCamera::Get()->ChangeRadius(2.0f, 0.5f);
-	}
+	//if (mJumpCount == 3)
+	//{
+	//	jumpPower = JUMP_VALUE * 4;
+	//	//この処理だとここが何回も呼ばれて無限にカメラがひいちゃう
+	//	PlayerCamera::Get()->ChangeRadius(2.0f, 0.5f);
+	//}
 
-	//値を指定
-	upJumpS = position.y;
-	upJumpE = position.y + jumpPower;
+	////値を指定
+	//upJumpS = position.y;
+	//upJumpE = position.y + jumpPower;
 
-	jumpManageTimer.Start();
-	jumpState = JumpState::Up;
+	//jumpManageTimer.Start();
+	//jumpState = JumpState::Up;
 
-	//重力を無効化
-	gravity = 0;
+	////重力を無効化
+	//gravity = 0;
 }
 
 int32_t Player::GetNowHP()

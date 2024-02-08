@@ -138,31 +138,31 @@ void CollideManager::CheckCollide(Entity* check, Entity* collide)
 
 		if (collide->CheckTag(TagTable::BreakBlock))
 		{
-			BreakBlock* bBlock = static_cast<BreakBlock*>(collide);
+			//BreakBlock* bBlock = static_cast<BreakBlock*>(collide);
 
 			//ヒップドロップ中なら
-			if (player->CheckState(Player::PlayerState::HipDrop))
-			{
-				//もし下面の当たり判定の中にブロックがあるなら、このブロックの当たり判定を消す
-				for (auto& block : player->hitListDown)
-				{
-					if (block.GetID() == bBlock->GetID()) {
-						bBlock->canBreak = false;
-					}
-					else
-					{
-						bBlock->canBreak = true;
-					}
-				}
+			//if (player->CheckState(Player::PlayerState::HipDrop))
+			//{
+			//	//もし下面の当たり判定の中にブロックがあるなら、このブロックの当たり判定を消す
+			//	for (auto& block : player->hitListDown)
+			//	{
+			//		if (block.GetID() == bBlock->GetID()) {
+			//			bBlock->canBreak = false;
+			//		}
+			//		else
+			//		{
+			//			bBlock->canBreak = true;
+			//		}
+			//	}
 
-				//そのうえで当たったなら
-				if (Collsions::CubeCollision(player->box.cubecol, bBlock->box.cubecol) && 
-					!bBlock->canBreak)
-				{
-					//破壊する
-					bBlock->HitEffect();
-				}
-			}
+			//	//そのうえで当たったなら
+			//	if (Collsions::CubeCollision(player->box.cubecol, bBlock->box.cubecol) && 
+			//		!bBlock->canBreak)
+			//	{
+			//		//破壊する
+			//		bBlock->HitEffect();
+			//	}
+			//}
 		}
 
 		if (collide->CheckTag(TagTable::TikuwaBlock)) {

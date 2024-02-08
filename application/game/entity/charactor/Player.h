@@ -5,6 +5,7 @@
 #include "Mob.h"
 #include "ImguiManager.h"
 #include "CameraHitCheck.h"
+#include "PlayerState.h"
 
 /*! Player
 	プレイヤークラス
@@ -12,19 +13,18 @@
 class Player final : public Mob
 {
 public:
-	
 	//なんか複数の状態が両立する仕組みにしたい
 	//タグと同じような管理方式に変えるか
 	//出現処理のもろもろ
-	enum class PlayerState
-	{
-		Normal,		//通常の状態(移動などの処理を行う)
-		Dash,		//ダッシュ状態
-		Apparrance,	//土管からの出現状態(Normalと被らない)
-		InDokan,	//土管への入り状態(Normalと被らない)
-		Debug,		//デバッグ状態
-		HipDrop,	//ヒップドロップ
-	};
+	//enum class PlayerState
+	//{
+	//	Normal,		//通常の状態(移動などの処理を行う)
+	//	Dash,		//ダッシュ状態
+	//	Apparrance,	//土管からの出現状態(Normalと被らない)
+	//	InDokan,	//土管への入り状態(Normalと被らない)
+	//	Debug,		//デバッグ状態
+	//	HipDrop,	//ヒップドロップ
+	//};
 
 	enum class InputMove
 	{
@@ -32,7 +32,7 @@ public:
 		Trigger,
 	};
 public:
-	/// <summary>
+	/*/// <summary>
 	/// 指定したステートがあるか確認する
 	/// </summary>
 	/// <param name="check">確認したいステート</param>
@@ -51,7 +51,10 @@ public:
 	/// </summary>
 	/// <param name="check">削除したいステート</param>
 	/// <returns>ステートの削除に成功でtrue ステートが見つからない場合false</returns>
-	bool DeleteState(PlayerState check);
+	bool DeleteState(PlayerState check);*/
+	PlayerState* state;
+	void ChangeState(PlayerState* newstate);
+	std::string showState();
 
 public:
 	//リソース読み込み
@@ -93,7 +96,7 @@ public:
 	bool GetApparanceEnd();
 
 	//プレイヤーのモードを変える(0,通常,1,デバッグモード)
-	void ChangeState(const PlayerState& pState);
+	//void ChangeState(const PlayerState& pState);
 
 	//動いているか
 	bool IsMove();
@@ -101,21 +104,30 @@ public:
 	//ジャンプしているか
 	bool IsJump();
 
-	//壁キックができるかどうか
-	bool CanWallKick();
-
 	//Imguiの処理
 	void DebugGUI();
 
 	//プレイヤーの移動入力があったか
 	bool GetInputMove(InputMove input);
 
+	//地面とぶつかった時のパーティクル
+	void GroundHitParticle();
+
+	void MoveValuePlus(const Vector3& plus);
+
+	Vector3 GetCenterVec();
+
+	float GetSpeed();
+
 private:
 	Player() : Mob()
 	{
 		SetTag(TagTable::Player);
+		state = new PlayerNormal;
 	};
-	~Player() {};
+	~Player() {
+		delete state;
+	};
 
 	//動きの更新
 	void MoveUpdate();
@@ -135,32 +147,26 @@ private:
 	//HPをその値に書きかえる 最大値より大きい場合、最大値を書き換える
 	void HPOverFlow(int32_t value);
 
-	//同じ壁を2連続で蹴っていないか確認する
-	bool CheckContinuanceKick(IDdCube* check);
-
 	//ダッシュ状態へ変更する処理
 	void ChangeDash();
 
-	//通常状態の更新処理
-	void NormalUpdate();
-	
-	//ダッシュ状態の更新処理
-	void DashUpdate();
+	////通常状態の更新処理
+	//void NormalUpdate();
+	//
+	////ダッシュ状態の更新処理
+	//void DashUpdate();
 
-	//デバッグモードの更新処理
-	void DebugUpdate();
+	////デバッグモードの更新処理
+	//void DebugUpdate();
 
-	//出現処理の更新処理
-	void ApparanceUpdate();
+	////出現処理の更新処理
+	//void ApparanceUpdate();
 
-	//ヒップドロップの更新処理
-	void HipDropUpdate();
+	////ヒップドロップの更新処理
+	//void HipDropUpdate();
 
 	//判定用オブジェクト群の更新
 	void AdjudicationUpdate();
-
-	//地面とぶつかった時のパーティクル
-	void GroundHitParticle();
 
 	//煙のパーティクルをドーナツ型で出現させる(より汎用的な場所に移動したい)
 	void DonuteSmoke(Vector3 center);
@@ -179,7 +185,7 @@ public:
 	//敵との当たり判定用スフィア
 	Sphere mEncountCol;
 
-	std::vector<PlayerState> mPlayerStates;
+	//std::vector<PlayerState> mPlayerStates;
 
 	void CheckGUI();
 
@@ -239,16 +245,6 @@ private:
 
 	//ジャンプ回数
 	int32_t mJumpCount = 0;
-
-	//壁キック変数群
-	//この時間だけ反対方向に飛ぶ
-	TEasing::easeTimer mWallKickTimer = 0.1f;
-
-	//壁キックの進行方向
-	Vector3 mWallKickVec = {};
-
-	//一度壁キックした壁を保存し、連続でキックできないようにする
-	IDdCube *mSaveKickWall = nullptr;
 
 	bool mFlyMode = false;
 

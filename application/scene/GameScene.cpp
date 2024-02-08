@@ -95,10 +95,10 @@ void GameScene::Update()
 		StageChanger::Get()->Reload();
 	}
 
-	if (player->CheckState(Player::PlayerState::Debug))
+	/*if (player->CheckState(Player::PlayerState::Debug))
 	{
 		GameSceneDebugGUI();
-	}
+	}*/
 
 	if (Input::Keyboard::TriggerKey(DIK_5))
 	{

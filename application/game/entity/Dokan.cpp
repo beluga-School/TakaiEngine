@@ -57,8 +57,8 @@ void Dokan::HitEffect(Mob* target_)
 		mDokanState = DokanState::PreMove;
 		mTarget = target_;
 		//ターゲットの当たり判定をなくす
-		Player* player = static_cast<Player*>(target_);
-		player->ChangeState(Player::PlayerState::InDokan);
+		//Player* player = static_cast<Player*>(target_);
+		//player->ChangeState(Player::PlayerState::InDokan);
 		mSavePos = target_->box.position;
 
 		//移動先の情報をステージへ移す

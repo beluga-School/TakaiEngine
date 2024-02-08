@@ -828,6 +828,9 @@
     <ClCompile Include="application\CameraHitCheck.cpp">
       <Filter>Application\Entity\EventBlock\CameraHitCheck</Filter>
     </ClCompile>
+    <ClCompile Include="PlayerState.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="engine\shader\Shader.h">
@@ -1192,6 +1195,9 @@
     </ClInclude>
     <ClInclude Include="application\CameraHitCheck.h">
       <Filter>Application\Entity\EventBlock\CameraHitCheck</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerState.h">
+      <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

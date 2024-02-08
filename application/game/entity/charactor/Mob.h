@@ -54,6 +54,9 @@ public:
 	//丸影を設定する
 	void SetShadow();
 
+	//地面に当たった瞬間ならtrue
+	bool CheckNowHitGround();
+
 protected:
 	//重力の強さを設定
 	void SetGravity(float value);
@@ -63,9 +66,6 @@ protected:
 
 	//当たり判定の更新
 	void CollsionUpdate();
-
-	//地面に当たった瞬間ならtrue
-	bool CheckNowHitGround();
 
 private:
 	//縦方向の当たり判定更新

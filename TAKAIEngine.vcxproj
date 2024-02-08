@@ -222,6 +222,7 @@
     <ClCompile Include="application\game\TikuwaBlock.cpp" />
     <ClCompile Include="application\ui\StarTutorialUI.cpp" />
     <ClCompile Include="application\ui\TutorialUI.cpp" />
+    <ClCompile Include="PlayerState.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="application\collision\CollideManager.h" />
@@ -334,6 +335,7 @@
     <ClInclude Include="application\game\entity\RedCoin.h" />
     <ClInclude Include="application\event\RedCoinEvent.h" />
     <ClInclude Include="application\game\Grass.h" />
+    <ClInclude Include="PlayerState.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="application\ui\StarUI.h" />
     <ClInclude Include="application\ui\UI.h" />
