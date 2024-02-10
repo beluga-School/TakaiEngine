@@ -99,8 +99,6 @@ protected:
 	void EncountSphereUpdate();
 
 public:
-	Sphere sphereCol{};
-
 	Vector3 saveColCenter = {};
 
 protected:

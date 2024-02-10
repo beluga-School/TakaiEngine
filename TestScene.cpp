@@ -115,7 +115,7 @@ void TestScene::Draw()
 	BasicObjectPreDraw("WireFrame");
 	tri3d.DrawMaterial();
 
-	InstantDrawer::DrawGraph(200, 200, 1.0f, 1.0f, "fovieta");
+	//InstantDrawer::DrawGraph(200, 200, 1.0f, 1.0f, "fovieta");
 
 	for (auto& cube : debugCubes)
 	{
