@@ -21,6 +21,7 @@
 #include "ShaderTestScene.h"
 #include "TitleScene.h"
 #include "InstantDrawer.h"
+#include "RouTestScene.h"
 
 //命名規則は以下の通り
 //メンバ変数->手前にm, mの次は大文字(例:mHoge)
@@ -104,7 +105,8 @@ int32_t WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_  HINSTANCE hPrevInstan
 
 	//シーンの初期化
 	SceneManager *scenemanager = SceneManager::Get();
-	scenemanager->ChangeScene<TitleScene>();
+	//scenemanager->ChangeScene<TitleScene>();
+	scenemanager->ChangeScene<RouTestScene>();
 
 #pragma endregion 描画初期化処理
 

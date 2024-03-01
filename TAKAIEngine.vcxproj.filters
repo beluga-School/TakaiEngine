@@ -478,6 +478,12 @@
     <Filter Include="シェーダー\BackGround">
       <UniqueIdentifier>{64e4de64-2e14-4b1d-82d6-69a46692867d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Application\Scene\RouTestScene">
+      <UniqueIdentifier>{3193fca5-d628-45eb-be90-28e4ca071946}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Application\Wax">
+      <UniqueIdentifier>{85b2d607-2a8a-49eb-91ad-ec8eb2db5a47}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="engine\input\Input.cpp">
@@ -827,6 +833,12 @@
     </ClCompile>
     <ClCompile Include="application\CameraHitCheck.cpp">
       <Filter>Application\Entity\EventBlock\CameraHitCheck</Filter>
+    </ClCompile>
+    <ClCompile Include="RouTestScene.cpp">
+      <Filter>Application\Scene\RouTestScene</Filter>
+    </ClCompile>
+    <ClCompile Include="Wax.cpp">
+      <Filter>ソース ファイル</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1192,6 +1204,12 @@
     </ClInclude>
     <ClInclude Include="application\CameraHitCheck.h">
       <Filter>Application\Entity\EventBlock\CameraHitCheck</Filter>
+    </ClInclude>
+    <ClInclude Include="RouTestScene.h">
+      <Filter>Application\Scene\RouTestScene</Filter>
+    </ClInclude>
+    <ClInclude Include="Wax.h">
+      <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

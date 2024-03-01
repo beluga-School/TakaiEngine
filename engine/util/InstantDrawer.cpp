@@ -253,15 +253,15 @@ void InstantDrawer::AllDraw3D()
 
 void InstantDrawer::PreCreate()
 {
-	for (int32_t i = 0; i < 100; i++)
+	for (int32_t i = 0; i < SP_MAX; i++)
 	{
 		Get()->sSprites.emplace_back();
 	}
-	for (int32_t i = 0; i < 100; i++)
+	for (int32_t i = 0; i < BILL_MAX; i++)
 	{
 		Get()->sBillboards.emplace_back();
 	}
-	for (int32_t i = 0; i < 100; i++)
+	for (int32_t i = 0; i < OBJ_MAX; i++)
 	{
 		Get()->sObjs.emplace_back();
 	}

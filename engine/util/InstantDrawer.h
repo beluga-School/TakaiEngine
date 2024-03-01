@@ -121,9 +121,12 @@ private:
 		return &instance;
 	}
 
+	static const int SP_MAX = 500;
 	std::list<InstantSprite> sSprites;
 
+	static const int BILL_MAX = 100;
 	std::list<InstantBillboard> sBillboards;
 
+	static const int OBJ_MAX = 100;
 	std::list<InstantObj> sObjs;
 };
